@@ -1,0 +1,7 @@
+.spacemacs.env
+README.sh
+# protonfixes layer
+.pyc
+__init__.py
+# guix
+shepherd.log

@@ -1,0 +1,49 @@
+* Emacs configuration
+** Clone
+#+NAME: clone
+#+BEGIN_SRC sh :tangle no
+git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 https://www.github.com/jamartin9/emacs-config
+# get branch heads
+git submodule foreach '
+if [ "$path" = "spacemacs" ]; then
+    git checkout develop
+else
+    git checkout master
+fi
+'
+
+#+END_SRC
+
+** Install
+*** make install
+**** tangle
+#+NAME: tangle
+#+BEGIN_SRC sh :tangle no
+emacs -Q --batch README.org --eval="(org-mode)" -f org-babel-tangle
+#+END_SRC
+**** link
+#+NAME: link
+#+BEGIN_SRC sh :tangle yes :shebang #!/usr/bin/env sh
+emacs -Q --batch --eval='(make-symbolic-link (expand-file-name "spacemacs") (expand-file-name ".emacs.d" (getenv "HOME")) 1)'
+emacs -Q --batch --eval='(make-symbolic-link (expand-file-name ".") (expand-file-name ".spacemacs.d" (getenv "HOME")) 1)'
+#+END_SRC
+**** run
+#+NAME: run
+#+BEGIN_SRC sh :tangle no
+./README.sh
+#+END_SRC
+** Update
+*** make update
+**** upstream merge
+#+NAME: update
+#+BEGIN_SRC sh :tangle no
+git -C spacemacs remote add upstream https://github.com/syl20bnr/spacemacs.git || true
+git -C spacemacs fetch --all
+git -C spacemacs merge upstream/develop # update-spacemacs
+emacs --eval="(progn (configuration-layer/update-packages) (save-buffers-kill-terminal))" # update-packages
+#+END_SRC
+**** remote merge
+#+NAME: update
+#+BEGIN_SRC sh :tangle no
+git submodule update --recursive --remote
+#+END_SRC

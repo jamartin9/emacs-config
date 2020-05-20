@@ -1,0 +1,54 @@
+#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
+
+# Guix setup manual
+# get tarball
+# system=x86_64-linux,aarch64,armhf,i686
+#wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
+
+# check sig
+#wget https://sv.gnu.org/people/viewgpg.php?user_id=15145 -qO - | gpg --import
+#wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz.sig
+#gpg --verify guix-binary-1.0.1.x86_64-linux.tar.xz.sig
+
+# with root
+# sudo -i
+
+# untar into dirs
+#tar --warning=no-timestamp -xf /path/to/guix-binary-1.0.1.x86_64-linux.tar.xz
+#mv var/guix /var/ && mv gnu /
+
+# add guix profile
+#mkdir -p ~root/.config/guix
+#ln -sf /var/guix/profiles/per-user/root/current-guix ~root/.config/guix/current
+
+# setup build daemon for multiple users
+#cp ~root/.config/guix/current/lib/systemd/system/guix-daemon.service /etc/systemd/system/
+
+# add build users
+#groupadd --system guixbuild
+#for i in `seq -w 1 10`;
+#do
+#    useradd -g guixbuild -G guixbuild           \
+#            -d /var/empty -s `which nologin`    \
+#            -c "Guix build user $i" --system    \
+#            guixbuilder$i;
+#done
+
+# link guix and info for all users
+#mkdir -p /usr/local/bin
+#cd /usr/local/bin
+#ln -s /var/guix/profiles/per-user/root/current-guix/bin/guix
+#mkdir -p /usr/local/share/info
+#cd /usr/local/share/info
+#for i in /var/guix/profiles/per-user/root/current-guix/share/info/* ;
+#do ln -s $i ; done
+
+# add sub server
+# source guix profile
+# source ~/root/.config/guix/current/etc/profile
+#guix archive --authorize < ~root/.config/guix/current/share/guix/ci.guix.gnu.org.pub
+
+# install locale
+#guix package -i glibc-utf8-locales
+
+# without root (needs relocatable guix build or fakeroot)
