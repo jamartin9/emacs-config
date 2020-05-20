@@ -1,14 +1,16 @@
-[submodule "spacemacs"]
-	path = spacemacs
-	url = https://www.github.com/jamartin9/spacemacs.git
-	branch = develop
-	update = merge
-	shallow = true
-[submodule "layers/guix/channels/guix-channel"]
-	path = layers/guix/channels/guix-channel
+[submodule "channels/guix-channel"]
+	path = channels/guix-channel
 	url = https://github.com/jamartin9/guix-channel
 	update = merge
 	shallow = true
-[submodule "layers/custom-shell/zsh-config"]
-	path = layers/custom-shell/zsh-config
+[submodule "zsh-config"]
+	path = zsh-config
 	url = https://github.com/jamartin9/zsh-config
+	update = merge
+	shallow = true
+[submodule "doom-emacs"]
+	path = doom-emacs
+	url = https://github.com/jamartin9/doom-emacs
+	shallow = true
+	update = merge
+	branch = develop

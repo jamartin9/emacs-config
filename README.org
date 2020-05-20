@@ -5,7 +5,7 @@
 git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 https://www.github.com/jamartin9/emacs-config
 # get branch heads
 git submodule foreach '
-if [ "$path" = "spacemacs" ]; then
+if [ "$path" = "doom-emacs" ]; then
     git checkout develop
 else
     git checkout master
@@ -24,23 +24,28 @@ emacs -Q --batch README.org --eval="(org-mode)" -f org-babel-tangle
 **** link
 #+NAME: link
 #+BEGIN_SRC sh :tangle yes :shebang #!/usr/bin/env sh
-emacs -Q --batch --eval='(make-symbolic-link (expand-file-name "spacemacs") (expand-file-name ".emacs.d" (getenv "HOME")) 1)'
-emacs -Q --batch --eval='(make-symbolic-link (expand-file-name ".") (expand-file-name ".spacemacs.d" (getenv "HOME")) 1)'
+emacs -Q --batch --eval='
+        (if (> emacs-major-version 26)
+                (make-symbolic-link (expand-file-name "doom-emacs") (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs") 1)
+                (make-symbolic-link (expand-file-name "doom-emacs") (expand-file-name ".emacs.d" (getenv "HOME")) 1))'
+emacs -Q --batch --eval='(make-symbolic-link (expand-file-name ".") (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "doom") 1)'
 #+END_SRC
 **** run
 #+NAME: run
 #+BEGIN_SRC sh :tangle no
-./README.sh
+./README.sh # run install script
+./doom-emacs/bin/doom sync # install doom
 #+END_SRC
 ** Update
 *** make update
 **** upstream merge
 #+NAME: update
 #+BEGIN_SRC sh :tangle no
-git -C spacemacs remote add upstream https://github.com/syl20bnr/spacemacs.git || true
-git -C spacemacs fetch --all
-git -C spacemacs merge upstream/develop # update-spacemacs
-emacs --eval="(progn (configuration-layer/update-packages) (save-buffers-kill-terminal))" # update-packages
+git submodule update --recursive --remote
+git -C doom-emacs remote add upstream https://github.com/hlissner/doom-emacs.git || true
+git -C doom-emacs fetch --all
+git -C doom-emacs merge upstream/develop # update-doom-emacs
+./doom-emacs/bin/doom upgrade # update-packages
 #+END_SRC
 **** remote merge
 #+NAME: update

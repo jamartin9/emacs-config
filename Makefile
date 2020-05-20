@@ -21,10 +21,11 @@ clean: prune
 
 update:
 	git submodule update --recursive --remote
-	git -C spacemacs remote add upstream https://github.com/syl20bnr/spacemacs.git || true
-	git -C spacemacs fetch --all
-	git -C spacemacs merge upstream/develop # update-spacemacs
-	$(EMACS_PROG) --eval="(progn (configuration-layer/update-packages) (save-buffers-kill-terminal))" # update-packages
+	git -C doom-emacs remote add upstream https://github.com/hlissner/doom-emacs.git || true
+	git -C doom-emacs fetch --all
+	git -C doom-emacs merge upstream/develop # update-doom-emacs
+	./doom-emacs/bin/doom upgrade # update-packages
 
 install: README.sh
 	./$< || true # run install script
+	./doom-emacs/bin/doom sync # install doom
