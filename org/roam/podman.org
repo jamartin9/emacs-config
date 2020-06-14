@@ -1,0 +1,137 @@
+:PROPERTIES:
+:ID:       90cf48a5-3b01-4667-b100-72acea67034f
+:END:
+#+title: podman
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* podman
+** podman notes
+- rootless containers with kernel >= 5.11 overlayfs
+  -  ~rm -rf ~/.{config,local/share}/containers /run/user/$(id -u)/{libpod,runc,vfs-*}~ or ~podman system migrate~ or ~podman system reset~
+  - ~touch /etc/subuid /etc/subgid && usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $(whoami)~ for pid/gid
+  - needs cgroupv2(grub cmdline and Delegate user service), slirp4netns for networking, fuse-overlayfs for storage
+  - set ~unqualified-search-registries = ["docker.io"]~ in ~/etc/containers/storage.conf~ for default searching to docker for kind
+- runc, crun, cri-o and conmon for monitoring the runtimes
+- needs ACLS set for rootless (zfs)
+- slirp4netns defaults to 10.0.2.100/24
+  - shares usernamespace with non root as 10.0.0.1 resolves
+- nvidia support with https://github.com/NVIDIA/nvidia-container-toolkit
+  - edit ~/etc/nvidia-container-runtime/config.toml~ with ~no-cgroups = true~ and ~ldconfig = "/sbin/ldconfig"~ (when using --userns keep-id) for rootless
+  - add ~--hooks-dir=/usr/share/containers/oci/hooks.d/ --security-opt=label=disable --security-opt=label=type:nvidia_container_t -e NVIDIA_VISIBLE_DEVICES=all  -e NVIDIA_DRIVER_CAPABILITIES=all~ to podman run
+- podman-compose does not cleanup networks (docker_default) which uses dnsmasq with the old configuration; run podman network rm on subsequent runs
+- ~podman load --log-level=debug~ for verbosity
+  - podman load can fail with a gzip'd exported docker image... so ~gzip -d~ first
+** p2pool and monerod kube configs
+podman play kube p2pool.yaml
+podman play kube xmrig.yaml --down
+#+NAME: p2pool
+#+BEGIN_SRC yaml :tangle p2pool.yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: xmr-deployment
+    labels:
+      app: xmr
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: xmr
+    template:
+      metadata:
+        labels:
+          app: xmr
+      spec:
+        volumes:
+        - name: p2pool-config
+          hostPath:
+            path: /storage/p2pool
+        - name: monero-config
+          hostPath:
+            path: /storage/bitmonero
+        containers:
+        - name: monero
+          image: localhost/monero:latest
+          volumeMounts:
+          - name: monero-config
+            mountPath: /tmp/bitmonero
+          args: ["--zmq-pub", "tcp://127.0.0.1:18084", "--disable-dns-checkpoints", "--enable-dns-blocklist", "--check-updates", "disabled", "--non-interactive", "--data-dir", "/tmp/bitmonero", "--no-igd", "--prune-blockchain", "--out-peers", "30", "--in-peers", "30", "--rpc-bind-ip", "0.0.0.0", "--confirm-external-bind"] # , "--rpc-bind-ip", "0.0.0.0", "--confirm-external-bind"
+          command: ["/bin/monerod"]
+          ports:
+          - name: monero-peers
+            containerPort: 18080
+            hostPort: 18080
+          - name: monero-wallet
+            containerPort: 18081
+            hostPort: 18081
+        - name: xmr-p2pool
+          image: localhost/p2pool:latest
+          volumeMounts:
+          - name: p2pool-config
+            mountPath: /tmp/p2pool
+          args: ["--mini","--zmq-port", "18084", "--in-peers", "20", "--out-peers", "20", "--no-randomx", "--no-cache", "--wallet", "41xxxADDRESSxHERExxx" ]
+          command: ["/bin/p2pool"]
+          workingDir: "/tmp/p2pool"
+          ports:
+          - name: stratum
+            containerPort: 3333
+            hostPort: 3333
+          - name: p2pool-peers-mini
+            containerPort: 37888
+            hostPort: 37888
+          #- name: p2pool-peers
+          #  containerPort: 37889
+          #  hostPort: 37889
+#+END_SRC
+** xmrig
+#+NAME: xmrig
+#+BEGIN_SRC yaml :tangle xmrig.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xmrig-deployment
+  labels:
+    app: xmrig
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig
+  template:
+    metadata:
+      labels:
+        app: xmrig
+    spec:
+      restartPolicy: "Never"
+      hostNetwork: true
+      volumes:
+      - name: hugepage-1gi
+        hostPath:
+          path: /dev/hugepages
+#        emptyDir:
+#          medium: HugePages-1Gi
+      - name: msr-module
+        hostPath:
+          path: /lib/modules
+      - name: msr-cpu
+        hostPath:
+          path: /dev/cpu
+      containers:
+      - name: xmrig
+        image: localhost/xmrig:latest
+#        image: localhost/xmrig-msr-tools-module-init-tools:latest
+        args: ["-o", "127.0.0.1:3333", "--randomx-1gb-pages", "--huge-pages-jit"]
+        command: ["/bin/xmrig"]
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /dev/hugepages
+            name: hugepage-1gi
+          - mountPath: /lib/modules
+            name: msr-module
+          - mountPath: /dev/cpu
+            name: msr-cpu
+#+END_SRC

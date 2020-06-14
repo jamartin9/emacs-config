@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       ed39a162-1454-4fbc-80fc-a2e9c02785a7
+:END:
+#+title: software
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Software
+** [[id:20556f17-762b-4534-befa-34dbd8d2ca33][bootloaders]]
+** [[id:ff9e5548-5857-43a7-88d5-89101c2468c1][operating-systems]]
+** [[id:1fd6a775-91da-4939-988f-63d30363ffc2][programming-languages]]
+** [[id:f6550312-62de-4538-8729-a11767d59560][databases]]
+** [[id:92a1c0fc-707f-4d2c-86af-a55206f51c17][software-contrib]]
+** [[id:0a94af9d-559e-4c78-b90e-cca4a43e9efe][software-projects]]
+** [[id:d0178e2c-9979-46db-9811-9c99bb12c121][video-encoding]]
+** [[id:6cf45163-2951-43a0-a970-25f64e785e09][software-license]]
+** algorithms
+- distributed
+  - paxos
+    - multiple roles
+    - TLA+ checked
+  - raft
+    - single role
+- hashing
+  - mapembed hashing is perfect hashing that supports dynamic updates; still with O(1) lookup time

@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       4670cd15-b5f6-42f5-ba1d-07a726aae64d
+:END:
+#+title: text-editors
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Editors
+Life in plaintext!
+- [[id:44337591-05ba-4e17-a151-4b4920906712][emacs]]
+- Atom
+  - [[https://www.electronjs.org/blog/electron][atom shell turned into electron]]
+  - [[https://github.blog/2022-06-08-sunsetting-atom/][killed by microsoft in favor of VSCODE]] despite [[https://thenextweb.com/news/githubs-new-ceo-promises-to-save-atom-post-microsoft-acquisition][initial claims]]
+- VSCODE
+  - https://github.com/VSCodium/vscodium for telemetry removed

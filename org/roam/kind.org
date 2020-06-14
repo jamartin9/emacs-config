@@ -1,0 +1,54 @@
+:PROPERTIES:
+:ID:       ab1f8872-ab90-4855-98a0-5d9bf5806d78
+:END:
+#+title: kind
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* kind
+** kind
+- kubernetes in docker with podman ~KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster~
+- KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native for zfs in kind >= 0.12
+- ~kind load docker-image IMAGE IMAGE~ to load images or mount path through config
+- postgresql (crunchydata)
+  - clone ~https://github.com/CrunchyData/postgres-operator-examples/~
+    - ~kubectl apply -f kustomize/install~ for the operator
+    - ~kubectl apply -f kustomize/postgres~ for default db
+  - change persistent volumes policy to retain and modify postgres for restore
+  -  default forward primary port
+#+NAME: crunchy-port
+#+BEGIN_SRC sh :tangle no
+PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
+kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
+#+END_SRC
+  - default connection
+#+NAME: crunchy-port
+#+BEGIN_SRC sh :tangle no
+PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
+#+END_SRC
+- cross plane
+  - deploy helm package (requires tiller)
+  - configure cloud resources with kubernetes yaml
+  - creates oci like images for xpackages
+  - providers for cf/gcp/ansible/terraform/kubernetes
+  - kube-provider manages operators/deployments across kubernetes clusters
+- hardening
+  - require authorization (default no auth)
+  - user accounts for rbac (default admin)
+  - disable mounting of service token in pods
+  - user namespace containers
+  - read-only fs
+  - drop capabilites
+  - encrypt secrets
+  - tls for services/kubelet/control plane
+  - kubeadm
+    - kubeadm certs check-expiration
+    - kubeadm certs renew
+    - does not support rotating CA (9 year default)
+- vault
+  - manages ca and cert rotation
+  - init/unseal with pgp keys
+  - operator has webhook to avoid sidecare
+    - configured through annotations and env vars

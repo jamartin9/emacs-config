@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       5ede22d0-93cd-4951-a2bb-3084a57ed2fc
+:END:
+#+title: version-control
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Version control
+We have to get those dirty versions under control...
+** [[id:bfd01242-3296-4e37-91f2-9aa2801c52fa][git]]
+- forges
+  - github
+    - proprietary source
+    - rails app
+    - bought by microsoft
+      - [[https://www.eff.org/deeplinks/2020/11/github-reinstates-youtube-dl-after-riaas-abuse-dmca][allows and enforces false DMCA take down notices]]
+      - [[https://techcrunch.com/2019/07/29/github-ban-sanctioned-countries/][banned iranian and syrian developers]]
+      - [[https://www.bleepingcomputer.com/news/security/github-suspends-accounts-of-russian-devs-at-sanctioned-companies/][banned russian developers]] [[https://github.blog/2022-03-02-our-response-to-the-war-in-ukraine/][despite public statements]]
+      - [[https://nitter.net/semenov_roman_/status/1556717890308653059#m][banned developer of tornado.cash]] and anyone who contributed code after US Treasury sanctioned
+      - removes non infringing projects/mirrors without warning or take down
+        - randomly removed my mirror of goldberg_emulator
+      - released copilot trained on [[https://twitter.com/ChrisGr93091552/status/1539731632931803137][uploaded]] and [[https://twitter.com/mitsuhiko/status/1410886329924194309][scraped]] code
+        - [[https://twitter.com/docsparse/status/1581461734665367554][copies copyrighted code verbatim]]
+        - trained on [[https://help.openai.com/en/articles/5480054-understanding-codex-training-data-and-outputs][openai codex]]'s lies of >99% not verbatim
+        - does *NOT* allow the use of gendered language or any other '[[https://github.com/orgs/community/discussions/20273#discussioncomment-3320989][content filtered]]' subjects
+          - The list is [[https://twitter.com/moyix/status/1433254293352730628][client side filtering]] with hashes of the words
+        - github sued for copilot copyright violation
+          - Oracle sued google over [[https://majadhondt.wordpress.com/2012/05/16/googles-9-lines/][9 lines]] and got to the supreme court
+  - gitlab
+    - rails app
+    - open core
+    - proposed removing 'inactive' (1 year w/o commits) free account repos to save a quarter of their costs
+      - despite apparent money problems gitlab has doubled down on using ruby on rails, [[https://about.gitlab.com/blog/2022/07/06/why-were-sticking-with-ruby-on-rails/][despite knowing the cost]] increase from less than stellar performance
+    - blocks us 'sanctioned' countries like cuba/russia etc
+  - sr.ht
+    - mailing list based
+    - [[https://sourcehut.org/blog/2022-10-31-tos-update-cryptocurrency/][disallows cryptocurrency/blockchain projects]]
+  - gitea
+    - federation support for forgefed (activity pub) in 1.18.0
+      - init support in 1.17
+    - added artifact repo in 1.17
+    - codeberg is a free hosted instance
+      - Found to not use raid/redundant storage for hosting when investigating (data will be lost outside backup window)
+      - must license software as foss (no unlicensed projects)

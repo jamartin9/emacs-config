@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       8005808d-1b21-48df-9706-6b999ee9aff6
+:END:
+#+title: android
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* android
+** notes
+- automobile integration
+   - Ford https://github.com/smartdevicelink/sdl_java_suite
+   - android auto
+- developer mode by tapping build number in settings multiple times
+- custom rom cyanogenmod discontinued into LineageOS
+- pozzed by google and cell carriers
+  - aosp is incomplete
+  - more locked down kiosk devices
+  - generally not unlocked bootloader or root on own device because of carrier
+  - old version of java bytecode on dalvikvm/art (7 and can polyfill 8 features)
+  - app store bullying
+  - old linux kernel
+  - custom recoveries require unlocked bootloader (TWRP/CWM)
+  - many apps needlessly crippled with gplay services or microg
+** apps
+*** termux
+- vol up/down and a/d to move left/right (other shortcuts too)
+- vol up long and Q for special keyboard
+*** aurora store
+- google play store without google account
+*** fdroid
+- apk repo that can self host and share device to device

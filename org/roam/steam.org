@@ -1,0 +1,111 @@
+:PROPERTIES:
+:ID:       274d4b9e-b898-4eb6-a44e-063e7ed34e89
+:END:
+#+title: steam
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Steam
+- [[https://gitlab.com/Mr_Goldberg/goldberg_emulator][steam emulator]]
+** steam proton notes
+ - pressure vessel added in > 5.10
+   - conflicting glibc version for bash link so had to revert/build custom
+ - [[https://github.com/ValveSoftware/steam-for-linux/issues/1890][does not respect XDG vars]]
+* Lutris
+- installers battle.net
+* Protonfixes for some games
+** Link localfixes
+#+NAME: link-localfixes-el
+#+BEGIN_SRC elisp :tangle no :shebang "\":\"; emacs -Q --script steam.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
+  (ignore-errors (let* ((proton-dir (concat (if (getenv "XDG_CONFIG_HOME") (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
+                                       (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
+                                     "protonfixes"))
+                        (localfixes-dir (concat (file-name-as-directory proton-dir) "localfixes")))
+    (if (not (or (file-exists-p localfixes-dir) (file-symlink-p localfixes-dir)))
+        (progn (make-directory localfixes-dir 1)
+               (set-file-modes localfixes-dir #o700)))
+    (if (not (or (file-exists-p (concat (file-name-as-directory localfixes-dir) "7110.py"))
+                 (file-symlink-p (concat (file-name-as-directory localfixes-dir) "7110.py"))))
+        (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "7110.py")
+                            (concat (file-name-as-directory localfixes-dir) "7110.py") 1))
+    (if (not (or (file-exists-p (concat (file-name-as-directory localfixes-dir) "22380.py"))
+                 (file-symlink-p (concat (file-name-as-directory localfixes-dir) "22380.py"))))
+        (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "22380.py")
+                            (concat (file-name-as-directory localfixes-dir) "22380.py") 1))
+    ))
+#+END_SRC
+** Jade Empire (process affinity)
+#+NAME: JadeEmpire
+#+BEGIN_SRC python :tangle 7110.py
+""" Game fix Jade Empire: Special Edition
+"""
+#pylint: disable=C0103
+
+import threading
+import os
+import subprocess
+from protonfixes.logger import log
+
+def _taskset():
+    """Use taskset to set mask of JadeEmpire.exe"""
+    # avoiding an external library as proc should be available on linux
+    again = True
+    badexes = ['JadeEmpire.exe']
+    while again:
+        pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
+        for pid in pids:
+            try:
+                with open(os.path.join('/proc', pid, 'cmdline'), 'rb') as proc_cmd:
+                    cmdline = proc_cmd.read()
+                    for exe in badexes:
+                        if exe in cmdline.decode():
+                            mask = os.sched_getaffinity(pid)
+                            while mask != {0} :
+                                mask = os.sched_getaffinity(pid)
+                            res = os.sched_setaffinity(pid, {0,1,2,3})
+                            again = False
+            except IOError:
+                continue
+
+@DeprecatedSince("5.0-3")
+def main():
+    """ Needs pid mask set on launch """
+    thread = threading.Thread(target=_taskset, args=())
+    thread.daemon = False
+    thread.start()
+#+END_SRC
+
+** Fallout New Vegas (audio/vk issues)
+#+NAME: FalloutNV
+#+BEGIN_SRC python :tangle 22380.py
+""" Game fix for Fallout: New Vegas
+"""
+# pylint: disable=C0103
+from protonfixes import util
+from protonfixes.protonversion import DeprecatedSince
+
+@DeprecatedSince("5.0-3")
+def main():
+    """ Use D3D9, quartz for audio, disable AA & water reflections/refractions
+    """
+    # DX9 game
+    util.disable_dxvk()
+
+    # quartz for audio
+    util.protontricks('quartz')
+
+    # Graphics and HUD glitches when
+    # AntiAliasing and Water Reflections/Refractions are enabled
+    # https://github.com/ValveSoftware/Proton/issues/356
+    user_opts = '''
+    [Display]
+    iMultiSample=0
+
+    [Water]
+    bUseWaterReflections=0
+    bUseWaterRefractions=0
+    '''
+    util.set_ini_options(user_opts, 'My Games/FalloutNV/FalloutPrefs.ini')
+#+END_SRC

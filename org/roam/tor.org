@@ -1,0 +1,143 @@
+:PROPERTIES:
+:ID:       806e68d1-fc6b-44a1-9293-e23ccbd8955d
+:END:
+#+title: tor
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* tor
+** tor notes
+- socks5 on 9050 by default
+- browser bundle runs 9051 by default
+#+NAME: tor-addrs
+#+BEGIN_SRC conf :tangle no
+brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion is brave
+https://protonmailrmez3lotccipshtkleegetolb73fuirgj7r4o4vfu7ozyd/ is protonmail
+https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/ is cloudflare 1.1.1.1
+MapAddress palladium.libera.chat libera75jm6of4wxpxt4aynol3xjmbtxgfyjpu34ss4d7r7q2v5zrpyd.onion is liberia.chat
+phobosxilamwcg75xt22id7aywkzol6q6rfl2flipcqoc4e4ahima5id.onion is phobos
+xmh57jrknzkhv6y3ls3ubitzfqnkrwxhopf5aygthi7d6rplyvk3noyd.onion is torch
+monerotoruzizulg5ttgat2emf4d6fbmiea25detrmmy7erypseyteyd.onion is getmonero (unstoppableswap.net for btc->xmr)
+p2pmin25k4ei5bp3l6bpyoap6ogevrc35c3hcfue7zfetjpbhhshxdqd.onion is p2pool
+njallalafimoej5i4eg7vlnqjvmb6zhdh27qxcatdn647jtwwwui3nad.onion is njal
+  - pozzed and will remove dns/vps it they do not like your content (flokinet, buyvm, ddos gaurd)
+https://incoghostm2dytlqdiaj3lmtn7x2l5gb76jhabb6ywbqhjfzcoqq6aad.onion/ is incognet
+http://kiwifarmsaaf4t2h7gc3dfc5ojhmqruw2nit3uejrpiagrxeuxiyxcyd.onion/ is kiwifarms
+  - t.me/s/kiwifarms for telegram updates
+uzfomcxbx24d3esy7akpdbiovcfoorupz4aez6fpabmyh45nnqdp7mqd.onion is /fdroid/repo
+https://4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion is guix sub mirror
+archiveiya74codqgiixo33q62qlrqtkgmcitqx5u2oeqnmn5bpcbiyd.onion is archive.is
+dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/ is dread
+https://twitter3e4tixl4xyajtrzo62zg5vztmjuricljdp2c5kshju4avyoid.onion/ is twitter
+https://5gdvpfoh6kb2iqbizb37lzk2ddzrwa47m6rpdueg2m656fovmbhoptqd.onion/ is riseup
+http://zlibrary24tuxziyiyfr7zd46ytefdqbqd2axkmxm4o5374ptpc52fad.onion/ is zlib
+https://bookszlibb74ugqojhzhg2a63w5i2atv5bqarulgczawnbmsb6s6qead.onion/ - zlib books
+https://www.reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad.onion/ is reddit
+#+END_SRC
+- digicert offers ev wildcard certs for .onion and harica.gr offers .onion
+- ensure multi point check or pinned HTTPS verified to avoid bgp att
+- tcp 9001 for relay default without bridge
+- set ~DNSPort 127.0.10.1:53~ and set pihole uservice directory of client/service
+- tcp with outbound nat punching
+- Traffic analysis vulnerabilities excluding routing/ddos fingerprinting
+  - snowflake (webrtc)
+    - hardcoded STUN servers list with fast local DNS requests for multiple instead of 1
+    - hardcoded request to sstatic cdn for domain fronting after STUN
+  - client unvalidated TLS handshake to node
+    - server TLS cert is self signed
+    - hardcodes fields in specific order, unusual lack of additional data fields
+    - issuer CN is always www. (8-20 chars) .com with no country, state, org or issuer
+    - subject CN is always www. (8-20 chars) .net (non overlaping with issuer) with no fields
+  - obsf4
+    - well known protocols are not imitated throughly ie the first data packet on port 443 needs a TLS/SSL header to be HTTPS
+    - obsf4proxy sets TCP push flag on last packet (uncommon)
+    - initialization data is half duplex and only flows one way at a time
+    - first data packet is client to server packet is 141 - 8192 bytes and the next server to client packet is 21 - 8192 bytes
+    - all data is  21 - 8192 bytes, checking 6+ data packets for size range increases fingerprint
+    - identified connections can reveal others based on the half second timing window for parallel connections
+    - Inter Arrival Timing flags
+      - 0 sends largest first with last having psh flag due to network segmentation
+      - 1 sets the max payload to 1448 bytes (with psh flag)
+      - 2 uncommon uses random sizes and the psh flag doesn't always change direction of data flow
+  - Browser bundle
+    - automatic bridge connections on startup
+    - known bridge request changing traceability
+    - private bridges allow unique tracking and proof as bridges persist to disk
+- [[https://github.com/cathugger/mkp224o][vanity address generator for v3]]
+  - v3 addresses use ed25519 keys
+** Link .torrc
+#+NAME: link-torrc-el
+#+BEGIN_SRC emacs-lisp :tangle no :shebang "\":\"; emacs -Q --script tor.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
+(ignore-errors
+  (let* ((tor-confdir (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME")
+                                                          (getenv "XDG_CONFIG_HOME")
+                                                        (concat (file-name-as-directory (getenv "HOME"))
+                                                                ".config")))
+                              "tor"))
+        (tor-conf (concat (file-name-as-directory tor-confdir) ".torrc")))
+    (if (not (file-exists-p tor-confdir))
+        (progn (make-directory tor-confdir)
+               (set-file-modes tor-confdir #o700)))
+    (if (not (or (file-exists-p tor-conf) (file-symlink-p tor-conf)))
+        (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) ".torrc") tor-conf 1))))
+#+END_SRC
+** Data Directory
+#+NAME: datadir
+#+BEGIN_SRC emacs-lisp :tangle no
+(concat (if (getenv "XDG_CONFIG_HOME")
+            (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
+          (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
+        "tor")
+#+END_SRC
+** Control Socket
+#+NAME: socket
+#+BEGIN_SRC emacs-lisp :tangle no
+(concat (file-name-as-directory
+         (concat (if (getenv "XDG_CONFIG_HOME")
+                     (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
+                   (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
+                 "tor"))
+        "torSocket")
+#+END_SRC
+** .torrc
+#+NAME: .torrc
+#+BEGIN_SRC conf :tangle .torrc :noweb yes
+StrictNodes 1
+AvoidDiskWrites 1
+Sandbox 1
+#UseBridges 1
+
+# does not work with bridges
+EntryNodes {us}
+
+#ExcludeExitNodes {il},{gb},{ca},{nz},{au},{us},{fr},{??}
+#ExcludeNodes BadExit,Unnamed,default,{il},{gb},{ca},{nz},{au}
+
+#ExitNodes {us}
+
+# obfs4proxy configuration
+#ClientTransportPlugin obfs4 exec /usr/share/tor/PluggableTransports/obfs4proxy
+
+DataDirectory <<datadir()>>
+ControlSocket <<socket()>>
+CookieAuthentication 1
+
+#HiddenServiceDir /Library/Tor/var/lib/tor/hidden_service/
+#HiddenServicePort 80 unix:/path/to/socket
+
+VanguardsLiteEnabled 1
+HiddenServiceEnableIntroDoSDefense 1
+#HiddenServiceEnableIntroDoSBurstPerSec 200
+#HiddenServiceEnableIntroDoSRatePerSec 25
+
+#HiddenServiceNumIntroductionPoints 20
+
+#HiddenServiceMaxStreams 65535
+#HiddenServiceMaxStreamsCloseCircuit 1
+
+#HiddenServiceOnionBalanceInstance 1
+
+#HiddenServiceExportCircuitID haproxy
+#+END_SRC

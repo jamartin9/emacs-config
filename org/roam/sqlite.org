@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       162f9fba-d1f9-44e8-ae9f-685c578523f1
+:END:
+#+title: sqlite
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* sqlite
+** notes
+- https://www.sqlite.org/limits.html
+- single flat file database
+- C source can be compiled to WASM/Javascript [[https://sqlite.org/fiddle/][sqlite.org/fiddle]]
+- Replication options
+  - dqlite
+    - custom c library by canonical
+  - rqlite
+    - uses sqlite as storage engine
+  - litefs
+    - streaming replication to s3
+    - fuse based file replication with 1 active writer in cluster
+      - litestream for recovery
+  - [[https://github.com/vlcn-io/cr-sqlite][crdt]] using last write wins
+- libsql is a fork of sqlite with extra features
+- strict tables for type enforcement
+- session extension for changeset management
+- max ~PRAGMA page_size = 65536~
+  - powers of 2 ex ~16384~ for 16KiB
+  - default 4096
+  - require ~PRAGMA journal_mode = OFF~
+- reduce wal before VACUUM INTO ~PRAGMA wal_checkpoint(TRUNCATE)~
+- ~pragma integrity_check;~
+- ~.recover~ command for corruption
+- sqlar is file sqlite archive for in db compression of files (zlib)
+- sqlite v3.4.0 added support wasm
+  - opfs enabled when loaded from worker
+    - opfs not limited in size unlike localstorage
+    - currently locking issues between threads/tabs

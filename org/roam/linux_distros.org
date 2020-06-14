@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       1545c3b7-0dff-4196-b73b-7fce0518b6af
+:END:
+#+title: linux-distros
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Linux distributions
+Having many flavors makes some lovely hot garbage...
+*** [[id:8005808d-1b21-48df-9706-6b999ee9aff6][android]]
+*** ubuntu
+- debian based
+- snaps and apt for packages
+- zfs by default
+- aws EKS for baremetal
+  - preinstalled components
+    - metallb for load balancer
+    - Cilium CNI for networking
+    - Flux for gitops
+    - eksctl for control
+  - same pod and node limit at kubernetes (5000 nodes 110 pods per node 150000 total pods)
+  - build own ova https://github.com/aws/eks-distro-build-tooling
+  - can run locally with containers (based on amazon linux 2)
+    - requires docker with cgroupsv1
+*** manjaro
+- arch based
+- pamac and pacman for packages
+- mkinitcpio for initraramfs
+*** [[id:18ebc285-c771-4420-a040-011fd3b96b51][openwrt]]
+*** RHEL
+- dracut for initraramfs
+- yum/dnf for package managers
+- fedora uses btrfs
+- killed centos
+  - replaced by rocky/alma
+*** gentoo
+- portage for packages
+  - use flags for config
+  - overlays for external repos
+  - can use binaries but usually source only

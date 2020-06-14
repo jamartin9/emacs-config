@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       0713d4b4-4d66-495b-9d1b-192c91a8ab9f
+:END:
+#+title: elixir
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Elixir
+** notes
+- hex is the package manager
+- uses erlang OTP libraries (genserver/task/agent etc)
+- built on BEAM VM
+  - firefly as alternative to beam as a wasi runtime
+- popular web framework phoenix with liveview
+  - liveview native for apps/desktop apps
+- uses message passing instead of shared memory
+  - this can cause a problem for data heavy applications with something like liveview as the data is copied from process to process
+- dynamic atom creation causes memory leaks (gc does not collect) and can crash if over 1_048_576
+- supports hot code reloading using relup and code_change for migration of current state
+- libcluster for auto cluster config
+  - clustering uses epmd by default

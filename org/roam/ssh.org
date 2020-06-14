@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       c1e41319-77e9-4902-8860-a888447b2beb
+:END:
+#+title: ssh
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* SSH
+** ssh/webssh
+- added quantum safe key exchange in 7.0
+*** sshd
+  - ~LogLevel VERBOSE~
+  - ~PermitRootLogin no~
+  - ~PubkeyAuthentication yes~
+  - ~PasswordAuthentication no~
+  - ~ChallengeResponseAuthentication no~
+  - ~UsePAM no~ (may want yes depending on mount/decrypt setup)
+  - ~KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256~
+    - ~ssh -Q kex~
+  - ~Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr~
+    - ~ssh -Q cipher-auth~
+    - ~ssh -Q cipher~
+  - ~MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com~
+    - ~ssh -Q mac~
+- sftp subsystem ~Subsystem sftp /sftp-server -f AUTHPRIV -l INFO~
+- Disable X11, TCP, and agent forwarding
+- key only to ~cat key.pub >> $USER/authorized_hosts~
+*** ssh client config
+- ~ssh-keygen -p~ for passphrase change
+- ~HashKnownHosts yes~
+- ~HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,ssh-rsa,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256~
+  - ~ssh -Q key~
+- ~KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256~
+- ~MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com~
+- ~Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr~
+- tcp port forwarding with ~-L~

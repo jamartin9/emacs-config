@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       fd5eb707-7fc5-40ee-a550-f167f8c43635
+:END:
+#+title: archive-formats
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* archive/compression formats
+Putting things places for reasons!
+- [[id:897075c7-1826-4e0d-bd35-fe1ce8e1ecd0][torrents]]
+- [[id:8a060a9e-3694-40bf-b9ad-a4c4a9e46507][usenet]]
+- shar
+  - self extracting shell archive script
+- nar
+  - normalized archive used by guix. Comparable to tar.
+- zip
+  - ignores invalid data in zipfile (how [[https://justine.lol/ape.html][APE executables]] work)
+  - contains directory structure
+  - supports compression
+- [[id:308edd9a-90d8-44f3-ab1f-fae4942b0eae][rar]]
+- web archive (warc with pywb)
+#+NAME: manifest-scm
+#+BEGIN_SRC shell :tangle no
+pip install --user pywb
+wb-manager init my-web-archive
+wget --recursive --warc mywarcfile https://mysite
+wb-manager add my-web-archive <path/to/my_warc.warc.gz>
+wayback # http://localhost:8080/my-web-archive/<url>/
+#+END_SRC

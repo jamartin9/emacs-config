@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       44337591-05ba-4e17-a151-4b4920906712
+:END:
+#+title: emacs
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Emacs
+** emacs notes
+- pgtk enabled ~broadwayd~ port 8080 with apps env var ~GDK_BACKEND=broadway~
+- magit-generate-changelog for commit msg
+- gnus needs app password from google for 2fa or oauth token from gcloud
+- ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
+*** TODO portable dumper for faster startup                           :emacs:
+*** org-mode notes
+- noweb can link code verbatium with <<CodeBlockName>> or evaluate it with <<CodeBlockName>>()
+- ~#+INCLUDE "file.org::selector" :only-contents t~ to select heading contents to include from other files
+- disable tangling with ~:tangle no~ on src blocks
+** emacs-config README
+#+INCLUDE: "../../README.org::emacs-config" :only-contents t

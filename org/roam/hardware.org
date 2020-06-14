@@ -1,0 +1,65 @@
+:PROPERTIES:
+:ID:       797885a6-0f94-4d02-9df2-2744d5526c4c
+:END:
+#+title: hardware
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* hardware
+- Backdoors
+  - intel management engine
+  - amd platform security processor
+  - firmware level malware (disk controller, usb controller, flashable uefi/bios etc)
+  - side channel data transmission such as AM https://github.com/fulldecent/system-bus-radio
+- Commonly defective (cheap companies and lack of quality control even with standards)
+  - HDMI cables (no hdcp, artifacts and non spec bandwidth limits)
+  - USBC charging (will not charge certain devices and can even damage ex. Nintendo Switch)
+    - lacking resistors usually to inform device of power
+  - refurbished drives (smart data wiped)
+    - fake drives sold on amazon/walmart/ebay with custom firmware to trick os
+  - Used GPUs (cryptocurreny mining wear and cheap factory solder)
+
+- GPS
+  - CoCom Limits is the limit placed on GPS devices that disables tracking when it is faster than 1,000 knots and/or an higher than 18,000m.
+    - Intended to prevent GPS in intercontinental ballistic missile applications.
+    - SDR may not enforce limits (ex. GNSS-SDR)
+- SDR
+  - krakensdr passive receiver ITAR restricted and censored after IEEE spectrum paper
+- Project silica (quartz/glass hard drives)
+  - [[https://www.microsoft.com/en-us/research/project/project-silica/][research project by microsoft]]
+  - 10000 year degrade time instead of 10 year like most optical mediums
+
+- iphone14 removed sim card for esim.
+
+- atomic clocks
+  - https://www.physics.ox.ac.uk/news/quantum-network-entangled-atomic-clocks
+    - optical atmoic clocks entangled on demand
+  - helps approximate 'proper' time
+  - nuclear atmoic clocks
+    - caesium
+    - Rubidium
+    - GPS in the us uses ~4 per sat (2 caesium and 2 rubidium) to get 'absolute' time and spatial position
+    - some NTP nodes use them (NTP is millisecond precision)
+
+- egpus for external gpu
+
+- RISC-V
+  - free ISA
+  - 32/64/128(wip) address spaces
+  - 32 (16 embeded) int registers
+  - 32 floating point registers
+
+- Breadboard
+  - simulation https://www.withdiode.com/
+
+- /r/unclebens rice packets to cultivate mushrooms
+
+- 2021 F150 has 'self driving' BlueCruise
+  - raptor does not due to software issues with off road mode
+  - [[https://github.com/roxasthenobody98/phoenixpilot][open pilot fork for lariat and above]]
+    - OBED connector with ForScan can enable Lane assist without the technology package
+      - [[https://www.f150forum.com/f118/openpilot-469489/index6/#post7077158][need short/button to toggle while driving]]
+
+- BaoFeng programmable in unregistered frequency with CHIRP

@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       9e9bcdb8-ac35-4420-a2c0-c32b96cb4803
+:END:
+#+title: linux
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+
+* Linux
+Finally some hardware support!
+** [[id:7eb34c6f-cb5e-4e5d-a0c4-0139fb12d66a][file-systems]]
+** [[id:c9d0999f-0950-4bca-8f92-e814fe4da4c0][init-system]]
+** [[id:d3d64983-6929-4267-94b9-caf50c95dfa9][vpns]]
+** [[id:b6230d85-cd0e-4bc7-aba2-b7b068897d4f][shells]]
+** [[id:f9cef312-d52f-4625-afbf-b94d94d6f0cc][crypto]]
+** [[id:536c7bc0-8049-429d-bfe6-641eeb67399c][browsers]]
+** [[id:167b9a3a-353c-4d7f-b706-bf7241bb6c08][webserver]]
+** [[id:40d61cd0-2c14-4a79-913c-1cefe0060c13][firewalls]]
+** [[id:5ede22d0-93cd-4951-a2bb-3084a57ed2fc][version-control]]
+** [[id:187181c4-598e-4373-96e0-b66b5c676d23][machine-learning]]
+** [[id:4670cd15-b5f6-42f5-ba1d-07a726aae64d][text-editors]]
+** [[id:ab1cf09d-eedf-4134-aa33-2b7cfd1eca78][software-packaging]]
+** [[id:bed575bb-5b8c-4ecd-a078-8d501d25418c][software-metrics]]
+** [[id:1545c3b7-0dff-4196-b73b-7fce0518b6af][linux-distros]]
+** [[id:4462b218-52ce-4445-b1ae-42ff24faf0d6][software-virt]]
+** [[id:faee0cd2-0648-4539-bfc2-c8533ac755c4][service-discovery]]
+** [[id:acec51e6-a3a8-40a0-a74e-614c2419ef01][video-games]]
+** [[id:7d0ec9d9-0185-4cd3-8b4a-b956c1d3aa5b][desktop]]
+** Kernel
+- removed sysctl system call in 5.5
+- io-uring
+  - io-uring-spawn for process launching
+- ~/proc/cpuinfo~  for model
+** [[id:e2a56828-55c2-4b26-868c-68d4c78903ab][video-playback]]
+** [[id:fd5eb707-7fc5-40ee-a550-f167f8c43635][archive-formats]]
+** [[id:aee3a8d2-a37a-454e-9359-0f56caa3502f][email]]
+** pam
+** misc
+- ~faillock --user $USER --reset~ for attempt reset

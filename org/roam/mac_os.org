@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       52c3b05c-2f7c-4862-b550-916cd689d995
+:END:
+#+title: mac-os
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Mac/ios
+** notes
+- BSD based
+- dmg apps mounted
+- ios browser is skin on webkit only
+- Apple pozzed
+  - serial coded software that bricks with 'improper' hardware
+  - CSAM scanning of all files
+    - false flags and foss generator for broken algorithm
+  - known unpatched exploits actively used
+    - pegasus (israeli nso) - imessage remote exploit
+    - patched after some years
+      - DROPOUTJEEP (snowden leaks)
+      - SONICSCREWDRIVER (vault 7 leaks) - firmware password bypass
+      - Admin framework backdoor (2011 - 10.10.3+)
+      - etc

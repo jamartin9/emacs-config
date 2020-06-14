@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       da54ebe6-f11a-4431-b50f-ee281502998a
+:END:
+#+title: netdata
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* netdata
+** netdata
+- default port 19999 for view
+  - port 8125 statsd tcp/udp
+- ~sudo touch /etc/netdata/.opt-out-from-anonymous-statistics~, ~export DO_NOT_TRACK=1~ or ~--disable-telemetry~
+- PKGBUILD edits for ebpf
+  - +  ~./packaging/bundle-ebpf.sh "$PWD" "${pkgdir}/usr/lib/netdata/plugins.d/"~ in package
+  - +  ~./packaging/bundle-libbpf.sh "$PWD"~ in build
+  - +  ~./packaging/bundle-ebpf-co-re.sh "$PWD"~ in build
+  - rebuild with ~makepkg~ and reinstall with ~sudo pacman -U netdata.pkg.tar.zst~
+- setuid on ebpf plugin until reduced capabilities are supported ~sudo chmod 4755 /usr/lib/netdata/plugins.d/ebpf.plugin~
+- go.d.plugin is standalone
+  - ~sudo setcap CAP_NET_ADMIN+epi~ for wireguard
+  - prometheus scraper
+- ~/etc/netdata/edit-config /etc/netdata/apps_groups.conf~
+  - Emacs: emacs *emacs*
+  - Guix: guix *guix* guix-daemon *guix-daemon*
+- /etc/netdata/netdata.conf
+  - [statsd] enabled = no
+  - [web] #mode = none
+  - [cloud] enabled = no # --disable-cloud on installer/configure flags
+  - [health] enabled = no
+  - [registry] enabled = no
+    - ~registry to announce = http://127.0.0.1:19999~
+  - [ml] enabled = no
+  - [plugins] ebpf = yes
+              node.d = no
+              go.d = no
+              charts.d = no
+              python.d = no

@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       faee0cd2-0648-4539-bfc2-c8533ac755c4
+:END:
+#+title: service-discovery
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Service Discovery
+Where is waldo... again
+- [[id:806e68d1-fc6b-44a1-9293-e23ccbd8955d][tor]] onion services
+- gnunet GNU name system dht
+- [[id:1c02d70d-b269-400d-beb8-086c52f17351][dns]]

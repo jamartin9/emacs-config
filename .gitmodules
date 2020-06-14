@@ -1,16 +1,12 @@
 [submodule "channels/guix-channel"]
-	path = channels/guix-channel
+	path = org/roam/guix-channel
 	url = https://github.com/jamartin9/guix-channel
 	update = merge
 	shallow = true
-[submodule "zsh-config"]
-	path = zsh-config
-	url = https://github.com/jamartin9/zsh-config
-	update = merge
-	shallow = true
-[submodule "doom-emacs"]
-	path = doom-emacs
-	url = https://github.com/jamartin9/doom-emacs
+	branch = master
+[submodule "doomemacs"]
+	path = doomemacs
+	url = https://github.com/jamartin9/doomemacs
 	shallow = true
 	update = merge
-	branch = develop
+	branch = master

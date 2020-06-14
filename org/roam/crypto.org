@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       f9cef312-d52f-4625-afbf-b94d94d6f0cc
+:END:
+#+title: crypto
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* crypto
+Secrets from the future!
+** tools
+*** [[id:f72ef287-09ed-40c4-af4c-3bc9634655fe][gpg]]
+*** [[id:806e68d1-fc6b-44a1-9293-e23ccbd8955d][tor]]
+*** [[id:bfb58ea0-5328-4dca-9cf4-a162d37bb9d0][cryptocurrency]]
+** notes
+- Quantum
+  - SIKE broken in 4th round of NIST
+  - Lattice based
+    - [[https://www.courtlistener.com/docket/64872195/bernstein-v-national-institute-of-standards-and-technology/][Bernstein in court against NIST]] for potential NSA tampering again (weak keysize?)
+    - openssh added hybrid NTRU-Prime (Bernstein on team) for key exchange encryption despite NIST being against 'hybrid' schemes
+    - NIST choose CRYSTALS-Kyber for KEM encryption with CRYSTALS-DILITHIUM for signatures. Falcon is alternative signature scheme
+      - NTRU may be considered if the *patent* issues with kyber are not resolved
+      - Falcon has smallest signature but needs masking for side channel attack (perf affected as it needs constant-time floating point arithmetic)
+      - CRYSTALS-Kyber may change nested hashes for security to hold
+  - NIST choose hash based signatures SPHINCS+ as a balance to lattice based signatures
+    - highest level of security assurance but large signatures of 8-50 kilobytes
+- Dual_EC_DRBG backdoor pushed into NIST standards from NSA
+- NSA coerced weak DES keysize of 56 bits
+- NSA coerced weak DSA keysize of 512 bits
+- Bernstein (EFF) v United States
+  - was classed as munitions in 1992 with limited key size for export controls
+  - Phil Zimmermann (pgp creator) published code as book (PGP Source Code and Internals) to avoid munitions export in 1994 after criminal investigation for his producing of privacy software
+  - ruled software code is protected under 1st amendment as free speech in 1999 (4 years in court)
+- FCC illegal encrypted HAM bands
+- Nist randomness beacon https://beacon.nist.gov/home
+- NIST [[https://pages.nist.gov/800-63-FAQ/#q-b05][does not recommend rotating passwords]] regularly
+- SMS 2FA is insecure with sim swapping attacks
+- ed25519 signatures
+  - batch vs single verification
+  - oracle pubkey attack
+    - https://github.com/dalek-cryptography/ed25519-dalek/pull/205
+  - malleability
+    - ed25519-dalek verify_strict
+  - blinded keys

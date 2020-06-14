@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       187181c4-598e-4373-96e0-b66b5c676d23
+:END:
+#+title: machine-learning
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Machine learning
+** notes
+- huggingface is a hub for models with api libs using pytorch/tensorflow/jax
+  - spaces to run in notebook like without colab using gradio
+** image generation
+  - dalle mini
+  - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
+    - [[https://github.com/andreasjansson/cog-stable-diffusion/tree/animate][animation with interpolation]]
+** Codegen
+  - [[https://github.com/moyix/fauxpilot][Fauxpilot]]
+    - uses salesforce/Codegen which supports natural language input and generation of C, C++, Go, Java, JavaScript, Python (BIG QUERY).
+      - specialized in python with the BIGPYTHON dataset
+    - Converts salesforce/codegen model into GPTJ

@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       bfd01242-3296-4e37-91f2-9aa2801c52fa
+:END:
+#+title: git
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Git
+** git notes
+- ~--depth~ implies ~single-branch~ thus the refspec will be on single branch
+  - ~git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*~
+  - ~git fetch --depth=1 origin "+refs/heads/*:refs/remotes/origin/*"~
+  - ~git fetch origin feature/branch --depth=1 && git checkout -b feature/branch FETCH_HEAD~
+  - ~git notes add~ stores notes that can be mailed with ~git format-patch -n1 --notes~ under the ---
+    - ~git config notes.rewriteRef refs/notes/commits~ to merge notes
+  - ~GIT_TRACE=1 git cmd~ for debug
+- ~git switch --orphan BRANCH_NAME~ for empty branch
+- ~git rev-parse --show-object-format~ sha1 or sha256 check
+  - mostly unsupported by forges

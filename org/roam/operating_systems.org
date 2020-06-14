@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       ff9e5548-5857-43a7-88d5-89101c2468c1
+:END:
+#+title: operating-systems
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Operating Systems
+** [[id:9e9bcdb8-ac35-4420-a2c0-c32b96cb4803][linux]]
+** [[id:5bed75cb-f8b0-41ef-b6da-6cdf05c7053c][windows]]
+** [[id:52c3b05c-2f7c-4862-b550-916cd689d995][mac]]
+** Misc
+*** Hurd
+- debian/arch/guix variants
+  - ia32 only
+  - userspace kernel drivers using netbsd rumpkernel
+*** freebsd
+- pkg for package manager
+- /etc/rc.conf for services
+  - ~zfs_enable="YES"~
+- zfs by default
+- support for linux emulation
+*** smartos
+- modern Illumos(OpenSolaris)
+- uses zones for control like vms and containers
+  - native zones
+  - linux emulation
+  - kvm/qemu
+  - bhyve from freebsd
+- uses netbsds pkg
+- in memory operating system

@@ -1,0 +1,252 @@
+:PROPERTIES:
+:ID:       0e6f9ba0-4452-4fdf-a22a-964a1c689146
+:END:
+#+title: jellyfin
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Jellyfin
+** notes
+- roku client
+- web client
+- create ~.ignore~ file under directory to be ignored (sample directory)
+- config
+  - whitelist ip ranges
+  - enable tone mapping with nvenc for HDR -> SDR
+  - add plugins for anidb
+  - set series under shows/
+- running jellyfin with podman container
+  - must have proper underlying volume mount permissions
+    - ~fuse.conf~ with ~user_allow_other~ for ~-o allow_other~ if not same user/group ie with user level namespaced containers
+    - same permissions as underlying fs for ro/rw
+  - rshared/rbind opts for recursive mounts
+    - With [[id:308edd9a-90d8-44f3-ab1f-fae4942b0eae][rarfs]] the container must be started before the mounts under volume for propagation or the mounts passed as volumes at creation time.
+    - BUG propagating existing fuse mounts on creation
+      - affects podman run only and not kube deployment
+- [[id:90cf48a5-3b01-4667-b100-72acea67034f][podman]] run configuration with nvidia support
+#+NAME: jellyfin
+#+BEGIN_SRC shell :tangle no
+  podman run \
+  --detach \
+  --label "io.containers.autoupdate=registry" \
+  --hooks-dir=/usr/share/containers/oci/hooks.d/ \
+  --security-opt=label=disable \
+  --security-opt=label=type:nvidia_container_t \
+  -e NVIDIA_VISIBLE_DEVICES=all \
+  -e NVIDIA_DRIVER_CAPABILITIES=all \
+  --name myjellyfin \
+  --publish 8096:8096/tcp \
+  --rm \
+  --user $(id -u):$(id -g) \
+  --userns keep-id \
+  --volume /storage/jellyfin-cache:/cache:Z \
+  --volume /storage/jellyfin-config:/config:Z \
+  --volume /home/jam/Videos:/media:ro \
+  --volume /home/jam/Shows:/media2:ro \
+  --volume /run/media/jam/Elements/Me/Shows/:/media4:ro \
+  --volume /run/media/jam/Elements/Me/Video:/media3:rshared,rbind \
+  docker.io/jellyfin/jellyfin:latest
+#+END_SRC
+
+#+NAME: media-stack
+#+BEGIN_SRC yaml :tangle no
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: arr-config
+  data:
+      PUID: 1000
+      GUID: 1000
+      TZ: America/New_York
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: arr-deployment
+    labels:
+      app: arr
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: arr
+    template:
+      metadata:
+        annotations:
+          bind-mount-options:/storage/sonarr-config: Z
+          bind-mount-options:/storage/radarr-config: Z
+          bind-mount-options:/storage/prowlarr-config: Z
+          bind-mount-options:/storage/ombi-config: Z
+          bind-mount-options:/storage/jellyfin-config: Z
+          bind-mount-options:/storage/jellyfin-cache: Z
+          io.podman.annotations.label/jellyfin: disable,label=type:nvidia_container_t
+        labels:
+          app: arr
+      spec:
+        volumes:
+        - name: storage-jellyfin-config
+          hostPath: # jellyfin
+            path: /storage/jellyfin-config
+            type: Directory
+        - name: run-media-jam-Elements-Me-Shows
+          hostPath:
+            path: /run/media/jam/Elements/Me/Shows
+            type: Directory
+        - name: run-media-jam-Elements-Me-Video
+          hostPath:
+            path: /run/media/jam/Elements/Me/Video
+            type: Directory
+        - name: storage-jellyfin-cache
+          hostPath:
+            path: /storage/jellyfin-cache
+            type: Directory
+        - name: home-jam-Shows
+          hostPath:
+            path: /home/jam/Shows
+            type: Directory
+        - name: home-jam-Videos
+          hostPath:
+            path: /home/jam/Videos
+            type: Directory
+        - name: storage-prowlarr-config
+          hostPath: # prowlarr
+            path: /storage/prowlarr-config
+            type: Directory
+        - name: storage-sonarr-config
+          hostPath: # sonarr
+            path: /storage/sonarr-config
+            type: Directory
+        - name: storage-arr-downloads
+          hostPath:
+            path: /storage/arr-downloads
+            type: Directory
+        - name: storage-radarr-config
+          hostPath: # radarr
+            path: /storage/radarr-config
+            type: Directory
+        - name: storage-ombi-config
+          hostPath:
+            path: /storage/ombi-config
+            type: Directory
+        containers: # images
+        - name: jellyfin
+          image: docker.io/jellyfin/jellyfin:10.8.4
+          env:
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: all
+          ports:
+          - name: jellyfin-port
+            containerPort: 8096
+            hostPort: 8096
+          securityContext:
+            capabilities:
+              drop:
+              - CAP_MKNOD
+              - CAP_NET_RAW
+              - CAP_AUDIT_WRITE
+          volumeMounts:
+          - mountPath: /config
+            name: storage-jellyfin-config
+          - mountPath: /cache
+            name: storage-jellyfin-cache
+          - mountPath: /media
+            name: home-jam-Videos
+            readOnly: true
+          - mountPath: /media2
+            name: home-jam-Shows
+            readOnly: true
+          - mountPath: /media4
+            name: run-media-jam-Elements-Me-Shows
+            readOnly: true
+            mountPropagation: HostToContainer
+          - mountPath: /media3
+            name: run-media-jam-Elements-Me-Video
+            readOnly: true
+            mountPropagation: HostToContainer
+        - name: prowlarr
+          image: docker.io/linuxserver/prowlarr:0.4.4-develop
+          envFrom:
+          - configMapRef:
+              name: arr-config
+              optional: false
+          ports:
+          - name: prowlarr-port
+            containerPort: 9696
+            hostPort: 9696
+          securityContext:
+            capabilities:
+              drop:
+              - CAP_MKNOD
+              - CAP_NET_RAW
+              - CAP_AUDIT_WRITE
+          volumeMounts:
+          - mountPath: /config
+            name: storage-prowlarr-config
+        - image: docker.io/linuxserver/sonarr:3.0.9
+          name: sonarr
+          envFrom:
+          - configMapRef:
+              name: arr-config
+              optional: false
+          ports:
+          - name: sonarr-port
+            containerPort: 8989
+            hostPort: 8989
+          securityContext:
+            capabilities:
+              drop:
+              - CAP_MKNOD
+              - CAP_NET_RAW
+              - CAP_AUDIT_WRITE
+          volumeMounts:
+          - mountPath: /config
+            name: storage-sonarr-config
+          - mountPath: /storage/arr-downloads
+            name: storage-arr-downloads
+          - mountPath: /home/jam/Shows
+            name: home-jam-Shows
+        - name: radarr
+          image: docker.io/linuxserver/radarr:4.2.1-develop
+          envFrom:
+          - configMapRef:
+              name: arr-config
+              optional: false
+          ports:
+          - name: radarr-port
+            containerPort: 7878
+            hostPort: 7878
+          securityContext:
+            capabilities:
+              drop:
+              - CAP_MKNOD
+              - CAP_NET_RAW
+              - CAP_AUDIT_WRITE
+          volumeMounts:
+          - mountPath: /home/jam/Videos
+            name: home-jam-Videos
+          - mountPath: /config
+            name: storage-radarr-config
+          - mountPath: /storage/arr-downloads
+            name: storage-arr-downloads
+        - name: ombi
+          image: docker.io/linuxserver/ombi:4.22.5
+          envFrom:
+          - configMapRef:
+              name: arr-config
+              optional: false
+          ports:
+          - name: ombi-port
+            containerPort: 3579
+            hostPort: 3579
+          securityContext:
+            capabilities:
+              drop:
+              - CAP_MKNOD
+              - CAP_NET_RAW
+              - CAP_AUDIT_WRITE
+          volumeMounts:
+          - mountPath: /config
+            name: storage-ombi-configy
+#+END_SRC

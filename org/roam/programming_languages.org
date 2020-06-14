@@ -1,0 +1,89 @@
+:PROPERTIES:
+:ID:       1fd6a775-91da-4939-988f-63d30363ffc2
+:END:
+#+title: programming-languages
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Programming Languages
+The tower of babel is your type system as a macro
+** guile
+- goops for objects instead of records
+** clojure
+- https://aphyr.com/posts/353-rewriting-the-technical-interview
+** elisp
+- eieio for objects
+** shell
+- sh
+  - posix shell
+  - https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/utilities/sh.html
+  - ~cmd 2>&1 | tee -- "log.txt"~
+- bash
+  - array syntax ~[@]~
+  - ~--posix~ for sh mode
+  - ~&>~ ~2>&1~ redirects stderr and stdout
+- zsh
+  - ~(P)~ array syntax
+  - shell script compilation (zinit automatically does)
+  - shell/bash emulation
+  - p10k theme starts git daemon in background
+- ksh
+  - setenv for environment variables
+** [[id:12a3e66b-5ada-4bfc-ab64-819a0d46d204][c]]
+** c++
+- https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
+- gcc < 11 can be built with c++98; c++11 required for 11+
+** rust
+-  ~cargo test -- --nocapture~ for ~println!()~
+- rls removed in 1.65 for rust-analyzer
+- HashTable uses SwissTable(DoS resistance)
+  - [[https://morestina.net/blog/1843/the-stable-hashmap-trap][conflicts with other hashers]] like fxhash on insertion. Use random init state.
+- https://rust-lang.github.io/api-guidelines/checklist.html
+- reference counting can be checked by [[https://github.com/matthieu-m/static-rc][statically]]
+#+NAME: rust-release-profile
+#+BEGIN_SRC toml :tangle no
+[profile.release]
+lto = true
+codegen-units = 1 # reduce parallel codegen for increased optimization
+strip = true
+opt-level = "z" # smallest binary instead of speed
+panic = "abort"
+#+END_SRC
+
+** [[id:a168933c-6a2b-456e-9fd0-760c5bc180dc][css]]
+** [[id:7c407252-45a1-41a6-901a-cfdb19a6ac36][make]]
+** [[id:0713d4b4-4d66-495b-9d1b-192c91a8ab9f][elixir]]
+** [[id:b4f4114e-75e8-4312-8c96-5567ca6d6b80][julia]]
+** golang
+- GOMEMLIMIT to control heap size to avoid GC
+- disable default proxy
+  - go env -w GOPROXY=direct
+  - go env -w GOSUMDB=off
+- raw syscalls vs libc
+  - CGO_ENABLED to toggle libc linkage
+- 6 month release cycle
+- export with capitalization
+- vendors dependencies by default
+- large std library
+  - can have ossification issues such as ed25519 signature malleability update cadence
+    - https://hdevalence.ca/images/ed25519-comparison.png
+** jvm
+- Valhalla for value objects (remove boxing overhead)
+- Loom for user mode green threads
+- panama for native library linkage
+*** java
+- 6 months release
+- 3 year lts release
+- espresso for java on java (graalvm)
+- microprofile for javaee
+- sealed classes
+- records
+** javascript
+*** typescript
+- compiles to javascript
+- any type for escape
+** DSL
+- [[https://github.com/open-goal/jak-project][GOAL]]
+  - jak 1-3 lisp game implementation

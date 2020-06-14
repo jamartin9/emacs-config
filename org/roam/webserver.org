@@ -1,0 +1,220 @@
+:PROPERTIES:
+:ID:       167b9a3a-353c-4d7f-b706-bf7241bb6c08
+:END:
+#+title: webserver
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content 
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* webservers
+** webserver notes
+- Alt-Svc headers for http3/onion service
+- http3 is udp (quic)
+- http2 requires tls
+- ~./wrk -t1 -c400 -d30s http://127.0.0.1:42000/index.html~
+- https://blog.tjll.net/reverse-proxy-hot-dog-eating-contest-caddy-vs-nginx/
+  - benchmarked with k6
+  - custom build with sendfile caddy
+    - basically same conclusions I came to despite my failing to make nginx error out as single core testing was limited.
+      Caddy almost never drops/refuses connections but is slowed in its reverse_proxy GC.
+      This leads to higher latency/less requests per second but more robust connection handling compared to nginx.
+** pingora (coming soon?)
+** nginx
+- 1.23.1
+  - 80k r/s default settings file serving 5ms response (45ms response w/1 worker)
+  - sendfile on; reduces r/s to 65k 3ms with t1 and 7k 5ms with t12
+- worker process per core with auto
+*** kong
+** apache
+** lighttpd
+- 60k r/s with timeouts default settings file serving 7ms response 1.4.66 ~t12~
+  - 70k with timeouts 7ms
+** redbean
+- lua scripting
+- segfaulted on launch
+** python -m http.server
+- 2k r/s with 10ms response with 3.10.5 ~t12~
+** caddy
+- 2.6 beta
+  -  65k r/s default settings file serving 50ms response ~t12~
+    - 55k r/s 4ms ~t1~
+- 2.6 enables http3 by default
+- Config adapters turn Caddyfil to a json config
+  - other config adapters: nginx, yaml, jsonc, json5
+    - ~xcaddy~ to build extension for nginx
+  - disable https default with ~:PORT~ or explict ~http://~
+- ~http://127.0.0.1:2019/metrics~ for metrics
+- ~caddy run --config Caddyfile~
+#+NAME: caddyfile
+#+BEGIN_SRC conf :tangle no
+:42000 {
+	header -Server # remove identifying headers
+	root * {$XDG_CONFIG_HOME}/emacs/org/roam
+	log {
+		output discard
+	}
+	handle_path /netdata/* {
+		reverse_proxy localhost:19999
+	}
+	handle_path /ombi/* {
+		reverse_proxy localhost:3579
+	}
+	handle_path /radarr/* {
+		reverse_proxy localhost:7878
+	}
+	handle_path /sonarr/* { # set URL BASE in settings
+		reverse_proxy localhost:8989
+	}
+	handle_path /prowlarr/* {
+		reverse_proxy localhost:9696
+	}
+	handle_path /jellyfin/* { # /jellyfin/web/index.html
+		reverse_proxy localhost:8096
+	}
+	handle_path /nzbget/* {
+		reverse_proxy localhost:6789
+	}
+	handle_path /btcpay/* {
+		reverse_proxy localhost:49392
+	}
+	handle_errors {
+		header -Server
+		rewrite * /site_map.html
+		file_server {
+			hide .git {$XDG_CONFIG_HOME}/emacs/org/roam/guix-channel
+			precompressed gzip
+		}
+	}
+	file_server {
+		hide .git {$XDG_CONFIG_HOME}/emacs/org/roam/guix-channel
+		precompressed gzip
+	}
+}
+
+:8080 { # /admin/index.html builtin webserver in pihole 6
+	header -Server
+	root * /srv/http/pihole
+	log {
+		output discard
+	}
+    php_fastcgi unix//run/php-fpm/php-fpm.sock
+    file_server
+}
+#+END_SRC
+** workerd
+- cloudflares fork of V8
+- config is capnproto (binary, rpc, text)
+- extra changes for untrusted code
+  - compilation with v8 into native executable via cache
+  - regular restarts and load moving to protect tenants
+  - high cpu workers process/vm isolated
+- changed V8 timing internals for spectre/meltdown mitigation.
+  - Single threaded to avoid racing workers
+  - compile v8 with ~v8_untrusted_code_mitigations~
+- compile config to binary with ~workerd compile myconfig.capnp constantName -o combinedBinary~
+- implicit "internet" service network with public network only (no 192.168, 10.x, 127.x )
+  - sample config
+#+NAME: workerd-config
+#+BEGIN_SRC conf :tangle no
+# By default this will serve a subdirectory called `content-dir`
+#     workerd serve config.capnp --directory-path site-files=/path/to/files
+# Wrangler.toml integration using: npx wrangler dev --experimental-local
+#[site]
+#bucket = "./content-dir"
+using Workerd = import "/workerd/workerd.capnp";
+const config :Workerd.Config = (
+  services = [
+    # JavaScript worker to serve static files from a directory and content-type, default to index.html, etc.
+    (name = "site-worker", worker = .siteWorker),
+    # service which provides direct access to files
+    (name = "__STATIC_CONTENT", disk = "content-dir"),
+    # service for reverse proxy
+  ],
+  sockets = [ ( name = "http", address = "*:8080", http = (), service = "site-worker" ) ],
+);
+const siteWorker :Workerd.Worker = (
+  compatibilityDate = "2022-09-16",
+  modules = [
+    (name = "shim.mjs", esModule = embed "shim.mjs"),
+    (name = "index.wasm", wasm = embed "index.wasm"),
+  ],
+  bindings = [
+    # request files on disk via the disk service
+    # bug that name and kvNamespace need to be the same?
+    (name = "__STATIC_CONTENT", kvNamespace = "__STATIC_CONTENT"),
+    # worker configuration options via JSON binding
+  ],
+);
+#+END_SRC
+#+NAME: workerd-static-rs
+#+BEGIN_SRC rust :tangle no
+// cf worker for fileserver in rust with worker-build
+use worker::*;
+//#[event(start)]// once per worker
+#[event(fetch)]
+pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Response> {
+    let router = Router::new();
+    router
+        .get_async("/", |_, context| serve(context)) // for index.html
+        .get_async("/:asset", |_, context| serve(context))
+        .run(req, env)
+        .await
+}
+/* Cloudflare page assets are hashed
+ *
+ * __STATIC_CONTENT_MANIFEST needs to be read into wasm from js
+ * and excluded as external in worker-build
+ *
+#[wasm_bindgen(module = "__STATIC_CONTENT_MANIFEST")]
+extern "C" {
+    #[wasm_bindgen(js_name = "default")]
+    static MANIFEST: String;
+}
+
+static MANIFEST_MAP: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
+    serde_json::from_str::<HashMap<&str, &str>>(&MANIFEST)
+        .unwrap_or_default()
+});
+ */
+pub async fn serve(context: RouteContext<()>) -> worker::Result<Response> {
+    let assets = context.kv("__STATIC_CONTENT")?; // default key-value namespace
+    let asset = context.param("asset")
+        .map(String::as_str)
+        .unwrap_or("index.html");
+    // locally MANIFEST_MAP is empty; otherwise a hashed name
+    //let asset = MANIFEST_MAP.get(asset).unwrap_or(&asset)
+    // TODO handle redirects/rewrites
+    // TODO apply gzip encoding for html/css/js
+    // when Accept-Encoding includes gzip
+    // set Content-Encoding header to gzip
+    // TODO set cache headers
+    // TODO implement webseeding requests
+    //   multi-file torrent magnet webseed uri must end in directory; the client will request a specific file
+    //   magnet link w/ xs:file.torrent for metadata, v2 torrent to avoid file alignment padding, http range requests
+    match assets.get(asset).bytes().await? {
+        Some(value) => {
+            let mut response = Response::from_bytes(value)?;
+            response.headers_mut()
+                .set("Content-Type", asset.rsplit_once(".")
+                    .map_or_else(|| "text/plain", |(_, ext)| match ext {
+                        "html" => "text/html;charset=utf-8",
+                        "css" => "text/css;charset=utf-8",
+                        "js" => "text/javascript;charset=utf-8",
+                        "json" => "application/json",
+                        "png" => "image/png",
+                        "jpeg" => "image/jpeg",
+                        "ico" => "image/x-icon",
+                        "wasm" => "application/wasm",
+                        "gif" => "image/gif",
+                        "ttf" => "font/ttf",
+                        "gz" => "application/gzip", // do not unzip
+                        _ => "application/octet-stream",
+                    })
+                )
+                .map(|_| response)
+        }
+        None => Response::error("Not Found", 404),
+    }
+}
+#+END_SRC

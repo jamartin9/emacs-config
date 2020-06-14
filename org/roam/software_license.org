@@ -1,0 +1,76 @@
+:PROPERTIES:
+:ID:       6cf45163-2951-43a0-a970-25f64e785e09
+:END:
+#+title: software-license
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* software patents and licenses
+** notes
+- entirely too many hours wasted arguing about imaginary property
+- mostly moot as enforcement is sparse/scarce and trolling is high
+- US software patents are not really applicable to the eu
+- arbitrary stifling as licenses/patents mean little to china/russia/iran/etc
+- DMCA
+  - circumvention of arbitrary controls/locks on things you *OWN* is illegal and punishable by fines and incarceration
+    - applied to cars, phones, video games, TVs, streaming services, etc
+  - 'Fair Use' is willfully ignored
+  - broken with false takedowns and no repercussions for violations of 'good faith belief' of infringement
+  - trolled usenet postings mitigations
+    - encrypted/scrambled/password protected files
+    - remove 1 piece to make invalid but other providers remove different pieces to enable reconstruction
+** GPL
+*** LGPL
+- non viral when linking but must allow replacement
+*** AGPL
+- viral to providing service over network socket
+*** GPL
+- must provide source code, licenses, copyright notices etc
+  - mark modified files with copyright and pointer to license
+  - 'should' print license if interactive
+- internal use allowed w/o following license
+- copyleft viral
+  - all linkage must be compatible license
+**** GPLv2
+- can add exceptions such as classpath, gcc runtime, 'or later'
+**** GPLv3
+- patent grant
+- anti tivoization
+  - must allow replacement of software
+** Apachev2
+- grants patent
+- implied CLA (under same license) for project
+- must
+  - reproduce license
+  - mark files changed
+  - include NOTICE files
+** MIT
+- must reproduce license and copyright notice
+** BSD
+- 0BSD
+  - no restrictions
+- 1 clause
+  - must reproduce license with if given source
+- 2 clause
+  - must reproduce license if given binary or source
+- 3 clause
+  - must reproduce license if given binary or source
+  - no endorsements from copyright holders
+** misc
+*** public domain
+- no restrictions
+- ex. sqlite
+*** boost
+- close to public domain for countries w/o the legal concept
+*** EPL
+- v1
+  - not GPL compatible
+  - ex. clojure
+- v2
+  - incompatible with EPL v1
+  - GPLv2 w/classpath exception for gpl compat
+    - effectively makes combined works gplv2+classpath exception
+*** MPL
+- mozilla license is file based and allows some mixing

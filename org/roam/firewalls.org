@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       40d61cd0-2c14-4a79-913c-1cefe0060c13
+:END:
+#+title: firewalls
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* firewalls
+much wall, such fire, very wow
+** firewalls
+- ufw accepts all localhost in ufw-before-input (so it can't be blocked in the INPUT chain)
+- iptables replaced by nftables replaced by bpfilter
+- [[https://github.com/evilsocket/opensnitch][opensnitch]] added nftables incoming rule support in v1.6.0-rc.2
+- upnpc
+  - 1900 udp for ssdp
+  - 5350 udp for pcp
+  - 5351 udp for nat-pmp
+- private networks (/32 is all and /24 is all but last octet)
+  - 10.x.x.x/8 is class A
+  - 192.168.x.x/16 is class C
+  - 127.x.x.x/8 is localhost
+- ~upnpc -s | grep ExternalIPAddress~
+- 8444 TCP chia, 18080 monerod, 37889 p2pool
+- nftables with xtables
+  - ~#match bpf pinned /sys/fs/bpf/mfw/match drop~ to load bpf program

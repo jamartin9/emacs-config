@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       aee3a8d2-a37a-454e-9359-0f56caa3502f
+:END:
+#+title: email
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+
+* email
+** notes
+- pozzed by companies
+  - gmail marks as spam as its algo sees fit
+  - outlook drops with no delivery after accepting
+  - tutanota spies for german gov
+  - protonmail spies for gov
+    - french climate protester ip given to glowies
+    - sends DNS takedowns for blogs that critic them
+    - onion site links redirected to clearnet
+      - needed phone number for setup through to
+  - riseup outsted 2 people to FBI
+    - example of 'compelled speech' by gov as they were required to maintain their warrant canary (making it useless)

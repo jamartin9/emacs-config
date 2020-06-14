@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       30ea5e38-9b41-4bcd-8631-76821e93e294
+:END:
+#+title: site-map
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Site Map
+#+NAME: sitemap
+#+BEGIN_SRC elisp :tangle no :exports results :results raw
+    (require 'org-roam-graph)
+    (setq-local org-roam-db-location (concat (file-name-as-directory user-emacs-directory)
+                                             (file-name-as-directory ".local")
+                                             (file-name-as-directory "cache")
+                                             "org-roam.db"))
+    (let* (;(current-file (or load-file-name buffer-file-name))
+           ;(current-id (caar (org-roam-db-query [:select id :from nodes :where (= file $s1)] current-file)))
+           (current-links (org-roam-graph--connected-component "30ea5e38-9b41-4bcd-8631-76821e93e294" 0))
+           (return-string (list "- Site Map: \n")))
+    (dolist (element current-links)
+      (let* ((id (format "%s" (nth 1 element)))
+             ;(id-from (format "%s" (nth 0 element))); bucket froms for nesting
+             (title (caar (org-roam-db-query [:select title :from nodes :where (= id $s1)] id))))
+      ;(message "ID from %s is for %s" id-from id)
+      (if title ; get title for each linked node id
+        (add-to-list 'return-string (format "  - [[id:%s][%s]] \n" id title))))); TODO sitemap nested tree unlike org-publish
+    ;(message "return string is: \n %s" (mapconcat 'identity (reverse return-string)))
+    (format "%s" (mapconcat 'identity (reverse return-string))))
+#+END_SRC

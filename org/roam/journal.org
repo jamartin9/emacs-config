@@ -1,0 +1,81 @@
+#+title: journal
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+
+* 2022
+
+** 2022-05 May
+
+*** 2022-05-26 Thursday
+:PROPERTIES:
+:ID:       69ce1b91-c7b2-4c2c-a92b-ad833b7d0b51
+:END:
+**** DONE change cabin air filter for 2017 f150-raptor ~21k miles [2022-05-26 Thu 13:33]
+Steps (costs ~20$):
+1. open glove box (can remove if more room needed)
+2. pry plastic strip/hooks off across top of glove box/dash
+3. take out the *7mm* bolts and pull back cover
+4. pull off air filter cover by undoing the plastic clips
+5. replace air filter in the proper direction
+
+*** 2022-05-27 Friday
+:PROPERTIES:
+:ID:       3f606de1-9fe3-4cbd-82b4-47eebcb0a552
+:END:
+**** DONE change break pads front and back ~23k miles (rotated tires) [2022-05-27 Fri 13:32]
+- Uneven wearing on break pads drivers rear side was gone while rest had more than half left.
+- Did NOT spin balance/align but no issues thus far.
+Steps (costs ~100$):
+1. Jack from rear pumpkin/front skid plate and place jack stands (too tall for normal floor jacks)
+2. Remove lug nuts then wheels with *21mm*
+   - rotate tires front to back for even wear
+   - torque to *100 psi* (calls for *150 psi*)
+3. remove caliper with *13mm*. Two bolts top and bottom on the back.
+   - optionally grease caliper bolts
+4. use c-clap/screwdriver to spread caliper apart
+5. place new brake pads and metal tabs (if provided)
+   - used duralast gold cermanic front (*DG1414*) and back (*DG1790*)
+   - optionally add break pad grease to the side of the pads
+6. pump breaks after reassembly to ensure pressure
+
+
+** 2022-07 July
+
+*** 2022-07-17 Sunday
+:PROPERTIES:
+:ID:       ef057b54-d9c4-4596-8b90-9cd483101fec
+:END:
+**** DONE oil change for 2017 f150-raptor ~23k miles <2022-07-17 Sun 10:03>
+Steps (cost ~60$):
+1. remove skid plate *10mm* (passenger side behind front wheel) for oil plug and drain
+   - turn pull out then turn again for removal
+     - plastic plug and pan
+       - newer models have metal
+       - mod kit available
+         - chemical sealing is time sensitive on install
+2. remove skid plate (front drivers side) with *T-40* torx for oil filter drain
+3. remove old filter with oil filter wrench and apply used oil to seal the new filter around edge
+   - *Fram PH10575* oil filter.
+     - Alternatives: *Motorcraft F500-S*, *STP S10590*, *Mobile M1-212* (only one not used yet)
+4. Add oil back with funnel
+   - *6 quarts* of *5W-30* synthetic pennzoil.
+
+** 2022-08 August
+
+*** 2022-08-01 Monday
+ :PROPERTIES:
+:ID:       58117d5b-95be-438f-938c-89b3cf2684c1
+:END:
+**** DONE Investigate router rebooting often.
+Model: Netgear Nighthawk AX12 RAX 120v2
+Firmware: 1.2.3.28
+Reboots sporadically during day/night. More common when using streaming devices such as rokus/fire tvs.
+Steps taken:
+1. Added surface with airflow and reseat power connection
+2. Disabled WMM(wifi multimedia) for 2.4 and 5 ghz under wmm tab on the Qos Setup page, to reduce load (speed is not the issue atm)
+3. Went to hidden page ~192.168.1.1/Thermal_FAN.htm~ and verify the Fan temp sensor is  NaNC (broken) (set fan speed level?)
+4. Went to hidden page ~192.168.1.1/debug.htm~ and enabled fan always
+5. Returned the PoS and got a refund!

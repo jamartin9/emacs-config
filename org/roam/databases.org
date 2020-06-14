@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       f6550312-62de-4538-8729-a11767d59560
+:END:
+#+title: databases
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Databases
+** Relational
+- [[id:162f9fba-d1f9-44e8-ae9f-685c578523f1][sqlite]]
+- [[id:46651545-b172-443b-b0db-506019b4456c][postgres]]
+** olap
+- duckdb
+  - column store for faster analytics
+  - sqlite/postgres scanner support
+  - no concurrent readers/writers yet
+- Clickhouse

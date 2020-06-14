@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       4462b218-52ce-4445-b1ae-42ff24faf0d6
+:END:
+#+title: software-virt
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Virtualization
+Simulate the simulation
+- containers
+  - [[id:90cf48a5-3b01-4667-b100-72acea67034f][podman]]
+  - [[id:ab1f8872-ab90-4855-98a0-5d9bf5806d78][kind]]
+- [[id:b066a88d-c1c4-43d4-b8b8-cc345ad8467f][firejail]]
+- qemu
+  - binfmt for running binaries for other archs
+  - ovmf/vfio for gpu pass through to vms
+    - must have second card as sharing/virtualization is not supported on older cards
+      - vGpus are [[https://github.com/DualCoder/vgpu_unlock][software locked]] but available as cloud offerings (grid etc)
+      - https://github.com/Arc-Compute/LibVF.IO for supported cards
+      - https://github.com/OpenMdev/GVM-user for supported cards
+- firecracker
+  - 5.10 lts kernel
+  - snapshots for faster boot after creation
+- mesa opengl env var ~LIBGL_ALWAYS_SOFTWARE=true~

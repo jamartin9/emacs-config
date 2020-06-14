@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       eadf1db2-5c2a-4dbe-b17e-74048162787b
+:END:
+#+title: pihole
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* pihole
+** pihole
+- lighttpd for web ui
+- FTL port 4711, dns 53 udp/tcp
+- blocklists supported
+- uses fork of dnsmasq
+  - supports pxe boot (dhcp boot flag)
+  - dnsec cache
+  - dhcp server

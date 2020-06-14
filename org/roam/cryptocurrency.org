@@ -1,0 +1,220 @@
+:PROPERTIES:
+:ID:       bfb58ea0-5328-4dca-9cf4-a162d37bb9d0
+:END:
+#+title: cryptocurrency
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* notes
+- fallacies of crypto haters
+  - wrought with fraud so it needs 'regulation'
+    - banks are the biggest scamming hucksters around and they facilitate most of financial fraud in the world within 'regulations'
+  - not decentralized
+    - 'people do not want to run their own servers' - moxie marlinspike
+      - they will and do; a nakamoto number greater than 1 is still more than the status quo
+- fallacies of crypto bros
+  - 'trapped energy'
+    - sets lower bound on energy production price beyond the government; thus encourages more production regardless of means
+    - wasting compute cycles on hashing random numbers instead of folding proteins, simulating fluid dynamics, SETI etc (need internet connection for blockchain sync); price should not be the primary factor for investing in hard research problems.
+* chia
+- ~CHIA_ROOT~ env variable configuration
+  - burn if not able to melt
+#+NAME: chia-burn-addrs
+#+BEGIN_SRC org :tangle no
+- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
+- sends to puzzle hash 0x000000000000000000000000000000000000000000000000000000000000dead
+- testnet burn txch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ksh7qddh
+#+END_SRC
+- utxo based (not account based like ethereum)
+- set env var root with ~export CHIA_ROOT=/usr/local/chia/mainnet/~
+- offer files for p2p exchange (atomic swaps)
+  - ALL CAT v1 Offers/Coins are INVALID as of 1.5 for vulnerability that allows anyone to claim; replaced by cat v2
+    - unable to control amount exploited. puzzle hash, coin amount, parent id are sha256 hashed but not validated. fixed by using shatree to validate.
+- proof of space and time
+- bls aggregatable signatures
+- tail emissions of 0.125 xch per block after 12 years
+- pooling protocol for self block creation
+- asic timelords
+- uses 3 'blockchains' with 1 being a transaction chain of foliage to avoid grinding the canonical trunk chain
+- compression of plots [[https://github.com/Chia-Network/chiapos/tree/main/hellman_example][possible]] with [[https://github.com/Chia-Network/proofofspace/blob/master/proof_of_space.md#Hellman-Attacks][Hellman Attack]] by using ram/cpu during plotting/harvesting. (tldr: throws first table away and reverses table 2 as needed)
+- chialisp
+  - programmable smart contracts
+    - autonomous custody with rate limiting, clawback and configurable settlement periods
+- chain stats dashboard.chia.net
+- xch domains
+  - namesdao nft
+    - webpages at ~SevenCharName.xch.cm~ and ~SevenCharName.xch.am~
+#+NAME: chia-namesdao-create
+#+BEGIN_SRC sh :tangle no
+chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
+#+END_SRC
+- https://pawket.app/ for some online chia tools. debugger coming soon...
+- 1.43 TB of writes per k32
+- data layer added in 1.6
+  - store hash in smart coin. updates are tracked on chain along with mirrors
+  - http server bundled to download and serve data
+    - selectively download layers if inclusion proof is acceptable
+  - can store key value pairs of json etc
+    - works with offer files
+* monero
+- use block > 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)
+- supports tor with sending tx's and wallets
+  - ~tx-proxy~ for sending transactions
+  - ~anonymous-inbound~ allow inbound transactions
+- randomx for POW algorithm
+  - ASIC resistance may not be stable long term
+- tail emissions of 0.6 XMR per block
+- variable block sizes
+  - potential difficulty/timestamp grinding but at cost
+- p2pool for distributed block creation
+  - needs zmq enabled monerod
+  - bundled with gui in 0.18
+  - mini side chain for lower hashrate
+  - xmrvsbeast raffle bonus
+- ringct
+  - bulletproofs
+  - ring signatures to obsurce sender, amount, recipient
+    - can still trace 'outputs' if you are the sends (alice bob alice attack) or if network is deanonymized (exchanges/users publish view keys, block reward before if enters txo set, transaction fee correlation)
+      - churn to avoid and create noise
+- stealth addresses
+  - random 1 time addresses for every transaction
+- Dandelion++
+  - transaction broadcast and peer sampling to prevent tracing tx origins
+- No light/SPV clients
+  - view tags since v0.18
+- lockable spends with ~locked_transfer~
+
+* bitcoin
+- double sha256
+- fixed block size
+- fixed supply 21m
+- lightning
+  - hash time locked contacts
+    - moving to point time locked contracts
+  - rebalance incoming/outgoing channels for sending/receiving/routing
+  - preimage based
+  - watchtowers
+    - monitor channel transactions and punish bad actors incase of attack on your node (publishing false state to chain) by publishing new state and penalizing
+  - taro for colored coins/assets
+- bip 351 payment codes for private transactions
+* btcpayserver
+- crypto payment server that supports invoices (multiple payments, refunds, tolerances etc)
+- xmr config requires the view only wallet.keys, wallet and password file be available before sync can complete
+- sync MUST be completed before the FIRST store can be created
+#+NAME: btcpayserver-podman
+#+BEGIN_SRC yaml :tangle no
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: btcpay-deployment
+  labels:
+    app: btcpay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: btcpay
+  template:
+    metadata:
+      labels:
+        app: btcpay
+    spec:
+      volumes:
+      - name: btcpay-data
+        hostPath:
+          path: /storage/btcpay/btcpay-data
+      - name: btcpay-plugins
+        hostPath:
+          path: /storage/btcpay/btcpay-plugins
+      - name: postgres-data
+        hostPath:
+          path: /storage/btcpay/btcpay-postgres
+      - name: monero-config
+        hostPath:
+          path: /storage/btcpay/btcpay-bitmonero
+      - name: monero-wallet
+        hostPath:
+          path: /storage/btcpay/btcpay-xmr-wallet
+      containers:
+      - name: btcpay
+        image: btcpayserver/btcpayserver:1.7.1-altcoins
+        volumeMounts:
+        - name: btcpay-data
+          mountPath: /datadir
+        - name: btcpay-plugins
+          mountPath: /root/.btcpayserver/Plugins
+        - name: monero-wallet
+          mountPath: /root/xmr_wallet
+        env:
+        - name: BTCPAY_POSTGRES
+          value: "User ID=postgres;Host=127.0.0.1;Port=5432;Application Name=btcpayserver;Database=btcpayserver"
+        - name: BTCPAY_NETWORK
+          value: regtest
+        - name: BTCPAY_BIND
+          value: 0.0.0.0:49392
+        - name: BTCPAY_ROOTPATH
+          value: /
+        - name: BTCPAY_SSHCONNECTION
+          value: "root@host.docker.internal"
+        - name: BTCPAY_SSHTRUSTEDFINGERPRINTS
+          value: ""
+        - name: BTCPAY_SSHKEYFILE
+          value: ""
+        - name: BTCPAY_SSHAUTHORIZEDKEYS
+          value: ""
+        - name: BTCPAY_DEBUGLOG
+          value: btcpay.log
+        - name: BTCPAY_UPDATEURL
+          value: https://api.github.com/repos/btcpayserver/btcpayserver/releases/latest
+        - name: BTCPAY_DOCKERDEPLOYMENT
+          value: "true"
+        - name: BTCPAY_CHAINS
+          value: "xmr"
+        - name: BTCPAY_XMR_DAEMON_URI
+          value: http://127.0.0.1:18081
+        - name: BTCPAY_XMR_WALLET_DAEMON_URI
+          value: http://127.0.0.1:18082
+        - name: BTCPAY_XMR_WALLET_DAEMON_WALLETDIR
+          value: /root/xmr_wallet
+        ports:
+        - name: btcpay-port
+          containerPort: 49392
+          hostPort: 49392
+      - name: monerod
+        image: btcpayserver/monero:0.18.1.0-amd64 # needs Containerfile with EXPOSE 18084 for p2pool zmq
+        volumeMounts:
+        - name: monero-config
+          mountPath: /home/monero/.bitmonero
+        args: ["--no-zmq", "--rpc-bind-ip=0.0.0.0", "--confirm-external-bind", "--rpc-bind-port=18081", "--non-interactive", "--hide-my-port", "--prune-blockchain", "--disable-dns-checkpoints", "--enable-dns-blocklist", "--block-notify", "/bin/sh ./scripts/notifier.sh -X GET http://127.0.0.1:49392/monerolikedaemoncallback/block?cryptoCode=xmr&hash=%s"] # "--zmq-pub", "tcp://127.0.0.1:18084", "--limit-rate-up", "800", "--out-peers", "30",
+        command: ["monerod"]
+        ports:
+        - name: monero-rpc
+          containerPort: 18081
+          hostPort: 18081
+      - name: monerod-wallet
+        image: btcpayserver/monero:0.18.1.0-amd64
+        volumeMounts:
+        - name: monero-wallet
+          mountPath: /wallet
+        args: ["--rpc-bind-ip=0.0.0.0", "--disable-rpc-login", "--confirm-external-bind", "--rpc-bind-port=18082", "--non-interactive", "--trusted-daemon", "--daemon-address=127.0.0.1:18081", "--wallet-file=/wallet/wallet", "--password-file=/wallet/password", "--tx-notify", "/bin/sh ./scripts/notifier.sh  -X GET http://127.0.0.1:49392/monerolikedaemoncallback/tx?cryptoCode=xmr&hash=%s"]
+        command: ["monero-wallet-rpc"]
+        ports:
+        - name: monero-daemon-rpc
+          containerPort: 18082
+          hostPort: 18082
+      - name: postgres
+        image: btcpayserver/postgres:13.7
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        args: ["-c", "random_page_cost=1.0", "-c", "shared_preload_libraries=pg_stat_statements"]
+        env:
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: trust
+        ports:
+        - name: postgres-port
+          containerPort: 5432
+          hostPort: 5432
+#+END_SRC

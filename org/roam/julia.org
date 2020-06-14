@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       b4f4114e-75e8-4312-8c96-5567ca6d6b80
+:END:
+#+title: julia
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* julia
+** julia notes
+- some [[https://yuri.is/not-julia/][heisenbugs]]
+- lisp for hoisting (used to be guile in early versions) ~julia --lisp~
+- SciML ecosystem
+  - [[https://github.com/SciML/DiffEqFlux.jl][universal differential equations]] models
+- automatic differentiation and optimization libraries turn grammar into symbolic variables
+#+NAME: julia-modeling
+#+BEGIN_SRC julia :tangle no
+using ModelingToolkit, GalacticOptim
+
+@variables x y
+@parameters a b
+loss = (a - x)^2 + b * (y - x^2)^2
+sys = OptimizationSystem(loss,[x,y],[a,b])
+
+u0 = [
+    x=>1.0
+    y=>2.0
+]
+p = [
+    a => 6.0
+    b => 7.0
+]
+
+prob = OptimizationProblem(sys,u0,p,grad=true,hess=true)
+solve(prob,Newton())
+#+END_SRC

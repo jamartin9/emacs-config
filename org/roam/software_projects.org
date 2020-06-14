@@ -1,0 +1,125 @@
+:PROPERTIES:
+:ID:       0a94af9d-559e-4c78-b90e-cca4a43e9efe
+:END:
+#+title: software-projects
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* TODO add links to html export for projects
+* software projects
+The coding will continue until morale improves!
+** working
+- key2words
+  - rust cli executable that uses bip39 to generate mneumonics from ed25519 keys.
+  - supports passphrase encryption and decryption of ssh/gpg
+  - added onion service secret file generation
+    - so you can take 1 set of words and make a hidden service behind ssh with pgp signing/encryption for that set of bytes
+- matching
+  - CUDA project for implementing the stable matching algorithm
+    - uses flattened 2d matrix structure to avoid pointer deref and multiplex access for the third dimension of block threads
+    - uses managed malloc api to avoid pinning/pointer deference performance issues
+    - limitation of 1024 x 3 concurrent problem size (api limit of x + y + z of threads in block execution) with respect to O(n log n ^2) complexity :wip:
+      - limited by find minimum (reduction) kernel which depends on the results of other parallel processes to finish the step in log n. (maybe solve with eventually consistent atmoic ops queue to avoid blocking?) nvidia's reduction kernel is O(n log n) as it is unbounded size despite extensive optimizations like block unrolling.
+      - removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation
+  - done as REU
+- guix-channel
+  - guile scheme guix channel for custom packages
+  - mostly packages that are in process or unsuitable for nonguix or other repos
+    - zfs
+      - add pam user login mounting :wip:
+      - add root initramfs support :wip:
+    - add graft support for nvda to browsers :wip:
+  - opensnitch daemon :wip:
+    - automatic recursive import needs step added for protoc generation of header files
+- emacs-config
+  - elisp/org configuration for emacs
+  - uses elisp wrapper script to untangle/eval org file code for setup
+  - uses submodules for the repo of emacs distribution and guix-channel
+  - publishes site from org-mode files
+    - does not use org-publish but each page is customizable from the org-roam-capture-template header
+- resume
+  - org file of my resume for latex to pdf export
+  - includes stencil cover letter
+  - pgp public key in profile picture qr code
+  - PDF links to projects/pages
+** Currently studying
+- cryptography
+- Compiler/VM optimizations
+- universal differential equations
+
+*** wip projects
+- Automatic differentiation of ssa via conversion of cps to ssa for guile bytecode (guile uses cps unlike llvm/jvm with are ssa) :wip:
+  - https://dl.acm.org/doi/10.1145/202529.202532 cps -> ssa
+  - https://arxiv.org/pdf/1810.07951v1.pdf ssa diff
+  - https://dl.acm.org/doi/10.1007/978-3-642-37051-9_6 bytecode to ssa
+  - This optimization is in hopes of bringing automatic universal differential equation support via symbolic notation (like julia global-optim)
+- AST partial evaluation through FFI with guile/elisp/cffi :wip:
+  - like graalvm with sulong in aot compilation
+    - graal uses 'sea of nodes' approach with partial evaluation under a closed world assumption that utilizes the compilers sdk for both languages being represented in the IR type.
+      guiles compiler tower supports some js, elisp and guile. https://savannah.nongnu.org/projects/nyacc can output C as sxml for transformation. https://www.nongnu.org/nyacc/ffi-help.html for example generation of scheme code. By static linking only specific call sites the optimizer can eliminate overhead of ffi and have potential better native generation; as the bytecode optimizer will get a chance to run before the template jit for native specific code
+- Porting netbsd Rumpkernel for GNU HURD to guix :wip:
+  - debian example https://salsa.debian.org/hurd-team/rumpkernel
+  - use of linux compat for even more drivers?
+- org-mode reloadable code block runner in wasm for personal website :wip:
+  - wasm code block runner with reloading (see https://github.com/wingo/wasm-jit for example)
+** old
+- angular-stock-table :obe:
+  - used beta angular material table and 3 way javascript sort
+  - [[https://spaz.gitlab.io/angular-stock-table/][published as gitlab page]] (click two columns for double sort ordering)
+- angular-worldwind :obe:
+  - used primeng with angular to add DVR controls to NASAs worldwind
+  - [[https://spaz.gitlab.io/angular-worldwind/][published as gitlab page]] (click layers -> new -> blue marble to get started)
+- ansible-free-gcp :obe:
+  - ansible yaml playbooks for free gcp vm, disk and network
+- aggregator :obe:
+  - gradle script to aggregate monorepo
+- clj-fx-example :obe:
+  - clojure graalvm javafx project using maven and gluonhq client plugin
+- docker-remote-saver :obe:
+  - ruby sinatra endpoint for creating composite docker images
+- dotfiles :obe:
+  - ansible playbooks and shell script for setting up emacs/zsh/ansible
+- font :obe:
+  - added cursive monospace letters to fira code with ligatures
+- gnag :obe:
+  - chrome is removing http2 push support
+  - uses golang builtin http2 server with push for resource loading
+- guile-sample :obe:
+  - uses automake, autotools, pkg-config with guix to create a patched statically relocatable guile executable.
+  - example makefile for setting running with custom linker libs
+  - embeds arbitrary script with ~xxd~ as C array
+    - C23 adds ~#embed~ pre-processor directive to do the same
+      - can be constexpr in c++ for compile time checking
+- hhrelay :obe:
+  - static jquery webpage for humanitarian cancer charity relay for life.
+- hop :obe:
+  - uses java to add reactive stream wrapper to spark websockets server
+- jyvert :obe:
+  - graalvm native-image clojure project using snakeyaml to convert between yaml and json.
+- kafka-streams-sample :obe:
+  - java kafka streams stackable topology example
+- make-org :obe:
+  - example makefile for using emacs to publish org documents in various formats
+- piston-example :obe:
+  - piston game engine with SDL sample of movable texture, sound and ai
+  - exposes window options for resizing and fullscreen
+- puppet-train :obe:
+  - puppet conf training modules
+  - uses hostname as dns with roles and profiles pattern
+- scape :obe:
+  - clojure project using webdriver with firefox headless (geckodriver) to scrape store website for deals.
+  - added branch for scraping router interface for reboots
+- tileD :obe:
+  - java game with lwjgl from scratch
+  - mixes overhead exploration with 2D side scrolling fighter combat
+- ticTacToe :obe:
+  - java tictactoe game using swt and minimax algorithm
+- yamlnjson :obe:
+  - ruby script to convert json to yaml despite [[https://metacpan.org/pod/JSON::XS#JSON-and-YAML][not being a superset]]
+- zsh-config :obe:
+  - zsh configuration using powerlevel10k and zinit
+  - zinit async loads all plugins and auto compiles all scripts with module
+- metrics-paper :obe:
+  - latex paper written in IEEE template on inconsistency of software estimation.

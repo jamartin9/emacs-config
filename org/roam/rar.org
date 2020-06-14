@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       308edd9a-90d8-44f3-ab1f-fae4942b0eae
+:END:
+#+title: rar
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* rar
+  - proprietary format
+  - supports encryption, error correction, file spanning
+  - SRR rescene
+    - can reconstruct original rars from original data + srr
+    - https://www.srrdb.com/
+      - irc://irc.efnet.org/%23srrdb for support verifying
+    - pyReScene is python port of .Net app
+      - https://github.com/srrDB/pyrescene
+    - https://www.xrel.to/ has proofs images for reconstruction
+  - SRS scene resample
+    - can reconstruct sample from original rar data
+      - bluray samples not supported (.m2ts)
+  - rarfs
+    - can mount rars as fuse filesystem
+      - ~rar2fs source dest -o allow_other~
+      - fusermount -u dest
+      - https://github.com/hasse69/rar2fs

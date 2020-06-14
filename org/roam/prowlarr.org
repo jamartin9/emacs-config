@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       6d09ecdd-b84f-4928-95bb-fbe5c58c2233
+:END:
+#+title: prowlarr
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Prowlarr
+** notes
+- searches indexers like usenet/torrent sites
+- acts as a 'proxy' rss indexer for sonarr/radarr/lidarr to create search/subscribe queries to indexers
+- *App Full Sync removes tags in synced apps*
+  - This prevents indexer specific profiles in synced apps like sonarr
+  - Use sync for added/removed indexers only to allow apps to override settings
+- can configure direct download with clients like transmission/nzbget
+- cookie string ~uid=numbers; pass=Password; cfduid=string of numbers and letters~
+- [[id:90cf48a5-3b01-4667-b100-72acea67034f][podman]] run configuration
+#+NAME: prowlarr
+#+BEGIN_SRC shell :tangle no
+podman run \
+  --detach \
+  --name myprowlarr \
+  --publish 9696:9696/tcp \
+  --rm \
+  -e TZ=America/New_York \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  --volume /storage/prowlarr-config:/config:Z \
+  docker.io/linuxserver/prowlarr:0.4.3-develop
+#+END_SRC

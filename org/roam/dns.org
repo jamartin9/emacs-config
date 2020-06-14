@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       1c02d70d-b269-400d-beb8-086c52f17351
+:END:
+#+title: dns
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* DNS
+** notes
+- [[id:eadf1db2-5c2a-4dbe-b17e-74048162787b][pihole]] for dns cache/forwarder
+- SRV records for port numbers
+- pozzed by companies
+  - pay to play or have domain highjacked by adds once traffic increases
+  - piratebay domain wars
+  - numerous known malware domains exist for years
+  - few implement security 'properly'
+    - wildcard cert pinning with BGP route hijack protection (crypto exchange was attacked by this)
+  - registrars are generally rent seeking tater heads
+    - cloudflare takes law into own handles despite claims of being 'impartial'
+      - extortion racket for ddos protection
+        - blocks sites that [[https://cloudflarehatecredits.org/][critic them]] on 1.1.1.3
+        - allows 'stressers', malware, doxing for hire services to remain in perpetuity
+          - malwarebytes blocked cloudflare ip space because of their unresponsiveness. Cloudflare doubled down despite logs of malware saying it was 'protected speech' to distribute malware
+        - personal threats to individuals who criticized them
+          - ex. cloudbleed, cloudflare lobbied the FTC to [[https://twitter.com/taviso/status/1566077115992133634][personally investigate the security researchers]] and questioned the legality of openly discussing security research
+      - banned 8chan
+      - banned kiwifarms (banned by ddos guard the next day)
+    - namecheap ceo challenges 'security researchers' to hack their *customers* accounts on twitter for 'clout'
+      - less than a day after their support portal leaks [[https://nitter.net/ReneReh1/status/1564349884106477573#m][db info]]

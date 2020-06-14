@@ -1,0 +1,71 @@
+:PROPERTIES:
+:ID:       92a1c0fc-707f-4d2c-86af-a55206f51c17
+:END:
+#+title: software-contrib
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* software contributions
+- [[https://github.com/PistonDevelopers/music/pull/64][PistonDevelopers/music]]
+  - used rust to add optional constructor to reuse sdl context avoiding already initialized error
+  - [[https://github.com/PistonDevelopers/piston_window/issues/191#issuecomment-427959481][provided example code for dynamic window resizing]]
+- [[https://github.com/rust-lang/book/pull/1222][rust-lang/book]]
+  - fixed unit to be base 2 based instead of base 10 for v1 of book
+- [[https://github.com/libp2p/rust-libp2p/pull/577][libp2p/rust-libp2p]]
+  - rewrote thread tests for newer tokio api in rust
+- syl20bnr/spacemacs
+  - added [[https://github.com/syl20bnr/spacemacs/pull/11355][lsp integration to rust layer]] with company, flycheck etc
+    - one user had [[https://github.com/syl20bnr/spacemacs/pull/11882][issues]]
+  - fixed [[https://github.com/syl20bnr/spacemacs/pull/11765][hooks for several lsp language layers]] and updated docs
+  - advised on [[https://github.com/syl20bnr/spacemacs/pull/11593][ruby lsp]] preliminary support
+  - helped gitter user setup swift lsp with eglot before lsp-mode supported
+- kwrooijen/cargo.el
+  - started from [[https://github.com/syl20bnr/spacemacs/issues/11110][spacemacs issue]]
+  - elisp change to exlcude the [[https://github.com/kwrooijen/cargo.el/pull/70][manifest argument]] from cargo search and format while support was broken upstream (might be fixed now?)
+- [[https://github.com/zcot/conky-manager2/pull/6][zcot/conky-manager2]]
+  - removed BOM (byte order mark) from utf nvidia theme to fix error on linux
+- yewstack/yew
+  - [[https://github.com/yewstack/yew/issues/359][suggested workaround]] for users getting setup
+- mesosphere/spark-build
+  - showed same error to user of [[https://github.com/mesosphere/spark-build/issues/69][json having a trailing comma]]
+- docker/registry
+  - patched AWS IAM role regression until rollback
+- [[https://github.com/jlxip/DiscordInjector/pull/1][jlxip/DiscordInjector]]
+  - patched to use discord public test beta and respect XDG config vars
+- clj-easy/graalvm-clojure
+  - [[https://github.com/clj-easy/graalvm-clojure/pull/20][updated aleph]] to compile with graalvm native image
+  - [[https://github.com/clj-easy/graalvm-clojure/pull/19][updated ring-jetty]] version to compile with graalvm native image
+- zdharma-continuum/zinit
+  - [[https://github.com/zdharma-continuum/zinit/commit/5828f7202967a4be159c32153139876d994fbd42][added 'cloneopts' ice option]]
+    - owner deleted original repo
+- guix/guix
+  - patched [[https://issues.guix.gnu.org/53711][home services for i18n]] guix module and fix setlocale
+- simons-public/protonfixes
+  - added python support for proton [[https://github.com/simons-public/protonfixes/pull/80][4.11 option for d9vk]]
+- ValveSoftware/Proton
+  - [[https://github.com/ValveSoftware/Proton/pull/2937][update sample]] with ~no_fsync~ option
+  - [[https://github.com/ValveSoftware/Proton/issues/2832][opened blazblue crosstag issue]] and upstreamed patches to make it work on dxd9
+- ValveSoftware/wine
+  - [[https://github.com/ValveSoftware/wine/pull/56][cherry picked upstream]] wine for my fix
+- wine/wine
+  - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
+- ClementTsang/bottom
+  - use the ~debug!~ macro to get a log file
+  - [[https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f][added zfs arc support]]
+    - enables more arc and disk io stats in future
+    - enables more freebsd/mac/old linux metrics with sysctl
+  - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
+    - hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle
+    - enables gpu power and processes information
+  - [[https://github.com/ClementTsang/bottom/pull/836][update docs, enable cli arg and update default config]]
+- borkdude/deps.clj :notupstream:
+  - not upstream as author said it was 'not important'
+  - [[https://github.com/jamartin9/deps.clj/commit/80c5973a7889cb3ab06764384a72c5509711317e][added musl static build]]
+- itmettkeDE/cargo-patch :notupstream:
+  - not upstream as 'proper' fix is to change input parsing
+    - only used to patch old version of ssh-key for exposing private key in key2words until updated version was pushed
+  - [[https://github.com/jamartin9/cargo-patch/commit/da103f64d0a8001d6a9479ea31ac9642467ade1b][removed trailing]] context after git range header
+  - [[https://github.com/jamartin9/cargo-patch/commit/b9ad3400f1aad471d787d7a5a0aae1609f736957][removed broken]] support for new files
+  - Still needs the a/ b/ stripped and delete/create file support (diff format normalization)

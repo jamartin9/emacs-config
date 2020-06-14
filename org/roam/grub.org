@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       2cb4f96f-cfaa-49ad-8eb0-b93e095ba7cb
+:END:
+#+title: grub
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Grub
+** grub
+- rescue shell set for /dev/sda5
+   prefix=(hd0,5)/boot/grub
+   insmod linux
+   set root=(hd0,5)
+   linux (hd0,6)/vmlinuz-linux root=/dev/sda6
+   initrd (hd0,6)/boot/initramfs-linux.img
+   boot
+- single user mode on boot by adding 'single' to the linux kernel line

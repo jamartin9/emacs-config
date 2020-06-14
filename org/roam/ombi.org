@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       4e3945f6-e0c1-4205-b1c8-341c8e6126a5
+:END:
+#+title: ombi
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* ombi notes
+Web interface for adding requests to [[id:825ea994-5841-4159-836e-c707476e4e6b][radarr]]/[[id:6e900762-6a77-4abd-b93b-c9a6aad61f71][sonarr]]
+** podman run config
+#+NAME: ombi
+#+BEGIN_SRC sh :tangle no
+podman run \
+  --detach \
+  --name myombi \
+  --publish 3579:3579/tcp \
+  --rm \
+  -e TZ=America/New_York \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e BASE_URL=/ombi \
+  --volume /storage/ombi-config:/config:Z \
+  docker.io/linuxserver/ombi:4.22.5
+#+END_SRC

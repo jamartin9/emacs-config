@@ -1,0 +1,88 @@
+:PROPERTIES:
+:ID:       382f92d4-f76f-47b1-b4dd-33a39c11aaa2
+:END:
+#+title: zfs
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* ZFS
+** openzfs
+*** install
+- If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
+  That small space is useful for uefi bootloader via:
+  ~mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX~ and
+  ~grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1~.
+  A larger partition can allow proper fat32 fs type, grub installation(~--boot-directory~) and kernel/initramfs storage.
+- add to kmod to initramfs via mkinitcpio/dracut
+  - ex. add zfs to HOOKS in ~/etc/defaults/mkinitcpio.conf~
+  - regen initramfs ~mkinitcpio -P~
+- update-grub with zfs root (if on root)
+- Pam module for auto decrypt/mount on user login
+  - /etc/pam.d/zfs-key
+#+NAME: zfs-key-pam
+#+BEGIN_SRC conf :tangle no
+     auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+     session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
+     session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+     password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+#+END_SRC
+  - /etc/pam.d/system-auth and /etc/pam.d/su-l
+     auth       include      zfs-key
+     session    include      zfs-key
+     password   include      zfs-key
+- Manual pam script
+  - ~/etc/pam.d/system-auth~
+    ~auth       optional                    pam_exec.so      expose_authtok /sbin/zfs-pam-login~
+    - zfs-pam-login
+       ~PASS=$(cat -)~
+       ~zfs load-key "${ZFS_HOME_VOL}" <<< "${PASS}" || continue~
+       ~zfs mount "${ZFS_HOME_VOL}" || true~
+- add systemd services for device scanning/import/automounting
+  - set cache if not scanning for pools ~zpool set cachefile=/etc/zfs/zpool.cache POOL~
+    - ~systemctl enable zfs-import-cache~
+    - ~systemctl enable zfs-import.target~
+  - enable mounts if not using ZED
+    - ~systemctl enable zfs-mount~
+    - ~systemctl enable zfs.target~
+- set arc memory in kernel params(grub), initramfs ~/etc/default/zfs~ or modprobe params ~/etc/modprobe.d/zfs.conf~
+*** usage
+- ~zpool~  scrub(error check), resilver(parity), trim(ssd), adding/removing disks
+- ~zfs~ Mounting, keys, snapshots, rollbacks
+*** notes
+- If you lose a vdev in a pool you LOSE THE POOL
+- Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
+  - Manual pool config can get more out of smaller disks with the same redundancy
+    - Linux 4.12+ udev IO rule for ~zfs_vdev_scheduler~ to reduce cpu for manual partition
+- When expanding rebalancing is not done leaving potentially higher resilver times in the future increasing the chance of cascading failure.
+  - snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset
+- Sparse files can be useful for testing/migrating setups if the enough storage is actually present(piecemeal the datasets)
+  - ~dd if=/dev/zero of=/zpool-file bs=1M count=1024~
+    - ~zpool create test /zpool-file~
+- relatime for normal timestamps
+- SLOG requires devices that will write data on power loss
+- SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down
+- spare drive helps resilver time (zed auto replace)
+- Single device zfs can use the COPIES attribute to help redundancy
+- /tmp sync off
+- enable sharing on dataset for nfs
+- set snapdir of dataset to visible for .zfs/snapshots
+- L2ARC/ssd cache with persistence(2.0+) for arc speed
+  - L2ARC has default ~l2arc_write_max~ of 8MiB/s and 8MiB/s burst (to fill up cache)
+  - uses arc ram (more for smaller blocks) to index
+- arc stats on linux ~cat /proc/spl/kstat/zfs/arcstats~
+  - freebsd/darwin (removed in linux 5.5)
+#+NAME: zfs-arc-sysctl
+#+BEGIN_SRC C :tangle no
+sysctlbyname("kstat.zfs.misc.arcstats.size")
+#+END_SRC
+- [[https://www.brendangregg.com/blog/2021-09-06/zfs-is-mysteriously-eating-my-cpu.html][zfs using cpu despite not being in use]]
+- https://github.com/kimono-koans/httm for snapshot traversal
+- record size for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)
+- ztest is userspace w/o zvols
+  - openebs cstor uses userspace openzfs with custom zrepl (based on 0.7.9)
+  - https://github.com/iomesh/zfs/tree/uzfs-dev is userspace fork using fuse vfs
+- compresses with blocks 7/8 of original size
+  - non default compression algo zstd is simd optimized (older chips)
+- RAM ECC check for ARC ~modprobe zfs zfs_flags=16~

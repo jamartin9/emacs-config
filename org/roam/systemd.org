@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       d4a9f73a-6bec-4d47-990c-c15941c5b143
+:END:
+#+title: systemd
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Systemd
+** systemd
+*** journalctl
+- ~/etc/systemd/journald.conf~
+  - ~SystemMaxUse=100M~
+- ~journalctl -u SERVICE~
+- coredumpctl
+*** sysctl
+- ~net.ipv4.icmp_echo_ignore_all = 1~ in ~/etc/sysctl.conf~ or ~/etc/sysctl.d/90-override.conf~ to disable icmp
+*** systemctl
+**** services
+- ~edit~ doesn't require ~daemon-reload~
+- hooks within services like ~ExecStartPost/ExecStopPost~
+- list ~systemctl list-unit-files~
+- list failed ~systemctl list-units --state failed~
+- deps ~systemctl list-dependencies --reverse~
+- mask with ~systemctl mask swap.target~
+- remote management with ssh ~systemctl --host=user@somesuchhost.com status SERVICE.unit~
+- restart interval with ~RestartSec=5~
+*** timedatectl
+- systemd-timesyncd ~timedatectl set-ntp true~
+- ~set-local-rtc~ to set hardware clock to localtime instead of UTC
+*** NetworkManager
+   - ~/usr/lib/NetworkManager/conf.d/20-connectivity.conf~ pings out
+     - ~/etc/NetworkManager/conf.d/20-connectivity.conf~
+        [connectivity]
+        uri=http://ping.manjaro.org/check_network_status.txt
+        interval=0
+        enabled=false
+   - conflicts with ~systemd-networkd~ & ~systemd-resolvd~
+*** misc
+- ~systemd-analyze blame~ for boot times
+- ~systemd-analyze security my-service.unit~ for sec settings
+- ~systemctl --user status~ for services in ~$HOME/.config/systemd/user/~
+- ~systemctl set-default~ or ~isolate~ with runlevels/targets ~rescue~, ~multi-user~ and ~graphical~
+- rate limited restart will disable units with ~Restart=on-failure~ without ~StartLimitIntervalSec=0~

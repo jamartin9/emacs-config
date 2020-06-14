@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       46651545-b172-443b-b0db-506019b4456c
+:END:
+#+title: postgres
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Postgresql
+** notes
+*** addons
+- [[https://github.com/neondatabase/neon][neon]]
+  - purpose
+    neon is used to decouple storage from compute for the database.
+    This enables it to provide copy on write semantics such as database snapshots/branching.
+  - architecture
+    Uses a patched postgres(compute node) with a pageserver and safekeeper (storage nodes) to decouple storage and computation.
+  compute nodes communicate to the pageserver for reads while streaming writes to the safekeeper.
+  safekeeper stores the writes into storage backend which the pageserver reads from.
+- [[https://github.com/CrunchyData/postgres-operator][crunchydata operator]]
+  - Uses kubernetes operator framework to manage postgres and backups with pgbackrest using yaml custom resource definitions.
+  - Local setup and usage with [[id:ab1f8872-ab90-4855-98a0-5d9bf5806d78][kind]].
+  - pgpodman extension for managing containers (redis cache) from db
+- https://www.postgresql.org/docs/current/limits.html
+- postgres compiled to wasm playground
+  - https://github.com/snaplet/postgres-wasm
+  - https://www.crunchydata.com/developers/playground/high-level-performance-analytics
+    - [[https://github.com/copy/v86][uses]] https://copy.sh/v86/ and a alpine qemu img with postgres
+- ~SET TRANSACTION SERIALIZABLE~ for strict isolation

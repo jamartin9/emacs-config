@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       7eb34c6f-cb5e-4e5d-a0c4-0139fb12d66a
+:END:
+#+title: file-systems
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* File Systems
+Systems need filing!
+** [[id:382f92d4-f76f-47b1-b4dd-33a39c11aaa2][zfs]]
+** swap
+- uses hard drive as memory page cache
+- ~swapoff /swapfile~ to disable
+- ~fallocate -l 2G /swapfile && mkswap /swapfile~ to create
+- ~swapon /swapfile~ to enable
+  - load zram module and setup swap partition for compression

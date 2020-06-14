@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       aae21430-637a-4b92-8f8a-d35e9991e396
+:END:
+#+title: firefox
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Firefox
+** firefox
+- about:config
+  - esni is replaced by ech but not all servers support it
+#+NAME: esni-ff
+#+BEGIN_SRC conf :tangle no
+network.dns.echconfig.enabled
+network.dns.use_https_rr_as_altsvc
+#+END_SRC
+    - dns over https for 1.1.1.1 1.0.0.1
+    - network.trr.mode 2
+#+NAME: tor-cf-doh
+#+BEGIN_SRC conf :tangle no
+  https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/ (should be valid cert with alt-svc)
+#+END_SRC
+  - network.trr.uri https://tor.cloudflare-dns.com/dns-query
+  - check: https://www.cloudflare.com/ssl/encrypted-sni/
+  - ~dom.security.https_only_mode~
+- added loads of tracking/crapware by default; pocket etc
+  - usage at an all time low especially on mobile (under a percent)
+- pozzed by mozilla being taken over by SJWs
+  - laid off 25% of engineering staff while giving the CEO a raise of 80%
+  - [[https://www.pcmag.com/news/mozilla-signs-lucrative-3-year-google-search-deal-for-firefox][90%]] of money came from search engines
+    - google for default engine bribes ~$400M to avoid antitrust
+  - ceo is a trashcan
+    - 'In 2018 she received a total of $2,458,350 in compensation from Mozilla, which represents a 400% payrise since 2008.On the same period, Firefox marketshare was down 85%. When asked about her salary she stated "I learned that my pay was about an 80% discount to market"'
+- removed PWA support for SSB (adding to homescreen)
+- lacks file system api
+- SHIELD Studies spyware

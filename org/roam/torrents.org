@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       897075c7-1826-4e0d-bd35-fe1ce8e1ecd0
+:END:
+#+title: torrents
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Torrents
+** torrent notes
+  - use magnet links that reference public tracker dht hashes
+  - crawl dht or peer exchange for discovery
+  - supports private torrents
+  - invented by Bram Cohen
+  - used for linux isos, game updates, etc
+  - bencoded for .torrent file format
+  - v2 standard
+    - file hashes for cross swarm seeding are sha256 (32 bytes) instead of sha1 (20 bytes)
+    - ~urn:btmh~ is v2 magent uri
+      - ~urn:btih~ is v1
+  - clients
+    - transmission
+      - [[https://github.com/transmission/transmission/issues/2462][single threaded io]]
+  - magent link can have ws for webseed
+    - needs ~xs~ linked torrent or non ~ws~ peer for metadata
+  - min request size 16 KiB

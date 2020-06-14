@@ -1,54 +1,45 @@
-* Emacs configuration
+
+* emacs-config
+This configuration relies on a few utilities.
+The required dependencies are: emacs, doom-emacs (git, rg, fd, aspell), and a shell
+The optional dependencies are: guix, gnupg/pass (password-store), vlc or mpv (emms), notification-daemon (erc), c compiler (forge)
+
 ** Clone
+Branch names diverging and "." complicate fetching the correct heads.
+
 #+NAME: clone
 #+BEGIN_SRC sh :tangle no
-git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 https://www.github.com/jamartin9/emacs-config
+git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
 # get branch heads
-git submodule foreach '
-if [ "$path" = "doom-emacs" ]; then
-    git checkout develop
-else
-    git checkout master
-fi
-'
-
+git submodule foreach 'git checkout master'
 #+END_SRC
 
-** Install
-*** make install
-**** tangle
+** Tangle
+Emacs untangles the script from the org file (using noweb to copy/eval code).
+
 #+NAME: tangle
 #+BEGIN_SRC sh :tangle no
-emacs -Q --batch README.org --eval="(org-mode)" -f org-babel-tangle
+pwsh make-el.ps1 install
 #+END_SRC
-**** link
-#+NAME: link
-#+BEGIN_SRC sh :tangle yes :shebang #!/usr/bin/env sh
-emacs -Q --batch --eval='
-        (if (> emacs-major-version 26)
-                (make-symbolic-link (expand-file-name "doom-emacs") (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs") 1)
-                (make-symbolic-link (expand-file-name "doom-emacs") (expand-file-name ".emacs.d" (getenv "HOME")) 1))'
-emacs -Q --batch --eval='(make-symbolic-link (expand-file-name ".") (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "doom") 1)'
+
+** Link
+Installable org files tangle to a script of the same name for installation.
+The script needs itself and emacs on the PATH or CWD.
+
+#+NAME: link-README
+#+BEGIN_SRC emacs-lisp :tangle README.sh :shebang "\":\"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
+(ignore-errors
+      (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "doomemacs") (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
+(ignore-errors
+  (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "doom")))
 #+END_SRC
-**** run
-#+NAME: run
+
+** Run
+The one line org-mode sesquicolon 'shebang' is a multipart shell/powershell wrapper.
+Passed arguments to the elisp script are available by argv (ignoring “–” and “$@”).
+To run with powershell use the same wrapper format with a .ps1 extension.
+
+#+NAME: run-wrapper
 #+BEGIN_SRC sh :tangle no
-./README.sh # run install script
-./doom-emacs/bin/doom sync # install doom
-#+END_SRC
-** Update
-*** make update
-**** upstream merge
-#+NAME: update
-#+BEGIN_SRC sh :tangle no
-git submodule update --recursive --remote
-git -C doom-emacs remote add upstream https://github.com/hlissner/doom-emacs.git || true
-git -C doom-emacs fetch --all
-git -C doom-emacs merge upstream/develop # update-doom-emacs
-./doom-emacs/bin/doom upgrade # update-packages
-#+END_SRC
-**** remote merge
-#+NAME: update
-#+BEGIN_SRC sh :tangle no
-git submodule update --recursive --remote
+":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 #+END_SRC

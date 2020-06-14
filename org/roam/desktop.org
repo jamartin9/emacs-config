@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       7d0ec9d9-0185-4cd3-8b4a-b956c1d3aa5b
+:END:
+#+title: desktop
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* Desktop
+More ricing less productivity!
+- gdm
+  - gnome display manager
+- sddm
+  - kde desktop manager (simple desktop display manager)
+- lightdm
+  - usually xfce's display manager
+- Cross desktop vars for configuration are XDG vars
+  - ~XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_RUNTIME_DIR XDG_CACHE_HOME XDG_CONFIG_DIRS XDG_DATA_DIRS~
+- xfce
+  - simple but lacks wayland support (planned some for 4.18 xfwm support?)
+- gnome
+  - javascript based desktop (leaked memory)
+- kde
+  - qt based
+    - qt project withholds patches for up to a year
+- aero (windows)
+- quartz (mac)

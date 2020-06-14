@@ -1,0 +1,62 @@
+:PROPERTIES:
+:ID:       536c7bc0-8049-429d-bfe6-641eeb67399c
+:END:
+#+title: browsers
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* browsers
+This your brain on the internet
+** notes
+- ctrl-shift-R for force cache reload
+- ctrl-w for close tab
+- ctrl-t for new tab
+- ctrl-tab for switch tab
+** [[id:aae21430-637a-4b92-8f8a-d35e9991e396][firefox]]
+** chrome
+- ~--ignore-certificate-errors~ cli arg to enable expired certs
+- pozzed by google
+  - changed to suit their needs
+    - deprecate app manifest v2 (brave preserves)
+    - allow any website to write to clipboard [[https://chromium.googlesource.com/chromium/src/+/4d7b74b051abfe5945f418601fdc2ffc8ce3072c][to make doodle work]] without required gesture
+      - brave [[https://github.com/brave/brave-browser/issues/16890][thought about]] blocking
+- blink and V8 for engine
+- fork of chromium
+- forks
+  - brave
+    - builtin tor, ad block
+    - disable wallet, sidebar
+  - ungoogled-chromium
+  - microsoft edge
+** safari
+- webkit based
+* search engines
+** [[id:b4a6be9e-1cb6-416a-b6e0-392ee9a28734][searx]]
+** ddg
+- fingerprinted users multiple times
+- no js version at lite.duckduckgo.com
+- uses bing (Micro$haft), yahoo
+  - [[https://twitter.com/shivan_kaul/status/1528879590772338689][allow microsoft tracking]] [[https://twitter.com/thezedwards/status/1528808790845362176][in product]]
+  - filters more than bing
+    - russians 'propaganda' sites (RT/sputnik) blocked/deranked
+    - torrent sites not blocked on bing blocked on ddg
+** brave
+- search.brave.com
+- has 'Goggles' for custom ranking
+- support bangs like !g
+- https://search.brave.com/search?q=%s to add to browser
+* sites
+** software
+- https://ossinsight.io/#trending-repos
+** alternative frontends
+- [[https://github.com/teddit-net/teddit][teddit.net]]
+- [[https://github.com/iv-org/invidious][yewtu.be]]
+- [[https://github.com/zedeus/nitter][nitter.net]]
+** media
+- https://ustv247.tv/
+- https://scnlog.me/
+- https://nr4.d-snf.net/
+- https://z-lib.org/
+- https://libgen.is/

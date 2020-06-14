@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       15a1bd83-5412-4ea3-b883-d2026fc2966a
+:END:
+#+title: prometheus-tech
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* prometheus
+** prometheus/grafana/node-exporter
+- grafana standalone oss, port 3000, node_exporter dashboard: https://grafana.com/grafana/dashboards/1860 , import datasource first
+- node-exporter from prometheus or cloudflare for ebpf, port 9100
+- prometheus --config.file=thing.yaml, port 9090,
+#+NAME: prometheus.yaml
+#+BEGIN_SRC yaml :tangle no
+global:
+  scrape_interval: 15s
+scrape_configs:
+- job_name: node
+  static_configs:
+  - targets: ['localhost:9100']
+#+END_SRC

@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       12a3e66b-5ada-4bfc-ab64-819a0d46d204
+:END:
+#+title: c-lang
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* C programming language
+Standards not correctness are all that matters when the world is a PDP-11
+** notes
+- shared_libraries can be packaged as executables
+  - ~/lib64/ld-linux-x86-64.so.2~ does this as does ~libQt5Core.so.5~
+  - Add ~-shared~, ~-fpie~, ~-Wl,--entry,main~, ~-L. -l:hello -Wl,-rpath,.~, flags to gcc
+    - ensure there is an ~exit()~ call in the entrypoint main
+  - Add section for ~PT_INTERP~
+    - ~const char interp[] __attribute__ ((section(".interp"))) = PT_INTERP;~
+    - Add ~-D 'PT_INTERP="/lib64/ld-linux-x86-64.so.2"'~ to gcc
+- size_t for loop/index portability
+- ~errno.h~ and ~perror~ to print thread local state of ~errno~
+- [[https://github.com/mpv-player/mpv/commit/1e70e82baa9193f6f027338b0fab0f5078971fbe][wchar_t]]
+  - ~setlocale~ is global state across all threads
+    - C locale is not UTF-8 there may be C.UTF-8 available
+- VLAs mandatory (again?) in C23
+  - {} is valid 0 initializer to avoid memset of vla (could be 0 sized)
+  - misunderstood as a 'stack' allocated array. Actual use is mainly for typing.
+    - 'sufficently' smart compiler can expand/probe stack with heap allocation as needed to compute sizes based on default allocation sizes for the target compiled platforms.
+    - ex. ~typedef int T[n]~ can be stack allocated ~T a~ or heap allocated ~T *a malloc(sizeof *a)~. Useful for matrix operations.
+- ~#embed~ add in C23 for including files as arrays (previously used xxd)
+- C11 added ~stdatomic.h~
+- C11 added ~theads.h~
+- C23 N2888 allows exact width integer types to exceed ~(u)intmax_t~
+- C23 added ~constexpr~
+- C23 adds ~nullptr~ constant
+- C23 adds ~auto~ typing
+#+NAME: c-signal-handler
+#+BEGIN_SRC c :tangle no
+// function to create signal handlers
+#include <signal.h>
+  void createSignalHandler() {
+      struct sigaction SigInt; // declare signal action(s)
+      memset(&SigInt, 0, sizeof(SigInt)); // clear the structure for SIGINT
+      SigInt.sa_handler = signalHandler; // setup SIGINT as signalHandler
+      sigemptyset(&SigInt.sa_mask);
+      if (-1 == sigaction(SIGINT, &SigInt, NULL)) { // check errors
+          // Error assigning SIGINT
+      }
+  }
+#+END_SRC
