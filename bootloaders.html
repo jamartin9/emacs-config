@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>bootloaders</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<div id="outline-container-org14a7e33" class="outline-2">
+<h2 id="org14a7e33">Bootloaders</h2>
+<div class="outline-text-2" id="text-org14a7e33">
+</div>
+<div id="outline-container-org8a7b2b7" class="outline-3">
+<h3 id="org8a7b2b7">notes</h3>
+<div class="outline-text-3" id="text-org8a7b2b7">
+<ul class="org-ul">
+<li>microcode update loading is usually built into the initramfs
+<ul class="org-ul">
+<li><a href="https://github.com/chip-red-pill/MicrocodeDecryptor">https://github.com/chip-red-pill/MicrocodeDecryptor</a> for intel</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1f9d608" class="outline-3">
+<h3 id="org1f9d608"><a href="grub.html#ID-2cb4f96f-cfaa-49ad-8eb0-b93e095ba7cb">grub</a></h3>
+</div>
+<div id="outline-container-org91057dd" class="outline-3">
+<h3 id="org91057dd">uefi</h3>
+<div class="outline-text-3" id="text-org91057dd">
+<ul class="org-ul">
+<li>efibootmgr for creating entries for stub kernels</li>
+</ul>
+</div>
+<div id="outline-container-org2f2856a" class="outline-4">
+<h4 id="org2f2856a">secureboot</h4>
+<div class="outline-text-4" id="text-org2f2856a">
+<ul class="org-ul">
+<li>some vendors require <a href="https://mjg59.dreamwidth.org/60248.html">micro$haft cert signed</a> bootloader shims
+<ul class="org-ul">
+<li>remote attestation with TPM next</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org6acad5d" class="outline-3">
+<h3 id="org6acad5d">libreboot</h3>
+<div class="outline-text-3" id="text-org6acad5d">
+<ul class="org-ul">
+<li>coreboot with blobs removed for foss bios/uefi firmaware</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

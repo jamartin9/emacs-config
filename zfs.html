@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>zfs</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<div id="outline-container-org8f72532" class="outline-2">
+<h2 id="org8f72532">ZFS</h2>
+<div class="outline-text-2" id="text-org8f72532">
+</div>
+<div id="outline-container-orga7a4dd8" class="outline-3">
+<h3 id="orga7a4dd8">openzfs</h3>
+<div class="outline-text-3" id="text-orga7a4dd8">
+</div>
+<div id="outline-container-orga902f49" class="outline-4">
+<h4 id="orga902f49">install</h4>
+<div class="outline-text-4" id="text-orga902f49">
+<ul class="org-ul">
+<li>If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
+That small space is useful for uefi bootloader via:
+<code>mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX</code> and
+<code>grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1</code>.
+A larger partition can allow proper fat32 fs type, grub installation(<code>--boot-directory</code>) and kernel/initramfs storage.</li>
+<li>add to kmod to initramfs via mkinitcpio/dracut
+<ul class="org-ul">
+<li>ex. add zfs to HOOKS in <code>/etc/defaults/mkinitcpio.conf</code></li>
+<li>regen initramfs <code>mkinitcpio -P</code></li>
+</ul></li>
+<li>update-grub with zfs root (if on root)</li>
+<li>Pam module for auto decrypt/mount on user login
+<ul class="org-ul">
+<li>/etc/pam.d/zfs-key
+auth       optional                    pam<sub>zfs</sub><sub>key.so</sub> homes=zroot/data/home runstatedir=/run/pam<sub>zfs</sub><sub>key</sub>
+session [success=1 default=ignore]     pam<sub>succeed</sub><sub>if.so</sub> service = systemd-user quiet
+session    optional                    pam<sub>zfs</sub><sub>key.so</sub> homes=zroot/data/home runstatedir=/run/pam<sub>zfs</sub><sub>key</sub>
+password   optional                    pam<sub>zfs</sub><sub>key.so</sub> homes=zroot/data/home runstatedir=/run/pam<sub>zfs</sub><sub>key</sub></li>
+<li>/etc/pam.d/system-auth and /etc/pam.d/su-l
+auth       include      zfs-key
+session    include      zfs-key
+password   include      zfs-key</li>
+</ul></li>
+<li>Manual pam script
+<ul class="org-ul">
+<li><code>/etc/pam.d/system-auth</code>
+auth       optional                    pam<sub>exec.so</sub>      expose<sub>authtok</sub> /sbin/zfs-pam-login
+<ul class="org-ul">
+<li>zfs-pam-login
+<code>PASS=$(cat -)</code>
+<code>zfs load-key "${ZFS_HOME_VOL}" &lt;&lt;&lt; "${PASS}" || continue</code>
+<code>zfs mount "${ZFS_HOME_VOL}" || true</code></li>
+</ul></li>
+</ul></li>
+<li>add systemd services for device scanning/import/automounting
+<ul class="org-ul">
+<li>set cache if not scanning for pools <code>zpool set cachefile=/etc/zfs/zpool.cache POOL</code>
+<ul class="org-ul">
+<li><code>systemctl enable zfs-import-cache</code></li>
+<li><code>systemctl enable zfs-import.target</code></li>
+</ul></li>
+<li>enable mounts if not using ZED
+<ul class="org-ul">
+<li><code>systemctl enable zfs-mount</code></li>
+<li><code>systemctl enable zfs.target</code></li>
+</ul></li>
+</ul></li>
+<li>set arc memory in kernel params(grub), initramfs <code>/etc/default/zfs</code> or modprobe params <code>/etc/modprobe.d/zfs.conf</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org195d5f1" class="outline-4">
+<h4 id="org195d5f1">usage</h4>
+<div class="outline-text-4" id="text-org195d5f1">
+<ul class="org-ul">
+<li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
+<li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdbe21ca" class="outline-4">
+<h4 id="orgdbe21ca">notes</h4>
+<div class="outline-text-4" id="text-orgdbe21ca">
+<ul class="org-ul">
+<li>If you lose a vdev in a pool you LOSE THE POOL</li>
+<li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
+<ul class="org-ul">
+<li>Manual pool config can get more out of smaller disks with the same redundancy
+<ul class="org-ul">
+<li>Linux 4.12+ udev IO rule for zfs<sub>vdev</sub><sub>scheduler</sub> to reduce cpu for manual partition</li>
+</ul></li>
+</ul></li>
+<li>When expanding rebalancing is not done leaving potentially higher resilver times in the future increasing the chance of cascading failure.
+<ul class="org-ul">
+<li>snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset</li>
+</ul></li>
+<li>Sparse files can be useful for testing/migrating setups if the enough storage is actually present(piecemeal the datasets)
+<ul class="org-ul">
+<li><code>dd if=/dev/zero of=/zpool-file bs=1m count=1024</code>
+<ul class="org-ul">
+<li><code>zpool create test /zpool-file</code></li>
+</ul></li>
+</ul></li>
+<li>relatime for normal timestamps</li>
+<li>SLOG requires devices that will write data on power loss</li>
+<li>SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down</li>
+<li>spare drive helps resilver time (zed auto replace)</li>
+<li>Single device zfs can use the COPIES attribute to help redundancy</li>
+<li>/tmp sync off</li>
+<li>enable sharing on dataset for nfs</li>
+<li>set snapdir of dataset to visible for .zfs/snapshots</li>
+<li>L2ARC/ssd cache with persistence(2.0+) for arc speed
+<ul class="org-ul">
+<li>L2ARC has default l2arc<sub>write</sub><sub>max</sub> of 8MiB/s and 8MiB/s burst (to fill up cache)</li>
+<li>uses arc ram (more for smaller blocks) to index</li>
+</ul></li>
+<li>arc stats on linux <code>cat /proc/spl/kstat/zfs/arcstats</code>
+<ul class="org-ul">
+<li>freebsd/darwin <code>sysctlbyname("kstat.zfs.misc.arcstats.size")</code> (removed in linux 5.5)</li>
+</ul></li>
+<li><a href="https://www.brendangregg.com/blog/2021-09-06/zfs-is-mysteriously-eating-my-cpu.html">zfs using cpu despite not being in use</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

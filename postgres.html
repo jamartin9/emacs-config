@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>postgres</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<div id="outline-container-org7da4dcb" class="outline-2">
+<h2 id="org7da4dcb">Postgresql</h2>
+<div class="outline-text-2" id="text-org7da4dcb">
+</div>
+<div id="outline-container-org07ea1fa" class="outline-3">
+<h3 id="org07ea1fa">notes</h3>
+<div class="outline-text-3" id="text-org07ea1fa">
+</div>
+<div id="outline-container-org677fc96" class="outline-4">
+<h4 id="org677fc96">addons</h4>
+<div class="outline-text-4" id="text-org677fc96">
+<ul class="org-ul">
+<li><p>
+<a href="https://github.com/neondatabase/neon">neon</a>
+</p>
+<ul class="org-ul">
+<li>purpose
+neon is used to decouple storage from compute for the database.
+This enables it to provide copy on write semantics such as database snapshots/branching.</li>
+<li>architecture
+Uses a patched postgres(compute node) with a pageserver and safekeeper (storage nodes) to decouple storage and computation.</li>
+</ul>
+<p>
+compute nodes communicate to the pageserver for reads while streaming writes to the safekeeper.
+safekeeper stores the writes into storage backend which the pageserver reads from.
+</p></li>
+<li><a href="https://github.com/CrunchyData/postgres-operator">crunchydata operator</a>
+<ul class="org-ul">
+<li>Uses kubernetes operator framework to manage postgres and backups with pgbackrest using yaml custom resource definitions.</li>
+<li>Local setup and usage with <a href="kind.html#ID-ab1f8872-ab90-4855-98a0-5d9bf5806d78">kind</a>.</li>
+<li>pgpodman extension for managing containers (redis cache) from db</li>
+</ul></li>
+<li><a href="https://www.postgresql.org/docs/current/limits.html">https://www.postgresql.org/docs/current/limits.html</a></li>
+<li>postgres compiled to wasm playground
+<ul class="org-ul">
+<li><a href="https://www.crunchydata.com/developers/playground/high-level-performance-analytics">https://www.crunchydata.com/developers/playground/high-level-performance-analytics</a>
+<ul class="org-ul">
+<li><a href="https://github.com/copy/v86">uses</a> <a href="https://copy.sh/v86/">https://copy.sh/v86/</a> and a alpine qemu img with postgres</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

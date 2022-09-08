@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>make</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<div id="outline-container-org7871867" class="outline-2">
+<h2 id="org7871867">make</h2>
+<div class="outline-text-2" id="text-org7871867">
+</div>
+<div id="outline-container-org7f4759b" class="outline-3">
+<h3 id="org7f4759b">snippets</h3>
+<div class="outline-text-3" id="text-org7f4759b">
+</div>
+<div id="outline-container-org7a881d9" class="outline-4">
+<h4 id="org7a881d9">makefile for emacs site</h4>
+<div class="outline-text-4" id="text-org7a881d9">
+<div class="org-src-container">
+<pre class="src src-makefile" id="org662b583">EMACS_PROG ?= emacs # emacsclient
+EMACS_FLAGS ?= -nw --no-splash --kill # -Q --batch
+EMACS_CMD ::= $(EMACS_PROG) $(EMACS_FLAGS)
+
+ORG_FILES ::= $(wildcard *.org)
+FILES ::=
+FILES += $(patsubst %.org, %.html, $(ORG_FILES)) # html
+
+.PHONY: all prune clean
+
+all: $(FILES)
+
+prune:
+	rm -f *.html\~
+
+clean : prune
+	rm -f *.html
+
+%.html : %.org
+	$(EMACS_CMD) $&lt; -f org-html-export-to-html
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

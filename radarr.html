@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>radarr</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<div id="outline-container-org7226025" class="outline-2">
+<h2 id="org7226025">Radarr notes</h2>
+<div class="outline-text-2" id="text-org7226025">
+</div>
+<div id="outline-container-orgcc6ecf9" class="outline-3">
+<h3 id="orgcc6ecf9">podman run config</h3>
+<div class="outline-text-3" id="text-orgcc6ecf9">
+<div class="org-src-container">
+<pre class="src src-shell" id="org5ba99be">podman run \
+  --detach \
+  --name myradarr \
+  --publish 7878:7878/tcp \
+  --rm \
+  -e TZ=America/New_York \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  --volume /storage/arr-downloads:/storage/arr-downloads:rshared,rbind \
+  --volume /home/jam/Videos:/home/jam/Videos:rshared,rbind \
+  --volume /storage/radarr-config:/config:Z \
+  docker.io/linuxserver/radarr:4.2.0-develop
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+html { /* https://github.com/jgthms/bulma/issues/527 vertical scroll bar always shown despite closed bug -_- */
+    overflow-y: auto;
+}
+
+body {
+  color: #ddd;
+  background-color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  min-height: 100vh; /*stretch vertical to bottom of screen*/
+  overflow: auto;
+}
+
+a:link,
+a:visited {
+  border-bottom: solid #fff 1px;
+  color: #bbb;
+  padding: 0 .2em;
+  text-decoration: none;
+  /* max-width: 696px; */
+}
+
+a:hover {
+  background-color: #bbb;
+  color: #111;
+}
+
+a:active {
+  border-bottom: solid #f00 1px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+  font-weight: normal;
+  line-height: 1.2em;
+}
+
+h1.title {
+  border-bottom: solid #000 1px;
+  padding: .2em 1em;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#preamble {
+  background-color: #000;
+  height: 24px;
+}
+
+#preamble a:link, #preamble a:visited {
+  border: none;
+  display: block;
+  margin: 0 auto;
+  text-decoration: none;
+  /*max-width: 696px;*/
+}
+
+#preamble a:active, #preamble a:hover {
+  border: none;
+  background-color: transparent;
+  color: #f00;
+}
+
+#postamble {
+  border-top: solid #000 1px;
+  color: #999;
+  font-style: italic;
+  text-align: right;
+  margin: 1em auto;
+  padding: 0 1em;
+}
+
+#postamble a.source-link:link,
+#postamble a.source-link:visited {
+  border-bottom: none;
+  color: #ccc;
+  font-family: monospace;
+  font-style: normal;
+  text-transform: lowercase;
+  text-decoration: none;
+}
+
+#postamble a.source-link:hover,
+#postamble a.source-link:active {
+  background-color: transparent;
+  color: #0f0;
+}
+
+code {
+  border-top: solid #000 1px;
+  border-bottom: solid #000 1px;
+  padding: 0 .2em;
+}
+
+pre.src, pre.example {
+  background-color: #111;
+  border-top: none;
+  border-bottom: solid #000 1px;
+  border-left: none;
+  border-right: solid #000 1px;
+  box-shadow: none;
+  padding: 1em 2em;
+  overflow: auto;
+}
+
+pre.src:before {
+  background-color: transparent;
+  border: none;
+  top: 0;
+  right: 0;
+}
+
+sup {
+  line-height: 0;
+}
+
+hr {
+  border-top: solid 1px #000;
+  border-bottom: solid 1px #333;
+}
+
+li p {
+  margin: 0;
+}
+
+.footpara {
+  margin: 0;
+}
+
+.footnotes {
+  margin-top: 1em;
+
+}
+
+h2, h3, h4, h5, h6,
+.footnotes {
+  margin: 0px auto;
+  /* max-width: 696px; */
+}
+
+/* p, ul { max-width: 672px; } */
+li ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li, ol, ul {
+  margin-left: 10px;
+}
+
+pre {
+  margin: 0 auto;
+  color: #fff;
+  /*max-width: 672px;*/
+}
+
+div.figure p {
+  margin: 0 auto;
+  /*max-width: none;*/
+}
+
+span.tag {
+  background-color: #333;
+}
+/* bulma and org-mode use content as a default css class */
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  color: #fff;
+  margin-bottom: 0;
+}

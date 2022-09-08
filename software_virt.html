@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>software-virt</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<div id="outline-container-org1e78401" class="outline-2">
+<h2 id="org1e78401">Virtualization</h2>
+<div class="outline-text-2" id="text-org1e78401">
+<p>
+Simulate the simulation
+</p>
+<ul class="org-ul">
+<li>containers
+<ul class="org-ul">
+<li><a href="podman.html#ID-90cf48a5-3b01-4667-b100-72acea67034f">podman</a></li>
+<li><a href="kind.html#ID-ab1f8872-ab90-4855-98a0-5d9bf5806d78">kind</a></li>
+</ul></li>
+<li><a href="firejail.html#ID-b066a88d-c1c4-43d4-b8b8-cc345ad8467f">firejail</a></li>
+<li>qemu
+<ul class="org-ul">
+<li>binfmt for running binaries for other archs</li>
+<li>ovmf/vfio for gpu pass through to vms
+<ul class="org-ul">
+<li>must have second card as sharing/virtualization is not supported on older cards
+<ul class="org-ul">
+<li>vGpus are <a href="https://github.com/DualCoder/vgpu_unlock">software locked</a> but available as cloud offerings (grid etc)</li>
+<li><a href="https://github.com/Arc-Compute/LibVF.IO">https://github.com/Arc-Compute/LibVF.IO</a> for supported cards</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>firecracker
+<ul class="org-ul">
+<li>5.10 lts kernel</li>
+<li>snapshots for faster boot after creation</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

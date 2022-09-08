@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>systemd</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<div id="outline-container-org58bb0ef" class="outline-2">
+<h2 id="org58bb0ef">Systemd</h2>
+<div class="outline-text-2" id="text-org58bb0ef">
+</div>
+<div id="outline-container-org37475a9" class="outline-3">
+<h3 id="org37475a9">systemd</h3>
+<div class="outline-text-3" id="text-org37475a9">
+</div>
+<div id="outline-container-org71497cd" class="outline-4">
+<h4 id="org71497cd">journalctl</h4>
+<div class="outline-text-4" id="text-org71497cd">
+<ul class="org-ul">
+<li><code>/etc/systemd/journald.conf</code>
+<ul class="org-ul">
+<li><code>SystemMaxUse=100M</code></li>
+</ul></li>
+<li><code>journalctl -u SERVICE</code></li>
+<li>coredumpctl</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org41a8845" class="outline-4">
+<h4 id="org41a8845">sysctl</h4>
+<div class="outline-text-4" id="text-org41a8845">
+<ul class="org-ul">
+<li><code>net.ipv4.icmp_echo_ignore_all = 1</code> in <code>/etc/sysctl.conf</code> or <code>/etc/sysctl.d/90-override.conf</code> to disable icmp</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge83a212" class="outline-4">
+<h4 id="orge83a212">systemctl</h4>
+<div class="outline-text-4" id="text-orge83a212">
+</div>
+<ul class="org-ul">
+<li><a id="orgb9e538b"></a>services<br />
+<div class="outline-text-5" id="text-orgb9e538b">
+<ul class="org-ul">
+<li><code>edit</code> doesn't require <code>daemon-reload</code></li>
+<li>hooks within services like <code>ExecStartPost/ExecStopPost</code></li>
+<li>list <code>systemctl list-unit-files</code></li>
+<li>list failed <code>systemctl list-units --state failed</code></li>
+<li>deps <code>systemctl list-dependencies --reverse</code></li>
+<li>mask with <code>systemctl mask swap.target</code></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org15e9e7f" class="outline-4">
+<h4 id="org15e9e7f">timedatectl</h4>
+<div class="outline-text-4" id="text-org15e9e7f">
+<ul class="org-ul">
+<li>systemd-timesyncd <code>timedatectl set-ntp true</code></li>
+<li><code>set-local-rtc</code> to set hardware clock to localtime instead of UTC</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9f18f55" class="outline-4">
+<h4 id="org9f18f55">NetworkManager</h4>
+<div class="outline-text-4" id="text-org9f18f55">
+<ul class="org-ul">
+<li><code>/usr/lib/NetworkManager/conf.d/20-connectivity.conf</code> pings out
+<ul class="org-ul">
+<li><code>/etc/NetworkManager/conf.d/20-connectivity.conf</code>
+[connectivity]
+uri=<a href="http://ping.manjaro.org/check_network_status.txt">http://ping.manjaro.org/check_network_status.txt</a>
+interval=0
+enabled=false</li>
+</ul></li>
+<li>conflicts with <code>systemd-networkd</code> &amp; <code>systemd-resolvd</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdb3f7e2" class="outline-4">
+<h4 id="orgdb3f7e2">misc</h4>
+<div class="outline-text-4" id="text-orgdb3f7e2">
+<ul class="org-ul">
+<li><code>systemd-analyze blame</code> for boot times</li>
+<li><code>systemd-analyze security my-service.unit</code> for sec settings</li>
+<li><code>systemctl --user status</code> for services in <code>$HOME/.config/systemd/user/</code></li>
+<li><code>systemctl set-default</code> or <code>isolate</code> with runlevels/targets <code>rescue</code>, <code>multi-user</code> and <code>graphical</code></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
