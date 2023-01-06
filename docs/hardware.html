@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>hardware</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgf76001c">
+<div class="navbar-brand" id="org001cca9">
+<div class="navbar-item" id="orga616e34">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgd0ca432">
+<div class="navbar-start" id="org280d12c">
+<div class="navbar-item" id="orga76f43d">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgce114fb">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org1a097c0" class="outline-2">
+<h2 id="org1a097c0">hardware</h2>
+<div class="outline-text-2" id="text-org1a097c0">
+<ul class="org-ul">
+<li>Backdoors
+<ul class="org-ul">
+<li>intel management engine</li>
+<li>amd platform security processor</li>
+<li>firmware level malware (disk controller, usb controller, flashable uefi/bios etc)</li>
+<li>side channel data transmission such as AM <a href="https://github.com/fulldecent/system-bus-radio">https://github.com/fulldecent/system-bus-radio</a></li>
+</ul></li>
+<li>Commonly defective (cheap companies and lack of quality control even with standards)
+<ul class="org-ul">
+<li>HDMI cables (no hdcp, artifacts and non spec bandwidth limits)</li>
+<li>USBC charging (will not charge certain devices and can even damage ex. Nintendo Switch)
+<ul class="org-ul">
+<li>lacking resistors usually to inform device of power</li>
+</ul></li>
+<li>refurbished drives (smart data wiped)
+<ul class="org-ul">
+<li>fake drives sold on amazon/walmart/ebay with custom firmware to trick os</li>
+</ul></li>
+<li>Used GPUs (cryptocurreny mining wear and cheap factory solder)</li>
+</ul></li>
+
+<li>GPS
+<ul class="org-ul">
+<li>CoCom Limits is the limit placed on GPS devices that disables tracking when it is faster than 1,000 knots and/or an higher than 18,000m.
+<ul class="org-ul">
+<li>Intended to prevent GPS in intercontinental ballistic missile applications.</li>
+<li>SDR may not enforce limits (ex. GNSS-SDR)</li>
+</ul></li>
+</ul></li>
+<li>SDR
+<ul class="org-ul">
+<li>krakensdr passive receiver ITAR restricted and censored after IEEE spectrum paper</li>
+</ul></li>
+<li>Project silica (quartz/glass hard drives)
+<ul class="org-ul">
+<li><a href="https://www.microsoft.com/en-us/research/project/project-silica/">research project by microsoft</a></li>
+<li>10000 year degrade time instead of 10 year like most optical mediums</li>
+</ul></li>
+
+<li>iphone14 removed sim card for esim.</li>
+
+<li>atomic clocks
+<ul class="org-ul">
+<li><a href="https://www.physics.ox.ac.uk/news/quantum-network-entangled-atomic-clocks">https://www.physics.ox.ac.uk/news/quantum-network-entangled-atomic-clocks</a>
+<ul class="org-ul">
+<li>optical atmoic clocks entangled on demand</li>
+</ul></li>
+<li>helps approximate 'proper' time</li>
+<li>nuclear atmoic clocks
+<ul class="org-ul">
+<li>caesium</li>
+<li>Rubidium</li>
+<li>GPS in the us uses ~4 per sat (2 caesium and 2 rubidium) to get 'absolute' time and spatial position</li>
+<li>some NTP nodes use them (NTP is millisecond precision)</li>
+</ul></li>
+</ul></li>
+
+<li>egpus for external gpu</li>
+
+<li>RISC-V
+<ul class="org-ul">
+<li>free ISA</li>
+<li>32/64/128(wip) address spaces</li>
+<li>32 (16 embeded) int registers</li>
+<li>32 floating point registers</li>
+</ul></li>
+
+<li>Breadboard
+<ul class="org-ul">
+<li>simulation <a href="https://www.withdiode.com/">https://www.withdiode.com/</a></li>
+</ul></li>
+
+<li>/r/unclebens rice packets to cultivate mushrooms</li>
+
+<li>2021 F150 has 'self driving' BlueCruise
+<ul class="org-ul">
+<li>raptor does not due to software issues with off road mode</li>
+<li><a href="https://github.com/flowdriveai/flowpilot">generic openpilot</a></li>
+<li><a href="https://github.com/roxasthenobody98/phoenixpilot">open pilot fork for lariat and above</a>
+<ul class="org-ul">
+<li>OBED connector with ForScan can enable Lane assist without the technology package
+<ul class="org-ul">
+<li><a href="https://www.f150forum.com/f118/openpilot-469489/index6/#post7077158">need short/button to toggle while driving</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+
+<li>BaoFeng programmable in unregistered frequency with CHIRP</li>
+
+<li>intel optane persistent high write nvme SSD cache</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

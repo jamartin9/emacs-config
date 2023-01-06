@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>archive-formats</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgf4759cb">
+<div class="navbar-brand" id="org4cef760">
+<div class="navbar-item" id="orgd5f398c">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org9d3d968">
+<div class="navbar-start" id="orga048299">
+<div class="navbar-item" id="org2f23898">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org87a145f">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org6038f4f" class="outline-2">
+<h2 id="org6038f4f">archive/compression formats</h2>
+<div class="outline-text-2" id="text-org6038f4f">
+<p>
+Putting things places for reasons!
+</p>
+<ul class="org-ul">
+<li><a href="torrents.html#ID-897075c7-1826-4e0d-bd35-fe1ce8e1ecd0">torrents</a></li>
+<li><a href="usenet.html#ID-8a060a9e-3694-40bf-b9ad-a4c4a9e46507">usenet</a></li>
+<li>shar
+<ul class="org-ul">
+<li>self extracting shell archive script</li>
+</ul></li>
+<li>nar
+<ul class="org-ul">
+<li>normalized archive used by guix. Comparable to tar.</li>
+</ul></li>
+<li>zip
+<ul class="org-ul">
+<li>ignores invalid data in zipfile (how <a href="https://justine.lol/ape.html">APE executables</a> work)</li>
+<li>contains directory structure</li>
+<li>supports compression</li>
+</ul></li>
+<li><a href="rar.html#ID-308edd9a-90d8-44f3-ab1f-fae4942b0eae">rar</a></li>
+<li>web archive (warc with pywb)</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-shell" id="org1a20ee0">pip install --user pywb
+wb-manager init my-web-archive
+wget --recursive --warc mywarcfile https://mysite
+wb-manager add my-web-archive &lt;path/to/my_warc.warc.gz&gt;
+wayback # http://localhost:8080/my-web-archive/&lt;url&gt;/
+</pre>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>git</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orga3735cc">
+<div class="navbar-brand" id="orgc750f8d">
+<div class="navbar-item" id="orgfdd987c">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org26fa602">
+<div class="navbar-start" id="org2d948c4">
+<div class="navbar-item" id="org4f7401f">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org9b913b1">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org26a7380" class="outline-2">
+<h2 id="org26a7380">Git</h2>
+<div class="outline-text-2" id="text-org26a7380">
+</div>
+<div id="outline-container-org6711d3c" class="outline-3">
+<h3 id="org6711d3c">git notes</h3>
+<div class="outline-text-3" id="text-org6711d3c">
+<ul class="org-ul">
+<li><code>--depth</code> implies <code>single-branch</code> thus the refspec will be on single branch
+<ul class="org-ul">
+<li><code>git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*</code></li>
+<li><code>git fetch --depth=1 origin "+refs/heads/*:refs/remotes/origin/*"</code></li>
+<li><code>git fetch origin feature/branch --depth=1 &amp;&amp; git checkout -b feature/branch FETCH_HEAD</code></li>
+<li><code>git notes add</code> stores notes that can be mailed with <code>git format-patch -n1 --notes</code> under the &#x2014;
+<ul class="org-ul">
+<li><code>git config notes.rewriteRef refs/notes/commits</code> to merge notes</li>
+</ul></li>
+<li><code>GIT_TRACE=1 git cmd</code> for debug</li>
+</ul></li>
+<li><code>git switch --orphan BRANCH_NAME</code> for empty branch</li>
+<li><code>git rev-parse --show-object-format</code> sha1 or sha256 check
+<ul class="org-ul">
+<li>mostly unsupported by forges</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

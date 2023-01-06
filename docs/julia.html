@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>julia</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org52f84f0">
+<div class="navbar-brand" id="org8e3b18a">
+<div class="navbar-item" id="orga53b3b0">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org0791429">
+<div class="navbar-start" id="org3f08051">
+<div class="navbar-item" id="org9986ee0">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orge8ea905">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org3b91325" class="outline-2">
+<h2 id="org3b91325">julia</h2>
+<div class="outline-text-2" id="text-org3b91325">
+</div>
+<div id="outline-container-org1284a58" class="outline-3">
+<h3 id="org1284a58">julia notes</h3>
+<div class="outline-text-3" id="text-org1284a58">
+<ul class="org-ul">
+<li>some <a href="https://yuri.is/not-julia/">heisenbugs</a></li>
+<li>lisp for hoisting (used to be guile in early versions) <code>julia --lisp</code></li>
+<li>SciML ecosystem
+<ul class="org-ul">
+<li><a href="https://github.com/SciML/DiffEqFlux.jl">universal differential equations</a> models</li>
+</ul></li>
+<li>automatic differentiation and optimization libraries turn grammar into symbolic variables</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-julia" id="org187340a">using ModelingToolkit, GalacticOptim
+
+@variables x y
+@parameters a b
+loss = (a - x)^2 + b * (y - x^2)^2
+sys = OptimizationSystem(loss,[x,y],[a,b])
+
+u0 = [
+    x=&gt;1.0
+    y=&gt;2.0
+]
+p = [
+    a =&gt; 6.0
+    b =&gt; 7.0
+]
+
+prob = OptimizationProblem(sys,u0,p,grad=true,hess=true)
+solve(prob,Newton())
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

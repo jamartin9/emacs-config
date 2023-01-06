@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>postgres</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgac28f11">
+<div class="navbar-brand" id="org0b03513">
+<div class="navbar-item" id="orgd4dc358">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgbe9daeb">
+<div class="navbar-start" id="org7f5b7f3">
+<div class="navbar-item" id="orgac7ebf0">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org4ae8765">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org3f7ae69" class="outline-2">
+<h2 id="org3f7ae69">Postgresql</h2>
+<div class="outline-text-2" id="text-org3f7ae69">
+</div>
+<div id="outline-container-org8f0eb69" class="outline-3">
+<h3 id="org8f0eb69">notes</h3>
+<div class="outline-text-3" id="text-org8f0eb69">
+</div>
+<div id="outline-container-orgc3a2360" class="outline-4">
+<h4 id="orgc3a2360">addons</h4>
+<div class="outline-text-4" id="text-orgc3a2360">
+<ul class="org-ul">
+<li><p>
+<a href="https://github.com/neondatabase/neon">neon</a>
+</p>
+<ul class="org-ul">
+<li>purpose
+neon is used to decouple storage from compute for the database.
+This enables it to provide copy on write semantics such as database snapshots/branching.</li>
+<li>architecture
+Uses a patched postgres(compute node) with a pageserver and safekeeper (storage nodes) to decouple storage and computation.</li>
+</ul>
+<p>
+compute nodes communicate to the pageserver for reads while streaming writes to the safekeeper.
+safekeeper stores the writes into storage backend which the pageserver reads from.
+</p></li>
+<li><a href="https://github.com/CrunchyData/postgres-operator">crunchydata operator</a>
+<ul class="org-ul">
+<li>Uses kubernetes operator framework to manage postgres and backups with pgbackrest using yaml custom resource definitions.</li>
+<li>Local setup and usage with <a href="kind.html#ID-ab1f8872-ab90-4855-98a0-5d9bf5806d78">kind</a>.</li>
+<li>pgpodman extension for managing containers (redis cache) from db</li>
+</ul></li>
+<li><a href="https://www.postgresql.org/docs/current/limits.html">https://www.postgresql.org/docs/current/limits.html</a></li>
+<li>postgres compiled to wasm playground
+<ul class="org-ul">
+<li><a href="https://github.com/snaplet/postgres-wasm">https://github.com/snaplet/postgres-wasm</a></li>
+<li><a href="https://www.crunchydata.com/developers/playground/high-level-performance-analytics">https://www.crunchydata.com/developers/playground/high-level-performance-analytics</a>
+<ul class="org-ul">
+<li><a href="https://github.com/copy/v86">uses</a> <a href="https://copy.sh/v86/">https://copy.sh/v86/</a> and a alpine qemu img with postgres</li>
+</ul></li>
+</ul></li>
+<li><code>SET TRANSACTION SERIALIZABLE</code> for strict isolation</li>
+<li><a href="https://github.com/supabase/vault">extension for secrets</a></li>
+<li>foreign data wrappers
+<ul class="org-ul">
+<li><a href="https://github.com/supabase/wrappers">rust examples</a></li>
+</ul></li>
+<li><a href="https://github.com/supabase/realtime">WAL streaming</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

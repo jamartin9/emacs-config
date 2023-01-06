@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>software-packaging</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgbb69126">
+<div class="navbar-brand" id="org1ab6390">
+<div class="navbar-item" id="org33b6086">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org701f366">
+<div class="navbar-start" id="org4c2d701">
+<div class="navbar-item" id="org00ca3f3">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgaf12e22">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org17cd825" class="outline-2">
+<h2 id="org17cd825">Packaging</h2>
+<div class="outline-text-2" id="text-org17cd825">
+<p>
+Lets make the same thing but differently!
+</p>
+<ul class="org-ul">
+<li><a href="guix.html#ID-4e76d981-fd7c-43b0-9d8c-120386135729">guix</a></li>
+<li><a href="ansible.html#ID-b6edbb6f-d886-4362-8654-5e4986c81a21">ansible</a></li>
+<li>flatpak
+<ul class="org-ul">
+<li>bubblewrap for isolation</li>
+<li>flathub for distribution</li>
+<li>non root user tool</li>
+<li>pamac flatpak plugin for manjaro</li>
+<li>bloats with old versions without updates
+<ul class="org-ul">
+<li>multiple nvidia driver versions etc</li>
+</ul></li>
+</ul></li>
+<li>rpms
+<ul class="org-ul">
+<li>redhat based distros</li>
+<li>can use alien to convert deb and rpm</li>
+</ul></li>
+<li>debs
+<ul class="org-ul">
+<li>debian based distros</li>
+</ul></li>
+<li>pkg
+<ul class="org-ul">
+<li>arch based distros</li>
+<li><code>paccache -ruk0</code> to delete cache</li>
+<li>makepkg to build</li>
+</ul></li>
+<li>appimages
+<ul class="org-ul">
+<li>uses old glibc</li>
+<li>uses fuse
+<ul class="org-ul">
+<li>fuse breakages can break compat (ex. ubuntu 21.04)</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

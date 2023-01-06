@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>grub</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgf52efb6">
+<div class="navbar-brand" id="orgb483bf3">
+<div class="navbar-item" id="org94c6b05">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgf55f921">
+<div class="navbar-start" id="orgc004de8">
+<div class="navbar-item" id="orgdcdc9a6">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgfe10fa5">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgb4a2e76" class="outline-2">
+<h2 id="orgb4a2e76">Grub</h2>
+<div class="outline-text-2" id="text-orgb4a2e76">
+</div>
+<div id="outline-container-org013356b" class="outline-3">
+<h3 id="org013356b">grub</h3>
+<div class="outline-text-3" id="text-org013356b">
+<ul class="org-ul">
+<li>rescue shell set for /dev/sda5
+prefix=(hd0,5)/boot/grub
+insmod linux
+set root=(hd0,5)
+linux (hd0,6)/vmlinuz-linux root=/dev/sda6
+initrd (hd0,6)/boot/initramfs-linux.img
+boot</li>
+<li>single user mode on boot by adding 'single' to the linux kernel line</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>elixir</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgb4d0eef">
+<div class="navbar-brand" id="org7d2b50d">
+<div class="navbar-item" id="org8a5ae5c">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org68a123b">
+<div class="navbar-start" id="org2762dc1">
+<div class="navbar-item" id="org6ee0059">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org75a6f84">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org9bed028" class="outline-2">
+<h2 id="org9bed028">Elixir</h2>
+<div class="outline-text-2" id="text-org9bed028">
+</div>
+<div id="outline-container-orgf2cad16" class="outline-3">
+<h3 id="orgf2cad16">notes</h3>
+<div class="outline-text-3" id="text-orgf2cad16">
+<ul class="org-ul">
+<li>hex is the package manager</li>
+<li>uses erlang OTP libraries (genserver/task/agent etc)</li>
+<li>built on BEAM VM
+<ul class="org-ul">
+<li>firefly as alternative to beam as a wasi runtime</li>
+</ul></li>
+<li>popular web framework phoenix with liveview
+<ul class="org-ul">
+<li>liveview native for apps/desktop apps</li>
+</ul></li>
+<li>uses message passing instead of shared memory
+<ul class="org-ul">
+<li>this can cause a problem for data heavy applications with something like liveview as the data is copied from process to process</li>
+</ul></li>
+<li>dynamic atom creation causes memory leaks (gc does not collect) and can crash if over 1<sub>048</sub><sub>576</sub></li>
+<li>supports hot code reloading using relup and code<sub>change</sub> for migration of current state</li>
+<li>libcluster for auto cluster config
+<ul class="org-ul">
+<li>clustering uses epmd by default</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

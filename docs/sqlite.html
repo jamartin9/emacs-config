@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>sqlite</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org8ba5a6b">
+<div class="navbar-brand" id="orgdc7c708">
+<div class="navbar-item" id="orgb980926">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgb106d73">
+<div class="navbar-start" id="org07c28b6">
+<div class="navbar-item" id="org6f5caa1">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org40db0dd">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org3b9890a" class="outline-2">
+<h2 id="org3b9890a">sqlite</h2>
+<div class="outline-text-2" id="text-org3b9890a">
+</div>
+<div id="outline-container-orgabb0e20" class="outline-3">
+<h3 id="orgabb0e20">notes</h3>
+<div class="outline-text-3" id="text-orgabb0e20">
+<ul class="org-ul">
+<li><a href="https://www.sqlite.org/limits.html">https://www.sqlite.org/limits.html</a></li>
+<li>single flat file database</li>
+<li>C source can be compiled to WASM/Javascript <a href="https://sqlite.org/fiddle/">sqlite.org/fiddle</a></li>
+<li>Replication options
+<ul class="org-ul">
+<li>dqlite
+<ul class="org-ul">
+<li>custom c library by canonical</li>
+</ul></li>
+<li>rqlite
+<ul class="org-ul">
+<li>uses sqlite as storage engine</li>
+</ul></li>
+<li>litefs
+<ul class="org-ul">
+<li>streaming replication to s3</li>
+<li>fuse based file replication with 1 active writer in cluster
+<ul class="org-ul">
+<li>litestream for recovery</li>
+</ul></li>
+</ul></li>
+<li><a href="https://github.com/vlcn-io/cr-sqlite">crdt</a> using last write wins</li>
+</ul></li>
+<li>libsql is a fork of sqlite with extra features</li>
+<li>strict tables for type enforcement</li>
+<li>session extension for changeset management</li>
+<li>max <code>PRAGMA page_size = 65536</code>
+<ul class="org-ul">
+<li>powers of 2 ex <code>16384</code> for 16KiB</li>
+<li>default 4096</li>
+<li>require <code>PRAGMA journal_mode = OFF</code></li>
+</ul></li>
+<li>reduce wal before VACUUM INTO <code>PRAGMA wal_checkpoint(TRUNCATE)</code></li>
+<li><code>pragma integrity_check;</code></li>
+<li><code>.recover</code> command for corruption</li>
+<li>sqlar is file sqlite archive for in db compression of files (zlib)</li>
+<li>sqlite v3.4.0 added support wasm
+<ul class="org-ul">
+<li>opfs enabled when loaded from worker
+<ul class="org-ul">
+<li>opfs not limited in size unlike localstorage</li>
+<li>currently locking issues between threads/tabs</li>
+</ul></li>
+</ul></li>
+<li>optimizer can create temporary index's automatically.
+dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</code> query output</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

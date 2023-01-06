@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>gpg</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orge763245">
+<div class="navbar-brand" id="org13516f0">
+<div class="navbar-item" id="org1430e93">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org0c6a1ca">
+<div class="navbar-start" id="orged794e7">
+<div class="navbar-item" id="org9adef37">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org305fa0d">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org286eba8" class="outline-2">
+<h2 id="org286eba8">GPG</h2>
+<div class="outline-text-2" id="text-org286eba8">
+</div>
+<div id="outline-container-org8f62a53" class="outline-3">
+<h3 id="org8f62a53">gpg</h3>
+<div class="outline-text-3" id="text-org8f62a53">
+<ul class="org-ul">
+<li><code>--expert --full-generate-key</code> for new ecc key</li>
+<li><code>--armor</code> for ascii transferable key</li>
+<li><code>--export</code> , <code>--export-secret-key</code> and <code>--import</code>  for recovery (can also do it for trust store)</li>
+<li>pass
+<ul class="org-ul">
+<li><code>pass init email@stuff.com</code> for loading gpg key</li>
+<li><code>pass add site/name</code> with password</li>
+<li><code>-m</code> for multiline</li>
+<li><code>pass generate -n site/user size</code></li>
+</ul></li>
+<li><code>gpg --edit-key XXXXX</code> then <code>trust</code> and <code>save</code></li>
+<li>encrypt <code>gpg --encrypt --sign --armor -r a@email.com -r me@email.com</code> and <code>--sign-key</code></li>
+<li><code>gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org</code></li>
+<li><code>export GPG_TTY=$(tty)</code> for ssh tty</li>
+</ul>
+</div>
+<div id="outline-container-org9731aaf" class="outline-4">
+<h4 id="org9731aaf"><span class="todo TODO">TODO</span> mnemonic reproducible keys&#xa0;&#xa0;&#xa0;<span class="tag"><span class="gpg">gpg</span></span></h4>
+</div>
+<div id="outline-container-org465837d" class="outline-4">
+<h4 id="org465837d"><span class="todo TODO">TODO</span> extend key expiration date&#xa0;&#xa0;&#xa0;<span class="tag"><span class="gpg">gpg</span></span></h4>
+<div class="outline-text-4" id="text-org465837d">
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

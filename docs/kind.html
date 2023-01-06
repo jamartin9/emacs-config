@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>kind</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org12221e9">
+<div class="navbar-brand" id="org7c5771b">
+<div class="navbar-item" id="org9c584a7">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org1f087e8">
+<div class="navbar-start" id="org1d0415b">
+<div class="navbar-item" id="org6430395">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org2019127">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orga40812e" class="outline-2">
+<h2 id="orga40812e">kind</h2>
+<div class="outline-text-2" id="text-orga40812e">
+</div>
+<div id="outline-container-orga83f485" class="outline-3">
+<h3 id="orga83f485">kind</h3>
+<div class="outline-text-3" id="text-orga83f485">
+<ul class="org-ul">
+<li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster</code></li>
+<li>KIND<sub>EXPERIMENTAL</sub><sub>CONTAINERD</sub><sub>SNAPSHOTTER</sub>=native for zfs in kind &gt;= 0.12</li>
+<li><code>kind load docker-image IMAGE IMAGE</code> to load images or mount path through config</li>
+<li>postgresql (crunchydata)
+<ul class="org-ul">
+<li>clone <code>https://github.com/CrunchyData/postgres-operator-examples/</code>
+<ul class="org-ul">
+<li><code>kubectl apply -f kustomize/install</code> for the operator</li>
+<li><code>kubectl apply -f kustomize/postgres</code> for default db</li>
+</ul></li>
+<li>change persistent volumes policy to retain and modify postgres for restore</li>
+<li>default forward primary port</li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh" id="org0401d7d">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
+kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
+</pre>
+</div>
+<ul class="org-ul">
+<li>default connection</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh" id="org66216e7">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
+</pre>
+</div>
+<ul class="org-ul">
+<li>cross plane
+<ul class="org-ul">
+<li>deploy helm package (requires tiller)</li>
+<li>configure cloud resources with kubernetes yaml</li>
+<li>creates oci like images for xpackages</li>
+<li>providers for cf/gcp/ansible/terraform/kubernetes</li>
+<li>kube-provider manages operators/deployments across kubernetes clusters</li>
+</ul></li>
+<li>hardening
+<ul class="org-ul">
+<li>require authorization (default no auth)</li>
+<li>user accounts for rbac (default admin)</li>
+<li>disable mounting of service token in pods</li>
+<li>user namespace containers</li>
+<li>read-only fs</li>
+<li>drop capabilites</li>
+<li>encrypt secrets</li>
+<li>tls for services/kubelet/control plane</li>
+<li>kubeadm
+<ul class="org-ul">
+<li>kubeadm certs check-expiration</li>
+<li>kubeadm certs renew</li>
+<li>does not support rotating CA (9 year default)</li>
+</ul></li>
+</ul></li>
+<li>vault
+<ul class="org-ul">
+<li>manages ca and cert rotation</li>
+<li>init/unseal with pgp keys</li>
+<li>operator has webhook to avoid sidecare
+<ul class="org-ul">
+<li>configured through annotations and env vars</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

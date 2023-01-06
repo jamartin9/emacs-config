@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>openwrt</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org5a363a7">
+<div class="navbar-brand" id="orga4114b1">
+<div class="navbar-item" id="org044ac8b">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org22bf268">
+<div class="navbar-start" id="org7f2a5f5">
+<div class="navbar-item" id="orgc3ec443">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgfca7da0">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org900b251" class="outline-2">
+<h2 id="org900b251">Openwrt</h2>
+<div class="outline-text-2" id="text-org900b251">
+<p>
+a os for my routers
+</p>
+</div>
+<div id="outline-container-org0a9f5d3" class="outline-3">
+<h3 id="org0a9f5d3">LINKSYS EA6500v2</h3>
+<div class="outline-text-3" id="text-org0a9f5d3">
+<ul class="org-ul">
+<li>official firmware beyond 1.1.40.166281 check signing and rollback is only 1 version
+<ul class="org-ul">
+<li>rollback via tftp
+<ul class="org-ul">
+<li>disable network manager</li>
+<li>set 192.168.1.2 for tftp server and client of 192.168.1.1
+<ul class="org-ul">
+<li><code>ip addr add 192.168.1.2/24 dev enp0s25</code></li>
+<li><code>arp -s 192.168.1.1 MA:CA:DD:RR:ES:SS</code></li>
+</ul></li>
+<li>flash older firmware then flash openwrt via web interface</li>
+<li>tftp.exe from linksys needs <code>winetricks mfc42</code> with wine 7.7
+<ul class="org-ul">
+<li>need linksys tftp client as they use a nonstandard password
+<ul class="org-ul">
+<li>router does not allow empty password</li>
+</ul></li>
+</ul></li>
+<li>flashes the 'rollback' firmware</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

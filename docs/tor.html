@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>tor</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org90722e1">
+<div class="navbar-brand" id="orgc7221f9">
+<div class="navbar-item" id="org259002f">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org8fbaf47">
+<div class="navbar-start" id="orgc7a23ad">
+<div class="navbar-item" id="org8a02852">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org99223d6">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgfb9bf1a" class="outline-2">
+<h2 id="orgfb9bf1a">tor</h2>
+<div class="outline-text-2" id="text-orgfb9bf1a">
+</div>
+<div id="outline-container-org75317cd" class="outline-3">
+<h3 id="org75317cd">tor notes</h3>
+<div class="outline-text-3" id="text-org75317cd">
+<ul class="org-ul">
+<li>socks5 on 9050 by default</li>
+<li>browser bundle runs 9051 by default</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-conf" id="orgc1b9544">brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion is brave
+https://protonmailrmez3lotccipshtkleegetolb73fuirgj7r4o4vfu7ozyd/ is protonmail
+https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/ is cloudflare 1.1.1.1
+MapAddress palladium.libera.chat libera75jm6of4wxpxt4aynol3xjmbtxgfyjpu34ss4d7r7q2v5zrpyd.onion is liberia.chat
+phobosxilamwcg75xt22id7aywkzol6q6rfl2flipcqoc4e4ahima5id.onion is phobos
+xmh57jrknzkhv6y3ls3ubitzfqnkrwxhopf5aygthi7d6rplyvk3noyd.onion is torch
+monerotoruzizulg5ttgat2emf4d6fbmiea25detrmmy7erypseyteyd.onion is getmonero (unstoppableswap.net for btc-&gt;xmr)
+p2pmin25k4ei5bp3l6bpyoap6ogevrc35c3hcfue7zfetjpbhhshxdqd.onion is p2pool
+njallalafimoej5i4eg7vlnqjvmb6zhdh27qxcatdn647jtwwwui3nad.onion is njal
+  - pozzed and will remove dns/vps it they do not like your content (flokinet, buyvm, ddos gaurd)
+https://incoghostm2dytlqdiaj3lmtn7x2l5gb76jhabb6ywbqhjfzcoqq6aad.onion/ is incognet
+http://kiwifarmsaaf4t2h7gc3dfc5ojhmqruw2nit3uejrpiagrxeuxiyxcyd.onion/ is kiwifarms
+  - t.me/s/kiwifarms for telegram updates
+uzfomcxbx24d3esy7akpdbiovcfoorupz4aez6fpabmyh45nnqdp7mqd.onion is /fdroid/repo
+https://4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion is guix sub mirror
+archiveiya74codqgiixo33q62qlrqtkgmcitqx5u2oeqnmn5bpcbiyd.onion is archive.is
+dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/ is dread
+https://twitter3e4tixl4xyajtrzo62zg5vztmjuricljdp2c5kshju4avyoid.onion/ is twitter
+https://5gdvpfoh6kb2iqbizb37lzk2ddzrwa47m6rpdueg2m656fovmbhoptqd.onion/ is riseup
+http://zlibrary24tuxziyiyfr7zd46ytefdqbqd2axkmxm4o5374ptpc52fad.onion/ is zlib
+https://bookszlibb74ugqojhzhg2a63w5i2atv5bqarulgczawnbmsb6s6qead.onion/ - zlib books
+https://www.reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad.onion/ is reddit
+</pre>
+</div>
+<ul class="org-ul">
+<li>digicert offers ev wildcard certs for .onion and harica.gr offers .onion</li>
+<li>ensure multi point check or pinned HTTPS verified to avoid bgp att</li>
+<li>tcp 9001 for relay default without bridge</li>
+<li>set <code>DNSPort 127.0.10.1:53</code> and set pihole uservice directory of client/service</li>
+<li>tcp with outbound nat punching</li>
+<li>Traffic analysis vulnerabilities excluding routing/ddos fingerprinting
+<ul class="org-ul">
+<li>snowflake (webrtc)
+<ul class="org-ul">
+<li>hardcoded STUN servers list with fast local DNS requests for multiple instead of 1</li>
+<li>hardcoded request to sstatic cdn for domain fronting after STUN</li>
+</ul></li>
+<li>client unvalidated TLS handshake to node
+<ul class="org-ul">
+<li>server TLS cert is self signed</li>
+<li>hardcodes fields in specific order, unusual lack of additional data fields</li>
+<li>issuer CN is always www. (8-20 chars) .com with no country, state, org or issuer</li>
+<li>subject CN is always www. (8-20 chars) .net (non overlaping with issuer) with no fields</li>
+</ul></li>
+<li>obsf4
+<ul class="org-ul">
+<li>well known protocols are not imitated throughly ie the first data packet on port 443 needs a TLS/SSL header to be HTTPS</li>
+<li>obsf4proxy sets TCP push flag on last packet (uncommon)</li>
+<li>initialization data is half duplex and only flows one way at a time</li>
+<li>first data packet is client to server packet is 141 - 8192 bytes and the next server to client packet is 21 - 8192 bytes</li>
+<li>all data is  21 - 8192 bytes, checking 6+ data packets for size range increases fingerprint</li>
+<li>identified connections can reveal others based on the half second timing window for parallel connections</li>
+<li>Inter Arrival Timing flags
+<ul class="org-ul">
+<li>0 sends largest first with last having psh flag due to network segmentation</li>
+<li>1 sets the max payload to 1448 bytes (with psh flag)</li>
+<li>2 uncommon uses random sizes and the psh flag doesn't always change direction of data flow</li>
+</ul></li>
+</ul></li>
+<li>Browser bundle
+<ul class="org-ul">
+<li>automatic bridge connections on startup</li>
+<li>known bridge request changing traceability</li>
+<li>private bridges allow unique tracking and proof as bridges persist to disk</li>
+</ul></li>
+</ul></li>
+<li><a href="https://github.com/cathugger/mkp224o">vanity address generator for v3</a>
+<ul class="org-ul">
+<li>v3 addresses use ed25519 keys</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgca48305" class="outline-3">
+<h3 id="orgca48305">Link .torrc</h3>
+<div class="outline-text-3" id="text-orgca48305">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="orgbac9522">(ignore-errors
+  (let* ((tor-confdir (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME")
+                                                          (getenv "XDG_CONFIG_HOME")
+                                                        (concat (file-name-as-directory (getenv "HOME"))
+                                                                ".config")))
+                              "tor"))
+        (tor-conf (concat (file-name-as-directory tor-confdir) ".torrc")))
+    (if (not (file-exists-p tor-confdir))
+        (progn (make-directory tor-confdir)
+               (set-file-modes tor-confdir #o700)))
+    (if (not (or (file-exists-p tor-conf) (file-symlink-p tor-conf)))
+        (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) ".torrc") tor-conf 1))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4603354" class="outline-3">
+<h3 id="org4603354">Data Directory</h3>
+<div class="outline-text-3" id="text-org4603354">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="orgefab736">(concat (if (getenv "XDG_CONFIG_HOME")
+            (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
+          (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
+        "tor")
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org396e39e" class="outline-3">
+<h3 id="org396e39e">Control Socket</h3>
+<div class="outline-text-3" id="text-org396e39e">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="org8960ffd">(concat (file-name-as-directory
+         (concat (if (getenv "XDG_CONFIG_HOME")
+                     (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
+                   (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
+                 "tor"))
+        "torSocket")
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org677a515" class="outline-3">
+<h3 id="org677a515">.torrc</h3>
+<div class="outline-text-3" id="text-org677a515">
+<div class="org-src-container">
+<pre class="src src-conf" id="orgacb93f8">StrictNodes 1
+AvoidDiskWrites 1
+Sandbox 1
+#UseBridges 1
+
+# does not work with bridges
+EntryNodes {us}
+
+#ExcludeExitNodes {il},{gb},{ca},{nz},{au},{us},{fr},{??}
+#ExcludeNodes BadExit,Unnamed,default,{il},{gb},{ca},{nz},{au}
+
+#ExitNodes {us}
+
+# obfs4proxy configuration
+#ClientTransportPlugin obfs4 exec /usr/share/tor/PluggableTransports/obfs4proxy
+
+DataDirectory /home/jam/.config/tor
+ControlSocket /home/jam/.config/tor/torSocket
+CookieAuthentication 1
+
+#HiddenServiceDir /Library/Tor/var/lib/tor/hidden_service/
+#HiddenServicePort 80 unix:/path/to/socket
+
+VanguardsLiteEnabled 1
+HiddenServiceEnableIntroDoSDefense 1
+#HiddenServiceEnableIntroDoSBurstPerSec 200
+#HiddenServiceEnableIntroDoSRatePerSec 25
+
+#HiddenServiceNumIntroductionPoints 20
+
+#HiddenServiceMaxStreams 65535
+#HiddenServiceMaxStreamsCloseCircuit 1
+
+#HiddenServiceOnionBalanceInstance 1
+
+#HiddenServiceExportCircuitID haproxy
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

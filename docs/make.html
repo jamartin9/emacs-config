@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>make</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org38180e9">
+<div class="navbar-brand" id="org61d0b3d">
+<div class="navbar-item" id="org9dd30f9">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgcaf66d8">
+<div class="navbar-start" id="orge179af3">
+<div class="navbar-item" id="orgffcc8ba">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org6d6c574">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orge8fdf79" class="outline-2">
+<h2 id="orge8fdf79">make</h2>
+<div class="outline-text-2" id="text-orge8fdf79">
+</div>
+<div id="outline-container-orgcea62fe" class="outline-3">
+<h3 id="orgcea62fe">snippets</h3>
+<div class="outline-text-3" id="text-orgcea62fe">
+</div>
+<div id="outline-container-orge566063" class="outline-4">
+<h4 id="orge566063">makefile for emacs site</h4>
+<div class="outline-text-4" id="text-orge566063">
+<div class="org-src-container">
+<pre class="src src-makefile" id="orgac865e5">EMACS_PROG ?= emacs # emacsclient
+EMACS_FLAGS ?= -nw --no-splash --kill # -Q --batch
+EMACS_CMD ::= $(EMACS_PROG) $(EMACS_FLAGS)
+
+ORG_FILES ::= $(wildcard *.org)
+FILES ::=
+FILES += $(patsubst %.org, %.html, $(ORG_FILES)) # html
+
+.PHONY: all prune clean
+
+all: $(FILES)
+
+prune:
+        rm -f *.html\~
+
+clean : prune
+        rm -f *.html
+
+%.html : %.org
+        $(EMACS_CMD) $&lt; -f org-html-export-to-html
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

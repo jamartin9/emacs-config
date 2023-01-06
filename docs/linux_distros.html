@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>linux-distros</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org3d275f8">
+<div class="navbar-brand" id="org4b49070">
+<div class="navbar-item" id="orgdfcf025">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgfc79ea3">
+<div class="navbar-start" id="org638cb2c">
+<div class="navbar-item" id="org30c3314">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org1d39679">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgef206d5" class="outline-2">
+<h2 id="orgef206d5">Linux distributions</h2>
+<div class="outline-text-2" id="text-orgef206d5">
+<p>
+Having many flavors makes some lovely hot garbage&#x2026;
+</p>
+</div>
+<div id="outline-container-org483705b" class="outline-4">
+<h4 id="org483705b"><a href="android.html#ID-8005808d-1b21-48df-9706-6b999ee9aff6">android</a></h4>
+</div>
+<div id="outline-container-org96822d4" class="outline-4">
+<h4 id="org96822d4">ubuntu</h4>
+<div class="outline-text-4" id="text-org96822d4">
+<ul class="org-ul">
+<li>debian based</li>
+<li>snaps and apt for packages</li>
+<li>zfs by default</li>
+<li>aws EKS for baremetal
+<ul class="org-ul">
+<li>preinstalled components
+<ul class="org-ul">
+<li>metallb for load balancer</li>
+<li>Cilium CNI for networking</li>
+<li>Flux for gitops</li>
+<li>eksctl for control</li>
+</ul></li>
+<li>same pod and node limit at kubernetes (5000 nodes 110 pods per node 150000 total pods)</li>
+<li>build own ova <a href="https://github.com/aws/eks-distro-build-tooling">https://github.com/aws/eks-distro-build-tooling</a></li>
+<li>can run locally with containers (based on amazon linux 2)
+<ul class="org-ul">
+<li>requires docker with cgroupsv1</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org209dc2d" class="outline-4">
+<h4 id="org209dc2d">manjaro</h4>
+<div class="outline-text-4" id="text-org209dc2d">
+<ul class="org-ul">
+<li>arch based</li>
+<li>pamac and pacman for packages</li>
+<li>mkinitcpio for initraramfs</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgce7aff8" class="outline-4">
+<h4 id="orgce7aff8"><a href="openwrt.html#ID-18ebc285-c771-4420-a040-011fd3b96b51">openwrt</a></h4>
+</div>
+<div id="outline-container-orge329e0a" class="outline-4">
+<h4 id="orge329e0a">RHEL</h4>
+<div class="outline-text-4" id="text-orge329e0a">
+<ul class="org-ul">
+<li>dracut for initraramfs</li>
+<li>yum/dnf for package managers</li>
+<li>fedora uses btrfs</li>
+<li>killed centos
+<ul class="org-ul">
+<li>replaced by rocky/alma</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org40dd357" class="outline-4">
+<h4 id="org40dd357">gentoo</h4>
+<div class="outline-text-4" id="text-org40dd357">
+<ul class="org-ul">
+<li>portage for packages
+<ul class="org-ul">
+<li>use flags for config</li>
+<li>overlays for external repos</li>
+<li>can use binaries but usually source only</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

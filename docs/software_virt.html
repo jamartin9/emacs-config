@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>software-virt</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org3a67910">
+<div class="navbar-brand" id="orgfb603b4">
+<div class="navbar-item" id="orgafef110">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org7a8424e">
+<div class="navbar-start" id="org2f382a0">
+<div class="navbar-item" id="org9c24ba4">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orga2b0f40">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org0ce1da2" class="outline-2">
+<h2 id="org0ce1da2">Virtualization</h2>
+<div class="outline-text-2" id="text-org0ce1da2">
+<p>
+Simulate the simulation
+</p>
+<ul class="org-ul">
+<li>containers
+<ul class="org-ul">
+<li><a href="podman.html#ID-90cf48a5-3b01-4667-b100-72acea67034f">podman</a></li>
+<li><a href="kind.html#ID-ab1f8872-ab90-4855-98a0-5d9bf5806d78">kind</a></li>
+</ul></li>
+<li><a href="firejail.html#ID-b066a88d-c1c4-43d4-b8b8-cc345ad8467f">firejail</a></li>
+<li>qemu
+<ul class="org-ul">
+<li>binfmt for running binaries for other archs</li>
+<li>ovmf/vfio for gpu pass through to vms
+<ul class="org-ul">
+<li>must have second card as sharing/virtualization is not supported on older cards
+<ul class="org-ul">
+<li>vGpus are <a href="https://github.com/DualCoder/vgpu_unlock">software locked</a> but available as cloud offerings (grid etc)</li>
+<li><a href="https://github.com/Arc-Compute/LibVF.IO">https://github.com/Arc-Compute/LibVF.IO</a> for supported cards</li>
+<li><a href="https://github.com/OpenMdev/GVM-user">https://github.com/OpenMdev/GVM-user</a> for supported cards</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>firecracker
+<ul class="org-ul">
+<li>5.10 lts kernel</li>
+<li>snapshots for faster boot after creation</li>
+</ul></li>
+<li>mesa opengl env var <code>LIBGL_ALWAYS_SOFTWARE=true</code></li>
+<li>ebpf
+<ul class="org-ul">
+<li>non turing complete register vm</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

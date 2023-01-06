@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>steam</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgcb8c911">
+<div class="navbar-brand" id="orga305aa3">
+<div class="navbar-item" id="org8fb33c5">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org78adea7">
+<div class="navbar-start" id="orgc5a8db6">
+<div class="navbar-item" id="org260e34d">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org4ed0fdf">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org642abcd" class="outline-2">
+<h2 id="org642abcd">Steam</h2>
+<div class="outline-text-2" id="text-org642abcd">
+<ul class="org-ul">
+<li><a href="https://gitlab.com/Mr_Goldberg/goldberg_emulator">steam emulator</a></li>
+</ul>
+</div>
+<div id="outline-container-org33301b7" class="outline-3">
+<h3 id="org33301b7">steam proton notes</h3>
+<div class="outline-text-3" id="text-org33301b7">
+<ul class="org-ul">
+<li>pressure vessel added in &gt; 5.10
+<ul class="org-ul">
+<li>conflicting glibc version for bash link so had to revert/build custom</li>
+</ul></li>
+<li><a href="https://github.com/ValveSoftware/steam-for-linux/issues/1890">does not respect XDG vars</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgad1afd0" class="outline-2">
+<h2 id="orgad1afd0">Lutris</h2>
+<div class="outline-text-2" id="text-orgad1afd0">
+<ul class="org-ul">
+<li>installers battle.net</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgac57ceb" class="outline-2">
+<h2 id="orgac57ceb">Protonfixes for some games</h2>
+<div class="outline-text-2" id="text-orgac57ceb">
+</div>
+<div id="outline-container-orgcbb1df7" class="outline-3">
+<h3 id="orgcbb1df7">Link localfixes</h3>
+<div class="outline-text-3" id="text-orgcbb1df7">
+<div class="org-src-container">
+<pre class="src src-elisp" id="org33d38b1">(ignore-errors (let* ((proton-dir (concat (if (getenv "XDG_CONFIG_HOME") (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
+                                     (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
+                                   "protonfixes"))
+                      (localfixes-dir (concat (file-name-as-directory proton-dir) "localfixes")))
+  (if (not (or (file-exists-p localfixes-dir) (file-symlink-p localfixes-dir)))
+      (progn (make-directory localfixes-dir 1)
+             (set-file-modes localfixes-dir #o700)))
+  (if (not (or (file-exists-p (concat (file-name-as-directory localfixes-dir) "7110.py"))
+               (file-symlink-p (concat (file-name-as-directory localfixes-dir) "7110.py"))))
+      (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "7110.py")
+                          (concat (file-name-as-directory localfixes-dir) "7110.py") 1))
+  (if (not (or (file-exists-p (concat (file-name-as-directory localfixes-dir) "22380.py"))
+               (file-symlink-p (concat (file-name-as-directory localfixes-dir) "22380.py"))))
+      (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "22380.py")
+                          (concat (file-name-as-directory localfixes-dir) "22380.py") 1))
+  ))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4c11dfd" class="outline-3">
+<h3 id="org4c11dfd">Jade Empire (process affinity)</h3>
+<div class="outline-text-3" id="text-org4c11dfd">
+<div class="org-src-container">
+<pre class="src src-python" id="org26ec09a">""" Game fix Jade Empire: Special Edition
+"""
+#pylint: disable=C0103
+
+import threading
+import os
+import subprocess
+from protonfixes.logger import log
+
+def _taskset():
+    """Use taskset to set mask of JadeEmpire.exe"""
+    # avoiding an external library as proc should be available on linux
+    again = True
+    badexes = ['JadeEmpire.exe']
+    while again:
+        pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
+        for pid in pids:
+            try:
+                with open(os.path.join('/proc', pid, 'cmdline'), 'rb') as proc_cmd:
+                    cmdline = proc_cmd.read()
+                    for exe in badexes:
+                        if exe in cmdline.decode():
+                            mask = os.sched_getaffinity(pid)
+                            while mask != {0} :
+                                mask = os.sched_getaffinity(pid)
+                            res = os.sched_setaffinity(pid, {0,1,2,3})
+                            again = False
+            except IOError:
+                continue
+
+@DeprecatedSince("5.0-3")
+def main():
+    """ Needs pid mask set on launch """
+    thread = threading.Thread(target=_taskset, args=())
+    thread.daemon = False
+    thread.start()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org87fa0f4" class="outline-3">
+<h3 id="org87fa0f4">Fallout New Vegas (audio/vk issues)</h3>
+<div class="outline-text-3" id="text-org87fa0f4">
+<div class="org-src-container">
+<pre class="src src-python" id="org6045d7b">""" Game fix for Fallout: New Vegas
+"""
+# pylint: disable=C0103
+from protonfixes import util
+from protonfixes.protonversion import DeprecatedSince
+
+@DeprecatedSince("5.0-3")
+def main():
+    """ Use D3D9, quartz for audio, disable AA &amp; water reflections/refractions
+    """
+    # DX9 game
+    util.disable_dxvk()
+
+    # quartz for audio
+    util.protontricks('quartz')
+
+    # Graphics and HUD glitches when
+    # AntiAliasing and Water Reflections/Refractions are enabled
+    # https://github.com/ValveSoftware/Proton/issues/356
+    user_opts = '''
+    [Display]
+    iMultiSample=0
+
+    [Water]
+    bUseWaterReflections=0
+    bUseWaterRefractions=0
+    '''
+    util.set_ini_options(user_opts, 'My Games/FalloutNV/FalloutPrefs.ini')
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

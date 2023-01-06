@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>systemd</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgd676222">
+<div class="navbar-brand" id="org323d22d">
+<div class="navbar-item" id="orge877c67">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org99acb47">
+<div class="navbar-start" id="org9ddd711">
+<div class="navbar-item" id="org1b0d676">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgaefc0e9">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgb3d1689" class="outline-2">
+<h2 id="orgb3d1689">Systemd</h2>
+<div class="outline-text-2" id="text-orgb3d1689">
+</div>
+<div id="outline-container-org8156a7e" class="outline-3">
+<h3 id="org8156a7e">systemd</h3>
+<div class="outline-text-3" id="text-org8156a7e">
+</div>
+<div id="outline-container-orgf1b6f2e" class="outline-4">
+<h4 id="orgf1b6f2e">journalctl</h4>
+<div class="outline-text-4" id="text-orgf1b6f2e">
+<ul class="org-ul">
+<li><code>/etc/systemd/journald.conf</code>
+<ul class="org-ul">
+<li><code>SystemMaxUse=100M</code></li>
+</ul></li>
+<li><code>journalctl -u SERVICE</code></li>
+<li>coredumpctl</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4419e17" class="outline-4">
+<h4 id="org4419e17">sysctl</h4>
+<div class="outline-text-4" id="text-org4419e17">
+<ul class="org-ul">
+<li><code>net.ipv4.icmp_echo_ignore_all = 1</code> in <code>/etc/sysctl.conf</code> or <code>/etc/sysctl.d/90-override.conf</code> to disable icmp</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgece8845" class="outline-4">
+<h4 id="orgece8845">systemctl</h4>
+<div class="outline-text-4" id="text-orgece8845">
+</div>
+<ul class="org-ul">
+<li><a id="org6b80b91"></a>services<br>
+<div class="outline-text-5" id="text-org6b80b91">
+<ul class="org-ul">
+<li><code>edit</code> doesn't require <code>daemon-reload</code></li>
+<li>hooks within services like <code>ExecStartPost/ExecStopPost</code></li>
+<li>list <code>systemctl list-unit-files</code></li>
+<li>list failed <code>systemctl list-units --state failed</code></li>
+<li>deps <code>systemctl list-dependencies --reverse</code></li>
+<li>mask with <code>systemctl mask swap.target</code></li>
+<li>remote management with ssh <code>systemctl --host=user@somesuchhost.com status SERVICE.unit</code></li>
+<li>restart interval with <code>RestartSec=5</code></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgf42a625" class="outline-4">
+<h4 id="orgf42a625">timedatectl</h4>
+<div class="outline-text-4" id="text-orgf42a625">
+<ul class="org-ul">
+<li>systemd-timesyncd <code>timedatectl set-ntp true</code></li>
+<li><code>set-local-rtc</code> to set hardware clock to localtime instead of UTC</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfff364b" class="outline-4">
+<h4 id="orgfff364b">NetworkManager</h4>
+<div class="outline-text-4" id="text-orgfff364b">
+<ul class="org-ul">
+<li><code>/usr/lib/NetworkManager/conf.d/20-connectivity.conf</code> pings out
+<ul class="org-ul">
+<li><code>/etc/NetworkManager/conf.d/20-connectivity.conf</code>
+[connectivity]
+uri=<a href="http://ping.manjaro.org/check_network_status.txt">http://ping.manjaro.org/check_network_status.txt</a>
+interval=0
+enabled=false</li>
+</ul></li>
+<li>conflicts with <code>systemd-networkd</code> &amp; <code>systemd-resolvd</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd6349af" class="outline-4">
+<h4 id="orgd6349af">misc</h4>
+<div class="outline-text-4" id="text-orgd6349af">
+<ul class="org-ul">
+<li><code>systemd-analyze blame</code> for boot times</li>
+<li><code>systemd-analyze security my-service.unit</code> for sec settings</li>
+<li><code>systemctl --user status</code> for services in <code>$HOME/.config/systemd/user/</code></li>
+<li><code>systemctl set-default</code> or <code>isolate</code> with runlevels/targets <code>rescue</code>, <code>multi-user</code> and <code>graphical</code></li>
+<li>rate limited restart will disable units with <code>Restart=on-failure</code> without <code>StartLimitIntervalSec=0</code></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

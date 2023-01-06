@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>file-systems</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgd48478a">
+<div class="navbar-brand" id="org8007a74">
+<div class="navbar-item" id="orgb076701">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org12bbfe0">
+<div class="navbar-start" id="org5b5ed12">
+<div class="navbar-item" id="org9213c95">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgc225fa4">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orga9c4a36" class="outline-2">
+<h2 id="orga9c4a36">File Systems</h2>
+<div class="outline-text-2" id="text-orga9c4a36">
+<p>
+Systems need filing!
+</p>
+</div>
+<div id="outline-container-org821eca6" class="outline-3">
+<h3 id="org821eca6"><a href="zfs.html#ID-382f92d4-f76f-47b1-b4dd-33a39c11aaa2">zfs</a></h3>
+</div>
+<div id="outline-container-orga77bdf1" class="outline-3">
+<h3 id="orga77bdf1">swap</h3>
+<div class="outline-text-3" id="text-orga77bdf1">
+<ul class="org-ul">
+<li>uses hard drive as memory page cache</li>
+<li><code>swapoff /swapfile</code> to disable</li>
+<li><code>fallocate -l 2G /swapfile &amp;&amp; mkswap /swapfile</code> to create</li>
+<li><code>swapon /swapfile</code> to enable
+<ul class="org-ul">
+<li>load zram module and setup swap partition for compression</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

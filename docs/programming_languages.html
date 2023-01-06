@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>programming-languages</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org124dbdb">
+<div class="navbar-brand" id="orgb27a3a2">
+<div class="navbar-item" id="org314370b">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org71228d4">
+<div class="navbar-start" id="org46496ad">
+<div class="navbar-item" id="org67b38b5">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org6c0d501">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org1536b1a" class="outline-2">
+<h2 id="org1536b1a">Programming Languages</h2>
+<div class="outline-text-2" id="text-org1536b1a">
+<p>
+The tower of babel is your type system as a macro
+</p>
+</div>
+<div id="outline-container-orgbad3d26" class="outline-3">
+<h3 id="orgbad3d26">guile</h3>
+<div class="outline-text-3" id="text-orgbad3d26">
+<ul class="org-ul">
+<li>goops for objects instead of records</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdfc07c7" class="outline-3">
+<h3 id="orgdfc07c7">clojure</h3>
+<div class="outline-text-3" id="text-orgdfc07c7">
+<ul class="org-ul">
+<li><a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">https://aphyr.com/posts/353-rewriting-the-technical-interview</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb479742" class="outline-3">
+<h3 id="orgb479742">elisp</h3>
+<div class="outline-text-3" id="text-orgb479742">
+<ul class="org-ul">
+<li>eieio for objects</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org48b6b6d" class="outline-3">
+<h3 id="org48b6b6d">shell</h3>
+<div class="outline-text-3" id="text-org48b6b6d">
+<ul class="org-ul">
+<li>sh
+<ul class="org-ul">
+<li>posix shell</li>
+<li><a href="https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/utilities/sh.html">https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/utilities/sh.html</a></li>
+<li><code>cmd 2&gt;&amp;1 | tee -- "log.txt"</code></li>
+</ul></li>
+<li>bash
+<ul class="org-ul">
+<li>array syntax <code>[@]</code></li>
+<li><code>--posix</code> for sh mode</li>
+<li><code>&amp;&gt;</code> <code>2&gt;&amp;1</code> redirects stderr and stdout</li>
+</ul></li>
+<li>zsh
+<ul class="org-ul">
+<li><code>(P)</code> array syntax</li>
+<li>shell script compilation (zinit automatically does)</li>
+<li>shell/bash emulation</li>
+<li>p10k theme starts git daemon in background</li>
+</ul></li>
+<li>ksh
+<ul class="org-ul">
+<li>setenv for environment variables</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1395e24" class="outline-3">
+<h3 id="org1395e24"><a href="c_lang.html#ID-12a3e66b-5ada-4bfc-ab64-819a0d46d204">c</a></h3>
+</div>
+<div id="outline-container-orgc2123b3" class="outline-3">
+<h3 id="orgc2123b3">c++</h3>
+<div class="outline-text-3" id="text-orgc2123b3">
+<ul class="org-ul">
+<li><a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines">https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines</a></li>
+<li>gcc &lt; 11 can be built with c++98; c++11 required for 11+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgab85f8a" class="outline-3">
+<h3 id="orgab85f8a">rust</h3>
+<div class="outline-text-3" id="text-orgab85f8a">
+<ul class="org-ul">
+<li><code>cargo test -- --nocapture</code> for <code>println!()</code></li>
+<li>rls removed in 1.65 for rust-analyzer</li>
+<li>HashTable uses SwissTable(DoS resistance)
+<ul class="org-ul">
+<li><a href="https://morestina.net/blog/1843/the-stable-hashmap-trap">conflicts with other hashers</a> like fxhash on insertion. Use random init state.</li>
+</ul></li>
+<li><a href="https://rust-lang.github.io/api-guidelines/checklist.html">https://rust-lang.github.io/api-guidelines/checklist.html</a></li>
+<li>reference counting can be checked by <a href="https://github.com/matthieu-m/static-rc">statically</a></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-toml" id="org8cdaf57">[profile.release]
+lto = true
+codegen-units = 1 # reduce parallel codegen for increased optimization
+strip = true
+opt-level = "z" # smallest binary instead of speed
+panic = "abort"
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8a49777" class="outline-3">
+<h3 id="org8a49777"><a href="css.html#ID-a168933c-6a2b-456e-9fd0-760c5bc180dc">css</a></h3>
+</div>
+<div id="outline-container-org42bbe29" class="outline-3">
+<h3 id="org42bbe29"><a href="make.html#ID-7c407252-45a1-41a6-901a-cfdb19a6ac36">make</a></h3>
+</div>
+<div id="outline-container-orgd3b33f9" class="outline-3">
+<h3 id="orgd3b33f9"><a href="elixir.html#ID-0713d4b4-4d66-495b-9d1b-192c91a8ab9f">elixir</a></h3>
+</div>
+<div id="outline-container-orgf6bbff0" class="outline-3">
+<h3 id="orgf6bbff0"><a href="julia.html#ID-b4f4114e-75e8-4312-8c96-5567ca6d6b80">julia</a></h3>
+</div>
+<div id="outline-container-org0f1073d" class="outline-3">
+<h3 id="org0f1073d">golang</h3>
+<div class="outline-text-3" id="text-org0f1073d">
+<ul class="org-ul">
+<li>GOMEMLIMIT to control heap size to avoid GC</li>
+<li>disable default proxy
+<ul class="org-ul">
+<li>go env -w GOPROXY=direct</li>
+<li>go env -w GOSUMDB=off</li>
+</ul></li>
+<li>raw syscalls vs libc
+<ul class="org-ul">
+<li>CGO<sub>ENABLED</sub> to toggle libc linkage</li>
+</ul></li>
+<li>6 month release cycle</li>
+<li>export with capitalization</li>
+<li>vendors dependencies by default</li>
+<li>large std library
+<ul class="org-ul">
+<li>can have ossification issues such as ed25519 signature malleability update cadence
+<ul class="org-ul">
+<li><img src="https://hdevalence.ca/images/ed25519-comparison.png" alt="ed25519-comparison.png"></li>
+</ul></li>
+</ul></li>
+<li>TCP <code>NODELAY</code> set by default (no batching with nagle's algorithm)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org66469b2" class="outline-3">
+<h3 id="org66469b2">jvm</h3>
+<div class="outline-text-3" id="text-org66469b2">
+<ul class="org-ul">
+<li>Valhalla for value objects (remove boxing overhead)</li>
+<li>Loom for user mode green threads</li>
+<li>panama for native library linkage</li>
+</ul>
+</div>
+<div id="outline-container-org44a9354" class="outline-4">
+<h4 id="org44a9354">java</h4>
+<div class="outline-text-4" id="text-org44a9354">
+<ul class="org-ul">
+<li>6 months release</li>
+<li>3 year lts release</li>
+<li>espresso for java on java (graalvm)</li>
+<li>microprofile for javaee</li>
+<li>sealed classes</li>
+<li>records</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org74b75d0" class="outline-3">
+<h3 id="org74b75d0">javascript</h3>
+<div class="outline-text-3" id="text-org74b75d0">
+</div>
+<div id="outline-container-org6d4b501" class="outline-4">
+<h4 id="org6d4b501">typescript</h4>
+<div class="outline-text-4" id="text-org6d4b501">
+<ul class="org-ul">
+<li>compiles to javascript</li>
+<li>any type for escape</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf99f2c4" class="outline-3">
+<h3 id="orgf99f2c4">DSL</h3>
+<div class="outline-text-3" id="text-orgf99f2c4">
+<ul class="org-ul">
+<li><a href="https://github.com/open-goal/jak-project">GOAL</a>
+<ul class="org-ul">
+<li>jak 1-3 lisp game implementation</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org694ebf3" class="outline-3">
+<h3 id="org694ebf3">WASM</h3>
+<div class="outline-text-3" id="text-org694ebf3">
+<ul class="org-ul">
+<li>sexp text format</li>
+<li>stack based vm instructions</li>
+<li>function table</li>
+<li>interoperability
+<ul class="org-ul">
+<li>js with SharedArrayBuffer</li>
+<li>WASI for host</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5cacf45" class="outline-3">
+<h3 id="org5cacf45">python</h3>
+<div class="outline-text-3" id="text-org5cacf45">
+<ul class="org-ul">
+<li>override behavior with double underscore methods like <code>__str(self)__</code></li>
+<li>create and activate virtual environment <code>python -m venv venv &amp;&amp; source venv/bin/activate</code></li>
+<li>run a http server on port 8080 <code>python -m http.server 8080</code></li>
+<li>pretty print json <code>python -m json.tool</code></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

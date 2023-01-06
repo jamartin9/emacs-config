@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>radarr</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org950870a">
+<div class="navbar-brand" id="org152eb36">
+<div class="navbar-item" id="orgbffd540">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orge4147bc">
+<div class="navbar-start" id="org97405bb">
+<div class="navbar-item" id="org54ecb40">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org56cd0fc">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgf45f87e" class="outline-2">
+<h2 id="orgf45f87e">Radarr notes</h2>
+<div class="outline-text-2" id="text-orgf45f87e">
+</div>
+<div id="outline-container-orgd76289d" class="outline-3">
+<h3 id="orgd76289d">podman run config</h3>
+<div class="outline-text-3" id="text-orgd76289d">
+<div class="org-src-container">
+<pre class="src src-shell" id="org0c74a36">podman run \
+  --detach \
+  --name myradarr \
+  --publish 7878:7878/tcp \
+  --rm \
+  -e TZ=America/New_York \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  --volume /storage/arr-downloads:/storage/arr-downloads:rshared,rbind \
+  --volume /home/jam/Videos:/home/jam/Videos:rshared,rbind \
+  --volume /storage/radarr-config:/config:Z \
+  docker.io/linuxserver/radarr:4.2.0-develop
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

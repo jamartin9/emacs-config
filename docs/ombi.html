@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ombi</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org50c3b8d">
+<div class="navbar-brand" id="orge640a54">
+<div class="navbar-item" id="orgcbfa6e8">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org550ce3c">
+<div class="navbar-start" id="orgcae7488">
+<div class="navbar-item" id="orgfe0518c">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgb970219">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org8c215dc" class="outline-2">
+<h2 id="org8c215dc">ombi notes</h2>
+<div class="outline-text-2" id="text-org8c215dc">
+<p>
+Web interface for adding requests to <a href="radarr.html#ID-825ea994-5841-4159-836e-c707476e4e6b">radarr</a>/<a href="sonarr.html#ID-6e900762-6a77-4abd-b93b-c9a6aad61f71">sonarr</a>
+</p>
+</div>
+<div id="outline-container-orge8f0679" class="outline-3">
+<h3 id="orge8f0679">podman run config</h3>
+<div class="outline-text-3" id="text-orge8f0679">
+<div class="org-src-container">
+<pre class="src src-sh" id="org347a7f3">podman run \
+  --detach \
+  --name myombi \
+  --publish 3579:3579/tcp \
+  --rm \
+  -e TZ=America/New_York \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e BASE_URL=/ombi \
+  --volume /storage/ombi-config:/config:Z \
+  docker.io/linuxserver/ombi:4.22.5
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>sonarr</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgc3bf04a">
+<div class="navbar-brand" id="orgf7c95fa">
+<div class="navbar-item" id="org6ad4b70">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org787181a">
+<div class="navbar-start" id="org86969f6">
+<div class="navbar-item" id="orgde18a11">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org250bdcd">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgc8c84b9" class="outline-2">
+<h2 id="orgc8c84b9">sonarr</h2>
+<div class="outline-text-2" id="text-orgc8c84b9">
+</div>
+<div id="outline-container-orga40be14" class="outline-3">
+<h3 id="orga40be14">notes</h3>
+<div class="outline-text-3" id="text-orga40be14">
+<ul class="org-ul">
+<li>TV show calendar, planner and downloader</li>
+<li>uses download client such as transmission/getnzb
+<ul class="org-ul">
+<li>Downloads to a downloads folder and hard links to media folder
+<ul class="org-ul">
+<li>support for renaming files on download</li>
+<li>scans media library and fills in missing shows
+<ul class="org-ul">
+<li>can manually import seasons/episodes</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>limited support for indexers without jackett or <a href="prowlarr.html#ID-6d09ecdd-b84f-4928-95bb-fbe5c58c2233">prowlarr</a></li>
+<li>tags are used to limit which indexer are used and in release profiles to include/exclude words</li>
+<li>BUG linuxserver docker images do not support &#x2013;user option (podman userspace containers) and user PUIG/GUID will incorrectly map forcing global permissions of some of the directories to be set</li>
+<li><a href="podman.html#ID-90cf48a5-3b01-4667-b100-72acea67034f">podman</a> run configuration</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-shell" id="org28b52e0">podman run \
+  --detach \
+  --name mysonarr \
+  --publish 8989:8989/tcp \
+  --rm \
+  -e TZ=America/New_York \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  --volume /storage/arr-downloads:/storage/arr-downloads:rshared,rbind \
+  --volume /home/jam/Shows:/home/jam/Shows:rshared,rbind \
+  --volume /storage/sonarr-config:/config:Z \
+  docker.io/linuxserver/sonarr:3.0.8
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

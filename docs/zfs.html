@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>zfs</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orga07c88f">
+<div class="navbar-brand" id="org970b0d6">
+<div class="navbar-item" id="orge551257">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgae09e2e">
+<div class="navbar-start" id="org2af1b68">
+<div class="navbar-item" id="org192c01e">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgb0a1613">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org9e1c494" class="outline-2">
+<h2 id="org9e1c494">ZFS</h2>
+<div class="outline-text-2" id="text-org9e1c494">
+</div>
+<div id="outline-container-orgf7a2e76" class="outline-3">
+<h3 id="orgf7a2e76">openzfs</h3>
+<div class="outline-text-3" id="text-orgf7a2e76">
+</div>
+<div id="outline-container-org0c2d231" class="outline-4">
+<h4 id="org0c2d231">install</h4>
+<div class="outline-text-4" id="text-org0c2d231">
+<ul class="org-ul">
+<li>If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
+That small space is useful for uefi bootloader via:
+<code>mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX</code> and
+<code>grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1</code>.
+A larger partition can allow proper fat32 fs type, grub installation(<code>--boot-directory</code>) and kernel/initramfs storage.</li>
+<li>add to kmod to initramfs via mkinitcpio/dracut
+<ul class="org-ul">
+<li>ex. add zfs to HOOKS in <code>/etc/defaults/mkinitcpio.conf</code></li>
+<li>regen initramfs <code>mkinitcpio -P</code></li>
+</ul></li>
+<li>update-grub with zfs root (if on root)</li>
+<li>Pam module for auto decrypt/mount on user login
+<ul class="org-ul">
+<li>/etc/pam.d/zfs-key</li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-conf" id="org4d793ae">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
+session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+</pre>
+</div>
+<ul class="org-ul">
+<li>/etc/pam.d/system-auth and /etc/pam.d/su-l
+auth       include      zfs-key
+session    include      zfs-key
+password   include      zfs-key</li>
+</ul>
+<ul class="org-ul">
+<li>Manual pam script
+<ul class="org-ul">
+<li><code>/etc/pam.d/system-auth</code>
+<code>auth       optional                    pam_exec.so      expose_authtok /sbin/zfs-pam-login</code>
+<ul class="org-ul">
+<li>zfs-pam-login
+<code>PASS=$(cat -)</code>
+<code>zfs load-key "${ZFS_HOME_VOL}" &lt;&lt;&lt; "${PASS}" || continue</code>
+<code>zfs mount "${ZFS_HOME_VOL}" || true</code></li>
+</ul></li>
+</ul></li>
+<li>add systemd services for device scanning/import/automounting
+<ul class="org-ul">
+<li>set cache if not scanning for pools <code>zpool set cachefile=/etc/zfs/zpool.cache POOL</code>
+<ul class="org-ul">
+<li><code>systemctl enable zfs-import-cache</code></li>
+<li><code>systemctl enable zfs-import.target</code></li>
+</ul></li>
+<li>enable mounts if not using ZED
+<ul class="org-ul">
+<li><code>systemctl enable zfs-mount</code></li>
+<li><code>systemctl enable zfs.target</code></li>
+</ul></li>
+</ul></li>
+<li>set arc memory in kernel params(grub), initramfs <code>/etc/default/zfs</code> or modprobe params <code>/etc/modprobe.d/zfs.conf</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2c649f8" class="outline-4">
+<h4 id="org2c649f8">usage</h4>
+<div class="outline-text-4" id="text-org2c649f8">
+<ul class="org-ul">
+<li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
+<li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgda35822" class="outline-4">
+<h4 id="orgda35822">notes</h4>
+<div class="outline-text-4" id="text-orgda35822">
+<ul class="org-ul">
+<li>If you lose a vdev in a pool you LOSE THE POOL</li>
+<li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
+<ul class="org-ul">
+<li>Manual pool config can get more out of smaller disks with the same redundancy
+<ul class="org-ul">
+<li>Linux 4.12+ udev IO rule for <code>zfs_vdev_scheduler</code> to reduce cpu for manual partition</li>
+</ul></li>
+</ul></li>
+<li>When expanding rebalancing is not done leaving potentially higher resilver times in the future increasing the chance of cascading failure.
+<ul class="org-ul">
+<li>snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset</li>
+</ul></li>
+<li>Sparse files can be useful for testing/migrating setups if the enough storage is actually present(piecemeal the datasets)
+<ul class="org-ul">
+<li><code>dd if=/dev/zero of=/zpool-file bs=1M count=1024</code>
+<ul class="org-ul">
+<li><code>zpool create test /zpool-file</code></li>
+</ul></li>
+</ul></li>
+<li>relatime for normal timestamps</li>
+<li>SLOG requires devices that will write data on power loss</li>
+<li>SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down</li>
+<li>spare drive helps resilver time (zed auto replace)</li>
+<li>Single device zfs can use the COPIES attribute to help redundancy</li>
+<li>/tmp sync off</li>
+<li>enable sharing on dataset for nfs</li>
+<li>set snapdir of dataset to visible for .zfs/snapshots</li>
+<li>L2ARC/ssd cache with persistence(2.0+) for arc speed
+<ul class="org-ul">
+<li>L2ARC has default <code>l2arc_write_max</code> of 8MiB/s and 8MiB/s burst (to fill up cache)</li>
+<li>uses arc ram (more for smaller blocks) to index</li>
+</ul></li>
+<li>arc stats on linux <code>cat /proc/spl/kstat/zfs/arcstats</code>
+<ul class="org-ul">
+<li>freebsd/darwin (removed in linux 5.5)</li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-C" id="org7d53ddb">sysctlbyname("kstat.zfs.misc.arcstats.size")
+</pre>
+</div>
+<ul class="org-ul">
+<li><a href="https://www.brendangregg.com/blog/2021-09-06/zfs-is-mysteriously-eating-my-cpu.html">zfs using cpu despite not being in use</a></li>
+<li><a href="https://github.com/kimono-koans/httm">https://github.com/kimono-koans/httm</a> for snapshot traversal</li>
+<li>record size for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)</li>
+<li>ztest is userspace w/o zvols
+<ul class="org-ul">
+<li>openebs cstor uses userspace openzfs with custom zrepl (based on 0.7.9)</li>
+<li><a href="https://github.com/iomesh/zfs/tree/uzfs-dev">https://github.com/iomesh/zfs/tree/uzfs-dev</a> is userspace fork using fuse vfs</li>
+</ul></li>
+<li>compresses with blocks 7/8 of original size
+<ul class="org-ul">
+<li>non default compression algo zstd is simd optimized (older chips)</li>
+</ul></li>
+<li>RAM ECC check for ARC <code>modprobe zfs zfs_flags=16</code></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

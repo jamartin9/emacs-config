@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>podman</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org20b72db">
+<div class="navbar-brand" id="org440130a">
+<div class="navbar-item" id="org8636b5d">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgad08858">
+<div class="navbar-start" id="orgc52c41f">
+<div class="navbar-item" id="org775738b">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org024f0fa">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org1582b33" class="outline-2">
+<h2 id="org1582b33">podman</h2>
+<div class="outline-text-2" id="text-org1582b33">
+</div>
+<div id="outline-container-org5be009c" class="outline-3">
+<h3 id="org5be009c">podman notes</h3>
+<div class="outline-text-3" id="text-org5be009c">
+<ul class="org-ul">
+<li>rootless containers with kernel &gt;= 5.11 overlayfs
+<ul class="org-ul">
+<li><code>rm -rf ~/.{config,local/share}/containers /run/user/$(id -u)/{libpod,runc,vfs-*}</code> or <code>podman system migrate</code> or <code>podman system reset</code></li>
+<li><code>touch /etc/subuid /etc/subgid &amp;&amp; usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $(whoami)</code> for pid/gid</li>
+<li>needs cgroupv2(grub cmdline and Delegate user service), slirp4netns for networking, fuse-overlayfs for storage</li>
+<li>set <code>unqualified-search-registries = ["docker.io"]</code> in <code>/etc/containers/storage.conf</code> for default searching to docker for kind</li>
+</ul></li>
+<li>runc, crun, cri-o and conmon for monitoring the runtimes</li>
+<li>needs ACLS set for rootless (zfs)</li>
+<li>slirp4netns defaults to 10.0.2.100/24
+<ul class="org-ul">
+<li>shares usernamespace with non root as 10.0.0.1 resolves</li>
+</ul></li>
+<li>nvidia support with <a href="https://github.com/NVIDIA/nvidia-container-toolkit">https://github.com/NVIDIA/nvidia-container-toolkit</a>
+<ul class="org-ul">
+<li>edit <code>/etc/nvidia-container-runtime/config.toml</code> with <code>no-cgroups = true</code> and <code>ldconfig = "/sbin/ldconfig"</code> (when using &#x2013;userns keep-id) for rootless</li>
+<li>add <code>--hooks-dir=/usr/share/containers/oci/hooks.d/ --security-opt=label=disable --security-opt=label=type:nvidia_container_t -e NVIDIA_VISIBLE_DEVICES=all  -e NVIDIA_DRIVER_CAPABILITIES=all</code> to podman run</li>
+</ul></li>
+<li>podman-compose does not cleanup networks (docker<sub>default</sub>) which uses dnsmasq with the old configuration; run podman network rm on subsequent runs</li>
+<li>podman container runtime config for crun can be built with wasm-edge runtime support and used via <code>module.wasm.image/variant=compat-smart</code> annotation</li>
+<li><code>podman load --log-level=debug</code> for verbosity
+<ul class="org-ul">
+<li>podman load can fail with a gzip'd exported docker image&#x2026; so <code>gzip -d</code> first</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org98f7b19" class="outline-3">
+<h3 id="org98f7b19">p2pool and monerod kube configs</h3>
+<div class="outline-text-3" id="text-org98f7b19">
+<p>
+podman play kube p2pool.yaml
+podman play kube xmrig.yaml &#x2013;down
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org8e426bc">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xmr-deployment
+  labels:
+    app: xmr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmr
+  template:
+    metadata:
+      labels:
+        app: xmr
+    spec:
+      volumes:
+      - name: p2pool-config
+        hostPath:
+          path: /storage/p2pool
+      - name: monero-config
+        hostPath:
+          path: /storage/bitmonero
+      containers:
+      - name: monero
+        image: localhost/monero:latest
+        volumeMounts:
+        - name: monero-config
+          mountPath: /tmp/bitmonero
+        args: ["--zmq-pub", "tcp://127.0.0.1:18084", "--disable-dns-checkpoints", "--enable-dns-blocklist", "--check-updates", "disabled", "--non-interactive", "--data-dir", "/tmp/bitmonero", "--no-igd", "--prune-blockchain", "--out-peers", "30", "--in-peers", "30", "--rpc-bind-ip", "0.0.0.0", "--confirm-external-bind"] # , "--rpc-bind-ip", "0.0.0.0", "--confirm-external-bind"
+        command: ["/bin/monerod"]
+        ports:
+        - name: monero-peers
+          containerPort: 18080
+          hostPort: 18080
+        - name: monero-wallet
+          containerPort: 18081
+          hostPort: 18081
+      - name: xmr-p2pool
+        image: localhost/p2pool:latest
+        volumeMounts:
+        - name: p2pool-config
+          mountPath: /tmp/p2pool
+        args: ["--mini","--zmq-port", "18084", "--in-peers", "20", "--out-peers", "20", "--no-randomx", "--no-cache", "--wallet", "41xxxADDRESSxHERExxx" ]
+        command: ["/bin/p2pool"]
+        workingDir: "/tmp/p2pool"
+        ports:
+        - name: stratum
+          containerPort: 3333
+          hostPort: 3333
+        - name: p2pool-peers-mini
+          containerPort: 37888
+          hostPort: 37888
+        #- name: p2pool-peers
+        #  containerPort: 37889
+        #  hostPort: 37889
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org562545f" class="outline-3">
+<h3 id="org562545f">xmrig</h3>
+<div class="outline-text-3" id="text-org562545f">
+<div class="org-src-container">
+<pre class="src src-yaml" id="org1e2a6fd">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xmrig-deployment
+  labels:
+    app: xmrig
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig
+  template:
+    metadata:
+      labels:
+        app: xmrig
+    spec:
+      restartPolicy: "Never"
+      hostNetwork: true
+      volumes:
+      - name: hugepage-1gi
+        hostPath:
+          path: /dev/hugepages
+#        emptyDir:
+#          medium: HugePages-1Gi
+      - name: msr-module
+        hostPath:
+          path: /lib/modules
+      - name: msr-cpu
+        hostPath:
+          path: /dev/cpu
+      containers:
+      - name: xmrig
+        image: localhost/xmrig:latest
+#        image: localhost/xmrig-msr-tools-module-init-tools:latest
+        args: ["-o", "127.0.0.1:3333", "--randomx-1gb-pages", "--huge-pages-jit"]
+        command: ["/bin/xmrig"]
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /dev/hugepages
+            name: hugepage-1gi
+          - mountPath: /lib/modules
+            name: msr-module
+          - mountPath: /dev/cpu
+            name: msr-cpu
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

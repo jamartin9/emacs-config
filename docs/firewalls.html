@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>firewalls</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org508fb7e">
+<div class="navbar-brand" id="orgb1d9bc8">
+<div class="navbar-item" id="orgf505c0d">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org1bc2d2c">
+<div class="navbar-start" id="org499855c">
+<div class="navbar-item" id="orga19e533">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org876efcc">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org88cf3aa" class="outline-2">
+<h2 id="org88cf3aa">firewalls</h2>
+<div class="outline-text-2" id="text-org88cf3aa">
+<p>
+much wall, such fire, very wow
+</p>
+</div>
+<div id="outline-container-org2035c5d" class="outline-3">
+<h3 id="org2035c5d">firewalls</h3>
+<div class="outline-text-3" id="text-org2035c5d">
+<ul class="org-ul">
+<li>ufw accepts all localhost in ufw-before-input (so it can't be blocked in the INPUT chain)</li>
+<li>iptables replaced by nftables replaced by bpfilter</li>
+<li><a href="https://github.com/evilsocket/opensnitch">opensnitch</a> added nftables incoming rule support in v1.6.0-rc.2</li>
+<li>upnpc
+<ul class="org-ul">
+<li>1900 udp for ssdp</li>
+<li>5350 udp for pcp</li>
+<li>5351 udp for nat-pmp</li>
+</ul></li>
+<li>private networks (/32 is all and /24 is all but last octet)
+<ul class="org-ul">
+<li>10.x.x.x/8 is class A</li>
+<li>192.168.x.x/16 is class C</li>
+<li>127.x.x.x/8 is localhost</li>
+</ul></li>
+<li><code>upnpc -s | grep ExternalIPAddress</code></li>
+<li>8444 TCP chia, 18080 monerod, 37889 p2pool</li>
+<li>nftables with xtables
+<ul class="org-ul">
+<li><code>#match bpf pinned /sys/fs/bpf/mfw/match drop</code> to load bpf program</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

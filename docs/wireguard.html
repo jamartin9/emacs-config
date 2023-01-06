@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>wireguard</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgf530249">
+<div class="navbar-brand" id="org61a86ef">
+<div class="navbar-item" id="org34b6097">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgf11e5d2">
+<div class="navbar-start" id="orgb8d99a2">
+<div class="navbar-item" id="orgc7a5ce2">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orge256b41">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orga33ab3d" class="outline-2">
+<h2 id="orga33ab3d">Wireguard</h2>
+<div class="outline-text-2" id="text-orga33ab3d">
+</div>
+<div id="outline-container-orgbb98bc6" class="outline-3">
+<h3 id="orgbb98bc6">wireguard</h3>
+<div class="outline-text-3" id="text-orgbb98bc6">
+</div>
+<div id="outline-container-org490fbb6" class="outline-4">
+<h4 id="org490fbb6">install</h4>
+<div class="outline-text-4" id="text-org490fbb6">
+<ul class="org-ul">
+<li>module added with <a href="linux.html#ID-9e9bcdb8-ac35-4420-a2c0-c32b96cb4803">linux</a> kernel 5.6</li>
+<li>use network manager for user in network group to add vpn w/o root
+<ul class="org-ul">
+<li><code>nmcli connection import type wireguard file ./wg0.conf</code></li>
+<li><code>nmcli connection up wg0</code></li>
+<li><code>nmcli connection down wg0</code></li>
+</ul></li>
+<li>wg-quick for testing
+<ul class="org-ul">
+<li><code>wg-quick up wg0</code></li>
+<li><code>wg-quick down wg0</code></li>
+</ul></li>
+<li><a href="systemd.html#ID-d4a9f73a-6bec-4d47-990c-c15941c5b143">systemd</a> script
+<ul class="org-ul">
+<li><code>systemctl start wg-quick\@wg0</code></li>
+<li>systemd override with <code>upnpc</code> for nat plug n play behind router/firewalls
+<ul class="org-ul">
+<li><code>systemctl edit wg-quick\@wg0</code> creates
+<code>/etc/systemd/system/wg-quick\@wg0.service.d/override.conf</code> with
+ [Service]
+ ExecStartPost=/usr/bin/upnpc -e WireGuard -r 42069 UDP
+ ExecStopPost=/usr/bin/upnpc -d 42069 UDP</li>
+</ul></li>
+</ul></li>
+<li>Config
+<ul class="org-ul">
+<li>add forwarding rules in <code>/etc/sysctl.d/90-override.conf</code>
+<ul class="org-ul">
+<li><code>net.ipv4.ip_forward=1</code></li>
+<li><code>net.ipv6.conf.all.forwarding=1</code></li>
+</ul></li>
+<li>server config with eno1 as interface for forwarding rules
+<ul class="org-ul">
+<li>[Interface]
+PrivateKey = PRIVATEKEY1
+Address = 10.0.0.1/24
+ListenPort = 42069
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eno1 -j MASQUERADE
+[Peer] # laptop
+PublicKey = PUBKEY2
+PresharedKey = PSK2
+AllowedIPs = 10.0.0.2/32
+[Peer] # phone
+PublicKey = PUBKEY3
+PresharedKey = PSK3
+AllowedIPs = 10.0.0.3/32</li>
+</ul></li>
+<li>client config
+<ul class="org-ul">
+<li>[Interface]
+PrivateKey = PRIVATEKEY3
+Address = 10.0.0.3/32
+#DNS = 10.0.0.1
+[Peer] # server
+PublicKey = PUBKEY3
+PresharedKey = PSK3
+AllowedIPs = 0.0.0.0/0, ::/0 # all traffic
+Endpoint = 127.0.0.1:42069</li>
+</ul></li>
+<li>runs udp</li>
+<li>ufw rule w/o nat <code>ufw route allow in on wg0 out on eno1</code></li>
+<li>reload without dropping client session <code>wg syncconf wg0 &lt;(wg-quick strip wg0)</code></li>
+</ul></li>
+<li>Ipv6 starting with <code>fe80::</code> is link-local (instead of nat66 with pcp)</li>
+<li>store wg keys in pass using processes substitution
+<ul class="org-ul">
+<li>PostUp = wg set %i private-key &lt;(su user -c "export PASSWORD<sub>STORE</sub><sub>DIR</sub>=/path/to/your/store/; pass WireGuard/private-keys/%i")</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

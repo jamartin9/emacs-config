@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>software-projects</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org529134c">
+<div class="navbar-brand" id="org94353e3">
+<div class="navbar-item" id="orgfafb3e9">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org908bdff">
+<div class="navbar-start" id="orgc359703">
+<div class="navbar-item" id="org327aebc">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgff5639d">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org6d9535b" class="outline-2">
+<h2 id="org6d9535b"><span class="todo TODO">TODO</span> add links to html export for projects</h2>
+</div>
+<div id="outline-container-org9e47be8" class="outline-2">
+<h2 id="org9e47be8">software projects</h2>
+<div class="outline-text-2" id="text-org9e47be8">
+<p>
+The coding will continue until morale improves!
+</p>
+</div>
+<div id="outline-container-org2818f8b" class="outline-3">
+<h3 id="org2818f8b">working</h3>
+<div class="outline-text-3" id="text-org2818f8b">
+<ul class="org-ul">
+<li>key2words
+<ul class="org-ul">
+<li>rust cli executable that uses bip39 to generate mneumonics from ed25519 keys.</li>
+<li>supports passphrase encryption and decryption of ssh/gpg</li>
+<li>added onion service secret file generation
+<ul class="org-ul">
+<li>so you can take 1 set of words and make a hidden service behind ssh with pgp signing/encryption for that set of bytes</li>
+</ul></li>
+</ul></li>
+<li>matching
+<ul class="org-ul">
+<li>CUDA project for implementing the stable matching algorithm
+<ul class="org-ul">
+<li>uses flattened 2d matrix structure to avoid pointer deref and multiplex access for the third dimension of block threads</li>
+<li>uses managed malloc api to avoid pinning/pointer deference performance issues</li>
+<li>limitation of 1024 x 3 concurrent problem size (api limit of x + y + z of threads in block execution) with respect to O(n log n ^2) complexity :wip:
+<ul class="org-ul">
+<li>limited by find minimum (reduction) kernel which depends on the results of other parallel processes to finish the step in log n. (maybe solve with eventually consistent atmoic ops queue to avoid blocking?) nvidia's reduction kernel is O(n log n) as it is unbounded size despite extensive optimizations like block unrolling.</li>
+<li>removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation</li>
+</ul></li>
+</ul></li>
+<li>done as REU</li>
+</ul></li>
+<li>guix-channel
+<ul class="org-ul">
+<li>guile scheme guix channel for custom packages</li>
+<li>mostly packages that are in process or unsuitable for nonguix or other repos
+<ul class="org-ul">
+<li>zfs
+<ul class="org-ul">
+<li>add pam user login mounting :wip:</li>
+<li>add root initramfs support :wip:</li>
+</ul></li>
+<li>add graft support for nvda to browsers :wip:</li>
+</ul></li>
+<li>opensnitch daemon :wip:
+<ul class="org-ul">
+<li>automatic recursive import needs step added for protoc generation of header files</li>
+</ul></li>
+</ul></li>
+<li>emacs-config
+<ul class="org-ul">
+<li>elisp/org configuration for emacs</li>
+<li>uses elisp wrapper script to untangle/eval org file code for setup</li>
+<li>uses submodules for the repo of emacs distribution and guix-channel</li>
+<li>publishes site from org-mode files
+<ul class="org-ul">
+<li>does not use org-publish but each page is customizable from the org-roam-capture-template header</li>
+</ul></li>
+</ul></li>
+<li>resume
+<ul class="org-ul">
+<li>org file of my resume for latex to pdf export</li>
+<li>includes stencil cover letter</li>
+<li>pgp public key in profile picture qr code</li>
+<li>PDF links to projects/pages</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5cdbcf4" class="outline-3">
+<h3 id="org5cdbcf4">Currently studying</h3>
+<div class="outline-text-3" id="text-org5cdbcf4">
+<ul class="org-ul">
+<li>cryptography</li>
+<li>Compiler/VM optimizations</li>
+<li>universal differential equations</li>
+<li>HMI</li>
+</ul>
+</div>
+
+<div id="outline-container-org426e24e" class="outline-4">
+<h4 id="org426e24e">wip projects</h4>
+<div class="outline-text-4" id="text-org426e24e">
+<ul class="org-ul">
+<li>Automatic differentiation of ssa via conversion of cps to ssa for guile bytecode (guile uses cps unlike llvm/jvm with are ssa) :wip:
+<ul class="org-ul">
+<li><a href="https://dl.acm.org/doi/10.1145/202529.202532">https://dl.acm.org/doi/10.1145/202529.202532</a> cps -&gt; ssa</li>
+<li><a href="https://arxiv.org/pdf/1810.07951v1.pdf">https://arxiv.org/pdf/1810.07951v1.pdf</a> ssa diff</li>
+<li><a href="https://dl.acm.org/doi/10.1007/978-3-642-37051-9_6">https://dl.acm.org/doi/10.1007/978-3-642-37051-9_6</a> bytecode to ssa</li>
+<li>This optimization is in hopes of bringing automatic universal differential equation support via symbolic notation (like julia global-optim) with <a href="https://arxiv.org/abs/2210.08572">discrete randomness</a></li>
+</ul></li>
+<li>AST partial evaluation through FFI with guile/elisp/cffi :wip:
+<ul class="org-ul">
+<li>like graalvm with sulong in aot compilation
+<ul class="org-ul">
+<li>graal uses 'sea of nodes' approach with partial evaluation under a closed world assumption that utilizes the compilers sdk for both languages being represented in the IR type.
+guiles compiler tower supports some js, elisp and guile. <a href="https://savannah.nongnu.org/projects/nyacc">https://savannah.nongnu.org/projects/nyacc</a> can output C as sxml for transformation. <a href="https://www.nongnu.org/nyacc/ffi-help.html">https://www.nongnu.org/nyacc/ffi-help.html</a> for example generation of scheme code. By static linking only specific call sites the optimizer can eliminate overhead of ffi and have potential better native generation; as the bytecode optimizer will get a chance to run before the template jit for native specific code</li>
+</ul></li>
+</ul></li>
+<li>Porting netbsd Rumpkernel for GNU HURD to guix :wip:
+<ul class="org-ul">
+<li>debian example <a href="https://salsa.debian.org/hurd-team/rumpkernel">https://salsa.debian.org/hurd-team/rumpkernel</a></li>
+<li>use of linux compat for even more drivers via netbsd</li>
+</ul></li>
+<li>org-mode reloadable code block runner in wasm for personal website :wip:
+<ul class="org-ul">
+<li>wasm code block runner with reloading (see <a href="https://github.com/wingo/wasm-jit">https://github.com/wingo/wasm-jit</a> for example)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orge1582cb" class="outline-3">
+<h3 id="orge1582cb">old</h3>
+<div class="outline-text-3" id="text-orge1582cb">
+<ul class="org-ul">
+<li>angular-stock-table :obe:
+<ul class="org-ul">
+<li>used beta angular material table and 3 way javascript sort</li>
+<li><a href="https://spaz.gitlab.io/angular-stock-table/">published as gitlab page</a> (click two columns for double sort ordering)</li>
+</ul></li>
+<li>angular-worldwind :obe:
+<ul class="org-ul">
+<li>used primeng with angular to add DVR controls to NASAs worldwind</li>
+<li><a href="https://spaz.gitlab.io/angular-worldwind/">published as gitlab page</a> (click layers -&gt; new -&gt; blue marble to get started)</li>
+</ul></li>
+<li>ansible-free-gcp :obe:
+<ul class="org-ul">
+<li>ansible yaml playbooks for free gcp vm, disk and network</li>
+</ul></li>
+<li>aggregator :obe:
+<ul class="org-ul">
+<li>gradle script to aggregate monorepo</li>
+</ul></li>
+<li>clj-fx-example :obe:
+<ul class="org-ul">
+<li>clojure graalvm javafx project using maven and gluonhq client plugin</li>
+</ul></li>
+<li>docker-remote-saver :obe:
+<ul class="org-ul">
+<li>ruby sinatra endpoint for creating composite docker images</li>
+</ul></li>
+<li>dotfiles :obe:
+<ul class="org-ul">
+<li>ansible playbooks and shell script for setting up emacs/zsh/ansible</li>
+</ul></li>
+<li>font :obe:
+<ul class="org-ul">
+<li>added cursive monospace letters to fira code with ligatures</li>
+</ul></li>
+<li>gnag :obe:
+<ul class="org-ul">
+<li>chrome is removing http2 push support</li>
+<li>uses golang builtin http2 server with push for resource loading</li>
+</ul></li>
+<li>guile-sample :obe:
+<ul class="org-ul">
+<li>uses automake, autotools, pkg-config with guix to create a patched statically relocatable guile executable.</li>
+<li>example makefile for setting running with custom linker libs</li>
+<li>embeds arbitrary script with <code>xxd</code> as C array
+<ul class="org-ul">
+<li>C23 adds <code>#embed</code> pre-processor directive to do the same
+<ul class="org-ul">
+<li>can be constexpr in c++ for compile time checking</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>hhrelay :obe:
+<ul class="org-ul">
+<li>static jquery webpage for humanitarian cancer charity relay for life.</li>
+</ul></li>
+<li>hop :obe:
+<ul class="org-ul">
+<li>uses java to add reactive stream wrapper to spark websockets server</li>
+</ul></li>
+<li>jyvert :obe:
+<ul class="org-ul">
+<li>graalvm native-image clojure project using snakeyaml to convert between yaml and json.</li>
+</ul></li>
+<li>kafka-streams-sample :obe:
+<ul class="org-ul">
+<li>java kafka streams stackable topology example</li>
+</ul></li>
+<li>make-org :obe:
+<ul class="org-ul">
+<li>example makefile for using emacs to publish org documents in various formats</li>
+</ul></li>
+<li>piston-example :obe:
+<ul class="org-ul">
+<li>piston game engine with SDL sample of movable texture, sound and ai</li>
+<li>exposes window options for resizing and fullscreen</li>
+</ul></li>
+<li>puppet-train :obe:
+<ul class="org-ul">
+<li>puppet conf training modules</li>
+<li>uses hostname as dns with roles and profiles pattern</li>
+</ul></li>
+<li>scape :obe:
+<ul class="org-ul">
+<li>clojure project using webdriver with firefox headless (geckodriver) to scrape store website for deals.</li>
+<li>added branch for scraping router interface for reboots</li>
+</ul></li>
+<li>tileD :obe:
+<ul class="org-ul">
+<li>java game with lwjgl from scratch</li>
+<li>mixes overhead exploration with 2D side scrolling fighter combat</li>
+</ul></li>
+<li>ticTacToe :obe:
+<ul class="org-ul">
+<li>java tictactoe game using swt and minimax algorithm</li>
+</ul></li>
+<li>yamlnjson :obe:
+<ul class="org-ul">
+<li>ruby script to convert json to yaml despite <a href="https://metacpan.org/pod/JSON::XS#JSON-and-YAML">not being a superset</a></li>
+</ul></li>
+<li>zsh-config :obe:
+<ul class="org-ul">
+<li>zsh configuration using powerlevel10k and zinit</li>
+<li>zinit async loads all plugins and auto compiles all scripts with module</li>
+</ul></li>
+<li>metrics-paper :obe:
+<ul class="org-ul">
+<li>latex paper written in IEEE template on inconsistency of software estimation.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

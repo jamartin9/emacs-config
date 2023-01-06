@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>c-lang</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgf3de15d">
+<div class="navbar-brand" id="org13b93be">
+<div class="navbar-item" id="org8145b4b">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org89b2225">
+<div class="navbar-start" id="org0cf9b36">
+<div class="navbar-item" id="orga3741f8">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org017d02d">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org6b6d157" class="outline-2">
+<h2 id="org6b6d157">C programming language</h2>
+<div class="outline-text-2" id="text-org6b6d157">
+<p>
+Standards not correctness are all that matters when the world is a PDP-11
+</p>
+</div>
+<div id="outline-container-orgbcb8526" class="outline-3">
+<h3 id="orgbcb8526">notes</h3>
+<div class="outline-text-3" id="text-orgbcb8526">
+<ul class="org-ul">
+<li>shared<sub>libraries</sub> can be packaged as executables
+<ul class="org-ul">
+<li><code>/lib64/ld-linux-x86-64.so.2</code> does this as does <code>libQt5Core.so.5</code></li>
+<li>Add <code>-shared</code>, <code>-fpie</code>, <code>-Wl,--entry,main</code>, <code>-L. -l:hello -Wl,-rpath,.</code>, flags to gcc
+<ul class="org-ul">
+<li>ensure there is an <code>exit()</code> call in the entrypoint main</li>
+</ul></li>
+<li>Add section for <code>PT_INTERP</code>
+<ul class="org-ul">
+<li><code>const char interp[] __attribute__ ((section(".interp"))) = PT_INTERP;</code></li>
+<li>Add <code>-D 'PT_INTERP="/lib64/ld-linux-x86-64.so.2"'</code> to gcc</li>
+</ul></li>
+</ul></li>
+<li>size<sub>t</sub> for loop/index portability</li>
+<li><code>errno.h</code> and <code>perror</code> to print thread local state of <code>errno</code></li>
+<li><a href="https://github.com/mpv-player/mpv/commit/1e70e82baa9193f6f027338b0fab0f5078971fbe">wchar<sub>t</sub></a>
+<ul class="org-ul">
+<li><code>setlocale</code> is global state across all threads
+<ul class="org-ul">
+<li>C locale is not UTF-8 there may be C.UTF-8 available</li>
+</ul></li>
+</ul></li>
+<li>VLAs mandatory (again?) in C23
+<ul class="org-ul">
+<li>{} is valid 0 initializer to avoid memset of vla (could be 0 sized)</li>
+<li>misunderstood as a 'stack' allocated array. Actual use is mainly for typing.
+<ul class="org-ul">
+<li>'sufficently' smart compiler can expand/probe stack with heap allocation as needed to compute sizes based on default allocation sizes for the target compiled platforms.</li>
+<li>ex. <code>typedef int T[n]</code> can be stack allocated <code>T a</code> or heap allocated <code>T *a malloc(sizeof *a)</code>. Useful for matrix operations.</li>
+</ul></li>
+</ul></li>
+<li><code>#embed</code> add in C23 for including files as arrays (previously used xxd)</li>
+<li>C11 added <code>stdatomic.h</code></li>
+<li>C11 added <code>theads.h</code></li>
+<li>C23 N2888 allows exact width integer types to exceed <code>(u)intmax_t</code></li>
+<li>C23 added <code>constexpr</code></li>
+<li>C23 adds <code>nullptr</code> constant</li>
+<li>C23 adds <code>auto</code> typing</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-c" id="org0ca0c6d">// function to create signal handlers
+#include &lt;signal.h&gt;
+  void createSignalHandler() {
+      struct sigaction SigInt; // declare signal action(s)
+      memset(&amp;SigInt, 0, sizeof(SigInt)); // clear the structure for SIGINT
+      SigInt.sa_handler = signalHandler; // setup SIGINT as signalHandler
+      sigemptyset(&amp;SigInt.sa_mask);
+      if (-1 == sigaction(SIGINT, &amp;SigInt, NULL)) { // check errors
+          // Error assigning SIGINT
+      }
+  }
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

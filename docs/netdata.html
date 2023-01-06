@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>netdata</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org69877e8">
+<div class="navbar-brand" id="org7bd6219">
+<div class="navbar-item" id="orgb58d50f">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgd1cc206">
+<div class="navbar-start" id="org0b396c2">
+<div class="navbar-item" id="org9230fce">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgf77ffab">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org9709e83" class="outline-2">
+<h2 id="org9709e83">netdata</h2>
+<div class="outline-text-2" id="text-org9709e83">
+</div>
+<div id="outline-container-org51a7556" class="outline-3">
+<h3 id="org51a7556">netdata</h3>
+<div class="outline-text-3" id="text-org51a7556">
+<ul class="org-ul">
+<li>default port 19999 for view
+<ul class="org-ul">
+<li>port 8125 statsd tcp/udp</li>
+</ul></li>
+<li><code>sudo touch /etc/netdata/.opt-out-from-anonymous-statistics</code>, <code>export DO_NOT_TRACK=1</code> or <code>--disable-telemetry</code></li>
+<li>PKGBUILD edits for ebpf
+<ul class="org-ul">
+<li>+  <code>./packaging/bundle-ebpf.sh "$PWD" "${pkgdir}/usr/lib/netdata/plugins.d/"</code> in package</li>
+<li>+  <code>./packaging/bundle-libbpf.sh "$PWD"</code> in build</li>
+<li>+  <code>./packaging/bundle-ebpf-co-re.sh "$PWD"</code> in build</li>
+<li>rebuild with <code>makepkg</code> and reinstall with <code>sudo pacman -U netdata.pkg.tar.zst</code></li>
+</ul></li>
+<li>setuid on ebpf plugin until reduced capabilities are supported <code>sudo chmod 4755 /usr/lib/netdata/plugins.d/ebpf.plugin</code></li>
+<li>go.d.plugin is standalone
+<ul class="org-ul">
+<li><code>sudo setcap CAP_NET_ADMIN+epi</code> for wireguard</li>
+<li>prometheus scraper</li>
+</ul></li>
+<li><code>/etc/netdata/edit-config /etc/netdata/apps_groups.conf</code>
+<ul class="org-ul">
+<li>Emacs: emacs <b>emacs</b></li>
+<li>Guix: guix <b>guix</b> guix-daemon <b>guix-daemon</b></li>
+</ul></li>
+<li>/etc/netdata/netdata.conf
+<ul class="org-ul">
+<li>[statsd] enabled = no</li>
+<li>[web] #mode = none</li>
+<li>[cloud] enabled = no # &#x2013;disable-cloud on installer/configure flags</li>
+<li>[health] enabled = no</li>
+<li>[registry] enabled = no
+<ul class="org-ul">
+<li><code>registry to announce = http://127.0.0.1:19999</code></li>
+</ul></li>
+<li>[ml] enabled = no</li>
+<li>[plugins] ebpf = yes
+node.d = no
+go.d = no
+charts.d = no
+python.d = no</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

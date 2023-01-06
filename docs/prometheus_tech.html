@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>prometheus-tech</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orge66d428">
+<div class="navbar-brand" id="org15c5643">
+<div class="navbar-item" id="org38cd552">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgcf9ccaf">
+<div class="navbar-start" id="orgf6b111f">
+<div class="navbar-item" id="org276629e">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgded1aa6">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org0b650be" class="outline-2">
+<h2 id="org0b650be">prometheus</h2>
+<div class="outline-text-2" id="text-org0b650be">
+</div>
+<div id="outline-container-org49b8082" class="outline-3">
+<h3 id="org49b8082">prometheus/grafana/node-exporter</h3>
+<div class="outline-text-3" id="text-org49b8082">
+<ul class="org-ul">
+<li>grafana standalone oss, port 3000, node<sub>exporter</sub> dashboard: <a href="https://grafana.com/grafana/dashboards/1860">https://grafana.com/grafana/dashboards/1860</a> , import datasource first</li>
+<li>node-exporter from prometheus or cloudflare for ebpf, port 9100</li>
+<li>prometheus &#x2013;config.file=thing.yaml, port 9090,</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org7b4cc93">global:
+  scrape_interval: 15s
+scrape_configs:
+- job_name: node
+  static_configs:
+  - targets: ['localhost:9100']
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

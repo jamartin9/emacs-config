@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>firejail</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org7d1340e">
+<div class="navbar-brand" id="org6c4a172">
+<div class="navbar-item" id="orgec1a49a">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org55cf1b6">
+<div class="navbar-start" id="org30695e3">
+<div class="navbar-item" id="org7628b4c">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org82211b1">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org4497fd6" class="outline-2">
+<h2 id="org4497fd6">firejail</h2>
+<div class="outline-text-2" id="text-org4497fd6">
+</div>
+<div id="outline-container-org1976e5d" class="outline-3">
+<h3 id="org1976e5d">firejail</h3>
+<div class="outline-text-3" id="text-org1976e5d">
+<ul class="org-ul">
+<li>.local overrides in <code>$XDG_CONFIG_HOME/firejail</code></li>
+<li><code>firejail --build=app.profile app</code> for creation</li>
+<li><code>firejail --private</code> for chroot home dir</li>
+<li>ex. <code>noblacklist ${HOME}/.ssh</code>
+<code>whitelist ${HOME}/Videos</code>
+<code>read-write ${HOME}/.password-store</code>
+<code>read-only ${HOME}/.gnupg</code>
+<code>env TR_CURL_SSL_NO_VERIFY=1</code> to set transmissions no ssl verification</li>
+<li><code>firejail redshift -l 40.70:-74.00</code></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

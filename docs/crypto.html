@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>crypto</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org6e4f3b1">
+<div class="navbar-brand" id="org510a40a">
+<div class="navbar-item" id="orge9514a7">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org57e5c4b">
+<div class="navbar-start" id="orgb6f1662">
+<div class="navbar-item" id="orgf816d05">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org7b08219">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org9cbf874" class="outline-2">
+<h2 id="org9cbf874">crypto</h2>
+<div class="outline-text-2" id="text-org9cbf874">
+<p>
+Secrets from the future!
+</p>
+</div>
+<div id="outline-container-org478346e" class="outline-3">
+<h3 id="org478346e">tools</h3>
+<div class="outline-text-3" id="text-org478346e">
+</div>
+<div id="outline-container-org04b90e3" class="outline-4">
+<h4 id="org04b90e3"><a href="gpg.html#ID-f72ef287-09ed-40c4-af4c-3bc9634655fe">gpg</a></h4>
+</div>
+<div id="outline-container-orgfcf3aac" class="outline-4">
+<h4 id="orgfcf3aac"><a href="tor.html#ID-806e68d1-fc6b-44a1-9293-e23ccbd8955d">tor</a></h4>
+</div>
+<div id="outline-container-orgc0bac47" class="outline-4">
+<h4 id="orgc0bac47"><a href="cryptocurrency.html#ID-bfb58ea0-5328-4dca-9cf4-a162d37bb9d0">cryptocurrency</a></h4>
+</div>
+</div>
+<div id="outline-container-org2d7816a" class="outline-3">
+<h3 id="org2d7816a">notes</h3>
+<div class="outline-text-3" id="text-org2d7816a">
+<ul class="org-ul">
+<li>Quantum
+<ul class="org-ul">
+<li>SIKE broken in 4th round of NIST</li>
+<li>Lattice based
+<ul class="org-ul">
+<li><a href="https://www.courtlistener.com/docket/64872195/bernstein-v-national-institute-of-standards-and-technology/">Bernstein in court against NIST</a> for potential NSA tampering again (weak keysize?)</li>
+<li>openssh added hybrid NTRU-Prime (Bernstein on team) for key exchange encryption despite NIST being against 'hybrid' schemes</li>
+<li>NIST choose CRYSTALS-Kyber for KEM encryption with CRYSTALS-DILITHIUM for signatures. Falcon is alternative signature scheme
+<ul class="org-ul">
+<li>NTRU may be considered if the <b>patent</b> issues with kyber are not resolved</li>
+<li>Falcon has smallest signature but needs masking for side channel attack (perf affected as it needs constant-time floating point arithmetic)</li>
+<li>CRYSTALS-Kyber may change nested hashes for security to hold</li>
+</ul></li>
+</ul></li>
+<li>NIST choose hash based signatures SPHINCS+ as a balance to lattice based signatures
+<ul class="org-ul">
+<li>highest level of security assurance but large signatures of 8-50 kilobytes</li>
+</ul></li>
+</ul></li>
+<li>Dual<sub>EC</sub><sub>DRBG</sub> backdoor pushed into NIST standards from NSA</li>
+<li>NSA coerced weak DES keysize of 56 bits</li>
+<li>NSA coerced weak DSA keysize of 512 bits</li>
+<li>Bernstein (EFF) v United States
+<ul class="org-ul">
+<li>was classed as munitions in 1992 with limited key size for export controls</li>
+<li>Phil Zimmermann (pgp creator) published code as book (PGP Source Code and Internals) to avoid munitions export in 1994 after criminal investigation for his producing of privacy software</li>
+<li>ruled software code is protected under 1st amendment as free speech in 1999 (4 years in court)</li>
+</ul></li>
+<li>FCC illegal encrypted HAM bands</li>
+<li>Nist randomness beacon <a href="https://beacon.nist.gov/home">https://beacon.nist.gov/home</a></li>
+<li>NIST <a href="https://pages.nist.gov/800-63-FAQ/#q-b05">does not recommend rotating passwords</a> regularly</li>
+<li>SMS 2FA is insecure with sim swapping attacks</li>
+<li>ed25519 signatures
+<ul class="org-ul">
+<li>batch vs single verification</li>
+<li>oracle pubkey attack
+<ul class="org-ul">
+<li><a href="https://github.com/dalek-cryptography/ed25519-dalek/pull/205">https://github.com/dalek-cryptography/ed25519-dalek/pull/205</a></li>
+</ul></li>
+<li>malleability
+<ul class="org-ul">
+<li>ed25519-dalek verify<sub>strict</sub></li>
+</ul></li>
+<li>blinded keys</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

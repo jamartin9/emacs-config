@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ssh</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgc855cf3">
+<div class="navbar-brand" id="orgb289f40">
+<div class="navbar-item" id="orgc0a3786">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgf9d84b0">
+<div class="navbar-start" id="org03c3062">
+<div class="navbar-item" id="org4969681">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org4120610">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org2960496" class="outline-2">
+<h2 id="org2960496">SSH</h2>
+<div class="outline-text-2" id="text-org2960496">
+</div>
+<div id="outline-container-orga5d7986" class="outline-3">
+<h3 id="orga5d7986">ssh/webssh</h3>
+<div class="outline-text-3" id="text-orga5d7986">
+<ul class="org-ul">
+<li>added quantum safe key exchange in 7.0</li>
+</ul>
+</div>
+<div id="outline-container-org68a0809" class="outline-4">
+<h4 id="org68a0809">sshd</h4>
+<div class="outline-text-4" id="text-org68a0809">
+<ul class="org-ul">
+<li><code>LogLevel VERBOSE</code></li>
+<li><code>PermitRootLogin no</code></li>
+<li><code>PubkeyAuthentication yes</code></li>
+<li><code>PasswordAuthentication no</code></li>
+<li><code>ChallengeResponseAuthentication no</code></li>
+<li><code>UsePAM no</code> (may want yes depending on mount/decrypt setup)</li>
+<li><code>KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256</code>
+<ul class="org-ul">
+<li><code>ssh -Q kex</code></li>
+</ul></li>
+<li><code>Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr</code>
+<ul class="org-ul">
+<li><code>ssh -Q cipher-auth</code></li>
+<li><code>ssh -Q cipher</code></li>
+</ul></li>
+<li><code>MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com</code>
+<ul class="org-ul">
+<li><code>ssh -Q mac</code></li>
+</ul></li>
+</ul>
+<ul class="org-ul">
+<li>sftp subsystem <code>Subsystem sftp /sftp-server -f AUTHPRIV -l INFO</code></li>
+<li>Disable X11, TCP, and agent forwarding</li>
+<li>key only to <code>cat key.pub &gt;&gt; $USER/authorized_hosts</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1c6b512" class="outline-4">
+<h4 id="org1c6b512">ssh client config</h4>
+<div class="outline-text-4" id="text-org1c6b512">
+<ul class="org-ul">
+<li><code>ssh-keygen -p</code> for passphrase change</li>
+<li><code>HashKnownHosts yes</code></li>
+<li><code>HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,ssh-rsa,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256</code>
+<ul class="org-ul">
+<li><code>ssh -Q key</code></li>
+</ul></li>
+<li><code>KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256</code></li>
+<li><code>MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com</code></li>
+<li><code>Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr</code></li>
+<li>tcp port forwarding with <code>-L</code></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

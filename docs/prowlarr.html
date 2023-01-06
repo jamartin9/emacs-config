@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>prowlarr</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org0ecc0d2">
+<div class="navbar-brand" id="org5c32c82">
+<div class="navbar-item" id="orgbfccee0">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orga65d14a">
+<div class="navbar-start" id="org1027e33">
+<div class="navbar-item" id="org826d7fb">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org8aa59b6">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgbbbf526" class="outline-2">
+<h2 id="orgbbbf526">Prowlarr</h2>
+<div class="outline-text-2" id="text-orgbbbf526">
+</div>
+<div id="outline-container-org6535128" class="outline-3">
+<h3 id="org6535128">notes</h3>
+<div class="outline-text-3" id="text-org6535128">
+<ul class="org-ul">
+<li>searches indexers like usenet/torrent sites</li>
+<li>acts as a 'proxy' rss indexer for sonarr/radarr/lidarr to create search/subscribe queries to indexers</li>
+<li><b>App Full Sync removes tags in synced apps</b>
+<ul class="org-ul">
+<li>This prevents indexer specific profiles in synced apps like sonarr</li>
+<li>Use sync for added/removed indexers only to allow apps to override settings</li>
+</ul></li>
+<li>can configure direct download with clients like transmission/nzbget</li>
+<li>cookie string <code>uid=numbers; pass=Password; cfduid=string of numbers and letters</code></li>
+<li><a href="podman.html#ID-90cf48a5-3b01-4667-b100-72acea67034f">podman</a> run configuration</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-shell" id="org5139952">podman run \
+  --detach \
+  --name myprowlarr \
+  --publish 9696:9696/tcp \
+  --rm \
+  -e TZ=America/New_York \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  --volume /storage/prowlarr-config:/config:Z \
+  docker.io/linuxserver/prowlarr:0.4.3-develop
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
