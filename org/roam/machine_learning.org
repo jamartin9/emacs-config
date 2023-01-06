@@ -11,12 +11,25 @@
 ** notes
 - huggingface is a hub for models with api libs using pytorch/tensorflow/jax
   - spaces to run in notebook like without colab using gradio
+- collab gives free 12hrs of compute
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
     - [[https://github.com/andreasjansson/cog-stable-diffusion/tree/animate][animation with interpolation]]
+    - [[https://github.com/carson-katri/dream-textures][dreambooth plugin for blender textures]]
+    - [[https://github.com/riffusion/riffusion-app][Generate music from spectrograph]]
 ** Codegen
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]
     - uses salesforce/Codegen which supports natural language input and generation of C, C++, Go, Java, JavaScript, Python (BIG QUERY).
       - specialized in python with the BIGPYTHON dataset
     - Converts salesforce/codegen model into GPTJ
+** Speech to text
+  - open ai whisper
+#+NAME: yt-translate
+#+BEGIN_SRC sh :tangle no
+pip install --user git+https://github.com/openai/whisper.git
+pip install --user yt-dlp
+VID="TyvE8oexEAA"
+yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
+whisper "/content/${VID}.m4a" --model small --language English
+#+END_SRC

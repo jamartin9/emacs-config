@@ -4,9 +4,3 @@
 	update = merge
 	shallow = true
 	branch = master
-[submodule "doomemacs"]
-	path = doomemacs
-	url = https://github.com/jamartin9/doomemacs
-	shallow = true
-	update = merge
-	branch = master

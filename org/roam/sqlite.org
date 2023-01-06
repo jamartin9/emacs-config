@@ -37,3 +37,5 @@
   - opfs enabled when loaded from worker
     - opfs not limited in size unlike localstorage
     - currently locking issues between threads/tabs
+- optimizer can create temporary index's automatically.
+  dictated as ~USING AUTOMATIC COVERING INDEX~ in the ~explain~ query output

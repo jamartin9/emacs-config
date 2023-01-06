@@ -13,5 +13,6 @@ Life in plaintext!
 - Atom
   - [[https://www.electronjs.org/blog/electron][atom shell turned into electron]]
   - [[https://github.blog/2022-06-08-sunsetting-atom/][killed by microsoft in favor of VSCODE]] despite [[https://thenextweb.com/news/githubs-new-ceo-promises-to-save-atom-post-microsoft-acquisition][initial claims]]
+  - Continued as [[https://github.com/pulsar-edit/pulsar][Pulsar]]
 - VSCODE
   - https://github.com/VSCodium/vscodium for telemetry removed

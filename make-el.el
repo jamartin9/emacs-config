@@ -11,24 +11,15 @@ NO-RUN: do not run the tangled argument"
           ("all" (jam/parse-args (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                               "\.org$" nil
                                                               #'(lambda (local-dir)
-                                                                  (if (string-match-p "\\(\.git$\\|doomemacs$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))
+                                                                  (if (string-match-p "\\(\.git$\\|.local$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))
                                  t))
-          ("install" (jam/parse-args (list "README.org"))
-                     (message "%s" (process-lines (concat (file-name-directory (or load-file-name buffer-file-name))
-                                                     (file-name-as-directory "doomemacs")
-                                                     (file-name-as-directory "bin")
-                                                     "doom")
-                                                  "sync")))
+          ("install" (jam/parse-args (list "README.org")))
           ("install-all" (jam/parse-args (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                                       "\.org$" nil
                                                                       #'(lambda (local-dir)
-                                                                          (if (string-match-p "\\(\.git$\\|doomemacs$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))))
+                                                                          (if (string-match-p "\\(\.git$\\|.local$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))))
           ("update" (let ((dir (file-name-directory (or load-file-name buffer-file-name))))
-                      (message "%s" (process-lines "git" "-C" dir "submodule" "update" "--recursive" "--remote"))
-                      (message "%s" (process-lines-ignore-status "git" "-C" (concat dir "doomemacs") "remote" "add" "upstream" "https://github.com/doomemacs/doomemacs.git")); || :
-                      (message "%s" (process-lines "git" "-C" (concat dir "doomemacs") "fetch" "--all"))
-                      (message "%s" (process-lines "git" "-C" (concat dir "doomemacs") "merge" "upstream/master"))
-                      (message "%s" (process-lines (concat dir (file-name-as-directory "doomemacs") (file-name-as-directory "bin") "doom") "sync" "-upe"))))
+                      (message "%s" (process-lines "git" "-C" dir "submodule" "update" "--recursive" "--remote"))))
 
           ("update-guix" (let ((dir (file-name-directory (or load-file-name buffer-file-name))))
                       (message "%s" (process-lines "guix" "pull")); --disable-authentication --allow-downgrades
@@ -41,7 +32,7 @@ NO-RUN: do not run the tangled argument"
                            (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                 "\\(\.sh$\\|\.yml$\\|^\.torrc$\\|\.py$\\|\.scm$\\|\.css$\\|\.html$\\|.html~$\\)" nil
                                                 #'(lambda (local-dir)
-                                                    (if (string-match-p "\\(\.git$\\|doomemacs$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))))
+                                                    (if (string-match-p "\\(\.git$\\|.local$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))))
           ("clean-guix" (message "%s" (process-lines "guix" "package" "-d"))
                         (message "%s" (process-lines "guix" "pull" "-d"))
                         (message "%s" (process-lines "guix" "home" "delete-generations"))
@@ -49,10 +40,10 @@ NO-RUN: do not run the tangled argument"
           ((or "-h" "--h" "--help" "help") (message (concat
                            "Usage Information: \n"
                            " all - tangles all org files and runs install scripts \n"
-                           " install - runs README.org's script and then syncs doom \n"
+                           " install - runs README.org's script \n"
                            " install-all - tangles all org files and runs their scripts \n"
                            " update - updates doom packages \n"
-                           " update-guix - updates guix packages \n"
+                           " update-guix - updates guix packages and guix home \n"
                            " clean - removes generated files \n"
                            " clean-guix - collect guix garbage \n"
                            " ARG.org - tangles and runs ARG \n"

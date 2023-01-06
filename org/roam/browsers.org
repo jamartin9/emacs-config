@@ -14,6 +14,9 @@ This your brain on the internet
 - ctrl-w for close tab
 - ctrl-t for new tab
 - ctrl-tab for switch tab
+- threads provided via web workers
+  - [[https://github.com/BuilderIO/partytown][web worker background loading]]
+- offline webapp manifest support with service worker
 ** [[id:aae21430-637a-4b92-8f8a-d35e9991e396][firefox]]
 ** chrome
 - ~--ignore-certificate-errors~ cli arg to enable expired certs

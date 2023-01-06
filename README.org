@@ -1,8 +1,7 @@
 
 * emacs-config
 This configuration relies on a few utilities.
-The required dependencies are: emacs, doom-emacs (git, rg, fd, aspell), and a shell
-The optional dependencies are: guix, gnupg/pass (password-store), vlc or mpv (emms), notification-daemon (erc), c compiler (forge)
+The dependencies are: emacs, git, rg, fd, aspell, guix, gnupg/pass (password-store), vlc or mpv (emms), notification-daemon (erc), c compiler (forge) and a shell
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.
@@ -29,9 +28,7 @@ The script needs itself and emacs on the PATH or CWD.
 #+NAME: link-README
 #+BEGIN_SRC emacs-lisp :tangle README.sh :shebang "\":\"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
 (ignore-errors
-      (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "doomemacs") (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
-(ignore-errors
-  (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "doom")))
+      (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
 #+END_SRC
 
 ** Run

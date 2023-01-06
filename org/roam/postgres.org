@@ -28,3 +28,7 @@
   - https://www.crunchydata.com/developers/playground/high-level-performance-analytics
     - [[https://github.com/copy/v86][uses]] https://copy.sh/v86/ and a alpine qemu img with postgres
 - ~SET TRANSACTION SERIALIZABLE~ for strict isolation
+- [[https://github.com/supabase/vault][extension for secrets]]
+- foreign data wrappers
+  - [[https://github.com/supabase/wrappers][rust examples]]
+- [[https://github.com/supabase/realtime][WAL streaming]]

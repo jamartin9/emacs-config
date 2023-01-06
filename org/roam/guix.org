@@ -111,7 +111,7 @@
                                                ;"xclip"
                                                "torsocks"
                                                "screen"
-                                               ;"virt-viewer"; for spice remote-viewer
+                                               "virt-viewer"; for spice remote-viewer
                                                "emacs-org"
                                                "emacs-flycheck-guile"
                                                "emacs-flycheck"
@@ -127,18 +127,16 @@
                                                "emacs-undo-tree"
                                                "emacs-switch-window"
                                                "emacs-pass"
-                                               "emacs-password-store"
                                                "emacs-orgit"
                                                "emacs-forge"
                                                "emacs-magit"
                                                "emacs-magit-todos"
                                                "emacs-use-package" ; remove for emacs-29
                                                ;"emacs-helpful"
-                                               "emacs-general"
                                                "emacs-ws-butler"
                                                "emacs-code-review"
                                                "emacs-orgit-forge"
-                                               ;"emacs-flycheck-popup-tip"
+                                               "emacs-flycheck-popup-tip"
                                                "emacs-macrostep-geiser"
                                                "emacs-drag-stuff"
                                                "emacs-cfrs" ; BUG needed for treemacs
@@ -154,20 +152,12 @@
                                                "emacs-geiser-guile"
                                                "emacs-realgud"
                                                "emacs-dap-mode"
-                                               "emacs-posframe"
                                                "emacs-link-hint"
                                                "emacs-expand-region"
                                                "emacs-which-key"
-                                               "emacs-modus-themes"
                                                "emacs-explain-pause-mode"
-                                               "emacs-projectile"; remove for builtin
-                                               "emacs-project"
-                                               "emacs-all-the-icons"
-                                               "emacs-hide-mode-line"
-                                               "emacs-highlight-numbers"
-                                               "emacs-rainbow-delimiters"
-                                               "emacs-restart-emacs"
-                                               "emacs-dtrt-indent"
+                                               ;"emacs-rainbow-delimiters"
+                                               ;"emacs-restart-emacs"
                                                "emacs-pcre2el"
                                                "emacs-smartparens"
                                                "emacs-gcmh"
@@ -457,308 +447,308 @@
 #+NAME: guix-os
 #+BEGIN_SRC scheme :tangle guix-os.scm
 
-(use-modules
- (gnu)
- (gnu services)
- (gnu services linux)
- (gnu services shepherd)
- (gnu services file-sharing)
- (gnu services networking)
- (gnu services sysctl)
- (gnu services vpn)
- (gnu packages networking)
- (gnu packages containers)
- (guix)
- (guix gexp)
- (guix packages)
- (srfi srfi-1)
- (jam packages zfs)
- (nongnu packages linux)
- (nongnu system linux-initrd)
- )
+  (use-modules
+   (gnu)
+   (gnu services)
+   (gnu services linux)
+   (gnu services shepherd)
+   (gnu services file-sharing)
+   (gnu services networking)
+   (gnu services sysctl)
+   (gnu services vpn)
+   (gnu packages networking)
+   (gnu packages containers)
+   (guix)
+   (guix gexp)
+   (guix packages)
+   (srfi srfi-1)
+   (jam packages zfs)
+   (nongnu packages linux)
+   (nongnu system linux-initrd)
+   )
 
-(use-service-modules desktop mcron networking spice ssh xorg sddm cuirass)
-(use-package-modules bootloaders certs fonts nvi
-                     package-management wget xorg
-                     ;; ZFS
-                     linux file-systems admin)
-;; broadcom service
-(define broadcom-service-type
-  (service-type
-   (name 'broadcom)
-   (extensions
-    (list
-     ;; add kernel module
-     (service-extension linux-loadable-module-service-type
-                               (const (list broadcom-sta)))
-      ;; load kernel module
-     (service-extension kernel-module-loader-service-type
-                               (const '("wl")))))
-   (default-value '())
-   (description "Install broadcom kernel module and service")))
-;; * TODO guix nvidia-driver(xorg/ko), tor service
+  (use-service-modules desktop mcron networking spice ssh xorg sddm cuirass)
+  (use-package-modules bootloaders certs fonts nvi
+                       package-management wget xorg
+                       ;; ZFS
+                       linux file-systems admin)
+  ;; broadcom service
+  (define broadcom-service-type
+    (service-type
+     (name 'broadcom)
+     (extensions
+      (list
+       ;; add kernel module
+       (service-extension linux-loadable-module-service-type
+                                 (const (list broadcom-sta)))
+        ;; load kernel module
+       (service-extension kernel-module-loader-service-type
+                                 (const '("wl")))))
+     (default-value '())
+     (description "Install broadcom kernel module and service")))
+  ;; * TODO guix nvidia-driver(xorg/ko), tor service
 
-(define my-kernel linux-lts)
+  (define my-kernel linux-6.1)
 
-(operating-system
-  (host-name "gnu")
-  (timezone "Etc/UTC")
-  (locale "en_US.utf8")
-  (keyboard-layout (keyboard-layout "us" "altgr-intl"))
+  (operating-system
+    (host-name "gnu")
+    (timezone "Etc/UTC")
+    (locale "en_US.utf8")
+    (keyboard-layout (keyboard-layout "us" "altgr-intl"))
 
-  (kernel my-kernel)
-  (initrd microcode-initrd)
-  (kernel-arguments '("modprobe.blacklist=b43,b43legacy,ssb,bcm43xx,brcm80211,brcmfmac,brcmsmac,bcma,nouveau"))
+    (kernel my-kernel)
+    (initrd microcode-initrd)
+    ;(kernel-arguments '("modprobe.blacklist=b43,b43legacy,ssb,bcm43xx,brcm80211,brcmfmac,brcmsmac,bcma,nouveau"))
 
-  ;; Label for the GRUB boot menu.
-  (label (string-append "GNU Guix " (package-version guix)))
+    ;; Label for the GRUB boot menu.
+    (label (string-append "GNU Guix " (package-version guix)))
 
-  (firmware (list linux-firmware))
+    (firmware (list linux-firmware))
 
-  ;; Below we assume /dev/vda is the VM's hard disk.
-  ;; Adjust as needed.
-  (bootloader (bootloader-configuration
-               (bootloader grub-bootloader)
-               (targets '("/dev/vda"))
-               (terminal-outputs '(console))))
+    ;; Below we assume /dev/vda is the VM's hard disk.
+    ;; Adjust as needed.
+    (bootloader (bootloader-configuration
+                 (bootloader grub-bootloader)
+                 (targets '("/dev/vda"))
+                 (terminal-outputs '(console))))
 
-  (file-systems (cons (file-system
-                        (mount-point "/")
-                        (device "/dev/vda1")
-                        (type "ext4"))
-                      %base-file-systems))
+    (file-systems (cons (file-system
+                          (mount-point "/")
+                          (device "/dev/vda1")
+                          (type "ext4"))
+                        %base-file-systems))
 
-  (users (cons (user-account
-                (name "guest")
-                (comment "GNU Guix Live")
-                (password "")                     ;no password
-                (group "users")
-                (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video"
-                                        "lp"))) ; lp for bluetooth dbus
-               %base-user-accounts))
+    (users (cons (user-account
+                  (name "guest")
+                  (comment "GNU Guix Live")
+                  (password "")                     ;no password
+                  (group "users")
+                  (supplementary-groups '("wheel" "netdev"
+                                          "audio" "video")))
+                 %base-user-accounts))
 
-  ;; Our /etc/sudoers file.  Since 'guest' initially has an empty password,
-  ;; allow for password-less sudo.
-  (sudoers-file (plain-file "sudoers" "\
-root ALL=(ALL) ALL
-%wheel ALL=NOPASSWD: ALL\n"))
+    ;; Our /etc/sudoers file.  Since 'guest' initially has an empty password,
+    ;; allow for password-less sudo.
+    (sudoers-file (plain-file "sudoers" "\
+  root ALL=(ALL) ALL
+  %wheel ALL=NOPASSWD: ALL\n"))
 
-  (packages (append (list font-bitstream-vera nss-certs nvi wget blueman cloud-utils); cloud-utils for growpart with resize2fs after img resize
-                    %base-packages)) ; podman flatpak
+    (packages (append (list font-bitstream-vera nss-certs nvi wget blueman cloud-utils); cloud-utils for growpart with resize2fs after img resize
+                      %base-packages)) ; podman flatpak
 
-  (services
-   (append (list (service xfce-desktop-service-type)
+    (services
+     (append (list (service xfce-desktop-service-type)
 
-                 ;; Choose SLiM, which is lighter than the default GDM.
-                 (service slim-service-type
-                          (slim-configuration
-                           (auto-login? #t)
-                           (default-user "guest")
-                           (xorg-configuration
-                            (xorg-configuration
-                             ;; The QXL virtual GPU driver is added to provide
-                             ;; a better SPICE experience.
-                             (modules (cons xf86-video-qxl
-                                            %default-xorg-modules))
-                             (keyboard-layout keyboard-layout)))))
+                   ;; Choose SLiM, which is lighter than the default GDM.
+                   (service slim-service-type
+                            (slim-configuration
+                             (auto-login? #t)
+                             (default-user "guest")
+                             (xorg-configuration
+                              (xorg-configuration
+                               ;; The QXL virtual GPU driver is added to provide
+                               ;; a better SPICE experience.
+                               (modules (cons xf86-video-qxl
+                                              %default-xorg-modules))
+                               (keyboard-layout keyboard-layout)))))
 
-                 (service bluetooth-service-type
-                          (bluetooth-configuration
-                           (auto-enable? #f)))
+                   (service bluetooth-service-type
+                            (bluetooth-configuration
+                             (auto-enable? #f)))
 
-                 (service broadcom-service-type)
+                   ;(service broadcom-service-type)
 
-                 (service openssh-service-type
-                          (openssh-configuration (%auto-start? #f)
-                                                 (port-number 8081)
-                                                 (password-authentication? #f)
-                                                 (authorized-keys `(("guest" ,(plain-file "jam.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjfouQY9m8opK3Sq5G81FuqlMEa5no1Jy1UywweZY3u jam@jam-pc"))))
-                                                 ))
+                   (service openssh-service-type
+                            (openssh-configuration (%auto-start? #f)
+                                                   (port-number 8081)
+                                                   (password-authentication? #f)
+                                                   (authorized-keys `(("guest" ,(plain-file "jam.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjfouQY9m8opK3Sq5G81FuqlMEa5no1Jy1UywweZY3u jam@jam-pc"))))
+                                                   ))
 
-                 ;(service cuirass-service-type
-                 ;         (cuirass-configuration (specifications #~(list (specification
-                 ;                                                         (name "my-channel-packages")
-                 ;                                                         (build '(packages "emacs-cfrs"))
-                 ;                                                         (build '(channels my-channel))
-                 ;                                                         (channels (cons (channel
-                 ;                                                                          (name 'my-channel)
-                 ;                                                                          (url "https://github.com/jamartin9/guix-channel.git"))
-                 ;                                                                         %default-channels))
-                                                                          ;(period 600)
-                                                                          ;(build-outputs (list
-                                                                          ;                (build-output
-                                                                          ;                 (job "hello*")
-                                                                          ;                 (type "archive")
-                                                                          ;                 (output "out")
-                                                                          ;                 (path ""))))
-                                                                          )))
-                 ;                                (use-substitutes? #t)
-                 ;                                (host "0.0.0.0")))
+                   ;(service cuirass-service-type
+                   ;         (cuirass-configuration (specifications #~(list (specification
+                   ;                                                         (name "my-channel-packages")
+                   ;                                                         (build '(packages "emacs-cfrs"))
+                   ;                                                         (build '(channels my-channel))
+                   ;                                                         (channels (cons (channel
+                   ;                                                                          (name 'my-channel)
+                   ;                                                                          (url "https://github.com/jamartin9/guix-channel.git"))
+                   ;                                                                         %default-channels))
+                                                                            ;(period 600)
+                                                                            ;(build-outputs (list
+                                                                            ;                (build-output
+                                                                            ;                 (job "hello*")
+                                                                            ;                 (type "archive")
+                                                                            ;                 (output "out")
+                                                                            ;                 (path ""))))
+                   ;                                                         )))
+                   ;                                (use-substitutes? #t)
+                   ;                                (host "0.0.0.0")))
 
-                 (simple-service 'os-file etc-service-type
-                                 (list `("guix-os.scm" ,(local-file "guix-os.scm"))))
+                   (simple-service 'os-file etc-service-type
+                                   (list `("guix-os.scm" ,(local-file "guix-os.scm"))))
 
-                 (simple-service 'channel-file etc-service-type ; TODO remove after guix-home integrated
-                                 (list `("channels.scm" ,(local-file "channels.scm"))))
+                   (simple-service 'channel-file etc-service-type ; TODO remove after guix-home integrated
+                                   (list `("channels.scm" ,(local-file "channels.scm"))))
 
-                 (service zfs-service-type
-                          (zfs-configuration
-                           (kernel my-kernel)))
+                   ;(service zfs-service-type
+                   ;         (zfs-configuration
+                   ;          (kernel my-kernel)))
 
-                 (service nftables-service-type
-                          (nftables-configuration
-                           (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -> input/output/forward -> postrouting
-# flush all the rules.
-flush ruleset
-# Define vars.
-#define wan = eno1
-define wan = eth0
-define vpn = wg0
-define vpn_net = 10.0.0.1/24
-define router = 192.168.1.1
+                   (service nftables-service-type
+                            (nftables-configuration
+                             (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -> input/output/forward -> postrouting
+  # flush all the rules.
+  flush ruleset
+  # Define vars.
+  #define wan = eno1
+  define wan = eth0
+  define vpn = wg0
+  define vpn_net = 10.0.0.1/24
+  define router = 192.168.1.1
 
-table inet router {
-  chain prerouting {
-    type nat hook prerouting priority -100;
+  table inet router {
+    chain prerouting {
+      type nat hook prerouting priority -100;
+    }
+    chain postrouting {
+      type nat hook postrouting priority 100;
+      oifname $wan ip saddr $vpn_net masquerade
+    }
   }
-  chain postrouting {
-    type nat hook postrouting priority 100;
-    oifname $wan ip saddr $vpn_net masquerade
-  }
-}
-table inet filter {
-  chain input {
-    type filter hook input priority 0; policy drop;
+  table inet filter {
+    chain input {
+      type filter hook input priority 0; policy drop;
 
-    # early drop of invalid connections
-    ct state invalid drop
+      # early drop of invalid connections
+      ct state invalid drop
 
-    # allow established/related connections
-    ct state { established, related } accept
+      # allow established/related connections
+      ct state { established, related } accept
 
-    # allow from loopback
-    iifname lo accept
+      # allow from loopback
+      iifname lo accept
 
-    # drop icmp
-    ip protocol icmp drop
-    ip6 nexthdr icmpv6 drop
+      # drop icmp
+      ip protocol icmp drop
+      ip6 nexthdr icmpv6 drop
 
-    # allow ssh
-    tcp dport 8081 accept
+      # allow ssh
+      tcp dport 8081 accept
 
-    # allow spice
-    tcp dport 5930 accept
+      # allow spice
+      tcp dport 5930 accept
 
-    # allow transmission
-    #tcp dport 51413 accept
+      # allow transmission
+      #tcp dport 51413 accept
 
-    # allow ssdp, pcp and nat-pmp port mapping
-    udp sport 1900 udp dport >= 1024 meta pkttype unicast limit rate 4/second burst 20 packets accept comment \"Accept UPnP IGD port mapping reply\"
-    udp sport 1900 ip saddr $router accept
-    udp sport 5350 ip saddr $router accept
-    udp sport 5351 ip saddr $router accept
+      # allow ssdp, pcp and nat-pmp port mapping
+      udp sport 1900 udp dport >= 1024 meta pkttype unicast limit rate 4/second burst 20 packets accept comment \"Accept UPnP IGD port mapping reply\"
+      udp sport 1900 ip saddr $router accept
+      udp sport 5350 ip saddr $router accept
+      udp sport 5351 ip saddr $router accept
 
-    # allow monerod
-    #tcp dport 18080 accept
+      # allow monerod
+      #tcp dport 18080 accept
 
-    # allow p2pool
-    #tcp dport 37889 accept
+      # allow p2pool
+      #tcp dport 37889 accept
 
-    # allow cuirass
-    #tcp dport 8080 accept
+      # allow cuirass
+      #tcp dport 8080 accept
 
-    # allow wireguard peers to connect to each other
-    iifname $vpn accept
-    udp dport 51820 accept
-    iifname $vpn oifname $vpn ct state new accept
+      # allow wireguard peers to connect to each other
+      iifname $vpn accept
+      udp dport 51820 accept
+      iifname $vpn oifname $vpn ct state new accept
 
-    # allow dhcp
-    udp sport bootpc udp dport bootps ip saddr 0.0.0.0 ip daddr 255.255.255.255 accept comment \"Accept DHCPDISCOVER (for DHCP-Proxy)\"
+      # allow dhcp
+      udp sport bootpc udp dport bootps ip saddr 0.0.0.0 ip daddr 255.255.255.255 accept comment \"Accept DHCPDISCOVER (for DHCP-Proxy)\"
 
-    # allow mdns
-    udp dport mdns ip6 daddr ff02::fb accept comment \"Accept mDNS\"
-    udp dport mdns ip daddr 224.0.0.251 accept comment \"Accept mDNS\"
+      # allow mdns
+      udp dport mdns ip6 daddr ff02::fb accept comment \"Accept mDNS\"
+      udp dport mdns ip daddr 224.0.0.251 accept comment \"Accept mDNS\"
 
-    # reject everything else
-    reject with icmpx type port-unreachable
-  }
-  chain forward {
-    type filter hook forward priority 0; policy drop;
+      # reject everything else
+      reject with icmpx type port-unreachable
+    }
+    chain forward {
+      type filter hook forward priority 0; policy drop;
 
-    # drop invalid packets
-    ct state invalid drop
+      # drop invalid packets
+      ct state invalid drop
 
-    # forward established connections
-    ct state established,related accept
+      # forward established connections
+      ct state established,related accept
 
-    # forward wireguard to wan
-    iifname $vpn oifname $wan ct state new accept
-  }
-  chain output {
-    type filter hook output priority 0; policy accept;
-  }
-}"))))
+      # forward wireguard to wan
+      iifname $vpn oifname $wan ct state new accept
+    }
+    chain output {
+      type filter hook output priority 0; policy accept;
+    }
+  }"))))
 
-                ; (service transmission-daemon-service-type
-                ;          (transmission-daemon-configuration
-                ;           ;(peer-port 51413)
-                ;           (port-forwarding-enabled? #f)
-                ;           (dht-enabled? #f)
-                ;           (pex-enabled? #f)
-                ;           (rpc-whitelist '("127.0.0.1" "::1" "10.0.0.*"))))
+                  ; (service transmission-daemon-service-type
+                  ;          (transmission-daemon-configuration
+                  ;           ;(peer-port 51413)
+                  ;           (port-forwarding-enabled? #f)
+                  ;           (dht-enabled? #f)
+                  ;           (pex-enabled? #f)
+                  ;           (rpc-whitelist '("127.0.0.1" "::1" "10.0.0.*"))))
 
-                 (service wireguard-service-type
-                          (wireguard-configuration
-                           (addresses '("10.0.0.5/32"))
-                           ;(port 51820)
-                           ;(private-key "/etc/wiregaurd/private.key"); autogened if doesn't exist
-                           (peers (list
-                                   (wireguard-peer
-                                    (name "my-peer")
-                                    ;(endpoint "somesuchendpoint")
-                                    (public-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=");; TODO support PSK
-                                    (allowed-ips '("10.0.0.1/24")))))))
+                   (service wireguard-service-type
+                            (wireguard-configuration
+                             (addresses '("10.0.0.5/32"))
+                             ;(port 51820)
+                             ;(private-key "/etc/wiregaurd/private.key"); autogened if doesn't exist
+                             (peers (list
+                                     (wireguard-peer
+                                      (name "my-peer")
+                                      ;(endpoint "somesuchendpoint")
+                                      (public-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=")
+                                      ;(preshared-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=")
+                                      (allowed-ips '("10.0.0.1/24")))))))
 
-                 ;; Add support for the SPICE protocol, which enables dynamic
-                 ;; resizing of the guest screen resolution, clipboard
-                 ;; integration with the host, etc.
-                 (service spice-vdagent-service-type)
+                   ;; Add support for the SPICE protocol, which enables dynamic
+                   ;; resizing of the guest screen resolution, clipboard
+                   ;; integration with the host, etc.
+                   (service spice-vdagent-service-type)
 
-                 ;; Use the DHCP client service rather than NetworkManager.
-                 (service dhcp-client-service-type))
+                   ;; Use the DHCP client service rather than NetworkManager.
+                   (service dhcp-client-service-type))
 
-           ;; Remove some services that don't make sense in a VM.
-           (remove (lambda (service)
-                     (let ((type (service-kind service)))
-                       (or (memq type
-                                 (list gdm-service-type
-                                       sddm-service-type
-                                       wpa-supplicant-service-type
-                                       cups-pk-helper-service-type
-                                       network-manager-service-type
-                                       modem-manager-service-type))
-                           (eq? 'network-manager-applet
-                                (service-type-name type)))))
-                   (modify-services %desktop-services
-                     (sysctl-service-type config =>
-                                          (sysctl-configuration
-                                           (settings (append '(("net.ipv4.ip_forward" . "1")
-                                                               ("net.ipv6.conf.all.forwarding" . "1"))
-                                                             %default-sysctl-settings))))
-                     (guix-service-type config =>
-                                         (guix-configuration
-                                          (inherit config)
-                                          (guix (current-guix))
-                                          (substitute-urls
-                                 (append (list "https://substitutes.nonguix.org/"); 4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion
-                                         %default-substitute-urls)) ;(http-proxy) with tor config HTTPTunnelPort
-                                          (authorized-keys
-                                 (append (list (local-file "./nonguix-pub.scm"))
-                                         %default-authorized-guix-keys))))))))
+             ;; Remove some services that don't make sense in a VM.
+             (remove (lambda (service)
+                       (let ((type (service-kind service)))
+                         (or (memq type
+                                   (list gdm-service-type
+                                         sddm-service-type
+                                         wpa-supplicant-service-type
+                                         cups-pk-helper-service-type
+                                         network-manager-service-type
+                                         modem-manager-service-type))
+                             (eq? 'network-manager-applet
+                                  (service-type-name type)))))
+                     (modify-services %desktop-services
+                       (sysctl-service-type config =>
+                                            (sysctl-configuration
+                                             (settings (append '(("net.ipv4.ip_forward" . "1")
+                                                                 ("net.ipv6.conf.all.forwarding" . "1"))
+                                                               %default-sysctl-settings))))
+                       (guix-service-type config =>
+                                           (guix-configuration
+                                            (inherit config)
+                                            (guix (current-guix))
+                                            (substitute-urls
+                                   (append (list "https://substitutes.nonguix.org/"); 4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion
+                                           %default-substitute-urls)) ;(http-proxy) with tor config HTTPTunnelPort
+                                            (authorized-keys
+                                   (append (list (local-file "./nonguix-pub.scm"))
+                                           %default-authorized-guix-keys))))))))
 
-  ;; Allow resolution of '.local' host names with mDNS.
-  (name-service-switch %mdns-host-lookup-nss))
+    ;; Allow resolution of '.local' host names with mDNS.
+    (name-service-switch %mdns-host-lookup-nss))
 #+END_SRC
 ** User manifest
 #+NAME: manifest-scm
@@ -1014,19 +1004,11 @@ guix package -i glibc-utf8-locales
   :END:
   [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
   [2022-06-21 Tue] Last modified
-*** TODO [#C] [PATCH] gnu: wireguard: Add support for PresharedKey :patch:
-  [2022-04-21 Thu] Submitted
-  :PROPERTIES:
-  :DEBBUGS_ID: 55055
-  :CREATOR: Paul Alesius <paul@unnservice.com>
-  :END:
-  [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
-  [2022-04-21 Thu] Last modified
 *** TODO [#C] Support binaries that need "setcap" similar to "setuid-programs"
   [2022-05-27 Fri] Submitted
   :PROPERTIES:
   :DEBBUGS_ID: 55683
   :CREATOR: Vagrant Cascadian <vagrant@debian.org>
   :END:
-  [[elisp:(debbugs-gnu-select-report)][Messages]]
+  [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
   [2022-05-27 Fri] Last modified

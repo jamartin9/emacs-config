@@ -12,8 +12,11 @@
 - pgtk enabled ~broadwayd~ port 8080 with apps env var ~GDK_BACKEND=broadway~
 - magit-generate-changelog for commit msg
 - gnus needs app password from google for 2fa or oauth token from gcloud
-- ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
+- webkit environment variable(s) for built-in browser
+  - ~WEBKIT_FORCE_SANDBOX="0"~
+- signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
 *** TODO portable dumper for faster startup                           :emacs:
+*** TODO aot compile elisp packages with guix                         :emacs:
 *** org-mode notes
 - noweb can link code verbatium with <<CodeBlockName>> or evaluate it with <<CodeBlockName>>()
 - ~#+INCLUDE "file.org::selector" :only-contents t~ to select heading contents to include from other files

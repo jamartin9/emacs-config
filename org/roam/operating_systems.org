@@ -22,6 +22,7 @@
   - ~zfs_enable="YES"~
 - zfs by default
 - support for linux emulation
+  - [[https://github.com/ravynsoft/ravynos][macos compat fork]]
 *** smartos
 - modern Illumos(OpenSolaris)
 - uses zones for control like vms and containers

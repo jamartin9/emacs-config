@@ -39,3 +39,4 @@ Finally some hardware support!
 ** pam
 ** misc
 - ~faillock --user $USER --reset~ for attempt reset
+- ~LD_LIBRARY_PATH~ and ~LD_PRELOAD~ environment variables override library location and load order respectively.

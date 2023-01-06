@@ -24,3 +24,5 @@ Simulate the simulation
   - 5.10 lts kernel
   - snapshots for faster boot after creation
 - mesa opengl env var ~LIBGL_ALWAYS_SOFTWARE=true~
+- ebpf
+  - non turing complete register vm

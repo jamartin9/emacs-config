@@ -12,3 +12,6 @@
 shepherd.log
 searx.yml
 .orgids
+# directories
+/.local/
+/auto-save-list/

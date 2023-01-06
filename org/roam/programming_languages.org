@@ -69,6 +69,7 @@ panic = "abort"
 - large std library
   - can have ossification issues such as ed25519 signature malleability update cadence
     - https://hdevalence.ca/images/ed25519-comparison.png
+- TCP ~NODELAY~ set by default (no batching with nagle's algorithm)
 ** jvm
 - Valhalla for value objects (remove boxing overhead)
 - Loom for user mode green threads
@@ -87,3 +88,15 @@ panic = "abort"
 ** DSL
 - [[https://github.com/open-goal/jak-project][GOAL]]
   - jak 1-3 lisp game implementation
+** WASM
+- sexp text format
+- stack based vm instructions
+- function table
+- interoperability
+  - js with SharedArrayBuffer
+  - WASI for host
+** python
+- override behavior with double underscore methods like ~__str(self)__~
+- create and activate virtual environment ~python -m venv venv && source venv/bin/activate~
+- run a http server on port 8080 ~python -m http.server 8080~
+- pretty print json ~python -m json.tool~
