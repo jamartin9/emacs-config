@@ -15,3 +15,4 @@ searx.yml
 # directories
 /.local/
 /auto-save-list/
+/gh-pages/
