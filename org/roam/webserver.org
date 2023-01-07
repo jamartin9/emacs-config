@@ -184,12 +184,12 @@ pub async fn serve(context: RouteContext<()>) -> worker::Result<Response> {
         .unwrap_or("index.html");
     // locally MANIFEST_MAP is empty; otherwise a hashed name
     //let asset = MANIFEST_MAP.get(asset).unwrap_or(&asset)
-    // TODO handle redirects/rewrites
-    // TODO apply gzip encoding for html/css/js
+    //  handle redirects/rewrites
+    //  apply gzip encoding for html/css/js
     // when Accept-Encoding includes gzip
     // set Content-Encoding header to gzip
-    // TODO set cache headers
-    // TODO implement webseeding requests
+    //  set cache headers
+    //  implement webseeding requests
     //   multi-file torrent magnet webseed uri must end in directory; the client will request a specific file
     //   magnet link w/ xs:file.torrent for metadata, v2 torrent to avoid file alignment padding, http range requests
     match assets.get(asset).bytes().await? {

@@ -16,3 +16,4 @@ searx.yml
 /.local/
 /auto-save-list/
 /gh-pages/
+/.extension/

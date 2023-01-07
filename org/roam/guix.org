@@ -95,7 +95,7 @@
   (home-environment
    (packages (map specification->package (list "guile"
                                                ;"guix"; managed by 'guix pull'
-                                               "emacs-next-pgtk"
+                                               ;"emacs-next-pgtk"
                                                "emacs-vterm"
                                                "emacs-debbugs"
                                                "emacs-org-roam"
@@ -157,7 +157,6 @@
                                                "emacs-which-key"
                                                "emacs-explain-pause-mode"
                                                ;"emacs-rainbow-delimiters"
-                                               ;"emacs-restart-emacs"
                                                "emacs-pcre2el"
                                                "emacs-smartparens"
                                                "emacs-gcmh"
@@ -591,9 +590,9 @@
                    (simple-service 'channel-file etc-service-type ; TODO remove after guix-home integrated
                                    (list `("channels.scm" ,(local-file "channels.scm"))))
 
-                   ;(service zfs-service-type
-                   ;         (zfs-configuration
-                   ;          (kernel my-kernel)))
+                   (service zfs-service-type
+                            (zfs-configuration
+                             (kernel my-kernel)))
 
                    (service nftables-service-type
                             (nftables-configuration

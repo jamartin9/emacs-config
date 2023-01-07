@@ -1,7 +1,7 @@
 
 * emacs-config
 This configuration relies on a few utilities.
-The dependencies are: emacs, git, rg, fd, aspell, guix, gnupg/pass (password-store), vlc or mpv (emms), notification-daemon (erc), c compiler (forge) and a shell
+The dependencies are: emacs >= 29/28, rg, fd, guix, git, gnupg, pass (password-store), aspell (flyspell), vlc/mpv (emms), notification-daemon (erc), c compiler (vterm), sqlite (forge) and a shell
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

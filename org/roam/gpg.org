@@ -21,6 +21,5 @@
 - encrypt ~gpg --encrypt --sign --armor -r a@email.com -r me@email.com~ and ~--sign-key~
 - ~gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org~
 - ~export GPG_TTY=$(tty)~ for ssh tty
-*** TODO mnemonic reproducible keys :gpg:
 *** TODO extend key expiration date :gpg:
 DEADLINE: <2026-05-08 -5d>

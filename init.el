@@ -45,12 +45,13 @@
   :init (setq gcmh-idle-delay 'auto ; gc startup
               gcmh-auto-idle-delay-factor 10
               gcmh-high-cons-threshold (* 16 1024 1024)) ; 16 MiB
-  (add-hook 'after-init-hook #'gcmh-mode))
+  (add-hook 'after-init-hook #'gcmh-mode)
+  :commands gcmh-mode)
 
 ;; Bookmark: C-x r m, C-c s m
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in
-  :config (setq user-full-name "Justin Martin"
+  :init (setq user-full-name "Justin Martin"
                 user-mail-address "jaming@protonmail.com"
                 backup-directory-alist `(("." .  ,(concat user-emacs-directory ".local/cache/")))
                 recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory ".local/cache/"))
@@ -132,10 +133,6 @@
                 use-package-always-defer t
                 ;auto-package-update-delete-old-versions t
                 ;auto-package-update-hide-results t
-                native-comp-deferred-compilation t ; native comp
-                native-comp-async-report-warnings-errors nil
-                native-compile-target-directory (concat user-emacs-directory ".local/cache/" "eln/")
-                native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/cache/" "eln/"))
                 gc-cons-threshold (* 16 1024 1024); gcmh managed 16 MiB and most-positive-fixnum on early-init
                 package-enable-at-startup nil ; packages
                 load-prefer-newer t; noninteractive
@@ -162,6 +159,11 @@
                 inhibit-startup-screen t
                 inhibit-startup-echo-area-message user-login-name
                 inhibit-default-init t)
+            (if (native-comp-available-p)
+                (setq native-comp-deferred-compilation t ; native comp
+                      native-comp-async-report-warnings-errors nil
+                      native-compile-target-directory (concat user-emacs-directory ".local/cache/" "eln/")
+                      native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/cache/" "eln/"))))
             (setq-default indent-tabs-mode nil
                 tab-width 4
                 tab-always-indent 'complete
@@ -247,8 +249,9 @@
   (require 'emms-playing-time)
   (emms-playing-time 1))
 
-(use-package guix
-  :commands guix-popup)
+(use-package guix ; TODO source home
+  ;:init (guix-set-emacs-environment "~/.guix-home")
+  :commands guix-popup guix-set-emacs-environment)
 
 (use-package rmsbolt
   :init (bind-keys :map jam/toggle ("r" . rmsbolt-mode))
@@ -256,6 +259,9 @@
 
 (use-package pass
   :init (bind-keys :map jam/open ("p" . pass))
+  :config
+  (setenv "GNUPGHOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "gnupg"))
+  (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "pass"))
   :commands pass)
 
 (use-package password-store ; info:auth#The Unix password store
@@ -305,9 +311,10 @@
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package switch-window
-  :init (bind-keys :map window-prefix-map
+  :init (if (>= emacs-major-version 29) ; remove after emacs-29
+            (bind-keys :map window-prefix-map
                    ("w" . switch-window)
-                   ("o" . other-frame))
+                   ("o" . other-frame)))
   :commands switch-window
   :config (setq switch-window-shortcut-style 'qwerty
                 switch-window-shortcut-appearance 'asciiart
@@ -329,8 +336,9 @@
                 undo-outer-limit 128000000) ; 128mb (default 24mb)
           (global-undo-tree-mode 1))
 
-(use-package minions ; hide minor modes on modeline. MAYBE use diminish/delight with use-package
-  :init (add-hook 'after-init-hook #'minions-mode))
+(use-package minions ; hide minor modes on modeline
+  :init (add-hook 'after-init-hook #'minions-mode)
+  :commands minions-mode)
 
 (use-package magit
   :commands magit-file-delete magit-status
@@ -354,6 +362,7 @@
 
 (use-package magit-todos
   :after magit
+  :custom (magit-todos-exclude-globs "*.html")
   :config
   (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:?") ; make colon optional
   (bind-keys :map jam/projects ("t" . magit-todos-list)))
@@ -405,6 +414,7 @@
               ("t" . org-todo-list)
               ("g" . org-clock-goto)
               ("a" . org-agenda)))
+
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
 (use-package org-roam
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
@@ -458,27 +468,30 @@
   :commands (fd-dired fd-grep-dired fd-name-dired))
 
 (use-package geiser
-  :defer t
+  :mode ("\\.scm$" . geiser-mode)
+  :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
   :config
   (setq geiser-repl-per-project-p t
         geiser-repl-current-project-function #'geiser-repl-project-root
-        geiser-repl-history-filename (concat user-emacs-directory ".local/cache/" "geiser-history")))
+        geiser-repl-history-filename (concat user-emacs-directory ".local/cache/" "geiser-history"))
+  (require 'geiser-guile)); geiser call per buffer?
 
 (use-package macrostep-geiser
   :init
   (add-hook 'geiser-mode-hook #'macrostep-geiser-setup)
-  (add-hook 'geiser-repl-mode-hook #'macrostep-geiser-setup))
+  (add-hook 'geiser-repl-mode-hook #'macrostep-geiser-setup)
+  :commands macrostep-geiser-setup)
 
-(use-package geiser-guile ; add guix guile modules
+(use-package geiser-guile
   :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (expand-file-name "~/.config/guix/current/share/guile/site/3.0")))
-  :after geiser)
+  :commands geiser-guile)
 
 (use-package flycheck-guile
   :after geiser)
 
 (use-package flycheck
   :init (add-hook 'after-init-hook #'global-flycheck-mode)
-  :commands flycheck-list-errors flycheck-buffer
+  :commands (flycheck-list-errors flycheck-buffer global-flycheck-mode flycheck-mode-hook)
   :custom (flycheck-display-errors-function #'display-error-messages)
   :config
   (delq 'new-line flycheck-check-syntax-automatically)
@@ -491,7 +504,7 @@
 
 (use-package flycheck-popup-tip
   :init (add-hook 'flycheck-mode-hook #'flycheck-popup-tip-mode)
-  :commands flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup)
+  :commands (flycheck-popup-tip-mode flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup))
 
 (use-package flyspell ; built-in
   :init
@@ -516,7 +529,7 @@
 
 (use-package erc ; built-in
   :init (bind-keys :map jam/open ("i" . erc-tls))
-  :commands erc-tls ; TODO add bot msg to erc-nickserv-identified-hook, erc-login function override/erc-join-hook for SASL support
+  :commands erc-tls ; MAYBE add bot msg to erc-nickserv-identified-hook, erc-login function override/erc-join-hook for SASL support
   :config (setq erc-rename-buffers t
                 erc-interpret-mirc-color t
                 erc-save-buffer-on-part t
@@ -605,20 +618,19 @@
         company-dabbrev-other-buffers nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
-  :commands (company-complete-common
+  :commands (global-company-mode
+             company-complete-common
              company-complete-common-or-cycle
              company-manual-begin
              company-grab-line)
   :config
-  (if (fboundp 'company-tng-configure-default) ; support older version then add to global-company-mode-hook
-      (company-tng-configure-default)
-    (company-tng-mode 1)))
+  (require 'company-tng)
+  (company-tng-configure-default))
 
-(use-package treemacs ; MAYBE replace with speedbar
+(use-package treemacs
   :init (bind-keys ("<f9>" . treemacs))
   (setq treemacs-persist-file (concat user-emacs-directory ".local/cache/" "treemacs-persist"))
-  :commands (treemacs treemacs-find-file)
-  :defer t)
+  :commands (treemacs treemacs-find-file))
 
 (use-package treemacs-magit
   :after treemacs magit)
@@ -629,6 +641,8 @@
                       ("a" . lsp-execute-code-action)
                       ("f" . lsp-format-buffer)
                       ("r" . lsp-rename))
+  (require 'lsp-diagnostics) ; flycheck enable?
+  (require 'lsp-lens) ; default enabled
   :init (setq lsp-enable-on-type-formatting nil
               lsp-headerline-breadcrumb-enable nil
               lsp-session-file (expand-file-name ".lsp-session-v1" (concat user-emacs-directory ".local/cache/"))
@@ -642,17 +656,22 @@
 
 (use-package lsp-ui
   :init (add-hook 'lsp-mode-hook #'lsp-ui-mode)
+  :commands lsp-ui-mode
   :config (setq lsp-ui-peek-enable t))
 
-(use-package dap-mode
-  :init (add-hook 'dap-mode-hook #'dap-tooltip-mode)
+(use-package dap-mode ; BUG guix icons not loading
+  :init (bind-keys :map jam/code ("d" . dap-debug))
+  :commands (dap-debug dap-debug-edit-template)
+  :after lsp-mode
   :config
-  (dap-mode 1)
+  (require 'dap-mouse)
+  (require 'dap-ui)
+  (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls tooltip))
   (require 'dap-gdb-lldb)
   ;;;###package gdb
   (setq gdb-show-main t
         gdb-many-windows t)
-  ;(dap-gdb-lldb-setup)
+  ;(dap-gdb-lldb-setup) ; BUG download/unzip fails?
   (dap-register-debug-template "Rust::GDB Run Configuration"
                                (list :type "gdb"
                                      :request "attach"; "launch"
@@ -663,10 +682,6 @@
                                      ;:arguments "-h" ; dap-debug-edit-template
                                      ;debugger_args ""
                                      :cwd nil)))
-
-(use-package dap-ui
-  :init (add-hook 'dap-mode-hook  #'dap-ui-mode)
-        (add-hook 'dap-ui-mode-hook  #'dap-ui-controls-mode))
 
 (use-package realgud
   :commands (realgud:gdb))
@@ -755,12 +770,11 @@
          (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
          (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
-(use-package osm
+(use-package osm ; BUG tiles not downloading?
   :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
   :config (setq osm-tile-directory (expand-file-name "osm" (concat user-emacs-directory ".local/cache/")))
   :custom
-  (osm-server 'default) ;; Configure the tile server
   (osm-copyright nil))
 
 (use-package multiple-cursors
@@ -773,14 +787,14 @@
   :config (setq mc/list-file (concat user-emacs-directory ".local/etc/" "mc-lists.el")))
 
 (use-package drag-stuff
-  :defer t
+  :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
   :init (bind-keys ("<M-up>" . drag-stuff-up)
            ("<M-down>" . drag-stuff-down)
            ("<M-left>" . drag-stuff-left)
            ("<M-right>" . drag-stuff-right)))
 
 (use-package explain-pause-mode
-  :init (bind-keys :map jam/open ("t" . explain-pause-top))
+  :init (bind-keys :map jam/open ("T" . explain-pause-top))
   :commands (explain-pause-top explain-pause-mode))
 
 (use-package pcre2el
@@ -793,11 +807,12 @@
 
 (use-package smartparens
   :init (add-hook 'after-init-hook #'smartparens-global-mode)
-  :commands (sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string))
+  :commands (sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string smartparens-global-mode))
 
 (use-package ws-butler ; a less intrusive `delete-trailing-whitespaces' on save
   :init
   (add-hook 'after-init-hook #'ws-butler-global-mode)
+  :commands ws-butler-global-mode
   :config
   (setq ws-butler-keep-whitespace-before-point nil))
 
@@ -806,12 +821,15 @@
   :commands (er/contract-region er/mark-symbol er/mark-word er/expand-region))
 
 (use-package which-key
-  :init (which-key-mode))
+  :commands (which-key-mode)
+  :init (add-hook 'after-init-hook #'which-key-mode))
 
 (use-package rustic
-  :init (setenv "PATH" (concat (getenv "PATH")
+  :config (setenv "PATH" (concat (getenv "PATH")
                                  path-separator (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
                                                         (file-name-as-directory "cargo") "bin")))
+  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "rustup"))
+  (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
   (setq exec-path (append exec-path '("~/.local/share/cargo/bin")))
   :mode ("\\.rs$" . rustic-mode))
 
@@ -932,3 +950,4 @@ OBJECT REPLACEMENT CHARACTER (65532, #xfffc)"
      (make-lsp-client :new-connection (lsp-stdio-connection '("node" "/home/jam/.vscode/extension/runner/build/runner.js"))
                       :activation-fn (lsp-activate-on "chialisp")
                       :server-id 'chialisp))))
+
