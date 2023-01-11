@@ -33,3 +33,5 @@ VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
 whisper "/content/${VID}.m4a" --model small --language English
 #+END_SRC
+** Text to speech
+- [[https://github.com/neonbjb/tortoise-tts][tortoise-tts]] based on dalle

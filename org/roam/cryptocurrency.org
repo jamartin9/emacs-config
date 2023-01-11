@@ -27,9 +27,11 @@
 - sends to puzzle hash 0x000000000000000000000000000000000000000000000000000000000000dead
 - testnet burn txch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ksh7qddh
 #+END_SRC
+- ~coin_type~ is 8444 in BLS HD key path
 - utxo based (not account based like ethereum)
 - set env var root with ~export CHIA_ROOT=/usr/local/chia/mainnet/~
 - offer files for p2p exchange (atomic swaps)
+  - submarine swap cross chain for btc
   - ALL CAT v1 Offers/Coins are INVALID as of 1.5 for vulnerability that allows anyone to claim; replaced by cat v2
     - unable to control amount exploited. puzzle hash, coin amount, parent id are sha256 hashed but not validated. fixed by using shatree to validate.
 - proof of space and time
@@ -51,6 +53,7 @@
 chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
 #+END_SRC
 - https://pawket.app/ for some online chia tools. debugger coming soon...
+  - implemented ecdh for chia addresses
 - 1.43 TB of writes per k32
 - data layer added in 1.6
   - store hash in smart coin. updates are tracked on chain along with mirrors

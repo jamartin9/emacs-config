@@ -20,6 +20,9 @@ Putting things places for reasons!
   - contains directory structure
   - supports compression
 - [[id:308edd9a-90d8-44f3-ab1f-fae4942b0eae][rar]]
+- Apache Parquet format
+  - column page store for large datasets with metadata searching
+  - Apache Arrow supports operations like querying/reading/writing
 - web archive (warc with pywb)
 #+NAME: manifest-scm
 #+BEGIN_SRC shell :tangle no

@@ -1,7 +1,40 @@
 
 * emacs-config
-This configuration relies on a few utilities.
+This configuration relies on a few utilities. Built-in functionality is preferred when functionality is identical.
 The dependencies are: emacs >= 29/28, rg, fd, guix, git, gnupg, pass (password-store), aspell (flyspell), vlc/mpv (emms), notification-daemon (erc), c compiler (vterm), sqlite (forge) and a shell
+
+Current package considerations:
+signal-msg: sms support dropping? unmaintained/broken currently (apply fixes/rewrite?)
+clipetty: copy-paste w/screen support. wayland?
+
+Third party package choices:
+gcmh: collect garbage when idle to avoid pauses
+emms: frontend for music/video player
+rmsbolt: decompiler explorer
+guix: package management
+pass: frontend to password-store
+switch-window: change windows w/o other-window rsi
+vterm: graphical terminal emulation
+magit/forge: git/forge manipulation
+debbugs: track emacs/guix bugs. alternative is bookmarking websites
+transmission: manage torrent client. alternative is scripting transmission-cli
+org-roam: tag system for note database
+fd-dired: speedup dired operations with rg/fd
+undo-tree: undo edit rsi
+flycheck: lsp, guile, rust checkers. alternative built-in flymake only has 10 backends w/o external packages
+company: aggregates built-in backends (dabbrev/hippie-expand/complete/pcomplete). alternatives: corfu lacks backends / auto-complete is obe
+lsp-mode: debugging with dap unlike alternative eglot
+ws-butler: modifies only touched lines unlike built-in alternative delete-trailing-whitespaces on save
+smartparens: strict matching speeds up font highlighting by avoiding broken/missing matches
+minions-mode: keeps the modeline visually brief with retained information
+langs: rustic, guile-geiser, pyvenv/pyls/debugpy
+multiple-cursors: mass editing
+explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
+pcre2el: regex converter. alternative: big brain
+expand-region: select semantic units of text. alternative is set mark and search/select
+which-key: show commands keybinds. alternative: M-x all the things and remember the names
+realgud: gdb frontend
+treemacs: project drawer with lsp features
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

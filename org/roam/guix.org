@@ -95,23 +95,26 @@
   (home-environment
    (packages (map specification->package (list "guile"
                                                ;"guix"; managed by 'guix pull'
-                                               ;"emacs-next-pgtk"
-                                               "emacs-vterm"
-                                               "emacs-debbugs"
-                                               "emacs-org-roam"
+                                               ;"emacs-next-pgtk" ; managed by default profile
                                                "fd"
                                                "git"
                                                "ripgrep"
                                                "nss-certs"
                                                "aspell-dict-en"
-                                               ;"vlc"; "mpv"
+                                               "mpv"; "vlc"
                                                "gnupg"
                                                "password-store"
                                                "notification-daemon"
                                                ;"xclip"
-                                               "torsocks"
                                                "screen"
                                                "virt-viewer"; for spice remote-viewer
+                                               "python" ; pulled in by treemacs and needed for debugpy module as python3
+                                               "python-lsp-server" ; python-lsp
+                                               "python-debugpy"
+                                               "emacs-pyvenv"
+                                               "emacs-vterm"
+                                               "emacs-debbugs"
+                                               "emacs-org-roam"
                                                "emacs-org"
                                                "emacs-flycheck-guile"
                                                "emacs-flycheck"
@@ -123,7 +126,6 @@
                                                "emacs-multiple-cursors"
                                                "emacs-minions"
                                                "emacs-transmission"
-                                               "emacs-yaml-mode" ; remove emacs-29
                                                "emacs-undo-tree"
                                                "emacs-switch-window"
                                                "emacs-pass"
@@ -131,22 +133,23 @@
                                                "emacs-forge"
                                                "emacs-magit"
                                                "emacs-magit-todos"
+                                               "emacs-yaml-mode" ; remove emacs-29
                                                "emacs-use-package" ; remove for emacs-29
                                                ;"emacs-helpful"
-                                               "emacs-ws-butler"
+                                               ;"emacs-avy"
                                                "emacs-code-review"
+                                               "emacs-ws-butler"
                                                "emacs-orgit-forge"
                                                "emacs-flycheck-popup-tip"
                                                "emacs-macrostep-geiser"
                                                "emacs-drag-stuff"
-                                               "emacs-cfrs" ; BUG needed for treemacs
                                                "emacs-company"
+                                               "emacs-cfrs" ; BUG needed for treemacs
                                                "emacs-treemacs"
                                                "emacs-treemacs-extra"
                                                "emacs-lsp-treemacs"
                                                "emacs-lsp-mode"
                                                "emacs-lsp-ui"
-                                               "emacs-avy"
                                                "emacs-rustic"
                                                "emacs-geiser"
                                                "emacs-geiser-guile"
@@ -156,11 +159,9 @@
                                                "emacs-expand-region"
                                                "emacs-which-key"
                                                "emacs-explain-pause-mode"
-                                               ;"emacs-rainbow-delimiters"
                                                "emacs-pcre2el"
                                                "emacs-smartparens"
-                                               "emacs-gcmh"
-                                               )))
+                                               "emacs-gcmh")))
    (services
     (list
      (simple-service 'my-channel-services
@@ -868,8 +869,9 @@
      ;;"wireguard-tools"
      ;;"socat"
      "strace"
-     ;;"tor"
-     ;;"torsocks"
+     "tor"
+     "torsocks"
+     ;;"i2pd"
      ;;"screen"
      ;;"dnsmasq"
 

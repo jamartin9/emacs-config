@@ -138,6 +138,7 @@
                 load-prefer-newer t; noninteractive
                 auto-mode-case-fold nil
                 kill-do-not-save-duplicates t
+                edebug-print-length nil ; print whole edebug result
                 browse-url-browser-function 'xwidget-webkit-browse-url ; libxml-parse-html-region w/ shr
                 display-time-format "%m-%d-%Y %R"
                 display-time-default-load-average nil
@@ -249,8 +250,9 @@
   (require 'emms-playing-time)
   (emms-playing-time 1))
 
-(use-package guix ; TODO source home
-  ;:init (guix-set-emacs-environment "~/.guix-home")
+(use-package guix
+  :config (require 'guix-autoloads)
+  (guix-set-emacs-environment "~/.guix-home/profile")
   :commands guix-popup guix-set-emacs-environment)
 
 (use-package rmsbolt
@@ -320,11 +322,12 @@
                 switch-window-shortcut-appearance 'asciiart
                 switch-window-multiple-frames t))
 
-(use-package vterm ; maybe bind C-v to vterm-yank
+(use-package vterm ; C-c C-t vterm-copy-mode
   :init (bind-keys :map jam/open ("t" . jam/vterm))
   :commands (vterm-mode vterm)
   :config (setq vterm-kill-buffer-on-exit t
-                vterm-max-scrollback 5000))
+                vterm-max-scrollback 5000)
+  (bind-keys :map vterm-mode-map ("C-S-v" . vterm-yank)))
 
 (use-package undo-tree
   :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory ".local/cache/" "undo-tree-hist/"))))
@@ -483,7 +486,8 @@
   :commands macrostep-geiser-setup)
 
 (use-package geiser-guile
-  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (expand-file-name "~/.config/guix/current/share/guile/site/3.0")))
+  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (expand-file-name "~/.config/guix/current/share/guile/site/3.0"))
+                              (add-to-list 'geiser-guile-load-path (expand-file-name "~/.guix-home/profile/share/guile/site/3.0")))
   :commands geiser-guile)
 
 (use-package flycheck-guile
@@ -502,7 +506,7 @@
         flycheck-display-errors-delay 0.25)
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
-(use-package flycheck-popup-tip
+(use-package flycheck-popup-tip ; flycheck tty popups
   :init (add-hook 'flycheck-mode-hook #'flycheck-popup-tip-mode)
   :commands (flycheck-popup-tip-mode flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup))
 
@@ -624,7 +628,7 @@
              company-manual-begin
              company-grab-line)
   :config
-  (require 'company-tng)
+  (require 'company-tng) ; TabNGo
   (company-tng-configure-default))
 
 (use-package treemacs
@@ -635,15 +639,22 @@
 (use-package treemacs-magit
   :after treemacs magit)
 
+(use-package cfrs
+  :commands cfrs-read
+  :after treemacs)
+
 (use-package lsp-mode
-  :commands (lsp-install-server lsp-mode)
+  :commands (lsp-install-server lsp-mode lsp)
+  :hook ((python-mode . lsp))
   :config (bind-keys :map jam/code
                       ("a" . lsp-execute-code-action)
                       ("f" . lsp-format-buffer)
                       ("r" . lsp-rename))
   (require 'lsp-diagnostics) ; flycheck enable?
   (require 'lsp-lens) ; default enabled
+  (require 'lsp-modeline)
   :init (setq lsp-enable-on-type-formatting nil
+              lsp-response-timeout 60
               lsp-headerline-breadcrumb-enable nil
               lsp-session-file (expand-file-name ".lsp-session-v1" (concat user-emacs-directory ".local/cache/"))
               lsp-enable-folding nil))
@@ -659,7 +670,7 @@
   :commands lsp-ui-mode
   :config (setq lsp-ui-peek-enable t))
 
-(use-package dap-mode ; BUG guix icons not loading
+(use-package dap-mode ; BUG guix: icons not included in package
   :init (bind-keys :map jam/code ("d" . dap-debug))
   :commands (dap-debug dap-debug-edit-template)
   :after lsp-mode
@@ -681,7 +692,10 @@
                                      ;:executable "/somesuchfile"
                                      ;:arguments "-h" ; dap-debug-edit-template
                                      ;debugger_args ""
-                                     :cwd nil)))
+                                     :cwd nil))
+  (require 'dap-python)
+  (setq dap-python-executable "python3" ; use guix-home's python for debug module
+        dap-python-debugger 'debugpy))
 
 (use-package realgud
   :commands (realgud:gdb))
@@ -773,7 +787,7 @@
 (use-package osm ; BUG tiles not downloading?
   :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
-  :config (setq osm-tile-directory (expand-file-name "osm" (concat user-emacs-directory ".local/cache/")))
+  :config (setq osm-tile-directory (concat user-emacs-directory ".local/cache/osm/"))
   :custom
   (osm-copyright nil))
 
@@ -832,6 +846,13 @@
   (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
   (setq exec-path (append exec-path '("~/.local/share/cargo/bin")))
   :mode ("\\.rs$" . rustic-mode))
+
+(use-package python
+  :commands (python-mode python-mode-hook python-mode-local-vars-hook))
+
+(use-package pyvenv ; activate before lsp or restart workspace
+  :init (add-hook 'python-mode-local-vars-hook #'pyvenv-tracking-mode)
+  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode))
 
 ; maybe packages
 ;
