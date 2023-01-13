@@ -174,6 +174,7 @@
                            ("a" . windmove-left)
                            ("s" . windmove-down)
                            ("d" . windmove-right)
+                           ("f" . select-frame-by-name)
                            ("o" . other-frame)))
             (setq-default indent-tabs-mode nil
                 tab-width 4
