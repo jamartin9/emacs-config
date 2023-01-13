@@ -20,4 +20,3 @@ ooh ahh the colors... with a generic plot to boot!
 *** mpv
 - ffmpeg based
 - supports custom scripts
-**** TODO add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix

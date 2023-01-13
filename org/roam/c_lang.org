@@ -34,6 +34,7 @@ Standards not correctness are all that matters when the world is a PDP-11
 - C23 added ~constexpr~
 - C23 adds ~nullptr~ constant
 - C23 adds ~auto~ typing
+- reserved names that start with [[https://www.iso-9899.info/n1570.html#7.31][to, is,]] [[https://devblogs.microsoft.com/oldnewthing/20230109-00/?p=107685][etc]]
 #+NAME: c-signal-handler
 #+BEGIN_SRC c :tangle no
 // function to create signal handlers

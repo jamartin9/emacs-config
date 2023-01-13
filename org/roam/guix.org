@@ -94,7 +94,6 @@
 
   (home-environment
    (packages (map specification->package (list "guile"
-                                               ;"guix"; managed by 'guix pull'
                                                ;"emacs-next-pgtk" ; managed by default profile
                                                "fd"
                                                "git"
@@ -105,7 +104,9 @@
                                                "gnupg"
                                                "password-store"
                                                "notification-daemon"
-                                               ;"xclip"
+                                               ;"qemu"
+                                               ;"alacritty"; "xterm"
+                                               "curl"; emacs-osm needs for CA's
                                                "screen"
                                                "virt-viewer"; for spice remote-viewer
                                                "python" ; pulled in by treemacs and needed for debugpy module as python3
@@ -127,7 +128,6 @@
                                                "emacs-minions"
                                                "emacs-transmission"
                                                "emacs-undo-tree"
-                                               "emacs-switch-window"
                                                "emacs-pass"
                                                "emacs-orgit"
                                                "emacs-forge"
@@ -136,9 +136,7 @@
                                                "emacs-yaml-mode" ; remove emacs-29
                                                "emacs-use-package" ; remove for emacs-29
                                                ;"emacs-helpful"
-                                               ;"emacs-avy"
                                                "emacs-code-review"
-                                               "emacs-ws-butler"
                                                "emacs-orgit-forge"
                                                "emacs-flycheck-popup-tip"
                                                "emacs-macrostep-geiser"
@@ -153,9 +151,8 @@
                                                "emacs-rustic"
                                                "emacs-geiser"
                                                "emacs-geiser-guile"
-                                               "emacs-realgud"
                                                "emacs-dap-mode"
-                                               "emacs-link-hint"
+                                               "emacs-link-hint";"emacs-avy"
                                                "emacs-expand-region"
                                                "emacs-which-key"
                                                "emacs-explain-pause-mode"
@@ -486,7 +483,7 @@
                                  (const '("wl")))))
      (default-value '())
      (description "Install broadcom kernel module and service")))
-  ;; * TODO guix nvidia-driver(xorg/ko), tor service
+  ;; * TODO guix nvidia-driver(xorg/ko), tor/i2p service
 
   (define my-kernel linux-6.1)
 
@@ -765,16 +762,17 @@
      ;;"transmission"
      ;;"nzbget"
      ;;"steam-nvidia" ;; steam
-     ;;"qemu"
      ;;"zfs"
+     "qemu"
      "perf"
      "bpftrace"
+     ;;"bcc"
 
      ;; C dev
      ;;"make" ;;"cmake"
      ;;"glibc" ;; "musl"
      ;;"gcc-toolchain" ;;"clang-toolchain"
-     "gdb" ;;"lldb"
+     ;;"gdb" ;;"lldb"
      "rr"
      ;;"binutils"
      ;;"module-init-tools"
@@ -794,8 +792,9 @@
 
      ;; shell
      "shellcheck" ;;"bash"
-     ;;"htop"
+     "htop"
      ;;"xclip"
+     ;;"wl-clipboard"
      ;;"bc"
      ;;"jq"
      ;;"coreutils" ;;"busybox"
@@ -854,7 +853,7 @@
      ;;"yt-dlp"
 
      ;; net
-     "curl"
+     ;;"curl"
      ;;"whois"
      ;;"bind:utils"
      ;;"nmap"
@@ -869,11 +868,11 @@
      ;;"wireguard-tools"
      ;;"socat"
      "strace"
-     "tor"
+     ;;"tor"
      "torsocks"
      ;;"i2pd"
      ;;"screen"
-     ;;"dnsmasq"
+     "dnsmasq"
 
      ;; Desktop
      ;;"xfce"; --with-graft=mesa=nvda
@@ -1013,3 +1012,11 @@ guix package -i glibc-utf8-locales
   :END:
   [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
   [2022-05-27 Fri] Last modified
+
+** guix pending packages
+*** TODO add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
+**** TODO add guix package for alacritty with nvidia-libs
+**** TODO add guix package for httm
+- rust version too old with cargo-build-system
+**** TODO add guix package for btm
+- rust version issue with rust-parking-lot dep

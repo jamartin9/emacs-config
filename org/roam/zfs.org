@@ -86,3 +86,5 @@ sysctlbyname("kstat.zfs.misc.arcstats.size")
 - compresses with blocks 7/8 of original size
   - non default compression algo zstd is simd optimized (older chips)
 - RAM ECC check for ARC ~modprobe zfs zfs_flags=16~
+- https://jro.io/truenas/openzfs/
+  - 6 vdev raidz2 eliminates allocation overhead, 3/5/9/17 raidz1, 7/11/19 raidz3

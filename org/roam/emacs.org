@@ -15,6 +15,7 @@
 - webkit environment variable(s) for built-in browser
   - ~WEBKIT_FORCE_SANDBOX="0"~
 - signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
+- German air control ATC ran on emacs in the 90's 
 *** TODO portable dumper for faster startup                           :emacs:
 *** TODO aot compile elisp packages with guix                         :emacs:
 *** org-mode notes

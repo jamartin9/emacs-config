@@ -1,40 +1,36 @@
 
 * emacs-config
-This configuration relies on a few utilities. Built-in functionality is preferred when functionality is identical.
-The dependencies are: emacs >= 29/28, rg, fd, guix, git, gnupg, pass (password-store), aspell (flyspell), vlc/mpv (emms), notification-daemon (erc), c compiler (vterm), sqlite (forge) and a shell
+This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
+The dependencies are: emacs >= 29/28, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store), aspell (flyspell), vlc/mpv (emms), notification-daemon (erc), c compiler (vterm), sqlite (forge/roam), osc terminal emulator (xterm.el) and a shell.
 
 Current package considerations:
 signal-msg: sms support dropping? unmaintained/broken currently (apply fixes/rewrite?)
-clipetty: copy-paste w/screen support. wayland?
 
 Third party package choices:
-gcmh: collect garbage when idle to avoid pauses
-emms: frontend for music/video player
+gcmh: collect garbage when idle to avoid pauses. alternative: increase gc-cons-threshold per workflow
+emms: frontend for music/video player. alternative: cli invocation
 rmsbolt: decompiler explorer
-guix: package management
-pass: frontend to password-store
-switch-window: change windows w/o other-window rsi
-vterm: graphical terminal emulation
-magit/forge: git/forge manipulation
+guix: package/environment management. alternative is pinning with use-packages and setting exec-path-from-shell
+pass: frontend to password-store. alternative is git repo of authinfo.gpg store.
+vterm: graphical terminal emulation. alternative built-in multi-term lacks visual command support
+magit/forge/code-review: git/forge manipulation. alternative built-in vc lacks complex workflows like interactive rebase or forge pull requests or code-review
 debbugs: track emacs/guix bugs. alternative is bookmarking websites
 transmission: manage torrent client. alternative is scripting transmission-cli
-org-roam: tag system for note database
-fd-dired: speedup dired operations with rg/fd
-undo-tree: undo edit rsi
+org-roam: tag system for note database. alternative is self devised naming/search scheme with org-captured journal
+fd-dired: speedup dired operations with rg/fd. alternative is find/grep
+undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
 flycheck: lsp, guile, rust checkers. alternative built-in flymake only has 10 backends w/o external packages
-company: aggregates built-in backends (dabbrev/hippie-expand/complete/pcomplete). alternatives: corfu lacks backends / auto-complete is obe
-lsp-mode: debugging with dap unlike alternative eglot
-ws-butler: modifies only touched lines unlike built-in alternative delete-trailing-whitespaces on save
-smartparens: strict matching speeds up font highlighting by avoiding broken/missing matches
-minions-mode: keeps the modeline visually brief with retained information
-langs: rustic, guile-geiser, pyvenv/pyls/debugpy
-multiple-cursors: mass editing
+company: automatic typing suggestions. alternatives: corfu lacks backends w/o cape / auto-complete is obe
+lsp-mode: debugging with dap-mode. alternative: eglot, realgud, lang specific packages (ex. jedi for python)
+treemacs: workspace/project drawer with lsp/flycheck/company features. alternative is manual built-in project.el management w/o lsp
+smartparens: saves typing closing delimiters and strict matching speeds up font highlighting by avoiding broken/missing matches
+minions-mode: keeps the modeline visually brief with retained information. alternative: diminish/delight packages and config for each mode
+multiple-cursors: mass editing. alternative: reinvent with a function of marks and operations.
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
-pcre2el: regex converter. alternative: big brain
 expand-region: select semantic units of text. alternative is set mark and search/select
-which-key: show commands keybinds. alternative: M-x all the things and remember the names
-realgud: gdb frontend
-treemacs: project drawer with lsp features
+langs: rustic, guile-geiser, pyvenv/pyls/debugpy
+which-key: show keymap keybinds. alternative is describe-* for bind discovery and remembering
+pcre2el: regex converter. alternative: big brain
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

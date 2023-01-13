@@ -41,14 +41,23 @@
   (newsticker-download-enclosures feedname item)
   (emms-play-directory download-dir)));(delete-directory download-dir t)
 
+;;;###autoload
+(defun jam/draw ()
+  "Activates artist-mode polygon in *scratch* buffer."
+  (interactive)
+  (switch-to-buffer "*scratch*")
+  (artist-mode 1); (picture-mode)
+  (artist-select-op-poly-line))
+
+
 (use-package gcmh ; gc when idle
   :init (setq gcmh-idle-delay 'auto ; gc startup
               gcmh-auto-idle-delay-factor 10
               gcmh-high-cons-threshold (* 16 1024 1024)) ; 16 MiB
   (add-hook 'after-init-hook #'gcmh-mode)
+  :config (setq gc-cons-threshold (* 16 1024 1024))
   :commands gcmh-mode)
 
-;; Bookmark: C-x r m, C-c s m
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in
   :init (setq user-full-name "Justin Martin"
@@ -81,6 +90,7 @@
                 display-line-numbers-type t ; defaults
                 apropos-do-all t
                 xterm-set-window-title t
+                xterm-extra-capabilities '(getSelection setSelection) ; osc term copy/paste
                 visible-cursor nil
                 ad-redefinition-action 'accept ; ignore warnings
                 completion-auto-help 'lazy ; TAB menu for mouse support ; TODO allow mouse for scrolling minibuffer (setq-local mwheel-scroll-up-function)
@@ -128,13 +138,6 @@
                 redisplay-skip-fontification-on-input t
                 shift-select-mode t
                 read-process-output-max (* 64 1024)
-                use-package-verbose t
-                ;use-package-always-ensure t
-                use-package-always-defer t
-                ;auto-package-update-delete-old-versions t
-                ;auto-package-update-hide-results t
-                gc-cons-threshold (* 16 1024 1024); gcmh managed 16 MiB and most-positive-fixnum on early-init
-                package-enable-at-startup nil ; packages
                 load-prefer-newer t; noninteractive
                 auto-mode-case-fold nil
                 kill-do-not-save-duplicates t
@@ -165,10 +168,19 @@
                       native-comp-async-report-warnings-errors nil
                       native-compile-target-directory (concat user-emacs-directory ".local/cache/" "eln/")
                       native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/cache/" "eln/"))))
+            (if (>= emacs-major-version 29) ; remove after emacs-29
+                (bind-keys :map window-prefix-map
+                           ("w" . windmove-up)
+                           ("a" . windmove-left)
+                           ("s" . windmove-down)
+                           ("d" . windmove-right)
+                           ("o" . other-frame)))
             (setq-default indent-tabs-mode nil
                 tab-width 4
                 tab-always-indent 'complete
                 word-wrap t)
+            (add-hook 'prog-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
+            (add-hook 'text-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
             (fido-vertical-mode 1) ; M-j to ignore completion
             (cua-mode 1)
             (window-divider-mode 1)
@@ -182,11 +194,12 @@
             (bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
             (bind-keys :prefix-map jam/vcs :prefix "C-c v")
             (bind-keys :prefix-map jam/notes :prefix "C-c n")
-            (bind-keys :prefix-map jam/projects :prefix "C-c p")
-
-          (bind-keys :prefix-map jam/toggle :prefix "C-c t"
+            (bind-keys :prefix-map jam/projects :prefix "C-c p"
+                       ("d" . jam/draw))
+            (bind-keys :prefix-map jam/toggle :prefix "C-c t"
                        ("v" . visible-mode)
                        ("w" . visual-line-mode)
+                       ("x" . xterm-mouse-mode)
                        ("c" . global-display-fill-column-indicator-mode)
                        ("F" . toggle-frame-fullscreen))
             (bind-keys :prefix-map jam/open :prefix "C-c o"
@@ -206,6 +219,7 @@
                         ("l" . link-hint-copy-link) ;link-hint
                         ("L" . ffap-menu)
                         ("i" . imenu)
+                        ("a" . apropos)
                         ("m" . bookmark-jump))
             (bind-keys :prefix-map jam/file :prefix "C-c f"
                        ("f" . find-file)
@@ -221,7 +235,6 @@
             (add-to-list 'default-frame-alist '(menu-bar-lines . 0)); disable w/o loading modes
             (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
             (add-to-list 'default-frame-alist '(vertical-scroll-bars))
-            ;; bind artist/picture mode for diagrams C-c C-a p
             ;(set-frame-parameter nil 'alpha-background 80)
             ;(add-to-list 'default-frame-alist '(width  . 190))
             ;(add-to-list 'default-frame-alist '(height  . 96))
@@ -312,16 +325,6 @@
                               ("BramCohen" "https://nitter.net/bramcohen/rss")
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
-(use-package switch-window
-  :init (if (>= emacs-major-version 29) ; remove after emacs-29
-            (bind-keys :map window-prefix-map
-                   ("w" . switch-window)
-                   ("o" . other-frame)))
-  :commands switch-window
-  :config (setq switch-window-shortcut-style 'qwerty
-                switch-window-shortcut-appearance 'asciiart
-                switch-window-multiple-frames t))
-
 (use-package vterm ; C-c C-t vterm-copy-mode
   :init (bind-keys :map jam/open ("t" . jam/vterm))
   :commands (vterm-mode vterm)
@@ -330,14 +333,15 @@
   (bind-keys :map vterm-mode-map ("C-S-v" . vterm-yank)))
 
 (use-package undo-tree
+  :init (add-hook 'after-init-hook #'global-undo-tree-mode)
+  :commands (global-undo-tree-mode)
   :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory ".local/cache/" "undo-tree-hist/"))))
   :config (setq undo-tree-visualizer-diff t
                 undo-tree-auto-save-history t
-                undo-tree-enable-undo-in-region t
                 undo-limit 800000 ; 800 kb (default 160kb)
                 undo-strong-limit 12000000 ; 12mb (default 240kb)
-                undo-outer-limit 128000000) ; 128mb (default 24mb)
-          (global-undo-tree-mode 1))
+                undo-outer-limit 128000000 ; 128mb (default 24mb)
+                undo-tree-enable-undo-in-region t))
 
 (use-package minions ; hide minor modes on modeline
   :init (add-hook 'after-init-hook #'minions-mode)
@@ -389,12 +393,18 @@
 (use-package yaml ; TODO remove for yaml-ts-mode (built-in emacs-29)
   :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
 
-(use-package transmission ; universal arg for directory prompt
+(use-package transmission ; C-u universal arg for directory prompt
   :commands (transmission transmission-add))
 
-(use-package debbugs ; debbugs-gnu-bugs with bug number for search
-  :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode);(setq org-link-elisp-confirm-function nil)
-  :config (setq debbugs-gnu-default-packages '("guix-patches"))); C-u M-x debbugs-gnu guix-patches n y then tag with t
+(use-package debbugs
+  :init (bind-keys :map jam/search ("b" . debbugs-gnu-bugs)); bug number search
+  :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
+  :config ;(setq org-link-elisp-confirm-function nil)
+  (setq debbugs-gnu-default-packages '("guix-patches"))
+  (require 'debbugs-guix)
+  (require 'debbugs-org)
+  (require 'debbugs-gnu)
+  (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
 
 (use-package hideshow ; built-in
   :init (bind-keys :map jam/toggle ("z" . hs-minor-mode))
@@ -471,7 +481,7 @@
   :commands (fd-dired fd-grep-dired fd-name-dired))
 
 (use-package geiser
-  :mode ("\\.scm$" . geiser-mode)
+  :init (add-hook 'scheme-mode-hook #'geiser-mode)
   :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
   :config
   (setq geiser-repl-per-project-p t
@@ -494,12 +504,14 @@
   :after geiser)
 
 (use-package flycheck
-  :init (add-hook 'after-init-hook #'global-flycheck-mode)
-  :commands (flycheck-list-errors flycheck-buffer global-flycheck-mode flycheck-mode-hook)
+  :init
+  ;(add-hook 'after-init-hook #'global-flycheck-mode)
+  (add-hook 'prog-mode-hook #'flycheck-mode)
+  (bind-keys :map jam/toggle ("f" . flycheck-mode))
+  :commands (flycheck-list-errors flycheck-buffer global-flycheck-mode flycheck-mode-hook flycheck-mode)
   :custom (flycheck-display-errors-function #'display-error-messages)
   :config
   (delq 'new-line flycheck-check-syntax-automatically)
-  (bind-keys :map jam/toggle ("f" . flycheck-mode))
   (setq flycheck-emacs-lisp-load-path 'inherit
         flycheck-idle-change-delay 1.0
         flycheck-buffer-switch-check-intermediate-buffers t
@@ -596,13 +608,13 @@
 
 (use-package tramp ; built-in
   :commands (tramp)
-  :config
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path); use login shell for tramp
-  (setq tramp-auto-save-directory "/tmp"))
+  :config (add-to-list 'tramp-remote-path 'tramp-own-remote-path); use login shell for tramp
+  (setq tramp-auto-save-directory "/tmp"
+        tramp-persistency-file-name (concat user-emacs-directory ".local/cache/" "tramp")))
 
 (use-package company
-  :init
-  (add-hook 'after-init-hook #'global-company-mode)
+  :init (add-hook 'after-init-hook #'global-company-mode)
+  (bind-keys :map jam/toggle ("a" . global-company-mode))
   (setq company-minimum-prefix-length 2
         company-tooltip-limit 14
         company-tooltip-align-annotations t
@@ -612,12 +624,12 @@
               circe-mode
               message-mode
               help-mode
-              gud-mode
+              ;gud-mode
               vterm-mode)
         company-frontends
         '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
           company-echo-metadata-frontend)  ; show selected candidate docs in echo area
-        company-backends '(company-capf company-yasnippet)
+        company-backends '(company-capf company-yasnippet); company-files
         company-auto-commit nil
         company-dabbrev-other-buffers nil
         company-dabbrev-ignore-case nil
@@ -633,8 +645,9 @@
 
 (use-package treemacs
   :init (bind-keys ("<f9>" . treemacs))
+  (bind-keys :map jam/projects ("w" . treemacs-switch-workspace))
   (setq treemacs-persist-file (concat user-emacs-directory ".local/cache/" "treemacs-persist"))
-  :commands (treemacs treemacs-find-file))
+  :commands (treemacs treemacs-find-file treemacs-switch-workspace))
 
 (use-package treemacs-magit
   :after treemacs magit)
@@ -697,8 +710,6 @@
   (setq dap-python-executable "python3" ; use guix-home's python for debug module
         dap-python-debugger 'debugpy))
 
-(use-package realgud
-  :commands (realgud:gdb))
 
 ;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
 ;; C-u RET for unread and read
@@ -784,12 +795,11 @@
          (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
          (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
-(use-package osm ; BUG tiles not downloading?
+(use-package osm
   :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
   :config (setq osm-tile-directory (concat user-emacs-directory ".local/cache/osm/"))
-  :custom
-  (osm-copyright nil))
+  :custom (osm-copyright nil))
 
 (use-package multiple-cursors
   :commands (multiple-cursors-mode mc/add-cursor-on-click mc/vertical-align
@@ -820,23 +830,17 @@
              rxt-mode rxt-global-mode))
 
 (use-package smartparens
-  :init (add-hook 'after-init-hook #'smartparens-global-mode)
-  :commands (sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string smartparens-global-mode))
-
-(use-package ws-butler ; a less intrusive `delete-trailing-whitespaces' on save
-  :init
-  (add-hook 'after-init-hook #'ws-butler-global-mode)
-  :commands ws-butler-global-mode
-  :config
-  (setq ws-butler-keep-whitespace-before-point nil))
+  :init (add-hook 'after-init-hook #'smartparens-global-mode) ; less typing
+  (bind-keys :map jam/toggle ("p" . smartparens-strict-mode))
+  :commands (sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string smartparens-global-mode smartparens-strict-mode))
 
 (use-package expand-region
   :init (bind-key "C-=" #'er/expand-region)
   :commands (er/contract-region er/mark-symbol er/mark-word er/expand-region))
 
 (use-package which-key
-  :commands (which-key-mode)
-  :init (add-hook 'after-init-hook #'which-key-mode))
+  :init (add-hook 'after-init-hook #'which-key-mode)
+  :commands (which-key-mode))
 
 (use-package rustic
   :config (setenv "PATH" (concat (getenv "PATH")
@@ -855,10 +859,6 @@
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode))
 
 ; maybe packages
-;
-;(use-package clipetty
-;  :commands clipetty-mode
-;  :init (add-hook 'tty-setup-hook #'(lambda () (global-clipetty-mode 1))))
 ;
 ;(use-package! signal-msg ; https://github.com/AsamK/signal-cli
 ;  :commands (signal-msg-new-message) ; jam/signal-msg-rec
@@ -971,4 +971,3 @@ OBJECT REPLACEMENT CHARACTER (65532, #xfffc)"
      (make-lsp-client :new-connection (lsp-stdio-connection '("node" "/home/jam/.vscode/extension/runner/build/runner.js"))
                       :activation-fn (lsp-activate-on "chialisp")
                       :server-id 'chialisp))))
-

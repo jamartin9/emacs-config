@@ -100,3 +100,4 @@ panic = "abort"
 - create and activate virtual environment ~python -m venv venv && source venv/bin/activate~
 - run a http server on port 8080 ~python -m http.server 8080~
 - pretty print json ~python -m json.tool~
+- [[https://peps.python.org/pep-0703/][PEP to remove GIL]]
