@@ -31,8 +31,6 @@ The coding will continue until morale improves!
       - add pam user login mounting :wip:
       - add root initramfs support :wip:
     - add graft support for nvda to browsers :wip:
-  - opensnitch daemon :wip:
-    - automatic recursive import needs step added for protoc generation of header files
 - emacs-config
   - elisp/org configuration for emacs
   - uses elisp wrapper script to untangle/eval org file code for setup

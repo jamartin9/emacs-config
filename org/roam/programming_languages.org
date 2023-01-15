@@ -51,7 +51,7 @@ strip = true
 opt-level = "z" # smallest binary instead of speed
 panic = "abort"
 #+END_SRC
-
+- rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview
 ** [[id:a168933c-6a2b-456e-9fd0-760c5bc180dc][css]]
 ** [[id:7c407252-45a1-41a6-901a-cfdb19a6ac36][make]]
 ** [[id:0713d4b4-4d66-495b-9d1b-192c91a8ab9f][elixir]]

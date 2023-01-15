@@ -1,0 +1,66 @@
+:PROPERTIES:
+:ID:       65b13d9c-d722-4b0a-bdc0-f29c33653076
+:END:
+#+title: i2p
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* i2p
+** notes
+- java and c++ implementations
+  - both have apps on fdroid
+  - browser bundle or proxy port
+#+NAME: i2pd-conf
+*** router
+#+BEGIN_SRC conf :tangle no
+[sam] ## disable SAM Bridge (app control for bitcoin)
+enabled = false
+[socksproxy] ## disable SOCKS Proxy
+enabled = false
+[httpproxy] ## Enable HTTP Proxy for eep sites (4444)
+enabled = true
+[http] ## Enable Web Console (7070)
+enabled = true
+[ntcp2] ## Enable NTCP2 transport (TCP) (default = true)
+enabled = true
+[upnp] ## disable UPnP (enabled by default in WINDOWS, ANDROID)
+enabled = false
+[i2cp] ##  Enable I2CP protocol for torrent clients (7654)
+enabled = true
+
+daemon = false
+## Enable SSU (UDP) transport
+ssu = true
+## Bandwidth configuration
+## L limit bandwidth to 32KBs/sec, O - to 256KBs/sec, P - to 2048KBs/sec, X - unlimited
+bandwidth = O
+## Max % of bandwidth limit for transit. 0-100. 100 by default
+share = 50
+
+## Enable communication through ipv4/6
+ipv4 = true
+ipv6 = true
+
+#+END_SRC
+*** tunnel configs
+#+NAME: i2pd-tunnels-server
+#+BEGIN_SRC conf :tangle no
+[wg-simple-server]
+type = udpserver
+keys = wg.dat
+host = 127.0.0.1
+port = 1337
+gzip = false # save cpu not trying to compress encypted wg data
+#accesslist = 
+#+END_SRC
+#+NAME: i2pd-tunnels-client
+#+BEGIN_SRC conf :tangle no
+[wg-simple-client]
+type = udpclient
+destination = something.b32.i2p
+address = 127.0.0.1
+port = 1337
+gzip = false # save cpu not trying to compress encypted wg data
+#+END_SRC

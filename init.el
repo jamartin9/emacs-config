@@ -7,13 +7,25 @@
    (list
     (read-string
      (format "Station (librefm://globaltags/Classical): ")
-     nil
-     nil
+     nil nil
      "librefm://globaltags/Classical")))
   (message "station is %s" station)
   (setq emms-librefm-scrobbler-username "jaming"
         emms-librefm-scrobbler-password (alist-get 'secret (auth-source-pass-parse-entry "librefm/jaming")))
   (emms-librefm-stream station))
+
+;;;###autoload
+(defun jam/sudo-edit (file)
+  "Edits opens file with sudo. Defaults to current buffer's file name."
+  (interactive
+   (list
+    (read-string
+     (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer)))
+     nil nil
+     (buffer-file-name (current-buffer)))))
+  (message "sudo-edited file: %s" file)
+  (find-file (format "/sudo::%s" file)))
+
 
 ;;;###autoload
 (defun jam/save-all ()
@@ -93,8 +105,8 @@
                 xterm-extra-capabilities '(getSelection setSelection) ; osc term copy/paste
                 visible-cursor nil
                 ad-redefinition-action 'accept ; ignore warnings
-                completion-auto-help 'lazy ; TAB menu for mouse support ; TODO allow mouse for scrolling minibuffer (setq-local mwheel-scroll-up-function)
-                completion-cycle-threshold nil ; disable TAB cycling, use arrows keys/C-s/C-r and RET for selection ; TODO add TAB insert (minibuffer-local-completion-map)
+                completion-auto-help nil; '?' for help w/mouse click
+                completion-cycle-threshold nil ; flex narrowing instead of cycling
                 column-number-mode t
                 sentence-end-double-space nil
                 require-final-newline t
@@ -164,7 +176,7 @@
                 inhibit-startup-echo-area-message user-login-name
                 inhibit-default-init t)
             (if (native-comp-available-p)
-                (setq native-comp-deferred-compilation t ; native comp
+                (setq native-comp-deferred-compilation t
                       native-comp-async-report-warnings-errors nil
                       native-compile-target-directory (concat user-emacs-directory ".local/cache/" "eln/")
                       native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/cache/" "eln/"))))
@@ -193,6 +205,18 @@
             (bind-keys :map ctl-x-map ("C-S-s" . jam/save-all))
             (bind-keys :map help-map ("D" . shortdoc))
             (bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
+            (bind-keys :map minibuffer-local-completion-map
+                       ;("<mouse-1>" . minibuffer-choose-completion)
+                       ("C-TAB" . icomplete-fido-ret)
+                       ("C-<tab>" . icomplete-fido-ret)
+                       ("S-TAB" . icomplete-backward-completions) ; wraparound?
+                       ("<backtab>" . icomplete-backward-completions)
+                       ("TAB" . icomplete-forward-completions)
+                       ("<tab>" . icomplete-forward-completions)
+                       ("<mouse-4>" . icomplete-backward-completions)
+                       ("<wheel-up>" . icomplete-backward-completions)
+                       ("<mouse-5>" . icomplete-forward-completions)
+                       ("<wheel-down>" . icomplete-forward-completions))
             (bind-keys :prefix-map jam/vcs :prefix "C-c v")
             (bind-keys :prefix-map jam/notes :prefix "C-c n")
             (bind-keys :prefix-map jam/projects :prefix "C-c p"
@@ -204,6 +228,7 @@
                        ("c" . global-display-fill-column-indicator-mode)
                        ("F" . toggle-frame-fullscreen))
             (bind-keys :prefix-map jam/open :prefix "C-c o"
+                        ("s" . jam/sudo-edit)
                         ("S" . speedbar-frame-mode)
                         ("b" . browse-url-of-file)
                         ("-" . dired-jump)
@@ -217,7 +242,7 @@
                         ("j" . xref-find-definitions)
                         ("c" . compile))
             (bind-keys :prefix-map jam/search :prefix "C-c s"
-                        ("l" . link-hint-copy-link) ;link-hint
+                        ("l" . link-hint-copy-link)
                         ("L" . ffap-menu)
                         ("i" . imenu)
                         ("a" . apropos)
@@ -236,13 +261,13 @@
             (add-to-list 'default-frame-alist '(menu-bar-lines . 0)); disable w/o loading modes
             (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
             (add-to-list 'default-frame-alist '(vertical-scroll-bars))
-            ;(set-frame-parameter nil 'alpha-background 80)
+            (set-frame-parameter nil 'alpha-background 80)
             ;(add-to-list 'default-frame-alist '(width  . 190))
             ;(add-to-list 'default-frame-alist '(height  . 96))
-            ;(add-to-list 'default-frame-alist '(alpha-background  . 80))
+            (add-to-list 'default-frame-alist '(alpha-background  . 80))
             ;(add-to-list 'initial-frame-alist '(width  . 190))
             ;(add-to-list 'initial-frame-alist '(height  . 96))
-            ;(add-to-list 'initial-frame-alist '(alpha-background  . 80))
+            (add-to-list 'initial-frame-alist '(alpha-background  . 80))
             (set-language-environment "UTF-8"))
 
 (use-package emms
@@ -369,6 +394,7 @@
   (bind-keys :map transient-map ([escape] . transient-quit-one)))
 
 (use-package magit-todos
+  ;:init (add-hook 'magit-status-mode-hook #'magit-status-mode)
   :after magit
   :custom (magit-todos-exclude-globs "*.html")
   :config
@@ -424,7 +450,7 @@
   :commands org-mode org-agenda org-capture
   :config (setq org-timer-default-timer 60)
   (bind-keys :map jam/notes
-              ("D"  . org-id-update-id-locations)
+              ("D" . org-id-update-id-locations)
               ("t" . org-todo-list)
               ("g" . org-clock-goto)
               ("a" . org-agenda)))
@@ -505,8 +531,7 @@
   :after geiser)
 
 (use-package flycheck
-  :init
-  ;(add-hook 'after-init-hook #'global-flycheck-mode)
+  :init ;(add-hook 'after-init-hook #'global-flycheck-mode)
   (add-hook 'prog-mode-hook #'flycheck-mode)
   (bind-keys :map jam/toggle ("f" . flycheck-mode))
   :commands (flycheck-list-errors flycheck-buffer global-flycheck-mode flycheck-mode-hook flycheck-mode)
@@ -524,7 +549,7 @@
   :commands (flycheck-popup-tip-mode flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup))
 
 (use-package flyspell ; built-in
-  :init
+  :init (bind-keys :map jam/toggle ("s" . flyspell-mode))
   (add-hook 'org-mode-hook #'flyspell-mode)
   (add-hook 'markdown-mode-hook #'flyspell-mode)
   (add-hook 'TeX-mode-hook #'flyspell-mode)
@@ -534,7 +559,6 @@
   (add-hook 'yaml-mode-hook #'flyspell-prog-mode)
   (add-hook 'conf-mode-hook #'flyspell-prog-mode)
   (add-hook 'prog-mode-hook #'flyspell-prog-mode)
-  (bind-keys :map jam/toggle ("s" . flyspell-mode))
   :config (setq flyspell-issue-welcome-flag nil
                 flyspell-issue-message-flag nil
                 ispell-program-name "aspell" ; runs as own process
@@ -589,7 +613,7 @@
   (add-to-list 'erc-modules 'dcc);/dcc list and /dcc get -s nick file
   (add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
   (add-to-list 'erc-modules 'log)
-  ;(add-to-list 'erc-modules 'services)
+  ;(add-to-list 'erc-modules 'services); nickserv
   (erc-update-modules))
 
 (use-package eshell ; built-in
@@ -603,7 +627,7 @@
   (setq eshell-directory-name (concat user-emacs-directory ".local/cache/" "eshell")
         eshell-prefer-lisp-functions nil
         eshell-cmpl-cycle-completions t; replace # with : for prompt regex using /ssh:jam@10.0.0.1#6969:/tmp
-        eshell-prompt-function (lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
+        eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
                                                   (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white"))))))
   (add-to-list 'eshell-modules-list 'eshell-tramp))
 
@@ -630,7 +654,7 @@
         company-frontends
         '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
           company-echo-metadata-frontend)  ; show selected candidate docs in echo area
-        company-backends '(company-capf company-yasnippet); company-files
+        company-backends '(company-capf company-yasnippet); company-ispell company-files company-keywords company-dabbrev
         company-auto-commit nil
         company-dabbrev-other-buffers nil
         company-dabbrev-ignore-case nil
@@ -653,7 +677,7 @@
 (use-package treemacs-magit
   :after treemacs magit)
 
-(use-package cfrs
+(use-package cfrs ; BUG guix package needs for treemacs
   :commands cfrs-read
   :after treemacs)
 
@@ -696,7 +720,7 @@
   ;;;###package gdb
   (setq gdb-show-main t
         gdb-many-windows t)
-  ;(dap-gdb-lldb-setup) ; BUG download/unzip fails?
+  ;(dap-gdb-lldb-setup) ; BUG download/unzip fails? redirect?
   (dap-register-debug-template "Rust::GDB Run Configuration"
                                (list :type "gdb"
                                      :request "attach"; "launch"
@@ -940,7 +964,6 @@
                          path-separator (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
                                      (file-name-as-directory "guix") "bin")))
   )
-
 ;;;###autoload
 (defun jam/replace-unicode ()
   "Replaces the following unicode characters:

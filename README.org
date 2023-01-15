@@ -7,9 +7,9 @@ Current package considerations:
 signal-msg: sms support dropping? unmaintained/broken currently (apply fixes/rewrite?)
 
 Third party package choices:
-gcmh: collect garbage when idle to avoid pauses. alternative: increase gc-cons-threshold per workflow
-emms: frontend for music/video player. alternative: cli invocation
-rmsbolt: decompiler explorer
+gcmh: collect garbage when idle to avoid pauses. alternative is increase gc-cons-threshold per workflow
+emms: frontend for music/video player. alternative is cli invocation of tools
+rmsbolt: decompiler explorer. alternative is external decompiler.
 guix: package/environment management. alternative is pinning with use-packages and setting exec-path-from-shell
 pass: frontend to password-store. alternative is git repo of authinfo.gpg store.
 vterm: graphical terminal emulation. alternative built-in multi-term lacks visual command support
@@ -20,17 +20,17 @@ org-roam: tag system for note database. alternative is self devised naming/searc
 fd-dired: speedup dired operations with rg/fd. alternative is find/grep
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
 flycheck: lsp, guile, rust checkers. alternative built-in flymake only has 10 backends w/o external packages
-company: automatic typing suggestions. alternatives: corfu lacks backends w/o cape / auto-complete is obe
+company: automatic typing suggestions. alternatives corfu lacks backends w/o cape and auto-complete is obe
 lsp-mode: debugging with dap-mode. alternative: eglot, realgud, lang specific packages (ex. jedi for python)
-treemacs: workspace/project drawer with lsp/flycheck/company features. alternative is manual built-in project.el management w/o lsp
+treemacs: workspace/project drawer with lsp/flycheck/company features. alternative is manual workspaces with built-in project.el
 smartparens: saves typing closing delimiters and strict matching speeds up font highlighting by avoiding broken/missing matches
 minions-mode: keeps the modeline visually brief with retained information. alternative: diminish/delight packages and config for each mode
 multiple-cursors: mass editing. alternative: reinvent with a function of marks and operations.
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
 expand-region: select semantic units of text. alternative is set mark and search/select
-langs: rustic, guile-geiser, pyvenv/pyls/debugpy
-which-key: show keymap keybinds. alternative is describe-* for bind discovery and remembering
-pcre2el: regex converter. alternative: big brain
+langs: rustic, guile-geiser, pyvenv/pyls/debugpy. alternative is only use elisp
+which-key: show keymap keybinds. alternative is describe-* functions for bind discovery
+pcre2el: regex converter. alternative is a smooth big brain
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.
