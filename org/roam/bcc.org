@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       bee863b2-bd4f-4332-a227-976b3cef1e45
+:END:
+#+title: bcc
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* bcc
+** notes
+- python tools usually under /usr/share/bcc/tools/
+- zfs latency with ~zfsslower~ and ~zfsdist~
+- system cache every 5000th cache call for 20 sec ~llcstat -c 5000 20~
+- profile ~profile -df -p 6969 10 > flamegraph.profile~
+  - ugc profile python/node/ruby/jvm gc ~ugc -l python -m $PID~
+  - ustat profile python/node/ruby/jvm events every 5 sec ~ustat -l python -C 5~
+  - ucalls profile latency/call counts python/node/ruby/jvm pids every 5 secs ~ucalls -l python -m -L -S 5~
+- trace ~trace 'sys_execve "%s", arg1'~
+- filetop ~filetop -C~
+- random disk pattern print every second ~biopattern 1~
+- disk io ~biotop~
+- disk latency ~biolatency -m -T 5~
+- dddos.py primitive ddos detection

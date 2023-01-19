@@ -18,3 +18,4 @@ The only winning move is not to play
   - rust port of ggrs
     - bevy engine plugin
 - [[https://github.com/deepnight/ldtk][2d game map tool]]
+- [[https://github.com/DFHack/stonesense][3D isometric viewer for dwarf fortress]]

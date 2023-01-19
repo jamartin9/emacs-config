@@ -44,3 +44,7 @@ We have to get those dirty versions under control...
     - codeberg is a free hosted instance
       - Found to not use raid/redundant storage for hosting when investigating (data will be lost outside backup window)
       - must license software as foss (no unlicensed projects)
+** sapling
+- https://github.com/facebook/sapling
+- git clone and github pr compatibility
+- uses ~sl~ or smart log

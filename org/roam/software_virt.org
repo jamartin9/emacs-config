@@ -26,3 +26,7 @@ Simulate the simulation
 - mesa opengl env var ~LIBGL_ALWAYS_SOFTWARE=true~
 - ebpf
   - non turing complete register vm
+  - CO-RE and BTF for portability
+  - tools
+    - [[id:a07e64d0-5cee-451a-af80-3f6c006dd0a1][bpftrace]]
+    - [[id:bee863b2-bd4f-4332-a227-976b3cef1e45][bcc]]

@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       a07e64d0-5cee-451a-af80-3f6c006dd0a1
+:END:
+#+title: bpftrace
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* bpftrace
+** notes
+- needs cap or sudo
+- <EVENT>/<FILTER>/<BLOCK> structure
+** oneliners
+- tools for oneline usually installed in /usr/share/bpftrace/tools/*.bt
+#+NAME: bpftrace-poll
+#+BEGIN_SRC sh :tangle no
+# print results on internval. Add to end to poll probe
+BPF_POLL='interval:s:1 { print(@); clear(@); }'
+# profile pid 6969
+BPF_PROFILE='profile:hz:99 /pid == 6969/ { @[ustack] = count(); }'
+# cache miss counter
+BPF_CACHE='hardware:cache-misses:1000000 { @[comm, pid] = count(); }'
+# page misses
+BPF_PAGE='software:faults:1 { @[comm] = count(); }'
+# print cache misses every sec
+sudo bpftrace -e "${BPF_CACHE} ${BPF_POLL}"
+# print all syscalls for prog
+sudo bpftrace -e 'tracepoint:syscalls:sys_enter_* /comm != "bpftrace"/ {printf("Process Name: %s Syscall Requested: %s\n", comm, probe);}'
+# print tcp active connections
+sudo bpftrace /usr/share/bpftrace/tools/tcpconnect.bt
+# print tcp passive connections
+sudo bpftrace /usr/share/bpftrace/tools/tcpaccept.bt
+#+END_SRC

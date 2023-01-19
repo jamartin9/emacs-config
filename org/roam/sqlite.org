@@ -10,6 +10,11 @@
 * sqlite
 ** notes
 - https://www.sqlite.org/limits.html
+- stores each index and table as separate b-tree over the database pages
+  - ~BEGIN CONCURRENT~ allows multiple writers with separate tables or index's separated by page size.
+  - hctree concurrency for row level locking
+    - uses session extension for leader-follower backend replication
+    - higher page bit (48 bit) support higher storage limit of 1EiB 
 - single flat file database
 - C source can be compiled to WASM/Javascript [[https://sqlite.org/fiddle/][sqlite.org/fiddle]]
 - Replication options

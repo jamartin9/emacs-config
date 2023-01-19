@@ -12,6 +12,9 @@
 - huggingface is a hub for models with api libs using pytorch/tensorflow/jax
   - spaces to run in notebook like without colab using gradio
 - collab gives free 12hrs of compute
+- Forward Forward is alternative back propagation
+- wasi-nn for evaluating ml models in wasm via SIMD extensions with either wasmedge (pytorch) or wasmtime(openvino)
+- [[https://github.com/microsoft/onnxruntime][ONNX]] for browser evaluation of pytorch models
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]

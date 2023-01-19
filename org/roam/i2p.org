@@ -15,6 +15,32 @@
 #+NAME: i2pd-conf
 *** router
 #+BEGIN_SRC conf :tangle no
+
+## Default: ~/.i2pd/
+#tunconf = /var/lib/i2pd/tunnels.conf
+#tunnelsdir = /var/lib/i2pd/tunnels.d
+#certsdir = /var/lib/i2pd/certificates
+
+## Logs: stdout, file, syslog. stdout by default
+#log = file
+#logfile = /var/log/i2pd/i2pd.log
+#pidfile = /run/i2pd.pid
+
+#port = 4567
+daemon = false
+## Enable SSU (UDP) transport
+ssu = true
+## Bandwidth configuration
+## L limit bandwidth to 32KBs/sec, O - to 256KBs/sec, P - to 2048KBs/sec, X - unlimited
+bandwidth = O
+## Max % of bandwidth limit for transit. 0-100. 100 by default
+share = 50
+
+## Enable communication through ipv4/6
+ipv4 = true
+ipv6 = true
+[ssu2] ## Enable SSU2 transport
+enabled = true
 [sam] ## disable SAM Bridge (app control for bitcoin)
 enabled = false
 [socksproxy] ## disable SOCKS Proxy
@@ -30,19 +56,9 @@ enabled = false
 [i2cp] ##  Enable I2CP protocol for torrent clients (7654)
 enabled = true
 
-daemon = false
-## Enable SSU (UDP) transport
-ssu = true
-## Bandwidth configuration
-## L limit bandwidth to 32KBs/sec, O - to 256KBs/sec, P - to 2048KBs/sec, X - unlimited
-bandwidth = O
-## Max % of bandwidth limit for transit. 0-100. 100 by default
-share = 50
-
-## Enable communication through ipv4/6
-ipv4 = true
-ipv6 = true
-
+[addressbook] ## Default: reg.i2p at "mainline" I2P Network. ex http://tracker2.postman.i2p http://tube.i2p http://get-monero.i2p
+#defaulturl = http://shx5vqsw7usdaunyzr2qmes2fq37oumybpudrd4jjj4e4vk4uusa.b32.i2p/hosts.txt
+#subscriptions = http://reg.i2p/hosts.txt,http://identiguy.i2p/hosts.txt,http://stats.i2p/cgi-bin/newhosts.txt,http://rus.i2p/hosts.txt
 #+END_SRC
 *** tunnel configs
 #+NAME: i2pd-tunnels-server
@@ -53,14 +69,17 @@ keys = wg.dat
 host = 127.0.0.1
 port = 1337
 gzip = false # save cpu not trying to compress encypted wg data
-#accesslist = 
+#accesslist = vsjho6tlfrx3duldjjmyoheoqtyppupzd5wzktxpyxmgwhdyujrq.b32.i2p
 #+END_SRC
 #+NAME: i2pd-tunnels-client
 #+BEGIN_SRC conf :tangle no
 [wg-simple-client]
 type = udpclient
 destination = something.b32.i2p
-address = 127.0.0.1
 port = 1337
 gzip = false # save cpu not trying to compress encypted wg data
+#+END_SRC
+#+NAME: i2pd-hosts
+#+BEGIN_SRC text :tangle no
+dread.i2p=http://dreadtoobigdsrxg4yfspcyjr3k6675vftyco5pyb7wg4pr4dwjq.b32.i2p
 #+END_SRC

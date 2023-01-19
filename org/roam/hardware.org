@@ -12,7 +12,8 @@
   - intel management engine
   - amd platform security processor
   - firmware level malware (disk controller, usb controller, flashable uefi/bios etc)
-  - side channel data transmission such as AM https://github.com/fulldecent/system-bus-radio
+  - side channel data transmission such as AM https://github.com/fulldecent/system-bus-radio or differential power analysis
+  - printers watermark pages and refuse to print without yellow ink 
 - Commonly defective (cheap companies and lack of quality control even with standards)
   - HDMI cables (no hdcp, artifacts and non spec bandwidth limits)
   - USBC charging (will not charge certain devices and can even damage ex. Nintendo Switch)

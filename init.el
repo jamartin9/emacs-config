@@ -26,7 +26,6 @@
   (message "sudo-edited file: %s" file)
   (find-file (format "/sudo::%s" file)))
 
-
 ;;;###autoload
 (defun jam/save-all ()
   "Saves all buffers"
@@ -61,6 +60,16 @@
   (artist-mode 1); (picture-mode)
   (artist-select-op-poly-line))
 
+;;;###autoload
+(defun jam/set-rust-path ()
+  "Sets PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
+  (interactive)
+  (setenv "PATH" (concat (getenv "PATH")
+                         path-separator (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+                                                (file-name-as-directory "cargo") "bin")))
+  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "rustup"))
+  (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
+  (setq exec-path (append exec-path '("~/.local/share/cargo/bin"))))
 
 (use-package gcmh ; gc when idle
   :init (setq gcmh-idle-delay 'auto ; gc startup
@@ -111,6 +120,7 @@
                 sentence-end-double-space nil
                 require-final-newline t
                 bidi-inhibit-bpa t ; some naughty unicodes
+                auto-revert-remote-files nil ; dired
                 use-short-answers t ; annoying
                 confirm-kill-processes nil
                 visible-bell nil
@@ -181,7 +191,7 @@
                       native-compile-target-directory (concat user-emacs-directory ".local/cache/" "eln/")
                       native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/cache/" "eln/"))))
             (if (>= emacs-major-version 29) ; remove after emacs-29
-                (bind-keys :map window-prefix-map
+                (bind-keys :map window-prefix-map ; C-x 1 C-x o
                            ("w" . windmove-up)
                            ("a" . windmove-left)
                            ("s" . windmove-down)
@@ -220,7 +230,7 @@
             (bind-keys :prefix-map jam/vcs :prefix "C-c v")
             (bind-keys :prefix-map jam/notes :prefix "C-c n")
             (bind-keys :prefix-map jam/projects :prefix "C-c p"
-                       ("d" . jam/draw))
+                       ("d" . jam/draw)); C-x p g
             (bind-keys :prefix-map jam/toggle :prefix "C-c t"
                        ("v" . visible-mode)
                        ("w" . visual-line-mode)
@@ -273,7 +283,8 @@
 (use-package emms
   :init (bind-keys :map jam/open
                    ("l" . jam/librefm-stream)
-                   ("m" . emms-play-file))
+                   ("m" . emms-play-file)
+                   ("M" . emms-play-directory))
   :commands (emms-play-file emms-librefm-stream emms-browser emms-play-url emms-play-directory)
   :config
   (require 'emms-setup)
@@ -348,7 +359,7 @@
                               ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
                               ("BruceSchneier" "https://www.schneier.com/feed/atom")
                               ("GlennGreenWald" "https://greenwald.substack.com/feed")
-                              ("BramCohen" "https://nitter.net/bramcohen/rss")
+                              ;("BramCohen" "https://nitter.net/bramcohen/rss"); twitter api broke?
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package vterm ; C-c C-t vterm-copy-mode
@@ -375,7 +386,6 @@
 
 (use-package magit
   :commands magit-file-delete magit-status
-;  :defer-incrementally (dash f s with-editor git-commit package eieio transient)
   :init
   (bind-keys :map jam/vcs ("s" . magit-status))
   (setq magit-auto-revert-mode nil)
@@ -392,14 +402,6 @@
   (add-hook 'magit-process-mode-hook #'goto-address-mode)
   (bind-keys :map magit-mode-map ("q" . kill-buffer))
   (bind-keys :map transient-map ([escape] . transient-quit-one)))
-
-(use-package magit-todos
-  ;:init (add-hook 'magit-status-mode-hook #'magit-status-mode)
-  :after magit
-  :custom (magit-todos-exclude-globs "*.html")
-  :config
-  (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:?") ; make colon optional
-  (bind-keys :map jam/projects ("t" . magit-todos-list)))
 
 ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
 (use-package forge
@@ -443,17 +445,22 @@
   :commands (org-encrypt-entries org-encrypt-entry org-decrypt-entries org-decrypt-entry))
 
 (use-package org-clock ; built-in
-  :commands org-clock-save)
+  :init (bind-keys :map jam/notes ("g" . org-clock-goto))
+  :commands (org-clock-goto org-clock-in org-clock-cancel))
 
 (use-package org ; built-in
-;  :defer-incrementally calendar find-func format-spec org-macs org-compat org-faces org-entities org-list org-pcomplete org-src org-footnote org-macro ob org org-agenda org-capture)
-  :commands org-mode org-agenda org-capture
-  :config (setq org-timer-default-timer 60)
+  :commands (org-mode org-agenda org-capture org-todo-list org-id-update-id-locations)
+  :init (setq org-timer-default-timer 60)
   (bind-keys :map jam/notes
               ("D" . org-id-update-id-locations)
               ("t" . org-todo-list)
-              ("g" . org-clock-goto)
               ("a" . org-agenda)))
+
+(use-package orgit
+  :commands (orgit-store-link))
+
+(use-package orgit-forge
+  :commands (orgit-topic-store orgit-topic-open))
 
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
 (use-package org-roam
@@ -674,9 +681,6 @@
   (setq treemacs-persist-file (concat user-emacs-directory ".local/cache/" "treemacs-persist"))
   :commands (treemacs treemacs-find-file treemacs-switch-workspace))
 
-(use-package treemacs-magit
-  :after treemacs magit)
-
 (use-package cfrs ; BUG guix package needs for treemacs
   :commands cfrs-read
   :after treemacs)
@@ -734,7 +738,6 @@
   (require 'dap-python)
   (setq dap-python-executable "python3" ; use guix-home's python for debug module
         dap-python-debugger 'debugpy))
-
 
 ;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
 ;; C-u RET for unread and read
@@ -868,12 +871,7 @@
   :commands (which-key-mode))
 
 (use-package rustic
-  :config (setenv "PATH" (concat (getenv "PATH")
-                                 path-separator (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
-                                                        (file-name-as-directory "cargo") "bin")))
-  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "rustup"))
-  (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
-  (setq exec-path (append exec-path '("~/.local/share/cargo/bin")))
+  :config (jam/set-rust-path)
   :mode ("\\.rs$" . rustic-mode))
 
 (use-package python

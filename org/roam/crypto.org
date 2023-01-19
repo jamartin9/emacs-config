@@ -12,6 +12,7 @@ Secrets from the future!
 ** tools
 *** [[id:f72ef287-09ed-40c4-af4c-3bc9634655fe][gpg]]
 *** [[id:806e68d1-fc6b-44a1-9293-e23ccbd8955d][tor]]
+*** [[id:65b13d9c-d722-4b0a-bdc0-f29c33653076][i2p]]
 *** [[id:bfb58ea0-5328-4dca-9cf4-a162d37bb9d0][cryptocurrency]]
 ** notes
 - Quantum

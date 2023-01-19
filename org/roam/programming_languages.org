@@ -85,6 +85,7 @@ panic = "abort"
 *** typescript
 - compiles to javascript
 - any type for escape
+- deno run npm package with ~deno run --allow-all npm:SomeSuchCommand~ or a ts file with ~import express from "npm:express@^4.20"~
 ** DSL
 - [[https://github.com/open-goal/jak-project][GOAL]]
   - jak 1-3 lisp game implementation
@@ -101,3 +102,7 @@ panic = "abort"
 - run a http server on port 8080 ~python -m http.server 8080~
 - pretty print json ~python -m json.tool~
 - [[https://peps.python.org/pep-0703/][PEP to remove GIL]]
+** asm
+*** x86
+- calling convention of setting registers and jumping
+- SIMD (xmmx) SSE/AVX(512)

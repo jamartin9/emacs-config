@@ -8,20 +8,20 @@ signal-msg: sms support dropping? unmaintained/broken currently (apply fixes/rew
 
 Third party package choices:
 gcmh: collect garbage when idle to avoid pauses. alternative is increase gc-cons-threshold per workflow
-emms: frontend for music/video player. alternative is cli invocation of tools
+emms: frontend for music/video player with radio. alternative mpv.el or cli
 rmsbolt: decompiler explorer. alternative is external decompiler.
-guix: package/environment management. alternative is pinning with use-packages and setting exec-path-from-shell
+guix: package/environment management. alternative is ensure/pinning with use-packages and setting exec-path-from-shell
 pass: frontend to password-store. alternative is git repo of authinfo.gpg store.
 vterm: graphical terminal emulation. alternative built-in multi-term lacks visual command support
 magit/forge/code-review: git/forge manipulation. alternative built-in vc lacks complex workflows like interactive rebase or forge pull requests or code-review
 debbugs: track emacs/guix bugs. alternative is bookmarking websites
 transmission: manage torrent client. alternative is scripting transmission-cli
-org-roam: tag system for note database. alternative is self devised naming/search scheme with org-captured journal
+org-roam: tag system for note database. alternative is self devised naming/search scheme with org-captured datetree journal
 fd-dired: speedup dired operations with rg/fd. alternative is find/grep
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
 flycheck: lsp, guile, rust checkers. alternative built-in flymake only has 10 backends w/o external packages
 company: automatic typing suggestions. alternatives corfu lacks backends w/o cape and auto-complete is obe
-lsp-mode: debugging with dap-mode. alternative: eglot, realgud, lang specific packages (ex. jedi for python)
+lsp-ui: debugging with dap-mode. alternative: eglot, realgud, lang specific packages (ex. jedi for python)
 treemacs: workspace/project drawer with lsp/flycheck/company features. alternative is manual workspaces with built-in project.el
 smartparens: saves typing closing delimiters and strict matching speeds up font highlighting by avoiding broken/missing matches
 minions-mode: keeps the modeline visually brief with retained information. alternative: diminish/delight packages and config for each mode

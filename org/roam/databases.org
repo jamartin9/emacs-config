@@ -11,6 +11,11 @@
 ** Relational
 - [[id:162f9fba-d1f9-44e8-ae9f-685c578523f1][sqlite]]
 - [[id:46651545-b172-443b-b0db-506019b4456c][postgres]]
+- MySQL
+  - [[https://github.com/pingcap/tidb][TiDB]]
+    - somewhat compatible with MySQL
+    - TiKV for key value storage
+    - distributed db
 ** olap
 - duckdb
   - column store for faster analytics

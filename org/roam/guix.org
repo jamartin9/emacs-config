@@ -96,9 +96,8 @@
        ((shepherd-service-auto-start?) #f)))
 
     (home-environment
-     (packages;(append
-              ;(map transform-emacs-build (list emacs-rmsbolt emacs-pyvenv emacs-vterm emacs-debbugs emacs-org-roam emacs-flycheck-guile emacs-flycheck emacs-guix emacs-fd emacs-emms emacs-osm emacs-multiple-cursors emacs-minions emacs-transmission emacs-undo-tree emacs-pass emacs-orgit emacs-magit emacs-use-package emacs-code-review emacs-orgit-forge emacs-flycheck-popup-tip emacs-macrostep-geiser emacs-drag-stuff emacs-company emacs-cfrs  emacs-treemacs emacs-treemacs-extra emacs-lsp-treemacs emacs-lsp-mode emacs-lsp-ui emacs-rustic emacs-geiser emacs-geiser-guile emacs-dap-mode emacs-link-hint emacs-expand-region emacs-which-key emacs-explain-pause-mode emacs-pcre2el emacs-smartparens emacs-gcmh emacs-yaml-mode emacs-forge))
-              ;(map transform-emacs-build-git (list emacs-helpful emacs-magit-todos))
+     (packages (append
+              (map transform-emacs-build (list emacs-rmsbolt emacs-pyvenv emacs-vterm emacs-debbugs emacs-org-roam emacs-flycheck-guile emacs-guix emacs-fd emacs-emms emacs-osm emacs-multiple-cursors emacs-minions emacs-transmission emacs-undo-tree emacs-pass emacs-use-package emacs-code-review emacs-orgit-forge emacs-flycheck-popup-tip emacs-macrostep-geiser emacs-drag-stuff emacs-company emacs-cfrs emacs-lsp-treemacs emacs-lsp-ui emacs-rustic emacs-geiser-guile emacs-dap-mode emacs-link-hint emacs-expand-region emacs-which-key emacs-explain-pause-mode emacs-pcre2el emacs-smartparens emacs-gcmh emacs-yaml-mode))
               (map specification->package (list "guile"
                                                ;"emacs-next-pgtk" ; managed by default profile
                                                "fd"
@@ -118,9 +117,9 @@
                                                "python" ; pulled in by treemacs and needed for debugpy module as python3
                                                "python-lsp-server" ; python-lsp
                                                "python-debugpy"
-                                               "emacs-pyvenv" "emacs-vterm" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-flycheck" "emacs-rmsbolt" "emacs-guix" "emacs-fd" "emacs-emms" "emacs-osm" "emacs-multiple-cursors" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-orgit" "emacs-magit" "emacs-code-review" "emacs-orgit-forge" "emacs-flycheck-popup-tip" "emacs-macrostep-geiser" "emacs-drag-stuff" "emacs-company" "emacs-treemacs" "emacs-treemacs-extra" "emacs-lsp-treemacs" "emacs-lsp-mode" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-expand-region" "emacs-which-key" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-smartparens" "emacs-gcmh" "emacs-forge" "emacs-cfrs" "emacs-magit-todos" ;"emacs-helpful"
-                                               "emacs-yaml-mode" "emacs-use-package" ; remove emacs-29
-                                               )));)
+                                               ;"emacs-pyvenv" "emacs-vterm" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-rmsbolt" "emacs-guix" "emacs-fd" "emacs-emms" "emacs-osm" "emacs-multiple-cursors" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-code-review" "emacs-orgit-forge" "emacs-flycheck-popup-tip" "emacs-macrostep-geiser" "emacs-drag-stuff" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-expand-region" "emacs-which-key" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-smartparens" "emacs-gcmh" "emacs-cfrs"
+                                               ;"emacs-yaml-mode" "emacs-use-package" ; remove emacs-29
+                                               ))))
      (services
       (list
        (simple-service 'my-channel-services
@@ -728,7 +727,7 @@
      "qemu"
      "perf"
      "bpftrace"
-     ;;"bcc"
+     "bcc"
 
      ;; C dev
      ;;"make" ;;"cmake"
