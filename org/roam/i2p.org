@@ -9,9 +9,15 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * i2p
 ** notes
+- server blinded keys are 56 chars instead of 52 and not viewable without the b33 address in flood fill routers
 - java and c++ implementations
   - both have apps on fdroid
   - browser bundle or proxy port
+- https://github.com/PurpleI2P/i2pd-tools/
+  - generate blinded master signing key ~keygen KeyName 11~
+  - sign server temp key ~offlinekeys TempKeyName OfflineKey 11 365~
+  - output b33 for clients ~keyinfo -b KeyName~
+  - ~x25519~ util for base64 DH key for lease set auth
 #+NAME: i2pd-conf
 *** router
 #+BEGIN_SRC conf :tangle no
@@ -61,23 +67,39 @@ enabled = true
 #subscriptions = http://reg.i2p/hosts.txt,http://identiguy.i2p/hosts.txt,http://stats.i2p/cgi-bin/newhosts.txt,http://rus.i2p/hosts.txt
 #+END_SRC
 *** tunnel configs
+- wireguard server
 #+NAME: i2pd-tunnels-server
 #+BEGIN_SRC conf :tangle no
 [wg-simple-server]
-type = udpserver
+type = udpserver # server
 keys = wg.dat
 host = 127.0.0.1
 port = 1337
 gzip = false # save cpu not trying to compress encypted wg data
-#accesslist = vsjho6tlfrx3duldjjmyoheoqtyppupzd5wzktxpyxmgwhdyujrq.b32.i2p
+#accesslist = ClientB32Address.b32.i2p,ClientB32Addr.b32.i2p
+signaturetype = 11 # blinded
+i2cp.leaseSetType = 5 # encypted lease set
+#i2cp.leaseSetAuthType = 1 # DH Auth
+#i2cp.leaseSetClient.dh.111 = phone:PublicKeyBase64Enc
+#i2cp.leaseSetClient.dh.112 = laptop:PublicKeyBase64Enc
+#i2cp.leaseSetClient.dh.113 = netbook:PublicKeyBase64Enc
+#outbound.quantity = 5 # 16 max
+#inbound.quantity = 5
+outbound.length = 1 # 8 max
+inbound.length = 1
 #+END_SRC
 #+NAME: i2pd-tunnels-client
 #+BEGIN_SRC conf :tangle no
 [wg-simple-client]
 type = udpclient
-destination = something.b32.i2p
+destination = ServerB33Address.b32.i2p
 port = 1337
 gzip = false # save cpu not trying to compress encypted wg data
+matchtunnels = true # align tunnels for latency
+i2cp.dontPublishLeaseSet = true
+#i2cp.leaseSetPrivKey = PrivateBase64Enc
+outbound.length = 1 # lower privacy with better speed
+inbound.length = 1
 #+END_SRC
 #+NAME: i2pd-hosts
 #+BEGIN_SRC text :tangle no

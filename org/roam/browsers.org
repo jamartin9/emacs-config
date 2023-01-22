@@ -51,8 +51,10 @@ This your brain on the internet
 - support bangs like !g
 - https://search.brave.com/search?q=%s to add to browser
 * sites
-** software
+** data
 - https://ossinsight.io/#trending-repos
+- Shodan
+- Zoomeye
 ** alternative frontends
 - [[https://github.com/teddit-net/teddit][teddit.net]]
 - [[https://github.com/iv-org/invidious][yewtu.be]]

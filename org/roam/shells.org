@@ -13,5 +13,6 @@ Sally sold cshell down by the seashore... the IRS was not amused
 ** bash
 ** powershell
 ** eshell
+- pseudo-devices /etc/clip /dev/kill for the clipboard and kill-ring
 ** zsh
 ** [[id:c1e41319-77e9-4902-8860-a888447b2beb][ssh]]

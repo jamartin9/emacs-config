@@ -42,8 +42,10 @@ git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 gi
 git submodule foreach 'git checkout master'
 #+END_SRC
 
-** Tangle
-Emacs untangles the script from the org file (using noweb to copy/eval code).
+** Tangle Install
+Emacs untangles the script from the org file (using noweb to copy/eval code) while expanding INCLUDE directives.
+Tangling is rerun when the org file is newer than the script (if present) and the html file.
+Cleanup is done via the ~clean~ arguments to the ~make-el~ wrapper.
 
 #+NAME: tangle
 #+BEGIN_SRC sh :tangle no

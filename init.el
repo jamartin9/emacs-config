@@ -737,7 +737,8 @@
                                      :cwd nil))
   (require 'dap-python)
   (setq dap-python-executable "python3" ; use guix-home's python for debug module
-        dap-python-debugger 'debugpy))
+        dap-python-debugger 'debugpy
+        dap-breakpoints-file (expand-file-name ".dap-breakpoints" (concat user-emacs-directory ".local/cache/"))))
 
 ;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
 ;; C-u RET for unread and read

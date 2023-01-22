@@ -36,3 +36,10 @@ network.dns.use_https_rr_as_altsvc
 - removed PWA support for SSB (adding to homescreen)
 - lacks file system api
 - SHIELD Studies spyware
+- color picker under 'More Tools' -> 'EyeDropper'
+- responsive design mode for various device resolutions
+*** addons
+- ublock origin
+- multi account containers
+- arkenfox user.js for config
+  - user --ProfileManager to select profile

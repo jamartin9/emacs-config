@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * tor
 ** tor notes
+- Known 0days not disclosed in court as defense. Cope with parallel construction.
 - socks5 on 9050 by default
 - browser bundle runs 9051 by default
 #+NAME: tor-addrs
@@ -140,4 +141,9 @@ HiddenServiceEnableIntroDoSDefense 1
 #HiddenServiceOnionBalanceInstance 1
 
 #HiddenServiceExportCircuitID haproxy
+
+#HiddenServiceNonAnonymousMode 1
+#HiddenServiceSingleHopMode 1
+
+#AllowSingleHopCircuits 1 # MAYBE set self as own Rendezvous point
 #+END_SRC
