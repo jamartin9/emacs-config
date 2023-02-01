@@ -41,6 +41,7 @@
 - asic timelords
 - uses 3 'blockchains' with 1 being a transaction chain of foliage to avoid grinding the canonical trunk chain
 - compression of plots [[https://github.com/Chia-Network/chiapos/tree/main/hellman_example][possible]] with [[https://github.com/Chia-Network/proofofspace/blob/master/proof_of_space.md#Hellman-Attacks][Hellman Attack]] by using ram/cpu during plotting/harvesting. (tldr: throws first table away and reverses table 2 as needed)
+  - 'bit dropping' is actually used approach
 - GPU compressed plot farming for C7(2gb vram) C8(4gb varm) C9(only if free power)
   - GPU plotting from mmx madmax
 - chialisp

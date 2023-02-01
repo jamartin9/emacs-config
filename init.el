@@ -16,7 +16,7 @@
 
 ;;;###autoload
 (defun jam/sudo-edit (file)
-  "Edits opens file with sudo. Defaults to current buffer's file name."
+  "Edit file with sudo. Defaults to current buffer's file name."
   (interactive
    (list
     (read-string
@@ -28,19 +28,19 @@
 
 ;;;###autoload
 (defun jam/save-all ()
-  "Saves all buffers"
+  "Save all buffers"
   (interactive)
   (save-some-buffers t))
 
 ;;;###autoload
 (defun jam/vterm ()
-  "opens new vterm"
+  "Open new vterm"
   (interactive)
   (vterm t))
 
 ;;;###autoload
 (defun jam/newsticker-download ()
-  "Downloads the current newsticker enclosure to tmpdir/newsticker/feed/title"
+  "Download the current newsticker enclosure to tmpdir/newsticker/feed/title"
   (interactive)
   (let* ((item (newsticker--treeview-get-selected-item))
          (feedname "jam")
@@ -54,7 +54,7 @@
 
 ;;;###autoload
 (defun jam/draw ()
-  "Activates artist-mode polygon in *scratch* buffer."
+  "Activate artist-mode polygon in *scratch* buffer."
   (interactive)
   (switch-to-buffer "*scratch*")
   (artist-mode 1); (picture-mode)
@@ -62,7 +62,7 @@
 
 ;;;###autoload
 (defun jam/set-rust-path ()
-  "Sets PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
+  "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
   (interactive)
   (setenv "PATH" (concat (getenv "PATH")
                          path-separator (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
@@ -89,6 +89,7 @@
                 project-list-file (expand-file-name "projects" (concat user-emacs-directory ".local/cache/"))
                 url-cookie-file (expand-file-name "cookies" (concat user-emacs-directory ".local/cache/"))
                 url-cache-directory (expand-file-name "cache" (concat user-emacs-directory ".local/cache/"))
+                nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory ".local/cache/"))
                 auth-sources (list (concat user-emacs-directory ".local/cache/" "authinfo.gpg") "~/.authinfo.gpg") ; auth
                 epa-file-cache-passphrase-for-symmetric-encryption t
                 modus-themes-mode-line '(accented borderless moody) ; theme
@@ -336,6 +337,7 @@
                               ("Wine" "https://www.winehq.org/news/rss")
                               ("Linux" "https://www.kernel.org/feeds/kdist.xml")
                               ("Lwn" "https://lwn.net/headlines/newrss")
+                              ("I2P" "https://geti2p.net/en/feed/blog/atom")
                               ("Tor" "https://blog.torproject.org/rss.xml")
                               ("zfs-release" "https://github.com/openzfs/zfs/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("emacs-tags" "https://github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
@@ -471,7 +473,7 @@
               org-return-follows-link t
               org-persist-directory (concat user-emacs-directory ".local/cache/" "org-persist/")
               org-roam-dailies-directory ""
-              org-agenda-files (list org-roam-directory (concat org-roam-directory org-roam-dailies-directory))
+              org-agenda-files (list org-roam-directory)
               org-roam-db-location (concat user-emacs-directory ".local/cache/" "org-roam.db")
               org-modules '(org-crypt);ol-bibtext
               org-roam-dailies-capture-templates '(("d" "default" entry
