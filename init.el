@@ -69,28 +69,21 @@
                                                 (file-name-as-directory "cargo") "bin")))
   (setenv "RUSTUP_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "rustup"))
   (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
-  (setq exec-path (append exec-path '("~/.local/share/cargo/bin"))))
-
-(use-package gcmh ; gc when idle
-  :init (setq gcmh-idle-delay 'auto ; gc startup
-              gcmh-auto-idle-delay-factor 10
-              gcmh-high-cons-threshold (* 16 1024 1024)) ; 16 MiB
-  (add-hook 'after-init-hook #'gcmh-mode)
-  :config (setq gc-cons-threshold (* 16 1024 1024))
-  :commands gcmh-mode)
+  (setq exec-path (append exec-path `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")))))
 
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in
   :init (setq user-full-name "Justin Martin"
                 user-mail-address "jaming@protonmail.com"
-                backup-directory-alist `(("." .  ,(concat user-emacs-directory ".local/cache/")))
-                recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory ".local/cache/"))
-                bookmark-default-file (expand-file-name "bookmarks" (concat user-emacs-directory ".local/cache/"))
-                project-list-file (expand-file-name "projects" (concat user-emacs-directory ".local/cache/"))
-                url-cookie-file (expand-file-name "cookies" (concat user-emacs-directory ".local/cache/"))
-                url-cache-directory (expand-file-name "cache" (concat user-emacs-directory ".local/cache/"))
-                nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory ".local/cache/"))
-                auth-sources (list (concat user-emacs-directory ".local/cache/" "authinfo.gpg") "~/.authinfo.gpg") ; auth
+                backup-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
+                auto-save-list-file-prefix (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "auto-save-list") ".saves-")
+                recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+                bookmark-default-file (expand-file-name "bookmarks" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+                project-list-file (expand-file-name "projects" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+                url-cookie-file (expand-file-name "cookies" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+                url-cache-directory (expand-file-name "cache" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+                nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+                auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo.gpg")) ; auth
                 epa-file-cache-passphrase-for-symmetric-encryption t
                 modus-themes-mode-line '(accented borderless moody) ; theme
                 modus-themes-box-buttons '(underline faint accented)
@@ -161,7 +154,7 @@
                 redisplay-skip-fontification-on-input t
                 shift-select-mode t
                 read-process-output-max (* 64 1024)
-                load-prefer-newer t; noninteractive
+                ;load-prefer-newer t; noninteractive
                 auto-mode-case-fold nil
                 kill-do-not-save-duplicates t
                 edebug-print-length nil ; print whole edebug result
@@ -186,11 +179,15 @@
                 inhibit-startup-screen t
                 inhibit-startup-echo-area-message user-login-name
                 inhibit-default-init t)
+
             (if (native-comp-available-p)
-                (setq native-comp-deferred-compilation t
-                      native-comp-async-report-warnings-errors nil
-                      native-compile-target-directory (concat user-emacs-directory ".local/cache/" "eln/")
-                      native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/cache/" "eln/"))))
+                (progn
+                  (if (>= emacs-major-version 29) ; set eln-cache & remove after emacs-29
+                      (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
+                    (setq native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
+                  (setq native-comp-deferred-compilation t
+                        native-comp-async-report-warnings-errors nil
+                        native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
             (if (>= emacs-major-version 29) ; remove after emacs-29
                 (bind-keys :map window-prefix-map ; C-x 1 C-x o
                            ("w" . windmove-up)
@@ -281,6 +278,14 @@
             (add-to-list 'initial-frame-alist '(alpha-background  . 80))
             (set-language-environment "UTF-8"))
 
+(use-package gcmh ; gc when idle
+  :init (setq gcmh-idle-delay 'auto ; gc startup
+              gcmh-auto-idle-delay-factor 10
+              gcmh-high-cons-threshold (* 16 1024 1024)) ; 16 MiB
+  (add-hook 'after-init-hook #'gcmh-mode)
+  :config (setq gc-cons-threshold (* 16 1024 1024))
+  :commands gcmh-mode)
+
 (use-package emms
   :init (bind-keys :map jam/open
                    ("l" . jam/librefm-stream)
@@ -293,7 +298,7 @@
   (setq emms-player-list '(emms-player-vlc emms-player-mpv))
   (require 'emms-librefm-stream)
   (emms-librefm-scrobbler-disable) ; BUG make work without login
-  (setq emms-source-file-default-directory "~/Music/"
+  (setq emms-source-file-default-directory (concat (file-name-as-directory (getenv "HOME")) "Music")
         emms-playlist-buffer-name "*Music*"
         emms-info-asynchronously t)
   (require 'emms-mode-line)
@@ -303,7 +308,7 @@
 
 (use-package guix
   :config (require 'guix-autoloads)
-  (guix-set-emacs-environment "~/.guix-home/profile")
+  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   :commands guix-popup guix-set-emacs-environment)
 
 (use-package rmsbolt
@@ -328,7 +333,7 @@
   :init (bind-keys :map jam/open ("n" . newsticker-treeview))
   (bind-keys :map jam/toggle ("n" . newsticker-stop))
   (setq newsticker-frontend 'newsticker-treeview
-        newsticker-dir (concat user-emacs-directory ".local/cache/" "newsticker")
+        newsticker-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "newsticker")
         newsticker-automatically-mark-items-as-old nil
         newsticker-automatically-mark-visited-items-as-old t
         newsticker-url-list-defaults nil
@@ -374,7 +379,7 @@
 (use-package undo-tree
   :init (add-hook 'after-init-hook #'global-undo-tree-mode)
   :commands (global-undo-tree-mode)
-  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory ".local/cache/" "undo-tree-hist/"))))
+  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
   :config (setq undo-tree-visualizer-diff t
                 undo-tree-auto-save-history t
                 undo-limit 800000 ; 800 kb (default 160kb)
@@ -391,9 +396,9 @@
   :init
   (bind-keys :map jam/vcs ("s" . magit-status))
   (setq magit-auto-revert-mode nil)
-  (setq transient-levels-file  (concat user-emacs-directory ".local/etc/" "transient/levels")
-        transient-values-file  (concat user-emacs-directory ".local/etc/" "transient/values")
-        transient-history-file (concat user-emacs-directory ".local/etc/" "transient/history"))
+  (setq transient-levels-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "levels")
+        transient-values-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "values")
+        transient-history-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "history"))
   :config
   (setq transient-default-level 5
         transient-display-buffer-action '(display-buffer-below-selected)
@@ -410,15 +415,15 @@
   :after magit
   :commands forge-create-pullreq forge-create-issue
   :init
-  (setq forge-database-file (concat user-emacs-directory ".local/etc/" "forge/forge-database.sqlite"))
+  (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
   (setq forge-add-default-bindings t))
 
 (use-package code-review
   :after magit
   :init
-  (setq code-review-db-database-file (concat user-emacs-directory ".local/etc/" "code-review/code-review-db-file.sqlite")
-        code-review-log-file (concat user-emacs-directory ".local/etc/" "code-review/code-review-error.log")
-        code-review-download-dir (concat user-emacs-directory ".local/etc/" "code-review/")
+  (setq code-review-db-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review") "code-review-db-file.sqlite")
+        code-review-log-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review") "code-review-error.log")
+        code-review-download-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review"))
         code-review-auth-login-marker 'forge))
 
 (use-package yaml ; TODO remove for yaml-ts-mode (built-in emacs-29)
@@ -471,10 +476,10 @@
               org-directory org-roam-directory
               org-id-locations-file (expand-file-name ".orgids" org-directory) ; org-id-update-id-locations org-roam-db-sync
               org-return-follows-link t
-              org-persist-directory (concat user-emacs-directory ".local/cache/" "org-persist/")
+              org-persist-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "org-persist"))
               org-roam-dailies-directory ""
               org-agenda-files (list org-roam-directory)
-              org-roam-db-location (concat user-emacs-directory ".local/cache/" "org-roam.db")
+              org-roam-db-location (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "org-roam.db")
               org-modules '(org-crypt);ol-bibtext
               org-roam-dailies-capture-templates '(("d" "default" entry
                                                     "* %U %?\n%i\n%a"
@@ -522,7 +527,7 @@
   :config
   (setq geiser-repl-per-project-p t
         geiser-repl-current-project-function #'geiser-repl-project-root
-        geiser-repl-history-filename (concat user-emacs-directory ".local/cache/" "geiser-history"))
+        geiser-repl-history-filename (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-history"))
   (require 'geiser-guile)); geiser call per buffer?
 
 (use-package macrostep-geiser
@@ -532,8 +537,8 @@
   :commands macrostep-geiser-setup)
 
 (use-package geiser-guile
-  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (expand-file-name "~/.config/guix/current/share/guile/site/3.0"))
-                              (add-to-list 'geiser-guile-load-path (expand-file-name "~/.guix-home/profile/share/guile/site/3.0")))
+  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "XDG_CONFIG_HOME")) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
+                              (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")))
   :commands geiser-guile)
 
 (use-package flycheck-guile
@@ -573,7 +578,7 @@
                 ispell-program-name "aspell" ; runs as own process
                 ispell-extra-args '("--sug-mode=ultra"
                                     "--run-together")
-                ispell-personal-dictionary (expand-file-name (concat "ispell/" ispell-dictionary ".pws") (concat user-emacs-directory ".local/etc/"))
+                ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
                 ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
@@ -584,7 +589,7 @@
                 erc-interpret-mirc-color t
                 erc-save-buffer-on-part t
                 erc-log-insert-log-on-open t
-                erc-log-channels-directory (concat user-emacs-directory ".local/etc/" "erc")
+                erc-log-channels-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "erc")
                 erc-nick '("jaming" "jamin" "jam")
                 erc-user-full-name "jaming"
                 erc-server-history-list '("irc.rizon.net" "irc.libera.chat" "irc.choopa.net" "irc.corrupt-net.org")
@@ -631,9 +636,7 @@
   :commands (eshell)
   :config
   (require 'em-smart)
-  (setq-local company-backends '(company-capf))
-  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t); add eshell C-c TAB to TAB
-  (setq eshell-directory-name (concat user-emacs-directory ".local/cache/" "eshell")
+  (setq eshell-directory-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eshell")
         eshell-prefer-lisp-functions nil
         eshell-cmpl-cycle-completions t; replace # with : for prompt regex using /ssh:jam@10.0.0.1#6969:/tmp
         eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
@@ -643,8 +646,8 @@
 (use-package tramp ; built-in
   :commands (tramp)
   :config (add-to-list 'tramp-remote-path 'tramp-own-remote-path); use login shell for tramp
-  (setq tramp-auto-save-directory "/tmp"
-        tramp-persistency-file-name (concat user-emacs-directory ".local/cache/" "tramp")))
+  (setq tramp-auto-save-directory (getenv "TMPDIR")
+        tramp-persistency-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp")))
 
 (use-package company
   :init (add-hook 'after-init-hook #'global-company-mode)
@@ -658,7 +661,7 @@
               circe-mode
               message-mode
               help-mode
-              ;gud-mode
+              gud-mode
               vterm-mode)
         company-frontends
         '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
@@ -680,7 +683,7 @@
 (use-package treemacs
   :init (bind-keys ("<f9>" . treemacs))
   (bind-keys :map jam/projects ("w" . treemacs-switch-workspace))
-  (setq treemacs-persist-file (concat user-emacs-directory ".local/cache/" "treemacs-persist"))
+  (setq treemacs-persist-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "treemacs-persist"))
   :commands (treemacs treemacs-find-file treemacs-switch-workspace))
 
 (use-package cfrs ; BUG guix package needs for treemacs
@@ -700,7 +703,7 @@
   :init (setq lsp-enable-on-type-formatting nil
               lsp-response-timeout 60
               lsp-headerline-breadcrumb-enable nil
-              lsp-session-file (expand-file-name ".lsp-session-v1" (concat user-emacs-directory ".local/cache/"))
+              lsp-session-file (expand-file-name ".lsp-session-v1" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               lsp-enable-folding nil))
 
 (use-package lsp-treemacs
@@ -740,7 +743,8 @@
   (require 'dap-python)
   (setq dap-python-executable "python3" ; use guix-home's python for debug module
         dap-python-debugger 'debugpy
-        dap-breakpoints-file (expand-file-name ".dap-breakpoints" (concat user-emacs-directory ".local/cache/"))))
+        dap-utils-extension-path (expand-file-name ".extension" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+        dap-breakpoints-file (expand-file-name ".dap-breakpoints" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))))
 
 ;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
 ;; C-u RET for unread and read
@@ -756,8 +760,8 @@
    gnus-read-newsrc-file nil
    gnus-use-dribble-file t
    gnus-always-read-dribble-file t
-   gnus-dribble-directory (concat user-emacs-directory ".local/cache/" (file-name-as-directory "gnus"))
-   gnus-startup-file (concat user-emacs-directory ".local/cache/" (file-name-as-directory "gnus") "newsrc")
+   gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
+   gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
    gnus-select-method
           '(nnimap "gmail"
                    (nnimap-address "imap.gmail.com")
@@ -788,8 +792,8 @@
     (eval-after-load 'gnus-topic
       '(progn
          (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
-               gnus-server-alist '(("archive" nnfolder "archive" (nnfolder-directory (concat user-emacs-directory ".local/cache/" "archive"))
-                                   (nnfolder-active-file (concat user-emacs-directory ".local/cache/" (file-name-as-directory "archive") "active"))
+               gnus-server-alist '(("archive" nnfolder "archive" (nnfolder-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
+                                   (nnfolder-active-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "archive") "active"))
                                    (nnfolder-get-new-mail nil)
                                    (nnfolder-inhibit-expiry t)))
                ;; "Gnus" is the root folder, and there are three mail accounts, "misc", "gmail", "riseup"
@@ -829,7 +833,7 @@
 (use-package osm
   :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
-  :config (setq osm-tile-directory (concat user-emacs-directory ".local/cache/osm/"))
+  :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
   :custom (osm-copyright nil))
 
 (use-package multiple-cursors
@@ -839,7 +843,7 @@
              mc/edit-lines mc/edit-beginnings-of-lines mc/edit-ends-of-lines
              mc/mark-all-in-region mc/mark-all-dwim mc/mark-all-like-this
              set-rectangular-region-anchor mc/edit-lines mc/vertical-align mc/mark-sgml-tag-pair)
-  :config (setq mc/list-file (concat user-emacs-directory ".local/etc/" "mc-lists.el")))
+  :config (setq mc/list-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "mc-lists.el")))
 
 (use-package drag-stuff
   :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
@@ -993,6 +997,6 @@ OBJECT REPLACEMENT CHARACTER (65532, #xfffc)"
     (add-to-list 'lsp-language-id-configuration
                  '(chialisp-mode . "chialisp"))
     (lsp-register-client ;; needs unzipped VSX extension in path
-     (make-lsp-client :new-connection (lsp-stdio-connection '("node" "/home/jam/.vscode/extension/runner/build/runner.js"))
+     (make-lsp-client :new-connection (lsp-stdio-connection `("node" ,(concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".vscode") (file-name-as-directory "extension") (file-name-as-directory "runner") (file-name-as-directory "build") "runner.js")))
                       :activation-fn (lsp-activate-on "chialisp")
                       :server-id 'chialisp))))
