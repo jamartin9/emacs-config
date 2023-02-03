@@ -792,8 +792,8 @@
     (eval-after-load 'gnus-topic
       '(progn
          (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
-               gnus-server-alist '(("archive" nnfolder "archive" (nnfolder-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
-                                   (nnfolder-active-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "archive") "active"))
+               gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
+                                   (nnfolder-active-file ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "archive") "active"))
                                    (nnfolder-get-new-mail nil)
                                    (nnfolder-inhibit-expiry t)))
                ;; "Gnus" is the root folder, and there are three mail accounts, "misc", "gmail", "riseup"
@@ -813,8 +813,8 @@
                                    "nnimap+riseup:Trash"
                                    "nnimap+riseup:Drafts")
                                   ("misc" ; the key of topic
-                                   "nnfolder+archive:sent.2021"
                                    "nnfolder+archive:sent.2022"
+                                   "nnfolder+archive:sent.2023"
                                    "nndraft:drafts")
                                   ("Gnus")))
 
