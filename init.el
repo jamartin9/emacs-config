@@ -69,7 +69,7 @@
                                                 (file-name-as-directory "cargo") "bin")))
   (setenv "RUSTUP_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "rustup"))
   (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
-  (setq exec-path (append exec-path `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")))))
+  (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
 
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in

@@ -51,6 +51,8 @@ This your brain on the internet
 - support bangs like !g
 - https://search.brave.com/search?q=%s to add to browser
 * sites
+** tools
+- [[https://wasm-test.libreoffice.org/][libreoffice wasm]]
 ** data
 - https://ossinsight.io/#trending-repos
 - Shodan

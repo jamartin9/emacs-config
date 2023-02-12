@@ -44,3 +44,4 @@ Secrets from the future!
   - malleability
     - ed25519-dalek verify_strict
   - blinded keys
+  - [[https://blog.mozilla.org/warner/files/2011/11/key-formats-757x1024.png][keygen diagram]]

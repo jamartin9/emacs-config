@@ -14,6 +14,7 @@ Simulate the simulation
   - [[id:ab1f8872-ab90-4855-98a0-5d9bf5806d78][kind]]
 - [[id:b066a88d-c1c4-43d4-b8b8-cc345ad8467f][firejail]]
 - qemu
+  - ~-M microvm~
   - binfmt for running binaries for other archs
   - ovmf/vfio for gpu pass through to vms
     - must have second card as sharing/virtualization is not supported on older cards

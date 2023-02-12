@@ -881,12 +881,37 @@
 - ~guix package --roll-back~ to drop to last version
 - commit signing and downgrading flags are ~--disable-authentication --allow-downgrades~
 - platform specific binaries can be produces with the ~--tune~ flag
-- app img run ~mount thing.AppImage tmpmnt -o offset=$(guix shell -C -F zlib -- "./thing.AppImage --appimage-offset")~
-- guix shell can emulate normal fs with --emulate-fhs
 - hpc channel for extra pytorch packages
   - https://gitlab.inria.fr/guix-hpc/guix-hpc/
 - non root guix can be done through a series of env variables and flags
   - arg ~--listen=/socket~ and/or env vars
+- app img run ~mount thing.AppImage tmpmnt -o offset=$(guix shell -C -F zlib -- "./thing.AppImage --appimage-offset")~
+- guix shell can emulate normal fs with --emulate-fhs
+#+NAME: guix-fhs-examples
+#+BEGIN_SRC sh :tangle no
+guix shell --container --network --emulate-fhs \
+    --development ungoogled-chromium gcc:lib \
+    --preserve='^DISPLAY$' \
+    --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
+    --preserve='^DBUS_' --expose=/var/run/dbus \
+    --expose=/sys/dev --expose=/sys/devices --expose=/dev/dri \
+    -- ./VSCodium-1.74.0.22342.glibc2.17-x86_64.AppImage --appimage-extract-and-run # Run VSCodium Appimage
+
+guix shell --network --container --emulate-fhs \
+    bash coreutils curl grep nss-certs gcc:lib gcc-toolchain \
+    pkg-config glib cairo atk pango@1.48.10 gdk-pixbuf gtk+ git \
+    --share=$HOME/temphome=$HOME --no-cwd
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # install rustup in guix
+
+guix shell --container --network --emulate-fhs \
+    --preserve='^DISPLAY$' \
+    --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
+    alsa-lib bash coreutils dbus-glib file gcc:lib \
+    grep gtk+ libcxx pciutils sed \
+    -- ./start-tor-browser.desktop -v ; # Start tor-browser
+#+END_SRC
+
 #+NAME: guix-env-vars
 #+BEGIN_SRC sh :tangle no
 GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
