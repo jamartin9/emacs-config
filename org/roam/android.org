@@ -31,3 +31,4 @@
 - google play store without google account
 *** fdroid
 - apk repo that can self host and share device to device
+- emacs, hackers keyboard, organic maps, i2p, wireguard, vlc

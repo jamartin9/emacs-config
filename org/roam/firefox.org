@@ -38,8 +38,11 @@ network.dns.use_https_rr_as_altsvc
 - SHIELD Studies spyware
 - color picker under 'More Tools' -> 'EyeDropper'
 - responsive design mode for various device resolutions
+- pdf editing tools
 *** addons
 - ublock origin
 - multi account containers
 - arkenfox user.js for config
   - user --ProfileManager to select profile
+- read-aloud for pdf/epub reader
+- https://profiler.firefox.com/ for power/perf flamegraph viewing

@@ -104,4 +104,5 @@ inbound.length = 1
 #+NAME: i2pd-hosts
 #+BEGIN_SRC text :tangle no
 dread.i2p=http://dreadtoobigdsrxg4yfspcyjr3k6675vftyco5pyb7wg4pr4dwjq.b32.i2p
+z-lib.i2p=http://kkd7tiqf5lv3olqfdnkw4znmmmmnjo2xqlxrp5ntthp6juowaiha.b32.i2p
 #+END_SRC

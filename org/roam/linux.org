@@ -33,6 +33,7 @@ Finally some hardware support!
 - io-uring
   - io-uring-spawn for process launching
 - ~/proc/cpuinfo~  for model
+- abi tracker https://abi-laboratory.pro/?view=timeline&l=linux 
 ** [[id:e2a56828-55c2-4b26-868c-68d4c78903ab][video-playback]]
 ** [[id:fd5eb707-7fc5-40ee-a550-f167f8c43635][archive-formats]]
 ** [[id:aee3a8d2-a37a-454e-9359-0f56caa3502f][email]]

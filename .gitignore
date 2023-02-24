@@ -16,3 +16,4 @@ searx.yml
 /.local/
 /gh-pages/
 /eln-cache/
+/elpa/

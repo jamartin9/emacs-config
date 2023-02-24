@@ -25,3 +25,26 @@ much wall, such fire, very wow
 - 8444 TCP chia, 18080 monerod, 37889 p2pool
 - nftables with xtables
   - ~#match bpf pinned /sys/fs/bpf/mfw/match drop~ to load bpf program
+#+NAME: upnpc-ssdp-curl
+#+BEGIN_SRC sh :tangle no
+curl 'http://10.0.0.1:5000/Public_UPNP_C3' \
+  -X 'POST' \
+  -H 'Content-Type: text/xml; charset="utf-8"' \
+  -H 'Connection: close' \
+  -H 'SOAPAction: "urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping"' \
+  -d '<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:AddPortMapping xmlns:u="urn:schemas-upnp-org:service:WANIPConnection:1">
+  <NewRemoteHost></NewRemoteHost>
+  <NewExternalPort>443</NewExternalPort>
+  <NewProtocol>TCP</NewProtocol>
+  <NewInternalPort>443</NewInternalPort>
+  <NewInternalClient>10.0.0.6</NewInternalClient>
+  <NewEnabled>1</NewEnabled>
+  <NewPortMappingDescription>node:nat:upnp</NewPortMappingDescription>
+  <NewLeaseDuration>10</NewLeaseDuration>
+</u:AddPortMapping>
+</s:Body>
+</s:Envelope>'
+#+END_SRC

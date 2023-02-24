@@ -33,6 +33,7 @@ This your brain on the internet
     - disable wallet, sidebar
   - ungoogled-chromium
   - microsoft edge
+  - [[https://github.com/fathyb/carbonyl][terminal browser]]
 ** safari
 - webkit based
 * search engines

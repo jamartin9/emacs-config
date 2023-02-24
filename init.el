@@ -71,6 +71,14 @@
   (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
   (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
 
+;;;###autoload
+(defun jam/compile-init-bytecode ()
+  "Recompile init.el and early-init.el"
+  (interactive)
+  (byte-recompile-file (concat user-emacs-directory "init.el"))
+  (byte-recompile-file (concat user-emacs-directory "early-init.el"))
+  (byte-recompile-file (concat user-emacs-directory "make-el.el")))
+
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in
   :init (setq user-full-name "Justin Martin"
@@ -124,7 +132,6 @@
                 confirm-kill-emacs nil
                 blink-matching-paren nil
                 enable-recursive-minibuffers t
-                menu-bar-mode nil
                 tool-bar-mode nil
                 scroll-bar-mode nil
                 mouse-yank-at-point t
@@ -266,8 +273,11 @@
                        ("Q" . save-buffers-kill-terminal)
                        ("K" . save-buffers-kill-emacs))
             (load-theme 'modus-vivendi); built-in does not need to hook after-make-frame-hook for daemonp
-            (add-to-list 'default-frame-alist '(menu-bar-lines . 0)); disable w/o loading modes
-            (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+            (if (not (memq window-system '(android))) ; disable menu-bar on non android
+                (progn
+                  (setq menu-bar-mode nil)
+                  (add-to-list 'default-frame-alist '(menu-bar-lines . 0))))
+            (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
             (add-to-list 'default-frame-alist '(vertical-scroll-bars))
             (set-frame-parameter nil 'alpha-background 80)
             ;(add-to-list 'default-frame-alist '(width  . 190))
@@ -287,6 +297,7 @@
   :commands gcmh-mode)
 
 (use-package emms
+  :if (not (memq window-system '(android))) ; vlc/mpv
   :init (bind-keys :map jam/open
                    ("l" . jam/librefm-stream)
                    ("m" . emms-play-file)
@@ -307,6 +318,7 @@
   (emms-playing-time 1))
 
 (use-package guix
+  :if (not (memq window-system '(android))) ; guix
   :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   :commands guix-popup guix-set-emacs-environment)
@@ -316,6 +328,7 @@
   :commands rmsbolt-mode)
 
 (use-package pass
+  :if (not (memq window-system '(android))) ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
   :config
   (setenv "GNUPGHOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "gnupg"))
@@ -323,10 +336,14 @@
   :commands pass)
 
 (use-package password-store ; info:auth#The Unix password store
+  :ensure nil
+  :if (not (memq window-system '(android))) ; pass
   :config (setq password-store-password-length 12)
           (auth-source-pass-enable))
 
 (use-package newsticker ; built-in
+  :ensure nil
+  :if (not (memq window-system '(android))) ; wget
   :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
   :config
   (bind-keys :map newsticker-treeview-item-mode-map ("d" . jam/newsticker-download))
@@ -370,6 +387,7 @@
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package vterm ; C-c C-t vterm-copy-mode
+  :if (not (memq window-system '(android))) ; gcc
   :init (bind-keys :map jam/open ("t" . jam/vterm))
   :commands (vterm-mode vterm)
   :config (setq vterm-kill-buffer-on-exit t
@@ -377,6 +395,7 @@
   (bind-keys :map vterm-mode-map ("C-S-v" . vterm-yank)))
 
 (use-package undo-tree
+  ;:pin gnu
   :init (add-hook 'after-init-hook #'global-undo-tree-mode)
   :commands (global-undo-tree-mode)
   :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
@@ -392,6 +411,7 @@
   :commands minions-mode)
 
 (use-package magit
+  :if (not (memq window-system '(android))) ; git
   :commands magit-file-delete magit-status
   :init
   (bind-keys :map jam/vcs ("s" . magit-status))
@@ -412,6 +432,7 @@
 
 ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
 (use-package forge
+  :if (not (memq window-system '(android))) ; git
   :after magit
   :commands forge-create-pullreq forge-create-issue
   :init
@@ -419,6 +440,7 @@
   (setq forge-add-default-bindings t))
 
 (use-package code-review
+  :if (not (memq window-system '(android))) ; git
   :after magit
   :init
   (setq code-review-db-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review") "code-review-db-file.sqlite")
@@ -430,9 +452,11 @@
   :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
 
 (use-package transmission ; C-u universal arg for directory prompt
+  :if (not (memq window-system '(android))) ; transmission
   :commands (transmission transmission-add))
 
 (use-package debbugs
+  ;:pin gnu
   :init (bind-keys :map jam/search ("b" . debbugs-gnu-bugs)); bug number search
   :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
   :config ;(setq org-link-elisp-confirm-function nil)
@@ -443,19 +467,23 @@
   (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
 
 (use-package hideshow ; built-in
+  :ensure nil
   :init (bind-keys :map jam/toggle ("z" . hs-minor-mode))
   (bind-keys :map jam/code ("z" . hs-toggle-hiding)
                            ("v" . hs-hide-block))
   :commands (hs-minor-mode hs-toggle-hiding hs-hide-block hs-hide-level hs-show-all hs-hide-all))
 
 (use-package org-crypt ; built-in
+  :ensure nil
   :commands (org-encrypt-entries org-encrypt-entry org-decrypt-entries org-decrypt-entry))
 
 (use-package org-clock ; built-in
+  :ensure nil
   :init (bind-keys :map jam/notes ("g" . org-clock-goto))
   :commands (org-clock-goto org-clock-in org-clock-cancel))
 
 (use-package org ; built-in
+  :ensure nil
   :commands (org-mode org-agenda org-capture org-todo-list org-id-update-id-locations)
   :init (setq org-timer-default-timer 60)
   (bind-keys :map jam/notes
@@ -464,9 +492,11 @@
               ("a" . org-agenda)))
 
 (use-package orgit
+  :if (not (memq window-system '(android))) ; git
   :commands (orgit-store-link))
 
 (use-package orgit-forge
+  :if (not (memq window-system '(android))) ; git
   :commands (orgit-topic-store orgit-topic-open))
 
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
@@ -506,6 +536,7 @@
 
 ;; M-j newline in regex
 (use-package dired ; built-in
+  :ensure nil
   :config (setq dired-dwim-target t
                 dired-hide-details-hide-symlink-targets nil
                 dired-auto-revert-buffer #'dired-buffer-stale-p
@@ -515,6 +546,7 @@
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
 
 (use-package fd-dired
+  :if (not (memq window-system '(android))) ; fd/rg
   :after dired
   :config (bind-key [remap find-dired] 'fd-dired)
   (bind-key [remap find-grep-dired] 'fd-grep-dired)
@@ -522,6 +554,7 @@
   :commands (fd-dired fd-grep-dired fd-name-dired))
 
 (use-package geiser
+  :if (not (memq window-system '(android))) ; guile
   :init (add-hook 'scheme-mode-hook #'geiser-mode)
   :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
   :config
@@ -531,17 +564,20 @@
   (require 'geiser-guile)); geiser call per buffer?
 
 (use-package macrostep-geiser
+  :if (not (memq window-system '(android))) ; guile
   :init
   (add-hook 'geiser-mode-hook #'macrostep-geiser-setup)
   (add-hook 'geiser-repl-mode-hook #'macrostep-geiser-setup)
   :commands macrostep-geiser-setup)
 
 (use-package geiser-guile
+  :if (not (memq window-system '(android))) ; guile
   :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "XDG_CONFIG_HOME")) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
                               (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")))
   :commands geiser-guile)
 
 (use-package flycheck-guile
+  :if (not (memq window-system '(android))) ; guile
   :after geiser)
 
 (use-package flycheck
@@ -563,6 +599,8 @@
   :commands (flycheck-popup-tip-mode flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup))
 
 (use-package flyspell ; built-in
+  :ensure nil
+  :if (not (memq window-system '(android))) ; aspell
   :init (bind-keys :map jam/toggle ("s" . flyspell-mode))
   (add-hook 'org-mode-hook #'flyspell-mode)
   (add-hook 'markdown-mode-hook #'flyspell-mode)
@@ -583,6 +621,7 @@
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
 (use-package erc ; built-in
+  :ensure nil
   :init (bind-keys :map jam/open ("i" . erc-tls))
   :commands erc-tls ; MAYBE add bot msg to erc-nickserv-identified-hook, erc-login function override/erc-join-hook for SASL support
   :config (setq erc-rename-buffers t
@@ -631,6 +670,7 @@
   (erc-update-modules))
 
 (use-package eshell ; built-in
+  :ensure nil
   :init (add-hook 'eshell-mode-hook #'(lambda () (add-to-list 'eshell-visual-commands "btm")))
   (bind-keys :map jam/open ("e" . eshell))
   :commands (eshell)
@@ -644,6 +684,7 @@
   (add-to-list 'eshell-modules-list 'eshell-tramp))
 
 (use-package tramp ; built-in
+  :ensure nil
   :commands (tramp)
   :config (add-to-list 'tramp-remote-path 'tramp-own-remote-path); use login shell for tramp
   (setq tramp-auto-save-directory (getenv "TMPDIR")
@@ -686,11 +727,13 @@
   (setq treemacs-persist-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "treemacs-persist"))
   :commands (treemacs treemacs-find-file treemacs-switch-workspace))
 
-(use-package cfrs ; BUG guix package needs for treemacs
+(use-package cfrs
+  :ensure nil ; BUG guix package needs for treemacs
   :commands cfrs-read
   :after treemacs)
 
 (use-package lsp-mode
+  :if (not (memq window-system '(android))) ; use eglot
   :commands (lsp-install-server lsp-mode lsp)
   :hook ((python-mode . lsp))
   :config (bind-keys :map jam/code
@@ -707,17 +750,20 @@
               lsp-enable-folding nil))
 
 (use-package lsp-treemacs
+  :if (not (memq window-system '(android))) ; use eglot
   :config (bind-keys :map jam/code
                       ("X" . lsp-treemacs-errors-list)
                       ("y" . lsp-treemacs-call-hierarchy))
   :after (treemacs lsp))
 
 (use-package lsp-ui
+  :if (not (memq window-system '(android))) ; use eglot
   :init (add-hook 'lsp-mode-hook #'lsp-ui-mode)
   :commands lsp-ui-mode
   :config (setq lsp-ui-peek-enable t))
 
 (use-package dap-mode ; BUG guix: icons not included in package
+  :if (not (memq window-system '(android))) ; use eglot
   :init (bind-keys :map jam/code ("d" . dap-debug))
   :commands (dap-debug dap-debug-edit-template)
   :after lsp-mode
@@ -752,6 +798,7 @@
 ;; U to manually subscribe
 ;; L list all groups
 (use-package gnus ; built-in
+  :ensure nil
   :init (bind-keys :map jam/open ("g" . gnus))
   :commands (gnus)
   :config
@@ -831,6 +878,8 @@
          (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
 (use-package osm
+  :if (not (memq window-system '(android))) ; curl
+  ;:pin gnu
   :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
   :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
@@ -853,6 +902,7 @@
            ("<M-right>" . drag-stuff-right)))
 
 (use-package explain-pause-mode
+  :ensure nil ; BUG not in melpa
   :init (bind-keys :map jam/open ("T" . explain-pause-top))
   :commands (explain-pause-top explain-pause-mode))
 
@@ -878,13 +928,16 @@
   :commands (which-key-mode))
 
 (use-package rustic
+  :if (not (memq window-system '(android))) ; rustc/cargo
   :config (jam/set-rust-path)
   :mode ("\\.rs$" . rustic-mode))
 
 (use-package python
+  :if (not (memq window-system '(android))) ; python
   :commands (python-mode python-mode-hook python-mode-local-vars-hook))
 
 (use-package pyvenv ; activate before lsp or restart workspace
+  :if (not (memq window-system '(android))) ; python
   :init (add-hook 'python-mode-local-vars-hook #'pyvenv-tracking-mode)
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode))
 

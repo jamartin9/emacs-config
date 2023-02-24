@@ -1,7 +1,7 @@
 
 * emacs-config
 This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
-The dependencies are: emacs >= 29/28, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store), aspell (flyspell), vlc/mpv (emms), notification-daemon (erc), c compiler (vterm), sqlite (forge/roam), osc terminal emulator (xterm.el) and a shell.
+The dependencies are: emacs >= 29/28, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store), aspell (flyspell), vlc/mpv (emms), notification-daemon (erc), c compiler (vterm), sqlite (forge/roam), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
 
 Current package considerations:
 signal-msg: sms support dropping? unmaintained/broken currently (apply fixes/rewrite?)
@@ -13,7 +13,7 @@ rmsbolt: decompiler explorer. alternative is external decompiler.
 guix: package/environment management. alternative is ensure/pinning with use-packages and setting exec-path-from-shell
 pass: frontend to password-store. alternative is git repo of authinfo.gpg store.
 vterm: graphical terminal emulation. alternative built-in multi-term lacks visual command support
-magit/forge/code-review: git/forge manipulation. alternative built-in vc lacks complex workflows like interactive rebase or forge pull requests or code-review
+magit/forge/code-review: git/forge manipulation. alternative built-in vc lacks complex workflows like interactive rebase, forge pull requests or code-review
 debbugs: track emacs/guix bugs. alternative is bookmarking websites
 transmission: manage torrent client. alternative is scripting transmission-cli
 org-roam: tag system for note database. alternative is self devised naming/search scheme with org-captured datetree journal
@@ -30,6 +30,7 @@ explain-pause-mode: profiler top like realtime view. alternative is profiler-rep
 expand-region: select semantic units of text. alternative is set mark and search/select
 langs: rustic, guile-geiser, pyvenv/pyls/debugpy. alternative is only use elisp
 which-key: show keymap keybinds. alternative is describe-* functions for bind discovery
+osm: Map tile viewer. alternative is web browser viewing
 pcre2el: regex converter. alternative is a smooth big brain
 
 ** Clone
@@ -70,4 +71,12 @@ To run with powershell use the same wrapper format with a .ps1 extension.
 #+NAME: run-wrapper
 #+BEGIN_SRC sh :tangle no
 ":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
+#+END_SRC
+
+** Cherry Picking
+Copy files by url with emacs
+#+NAME: elisp-copy
+#+BEGIN_SRC elisp :tangle no
+(url-copy-file "https://github.com/jamartin9/emacs-config/blob/master/init.el" "init.el")
+(url-copy-file "https://github.com/jamartin9/emacs-config/blob/master/early-init.el" "early-init.el")
 #+END_SRC

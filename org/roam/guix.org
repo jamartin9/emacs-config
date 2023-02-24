@@ -454,14 +454,14 @@
     (locale "en_US.utf8")
     (keyboard-layout (keyboard-layout "us" "altgr-intl"))
 
-    (kernel my-kernel)
-    (initrd microcode-initrd)
+    (kernel linux-libre-with-bpf); my-kernel
+    ;(initrd microcode-initrd)
     ;(kernel-arguments '("modprobe.blacklist=b43,b43legacy,ssb,bcm43xx,brcm80211,brcmfmac,brcmsmac,bcma,nouveau"))
 
     ;; Label for the GRUB boot menu.
     (label (string-append "GNU Guix " (package-version guix)))
 
-    (firmware (list linux-firmware))
+    ;(firmware (list linux-firmware))
 
     ;; Below we assume /dev/vda is the VM's hard disk.
     ;; Adjust as needed.
@@ -473,7 +473,8 @@
     (file-systems (cons (file-system
                           (mount-point "/")
                           (device "/dev/vda1")
-                          (type "ext4"))
+                          (options "compress=zstd,space_cache=v2")
+                          (type "btrfs"))
                         %base-file-systems))
 
     (users (cons (user-account
@@ -491,8 +492,8 @@
   root ALL=(ALL) ALL
   %wheel ALL=NOPASSWD: ALL\n"))
 
-    (packages (append (list font-bitstream-vera nss-certs nvi wget blueman cloud-utils); cloud-utils for growpart with resize2fs after img resize
-                      %base-packages)) ; podman flatpak
+    (packages (append (list font-bitstream-vera nss-certs nvi wget cloud-utils); cloud-utils for growpart with resize2fs after img resize
+                      %base-packages)) ; podman flatpak blueman
 
     (services
      (append (list (service xfce-desktop-service-type)
@@ -510,9 +511,9 @@
                                               %default-xorg-modules))
                                (keyboard-layout keyboard-layout)))))
 
-                   (service bluetooth-service-type
-                            (bluetooth-configuration
-                             (auto-enable? #f)))
+                   ;(service bluetooth-service-type
+                   ;         (bluetooth-configuration
+                   ;          (auto-enable? #f)))
 
                    ;(service broadcom-service-type)
 
@@ -549,9 +550,9 @@
                    (simple-service 'channel-file etc-service-type ; TODO remove after guix-home integrated
                                    (list `("channels.scm" ,(local-file "channels.scm"))))
 
-                   (service zfs-service-type
-                            (zfs-configuration
-                             (kernel my-kernel)))
+                   ;(service zfs-service-type
+                   ;         (zfs-configuration
+                   ;          (kernel my-kernel)))
 
                    (service nftables-service-type
                             (nftables-configuration
@@ -697,6 +698,7 @@
                        (guix-service-type config =>
                                            (guix-configuration
                                             (inherit config)
+                                            (log-compression 'none); use btrfs compression
                                             (guix (current-guix))
                                             (substitute-urls
                                    (append (list "https://substitutes.nonguix.org/"); 4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion
