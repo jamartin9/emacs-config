@@ -448,9 +448,6 @@
         code-review-download-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review"))
         code-review-auth-login-marker 'forge))
 
-(use-package yaml ; TODO remove for yaml-ts-mode (built-in emacs-29)
-  :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
-
 (use-package transmission ; C-u universal arg for directory prompt
   :if (not (memq window-system '(android))) ; transmission
   :commands (transmission transmission-add))
@@ -773,7 +770,7 @@
   (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls tooltip))
   (require 'dap-gdb-lldb)
   ;;;###package gdb
-  (setq gdb-show-main t
+  (setq gdb-show-main t ; MAYBE use gdb dap interface
         gdb-many-windows t)
   ;(dap-gdb-lldb-setup) ; BUG download/unzip fails? redirect?
   (dap-register-debug-template "Rust::GDB Run Configuration"
@@ -927,8 +924,20 @@
   :init (add-hook 'after-init-hook #'which-key-mode)
   :commands (which-key-mode))
 
+(use-package treesit ; built-in
+  :if (not (memq window-system '(android)))
+  :if (>= emacs-major-version 29) ; remove after emacs-29
+  :ensure nil ; built-in
+  :init
+  (if (treesit-available-p)
+      (progn
+          (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
+          (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+          (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
+
 (use-package rustic
   :if (not (memq window-system '(android))) ; rustc/cargo
+  ;:init (setq rustic-treesitter-derive t) ; MAYBE add when rustic supports treesit
   :config (jam/set-rust-path)
   :mode ("\\.rs$" . rustic-mode))
 
@@ -940,49 +949,6 @@
   :if (not (memq window-system '(android))) ; python
   :init (add-hook 'python-mode-local-vars-hook #'pyvenv-tracking-mode)
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode))
-
-; maybe packages
-;
-;(use-package! signal-msg ; https://github.com/AsamK/signal-cli
-;  :commands (signal-msg-new-message) ; jam/signal-msg-rec
-;  :config (setq signal-msg-username (alist-get 'secret (auth-source-pass-parse-entry "signal/account"))
-;                signal-msg-number (alist-get 'secret (auth-source-pass-parse-entry "signal/phone")))
-;  (advice-add 'signal-msg-send :override #'jam/signal-msg-send))
-;
-;;;###autoload
-;(defun jam/signal-msg-send ()
-;  "Override to use -a account notation and stdin for sending buffer to signal-cli"
-;  (interactive)
-;  (let ((exit-code (call-process-region
-;                    (point-min)
-;                    (point-max)
-;                    "signal-cli"
-;                    nil                                  ; delete
-;                    nil                                  ; buffer
-;                    nil                                  ; display
-;                    "-a" signal-msg-number "send" "--message-from-stdin" signal-msg-dest-number)))
-;    (if (= exit-code 0)
-;        (kill-buffer)
-;      (warn (format "Something went wrong. signal-cli returned %d" exit-code)))))
-;
-;;;;###autoload
-;(defun jam/signal-msg-rec ()
-;  "Reads all json encoded messages from signal-cli into *Signal* buffer"
-;  (interactive)
-;  (with-temp-buffer (progn (call-process "signal-cli" nil (current-buffer) nil "--output=json" "receive"); (call-process "cat" nil (current-buffer) nil "signals.json")
-;                           ;(message "current buffer is %s " (buffer-string))
-;                           (goto-char (point-min))
-;                           (unwind-protect
-;                               (while (not (eobp))
-;                                 (let* (;(message-json (json-read-file "signals.json"))
-;                                        (message-json (json-read))
-;                                        (message-content (alist-get 'envelope message-json ))
-;                                        (message-from (alist-get 'sourceName message-content))
-;                                        (message-data (alist-get 'dataMessage message-content))
-;                                        (message-text (alist-get 'message message-data)))
-;                                   ;(message "\nFrom: %s\nMessage: %s\n" message-from message-text)
-;                                   (with-current-buffer (get-buffer-create "*Signal*") (insert (format "\nFrom: %s\nMessage: %s\n" message-from message-text)))))))))
-
 
 ;;;###autoload
 (defun jam/guix-env()

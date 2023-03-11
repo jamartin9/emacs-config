@@ -20,7 +20,7 @@ Secrets from the future!
   - Lattice based
     - [[https://www.courtlistener.com/docket/64872195/bernstein-v-national-institute-of-standards-and-technology/][Bernstein in court against NIST]] for potential NSA tampering again (weak keysize?)
     - openssh added hybrid NTRU-Prime (Bernstein on team) for key exchange encryption despite NIST being against 'hybrid' schemes
-    - NIST choose CRYSTALS-Kyber for KEM encryption with CRYSTALS-DILITHIUM for signatures. Falcon is alternative signature scheme
+    - NIST choose CRYSTALS-Kyber([[https://www.schneier.com/blog/archives/2023/02/side-channel-attack-against-crystals-kyber.html][side channel power attack]]) for KEM encryption with CRYSTALS-DILITHIUM for signatures. Falcon is alternative signature scheme
       - NTRU may be considered if the *patent* issues with kyber are not resolved
       - Falcon has smallest signature but needs masking for side channel attack (perf affected as it needs constant-time floating point arithmetic)
       - CRYSTALS-Kyber may change nested hashes for security to hold
@@ -29,6 +29,7 @@ Secrets from the future!
 - Dual_EC_DRBG backdoor pushed into NIST standards from NSA
 - NSA coerced weak DES keysize of 56 bits
 - NSA coerced weak DSA keysize of 512 bits
+- NSA operation ORCHESTRA weakens oss projects openssl,python,CA's etc
 - Bernstein (EFF) v United States
   - was classed as munitions in 1992 with limited key size for export controls
   - Phil Zimmermann (pgp creator) published code as book (PGP Source Code and Internals) to avoid munitions export in 1994 after criminal investigation for his producing of privacy software

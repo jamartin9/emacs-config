@@ -56,6 +56,8 @@
   - [[https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f][added zfs arc support]]
     - enables more arc and disk io stats in future
     - enables more freebsd/mac/old linux metrics with sysctl
+      - freebsd used sysctl support for hw temp sensors
+    - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
     - hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle
     - enables gpu power and processes information

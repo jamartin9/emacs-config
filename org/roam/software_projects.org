@@ -43,9 +43,7 @@ The coding will continue until morale improves!
   - pgp public key in profile picture qr code
   - PDF links to projects/pages
 ** Currently studying
-- Compiler/VM optimizations
-- cryptography
-- machine learning
+- Algorithms for use in physical world problems using mathematical tools via computational science
 
 *** wip projects
 - Automatic differentiation of ssa via conversion of cps to ssa for guile bytecode (guile uses cps unlike llvm/jvm with are ssa) :wip:
