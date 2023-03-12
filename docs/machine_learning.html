@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgc8c35e7">
-<div class="navbar-brand" id="org2301bad">
-<div class="navbar-item" id="org042b49b">
+<nav class="navbar is-black" id="org309e90c">
+<div class="navbar-brand" id="orgef65011">
+<div class="navbar-item" id="org01d18b5">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org30de211">
-<div class="navbar-start" id="org26b4e63">
-<div class="navbar-item" id="org53f6ba2">
+<div class="navbar-menu" id="org0e4a55c">
+<div class="navbar-start" id="orgc6cf8e4">
+<div class="navbar-item" id="org26ea678">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,31 +29,35 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgd95635e">
+<div class="navbar-end" id="orge160579">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgc770961" class="outline-2">
-<h2 id="orgc770961">Machine learning</h2>
-<div class="outline-text-2" id="text-orgc770961">
+<div id="outline-container-org76d7707" class="outline-2">
+<h2 id="org76d7707">Machine learning</h2>
+<div class="outline-text-2" id="text-org76d7707">
 </div>
-<div id="outline-container-orgafa1bd3" class="outline-3">
-<h3 id="orgafa1bd3">notes</h3>
-<div class="outline-text-3" id="text-orgafa1bd3">
+<div id="outline-container-orgec43801" class="outline-3">
+<h3 id="orgec43801">notes</h3>
+<div class="outline-text-3" id="text-orgec43801">
 <ul class="org-ul">
 <li>huggingface is a hub for models with api libs using pytorch/tensorflow/jax
 <ul class="org-ul">
 <li>spaces to run in notebook like without colab using gradio</li>
 </ul></li>
 <li>collab gives free 12hrs of compute</li>
+<li>Forward Forward is alternative back propagation</li>
+<li>wasi-nn for evaluating ml models in wasm via SIMD extensions with either wasmedge (pytorch) or wasmtime(openvino)</li>
+<li><a href="https://github.com/microsoft/onnxruntime">ONNX</a> for browser evaluation of pytorch models</li>
+<li>usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9b3d98d" class="outline-3">
-<h3 id="org9b3d98d">image generation</h3>
-<div class="outline-text-3" id="text-org9b3d98d">
+<div id="outline-container-orge975eb0" class="outline-3">
+<h3 id="orge975eb0">image generation</h3>
+<div class="outline-text-3" id="text-orge975eb0">
 <ul class="org-ul">
 <li>dalle mini</li>
 <li><a href="https://github.com/hlky/stable-diffusion">stable diffusion</a>
@@ -61,13 +65,33 @@
 <li><a href="https://github.com/andreasjansson/cog-stable-diffusion/tree/animate">animation with interpolation</a></li>
 <li><a href="https://github.com/carson-katri/dream-textures">dreambooth plugin for blender textures</a></li>
 <li><a href="https://github.com/riffusion/riffusion-app">Generate music from spectrograph</a></li>
+<li><a href="https://github.com/lllyasviel/ControlNet">Controlnet</a> guided Stable diffusion from scribbles/images/depth maps</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org408fe9d" class="outline-3">
-<h3 id="org408fe9d">Codegen</h3>
-<div class="outline-text-3" id="text-org408fe9d">
+<div id="outline-container-org057d3fe" class="outline-3">
+<h3 id="org057d3fe">Large Language Models</h3>
+<div class="outline-text-3" id="text-org057d3fe">
+<ul class="org-ul">
+<li><a href="https://github.com/facebookresearch/llama">Llama</a>
+<ul class="org-ul">
+<li>weights unpublished
+<ul class="org-ul">
+<li>torrent <code>magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&amp;dn=LLaMA</code> (hugginface has several copies too)</li>
+</ul></li>
+<li>more than 1,000,000 hours of 40GiB GPU (400 watts) compute hours for 65B model
+<ul class="org-ul">
+<li>1000 tons of CO2 (2.6 million KWh hours)</li>
+</ul></li>
+<li><a href="https://github.com/markasoftware/llama-cpu/commit/3f0326e9d2e567d573cce2479eb71a1262af8a93">cpu patch</a></li>
+<li><a href="https://github.com/tloen/llama-int8">int8 patch</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-org2049ba8" class="outline-4">
+<h4 id="org2049ba8">Codegen</h4>
+<div class="outline-text-4" id="text-org2049ba8">
 <ul class="org-ul">
 <li><a href="https://github.com/moyix/fauxpilot">Fauxpilot</a>
 <ul class="org-ul">
@@ -80,20 +104,30 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org9d710bf" class="outline-3">
-<h3 id="org9d710bf">Speech to text</h3>
-<div class="outline-text-3" id="text-org9d710bf">
+</div>
+<div id="outline-container-org0c8f864" class="outline-3">
+<h3 id="org0c8f864">Speech to text</h3>
+<div class="outline-text-3" id="text-org0c8f864">
 <ul class="org-ul">
 <li>open ai whisper</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org1ec4ca3">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="org3d4e3dc">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
 whisper "/content/${VID}.m4a" --model small --language English
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-org1cf8c0a" class="outline-3">
+<h3 id="org1cf8c0a">Text to speech</h3>
+<div class="outline-text-3" id="text-org1cf8c0a">
+<ul class="org-ul">
+<li><a href="https://github.com/neonbjb/tortoise-tts">tortoise-tts</a> based on dalle</li>
+<li><a href="https://github.com/coqui-ai/TTS">coqui-ai</a> with YourTTS voice cloning</li>
+</ul>
 </div>
 </div>
 </div>

@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org7f2d5d6">
-<div class="navbar-brand" id="orge4a69ee">
-<div class="navbar-item" id="org06e2b07">
+<nav class="navbar is-black" id="org71f1cbc">
+<div class="navbar-brand" id="orgc387ca6">
+<div class="navbar-item" id="org0b13830">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orge4329a9">
-<div class="navbar-start" id="org9233bc3">
-<div class="navbar-item" id="org01f8ab8">
+<div class="navbar-menu" id="org991439a">
+<div class="navbar-start" id="orgf88b4ce">
+<div class="navbar-item" id="orgb89d930">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,22 +29,22 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org87d49aa">
+<div class="navbar-end" id="org6ee147b">
 
 </div>
 
 </div>
 </nav>
 
-<div id="outline-container-org4380f47" class="outline-2">
-<h2 id="org4380f47">Guix</h2>
-<div class="outline-text-2" id="text-org4380f47">
+<div id="outline-container-org54ee23d" class="outline-2">
+<h2 id="org54ee23d">Guix</h2>
+<div class="outline-text-2" id="text-org54ee23d">
 </div>
-<div id="outline-container-org055d933" class="outline-3">
-<h3 id="org055d933">Link manifest and channels</h3>
-<div class="outline-text-3" id="text-org055d933">
+<div id="outline-container-orgeec3261" class="outline-3">
+<h3 id="orgeec3261">Link manifest and channels</h3>
+<div class="outline-text-3" id="text-orgeec3261">
 <div class="org-src-container">
-<pre class="src src-elisp" id="org77fee04">(ignore-errors
+<pre class="src src-elisp" id="org3e5fe93">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (if (getenv "XDG_CONFIG_HOME") (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
                                                     (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
                                                   "guix-manifests")))
@@ -57,11 +57,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgce1d92d" class="outline-3">
-<h3 id="orgce1d92d">guix home</h3>
-<div class="outline-text-3" id="text-orgce1d92d">
+<div id="outline-container-orgf93a79b" class="outline-3">
+<h3 id="orgf93a79b">guix home</h3>
+<div class="outline-text-3" id="text-orgf93a79b">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org25180fd">(use-modules (gnu home)
+<pre class="src src-scheme" id="org12b88a7">(use-modules (gnu home)
              (gnu home services)
              (gnu home services guix)
              (gnu home services shells)
@@ -73,6 +73,9 @@
              (gnu packages admin)
              (srfi srfi-9 gnu)
              (guix channels)
+             (gnu packages emacs-xyz)
+             (jam packages emacs-xyz)
+             (jam packages emacs)
              (guix gexp))
 
 (define emacs-service
@@ -129,75 +132,31 @@
    ((shepherd-service-auto-start?) #f)))
 
 (home-environment
- (packages (map specification-&gt;package (list "guile"
-                                             ;"guix"; managed by 'guix pull'
-                                             "emacs-next-pgtk"
-                                             "emacs-vterm"
-                                             "emacs-debbugs"
-                                             "emacs-org-roam"
-                                             "fd"
-                                             "git"
-                                             "ripgrep"
-                                             "nss-certs"
-                                             "aspell-dict-en"
-                                             ;"vlc"; "mpv"
-                                             "gnupg"
-                                             "password-store"
-                                             "notification-daemon"
-                                             ;"xclip"
-                                             "torsocks"
-                                             "screen"
-                                             "virt-viewer"; for spice remote-viewer
-                                             "emacs-org"
-                                             "emacs-flycheck-guile"
-                                             "emacs-flycheck"
-                                             "emacs-rmsbolt"
-                                             "emacs-guix"
-                                             "emacs-fd"
-                                             "emacs-emms"
-                                             "emacs-osm"
-                                             "emacs-multiple-cursors"
-                                             "emacs-minions"
-                                             "emacs-transmission"
-                                             "emacs-yaml-mode" ; remove emacs-29
-                                             "emacs-undo-tree"
-                                             "emacs-switch-window"
-                                             "emacs-pass"
-                                             "emacs-orgit"
-                                             "emacs-forge"
-                                             "emacs-magit"
-                                             "emacs-magit-todos"
-                                             "emacs-use-package" ; remove for emacs-29
-                                             ;"emacs-helpful"
-                                             "emacs-ws-butler"
-                                             "emacs-code-review"
-                                             "emacs-orgit-forge"
-                                             "emacs-flycheck-popup-tip"
-                                             "emacs-macrostep-geiser"
-                                             "emacs-drag-stuff"
-                                             "emacs-cfrs" ; BUG needed for treemacs
-                                             "emacs-company"
-                                             "emacs-treemacs"
-                                             "emacs-treemacs-extra"
-                                             "emacs-lsp-treemacs"
-                                             "emacs-lsp-mode"
-                                             "emacs-lsp-ui"
-                                             "emacs-avy"
-                                             "emacs-rustic"
-                                             "emacs-geiser"
-                                             "emacs-geiser-guile"
-                                             "emacs-realgud"
-                                             "emacs-dap-mode"
-                                             "emacs-link-hint"
-                                             "emacs-expand-region"
-                                             "emacs-which-key"
-                                             "emacs-explain-pause-mode"
-                                             ;"emacs-rainbow-delimiters"
-                                             ;"emacs-restart-emacs"
-                                             "emacs-pcre2el"
-                                             "emacs-smartparens"
-                                             "emacs-gcmh"
-                                             )))
+ (packages (append
+          ;(map transform-emacs-build (list emacs-rmsbolt emacs-pyvenv emacs-vterm emacs-debbugs emacs-org-roam emacs-flycheck-guile emacs-guix emacs-fd emacs-emms emacs-osm emacs-multiple-cursors emacs-minions emacs-transmission emacs-undo-tree emacs-pass emacs-use-package emacs-code-review emacs-orgit-forge emacs-flycheck-popup-tip emacs-macrostep-geiser emacs-drag-stuff emacs-company emacs-cfrs emacs-lsp-treemacs emacs-lsp-ui emacs-rustic emacs-geiser-guile emacs-dap-mode emacs-link-hint emacs-expand-region emacs-which-key emacs-explain-pause-mode emacs-pcre2el emacs-smartparens emacs-gcmh)) ; BUG no eln
+          (map specification-&gt;package (list "guile"
+                                           ;"emacs-next-tree-sitter" ; managed by default profile
+                                           "fd"
+                                           "git"
+                                           "ripgrep"
+                                           "nss-certs"
+                                           "aspell-dict-en"
+                                           "mpv"; "vlc"
+                                           "gnupg"
+                                           "password-store" "pass-otp"
+                                           "notification-daemon"
+                                           "qemu"
+                                           "alacritty"; "xterm"
+                                           "curl"; emacs-osm needs for CA's
+                                           "screen"
+                                           "virt-viewer"; for spice remote-viewer
+                                           "python" ; python-lsp
+                                           "python-lsp-server"
+                                           "python-debugpy"
+                                           "tree-sitter-python" "tree-sitter-yaml" ; "tree-sitter-rust"
+                                           "emacs-pyvenv" "emacs-vterm" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-rmsbolt" "emacs-guix" "emacs-fd" "emacs-emms" "emacs-osm" "emacs-multiple-cursors" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-flycheck-popup-tip" "emacs-macrostep-geiser" "emacs-drag-stuff" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-expand-region" "emacs-which-key" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-smartparens" "emacs-gcmh" "emacs-cfrs"
+                                           "emacs-use-package" ; "emacs-yaml-mode" ; remove emacs-29
+                                           ))))
  (services
   (list
    (simple-service 'my-channel-services
@@ -305,7 +264,7 @@ alias guixRunVm=\"_guix_run_vm\" # guixRunVm -d -t os.scm
 
 _guix_vars(){
     if [ -z \"${GUIX_PREV_ENV}\" ]; then # unset vars in guix-home and keep login vars
-        export GUIX_PREV_ENV=(\"$(env -u PATH -u GUIX_PROFILE -u GUILE_LOAD_COMPILED_PATH -u GUILE_LOAD_PATH -u SSL_CERT_DIR -u GIT_EXEC_PATH -u GIT_SSL_CAINFO -u INFOPATH -u EMACSLOADPATH -u EMACSNATIVELOADPATH -u BASH_LOADABLES_PATH -u PASSWORD_STORE_SYSTEM_EXTENSION_DIR PATH=/sbin:/bin:/usr/sbin:/usr/bin bash -c '. /etc/profile &amp;&amp; env')\")
+        export GUIX_PREV_ENV=(\"$(env -u PATH -u GUIX_PROFILE -u GUILE_LOAD_COMPILED_PATH -u GUILE_LOAD_PATH -u SSL_CERT_DIR -u SSL_CERT_FILE -u GIT_EXEC_PATH -u GIT_SSL_CAINFO -u INFOPATH -u EMACSLOADPATH -u EMACSNATIVELOADPATH -u BASH_LOADABLES_PATH -u PASSWORD_STORE_SYSTEM_EXTENSION_DIR -u CURL_CA_BUNDLE PATH=/sbin:/bin:/usr/sbin:/usr/bin bash -c '. /etc/profile &amp;&amp; env')\")
         export GUIX_ACTIVE_PROFILES=()
         # guix-home activated with login shell
         [ -f ~/.guix-home/setup-environment ] &amp;&amp; export GUIX_PREV_ENV_home=(\"$(env)\") &amp;&amp; export GUIX_ACTIVE_PROFILES=(\"home\")
@@ -482,11 +441,11 @@ _guix_opts default"))))))))
 </div>
 </div>
 
-<div id="outline-container-org920c6de" class="outline-3">
-<h3 id="org920c6de">guixsd config</h3>
-<div class="outline-text-3" id="text-org920c6de">
+<div id="outline-container-org60d70d0" class="outline-3">
+<h3 id="org60d70d0">guixsd config</h3>
+<div class="outline-text-3" id="text-org60d70d0">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orga4884ce">
+<pre class="src src-scheme" id="org02c1b9d">
 (use-modules
  (gnu)
  (gnu services)
@@ -526,9 +485,9 @@ _guix_opts default"))))))))
                                (const '("wl")))))
    (default-value '())
    (description "Install broadcom kernel module and service")))
-;; * TODO guix nvidia-driver(xorg/ko), tor service
+;; * TODO guix nvidia-driver(xorg/ko), tor/i2p service
 
-(define my-kernel linux-6.1)
+(define my-kernel (corrupt-linux linux-libre-with-bpf))
 
 (operating-system
   (host-name "gnu")
@@ -536,14 +495,14 @@ _guix_opts default"))))))))
   (locale "en_US.utf8")
   (keyboard-layout (keyboard-layout "us" "altgr-intl"))
 
-  (kernel my-kernel)
-  (initrd microcode-initrd)
+  (kernel linux-libre-with-bpf); my-kernel
+  ;(initrd microcode-initrd)
   ;(kernel-arguments '("modprobe.blacklist=b43,b43legacy,ssb,bcm43xx,brcm80211,brcmfmac,brcmsmac,bcma,nouveau"))
 
   ;; Label for the GRUB boot menu.
   (label (string-append "GNU Guix " (package-version guix)))
 
-  (firmware (list linux-firmware))
+  ;(firmware (list linux-firmware))
 
   ;; Below we assume /dev/vda is the VM's hard disk.
   ;; Adjust as needed.
@@ -555,7 +514,8 @@ _guix_opts default"))))))))
   (file-systems (cons (file-system
                         (mount-point "/")
                         (device "/dev/vda1")
-                        (type "ext4"))
+                        (options "compress=zstd,space_cache=v2")
+                        (type "btrfs"))
                       %base-file-systems))
 
   (users (cons (user-account
@@ -573,8 +533,8 @@ _guix_opts default"))))))))
 root ALL=(ALL) ALL
 %wheel ALL=NOPASSWD: ALL\n"))
 
-  (packages (append (list font-bitstream-vera nss-certs nvi wget blueman cloud-utils); cloud-utils for growpart with resize2fs after img resize
-                    %base-packages)) ; podman flatpak
+  (packages (append (list font-bitstream-vera nss-certs nvi wget cloud-utils); cloud-utils for growpart with resize2fs after img resize
+                    %base-packages)) ; podman flatpak blueman
 
   (services
    (append (list (service xfce-desktop-service-type)
@@ -592,9 +552,9 @@ root ALL=(ALL) ALL
                                             %default-xorg-modules))
                              (keyboard-layout keyboard-layout)))))
 
-                 (service bluetooth-service-type
-                          (bluetooth-configuration
-                           (auto-enable? #f)))
+                 ;(service bluetooth-service-type
+                 ;         (bluetooth-configuration
+                 ;          (auto-enable? #f)))
 
                  ;(service broadcom-service-type)
 
@@ -647,7 +607,7 @@ define vpn = wg0
 define vpn_net = 10.0.0.1/24
 define router = 192.168.1.1
 
-table inet router {
+table inet nat {
   chain prerouting {
     type nat hook prerouting priority -100;
   }
@@ -779,6 +739,7 @@ table inet filter {
                      (guix-service-type config =&gt;
                                          (guix-configuration
                                           (inherit config)
+                                          (log-compression 'none); use btrfs compression
                                           (guix (current-guix))
                                           (substitute-urls
                                  (append (list "https://substitutes.nonguix.org/"); 4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion
@@ -793,11 +754,11 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-org87561e2" class="outline-3">
-<h3 id="org87561e2">User manifest</h3>
-<div class="outline-text-3" id="text-org87561e2">
+<div id="outline-container-orge4c02df" class="outline-3">
+<h3 id="orge4c02df">User manifest</h3>
+<div class="outline-text-3" id="text-orge4c02df">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgcb50c49">;; Manifest for development env
+<pre class="src src-scheme" id="org8fd5b5b">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
@@ -809,16 +770,17 @@ table inet filter {
    ;;"transmission"
    ;;"nzbget"
    ;;"steam-nvidia" ;; steam
-   ;;"qemu"
    ;;"zfs"
+   "qemu"
    "perf"
    "bpftrace"
+   "bcc"
 
    ;; C dev
    ;;"make" ;;"cmake"
    ;;"glibc" ;; "musl"
    ;;"gcc-toolchain" ;;"clang-toolchain"
-   "gdb" ;;"lldb"
+   ;;"gdb" ;;"lldb"
    "rr"
    ;;"binutils"
    ;;"module-init-tools"
@@ -838,8 +800,9 @@ table inet filter {
 
    ;; shell
    "shellcheck" ;;"bash"
-   ;;"htop"
+   "htop"
    ;;"xclip"
+   ;;"wl-clipboard"
    ;;"bc"
    ;;"jq"
    ;;"coreutils" ;;"busybox"
@@ -898,7 +861,7 @@ table inet filter {
    ;;"yt-dlp"
 
    ;; net
-   "curl"
+   ;;"curl"
    ;;"whois"
    ;;"bind:utils"
    ;;"nmap"
@@ -914,9 +877,10 @@ table inet filter {
    ;;"socat"
    "strace"
    ;;"tor"
-   ;;"torsocks"
+   "torsocks"
+   ;;"i2pd"
    ;;"screen"
-   ;;"dnsmasq"
+   "dnsmasq"
 
    ;; Desktop
    ;;"xfce"; --with-graft=mesa=nvda
@@ -926,11 +890,11 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-org0824df8" class="outline-3">
-<h3 id="org0824df8">Channel configuration</h3>
-<div class="outline-text-3" id="text-org0824df8">
+<div id="outline-container-orga0a51d5" class="outline-3">
+<h3 id="orga0a51d5">Channel configuration</h3>
+<div class="outline-text-3" id="text-orga0a51d5">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgee2b6ed">(list (channel
+<pre class="src src-scheme" id="org280670b">(list (channel
        ;; custom guix override
        (name 'guix)
        (url "https://git.savannah.gnu.org/git/guix.git")
@@ -953,11 +917,11 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-org6a8749c" class="outline-3">
-<h3 id="org6a8749c">non guix key</h3>
-<div class="outline-text-3" id="text-org6a8749c">
+<div id="outline-container-orgf34d959" class="outline-3">
+<h3 id="orgf34d959">non guix key</h3>
+<div class="outline-text-3" id="text-orgf34d959">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgc1c91c3">(public-key
+<pre class="src src-scheme" id="orgbcb2327">(public-key
  (ecc
   (curve Ed25519)
   (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)
@@ -967,9 +931,9 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-orgce169c9" class="outline-3">
-<h3 id="orgce169c9">guix notes</h3>
-<div class="outline-text-3" id="text-orgce169c9">
+<div id="outline-container-orgfd7df93" class="outline-3">
+<h3 id="orgfd7df93">guix notes</h3>
+<div class="outline-text-3" id="text-orgfd7df93">
 <ul class="org-ul">
 <li>transform options for source, c-toolchain, debug, grafts/inputs
 <ul class="org-ul">
@@ -980,8 +944,6 @@ table inet filter {
 <li><code>guix package --roll-back</code> to drop to last version</li>
 <li>commit signing and downgrading flags are <code>--disable-authentication --allow-downgrades</code></li>
 <li>platform specific binaries can be produces with the <code>--tune</code> flag</li>
-<li>app img run <code>mount thing.AppImage tmpmnt -o offset=$(guix shell -C -F zlib -- "./thing.AppImage --appimage-offset")</code></li>
-<li>guix shell can emulate normal fs with &#x2013;emulate-fhs</li>
 <li>hpc channel for extra pytorch packages
 <ul class="org-ul">
 <li><a href="https://gitlab.inria.fr/guix-hpc/guix-hpc/">https://gitlab.inria.fr/guix-hpc/guix-hpc/</a></li>
@@ -990,9 +952,36 @@ table inet filter {
 <ul class="org-ul">
 <li>arg <code>--listen=/socket</code> and/or env vars</li>
 </ul></li>
+<li>app img run <code>mount thing.AppImage tmpmnt -o offset=$(guix shell -C -F zlib -- "./thing.AppImage --appimage-offset")</code></li>
+<li>guix shell can emulate normal fs with &#x2013;emulate-fhs</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org989a0f1">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org9761d47">guix shell --container --network --emulate-fhs \
+    --development ungoogled-chromium gcc:lib \
+    --preserve='^DISPLAY$' \
+    --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
+    --preserve='^DBUS_' --expose=/var/run/dbus \
+    --expose=/sys/dev --expose=/sys/devices --expose=/dev/dri \
+    -- ./VSCodium-1.74.0.22342.glibc2.17-x86_64.AppImage --appimage-extract-and-run # Run VSCodium Appimage
+
+guix shell --network --container --emulate-fhs \
+    bash coreutils curl grep nss-certs gcc:lib gcc-toolchain \
+    pkg-config glib cairo atk pango@1.48.10 gdk-pixbuf gtk+ git \
+    --share=$HOME/temphome=$HOME --no-cwd
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # install rustup in guix
+
+guix shell --container --network --emulate-fhs \
+    --preserve='^DISPLAY$' \
+    --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
+    alsa-lib bash coreutils dbus-glib file gcc:lib \
+    grep gtk+ libcxx pciutils sed \
+    -- ./start-tor-browser.desktop -v ; # Start tor-browser
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh" id="orga71a5f5">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
@@ -1017,7 +1006,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 <li><code>guix publish</code> substitutes after exporting/importing key with <code>guix archive</code> or use nars with <code>guix archive --export -r</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org0144b58">guix time-machine --commit=a4eae0c3adce8e4c4ac153a4959d18b9897a67e1 -- package -i old
+<pre class="src src-sh" id="org8512898">guix time-machine --commit=a4eae0c3adce8e4c4ac153a4959d18b9897a67e1 -- package -i old
 </pre>
 </div>
 <ul class="org-ul">
@@ -1026,7 +1015,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 manual setup
 </p>
 <div class="org-src-container">
-<pre class="src src-shell" id="org2cec2d1">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
+<pre class="src src-shell" id="org08fadda">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
 # get tarball for system=x86_64-linux,aarch64,armhf,i686
 wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
 # check sig
@@ -1072,13 +1061,13 @@ guix package -i glibc-utf8-locales
 </div>
 </div>
 
-<div id="outline-container-orgd668838" class="outline-3">
-<h3 id="orgd668838">guix issues</h3>
-<div class="outline-text-3" id="text-orgd668838">
+<div id="outline-container-org920696a" class="outline-3">
+<h3 id="org920696a">guix issues</h3>
+<div class="outline-text-3" id="text-org920696a">
 </div>
-<div id="outline-container-orgc54b924" class="outline-4">
-<h4 id="orgc54b924"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-orgc54b924">
+<div id="outline-container-org9c9b7c7" class="outline-4">
+<h4 id="org9c9b7c7"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
+<div class="outline-text-4" id="text-org9c9b7c7">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-02 Mon] </span></span> Submitted
 </p>
@@ -1092,9 +1081,9 @@ guix package -i glibc-utf8-locales
 </p>
 </div>
 </div>
-<div id="outline-container-org0e8926f" class="outline-4">
-<h4 id="org0e8926f"><span class="todo TODO">TODO</span> Support binaries that need "setcap" similar to "setuid-programs"</h4>
-<div class="outline-text-4" id="text-org0e8926f">
+<div id="outline-container-orgac89ec0" class="outline-4">
+<h4 id="orgac89ec0"><span class="todo TODO">TODO</span> Support binaries that need "setcap" similar to "setuid-programs"</h4>
+<div class="outline-text-4" id="text-orgac89ec0">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-27 Fri] </span></span> Submitted
 </p>
@@ -1103,10 +1092,45 @@ guix package -i glibc-utf8-locales
 :CREATOR: Vagrant Cascadian &lt;vagrant@debian.org&gt;
 </p>
 <p>
-<a href="(debbugs-gnu-select-report)">Messages</a>
+<a href="(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))">Messages</a>
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-27 Fri] </span></span> Last modified
 </p>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org2405d47" class="outline-3">
+<h3 id="org2405d47">guix pending packages</h3>
+<div class="outline-text-3" id="text-org2405d47">
+</div>
+<div id="outline-container-org23bab69" class="outline-4">
+<h4 id="org23bab69"><span class="todo TODO">TODO</span> add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix</h4>
+<div class="outline-text-4" id="text-org23bab69">
+</div>
+<ul class="org-ul">
+<li><a id="orgfc1a8f5"></a><span class="todo TODO">TODO</span> add guix package for alacritty with nvidia-libs<br></li>
+<li><a id="org881fbe9"></a><span class="todo TODO">TODO</span> add guix package for httm<br>
+<div class="outline-text-5" id="text-org881fbe9">
+<ul class="org-ul">
+<li>rust version too old with cargo-build-system</li>
+</ul>
+</div>
+</li>
+<li><a id="orgf65f555"></a><span class="todo TODO">TODO</span> add guix package for btm<br>
+<div class="outline-text-5" id="text-orgf65f555">
+<ul class="org-ul">
+<li>rust version issue with rust-parking-lot dep</li>
+</ul>
+</div>
+</li>
+<li><a id="org834d015"></a><span class="todo TODO">TODO</span> add guix package for opensnitch<br>
+<div class="outline-text-5" id="text-org834d015">
+<ul class="org-ul">
+<li>import needs step added for protoc header generation</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>

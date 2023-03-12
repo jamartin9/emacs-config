@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org6e4f3b1">
-<div class="navbar-brand" id="org510a40a">
-<div class="navbar-item" id="orge9514a7">
+<nav class="navbar is-black" id="org65aa8d1">
+<div class="navbar-brand" id="org49f3a35">
+<div class="navbar-item" id="orgffac97a">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org57e5c4b">
-<div class="navbar-start" id="orgb6f1662">
-<div class="navbar-item" id="orgf816d05">
+<div class="navbar-menu" id="orgdc435db">
+<div class="navbar-start" id="org88cb7fa">
+<div class="navbar-item" id="orgbfea153">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,36 +29,39 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org7b08219">
+<div class="navbar-end" id="org9dc4e61">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org9cbf874" class="outline-2">
-<h2 id="org9cbf874">crypto</h2>
-<div class="outline-text-2" id="text-org9cbf874">
+<div id="outline-container-org156c4db" class="outline-2">
+<h2 id="org156c4db">crypto</h2>
+<div class="outline-text-2" id="text-org156c4db">
 <p>
 Secrets from the future!
 </p>
 </div>
-<div id="outline-container-org478346e" class="outline-3">
-<h3 id="org478346e">tools</h3>
-<div class="outline-text-3" id="text-org478346e">
+<div id="outline-container-org3f3d9a8" class="outline-3">
+<h3 id="org3f3d9a8">tools</h3>
+<div class="outline-text-3" id="text-org3f3d9a8">
 </div>
-<div id="outline-container-org04b90e3" class="outline-4">
-<h4 id="org04b90e3"><a href="gpg.html#ID-f72ef287-09ed-40c4-af4c-3bc9634655fe">gpg</a></h4>
+<div id="outline-container-org764f2fd" class="outline-4">
+<h4 id="org764f2fd"><a href="gpg.html#ID-f72ef287-09ed-40c4-af4c-3bc9634655fe">gpg</a></h4>
 </div>
-<div id="outline-container-orgfcf3aac" class="outline-4">
-<h4 id="orgfcf3aac"><a href="tor.html#ID-806e68d1-fc6b-44a1-9293-e23ccbd8955d">tor</a></h4>
+<div id="outline-container-org0e5f416" class="outline-4">
+<h4 id="org0e5f416"><a href="tor.html#ID-806e68d1-fc6b-44a1-9293-e23ccbd8955d">tor</a></h4>
 </div>
-<div id="outline-container-orgc0bac47" class="outline-4">
-<h4 id="orgc0bac47"><a href="cryptocurrency.html#ID-bfb58ea0-5328-4dca-9cf4-a162d37bb9d0">cryptocurrency</a></h4>
+<div id="outline-container-org69d8573" class="outline-4">
+<h4 id="org69d8573"><a href="i2p.html#ID-65b13d9c-d722-4b0a-bdc0-f29c33653076">i2p</a></h4>
+</div>
+<div id="outline-container-org35192bd" class="outline-4">
+<h4 id="org35192bd"><a href="cryptocurrency.html#ID-bfb58ea0-5328-4dca-9cf4-a162d37bb9d0">cryptocurrency</a></h4>
 </div>
 </div>
-<div id="outline-container-org2d7816a" class="outline-3">
-<h3 id="org2d7816a">notes</h3>
-<div class="outline-text-3" id="text-org2d7816a">
+<div id="outline-container-org103c295" class="outline-3">
+<h3 id="org103c295">notes</h3>
+<div class="outline-text-3" id="text-org103c295">
 <ul class="org-ul">
 <li>Quantum
 <ul class="org-ul">
@@ -67,7 +70,7 @@ Secrets from the future!
 <ul class="org-ul">
 <li><a href="https://www.courtlistener.com/docket/64872195/bernstein-v-national-institute-of-standards-and-technology/">Bernstein in court against NIST</a> for potential NSA tampering again (weak keysize?)</li>
 <li>openssh added hybrid NTRU-Prime (Bernstein on team) for key exchange encryption despite NIST being against 'hybrid' schemes</li>
-<li>NIST choose CRYSTALS-Kyber for KEM encryption with CRYSTALS-DILITHIUM for signatures. Falcon is alternative signature scheme
+<li>NIST choose CRYSTALS-Kyber(<a href="https://www.schneier.com/blog/archives/2023/02/side-channel-attack-against-crystals-kyber.html">side channel power attack</a>) for KEM encryption with CRYSTALS-DILITHIUM for signatures. Falcon is alternative signature scheme
 <ul class="org-ul">
 <li>NTRU may be considered if the <b>patent</b> issues with kyber are not resolved</li>
 <li>Falcon has smallest signature but needs masking for side channel attack (perf affected as it needs constant-time floating point arithmetic)</li>
@@ -82,6 +85,7 @@ Secrets from the future!
 <li>Dual<sub>EC</sub><sub>DRBG</sub> backdoor pushed into NIST standards from NSA</li>
 <li>NSA coerced weak DES keysize of 56 bits</li>
 <li>NSA coerced weak DSA keysize of 512 bits</li>
+<li>NSA operation ORCHESTRA weakens oss projects openssl,python,CA's etc</li>
 <li>Bernstein (EFF) v United States
 <ul class="org-ul">
 <li>was classed as munitions in 1992 with limited key size for export controls</li>
@@ -104,6 +108,7 @@ Secrets from the future!
 <li>ed25519-dalek verify<sub>strict</sub></li>
 </ul></li>
 <li>blinded keys</li>
+<li><a href="https://blog.mozilla.org/warner/files/2011/11/key-formats-757x1024.png">keygen diagram</a></li>
 </ul></li>
 </ul>
 </div>

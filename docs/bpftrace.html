@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>bpftrace</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org70a2622">
+<div class="navbar-brand" id="org31c7993">
+<div class="navbar-item" id="orgc735fcc">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org39b6089">
+<div class="navbar-start" id="orgb02ea85">
+<div class="navbar-item" id="orgc45a4aa">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org909463a">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org2a522a9" class="outline-2">
+<h2 id="org2a522a9">bpftrace</h2>
+<div class="outline-text-2" id="text-org2a522a9">
+</div>
+<div id="outline-container-org7e6c615" class="outline-3">
+<h3 id="org7e6c615">notes</h3>
+<div class="outline-text-3" id="text-org7e6c615">
+<ul class="org-ul">
+<li>needs cap or sudo</li>
+<li>&lt;EVENT&gt;/&lt;FILTER&gt;/&lt;BLOCK&gt; structure</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc2ec07b" class="outline-3">
+<h3 id="orgc2ec07b">oneliners</h3>
+<div class="outline-text-3" id="text-orgc2ec07b">
+<ul class="org-ul">
+<li>tools for oneline usually installed in /usr/share/bpftrace/tools/*.bt</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh" id="org0d6204a"># print results on internval. Add to end to poll probe
+BPF_POLL='interval:s:1 { print(@); clear(@); }'
+# profile pid 6969
+BPF_PROFILE='profile:hz:99 /pid == 6969/ { @[ustack] = count(); }'
+# cache miss counter
+BPF_CACHE='hardware:cache-misses:1000000 { @[comm, pid] = count(); }'
+# page misses
+BPF_PAGE='software:faults:1 { @[comm] = count(); }'
+# print cache misses every sec
+sudo bpftrace -e "${BPF_CACHE} ${BPF_POLL}"
+# print all syscalls for prog
+sudo bpftrace -e 'tracepoint:syscalls:sys_enter_* /comm != "bpftrace"/ {printf("Process Name: %s Syscall Requested: %s\n", comm, probe);}'
+# print tcp active connections
+sudo bpftrace /usr/share/bpftrace/tools/tcpconnect.bt
+# print tcp passive connections
+sudo bpftrace /usr/share/bpftrace/tools/tcpaccept.bt
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

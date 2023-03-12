@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orga07c88f">
-<div class="navbar-brand" id="org970b0d6">
-<div class="navbar-item" id="orge551257">
+<nav class="navbar is-black" id="orgff438b7">
+<div class="navbar-brand" id="org8f6a70e">
+<div class="navbar-item" id="org25289e8">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgae09e2e">
-<div class="navbar-start" id="org2af1b68">
-<div class="navbar-item" id="org192c01e">
+<div class="navbar-menu" id="org2215e51">
+<div class="navbar-start" id="org8b576c5">
+<div class="navbar-item" id="org7af525a">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,23 +29,23 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgb0a1613">
+<div class="navbar-end" id="orgd2bfd97">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org9e1c494" class="outline-2">
-<h2 id="org9e1c494">ZFS</h2>
-<div class="outline-text-2" id="text-org9e1c494">
+<div id="outline-container-org41fcf93" class="outline-2">
+<h2 id="org41fcf93">ZFS</h2>
+<div class="outline-text-2" id="text-org41fcf93">
 </div>
-<div id="outline-container-orgf7a2e76" class="outline-3">
-<h3 id="orgf7a2e76">openzfs</h3>
-<div class="outline-text-3" id="text-orgf7a2e76">
+<div id="outline-container-org1b14146" class="outline-3">
+<h3 id="org1b14146">openzfs</h3>
+<div class="outline-text-3" id="text-org1b14146">
 </div>
-<div id="outline-container-org0c2d231" class="outline-4">
-<h4 id="org0c2d231">install</h4>
-<div class="outline-text-4" id="text-org0c2d231">
+<div id="outline-container-orge482044" class="outline-4">
+<h4 id="orge482044">install</h4>
+<div class="outline-text-4" id="text-orge482044">
 <ul class="org-ul">
 <li>If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
 That small space is useful for uefi bootloader via:
@@ -64,7 +64,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org4d793ae">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="org80086ec">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -105,18 +105,18 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2c649f8" class="outline-4">
-<h4 id="org2c649f8">usage</h4>
-<div class="outline-text-4" id="text-org2c649f8">
+<div id="outline-container-org11e385b" class="outline-4">
+<h4 id="org11e385b">usage</h4>
+<div class="outline-text-4" id="text-org11e385b">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgda35822" class="outline-4">
-<h4 id="orgda35822">notes</h4>
-<div class="outline-text-4" id="text-orgda35822">
+<div id="outline-container-org4a140bc" class="outline-4">
+<h4 id="org4a140bc">notes</h4>
+<div class="outline-text-4" id="text-org4a140bc">
 <ul class="org-ul">
 <li>If you lose a vdev in a pool you LOSE THE POOL</li>
 <li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
@@ -156,7 +156,7 @@ password   include      zfs-key</li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-C" id="org7d53ddb">sysctlbyname("kstat.zfs.misc.arcstats.size")
+<pre class="src src-C" id="org6b403cd">sysctlbyname("kstat.zfs.misc.arcstats.size")
 </pre>
 </div>
 <ul class="org-ul">
@@ -173,6 +173,10 @@ password   include      zfs-key</li>
 <li>non default compression algo zstd is simd optimized (older chips)</li>
 </ul></li>
 <li>RAM ECC check for ARC <code>modprobe zfs zfs_flags=16</code></li>
+<li><a href="https://jro.io/truenas/openzfs/">https://jro.io/truenas/openzfs/</a>
+<ul class="org-ul">
+<li>6 vdev raidz2 eliminates allocation overhead, 3/5/9/17 raidz1, 7/11/19 raidz3</li>
+</ul></li>
 </ul>
 </div>
 </div>

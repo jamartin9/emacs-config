@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>bcc</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgf72bba1">
+<div class="navbar-brand" id="org63e1fe4">
+<div class="navbar-item" id="org1737afe">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org51c9db1">
+<div class="navbar-start" id="org06b141d">
+<div class="navbar-item" id="orga44a42f">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgf95a582">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org838ca6d" class="outline-2">
+<h2 id="org838ca6d">bcc</h2>
+<div class="outline-text-2" id="text-org838ca6d">
+</div>
+<div id="outline-container-org8cd332e" class="outline-3">
+<h3 id="org8cd332e">notes</h3>
+<div class="outline-text-3" id="text-org8cd332e">
+<ul class="org-ul">
+<li>python tools usually under <i>usr/share/bcc/tools</i></li>
+<li>zfs latency with <code>zfsslower</code> and <code>zfsdist</code></li>
+<li>system cache every 5000th cache call for 20 sec <code>llcstat -c 5000 20</code></li>
+<li>profile <code>profile -df -p 6969 10 &gt; flamegraph.profile</code>
+<ul class="org-ul">
+<li>ugc profile python/node/ruby/jvm gc <code>ugc -l python -m $PID</code></li>
+<li>ustat profile python/node/ruby/jvm events every 5 sec <code>ustat -l python -C 5</code></li>
+<li>ucalls profile latency/call counts python/node/ruby/jvm pids every 5 secs <code>ucalls -l python -m -L -S 5</code></li>
+</ul></li>
+<li>trace <code>trace 'sys_execve "%s", arg1'</code></li>
+<li>filetop <code>filetop -C</code></li>
+<li>random disk pattern print every second <code>biopattern 1</code></li>
+<li>disk io <code>biotop</code></li>
+<li>disk latency <code>biolatency -m -T 5</code></li>
+<li>dddos.py primitive ddos detection</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
