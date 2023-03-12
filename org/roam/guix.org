@@ -107,7 +107,7 @@
                                              "aspell-dict-en"
                                              "mpv"; "vlc"
                                              "gnupg"
-                                             "password-store"
+                                             "password-store" "pass-otp"
                                              "notification-daemon"
                                              "qemu"
                                              "alacritty"; "xterm"
@@ -118,7 +118,7 @@
                                              "python-lsp-server"
                                              "python-debugpy"
                                              "tree-sitter-python" "tree-sitter-yaml" ; "tree-sitter-rust"
-                                             "emacs-pyvenv" "emacs-vterm" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-rmsbolt" "emacs-guix" "emacs-fd" "emacs-emms" "emacs-osm" "emacs-multiple-cursors" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-code-review" "emacs-orgit-forge" "emacs-flycheck-popup-tip" "emacs-macrostep-geiser" "emacs-drag-stuff" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-expand-region" "emacs-which-key" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-smartparens" "emacs-gcmh" "emacs-cfrs"
+                                             "emacs-pyvenv" "emacs-vterm" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-rmsbolt" "emacs-guix" "emacs-fd" "emacs-emms" "emacs-osm" "emacs-multiple-cursors" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-flycheck-popup-tip" "emacs-macrostep-geiser" "emacs-drag-stuff" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-expand-region" "emacs-which-key" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-smartparens" "emacs-gcmh" "emacs-cfrs"
                                              "emacs-use-package" ; "emacs-yaml-mode" ; remove emacs-29
                                              ))))
    (services

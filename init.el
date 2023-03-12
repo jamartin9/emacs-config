@@ -335,6 +335,10 @@
   (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "pass"))
   :commands pass)
 
+(use-package password-store-otp
+  :if (not (memq window-system '(android))) ; pass
+  :after pass)
+
 (use-package password-store ; info:auth#The Unix password store
   :ensure nil
   :if (not (memq window-system '(android))) ; pass
@@ -924,7 +928,7 @@
   :init (add-hook 'after-init-hook #'which-key-mode)
   :commands (which-key-mode))
 
-(use-package treesit ; built-in
+(use-package treesit
   :if (not (memq window-system '(android)))
   :if (>= emacs-major-version 29) ; remove after emacs-29
   :ensure nil ; built-in
