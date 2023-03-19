@@ -14,7 +14,12 @@ Secrets from the future!
 *** [[id:806e68d1-fc6b-44a1-9293-e23ccbd8955d][tor]]
 *** [[id:65b13d9c-d722-4b0a-bdc0-f29c33653076][i2p]]
 *** [[id:bfb58ea0-5328-4dca-9cf4-a162d37bb9d0][cryptocurrency]]
+*** Signal
+- backdoored locally and [[https://twitter.com/TheChiefNerd/status/1634322345509756930][remotely]]
+  - Intel has the SGX keys and AU is a Five Eye Country
 ** notes
+- EC
+  - safe curves [[https://safecurves.cr.yp.to/rigid.html][should be rigid]] and parameters justified
 - Quantum
   - SIKE broken in 4th round of NIST
   - Lattice based

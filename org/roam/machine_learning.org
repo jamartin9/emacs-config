@@ -16,6 +16,7 @@
 - wasi-nn for evaluating ml models in wasm via SIMD extensions with either wasmedge (pytorch) or wasmtime(openvino)
 - [[https://github.com/microsoft/onnxruntime][ONNX]] for browser evaluation of pytorch models
 - usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
+  - 4bit with GPTQ
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
@@ -31,6 +32,8 @@
       - 1000 tons of CO2 (2.6 million KWh hours)
     - [[https://github.com/markasoftware/llama-cpu/commit/3f0326e9d2e567d573cce2479eb71a1262af8a93][cpu patch]]
     - [[https://github.com/tloen/llama-int8][int8 patch]]
+      - [[https://github.com/ggerganov/llama.cpp][ggml is 4 bit and cpu]]
+        - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
 *** Codegen
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]
     - uses salesforce/Codegen which supports natural language input and generation of C, C++, Go, Java, JavaScript, Python (BIG QUERY).

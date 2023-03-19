@@ -12,15 +12,16 @@ We have to get those dirty versions under control...
 ** [[id:bfd01242-3296-4e37-91f2-9aa2801c52fa][git]]
 - forges
   - github
+    - exported [[id:8c3352ee-7a06-45af-85a8-8562d31023cf][github-stars]]
     - proprietary source
     - rails app
     - bought by microsoft
       - [[https://www.eff.org/deeplinks/2020/11/github-reinstates-youtube-dl-after-riaas-abuse-dmca][allows and enforces false DMCA take down notices]]
       - [[https://techcrunch.com/2019/07/29/github-ban-sanctioned-countries/][banned iranian and syrian developers]]
-      - [[https://www.bleepingcomputer.com/news/security/github-suspends-accounts-of-russian-devs-at-sanctioned-companies/][banned russian developers]] [[https://github.blog/2022-03-02-our-response-to-the-war-in-ukraine/][despite public statements]]
+      - [[https://www.bleepingcomputer.com/news/security/github-suspends-accounts-of-russian-devs-at-sanctioned-companies/][banned russian developers]] [[https://github.blog/2022-03-02-our-response-to-the-war-in-ukraine/][despite public statements]]; [[https://lwn.net/Articles/926101/][numerous times]]
       - [[https://nitter.net/semenov_roman_/status/1556717890308653059#m][banned developer of tornado.cash]] and anyone who contributed code after US Treasury sanctioned
       - removes non infringing projects/mirrors without warning or take down
-        - randomly removed my mirror of goldberg_emulator
+        - randomly removed *MY* mirror of ~goldberg_emulator~ without notice/alert
       - released copilot trained on [[https://twitter.com/ChrisGr93091552/status/1539731632931803137][uploaded]] and [[https://twitter.com/mitsuhiko/status/1410886329924194309][scraped]] code
         - [[https://twitter.com/docsparse/status/1581461734665367554][copies copyrighted code verbatim]]
         - trained on [[https://help.openai.com/en/articles/5480054-understanding-codex-training-data-and-outputs][openai codex]]'s lies of >99% not verbatim
