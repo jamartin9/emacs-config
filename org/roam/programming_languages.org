@@ -13,6 +13,7 @@ The tower of babel is your type system as a macro
 - goops for objects instead of records
 - can embed precise gc [[https://github.com/wingo/whippet-gc][whippet]]
 - goblins adding wasm support for distributed objects
+- guile wasm https://gitlab.com/spritely/guile-hoot-updates/
 ** clojure
 - https://aphyr.com/posts/353-rewriting-the-technical-interview
 ** elisp

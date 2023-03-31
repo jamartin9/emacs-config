@@ -77,6 +77,6 @@ To run with powershell use the same wrapper format with a .ps1 extension.
 Copy files by url with emacs
 #+NAME: elisp-copy
 #+BEGIN_SRC elisp :tangle no
-(url-copy-file "https://github.com/jamartin9/emacs-config/blob/master/init.el" "init.el")
-(url-copy-file "https://github.com/jamartin9/emacs-config/blob/master/early-init.el" "early-init.el")
+(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
+(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
 #+END_SRC

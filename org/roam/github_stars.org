@@ -188,10 +188,14 @@
   - Bitcoin Core integration/staging tree
 ** bitwiseshiftleft/sjcl
   - Stanford Javascript Crypto Library
+** bjorn3/browser_wasi_shim
+  -  A WASI shim for in the browser
 ** BLAKE3-team/BLAKE3
   - the official Rust and C implementations of the BLAKE3 cryptographic hash function
 ** blender/blender
   - Official mirror of Blender
+** BlinkDL/RWKV-LM
+  - RWKV is an RNN with transformer-level LLM performance. It can be directly trained like a GPT (parallelizable). So it's combining the best of RNN and transformer - great performance, fast inference, saves VRAM, fast training, "infinite" ctx_len, and free sentence embedding.
 ** bluecatengineering/dora
   - A Rust DHCP server
 ** blueturtleai/gimp-stable-diffusion
@@ -802,6 +806,8 @@
   - A modest JavaScript framework for the HTML you already have
 ** HouraiTeahouse/backroll-rs
   - A (almost) 100% pure safe Rust implementation of GGPO-style rollback netcode.
+** hpcaitech/ColossalAI
+  - Making large AI models cheaper, faster and more accessible (based on llama)
 ** hrydgard/ppsspp
   - A PSP emulator for Android, Windows, Mac and Linux, written in C++. Want to contribute? Join us on Discord at https://discord.gg/5NJB6dD or just send pull requests / issues. For discussion use the forums at forums.ppsspp.org.
 ** hsutter/cppfront
@@ -862,6 +868,8 @@
   - Invidious is an alternative front-end to YouTube
 ** Jackett/Jackett
   - API Support for your favorite torrent trackers
+** jagotu/BACIL
+  - An experimental interpreter for .NET CIL binaries for GraalVM 
 ** JakeWharton/wormhole
   - A time-traveling bytecode rewriter which adds future APIs to android.jar
 ** jart/bestline
@@ -1010,6 +1018,8 @@
   - The most powerful open source SDK for the PS1 (as far as open source PS1 SDKs go). Not recommended for beginner use.
 ** lampepfl/dotty
   - The Scala 3 compiler, also known as Dotty.
+** landley/toybox
+  - toybox like busybox
 ** languagetool-org/languagetool
   - Style and Grammar Checker for 25+ Languages
 ** LaurentMazare/diffusers-rs
@@ -1140,6 +1150,8 @@
   - Compiler for the SEAL homomorphic encryption library
 ** microsoft/gctoolkit
   - Tool for parsing GC logs
+** microsoft/LoRA
+  - Code for loralib, an implementation of "LoRA: Low-Rank Adaptation of Large Language Models"
 ** microsoft/mimalloc
   - mimalloc is a compact general purpose allocator with excellent performance.
 ** microsoft/Nova
@@ -1227,7 +1239,7 @@
 ** mpv-player/mpv
   - Command line video player
 ** mre/cargo-inspect
-  - Pssst!... see what Rust is doing behind the curtains 🕵🤫
+  - Pssst!... see what Rust is doing behind the curtains 
 ** mtth/avsc
   - Avro for JavaScript
 ** n64decomp/sm64
@@ -1458,6 +1470,8 @@
   - Proton Mail Android app
 ** Prowlarr/Prowlarr
   - Arr stack search aggregator
+** prusa3d/PrusaSlicer
+  - G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 ** psanford/sqlite3vfshttp
   - Go sqlite3 http vfs: query sqlite databases over http with range headers
 ** pulsar-edit/pulsar
@@ -1546,6 +1560,8 @@
   - A Zsh theme
 ** rose-compiler/rose-develop
   - The latest development version of rose. It may not pass all regression tests.
+** rosefromthedead/effing-mad
+  -  Algebraic effects for Rust
 ** rougier/nano-sidebar
   - Emacs package to have configurable sidebars on a per frame basis.
 ** rougier/nano-theme
@@ -1649,7 +1665,7 @@
 ** sharkdp/hyperfine
   - A command-line benchmarking tool
 ** SheetJS/sheetjs
-  - 📗 SheetJS Spreadsheet Data Toolkit -- New home https://git.sheetjs.com/SheetJS/sheetjs
+  - SheetJS Spreadsheet Data Toolkit -- New home https://git.sheetjs.com/SheetJS/sheetjs
 ** shyamsn97/mario-gpt
   - Generating Mario Levels with GPT2. Code for the paper "MarioGPT: Open-Ended Text2Level Generation through Large Language Models" https://arxiv.org/abs/2302.05981
 ** sigma/pcache
@@ -1750,6 +1766,8 @@
   - The systemd System and Service Manager
 ** t184256/nix-on-droid
   - Nix-enabled environment for your Android device.
+** tadfisher/pass-otp
+  - A pass extension for managing one-time-password (OTP) tokens
 ** tauri-apps/tauri
   - Build smaller, faster, and more secure desktop applications with a web frontend.
 ** tcdi/pgx
@@ -1790,6 +1808,8 @@
   - Distributed transactional key-value database, originally created to complement TiDB
 ** timescale/timescaledb
   - An open-source time-series SQL database optimized for fast ingest and complex queries.  Packaged as a PostgreSQL extension.
+** tloen/alpaca-lora
+  - Instruct-tune LLaMA on consumer hardware 
 ** tokio-rs/console
   - a debugger for async rust!
 ** tokio-rs/io-uring
@@ -1834,6 +1854,8 @@
   - For more information, please see http://smartos.org/  For any questions that aren't answered there, please join the SmartOS discussion list: https://smartos.topicbox.com/groups/smartos-discuss
 ** TritonVM/triton-vm
   - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
+** tui-rs-revival/ratatui
+  - tui-rs revival project
 ** turbolinks/turbolinks
   - Turbolinks makes navigating your web application faster
 ** twitter/rezolus
@@ -1921,7 +1943,7 @@
 ** webrecorder/pywb
   - Core Python Web Archiving Toolkit for replay and recording of web archives
 ** webtorrent/webtorrent
-  - ⚡️ Streaming torrent client for the web
+  - Streaming torrent client for the web
 ** webview/webview
   - Tiny cross-platform webview library for C/C++/Golang. Uses WebKit (Gtk/Cocoa) and Edge (Windows)
 ** wg/wrk
@@ -2038,28 +2060,27 @@
   - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
 
 * android
-** whyorean/AuroraStore
-  - Google play store without google account
-** guardianproject/orbot
-  - The Github home of Orbot: Tor on Android (Also available on gitlab!)
 ** f-droid/fdroidclient
   - Android client application.
 ** f-droid/fdroidserver
   - F-Droid server and build tools.
-** termux/termux-app
-  - Termux - a terminal emulator application for Android OS extendible by variety of packages.
-** termux/termux-packages
-  - A package build system for Termux.
-** WireGuard/wireguard-android
-  - Mirror only. Official repository is at https://git.zx2c4.com/wireguard-android
-** organicmaps/organicmaps
-  - Organic Maps is a free Android & iOS offline maps app for travelers, tourists, hikers, and cyclists. It uses crowd-sourced OpenStreetMap data and is developed with love by MapsWithMe (MapsMe) founders and our community. No ads, no tracking, no data collection, no crapware. Please donate to support the development!
 ** flowdriveai/flowpilot
   - flow-pilot is an openpilot based driver assistance system that runs on linux, windows and android powered machines.
+** guardianproject/orbot
+  - The Github home of Orbot: Tor on Android (Also available on gitlab!)
 ** LineageOS/android
   - OSS android
+** organicmaps/organicmaps
+  - Organic Maps is a free Android & iOS offline maps app for travelers, tourists, hikers, and cyclists. It uses crowd-sourced OpenStreetMap data and is developed with love by MapsWithMe (MapsMe) founders and our community. No ads, no tracking, no data collection, no crapware. Please donate to support the development!
 ** smartdevicelink/sdl_core
   - SmartDeviceLink In-Vehicle Software and Sample HMI
 ** smartdevicelink/sdl_java_suite
   - SmartDeviceLink libraries for Android, Java SE, and Java EE
-
+** termux/termux-app
+  - Termux - a terminal emulator application for Android OS extendible by variety of packages.
+** termux/termux-packages
+  - A package build system for Termux.
+** whyorean/AuroraStore
+  - Google play store without google account
+** WireGuard/wireguard-android
+  - Mirror only. Official repository is at https://git.zx2c4.com/wireguard-android

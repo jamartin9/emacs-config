@@ -14,6 +14,7 @@
 - gnus needs app password from google for 2fa or oauth token from gcloud
 - webkit environment variable(s) for built-in browser
   - ~WEBKIT_FORCE_SANDBOX="0"~
+- android port manual entry specifies enabling 'special app permissions' for all files to access ~/sdcard~
 - signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
 - German air control ATC ran on emacs in the 90's
 *** org-mode notes

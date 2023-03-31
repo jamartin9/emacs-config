@@ -16,7 +16,8 @@
 - wasi-nn for evaluating ml models in wasm via SIMD extensions with either wasmedge (pytorch) or wasmtime(openvino)
 - [[https://github.com/microsoft/onnxruntime][ONNX]] for browser evaluation of pytorch models
 - usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
-  - 4bit with GPTQ
+  - 4bit with GPTQ compression
+- LoRA is a finetunning mechanism
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
@@ -24,6 +25,7 @@
     - [[https://github.com/carson-katri/dream-textures][dreambooth plugin for blender textures]]
     - [[https://github.com/riffusion/riffusion-app][Generate music from spectrograph]]
     - [[https://github.com/lllyasviel/ControlNet][Controlnet]] guided Stable diffusion from scribbles/images/depth maps
+    - fine tune with [[https://github.com/cloneofsimo/lora][lora]]
 ** Large Language Models
   - [[https://github.com/facebookresearch/llama][Llama]]
     - weights unpublished
@@ -34,6 +36,8 @@
     - [[https://github.com/tloen/llama-int8][int8 patch]]
       - [[https://github.com/ggerganov/llama.cpp][ggml is 4 bit and cpu]]
         - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
+    - [[https://github.com/antimatter15/alpaca.cpp][Alpaca]] is [[https://github.com/tatsu-lab/stanford_alpaca][refined by standford]] for chat
+    - Can be fine tuned with [[https://github.com/tloen/alpaca-lora][LoRA]]
 *** Codegen
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]
     - uses salesforce/Codegen which supports natural language input and generation of C, C++, Go, Java, JavaScript, Python (BIG QUERY).
@@ -51,4 +55,5 @@ whisper "/content/${VID}.m4a" --model small --language English
 #+END_SRC
 ** Text to speech
 - [[https://github.com/neonbjb/tortoise-tts][tortoise-tts]] based on dalle
-- [[https://github.com/coqui-ai/TTS][coqui-ai]] with YourTTS voice cloning
+- [[https://github.com/coqui-ai/TTS][coqui-ai]] with YourTTS/FreeVC voice cloning
+  - [[https://github.com/coqui-ai/TTS/blob/dev/TTS/tts/utils/text/cleaners.py][english cleaner]] for abbrevations/dates/times/numbers

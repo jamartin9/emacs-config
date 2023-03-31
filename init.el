@@ -293,6 +293,7 @@
               gcmh-auto-idle-delay-factor 10
               gcmh-high-cons-threshold (* 16 1024 1024)) ; 16 MiB
   (add-hook 'after-init-hook #'gcmh-mode)
+  :pin gnu ; pin to gnu for android
   :config (setq gc-cons-threshold (* 16 1024 1024))
   :commands gcmh-mode)
 
@@ -325,6 +326,7 @@
 
 (use-package rmsbolt
   :init (bind-keys :map jam/toggle ("r" . rmsbolt-mode))
+  :if (not (memq window-system '(android))) ; BUG android melpa
   :commands rmsbolt-mode)
 
 (use-package pass
@@ -399,7 +401,7 @@
   (bind-keys :map vterm-mode-map ("C-S-v" . vterm-yank)))
 
 (use-package undo-tree
-  ;:pin gnu
+  :pin gnu
   :init (add-hook 'after-init-hook #'global-undo-tree-mode)
   :commands (global-undo-tree-mode)
   :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
@@ -411,6 +413,7 @@
                 undo-tree-enable-undo-in-region t))
 
 (use-package minions ; hide minor modes on modeline
+  :if (not (memq window-system '(android))) ; BUG android melpa
   :init (add-hook 'after-init-hook #'minions-mode)
   :commands minions-mode)
 
@@ -457,7 +460,7 @@
   :commands (transmission transmission-add))
 
 (use-package debbugs
-  ;:pin gnu
+  :pin gnu
   :init (bind-keys :map jam/search ("b" . debbugs-gnu-bugs)); bug number search
   :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
   :config ;(setq org-link-elisp-confirm-function nil)
@@ -502,6 +505,7 @@
 
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
 (use-package org-roam
+  :if (not (memq window-system '(android))) ; BUG android melpa
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
   :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
               org-directory org-roam-directory
@@ -582,6 +586,7 @@
   :after geiser)
 
 (use-package flycheck
+  :if (not (memq window-system '(android))) ; BUG android melpa
   :init ;(add-hook 'after-init-hook #'global-flycheck-mode)
   (add-hook 'prog-mode-hook #'flycheck-mode)
   (bind-keys :map jam/toggle ("f" . flycheck-mode))
@@ -596,6 +601,7 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 (use-package flycheck-popup-tip ; flycheck tty popups
+  :if (not (memq window-system '(android))) ; BUG android melpa
   :init (add-hook 'flycheck-mode-hook #'flycheck-popup-tip-mode)
   :commands (flycheck-popup-tip-mode flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup))
 
@@ -692,6 +698,7 @@
         tramp-persistency-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp")))
 
 (use-package company
+  :pin gnu
   :init (add-hook 'after-init-hook #'global-company-mode)
   (bind-keys :map jam/toggle ("a" . global-company-mode))
   (setq company-minimum-prefix-length 2
@@ -723,6 +730,7 @@
   (company-tng-configure-default))
 
 (use-package treemacs
+  :if (not (memq window-system '(android))) ; BUG android melpa 
   :init (bind-keys ("<f9>" . treemacs))
   (bind-keys :map jam/projects ("w" . treemacs-switch-workspace))
   (setq treemacs-persist-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "treemacs-persist"))
@@ -880,13 +888,14 @@
 
 (use-package osm
   :if (not (memq window-system '(android))) ; curl
-  ;:pin gnu
+  :pin gnu
   :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
   :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
   :custom (osm-copyright nil))
 
 (use-package multiple-cursors
+  :pin nongnu
   :commands (multiple-cursors-mode mc/add-cursor-on-click mc/vertical-align
              mc/mark-next-like-this mc/mark-previous-like-this mc/mark-more-like-this-extended
              mc/mark-pop mc/unmark-previous-like-this mc/unmark-next-like-this
@@ -908,6 +917,7 @@
   :commands (explain-pause-top explain-pause-mode))
 
 (use-package pcre2el
+  :pin nongnu
   :commands (rxt-pcre-to-elisp
              rxt-elisp-to-pcre
              rxt-convert-pcre-to-rx
@@ -916,15 +926,18 @@
              rxt-mode rxt-global-mode))
 
 (use-package smartparens
+  :pin nongnu
   :init (add-hook 'after-init-hook #'smartparens-global-mode) ; less typing
   (bind-keys :map jam/toggle ("p" . smartparens-strict-mode))
   :commands (sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string smartparens-global-mode smartparens-strict-mode))
 
 (use-package expand-region
+  :pin gnu
   :init (bind-key "C-=" #'er/expand-region)
   :commands (er/contract-region er/mark-symbol er/mark-word er/expand-region))
 
 (use-package which-key
+  :pin gnu
   :init (add-hook 'after-init-hook #'which-key-mode)
   :commands (which-key-mode))
 

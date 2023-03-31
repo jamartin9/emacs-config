@@ -67,3 +67,5 @@
 - BaoFeng programmable in unregistered frequency with CHIRP
 
 - intel optane persistent high write nvme SSD cache
+
+- 'auto sear' plastic converts gun to fully automatic
