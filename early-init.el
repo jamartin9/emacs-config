@@ -33,9 +33,16 @@
 	(require 'use-package-ensure)
 	(setq use-package-always-pin "melpa"
           use-package-always-ensure t
-         ; package-pinned-packages '((osm . "gnu")
-         ;                           (debbugs . "gnu")
-         ;                           (undo-tree . "gnu"))
+          package-pinned-packages '((smartparens . "nongnu")
+                                    (pcre2el . "nongnu")
+                                    (multiple-cursors . "nongnu")
+                                    (which-key . "gnu")
+                                    (expand-region . "gnu")
+                                    (gcmh . "gnu")
+                                    (company . "gnu")
+                                    (osm . "gnu")
+                                    (debbugs . "gnu")
+                                    (undo-tree . "gnu"))
     )))
   (normal-top-level-add-subdirs-to-load-path)
   (require 'use-package)) ;; remove for emacs-29
