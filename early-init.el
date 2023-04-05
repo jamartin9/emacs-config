@@ -23,7 +23,8 @@
         (require 'package)
         (setq package-check-signature nil
               package-user-dir user-package-dir)
-        (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t) ; add package repo
+        (if (gnutls-available-p) ; melpa requires gnutls
+            (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)) ; add package repo
         (if (not (>= emacs-major-version 29)) ; remove after emacs-29
             (progn ; install use-package
               (if (not (package-installed-p 'use-package))
@@ -31,8 +32,8 @@
 		(package-initialize)))
           (package-initialize))
 	(require 'use-package-ensure)
-	(setq use-package-always-pin "melpa"
-          use-package-always-ensure t
+    (if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
+    (setq use-package-always-ensure t
           package-pinned-packages '((smartparens . "nongnu")
                                     (pcre2el . "nongnu")
                                     (multiple-cursors . "nongnu")

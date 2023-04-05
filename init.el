@@ -326,7 +326,7 @@
                 dired-create-destination-dirs 'ask)
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
 
-(when (not (memq window-system '(android))) ; BUG android melpa
+(when (not (memq window-system '(android))) ; BUG android native build does not enable gnutls which is needed for melpa packages
 (use-package emms ; vlc/mpv
   :init (bind-keys :map jam/open
                    ("l" . jam/librefm-stream)
@@ -351,10 +351,6 @@
   :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   :commands guix-popup guix-set-emacs-environment)
-
-(use-package rmsbolt
-  :init (bind-keys :map jam/toggle ("r" . rmsbolt-mode))
-  :commands rmsbolt-mode)
 
 (use-package pass ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
@@ -412,7 +408,7 @@
                               ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
                               ("BruceSchneier" "https://www.schneier.com/feed/atom")
                               ("GlennGreenWald" "https://greenwald.substack.com/feed")
-                              ;("BramCohen" "https://nitter.net/bramcohen/rss"); twitter api broke?
+                              ;("BramCohen" "https://nitter.net/bramcohen/rss"); twitter api is paid only now
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package vterm ; C-c C-t vterm-copy-mode ; gcc
@@ -421,10 +417,6 @@
   :config (setq vterm-kill-buffer-on-exit t
                 vterm-max-scrollback 5000)
   (bind-keys :map vterm-mode-map ("C-S-v" . vterm-yank)))
-
-(use-package minions ; hide minor modes on modeline
-  :init (add-hook 'after-init-hook #'minions-mode)
-  :commands minions-mode)
 
 (use-package magit ; git
   :commands magit-file-delete magit-status
@@ -471,7 +463,7 @@
   :commands (orgit-topic-store orgit-topic-open))
 
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
-(use-package org-roam
+(use-package org-roam ; sqlite ; emacs-29 >= (sqlite-available-p)
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
   :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
               org-directory org-roam-directory
@@ -670,6 +662,14 @@
   :init (add-hook 'python-mode-local-vars-hook #'pyvenv-tracking-mode)
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode))
 
+(use-package rmsbolt
+  :init (bind-keys :map jam/toggle ("r" . rmsbolt-mode))
+  :commands rmsbolt-mode)
+
+(use-package minions ; hide minor modes on modeline
+  :init (add-hook 'after-init-hook #'minions-mode)
+  :commands minions-mode)
+
 (use-package drag-stuff
   :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
   :init (bind-keys ("<M-up>" . drag-stuff-up)
@@ -677,7 +677,7 @@
            ("<M-left>" . drag-stuff-left)
            ("<M-right>" . drag-stuff-right)))
 
-) ; non android/melpa packages
+) ; treemacs/flycheck/rmsbolt/minions/drag-stuff only require melpa and not other external programs.
 
 (use-package undo-tree
   ;:pin gnu
@@ -712,7 +712,7 @@
 (use-package erc
   :ensure nil ; built-in
   :init (bind-keys :map jam/open ("i" . erc-tls))
-  :commands erc-tls ; MAYBE add bot msg to erc-nickserv-identified-hook, erc-login function override/erc-join-hook for SASL support
+  :commands erc-tls erc ; MAYBE add bot msg to erc-nickserv-identified-hook, erc-login function override/erc-join-hook for SASL support
   :config (setq erc-rename-buffers t
                 erc-interpret-mirc-color t
                 erc-save-buffer-on-part t
@@ -907,7 +907,7 @@
   :config (setq mc/list-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "mc-lists.el")))
 
 (use-package explain-pause-mode
-  :ensure nil ; BUG not in melpa
+  :ensure nil ; BUG not in melpa MAYBE install from source with package.el or url-copy-file
   :init (bind-keys :map jam/open ("T" . explain-pause-top))
   :commands (explain-pause-top explain-pause-mode))
 
