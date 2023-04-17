@@ -404,6 +404,8 @@
   - Privacy Possum makes tracking you less profitable
 ** cpeikert/ALCHEMY
   - A Language and Compiler for Homomorphic Encryption Made easY
+** crablang/crab
+  - A community fork of a language named after a plant fungus. All of the memory-safe features you love, now with 100% less bureaucracy!
 ** CrackerCat/video_decrypter
   - Decrypt video from a streaming site with MPEG-DASH Widevine DRM encryption.
 ** cri-o/cri-o
@@ -422,6 +424,8 @@
   - An Ephemeral, browser-based, no-server point of sale for receiving and validating Monero payments
 ** curl/curl
   - A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features
+** curl/trurl
+- trurl is a command line tool for URL parsing and manipulation.
 ** Cxbx-Reloaded/Cxbx-Reloaded
   - Xbox (Original) Emulator
 ** DadSchoorse/vkBasalt
@@ -574,6 +578,8 @@
   - Inference code for LLaMA models
 ** facebookresearch/Private-ID
   - A collection of algorithms that can do join between two parties while preserving the privacy of keys on which the join happens
+** facebookresearch/segment-anything
+  - The repository provides code for running inference with the SegmentAnything Model (SAM), links for downloading the trained model checkpoints, and example notebooks that show how to use the model.
 ** Fallenbagel/jellyseerr
   - fork of overseerr for jellyfin support
 ** farcaster-project/farcaster-node
@@ -731,7 +737,7 @@
 ** GoogleContainerTools/container-diff
   - container-diff: Diff your Docker containers
 ** GoogleContainerTools/distroless
-  - 🥑  Language focused docker images, minus the operating system.
+  - Language focused docker images, minus the operating system.
 ** GoogleContainerTools/jib
   - Build container images for your Java applications.
 ** gorhill/uBlock
@@ -789,7 +795,7 @@
 ** heterodb/pg-strom
   - PG-Strom - Master development repository
 ** HFO4/gameboy.live
-  - 🕹️ A basic gameboy emulator with terminal "Cloud Gaming" support
+  - A basic gameboy emulator with terminal "Cloud Gaming" support
 ** hibernate/hibernate-orm
   - Hibernate's core Object/Relational Mapping functionality
 ** HigherOrderCO/HVM
@@ -815,17 +821,21 @@
 ** huggingface/safetensors
   - Simple, safe way to store and distribute tensors
 ** huggingface/tokenizers
-  - 💥 Fast State-of-the-Art Tokenizers optimized for Research and Production
+  - Fast State-of-the-Art Tokenizers optimized for Research and Production
 ** huggingface/transformers
-  - 🤗 Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
+  - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
 ** hvmi/hvmi
   - Hypervisor Memory Introspection Core Library
+** hwchase17/langchain
+- Building applications with LLMs through composability
 ** i-net-software/JWebAssembly
   - Java bytecode to WebAssembly compiler
 ** IBM/differential-privacy-library
   - Diffprivlib: The IBM Differential Privacy Library
 ** IBM/fhe-toolkit-linux
   - IBM Fully Homomorphic Encryption Toolkit For Linux. This toolkit is a Linux based Docker container that demonstrates computing on encrypted data without decrypting it! The toolkit ships with two demos including a fully encrypted Machine Learning inference with a Neural Network and a Privacy-Preserving key-value search.
+** IDEA-Research/Grounded-Segment-Anything
+  - Marrying Grounding DINO with Segment Anything & Stable Diffusion & BLIP & Whisper - Automatically Detect , Segment and Generate Anything with Image, Text, and Speech Inputs
 ** idris-hackers/idris-crypto
   - Implementation of cryptographic primitives using Idris
 ** idris-lang/Idris-dev
@@ -947,7 +957,7 @@
 ** jupyterhub/jupyterhub
   - Multi-user server for Jupyter notebooks
 ** jupyterlite/jupyterlite
-  - Wasm powered Jupyter running in the browser 💡
+  - Wasm powered Jupyter running in the browser
 ** justbur/emacs-which-key
   - Emacs package that displays available keybindings in popup
 ** jvm-profiling-tools/honest-profiler
@@ -1031,7 +1041,7 @@
 ** learnk8s/xlskubectl
   - xlskubectl — a spreadsheet to control your Kubernetes cluster
 ** lerna/lerna
-  - :dragon: Lerna is a fast, modern build system for managing and publishing multiple JavaScript/TypeScript packages from the same repository.
+  - Lerna is a fast, modern build system for managing and publishing multiple JavaScript/TypeScript packages from the same repository.
 ** libbpf/bpftool
   - Automated upstream mirror for bpftool stand-alone build.
 ** libbpf/libbpf
@@ -1051,7 +1061,7 @@
 ** libuv/libuv
   - Cross-platform asynchronous I/O
 ** lichess-org/lila
-  - ♞ lichess.org: the forever free, adless and open source chess server ♞
+  - lichess.org: the forever free, adless and open source chess server
 ** lightningnetwork/lnd
   - Lightning Network Daemon
 ** liquibase/liquibase
@@ -1063,7 +1073,7 @@
 ** llvm/llvm-project
   - The LLVM Project is a collection of modular and reusable compiler and toolchain technologies. Note: the repository does not accept github pull requests at this moment. Please submit your patches at http://reviews.llvm.org.
 ** localstack/localstack
-  - 💻  A fully functional local AWS cloud stack. Develop and test your cloud & Serverless apps offline!
+  - A fully functional local AWS cloud stack. Develop and test your cloud & Serverless apps offline!
 ** locationtech/geomesa
   - GeoMesa is a suite of tools for working with big geo-spatial data in a distributed fashion.
 ** locationtech/jts
@@ -1150,6 +1160,8 @@
   - Compiler for the SEAL homomorphic encryption library
 ** microsoft/gctoolkit
   - Tool for parsing GC logs
+** microsoft/JARVIS
+  - JARVIS, a system to connect LLMs with ML community
 ** microsoft/LoRA
   - Code for loralib, an implementation of "LoRA: Low-Rank Adaptation of Large Language Models"
 ** microsoft/mimalloc
@@ -1189,7 +1201,7 @@
 ** Mikubill/sd-webui-controlnet
   - WebUI extension for ControlNet
 ** minad/vertico
-  - :dizzy: vertico.el - VERTical Interactive COmpletion
+  - vertico.el - VERTical Interactive COmpletion
 ** mindsdb/mindsdb
   - An emerging platform to help developers build #AI solutions
 ** miniupnp/miniupnp
@@ -1204,6 +1216,10 @@
   - Cute SVG React Components
 ** mjuhasz/BDSup2Sub
   - Blu-Ray/DVD subtitle editor
+** mlc-ai/web-llm
+  -  Bringing large-language models and chat to web browsers. Everything runs inside the browser with no server support.
+** mlc-ai/web-stable-diffusion
+  - Bringing stable diffusion models to web browsers. Everything runs inside the browser with no server support.
 ** mmhelloworld/idris-jvm
   - JVM bytecode back end for Idris
 ** moby/buildkit
@@ -1239,7 +1255,7 @@
 ** mpv-player/mpv
   - Command line video player
 ** mre/cargo-inspect
-  - Pssst!... see what Rust is doing behind the curtains 
+  - Pssst!... see what Rust is doing behind the curtains
 ** mtth/avsc
   - Avro for JavaScript
 ** n64decomp/sm64
@@ -1328,6 +1344,8 @@
   - Set of Python bindings to C++ libraries which provides full HW acceleration for video decoding, encoding and GPU-accelerated color space and pixel format conversions
 ** NVIDIAGameWorks/PhysX
   - NVIDIA PhysX SDK
+** NVIDIAGameWorks/rtx-remix
+  - Combined repo for the RTX-Remix runtime. dxd9 game modding.
 ** nysenate/OpenLegislation
   - OpenLegislation is a web service that delivers legislative information from the New York State Senate and Assembly to the public in near-real time.  It is used internally to serve up legislative data for nysenate.gov and the Bluebird-CRM.
 ** nzbget/nzbget
@@ -1562,6 +1580,8 @@
   - The latest development version of rose. It may not pass all regression tests.
 ** rosefromthedead/effing-mad
   -  Algebraic effects for Rust
+** RosettaCommons/RFdiffusion
+  -  Code for running RFdiffusion protein creation
 ** rougier/nano-sidebar
   - Emacs package to have configurable sidebars on a per frame basis.
 ** rougier/nano-theme
@@ -1802,6 +1822,8 @@
   - Moved to https://git.sr.ht/~thestr4ng3r/chiaki - Free and Open Source PS4 Remote Play Client
 ** thundernest/k-9
   - K-9 Mail – Open Source Email App for Android
+** tikv/jemallocator
+  - Rust allocator using jemalloc as a backend
 ** tikv/pprof-rs
   - A Rust CPU profiler implemented with the help of backtrace-rs
 ** tikv/tikv
@@ -1809,7 +1831,7 @@
 ** timescale/timescaledb
   - An open-source time-series SQL database optimized for fast ingest and complex queries.  Packaged as a PostgreSQL extension.
 ** tloen/alpaca-lora
-  - Instruct-tune LLaMA on consumer hardware 
+  - Instruct-tune LLaMA on consumer hardware
 ** tokio-rs/console
   - a debugger for async rust!
 ** tokio-rs/io-uring
@@ -2012,6 +2034,8 @@
   - Multipurpose homebrew tool for Nintendo Switch
 ** xqemu/xqemu
   - Open-source emulator to play original Xbox games on Windows, macOS, and Linux
+** Yakuhito/tibet
+  - chia swap. TibetSwap v1, a.k.a. yakSwap
 ** Yelp/dumb-init
   - A minimal init system for Linux containers
 ** yewstack/yew

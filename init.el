@@ -193,6 +193,7 @@
                       (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
                     (setq native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
                   (setq native-comp-deferred-compilation t
+                        comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln") ; renamed with native- in 29.1
                         native-comp-async-report-warnings-errors nil
                         native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
             (if (>= emacs-major-version 29) ; remove after emacs-29
@@ -408,7 +409,7 @@
                               ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
                               ("BruceSchneier" "https://www.schneier.com/feed/atom")
                               ("GlennGreenWald" "https://greenwald.substack.com/feed")
-                              ;("BramCohen" "https://nitter.net/bramcohen/rss"); twitter api is paid only now
+                              ("BramCohen" "https://nitter.net/bramcohen/rss")
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package vterm ; C-c C-t vterm-copy-mode ; gcc

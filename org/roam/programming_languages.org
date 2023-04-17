@@ -45,6 +45,7 @@ The tower of babel is your type system as a macro
   - [[https://morestina.net/blog/1843/the-stable-hashmap-trap][conflicts with other hashers]] like fxhash on insertion. Use random init state.
 - https://rust-lang.github.io/api-guidelines/checklist.html
 - reference counting can be checked by [[https://github.com/matthieu-m/static-rc][statically]]
+- default allocator can be changed to jemalloc to avoid heap fragmentation
 #+NAME: rust-release-profile
 #+BEGIN_SRC toml :tangle no
 [profile.release]
