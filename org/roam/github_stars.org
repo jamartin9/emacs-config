@@ -63,7 +63,7 @@
 ** android/ndk
   - The Android Native Development Kit
 ** animate-css/animate.css
-  - 🍿 A cross-browser library of CSS animations. As easy to use as an easy thing.
+  - A cross-browser library of CSS animations. As easy to use as an easy thing.
 ** anishathalye/neural-hash-collider
   - Preimage attack against NeuralHash
 ** ansible-community/molecule
@@ -442,6 +442,8 @@
   - DC/OS - The Datacenter Operating System
 ** decathorpe/mitmproxy_wireguard
   - WireGuard frontend for mitmproxy
+** deep-floyd/IF
+  - text-to-image model with a high degree of photorealism and language understanding
 ** deepfakes/faceswap
   - Deepfakes Software For All
 ** deepmind/alphafold
@@ -830,6 +832,8 @@
 - Building applications with LLMs through composability
 ** i-net-software/JWebAssembly
   - Java bytecode to WebAssembly compiler
+** IBM/AI-Descartes
+  - Open source package for accelerated symbolic discovery of fundamental laws.
 ** IBM/differential-privacy-library
   - Diffprivlib: The IBM Differential Privacy Library
 ** IBM/fhe-toolkit-linux
@@ -898,6 +902,8 @@
   - a lightweight, robust, scheme-like lisp implementation
 ** jellyfin/jellyfin
   - The Free Software Media System
+** jepsen-io/jepsen
+  -  A framework for distributed systems verification, with fault injection
 ** JetBrains/intellij-community
   - IntelliJ IDEA Community Edition & IntelliJ Platform
 ** jgm/pandoc
@@ -1320,6 +1326,8 @@
   - Dynamic DNS service
 ** ntop/nDPI
   - Open Source Deep Packet Inspection Software Toolkit
+** nubank/morse
+  - A graphical, interactive tool for browsing Clojure data
 ** Nugine/simd
   - SIMD-accelerated operations
 ** Nuitka/Nuitka
@@ -1382,6 +1390,8 @@
   - A batch-optimized scaling manager for Kubernetes
 ** openai/point-e
   - Point cloud diffusion for 3D model synthesis
+** openai/shap-e
+  - Generate 3D objects conditioned on text or images
 ** openai/whisper
   - Robust Speech Recognition via Large-Scale Weak Supervision
 ** OpenAPITools/openapi-generator
@@ -1550,6 +1560,8 @@
   - Modern API for working with files and directories in Emacs
 ** relic-toolkit/relic
   - Code
+** replit/ReplitLM
+  - Inference code and configs for the ReplitLM model family
 ** RequestPolicyContinued/requestpolicy
   - a web browser extension that gives you control over cross-site requests. Available for XUL/XPCOM-based browsers.
 ** retropiler/retropiler
@@ -1742,6 +1754,8 @@
   - recreate scene releases
 ** sslab-gatech/Rudra
   - Rust Memory Safety & Undefined Behavior Detection
+** Stability-AI/StableLM
+  - StableLM: Stability AI Language Models
 ** stackblitz/webcontainer-core
   - Dev environments. In your web app.
 ** stathissideris/spec-provider
@@ -2050,6 +2064,8 @@
   - Media Foundation workaround for Wine
 ** Z3Prover/z3
   - The Z3 Theorem Prover
+** zama-ai/concrete
+  - Concrete: TFHE Compiler that converts python programs into FHE equivalent
 ** zama-ai/tfhe-rs
   - TFHE-rs: Pure Rust implementation of the TFHE scheme for boolean and integers FHE arithmetics.
 ** zaproxy/zaproxy

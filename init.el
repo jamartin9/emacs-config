@@ -328,7 +328,7 @@
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
 
 (when (not (memq window-system '(android))) ; BUG android native build does not enable gnutls which is needed for melpa packages
-(use-package emms ; vlc/mpv
+(use-package emms ; mpv
   :init (bind-keys :map jam/open
                    ("l" . jam/librefm-stream)
                    ("m" . emms-play-file)
@@ -337,7 +337,7 @@
   :config
   (require 'emms-setup)
   (emms-minimalistic)
-  (setq emms-player-list '(emms-player-vlc emms-player-mpv))
+  (setq emms-player-list '(emms-player-mpv)) ; emms-player-vlc
   (require 'emms-librefm-stream)
   (emms-librefm-scrobbler-disable) ; BUG make work without login
   (setq emms-source-file-default-directory (concat (file-name-as-directory (getenv "HOME")) "Music")
@@ -988,7 +988,7 @@ OBJECT REPLACEMENT CHARACTER (65532, #xfffc)"
   (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" ""))
 
 ;;;###autoload
-(defun jam/chia-lsp-setup ()
+(defun jam/chia-lsp-setup () ;; MAYBE use https://github.com/Quexington/tree-sitter-chialisp for syntax
   "Adds syntax highlighting to chialisp and lsp client"
   (interactive)
   (define-generic-mode 'chialisp-mode

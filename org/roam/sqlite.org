@@ -14,7 +14,7 @@
   - ~BEGIN CONCURRENT~ allows multiple writers with separate tables or index's separated by page size.
   - hctree concurrency for row level locking
     - uses session extension for leader-follower backend replication
-    - higher page bit (48 bit) support higher storage limit of 1EiB 
+    - higher page bit (48 bit) support higher storage limit of 1EiB
 - single flat file database
 - C source can be compiled to WASM/Javascript [[https://sqlite.org/fiddle/][sqlite.org/fiddle]]
 - Replication options
@@ -45,3 +45,8 @@
 - optimizer can create temporary index's automatically.
   dictated as ~USING AUTOMATIC COVERING INDEX~ in the ~explain~ query output
 - import csv as virtual table or database
+- ~pragma journal_mode = WAL;~ for write ahead log (replaced shared cache)
+- ~pragma synchronous = normal;~
+- ~pragma temp_store = memory;~ to disable temp writes
+- ~pragma mmap_size = 30000000000;~ for memory mapping
+- open in memory database with ~:memory:~

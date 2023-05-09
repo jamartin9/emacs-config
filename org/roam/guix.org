@@ -99,7 +99,7 @@
    (packages (append
             ;(map transform-emacs-build (list emacs-rmsbolt emacs-pyvenv emacs-vterm emacs-debbugs emacs-org-roam emacs-flycheck-guile emacs-guix emacs-fd emacs-emms emacs-osm emacs-multiple-cursors emacs-minions emacs-transmission emacs-undo-tree emacs-pass emacs-use-package emacs-code-review emacs-orgit-forge emacs-flycheck-popup-tip emacs-macrostep-geiser emacs-drag-stuff emacs-company emacs-cfrs emacs-lsp-treemacs emacs-lsp-ui emacs-rustic emacs-geiser-guile emacs-dap-mode emacs-link-hint emacs-expand-region emacs-which-key emacs-explain-pause-mode emacs-pcre2el emacs-smartparens emacs-gcmh)) ; BUG no eln
             (map specification->package (list "guile"
-                                             ;"emacs-next-pgtk" ; managed by default profile
+                                             "emacs-next-pgtk-xwidgets" ; managed by default profile
                                              "fd"
                                              "git"
                                              "ripgrep"
@@ -117,7 +117,7 @@
                                              "python" ; python-lsp
                                              "python-lsp-server"
                                              "python-debugpy"
-                                             "tree-sitter-python" "tree-sitter-yaml" ; "tree-sitter-rust"
+                                             "tree-sitter-python" "tree-sitter-yaml" ; "tree-sitter-rust" "tree-sitter"
                                              "emacs-pyvenv" "emacs-vterm" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-rmsbolt" "emacs-guix" "emacs-fd" "emacs-emms" "emacs-osm" "emacs-multiple-cursors" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-flycheck-popup-tip" "emacs-macrostep-geiser" "emacs-drag-stuff" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-expand-region" "emacs-which-key" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-smartparens" "emacs-gcmh" "emacs-cfrs"
                                              "emacs-use-package" ; "emacs-yaml-mode" ; remove emacs-29
                                              ))))

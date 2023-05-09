@@ -25,6 +25,7 @@
     - [[https://github.com/carson-katri/dream-textures][dreambooth plugin for blender textures]]
     - [[https://github.com/riffusion/riffusion-app][Generate music from spectrograph]]
     - [[https://github.com/lllyasviel/ControlNet][Controlnet]] guided Stable diffusion from scribbles/images/depth maps
+    - [[https://github.com/facebookresearch/segment-anything][inpainting selection with Segment Anything Model]]
     - fine tune with [[https://github.com/cloneofsimo/lora][lora]]
 ** Large Language Models
   - [[https://github.com/facebookresearch/llama][Llama]]
@@ -32,8 +33,6 @@
       - torrent ~magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA~ (hugginface has several copies too)
     - more than 1,000,000 hours of 40GiB GPU (400 watts) compute hours for 65B model
       - 1000 tons of CO2 (2.6 million KWh hours)
-    - [[https://github.com/markasoftware/llama-cpu/commit/3f0326e9d2e567d573cce2479eb71a1262af8a93][cpu patch]]
-    - [[https://github.com/tloen/llama-int8][int8 patch]]
       - [[https://github.com/ggerganov/llama.cpp][ggml is 4 bit and cpu]]
         - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
     - [[https://github.com/antimatter15/alpaca.cpp][Alpaca]] is [[https://github.com/tatsu-lab/stanford_alpaca][refined by standford]] for chat
