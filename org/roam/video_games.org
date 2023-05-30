@@ -19,3 +19,33 @@ The only winning move is not to play
     - bevy engine plugin
 - [[https://github.com/deepnight/ldtk][2d game map tool]]
 - [[https://github.com/DFHack/stonesense][3D isometric viewer for dwarf fortress]]
+- binding of isaac
+  - drop trink/item in first few floors boss/item room for red key peice
+  - bomb skull with 'x' to get tele card for after polaroid boss fight
+- dark alliance 2
+  - max 16 runestones (+5) in non extreme(extreme 176 +15 only for boots/rings/amulets)
+one runestone per gem
+  - max 10 ranks for feats
+  - max *15 multiplier to stats in extreme mode (+60 bonus to 2 stats)
+  - Fine           +15% AC       x 1.5 Damage, Remarkable     +30% AC       x 2 Damage, Superior       +45% AC       x 2.5 Damage, Grand          +60% AC       x 3 Damage, Imperial       +75% AC       x 3.5 Damage, Flawless       +90% AC       x 4 Damage,
+  - gems
+    - melee/ranged/gloves:
+      - emerald and ruby make vampirism
+      - Jacinth x16 and topaz x 16 for most elemental damage on weapons
+      - Moonstone for +1 combat reflexes (attack speed)
+      - Pearl for +1 improved crit // cleric gloves
+      - Jet for +1 def for each piece of armor worn
+    - chest/helm/shield:
+      - Emerald +5% magical energy and weight reduction
+      - amethyst +5% damage resistance // cleric
+      - sapphire +1 power attack // cleric 1 item
+      - diamond +3 % ele resistance
+      - jet +5 hp
+    - ring/amulet/boot:
+      - rings/amulets get no bonus from quality
+      - Jacinth is +1 strength
+      - Jade is +1 const
+      - diamond is +1 bless (max 10 ranks)
+      - Pearl is +1 wisdom
+      - aquamarine is +1 intelligence
+      - topaz is +1 dex (armour + ranged)

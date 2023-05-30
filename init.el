@@ -33,12 +33,6 @@
   (save-some-buffers t))
 
 ;;;###autoload
-(defun jam/vterm ()
-  "Open new vterm"
-  (interactive)
-  (vterm t))
-
-;;;###autoload
 (defun jam/newsticker-download ()
   "Download the current newsticker enclosure to tmpdir/newsticker/feed/title"
   (interactive)
@@ -380,44 +374,19 @@
         newsticker-automatically-mark-items-as-old nil
         newsticker-automatically-mark-visited-items-as-old t
         newsticker-url-list-defaults nil
-        newsticker-url-list '(("Guile" "https://www.gnu.org/software/guile/news/feed.xml")
-                              ("Guix" "https://guix.gnu.org/feeds/blog.atom")
-                              ("Wine" "https://www.winehq.org/news/rss")
-                              ("Linux" "https://www.kernel.org/feeds/kdist.xml")
+        newsticker-url-list '(("Guix" "https://guix.gnu.org/feeds/blog.atom")
                               ("Lwn" "https://lwn.net/headlines/newrss")
-                              ("I2P" "https://geti2p.net/en/feed/blog/atom")
                               ("Tor" "https://blog.torproject.org/rss.xml")
-                              ("zfs-release" "https://github.com/openzfs/zfs/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("emacs-tags" "https://github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
-                              ("guix-tags" "https://github.com/guix-mirror/guix/tags.atom")
-                              ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom")
-                              ("xmrig-release" "https://github.com/xmrig/xmrig/releases.atom")
-                              ("monero-release" "https://github.com/monero-project/monero-gui/releases.atom")
-                              ("p2pool-release" "https://github.com/SChernykh/p2pool/releases.atom")
-                              ("zfs-meetings" "https://yewtu.be/feed/channel/UC0IK6Y4Go2KtRueHDiQcxow")
-                              ("chia-meetings" "https://yewtu.be/feed/channel/UChFkJ3OAUvnHZdiQISWdWPA")
-                              ("TheChinaShow" "https://yewtu.be/feed/channel/UCcukTqc1cJJ4K3c4uzxTzjA")
+                              ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
                               ("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
-                              ("TimPool" "https://odysee.com/$/rss/@timcast:c")
                               ("Reddit-news" "https://teddit.net/r/news?api&type=rss"); reddit ex: https://www.reddit.com/r/news/.rss
-                              ("CNN" "http://rss.cnn.com/rss/cnn_topstories.rss")
-                              ("Fox" "http://feeds.foxnews.com/foxnews/latest?format=xml")
                               ("Lobste" "https://lobste.rs/rss")
-                              ("HN" "https://hnrss.org/newest")
                               ("Phoronix" "https://www.phoronix.com/rss.php")
                               ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
-                              ("BruceSchneier" "https://www.schneier.com/feed/atom")
-                              ("GlennGreenWald" "https://greenwald.substack.com/feed")
                               ("BramCohen" "https://nitter.net/bramcohen/rss")
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
-
-(use-package vterm ; C-c C-t vterm-copy-mode ; gcc
-  :init (bind-keys :map jam/open ("t" . jam/vterm))
-  :commands (vterm-mode vterm)
-  :config (setq vterm-kill-buffer-on-exit t
-                vterm-max-scrollback 5000)
-  (bind-keys :map vterm-mode-map ("C-S-v" . vterm-yank)))
 
 (use-package magit ; git
   :commands magit-file-delete magit-status
@@ -500,6 +469,7 @@
 
 (use-package fd-dired ; fd/rg
   :after dired
+  ;:vc (:url "https://github.com/yqrashawn/fd-dired.git" :rev :newest)
   :config (bind-key [remap find-dired] 'fd-dired)
   (bind-key [remap find-grep-dired] 'fd-grep-dired)
   (bind-key [remap find-name-dired] 'fd-name-dired)
@@ -754,7 +724,7 @@
   (add-to-list 'erc-server-alist '("Corrupt-Net" Corrupt "irc.corrupt-net.org" ((6666 6669)) 8067 6697 7000))
   ;(add-to-list 'erc-nickserv-alist '(Corrupt "NickServ!services@shd.u" "This\\s-nickname\\s-is\\s-registered\\s-and\\s-protected.\\s-\\s-If\\s-it\\s-is\\s-your" "NickServ" "IDENTIFY" nil))
   (add-to-list 'erc-modules 'dcc);/dcc list and /dcc get -s nick file
-  (add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
+  ;(add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
   (add-to-list 'erc-modules 'log)
   ;(add-to-list 'erc-modules 'services); nickserv
   (erc-update-modules))
@@ -772,6 +742,12 @@
         eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
                                                   (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white"))))))
   (add-to-list 'eshell-modules-list 'eshell-tramp))
+
+(use-package eat
+  :init (bind-keys :map jam/open ("t" . eat))
+  (add-hook 'eshell-load-hook #'eat-eshell-mode)
+  (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
+  :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
 
 (use-package tramp
   :ensure nil ; built-in
@@ -793,8 +769,7 @@
               circe-mode
               message-mode
               help-mode
-              gud-mode
-              vterm-mode)
+              gud-mode)
         company-frontends
         '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
           company-echo-metadata-frontend)  ; show selected candidate docs in echo area
@@ -844,6 +819,8 @@
                                                   (nnir-search-engine imap)
                                                   (nnmail-expiry-wait 90)))
           gnus-use-cache t
+          gnus-asynchronous t
+          gnus-use-header-prefetch t
           message-send-mail-function 'smtpmail-send-it ;; Send email through SMTP
           smtpmail-default-smtp-server "smtp.gmail.com";"mail.riseup.net"
           smtpmail-smtp-service 587
@@ -908,7 +885,8 @@
   :config (setq mc/list-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "mc-lists.el")))
 
 (use-package explain-pause-mode
-  :ensure nil ; BUG not in melpa MAYBE install from source with package.el or url-copy-file
+  ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; MAYBE install from source with package.el or url-copy-file
+  :ensure nil ; BUG not in melpa
   :init (bind-keys :map jam/open ("T" . explain-pause-top))
   :commands (explain-pause-top explain-pause-mode))
 

@@ -37,6 +37,7 @@
           package-pinned-packages '((smartparens . "nongnu")
                                     (pcre2el . "nongnu")
                                     (multiple-cursors . "nongnu")
+                                    (eat . "nongnu")
                                     (which-key . "gnu")
                                     (expand-region . "gnu")
                                     (gcmh . "gnu")

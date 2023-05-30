@@ -388,6 +388,8 @@
   - Unprivileged sandboxing tool
 ** containers/podman
   - Podman: A tool for managing OCI containers and pods.
+** continue-revolution/sd-webui-segment-anything
+  - Segment Anything for Stable Diffusion WebUI
 ** Cookie-AutoDelete/Cookie-AutoDelete
   - Firefox and Chrome WebExtension that deletes cookies and other browsing site data as soon as the tab closes, domain changes, browser restarts, or a combination of those events.
 ** copy/v86
@@ -910,6 +912,8 @@
   - Universal markup converter
 ** jgthms/bulma
   - Modern CSS framework based on Flexbox
+** JiauZhang/DragGAN
+  - mplementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
 ** jitsi/jitsi-meet
   - Jitsi Meet - Secure, Simple and Scalable Video Conferences that you use as a standalone app or embed in your web application.
 ** jitsi/jitsi-videobridge
@@ -972,6 +976,8 @@
   - Simple library for asynchronous processing in Emacs
 ** jwiegley/use-package
   - A use-package declaration for simplifying your .emacs
+** kahst/BirdNET-Analyzer
+  - BirdNET analyzer for scientific audio data processing.
 ** kanidm/webauthn-rs
   - An implementation of webauthn components for Rustlang servers
 ** karpathy/nanoGPT
@@ -1166,6 +1172,8 @@
   - Compiler for the SEAL homomorphic encryption library
 ** microsoft/gctoolkit
   - Tool for parsing GC logs
+** microsoft/i-Code
+  - any to any composable diffusion model
 ** microsoft/JARVIS
   - JARVIS, a system to connect LLMs with ML community
 ** microsoft/LoRA
@@ -1384,6 +1392,8 @@
   - C library for prototyping and experimenting with quantum-resistant cryptography
 ** open5gs/open5gs
   - Open5GS is a C-language Open Source implementation for 5G Core and EPC, i.e. the core network of LTE/NR network (Release-17)
+** openai/automated-interpretability
+  - GPT-2 neuron labeling tools
 ** openai/gpt-2
   - Code for the paper "Language Models are Unsupervised Multitask Learners"
 ** openai/kubernetes-ec2-autoscaler

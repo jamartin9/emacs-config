@@ -34,6 +34,7 @@ This your brain on the internet
   - ungoogled-chromium
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]
+  - [[https://cobalt.googlesource.com/cobalt][cobalt embeded app]]
 ** safari
 - webkit based
 * search engines
@@ -69,3 +70,5 @@ This your brain on the internet
 - https://z-lib.org/
 - https://libgen.is/
 - https://zoro.to
+- https://cs.rin.ru
+- https://rutracker.org

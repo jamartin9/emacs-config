@@ -18,9 +18,12 @@
 - usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
   - 4bit with GPTQ compression
 - LoRA is a finetunning mechanism
+- multi modal models (ViTS) combine visual and image
+- steering vectors cache activation layer results and swap them for alignment at the same layer
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
+    - ~stable-diffusion-webui/webui.sh --listen --no-half --use-cpu all~ for cpu only inside container
     - [[https://github.com/andreasjansson/cog-stable-diffusion/tree/animate][animation with interpolation]]
     - [[https://github.com/carson-katri/dream-textures][dreambooth plugin for blender textures]]
     - [[https://github.com/riffusion/riffusion-app][Generate music from spectrograph]]
@@ -28,23 +31,31 @@
     - [[https://github.com/facebookresearch/segment-anything][inpainting selection with Segment Anything Model]]
     - fine tune with [[https://github.com/cloneofsimo/lora][lora]]
 ** Large Language Models
-  - [[https://github.com/facebookresearch/llama][Llama]]
+  - chinchilla paper showed most models are over parameterized without enough data
+  - [[https://github.com/facebookresearch/llama][Llama]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]]
+    - context length of 2048
     - weights unpublished
       - torrent ~magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA~ (hugginface has several copies too)
     - more than 1,000,000 hours of 40GiB GPU (400 watts) compute hours for 65B model
       - 1000 tons of CO2 (2.6 million KWh hours)
       - [[https://github.com/ggerganov/llama.cpp][ggml is 4 bit and cpu]]
         - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
-    - [[https://github.com/antimatter15/alpaca.cpp][Alpaca]] is [[https://github.com/tatsu-lab/stanford_alpaca][refined by standford]] for chat
-      - [[https://github.com/lm-sys/FastChat][Vicuna]] is refined alpaca with sharegpt
+    - [[https://github.com/antimatter15/alpaca.cpp][Alpaca]] is [[https://github.com/tatsu-lab/stanford_alpaca][refined by standford]] for chat instructions
+      - [[https://github.com/lm-sys/FastChat][Vicuna]] is refined alpaca with sharegpt with 'conversation format'
+    - WizardLM is fine tuned with  'Evol-Instruct' (llm generated) data for 'deep knowledge'
+      - VicunaWizard combines the Vicuna and Wizardlm
     - Can be fine tuned with [[https://github.com/tloen/alpaca-lora][LoRA]]
+  - Flan-T5 for text summary
+  - Donut for document image question answering
+  - Vilt for image question answering
 *** Codegen
+  - [[https://github.com/salesforce/CodeT5][CodeT5+]]
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]
     - uses salesforce/Codegen which supports natural language input and generation of C, C++, Go, Java, JavaScript, Python (BIG QUERY).
       - specialized in python with the BIGPYTHON dataset
     - Converts salesforce/codegen model into GPTJ
 ** Speech to text
-  - open ai whisper
+  - open ai whisper translation
 #+NAME: yt-translate
 #+BEGIN_SRC sh :tangle no
 pip install --user git+https://github.com/openai/whisper.git
@@ -57,3 +68,26 @@ whisper "/content/${VID}.m4a" --model small --language English
 - [[https://github.com/neonbjb/tortoise-tts][tortoise-tts]] based on dalle
 - [[https://github.com/coqui-ai/TTS][coqui-ai]] with YourTTS/FreeVC voice cloning
   - [[https://github.com/coqui-ai/TTS/blob/dev/TTS/tts/utils/text/cleaners.py][english cleaner]] for abbrevations/dates/times/numbers
+** Agent prompts
+#+NAME: chain-of-thought-tools
+#+BEGIN_SRC text :tangle no
+Answer the following questions as best you can. You have access to the following tools:
+
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin! Remember the following: {context}
+
+Question: {input}
+{agent_scratchpad}
+#+END_SRC
