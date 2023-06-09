@@ -69,8 +69,6 @@ The coding will continue until morale improves!
   - [[https://spaz.gitlab.io/angular-worldwind/][published as gitlab page]] (click layers -> new -> blue marble to get started)
 - ansible-free-gcp :obe:
   - ansible yaml playbooks for free gcp vm, disk and network
-- aggregator :obe:
-  - gradle script to aggregate monorepo
 - clj-fx-example :obe:
   - clojure graalvm javafx project using maven and gluonhq client plugin
 - docker-remote-saver :obe:

@@ -76,6 +76,12 @@
   (package-quickstart-refresh)
   (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
 
+;;;###autoload
+(defun jam/eshell ()
+  "Open new eshell"
+  (interactive)
+  (eshell t))
+
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in
   :init (setq user-full-name "Justin Martin"
@@ -738,7 +744,7 @@
 (use-package eshell
   :ensure nil ; built-in
   :init (add-hook 'eshell-mode-hook #'(lambda () (add-to-list 'eshell-visual-commands "btm")))
-  (bind-keys :map jam/open ("e" . eshell))
+  (bind-keys :map jam/open ("e" . jam/eshell))
   :commands (eshell)
   :config
   (require 'em-smart)
@@ -777,6 +783,7 @@
               circe-mode
               message-mode
               help-mode
+              ;eshell-mode
               gud-mode)
         company-frontends
         '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
