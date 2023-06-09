@@ -67,11 +67,14 @@
 
 ;;;###autoload
 (defun jam/compile-init-bytecode ()
-  "Recompile init.el and early-init.el"
+  "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)"
   (interactive)
   (byte-recompile-file (concat user-emacs-directory "init.el"))
   (byte-recompile-file (concat user-emacs-directory "early-init.el"))
-  (byte-recompile-file (concat user-emacs-directory "make-el.el")))
+  (byte-recompile-file (concat user-emacs-directory "make-el.el"))
+  (require 'package) ; recompile autoloads
+  (package-quickstart-refresh)
+  (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
 
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in
@@ -304,7 +307,8 @@
 (use-package org
   :ensure nil ; built-in
   :commands (org-mode org-agenda org-capture org-todo-list org-id-update-id-locations)
-  :init (setq org-timer-default-timer 60)
+  :init (setq org-timer-default-timer 60
+              org-clock-sound t); org-timer-set-timer
   (bind-keys :map jam/notes
               ("D" . org-id-update-id-locations)
               ("t" . org-todo-list)
@@ -345,6 +349,7 @@
 (use-package guix ; guix
   :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
+  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   :commands guix-popup guix-set-emacs-environment)
 
 (use-package pass ; gpg/pass/sh
@@ -482,7 +487,8 @@
   (setq geiser-repl-per-project-p t
         geiser-repl-current-project-function #'geiser-repl-project-root
         geiser-repl-history-filename (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-history"))
-  (require 'geiser-guile)); geiser call per buffer?
+  (require 'geiser-guile)
+  (require 'flycheck-guile)); geiser call per buffer?
 
 (use-package macrostep-geiser ; guile
   :init
@@ -618,7 +624,7 @@
   (if (treesit-available-p)
       (progn
           (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
-          (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist)
           (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 (use-package rustic ; rustc/cargo
@@ -744,10 +750,12 @@
   (add-to-list 'eshell-modules-list 'eshell-tramp))
 
 (use-package eat
+  ;:pin nongnu
   :init (bind-keys :map jam/open ("t" . eat))
   (add-hook 'eshell-load-hook #'eat-eshell-mode)
   (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
-  :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
+  :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode)
+  :config (bind-keys :map eat-mode-map ("C-S-v" . eat-yank)))
 
 (use-package tramp
   :ensure nil ; built-in

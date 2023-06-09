@@ -19,3 +19,4 @@
 - ~git switch --orphan BRANCH_NAME~ for empty branch
 - ~git rev-parse --show-object-format~ sha1 or sha256 check
   - mostly unsupported by forges
+- git bundle for offline repo backup

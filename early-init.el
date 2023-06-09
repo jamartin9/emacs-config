@@ -1,6 +1,7 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
 (setq package-enable-at-startup nil ;; skip packages
+      package-quickstart t ;; concat autoloads ; (package-quickstart-refresh)
       load-prefer-newer noninteractive ;; skip newer checks
       gc-cons-threshold most-positive-fixnum) ;; skip gc
 
@@ -32,7 +33,7 @@
 		(package-initialize)))
           (package-initialize))
 	(require 'use-package-ensure)
-    (if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
+    ;(if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
     (setq use-package-always-ensure t
           package-pinned-packages '((smartparens . "nongnu")
                                     (pcre2el . "nongnu")
@@ -51,3 +52,5 @@
 
 (setq use-package-always-defer t
       use-package-verbose t)
+
+

@@ -16,14 +16,6 @@ The coding will continue until morale improves!
   - supports passphrase encryption and decryption of ssh/gpg
   - added onion service secret file generation
     - so you can take 1 set of words and make a hidden service behind ssh with pgp signing/encryption for that set of bytes
-- matching
-  - CUDA project for implementing the stable matching algorithm
-    - uses flattened 2d matrix structure to avoid pointer deref and multiplex access for the third dimension of block threads
-    - uses managed malloc api to avoid pinning/pointer deference performance issues
-    - limitation of 1024 x 3 concurrent problem size (api limit of x + y + z of threads in block execution) with respect to O(n log n ^2) complexity :wip:
-      - limited by find minimum (reduction) kernel which depends on the results of other parallel processes to finish the step in log n. (maybe solve with eventually consistent atmoic ops queue to avoid blocking?) nvidia's reduction kernel is O(n log n) as it is unbounded size despite extensive optimizations like block unrolling.
-      - removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation
-  - done as REU
 - guix-channel
   - guile scheme guix channel for custom packages
   - mostly packages that are in process or unsuitable for nonguix or other repos
@@ -61,6 +53,14 @@ The coding will continue until morale improves!
 - org-mode reloadable code block runner in wasm for personal website :wip:
   - wasm code block runner with reloading (see https://github.com/wingo/wasm-jit for example)
 ** old
+- matching
+  - CUDA project for implementing the stable matching algorithm
+    - uses flattened 2d matrix structure to avoid pointer deref and multiplex access for the third dimension of block threads
+    - uses managed malloc api to avoid pinning/pointer deference performance issues
+    - limitation of 1024 x 3 concurrent problem size (api limit of x + y + z of threads in block execution) with respect to O(n log n ^2) complexity :wip:
+      - limited by find minimum (reduction) kernel which depends on the results of other parallel processes to finish the step in log n. (maybe solve with eventually consistent atmoic ops queue to avoid blocking?) nvidia's reduction kernel is O(n log n) as it is unbounded size despite extensive optimizations like block unrolling.
+      - removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation
+  - done as REU
 - angular-stock-table :obe:
   - used beta angular material table and 3 way javascript sort
   - [[https://spaz.gitlab.io/angular-stock-table/][published as gitlab page]] (click two columns for double sort ordering)

@@ -133,6 +133,8 @@ HiddenServiceEnableIntroDoSDefense 1
 #HiddenServiceEnableIntroDoSBurstPerSec 200
 #HiddenServiceEnableIntroDoSRatePerSec 25
 
+#HiddenServicePoWDefensesEnabled 1
+
 #HiddenServiceNumIntroductionPoints 20
 
 #HiddenServiceMaxStreams 65535

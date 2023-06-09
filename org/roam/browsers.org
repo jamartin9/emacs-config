@@ -17,6 +17,7 @@ This your brain on the internet
 - threads provided via web workers
   - [[https://github.com/BuilderIO/partytown][web worker background loading]]
 - offline webapp manifest support with service worker
+- ARIA elements for accessibility
 ** [[id:aae21430-637a-4b92-8f8a-d35e9991e396][firefox]]
 ** chrome
 - ~--ignore-certificate-errors~ cli arg to enable expired certs
@@ -29,6 +30,9 @@ This your brain on the internet
 - fork of chromium
 - forks
   - brave
+    - ~brave://gpu~
+    - ~brave://flags~
+      - WebGPU flag ~--enable-features=Vulkan~
     - builtin tor, ad block
     - disable wallet, sidebar
   - ungoogled-chromium

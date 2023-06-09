@@ -640,6 +640,8 @@
   - reuse is a tool for compliance with the REUSE recommendations.
 ** fulldecent/system-bus-radio
   - Transmits AM radio on computers without radio transmitting hardware.
+** GalactechsLLC/dg_xch_utils
+  - A collection of packages made for working with the Chia Blockchain using Rust
 ** GaloisInc/reopt
   - A tool for analyzing x86-64 binaries.
 ** gaurav-arya/StochasticAD.jl
@@ -656,6 +658,8 @@
   - You like pytorch? You like micrograd? You love tinygrad! ❤
 ** geoserver/geoserver
   - Official GeoServer repository
+** geraldneale/py-blink_mojo-secure
+  - Chialisp money privacy tool using non-interactive aggregated BLS signatures for security
 ** gfx-rs/naga
   - Universal shader translation in Rust
 ** gfx-rs/wgpu
@@ -1798,6 +1802,8 @@
   - Pawket is a comprehensive software that supporting the Chia eco-system, including wallet, developer tool, command line, extension and so on.
 ** swadey/LispSyntax.jl
   - lisp-like syntax in julia
+** SwagSoftware/Kisak-Strike
+  - Open Source CSGO
 ** switchbrew/libnx
   - Library for Switch Homebrew
 ** syl20bnr/spacemacs

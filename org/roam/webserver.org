@@ -25,7 +25,7 @@
   - 80k r/s default settings file serving 5ms response (45ms response w/1 worker)
   - sendfile on; reduces r/s to 65k 3ms with t1 and 7k 5ms with t12
 - worker process per core with auto
-*** kong
+** kong
 ** apache
 ** lighttpd
 - 60k r/s with timeouts default settings file serving 7ms response 1.4.66 ~t12~
@@ -40,7 +40,7 @@
   -  65k r/s default settings file serving 50ms response ~t12~
     - 55k r/s 4ms ~t1~
 - 2.6 enables http3 by default
-- Config adapters turn Caddyfil to a json config
+- Config adapters turn Caddyfile to a json config
   - other config adapters: nginx, yaml, jsonc, json5
     - ~xcaddy~ to build extension for nginx
   - disable https default with ~:PORT~ or explict ~http://~

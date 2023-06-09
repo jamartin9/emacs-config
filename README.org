@@ -7,6 +7,7 @@ The dependencies are: emacs >= 29/28, guix (guix.el), gnupg (authinfo), git (mag
 Current package considerations:
 embark for dwim shortcuts
 combobulate for structural editing
+ts-fold for structural folding
 
 Third party package choices:
 
@@ -62,7 +63,7 @@ pcre2el: regex converter. alternative is a smooth big brain
 
 drag-stuff: move text around. alternative is treesit with combobulate
 
-link-hint: copy link urls. alternative is regex buffer contents
+link-hint: copy link urls (using avy). alternative is regex buffer contents
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.
