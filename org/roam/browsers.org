@@ -61,6 +61,7 @@ This your brain on the internet
 - [[https://wasm-test.libreoffice.org/][libreoffice wasm]]
 ** data
 - https://ossinsight.io/#trending-repos
+- https://search.marginalia.nu/
 - Shodan
 - Zoomeye
 ** alternative frontends

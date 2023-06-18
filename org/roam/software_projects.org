@@ -13,6 +13,7 @@ The coding will continue until morale improves!
 ** working
 - key2words
   - rust cli executable that uses bip39 to generate mneumonics from ed25519 keys.
+    - bulma/yew web ui form too
   - supports passphrase encryption and decryption of ssh/gpg
   - added onion service secret file generation
     - so you can take 1 set of words and make a hidden service behind ssh with pgp signing/encryption for that set of bytes
@@ -26,13 +27,14 @@ The coding will continue until morale improves!
 - emacs-config
   - elisp/org configuration for emacs
   - uses elisp wrapper script to untangle/eval org file code for setup
-  - uses submodules for the repo of emacs distribution and guix-channel
+  - uses submodules for guix-channel of with custom emacs packages
   - publishes site from org-mode files
     - does not use org-publish but each page is customizable from the org-roam-capture-template header
 - resume
   - org file of my resume for latex to pdf export
   - includes stencil cover letter
   - pgp public key in profile picture qr code
+    - customize qr code image?
   - PDF links to projects/pages
 ** Currently studying
 - Algorithms for use in physical world problems using mathematical tools via computational science
@@ -47,6 +49,8 @@ The coding will continue until morale improves!
   - like graalvm with sulong in aot compilation
     - graal uses 'sea of nodes' approach with partial evaluation under a closed world assumption that utilizes the compilers sdk for both languages being represented in the IR type.
       guiles compiler tower supports some js, elisp and guile. https://savannah.nongnu.org/projects/nyacc can output C as sxml for transformation. https://www.nongnu.org/nyacc/ffi-help.html for example generation of scheme code. By static linking only specific call sites the optimizer can eliminate overhead of ffi and have potential better native generation; as the bytecode optimizer will get a chance to run before the template jit for native specific code
+- Neural Network for runtime profile guided optimizations in Guile's JIT
+  - [[https://apexapps.oracle.com/pls/apex/f?p=LABS:0:112476512352389:APPLICATION_PROCESS=GETDOC_INLINE:::DOC_ID:3085][graalvm example paper]]
 - Porting netbsd Rumpkernel for GNU HURD to guix :wip:
   - debian example https://salsa.debian.org/hurd-team/rumpkernel
   - use of linux compat for even more drivers via netbsd
@@ -67,19 +71,8 @@ The coding will continue until morale improves!
 - angular-worldwind :obe:
   - used primeng with angular to add DVR controls to NASAs worldwind
   - [[https://spaz.gitlab.io/angular-worldwind/][published as gitlab page]] (click layers -> new -> blue marble to get started)
-- ansible-free-gcp :obe:
-  - ansible yaml playbooks for free gcp vm, disk and network
-- clj-fx-example :obe:
-  - clojure graalvm javafx project using maven and gluonhq client plugin
-- docker-remote-saver :obe:
-  - ruby sinatra endpoint for creating composite docker images
-- dotfiles :obe:
-  - ansible playbooks and shell script for setting up emacs/zsh/ansible
 - font :obe:
   - added cursive monospace letters to fira code with ligatures
-- gnag :obe:
-  - chrome is removing http2 push support
-  - uses golang builtin http2 server with push for resource loading
 - guile-sample :obe:
   - uses automake, autotools, pkg-config with guix to create a patched statically relocatable guile executable.
   - example makefile for setting running with custom linker libs
@@ -88,32 +81,13 @@ The coding will continue until morale improves!
       - can be constexpr in c++ for compile time checking
 - hhrelay :obe:
   - static jquery webpage for humanitarian cancer charity relay for life.
-- hop :obe:
-  - uses java to add reactive stream wrapper to spark websockets server
-- jyvert :obe:
-  - graalvm native-image clojure project using snakeyaml to convert between yaml and json.
-- kafka-streams-sample :obe:
-  - java kafka streams stackable topology example
-- make-org :obe:
-  - example makefile for using emacs to publish org documents in various formats
-- piston-example :obe:
-  - piston game engine with SDL sample of movable texture, sound and ai
-  - exposes window options for resizing and fullscreen
 - puppet-train :obe:
   - puppet conf training modules
   - uses hostname as dns with roles and profiles pattern
-- scape :obe:
-  - clojure project using webdriver with firefox headless (geckodriver) to scrape store website for deals.
-  - added branch for scraping router interface for reboots
 - tileD :obe:
   - java game with lwjgl from scratch
   - mixes overhead exploration with 2D side scrolling fighter combat
 - ticTacToe :obe:
   - java tictactoe game using swt and minimax algorithm
-- yamlnjson :obe:
-  - ruby script to convert json to yaml despite [[https://metacpan.org/pod/JSON::XS#JSON-and-YAML][not being a superset]]
-- zsh-config :obe:
-  - zsh configuration using powerlevel10k and zinit
-  - zinit async loads all plugins and auto compiles all scripts with module
 - metrics-paper :obe:
   - latex paper written in IEEE template on inconsistency of software estimation.

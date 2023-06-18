@@ -118,6 +118,8 @@
   - Progressive Delivery for Kubernetes
 ** argosopentech/argos-translate
   - Open-source offline translation library written in Python
+** arkworks-rs/r1cs-std
+  - R1CS constraints for bits, fields, and elliptic curves
 ** arrayfire/arrayfire
   - ArrayFire: a general purpose GPU library.
 ** Artomatix/infinity_tile_shader
@@ -556,6 +558,8 @@
   - Modern columnar data format for ML implemented in Rust. Convert from parquet in 2 lines of code for 100x faster random access, vector index, and data versioning. Compatible with Pandas, DuckDB, Polars, Pyarrow, with more integrations coming..
 ** eunomia-bpf/eunomia-bpf
   - Build, Distribute and Run CO-RE eBPF programs easier with JSON and Webassembly
+** evergreen-xch/cult-lite-farmer
+  - A lite farmer and harvester for the Chia Blockchain.
 ** evilsocket/opensnitch
   - OpenSnitch is a GNU/Linux interactive application firewall inspired by Little Snitch.
 ** extism/extism
@@ -574,6 +578,8 @@
   - A time traveling resource monitor for modern Linux systems
 ** facebookincubator/BOLT
   - Binary Optimization and Layout Tool - A linux command-line utility used for optimizing performance of binaries
+** facebookresearch/audiocraft
+  - Audiocraft is a library for audio processing and generation with deep learning. It features the state-of-the-art EnCodec audio compressor / tokenizer, along with MusicGen, a simple and controllable music generation LM with textual and melodic conditioning.
 ** facebookresearch/Cupcake
   - A Rust library for lattice-based additive homomorphic encryption.
 ** facebookresearch/esm
@@ -1020,6 +1026,8 @@
   - The official source code repository for the calibre ebook manager
 ** kristerw/pysmtgcc
   - Some experiments with SMT solvers and GIMPLE IR
+** ktock/container2wasm
+  - Container to WASM converter
 ** kube-rs/kube
   - Rust Kubernetes client and controller runtime
 ** kubearmor/KubeArmor
@@ -1104,6 +1112,8 @@
   - Implementation of RLHF (Reinforcement Learning with Human Feedback) on top of the PaLM architecture. Basically ChatGPT but with PaLM
 ** lucidrains/toolformer-pytorch
   - Implementation of Toolformer, Language Models That Can Use Tools, by MetaAI
+** Luodian/Otter
+  - Otter, a multi-modal model based on OpenFlamingo (open-sourced version of DeepMind's Flamingo), trained on MIMIC-IT and showcasing improved instruction-following and in-context learning ability.
 ** lurk-lang/lurk-rs
   - lisp snark
 ** lutris/lutris
@@ -1502,6 +1512,8 @@
   - Patched fonts for Powerline users.
 ** ppy/osu
   - rhythm is just a *click* away!
+** princeton-vl/infinigen
+  - Infinite Photorealistic Worlds using Procedural Generation
 ** processone/ejabberd
   - Robust, Ubiquitous and Massively Scalable Messaging Platform (XMPP, MQTT, SIP Server)
 ** protocolbuffers/protobuf
@@ -1942,6 +1954,8 @@
   - A glossy Matrix collaboration client for the web.
 ** veracrypt/VeraCrypt
   - Disk encryption with strong security based on TrueCrypt
+** Victorwz/LongMem
+  - adding long term memory to LLMs
 ** videolan/vlc
   - VLC media player - All pull requests are ignored, please follow https://wiki.videolan.org/Sending_Patches_VLC/
 ** virtualagc/virtualagc
@@ -1974,6 +1988,8 @@
   - The RuneScript scripting language
 ** wangyu-/udp2raw
   - A Tunnel which Turns UDP Traffic into Encrypted UDP/FakeTCP/ICMP Traffic by using Raw Socket,helps you Bypass UDP FireWalls(or Unstable UDP Environment)
+** wasix-org/cargo-wasix
+  - Cargo wrapper for working with Webassembly wasi(x).
 ** WasmEdge/WasmEdge
   - WasmEdge is a lightweight, high-performance, and extensible WebAssembly runtime for cloud native, edge, and decentralized applications. It powers serverless apps, embedded functions, microservices, smart contracts, and IoT devices.
 ** wasmerio/kernel-wasm

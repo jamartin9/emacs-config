@@ -1,0 +1,102 @@
+:PROPERTIES:
+:ID:       bf21269e-5bf5-4c51-be58-4c040d905e25
+:END:
+#+title: zig
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* zig
+** Using linked C libraries
+#+NAME: build-guile.zig
+#+BEGIN_SRC zig :tangle no
+const std = @import("std");
+
+pub fn build(b: *std.build.Builder) !void {
+    const target = b.standardTargetOptions(.{});
+    const mode = b.standardReleaseOptions();
+    const exe = b.addExecutable("zgl", "src/main.zig");
+    //exe.is_dynamic = false;
+    exe.setTarget(target);
+    exe.setBuildMode(mode);
+    exe.linkLibC();
+    exe.addIncludeDir("/gnu/store/6l9rix46ydxyldf74dvpgr60rf5ily0c-guile-3.0.7/include/guile/3.0/");
+    exe.addLibPath("/gnu/store/6l9rix46ydxyldf74dvpgr60rf5ily0c-guile-3.0.7/lib");
+    exe.addPackagePath("guile-3.0", "/gnu/store/6l9rix46ydxyldf74dvpgr60rf5ily0c-guile-3.0.7/lib/pkgconfig/guile-3.0.pc");
+    exe.linkSystemLibrary("guile-3.0");
+    exe.install();
+    const run_cmd = exe.run();
+    run_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_cmd.addArgs(args);
+    }
+    const run_step = b.step("run", "run the app");
+    run_step.dependOn(&run_cmd.step);
+}
+#+END_SRC
+#+NAME: guile.zig
+#+BEGIN_SRC zig :tangle no
+const std = @import("std");
+
+const c = @cImport({
+    @cInclude("libguile.h");
+});
+
+pub fn main() anyerror!void {
+    std.log.info("starting", .{});
+    c.scm_init_guile();
+    std.log.info("loaded guile", .{});
+//    var prog_flag = [_]u8{ 'z', 'g', 'l', 0 };
+    var prog_flag = "zgl";
+//    var ex_flag = [_]u8{ '-', 'v', 0 };
+    var args = [_][*c]u8{
+        &prog_flag,
+//        &ex_flag,
+    };
+    std.log.info("loading shell", .{});
+    c.scm_shell(args.len, &args);
+}
+#+END_SRC
+#+NAME: julia.zig
+#+BEGIN_SRC zig :tangle no
+const std = @import("std");
+
+const c = @cImport({
+    @cDefine("JULIA_DEFINE_FAST_TLS()", {});
+    @cInclude("julia.h");
+});
+
+pub fn main() anyerror!void {
+    std.log.info("starting", .{});
+    c.jl_init();
+    std.log.info("loaded julia", .{});
+    _ = c.jl_eval_string("print(sqrt(2.0))");
+    c.jl_atexit_hook(0);
+}
+#+END_SRC
+#+NAME: build-julia.zig
+#+BEGIN_SRC zig :tangle no
+const std = @import("std");
+
+pub fn build(b: *std.build.Builder) void {
+    const target = b.standardTargetOptions(.{});
+    const mode = b.standardReleaseOptions();
+    const exe = b.addExecutable("zjl", "src/main.zig");
+    exe.setTarget(target);
+    exe.setBuildMode(mode);
+    exe.addIncludeDir("/usr/include/julia");
+    exe.addLibPath("/usr/lib/julia");
+    exe.linkLibC();
+    exe.linkSystemLibrary("julia");
+    exe.linkSystemLibrary("openlibm");
+    exe.install();
+    const run_cmd = exe.run();
+    run_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_cmd.addArgs(args);
+    }
+    const run_step = b.step("run", "run the app");
+    run_step.dependOn(&run_cmd.step);
+}
+#+END_SRC

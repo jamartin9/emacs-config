@@ -35,3 +35,74 @@ p = [
 prob = OptimizationProblem(sys,u0,p,grad=true,hess=true)
 solve(prob,Newton())
 #+END_SRC
+#+NAME: julia-matrix
+#+BEGIN_SRC julia :tangle no
+@enum MatchType unmatched=0 matched=1 unstable=2 nm1gen=3 nm1=4 nm2=5
+mutable struct Element
+    x::Int
+    y::Int
+    l::Int
+    r::Int
+    matchtype::MatchType
+   nm2gen::Bool
+   nm2cpointer::Element
+   nm2rpointer::Element
+   lpointer::Element
+   Element(x,y,l,r) = (me = new();
+                       me.x = x; me.y = y; me.l = l; me.r = r; me.matchtype = unmatched; me.nm2gen = false;
+                       me.nm2cpointer = me;
+                       me.nm2rpointer = me;
+                       me.lpointer = me;
+                       me)
+
+end
+
+using Random
+"""
+create n x n Element matrix with cartesian coordinates and random l/r values
+"""
+function createMatrix(n::Int)
+    matrix = Array{Element}(undef, n, n) # nxn matrix
+    rng = MersenneTwister(n);
+    randomMens = shuffle(rng, Vector(1:n)) # random prefs for each row/col
+    randomWomens = shuffle(rng, Vector(1:n))# FUTURE add by col instead of row
+    x = 1;
+    y = 1;
+    for i in eachindex(matrix)
+        matrix[i] = Element(x, y, randomMens[x], randomWomens[x])
+        x = x + 1
+        if (x > n)
+            x = 1
+            y = y + 1
+            randomMens = shuffle(rng, Vector(1:n)) # random prefs for new row/col
+            randomWomens = shuffle(rng, Vector(1:n))
+        end
+    end
+    matrix # return built up matrix
+end
+
+"""
+prints each element of the array
+"""
+function printElements(matrix::Array{Element})
+    for i in eachindex(matrix)
+        print("\nElement: ", i,
+              " x is ", matrix[i].x,
+              " y is ", matrix[i].y,
+              " l is ", matrix[i].l,
+              " r is ", matrix[i].r,
+              #" matchtype is ", matrix[i].matchtype,
+              #" nm2gen is ", matrix[i].nm2gen,
+              #" lpointer is ", matrix[i].lpointer,
+              #" cpointer is ", matrix[i].nm2cpointer,
+              #" rpointer is ", matrix[i].nm2rpointer,
+              " \n")
+    end
+end
+
+rng = rand((2,10))
+print("RNG is : ", rng, " \n")
+
+matrix = createMatrix(rng)
+printElements(matrix)
+#+END_SRC

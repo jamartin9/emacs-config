@@ -1,0 +1,331 @@
+:PROPERTIES:
+:ID:       fd6e2c21-220f-4d63-ab7e-5004dc053e5b
+:END:
+#+title: clojure
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* clojure
+** notes
+- https://aphyr.com/posts/353-rewriting-the-technical-interview
+- ~lein trampoline~ runs a separate jvm
+** webdriver form submit with cli tools example
+- Uses jvm shutdown hooks instead of implementing ~AutoClosable~ for headless browser
+#+NAME: clojure-cli-tools
+#+BEGIN_SRC clojure :tangle no
+(ns scape.core
+  (:gen-class)
+  (:require [etaoin.api :as api]
+            [clojure.tools.cli :refer [parse-opts]]
+            [clojure.tools.logging :as log])
+  (:import [java.util.concurrent TimeUnit]))
+
+(defonce cli-options
+  [["-t" "--type TYPE" "type of router"
+    :default "arris"]
+   ["-l" "--login LOGIN" "login username"
+    :default "admin"]
+   ["-p" "--pass PASS" "login password"
+    :default "password"]
+   ["-s" "--sleep SLEEP" "Interval in seconds for refreshing"
+    :default 180
+    :parse-fn #(Integer/parseInt %)]
+   ["-u" "--url URL" "URL of website to use"
+    :default "http://192.168.0.1/"
+    :parse-fn #(.toString (java.net.URL. %))]])
+
+(defn create-driver []
+  (log/info "Creating driver")
+  (let [driver (api/firefox-headless)]
+    (log/info "adding shutdown hook")
+    (.addShutdownHook (Runtime/getRuntime)
+                      (Thread. (fn []
+                                 (println "Shutting down driver")
+                                 (api/quit driver)
+                                 (println "Quit driver"))))
+    (log/info "added shutdown hook")
+    driver))
+
+(defn reset-linksys [driver url login pass]
+  (log/info "Going to url: " url)
+  (api/go driver url)
+  (log/info "Getting username box")
+  (api/wait-visible driver [{:tag :input :id :userName}])
+  (api/fill driver {:tag :input :id :userName} login)
+  (log/info "Entering password")
+  (api/wait-visible driver [{:tag :input :id :pcPassword}])
+  (api/fill driver {:tag :input :id :pcPassword} pass)
+  (log/info "Clicking login")
+  (api/wait-visible driver [{:tag :label :id :loginBtn}])
+  (api/click driver {:tag :label :id :loginBtn})
+  (log/info "Switching to left frame")
+  (api/wait-visible driver [{:tag :frame :name :bottomLeftFrame}])
+  (api/switch-frame driver {:tag :frame :name :bottomLeftFrame})
+  (log/info "Clicking system button")
+  (api/wait-visible driver [{:tag :ol :id :ol62}])
+  (api/click driver {:tag :ol :id :ol62})
+  (log/info "Clicking reboot menu button")
+  (api/wait-visible driver [{:tag :a :id :a68}])
+  (api/click driver {:tag :a :id :a68})
+  (log/info "Switching to top frame")
+  (api/switch-frame-top driver)
+  (log/info "Switching to main frame")
+  (api/wait-visible driver [{:tag :frame :name :mainFrame}])
+  (api/switch-frame driver {:tag :frame :name :mainFrame})
+  (log/info "Clicking reboot button")
+  (api/wait-visible driver [{:tag :input :id :reboot}])
+  (api/click driver {:tag :input :id :reboot})
+  (log/info "Clicked reboot button")
+  (log/info "waiting on alert")
+  (api/wait-has-alert driver)
+  (log/info "accepting alert")
+  (api/accept-alert driver)
+  (log/info "accepted alert"))
+
+(defn reset-arris [driver url login pass]
+  (log/info "Going to url: " url)
+  (api/go driver url)
+  (log/info "Entering username")
+  (api/wait-visible driver [{:tag :input :id :UserName}])
+  (api/fill driver {:tag :input :id :UserName} login)
+  (log/info "Entering password")
+  (api/wait-visible driver [{:tag :input :id :Password}])
+  (api/fill driver {:tag :input :id :Password} pass)
+  (log/info "Clicking login")
+  (api/wait-visible driver [{:tag :input :class :submitBtn}])
+  (api/click driver {:tag :input :class :submitBtn})
+  (log/info "clicked button")
+  (log/info "waiting on utilites menu")
+  (api/wait-visible driver [{:tag :a :href :?util_status}])
+  (api/go driver (.concat url "/?util_restart"));"/?util_status"))
+  (log/info "redirected menu")
+  (log/info "waiting on reboot button")
+  (api/wait-visible driver [{:tag :input :class :submitBtn}])
+  (log/info "Clicking the reboot button")
+  (api/click driver {:tag :input :class :submitBtn})
+  (log/info "waiting on alert")
+  (api/wait-has-alert driver)
+  (log/info "accepting alert")
+  (api/accept-alert driver)
+  (log/info "accepted alert"))
+
+(defn -main
+  [& args]
+  (log/info "Ensure Geckodriver and Firefox with headless support are available.") ;; ten attempts 2 hours
+  (let [{:keys [options arguments summary errors]} (parse-opts args cli-options)
+        driver (create-driver)]
+    (log/info "arguments: " arguments)
+    (log/info "using config values: " options)
+    (if (.equals "arris" (:type options))
+      (reset-arris driver (:url options) (:login options) (:pass options))
+      (reset-linksys driver (:url options) (:login options) (:pass options)))
+    (log/info "Done sleeping for: " (:sleep options) " seconds")
+    (.sleep TimeUnit/SECONDS (:sleep options))
+  (log/info "Done")))
+
+(defn goto-site [driver url]
+  (log/info "Going to url: " url)
+  (api/go driver url) ;; get iframe of menu from url
+  (api/wait-visible driver [{:tag :iframe :id :jane-menu}])
+  (log/info "Getting site iframe")
+  (let [site (str (api/get-element-property driver {:tag :iframe :id :jane-menu} :src) "refinementList%5Broot_types%5D%5B0%5D=flower")]
+    (log/info "Going to site: " site)
+    (api/go driver site)))
+
+(defn get-max [driver]
+  (log/info "Getting max %")
+  (api/wait-visible driver [{:fn/has-text "Max:"}])
+  (let [max (atom (Integer/parseInt (re-find #"\d+" (api/get-element-text driver [{:fn/has-text "Max:"}]))))]
+    (log/info "Max is: " @max)
+    max))
+
+(defn scrape-site
+  [& args]
+  (log/info "Ensure Geckodriver and Firefox with headless support are available.")
+  (let [{:keys [options arguments summary errors]} (parse-opts args cli-options)
+        driver (create-driver)
+        max (do
+              (goto-site driver (:url options))
+              (get-max driver))]
+    (while (< @max (:threshold options))
+      (try
+        (log/info "Sleeping for: " (:sleep options) " mins")
+        (.sleep TimeUnit/MINUTES (:sleep options))
+        (log/info "Refreshing...")
+        (api/refresh)
+        (reset! max (get-max driver))
+        (catch Throwable e (str " error : " (.getMessage e))))))
+  (log/info "Done"))
+#+END_SRC
+** javafx example with graalvm
+#+NAME: clojure-javafx
+#+BEGIN_SRC clojure :tangle no
+(ns jam.start
+   (:import
+   (javafx.scene Scene)
+   (javafx.application Application)
+   (javafx.application Platform)
+   (javafx.scene.control Button)
+   (javafx.stage Stage))
+  (:gen-class
+   :extends javafx.application.Application
+   :name jam.start
+   :main true))
+
+(defn -start [this ^Stage stage]
+  (println "START")
+  (.setScene stage (Scene. (Button. "My Button") 200 100))
+  (.show stage)
+  (println "started"))
+
+(defn -stop
+  [this]
+  (println "Exiting"))
+
+(defn -main
+  [& args]
+  (println "Starting")
+  (System/setProperty "prism.order" "sw")
+  (System/setProperty "prism.text" "t2k")
+  (System/setProperty "prism.nativepisces" "false")
+  (System/setProperty "prism.allowhidpi" "false")
+  (System/setProperty "prism.vsync" "false")
+  (Application/launch jam.start args)
+  (println "Done"))
+#+END_SRC
+- Run with ~mvn gluonfx:build gluonfx:nativerun~
+  - needs at least java 17 GraalVM CE 22.1.0
+  - WIP: web profile breaks on clojure ex: mvn gluonfx:build gluonfx:nativerun -Pweb android profile breaks on clojure ex: mvn gluonfx:build gluonfx:nativerun -Pandroid
+#+NAME: clojure-javafx-pom
+#+BEGIN_SRC maven :tangle no
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>mvnclj</name>
+    <groupId>com.mycompany</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>clojure</packaging>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>18.0.1</javafx.version>
+        <client.plugin.version>1.0.14</client.plugin.version>
+        <clojure.mainClass>jam.start</clojure.mainClass>
+        <mainClassName>jam.start</mainClassName>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.theoryinpractise</groupId>
+                <artifactId>clojure-maven-plugin</artifactId>
+                <version>1.8.4</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <mainClass>${mainClassName}</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>${mainClassName}</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.gluonhq</groupId>
+                <artifactId>gluonfx-maven-plugin</artifactId>
+                <version>${client.plugin.version}</version>
+                <configuration>
+                    <mainClass>${mainClassName}</mainClass>
+                    <nativeImageArgs>
+                        <list>--no-fallback</list>
+                        <list>-J-Dclojure.compiler.direct-linking=true</list>
+                        <list>-J-Dclojure.spec.skip-macros=true</list>
+                    </nativeImageArgs>
+                    <verbose>true</verbose>
+                    <enableSWRendering>true</enableSWRendering>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.clojure</groupId>
+            <artifactId>clojure</artifactId>
+            <version>1.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.clj-easy</groupId>
+            <artifactId>graal-build-time</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>gluon</id>
+            <name>gluon</name>
+            <url>https://nexus.gluonhq.com/nexus/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>sona</id>
+            <name>sona</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+        <repository>
+            <id>clojars.org</id>
+            <name>clojars</name>
+            <url>https://repo.clojars.org</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>gluon-releases</id>
+            <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
+        </pluginRepository>
+    </pluginRepositories>
+        <profiles>
+        <profile>
+            <id>desktop</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <gluonfx.target>host</gluonfx.target>
+            </properties>
+        </profile>
+        <profile>
+            <id>android</id>
+            <properties>
+                <gluonfx.target>android</gluonfx.target>
+            </properties>
+        </profile>
+        <profile>
+            <id>ios</id>
+            <properties>
+                <gluonfx.target>ios</gluonfx.target>
+            </properties>
+        </profile>
+        <profile>
+            <id>web</id>
+            <properties>
+                <gluonfx.target>web</gluonfx.target>
+            </properties>
+        </profile>
+    </profiles>
+</project>
+#+END_SRC

@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       6cb9147a-f7ca-4b2f-af98-14347eaba82f
+:END:
+#+title: docker
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* docker
+** dockerfile of multi image builder
+#+NAME: dockerfile-example
+#+BEGIN_SRC dockerfile :tangle no
+FROM clojure as builder
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY project.clj /usr/src/app/
+RUN lein deps
+COPY src /usr/src/app/src
+RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" app-standalone.jar
+
+FROM jam/graal as native
+WORKDIR /tmp
+COPY --from=builder /usr/src/app/app-standalone.jar ./
+# graal reflection json config for snakeyaml.
+COPY graal.json .
+RUN graalvm-ce-${GRAALVM_V}/bin/native-image \
+  --no-server \
+  --static \
+  -H:ReflectionConfigurationFiles=/tmp/graal.json \
+#  -H:+ReportUnsupportedElementsAtRuntime \
+  -jar /tmp/app-standalone.jar
+
+FROM scratch
+COPY --from=native /tmp/app-standalone .
+ENTRYPOINT ["/app-standalone"]
+#+END_SRC
+

@@ -26,6 +26,7 @@
 - mask with ~systemctl mask swap.target~
 - remote management with ssh ~systemctl --host=user@somesuchhost.com status SERVICE.unit~
 - restart interval with ~RestartSec=5~
+- cron like with a ~service.timer~ containing a schedule like ~OnCalendar=Sunday *-*-* 4:00:00~ and a service with the ~Type=oneshot~
 *** timedatectl
 - systemd-timesyncd ~timedatectl set-ntp true~
 - ~set-local-rtc~ to set hardware clock to localtime instead of UTC

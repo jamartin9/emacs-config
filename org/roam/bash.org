@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       b3b9d8e3-c20f-49ec-acf7-0cb2cf4a6c1a
+:END:
+#+title: bash
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* bash
+  - array syntax ~[@]~
+  - ~--posix~ for sh mode
+  - ~&>~ ~2>&1~ redirects stderr and stdout
+** snippets
+#+NAME: bash-examples
+#+BEGIN_SRC bash :tangle no
+#!/usr/bin/env bash
+# trap errors
+set -Eeuxo pipefail
+trap "ERROR TRAPPED" ERR
+_install_stuff(){
+    # setup dir
+    local OLD_DIR="$( pwd )"
+    local CUR_DIR="$( dirname $0 )"
+    cd ${CUR_DIR}
+    # ensure binary
+    local ANSIBLE_CMD="ansible-playbook"
+    if ! [ -x "$(command -v ${ANSIBLE_CMD})" ]; then
+        ANSIBLE_CMD="${HOME}/.local/bin/ansible-playbook"
+    fi
+    # glob
+    for dir in ${CUR_DIR}/*/; do
+        cd ${dir}
+        ${ANSIBLE_CMD} ./*-playbook.yaml
+        cd ..
+    done
+    # return to calling dir
+    cd ${OLD_DIR}
+}
+# run and cleanup
+_install_stuff
+unset _install_stuff
+#+END_SRC

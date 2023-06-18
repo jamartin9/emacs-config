@@ -1,0 +1,57 @@
+:PROPERTIES:
+:ID:       b8d0efc3-099f-4791-b65a-a168ff56aafd
+:END:
+#+title: gradle
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* gradle
+- build DSL for jvm
+#+NAME: settings.gradle
+#+BEGIN_SRC gradle :tangle no
+rootProject.name = 'aggregator'
+// include all gradle builds
+
+fileTree('.') {
+    include '**/build.gradle'
+    exclude 'build.gradle', '**/node_modules/**/build.gradle', '' // Exclude the root build file and node modules
+}.collect { relativePath(it.parent).replace(File.separator, ':') }
+        .each {
+    def shortName = it.tokenize(':')[-1]
+    def projName = ':' + shortName
+    def folder = new File(it.replace(':', File.separator) + '/settings.gradle')
+    if (folder.exists()) {
+        println('includeBuild ' + it.replace(':', File.separator))
+        //includeBuild it.replace(':', File.separator)
+    }else{
+        // allow referencing projects by their short name with the path set
+        println("including regular " + shortName)
+        include(it)
+        //project(projName).projectDir = new File(it.replace(':', File.separator))
+        //Properties props = new Properties()
+        //props.load(new FileInputStream(it.replace(':', File.separator)+'/gradle.properties'))
+        //props.each { prop ->
+        //project(projName).ext.set(prop.key, prop.value)
+        //}
+    }
+
+}
+
+// add all composite builds marked by no build.gradle
+fileTree('.') {
+    include '**/settings.gradle'
+    exclude 'settings.gradle', '**/node_modules/**/settings.gradle' // Exclude the root build file and node modules
+}.collect { relativePath(it.parent).replace(File.separator, ':') }
+        .each {
+    def folder = new File(it.replace(':', File.separator) + '/build.gradle')
+    if (folder.exists()) {
+        println('Skipping Composite '+ it)
+    }else{
+        println("including composite " + it)
+        include(it)
+    }
+}
+#+END_SRC
+

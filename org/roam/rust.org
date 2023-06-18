@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       e518d6e6-18f5-4bb5-8b92-135b125b5797
+:END:
+#+title: rust
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* rust
+-  ~cargo test -- --nocapture~ for ~println!()~
+- rls removed in 1.65 for rust-analyzer
+- HashTable uses SwissTable(DoS resistance)
+  - [[https://morestina.net/blog/1843/the-stable-hashmap-trap][conflicts with other hashers]] like fxhash on insertion. Use random init state.
+- https://rust-lang.github.io/api-guidelines/checklist.html
+- reference counting can be checked by [[https://github.com/matthieu-m/static-rc][statically]]
+- default allocator can be changed to jemalloc to avoid heap fragmentation
+#+NAME: rust-release-profile
+#+BEGIN_SRC toml :tangle no
+[profile.release]
+lto = true
+codegen-units = 1 # reduce parallel codegen for increased optimization
+strip = true
+opt-level = "z" # smallest binary instead of speed
+panic = "abort"
+#+END_SRC
+- rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview

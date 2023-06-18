@@ -67,5 +67,6 @@
 - BaoFeng programmable in unregistered frequency with CHIRP
 
 - intel optane persistent high write nvme SSD cache
+  - [[https://ieeexplore.ieee.org/document/9387168][ULTRARAM]] quantum RAM paper
 
 - 'auto sear' plastic converts gun to fully automatic

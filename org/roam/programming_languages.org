@@ -9,13 +9,8 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Programming Languages
 The tower of babel is your type system as a macro
-** guile
-- goops for objects instead of records
-- can embed precise gc [[https://github.com/wingo/whippet-gc][whippet]]
-- goblins adding wasm support for distributed objects
-- guile wasm https://gitlab.com/spritely/guile-hoot-updates/
-** clojure
-- https://aphyr.com/posts/353-rewriting-the-technical-interview
+** [[id:d6237a00-1daa-4752-b311-1749950f4f6e][guile]]
+** [[id:fd6e2c21-220f-4d63-ab7e-5004dc053e5b][clojure]]
 ** elisp
 - eieio for objects
 ** shell
@@ -23,76 +18,36 @@ The tower of babel is your type system as a macro
   - posix shell
   - https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/utilities/sh.html
   - ~cmd 2>&1 | tee -- "log.txt"~
-- bash
-  - array syntax ~[@]~
-  - ~--posix~ for sh mode
-  - ~&>~ ~2>&1~ redirects stderr and stdout
-- zsh
-  - ~(P)~ array syntax
-  - shell script compilation (zinit automatically does)
-  - shell/bash emulation
-  - p10k theme starts git daemon in background
+- [[id:b3b9d8e3-c20f-49ec-acf7-0cb2cf4a6c1a][bash]]
+- [[id:948e8828-a510-4088-a846-888cfc719914][zsh]]
 - ksh
   - setenv for environment variables
 ** [[id:12a3e66b-5ada-4bfc-ab64-819a0d46d204][c]]
 ** c++
 - https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
 - gcc < 11 can be built with c++98; c++11 required for 11+
-** rust
--  ~cargo test -- --nocapture~ for ~println!()~
-- rls removed in 1.65 for rust-analyzer
-- HashTable uses SwissTable(DoS resistance)
-  - [[https://morestina.net/blog/1843/the-stable-hashmap-trap][conflicts with other hashers]] like fxhash on insertion. Use random init state.
-- https://rust-lang.github.io/api-guidelines/checklist.html
-- reference counting can be checked by [[https://github.com/matthieu-m/static-rc][statically]]
-- default allocator can be changed to jemalloc to avoid heap fragmentation
-#+NAME: rust-release-profile
-#+BEGIN_SRC toml :tangle no
-[profile.release]
-lto = true
-codegen-units = 1 # reduce parallel codegen for increased optimization
-strip = true
-opt-level = "z" # smallest binary instead of speed
-panic = "abort"
-#+END_SRC
-- rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview
+** [[id:e518d6e6-18f5-4bb5-8b92-135b125b5797][rust]]
 ** [[id:a168933c-6a2b-456e-9fd0-760c5bc180dc][css]]
 ** [[id:7c407252-45a1-41a6-901a-cfdb19a6ac36][make]]
 ** [[id:0713d4b4-4d66-495b-9d1b-192c91a8ab9f][elixir]]
 ** [[id:b4f4114e-75e8-4312-8c96-5567ca6d6b80][julia]]
-** golang
-- GOMEMLIMIT to control heap size to avoid GC
-- disable default proxy
-  - go env -w GOPROXY=direct
-  - go env -w GOSUMDB=off
-- raw syscalls vs libc
-  - CGO_ENABLED to toggle libc linkage
-- 6 month release cycle
-- export with capitalization
-- vendors dependencies by default
-- large std library
-  - can have ossification issues such as ed25519 signature malleability update cadence
-    - https://hdevalence.ca/images/ed25519-comparison.png
-- TCP ~NODELAY~ set by default (no batching with nagle's algorithm)
+** [[id:ec8d7fc7-d5fa-4265-b795-043a5e55cd33][golang]]
+** [[id:0a869230-4f44-4e06-97a1-e35ec5cde213][ruby]]
 ** jvm
 - Valhalla for value objects (remove boxing overhead)
 - Loom for user mode green threads
 - panama for native library linkage
-*** java
-- 6 months release
-- 3 year lts release
-- espresso for java on java (graalvm)
-- microprofile for javaee
-- sealed classes
-- records
+*** [[id:2b605045-23e1-4995-9ed4-843699a0481f][java]]
 ** javascript
 *** typescript
 - compiles to javascript
 - any type for escape
 - deno run npm package with ~deno run --allow-all npm:SomeSuchCommand~ or a ts file with ~import express from "npm:express@^4.20"~
 ** DSL
-- [[https://github.com/open-goal/jak-project][GOAL]]
+*** [[https://github.com/open-goal/jak-project][GOAL]]
   - jak 1-3 lisp game implementation
+*** [[id:6cb9147a-f7ca-4b2f-af98-14347eaba82f][docker]]
+*** [[id:b8d0efc3-099f-4791-b65a-a168ff56aafd][gradle]]
 ** WASM
 - sexp text format
 - stack based vm instructions
@@ -100,60 +55,9 @@ panic = "abort"
 - interoperability
   - js with SharedArrayBuffer
   - WASI for host
-** python
-- override behavior with double underscore methods like ~__str(self)__~
-- create and activate virtual environment ~python -m venv venv && source venv/bin/activate~
-- run a http server on port 8080 ~python -m http.server 8080~
-- pretty print json ~python -m json.tool~
-- [[https://peps.python.org/pep-0703/][PEP to remove GIL]]
+** [[id:a7f0c442-c2ec-4d7e-bc65-628631138d81][python]]
 ** asm
 *** x86
 - calling convention of setting registers and jumping
 - SIMD (xmmx) SSE/AVX(512)
-** gradle
-- build DSL for jvm
-#+NAME: settings.gradle
-#+BEGIN_SRC gradle :tangle no
-rootProject.name = 'aggregator'
-// include all gradle builds
-
-fileTree('.') {
-    include '**/build.gradle'
-    exclude 'build.gradle', '**/node_modules/**/build.gradle', '' // Exclude the root build file and node modules
-}.collect { relativePath(it.parent).replace(File.separator, ':') }
-        .each {
-    def shortName = it.tokenize(':')[-1]
-    def projName = ':' + shortName
-    def folder = new File(it.replace(':', File.separator) + '/settings.gradle')
-    if (folder.exists()) {
-        println('includeBuild ' + it.replace(':', File.separator))
-        //includeBuild it.replace(':', File.separator)
-    }else{
-        // allow referencing projects by their short name with the path set
-        println("including regular " + shortName)
-        include(it)
-        //project(projName).projectDir = new File(it.replace(':', File.separator))
-        //Properties props = new Properties()
-        //props.load(new FileInputStream(it.replace(':', File.separator)+'/gradle.properties'))
-        //props.each { prop ->
-        //project(projName).ext.set(prop.key, prop.value)
-        //}
-    }
-
-}
-
-// add all composite builds marked by no build.gradle
-fileTree('.') {
-    include '**/settings.gradle'
-    exclude 'settings.gradle', '**/node_modules/**/settings.gradle' // Exclude the root build file and node modules
-}.collect { relativePath(it.parent).replace(File.separator, ':') }
-        .each {
-    def folder = new File(it.replace(':', File.separator) + '/build.gradle')
-    if (folder.exists()) {
-        println('Skipping Composite '+ it)
-    }else{
-        println("including composite " + it)
-        include(it)
-    }
-}
-#+END_SRC
+** [[id:bf21269e-5bf5-4c51-be58-4c040d905e25][zig]]
