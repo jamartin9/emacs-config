@@ -18,6 +18,71 @@ This your brain on the internet
   - [[https://github.com/BuilderIO/partytown][web worker background loading]]
 - offline webapp manifest support with service worker
 - ARIA elements for accessibility
+- third-party iframe service workers can only register themselves if third party cookies are enabled ~chrome://settings/cookies~
+*** pwa
+- managed under ~brave://apps/~ or ~chrome://apps~
+- progressive web apps have a manifest and service worker for offline installable apps
+  - must have name, icons, start-url and display
+  - can be published as a TWA (trusted web app) android application with [[https://github.com/GoogleChromeLabs/bubblewrap][bubblewrap]]
+  - service workers should not cache the manifest, itself or icons (16x16 and 32x32 should be cached for browser favicons)
+  - service workers require https or ~chrome://flags/#unsafely-treat-insecure-origin-as-secure~ to be set locally
+- add the manifest to the html ~<head>~ as ~<link rel="manifest" href="./manifest.json">~
+#+NAME: manifest.json
+#+BEGIN_SRC javascript :tangle no
+{
+    "name": "Progressive Web App",
+    "short_name": "PWA",
+    "icons": [{
+      "src": "./icon-256.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      }],
+    "lang": "en-US",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "white",
+    "theme_color": "white"
+}
+#+END_SRC
+#+NAME: index.html-swjs
+#+BEGIN_SRC html :tangle no
+<script>
+    // register ServiceWorker
+    window.onload = () => {
+        'use strict';
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                    .register('./service_worker.js');
+        }
+    }
+</script>
+#+END_SRC
+#+NAME: service-worker.js
+#+BEGIN_SRC javascript :tangle no
+var cacheName = 'pwa';
+var filesToCache = [
+  './',
+  './index.html',
+  './build/bundle.js',
+  './build/bundle.wasm'
+];
+/* Start the service worker and cache all of the app's content */
+self.addEventListener('install', function(e) {
+  e.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.addAll(filesToCache);
+    })
+  );
+});
+/* Serve cached content when offline */
+self.addEventListener('fetch', function(e) {
+  e.respondWith(
+    caches.match(e.request).then(function(response) {
+      return response || fetch(e.request);
+    })
+  );
+});
+#+END_SRC
 ** [[id:aae21430-637a-4b92-8f8a-d35e9991e396][firefox]]
 ** chrome
 - ~--ignore-certificate-errors~ cli arg to enable expired certs

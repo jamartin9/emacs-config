@@ -376,6 +376,8 @@
   - Master programming by recreating your favorite technologies from scratch.
 ** colesbury/nogil
   - Multithreaded Python without the GIL
+** comfyanonymous/ComfyUI
+  - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
 ** comit-network/xmr-btc-swap
   - Bitcoin–Monero Cross-chain Atomic Swap
 ** commaai/openpilot
@@ -600,6 +602,10 @@
   - Chromium running inside your terminal
 ** fauxpilot/fauxpilot
   - FauxPilot - an open-source GitHub Copilot server
+** federicodotta/Brida
+  - The new bridge between Burp Suite and Frida!
+** federicodotta/ghidra2frida
+  - The new bridge between Ghidra and Frida!
 ** FeralInteractive/gamemode
   - Optimise Linux system performance on demand
 ** fereidani/kanal
@@ -842,6 +848,8 @@
   - Hypervisor Memory Introspection Core Library
 ** hwchase17/langchain
 - Building applications with LLMs through composability
+** hyprwm/Hyprland
+  - Hyprland is a highly customizable dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 ** i-net-software/JWebAssembly
   - Java bytecode to WebAssembly compiler
 ** IBM/AI-Descartes
@@ -923,7 +931,7 @@
 ** jgthms/bulma
   - Modern CSS framework based on Flexbox
 ** JiauZhang/DragGAN
-  - mplementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
+  - Implementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
 ** jitsi/jitsi-meet
   - Jitsi Meet - Secure, Simple and Scalable Video Conferences that you use as a standalone app or embed in your web application.
 ** jitsi/jitsi-videobridge
@@ -1004,6 +1012,8 @@
   - WebRTC Pluggable Transport - the original snowflake repo
 ** keybase/saltpack
   - a modern crypto messaging format
+** keylase/nvidia-patch
+  - This patch removes restriction on maximum number of simultaneous NVENC video encoding sessions imposed by Nvidia to consumer-grade GPUs.
 ** keystone-engine/keystone
   - Keystone assembler framework: Core (Arm, Arm64, Hexagon, Mips, PowerPC, Sparc, SystemZ & X86) + bindings
 ** KhronosGroup/glslang
@@ -1020,6 +1030,8 @@
   - Hacker's Keyboard (official)
 ** koalaman/shellcheck
   - ShellCheck, a static analysis tool for shell scripts
+** kohya-ss/sd-scripts
+  - This repository contains training, generation and utility scripts for Stable Diffusion XL.
 ** konsoletyper/teavm
   - Compiler of Java bytecode to JavaScript
 ** kovidgoyal/calibre
@@ -1210,6 +1222,8 @@
   - Microsoft SEAL is an easy-to-use and powerful homomorphic encryption library.
 ** microsoft/ShaderConductor
   - ShaderConductor is a tool designed for cross-compiling HLSL to other shading languages
+** microsoft/torchgeo
+  - TorchGeo: datasets, samplers, transforms, and pre-trained models for geospatial data
 ** microsoft/TypeScript
   - TypeScript is a superset of JavaScript that compiles to clean JavaScript output.
 ** microsoft/verona
@@ -1456,6 +1470,8 @@
   - OpenZFS on Linux and FreeBSD
 ** operator-framework/operator-sdk
   - SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding.
+** oracle-samples/bpftune
+  - bpftune uses BPF to auto-tune Linux systems
 ** oracle/adaptivemm
   - adaptivemm - A userspace daemon for proactive free memory management
 ** oracle/graal
@@ -1670,8 +1686,12 @@
   - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
 ** rustwasm/wasm-bindgen
   - Facilitating high-level interactions between Wasm modules and JavaScript
+** Ryujinx/Ryujinx
+  - Experimental Nintendo Switch Emulator written in C#
 ** s-rah/onionscan
   - OnionScan is a free and open source tool for investigating the Dark Web.
+** s0md3v/sd-webui-roop
+  - roop extension for StableDiffusion web-ui for face swap
 ** sagemathinc/cowasm
   - CoWasm: Collaborative WebAssembly for Servers and Browsers. Built using Zig. Supports Python with extension modules, including numpy.
 ** samrawal/emacs-secondmate
@@ -1780,6 +1800,8 @@
   - recreate scene releases
 ** sslab-gatech/Rudra
   - Rust Memory Safety & Undefined Behavior Detection
+** Stability-AI/generative-models
+  - Generative Models by Stability AI such as Stable Diffusion XL
 ** Stability-AI/StableLM
   - StableLM: Stability AI Language Models
 ** stackblitz/webcontainer-core
@@ -2066,6 +2088,8 @@
   - Xbox 360 Emulator Research Project
 ** xianyi/OpenBLAS
   - OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version.
+** XingangPan/DragGAN
+  - Official Code for DragGAN (SIGGRAPH 2023)
 ** xiph/flac
   - Free Lossless Audio Codec
 ** xiph/rav1e

@@ -6,6 +6,7 @@ The dependencies are: emacs >= 29/28, guix (guix.el), gnupg (authinfo), git (mag
 
 Current package considerations:
 embark for dwim shortcuts
+consult for commands
 combobulate for structural editing
 ts-fold for structural folding
 

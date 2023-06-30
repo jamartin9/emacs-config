@@ -20,7 +20,9 @@
 - LoRA is a finetunning mechanism
 - multi modal models (ViTS) combine visual image and text
 - steering vectors cache activation layer results and swap them for alignment at the same layer
-- transformers context length prediction can be expanded from the size used in training by using [[https://arxiv.org/pdf/2108.12409.pdf][ALiBi]]
+- transformers context length prediction can be expanded from the size used in training by using [[https://arxiv.org/pdf/2108.12409.pdf][ALiBi]] (or 0.5 scale on the positional embeddings like in SUPERHOT?)
+  - [[https://github.com/salesforce/xGen][xGen 8k context]]
+  - [[https://huggingface.co/lmsys/longchat-13b-16k][longchat 16k context]]
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]

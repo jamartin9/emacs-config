@@ -13,6 +13,7 @@
 - ~/etc/systemd/journald.conf~
   - ~SystemMaxUse=100M~
 - ~journalctl -u SERVICE~
+- previous boots dmesg log ~journalctl -k -b -1~
 - coredumpctl
 *** sysctl
 - ~net.ipv4.icmp_echo_ignore_all = 1~ in ~/etc/sysctl.conf~ or ~/etc/sysctl.d/90-override.conf~ to disable icmp

@@ -66,6 +66,9 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
     - selectively download layers if inclusion proof is acceptable
   - can store key value pairs of json etc
     - works with offer files
+  - ex of video sharing with datalayer https://github.com/jjldv/ChiaTubi
+- Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling
+  - chia wrapper BTC scam because their reserves were 0.59 and they require 1btc or more of wrapped to withdraw (double the btc they have).
 * monero
 - use block > 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)
 - supports tor with sending tx's and wallets
