@@ -15,6 +15,16 @@
 - https://rust-lang.github.io/api-guidelines/checklist.html
 - reference counting can be checked by [[https://github.com/matthieu-m/static-rc][statically]]
 - default allocator can be changed to jemalloc to avoid heap fragmentation
+- ~CROSS_CONTAINER_ENGINE=podman cross build --target x86_64-unknown-freebsd~
+  - freebsd tests only run on qemu runner
+  - set the image tag for newer cross
+#+NAME: Cross.toml
+#+BEGIN_SRC toml :tangle no
+[target.x86_64-unknown-freebsd]
+image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:main"
+#runner = "qemu-user"
+#+END_SRC
+- rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview
 #+NAME: rust-release-profile
 #+BEGIN_SRC toml :tangle no
 [profile.release]
@@ -24,4 +34,3 @@ strip = true
 opt-level = "z" # smallest binary instead of speed
 panic = "abort"
 #+END_SRC
-- rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview

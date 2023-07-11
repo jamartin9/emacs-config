@@ -50,3 +50,4 @@
 - ~pragma temp_store = memory;~ to disable temp writes
 - ~pragma mmap_size = 30000000000;~ for memory mapping
 - open in memory database with ~:memory:~
+- foreign keys disabled in transactions and by default ~PRAGMA foreign keys~

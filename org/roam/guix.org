@@ -891,11 +891,14 @@
 - platform specific binaries can be produces with the ~--tune~ flag
 - hpc channel for extra pytorch packages
   - https://gitlab.inria.fr/guix-hpc/guix-hpc/
+  - misc channels https://git.sr.ht/~whereiseveryone/toys/log
 - non root guix can be done through a series of env variables and flags
   - arg ~--listen=/socket~ and/or env vars
 - app img run ~mount thing.AppImage tmpmnt -o offset=$(guix shell -C -F zlib -- "./thing.AppImage --appimage-offset")~
 - guix shell can emulate normal fs with --emulate-fhs
 - set package as GC root with ~ln --symbolic --force /path/to/guix/packagelink /var/guix/gcroots~ for guix copy
+- download source with ~guix build -S PKG~
+  - search with ~rg -a -z "STR" /gnu/store/PKG.tar.gz~
 #+NAME: guix-fhs-examples
 #+BEGIN_SRC sh :tangle no
 guix shell --container --network --emulate-fhs \
@@ -1013,7 +1016,5 @@ guix package -i glibc-utf8-locales
 **** TODO add guix package for alacritty with nvidia-libs
 **** TODO add guix package for httm
 - rust version too old with cargo-build-system
-**** TODO add guix package for btm
-- rust version issue with rust-parking-lot dep
 **** TODO add guix package for opensnitch
 - import needs step added for protoc header generation

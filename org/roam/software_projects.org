@@ -37,8 +37,14 @@ The coding will continue until morale improves!
     - customize qr code image?
   - PDF links to projects/pages
 ** Currently studying
-- Algorithms for use in physical world problems using mathematical tools via computational science
-
+- zk/fhe cryptography
+  - potential higher security/scaling than current probabilistic models
+- machine learning
+  - statically correct* interpretation of arbitrary patterns
+- p2p systems
+  - censorship resistance
+- compilers/jits/vms
+  - efficient computation
 *** wip projects
 - Automatic differentiation of ssa via conversion of cps to ssa for guile bytecode (guile uses cps unlike llvm/jvm with are ssa) :wip:
   - https://dl.acm.org/doi/10.1145/202529.202532 cps -> ssa

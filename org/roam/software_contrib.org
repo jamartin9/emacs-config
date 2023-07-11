@@ -58,10 +58,13 @@
     - enables more freebsd/mac/old linux metrics with sysctl
       - freebsd used sysctl support for hw temp sensors
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
+    - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
     - hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle
     - enables gpu power and processes information
   - [[https://github.com/ClementTsang/bottom/pull/836][update docs, enable cli arg and update default config]]
+- huggingface/transformers
+  - [[https://github.com/huggingface/transformers/pull/24736][typo bugfix to allow models to be ran with LocalAgent]]
 - borkdude/deps.clj :notupstream:
   - not upstream as author said it was 'not important'
   - [[https://github.com/jamartin9/deps.clj/commit/80c5973a7889cb3ab06764384a72c5509711317e][added musl static build]]

@@ -33,7 +33,7 @@ Finally some hardware support!
 - io-uring
   - io-uring-spawn for process launching
 - ~/proc/cpuinfo~  for model
-- abi tracker https://abi-laboratory.pro/?view=timeline&l=linux 
+- abi tracker https://abi-laboratory.pro/?view=timeline&l=linux
 ** [[id:e2a56828-55c2-4b26-868c-68d4c78903ab][video-playback]]
 ** [[id:fd5eb707-7fc5-40ee-a550-f167f8c43635][archive-formats]]
 ** [[id:aee3a8d2-a37a-454e-9359-0f56caa3502f][email]]
@@ -41,3 +41,7 @@ Finally some hardware support!
 ** misc
 - ~faillock --user $USER --reset~ for attempt reset
 - ~LD_LIBRARY_PATH~ and ~LD_PRELOAD~ environment variables override library location and load order respectively.
+  - ~LD_DEBUG=libs~ to monitor ~dlopen~ (redirect stderr for cli ~2>err.txt~)
+  - ~readelf -d~ to check the dynamic section of the elf for ~rpath~ (searched before library path) or ~runpath~ (searched after library path) or ~FLAGS~ such as ~NODEFLIB~
+    - each shared lib is searched for in the following order:  rpath, libary path, runpath, ld cache, system lib (skipped if compiled with ~ld -z nodefaultlib~)
+- strace for system call debugging

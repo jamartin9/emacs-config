@@ -128,8 +128,6 @@
   - signal-cli provides an unofficial commandline and dbus interface for signalapp/libsignal-service-java
 ** AscEmu/AscEmu
   - Official AscEmu repo... a never ending place to work. With cutting edge technologies XD
-** ashawkey/stable-dreamfusion
-  - A pytorch implementation of text-to-3D dreamfusion, powered by stable diffusion.
 ** asn-d6/onionbalance
   - Onionbalance v3  -- mirror of (https://gitlab.torproject.org/tpo/core/onionbalance/)
 ** assimp/assimp
@@ -148,8 +146,6 @@
   - Audio Editor
 ** autobrr/autobrr
   - Automation for downloads.
-** AUTOMATIC1111/stable-diffusion-webui
-  - Stable Diffusion web UI
 ** automerge/automerge
   - A JSON-like data structure (a CRDT) that can be modified concurrently by different users, and merged again automatically.
 ** avast/retdec
@@ -212,6 +208,8 @@
   - A faithful port of the clojure CLI bash script to Clojure
 ** borkdude/lein2deps
   - Lein project.clj to deps.edn converter
+** bounce-rs/bounce
+  - The uncomplicated Yew State management library
 ** boyter/scc
   - Sloc, Cloc and Code: scc is a very fast accurate code counter with complexity calculations and COCOMO estimates written in pure Go
 ** brendangregg/FlameGraph
@@ -262,8 +260,6 @@
   - Cap'n Proto serialization/RPC system - core tools and C++ library
 ** carp-lang/Carp
   - A statically typed lisp, without a GC, for real-time applications.
-** carson-katri/dream-textures
-  - Stable Diffusion built-in to Blender
 ** cathugger/mkp224o
   - vanity address generator for tor onion v3 (ed25519) hidden services
 ** CEA-LIST/Cingulata
@@ -294,8 +290,6 @@
   - ActivityPub-federated video streaming platform using P2P directly in your web browser
 ** Chris2011/Cucumberbeans
   - Cucumberbeans: the only feature file assistant you'll ever need.
-** chrislgarry/Apollo-11
-  - Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
 ** chrismaltby/gb-studio
   - A quick and easy to use drag and drop retro game creator for your favourite handheld video game system
 ** cilium/cilium
@@ -392,16 +386,12 @@
   - Unprivileged sandboxing tool
 ** containers/podman
   - Podman: A tool for managing OCI containers and pods.
-** continue-revolution/sd-webui-segment-anything
-  - Segment Anything for Stable Diffusion WebUI
 ** Cookie-AutoDelete/Cookie-AutoDelete
   - Firefox and Chrome WebExtension that deletes cookies and other browsing site data as soon as the tab closes, domain changes, browser restarts, or a combination of those events.
 ** copy/v86
   - x86 virtualization in your browser, recompiling x86 to wasm on the fly
 ** coq/coq
   - Coq is a formal proof management system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs.
-** coqui-ai/TTS
-  - a deep learning toolkit for Text-to-Speech, battle-tested in research and production
 ** CorentinJ/Real-Time-Voice-Cloning
   - Clone a voice in 5 seconds to generate arbitrary speech in real-time
 ** coreutils/coreutils
@@ -468,8 +458,6 @@
   - The missing puzzle piece for NVPTX experience with Rust
 ** dessant/buster
   - Captcha solver extension for humans
-** DFHack/stonesense
-  - A retro isometric visualizer for Dwarf Fortress
 ** dgoulet/torsocks
   - Library to torify application - NOTE: upstream has been moved to https://gitweb.torproject.org/torsocks.git
 ** DioxusLabs/dioxus
@@ -546,8 +534,6 @@
   - Emscripten: An LLVM-to-WebAssembly Compiler
 ** endrazine/wcc
   - The Witchcraft Compiler Collection
-** enhuiz/vall-e
-  - An unofficial PyTorch implementation of the audio LM VALL-E
 ** envoyproxy/envoy
   - Cloud-native high-performance edge/middle/service proxy
 ** EpistasisLab/tpot
@@ -590,8 +576,6 @@
   - Inference code for LLaMA models
 ** facebookresearch/Private-ID
   - A collection of algorithms that can do join between two parties while preserving the privacy of keys on which the join happens
-** facebookresearch/segment-anything
-  - The repository provides code for running inference with the SegmentAnything Model (SAM), links for downloading the trained model checkpoints, and example notebooks that show how to use the model.
 ** Fallenbagel/jellyseerr
   - fork of overseerr for jellyfin support
 ** farcaster-project/farcaster-node
@@ -650,14 +634,12 @@
   - Automate the (annoying) installation of mingw on Arch and Arch-based distros
 ** fsfe/reuse-tool
   - reuse is a tool for compliance with the REUSE recommendations.
-** fulldecent/system-bus-radio
-  - Transmits AM radio on computers without radio transmitting hardware.
+** futursolo/stylist-rs
+  - A CSS-in-Rust styling solution for WebAssembly Applications
 ** GalactechsLLC/dg_xch_utils
   - A collection of packages made for working with the Chia Blockchain using Rust
 ** GaloisInc/reopt
   - A tool for analyzing x86-64 binaries.
-** gaurav-arya/StochasticAD.jl
-  - Research package for automatic differentiation of programs containing discrete randomness.
 ** gcc-mirror/gcc
   - Gnu compiler collection
 ** ge0rg/aprsdroid
@@ -676,10 +658,6 @@
   - Universal shader translation in Rust
 ** gfx-rs/wgpu
   - Safe and portable GPU abstraction in Rust, implementing WebGPU API.
-** ggerganov/llama.cpp
-  - Port of Facebook's LLaMA model in C/C++
-** ggerganov/whisper.cpp
-  - Port of OpenAI's Whisper model in C/C++
 ** GiovineItalia/Gadfly.jl
   - Crafty statistical graphics for Julia.
 ** git-lfs/git-lfs
@@ -838,12 +816,6 @@
   - A PSP emulator for Android, Windows, Mac and Linux, written in C++. Want to contribute? Join us on Discord at https://discord.gg/5NJB6dD or just send pull requests / issues. For discussion use the forums at forums.ppsspp.org.
 ** hsutter/cppfront
   - A personal experimental C++ Syntax 2 -> Syntax 1 compiler
-** huggingface/safetensors
-  - Simple, safe way to store and distribute tensors
-** huggingface/tokenizers
-  - Fast State-of-the-Art Tokenizers optimized for Research and Production
-** huggingface/transformers
-  - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
 ** hvmi/hvmi
   - Hypervisor Memory Introspection Core Library
 ** hwchase17/langchain
@@ -852,14 +824,10 @@
   - Hyprland is a highly customizable dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 ** i-net-software/JWebAssembly
   - Java bytecode to WebAssembly compiler
-** IBM/AI-Descartes
-  - Open source package for accelerated symbolic discovery of fundamental laws.
 ** IBM/differential-privacy-library
   - Diffprivlib: The IBM Differential Privacy Library
 ** IBM/fhe-toolkit-linux
   - IBM Fully Homomorphic Encryption Toolkit For Linux. This toolkit is a Linux based Docker container that demonstrates computing on encrypted data without decrypting it! The toolkit ships with two demos including a fully encrypted Machine Learning inference with a Neural Network and a Privacy-Preserving key-value search.
-** IDEA-Research/Grounded-Segment-Anything
-  - Marrying Grounding DINO with Segment Anything & Stable Diffusion & BLIP & Whisper - Automatically Detect , Segment and Generate Anything with Image, Text, and Speech Inputs
 ** idris-hackers/idris-crypto
   - Implementation of cryptographic primitives using Idris
 ** idris-lang/Idris-dev
@@ -874,8 +842,6 @@
   - The InitWare Suite of Middleware allows you to manage services and system resources as logical entities called units. Its main component is a service management ("init") system.
 ** Instagram/MonkeyType
   - A Python library that generates static type annotations by collecting runtime types
-** intel/neural-compressor
-  - Intel Neural Compressor (formerly known as Intel® Low Precision Optimization Tool), targeting to provide unified APIs for network compression technologies, such as low precision quantization, sparsity, pruning, knowledge distillation, across different deep learning frameworks to pursue optimal inference performance.
 ** ionic-team/capacitor
   - Build cross-platform Native Progressive Web Apps for iOS, Android, and the Web
 ** iovisor/bcc
@@ -903,15 +869,13 @@
 ** Jackett/Jackett
   - API Support for your favorite torrent trackers
 ** jagotu/BACIL
-  - An experimental interpreter for .NET CIL binaries for GraalVM 
+  - An experimental interpreter for .NET CIL binaries for GraalVM
 ** JakeWharton/wormhole
   - A time-traveling bytecode rewriter which adds future APIs to android.jar
 ** jart/bestline
   - ANSI Standard X3.64 Teletypewriter Command Session Library
 ** jart/cosmopolitan
   - build-once run-anywhere c library
-** jart/sectorlisp
-  - Bootstrapping LISP in a Boot Sector
 ** java-decompiler/jd-gui
   - A standalone Java Decompiler GUI
 ** javafxports/openjdk-jfx
@@ -930,8 +894,6 @@
   - Universal markup converter
 ** jgthms/bulma
   - Modern CSS framework based on Flexbox
-** JiauZhang/DragGAN
-  - Implementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
 ** jitsi/jitsi-meet
   - Jitsi Meet - Secure, Simple and Scalable Video Conferences that you use as a standalone app or embed in your web application.
 ** jitsi/jitsi-videobridge
@@ -1036,8 +998,6 @@
   - Compiler of Java bytecode to JavaScript
 ** kovidgoyal/calibre
   - The official source code repository for the calibre ebook manager
-** kristerw/pysmtgcc
-  - Some experiments with SMT solvers and GIMPLE IR
 ** ktock/container2wasm
   - Container to WASM converter
 ** kube-rs/kube
@@ -1104,8 +1064,6 @@
   - Main Liquibase Source
 ** lkrg-org/lkrg
   - Linux Kernel Runtime Guard
-** lllyasviel/ControlNet
-  - Let us control diffusion models!
 ** llvm/llvm-project
   - The LLVM Project is a collection of modular and reusable compiler and toolchain technologies. Note: the repository does not accept github pull requests at this moment. Please submit your patches at http://reviews.llvm.org.
 ** localstack/localstack
@@ -1116,14 +1074,6 @@
   - The JTS Topology Suite is a Java library for creating and manipulating vector geometry.
 ** lokke-org/lokke
   - Lokke: Clojure for Guile
-** lucidrains/make-a-video-pytorch
-  - Implementation of Make-A-Video, new SOTA text to video generator from Meta AI, in Pytorch
-** lucidrains/musiclm-pytorch
-  - Implementation of MusicLM, Google's new SOTA model for music generation using attention networks, in Pytorch
-** lucidrains/PaLM-rlhf-pytorch
-  - Implementation of RLHF (Reinforcement Learning with Human Feedback) on top of the PaLM architecture. Basically ChatGPT but with PaLM
-** lucidrains/toolformer-pytorch
-  - Implementation of Toolformer, Language Models That Can Use Tools, by MetaAI
 ** Luodian/Otter
   - Otter, a multi-modal model based on OpenFlamingo (open-sourced version of DeepMind's Flamingo), trained on MIMIC-IT and showcasing improved instruction-following and in-context learning ability.
 ** lurk-lang/lurk-rs
@@ -1208,8 +1158,6 @@
   - mimalloc is a compact general purpose allocator with excellent performance.
 ** microsoft/Nova
   - Nova: Recursive SNARKs without trusted setup
-** microsoft/onnxruntime
-  - ONNX Runtime: cross-platform, high performance ML inferencing and training accelerator
 ** microsoft/Picnic
   - Reference implementation of the Picnic post-quantum signature scheme
 ** microsoft/PQCrypto-SIDH
@@ -1240,8 +1188,6 @@
   - Native Rendering integration for JavaFX (13 and beyond)
 ** mikeperry-tor/vanguards
   - Vanguards help guard you from getting vanned...
-** Mikubill/sd-webui-controlnet
-  - WebUI extension for ControlNet
 ** minad/vertico
   - vertico.el - VERTical Interactive COmpletion
 ** mindsdb/mindsdb
@@ -1258,10 +1204,6 @@
   - Cute SVG React Components
 ** mjuhasz/BDSup2Sub
   - Blu-Ray/DVD subtitle editor
-** mlc-ai/web-llm
-  -  Bringing large-language models and chat to web browsers. Everything runs inside the browser with no server support.
-** mlc-ai/web-stable-diffusion
-  - Bringing stable diffusion models to web browsers. Everything runs inside the browser with no server support.
 ** mmhelloworld/idris-jvm
   - JVM bytecode back end for Idris
 ** moby/buildkit
@@ -1388,8 +1330,6 @@
   - Set of Python bindings to C++ libraries which provides full HW acceleration for video decoding, encoding and GPU-accelerated color space and pixel format conversions
 ** NVIDIAGameWorks/PhysX
   - NVIDIA PhysX SDK
-** NVIDIAGameWorks/rtx-remix
-  - Combined repo for the RTX-Remix runtime. dxd9 game modding.
 ** nysenate/OpenLegislation
   - OpenLegislation is a web service that delivers legislative information from the New York State Senate and Assembly to the public in near-real time.  It is used internally to serve up legislative data for nysenate.gov and the Bluebird-CRM.
 ** nzbget/nzbget
@@ -1410,8 +1350,6 @@
   - A gradio web UI for running Large Language Models like GPT-J 6B, OPT, GALACTICA, LLaMA, and Pygmalion.
 ** open-deepnude/open-deepnude
   - Open source reverse-engineered clone of DeepNude
-** open-goal/jak-project
-  - Reviving the language that brought us the Jak & Daxter Series
 ** open-mpi/ompi
   - Open MPI main development repository
 ** open-osrs/runelite
@@ -1614,8 +1552,6 @@
   - Simple makefile-based build for musl cross compiler
 ** Ride-The-Lightning/RTL
   - Ride The Lightning - A full function web browser app for LND, C-Lightning and Eclair
-** riffusion/riffusion-app
-  - Stable diffusion for real-time music generation (web app)
 ** ripienaar/free-for-dev
   - A list of SaaS, PaaS and IaaS offerings that have free tiers of interest to devops and infradev
 ** riscv-collab/riscv-gnu-toolchain
@@ -1700,6 +1636,8 @@
   - runj is an experimental, proof-of-concept OCI-compatible runtime for FreeBSD jails.
 ** sandboxie-plus/Sandboxie
   - Sandboxie Plus & Classic
+** Sanster/lama-cleaner
+  - Image inpainting tool powered by SOTA AI Model. Remove any unwanted object, defect, people from your pictures or erase and replace(powered by stable diffusion) any thing on your pictures.
 ** SAPikachu/flash3kyuu_deband
   - A deband library and filter for avisynth/vapoursynth
 ** sbstp/rust-igd
@@ -1710,16 +1648,6 @@
   - Decentralized pool for Monero mining
 ** schism-lang/schism
   - A self-hosting Scheme to WebAssembly compiler
-** SciML/DataDrivenDiffEq.jl
-  - Data driven modeling and automated discovery of dynamical systems for the SciML Scientific Machine Learning organization
-** SciML/DiffEqFlux.jl
-  - Universal neural differential equations with O(1) backprop, GPUs, and stiff+non-stiff DE solvers, demonstrating scientific machine learning (SciML) and physics-informed machine learning methods
-** SciML/DifferentialEquations.jl
-  - Multi-language suite for high-performance solvers of differential equations and scientific machine learning (SciML) components. Ordinary differential equations (ODEs), stochastic differential equations (SDEs), delay differential equations (DDEs), differential-algebraic equations (DAEs), and more in Julia.
-** SciML/ModelingToolkit.jl
-  - An acausal modeling framework for automatically parallelized scientific machine learning (SciML) in Julia. A computer algebra system for integrated symbolics for physics-informed machine learning and automated transformations of differential equations
-** SciML/Optimization.jl
-  - Local, global, and beyond optimization for scientific machine learning (SciML)
 ** screeps/screeps
   - A standalone server for programming game Screeps
 ** scriptzteam/SCENE-SCRiPTS
@@ -1744,8 +1672,6 @@
   - A command-line benchmarking tool
 ** SheetJS/sheetjs
   - SheetJS Spreadsheet Data Toolkit -- New home https://git.sheetjs.com/SheetJS/sheetjs
-** shyamsn97/mario-gpt
-  - Generating Mario Levels with GPT2. Code for the paper "MarioGPT: Open-Ended Text2Level Generation through Large Language Models" https://arxiv.org/abs/2302.05981
 ** sigma/pcache
   - persistent caching for Emacs
 ** signalapp/libsignal
@@ -1800,8 +1726,6 @@
   - recreate scene releases
 ** sslab-gatech/Rudra
   - Rust Memory Safety & Undefined Behavior Detection
-** Stability-AI/generative-models
-  - Generative Models by Stability AI such as Stable Diffusion XL
 ** Stability-AI/StableLM
   - StableLM: Stability AI Language Models
 ** stackblitz/webcontainer-core
@@ -1864,8 +1788,6 @@
   -  alternative Reddit front-end focused on privacy https://teddit.net
 ** TencentARC/GFPGAN
   - GFPGAN aims at developing Practical Algorithms for Real-world Face Restoration.
-** TencentARC/T2I-Adapter
-  - T2I-Adapter
 ** tensorflow/tfjs
   - A WebGL accelerated JavaScript library for training and deploying ML models.
 ** testcontainers/testcontainers-rs
@@ -1938,8 +1860,6 @@
   - NetBSD/pkgsrc fork for our binary package repositories
 ** TritonDataCenter/smartos-live
   - For more information, please see http://smartos.org/  For any questions that aren't answered there, please join the SmartOS discussion list: https://smartos.topicbox.com/groups/smartos-discuss
-** TritonVM/triton-vm
-  - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
 ** tui-rs-revival/ratatui
   - tui-rs revival project
 ** turbolinks/turbolinks
@@ -2072,10 +1992,6 @@
   - A customizable, open-source ecommerce platform built on WordPress. Build any commerce solution you can imagine.
 ** woodrush/lambdalisp
   - A Lisp interpreter written in untyped lambda calculus
-** worldreboot/twitch-reloaded-roku
-  - An Improvable™ Twitch app for Roku
-** x-hw/amazing-qr
-  - amazing QRCode generator in Python (supporting animated gif)
 ** xahlee/xah-fly-keys
   - the most efficient keybinding for emacs
 ** XavierXiao/Dreambooth-Stable-Diffusion
@@ -2088,8 +2004,6 @@
   - Xbox 360 Emulator Research Project
 ** xianyi/OpenBLAS
   - OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version.
-** XingangPan/DragGAN
-  - Official Code for DragGAN (SIGGRAPH 2023)
 ** xiph/flac
   - Free Lossless Audio Codec
 ** xiph/rav1e
@@ -2155,6 +2069,77 @@
 ** zx2c4/password-store
   - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
 
+* machine learning
+** ashawkey/stable-dreamfusion
+  - A pytorch implementation of text-to-3D dreamfusion, powered by stable diffusion.
+** AUTOMATIC1111/stable-diffusion-webui
+  - Stable Diffusion web UI
+** carson-katri/dream-textures
+  - Stable Diffusion built-in to Blender
+** continue-revolution/sd-webui-segment-anything
+  - Segment Anything for Stable Diffusion WebUI
+** coqui-ai/TTS
+  - a deep learning toolkit for Text-to-Speech, battle-tested in research and production
+** enhuiz/vall-e
+  - An unofficial PyTorch implementation of the audio LM VALL-E
+** facebookresearch/segment-anything
+  - The repository provides code for running inference with the SegmentAnything Model (SAM), links for downloading the trained model checkpoints, and example notebooks that show how to use the model.
+** gaurav-arya/StochasticAD.jl
+  - Research package for automatic differentiation of programs containing discrete randomness.
+** ggerganov/llama.cpp
+  - Port of Facebook's LLaMA model in C/C++
+** ggerganov/whisper.cpp
+  - Port of OpenAI's Whisper model in C/C++
+** huggingface/safetensors
+  - Simple, safe way to store and distribute tensors
+** huggingface/tokenizers
+  - Fast State-of-the-Art Tokenizers optimized for Research and Production
+** huggingface/transformers
+  - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
+** IBM/AI-Descartes
+  - Open source package for accelerated symbolic discovery of fundamental laws.
+** IDEA-Research/Grounded-Segment-Anything
+  - Marrying Grounding DINO with Segment Anything & Stable Diffusion & BLIP & Whisper - Automatically Detect , Segment and Generate Anything with Image, Text, and Speech Inputs
+** intel/neural-compressor
+  - Intel Neural Compressor (formerly known as Intel® Low Precision Optimization Tool), targeting to provide unified APIs for network compression technologies, such as low precision quantization, sparsity, pruning, knowledge distillation, across different deep learning frameworks to pursue optimal inference performance.
+** JiauZhang/DragGAN
+  - Implementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
+** lllyasviel/ControlNet
+  - Let us control diffusion models!
+** lucidrains/make-a-video-pytorch
+  - Implementation of Make-A-Video, new SOTA text to video generator from Meta AI, in Pytorch
+** lucidrains/musiclm-pytorch
+  - Implementation of MusicLM, Google's new SOTA model for music generation using attention networks, in Pytorch
+** lucidrains/PaLM-rlhf-pytorch
+  - Implementation of RLHF (Reinforcement Learning with Human Feedback) on top of the PaLM architecture. Basically ChatGPT but with PaLM
+** lucidrains/toolformer-pytorch
+  - Implementation of Toolformer, Language Models That Can Use Tools, by MetaAI
+** microsoft/onnxruntime
+  - ONNX Runtime: cross-platform, high performance ML inferencing and training accelerator
+** Mikubill/sd-webui-controlnet
+  - WebUI extension for ControlNet
+** mlc-ai/web-llm
+  -  Bringing large-language models and chat to web browsers. Everything runs inside the browser with no server support.
+** mlc-ai/web-stable-diffusion
+  - Bringing stable diffusion models to web browsers. Everything runs inside the browser with no server support.
+** riffusion/riffusion-app
+  - Stable diffusion for real-time music generation (web app)
+** SciML/DataDrivenDiffEq.jl
+  - Data driven modeling and automated discovery of dynamical systems for the SciML Scientific Machine Learning organization
+** SciML/DiffEqFlux.jl
+  - Universal neural differential equations with O(1) backprop, GPUs, and stiff+non-stiff DE solvers, demonstrating scientific machine learning (SciML) and physics-informed machine learning methods
+** SciML/DifferentialEquations.jl
+  - Multi-language suite for high-performance solvers of differential equations and scientific machine learning (SciML) components. Ordinary differential equations (ODEs), stochastic differential equations (SDEs), delay differential equations (DDEs), differential-algebraic equations (DAEs), and more in Julia.
+** SciML/ModelingToolkit.jl
+  - An acausal modeling framework for automatically parallelized scientific machine learning (SciML) in Julia. A computer algebra system for integrated symbolics for physics-informed machine learning and automated transformations of differential equations
+** SciML/Optimization.jl
+  - Local, global, and beyond optimization for scientific machine learning (SciML)
+** Stability-AI/generative-models
+  - Generative Models by Stability AI such as Stable Diffusion XL
+** TencentARC/T2I-Adapter
+  - T2I-Adapter
+** XingangPan/DragGAN
+  - Official Code for DragGAN (SIGGRAPH 2023)
 * android
 ** f-droid/fdroidclient
   - Android client application.
@@ -2180,3 +2165,27 @@
   - Google play store without google account
 ** WireGuard/wireguard-android
   - Mirror only. Official repository is at https://git.zx2c4.com/wireguard-android
+
+* kewl
+** chrislgarry/Apollo-11
+  - Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
+** DFHack/stonesense
+  - A retro isometric visualizer for Dwarf Fortress
+** fulldecent/system-bus-radio
+  - Transmits AM radio on computers without radio transmitting hardware.
+** jart/sectorlisp
+  - Bootstrapping LISP in a Boot Sector
+** kristerw/pysmtgcc
+  - Some experiments with SMT solvers and GIMPLE IR
+** NVIDIAGameWorks/rtx-remix
+  - Combined repo for the RTX-Remix runtime. dxd9 game modding.
+** open-goal/jak-project
+  - Reviving the language that brought us the Jak & Daxter Series
+** shyamsn97/mario-gpt
+  - Generating Mario Levels with GPT2. Code for the paper "MarioGPT: Open-Ended Text2Level Generation through Large Language Models" https://arxiv.org/abs/2302.05981
+** TritonVM/triton-vm
+  - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
+** worldreboot/twitch-reloaded-roku
+  - An Improvable™ Twitch app for Roku
+** x-hw/amazing-qr
+  - amazing QRCode generator in Python (supporting animated gif)

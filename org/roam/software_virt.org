@@ -21,6 +21,7 @@ Simulate the simulation
       - vGpus are [[https://github.com/DualCoder/vgpu_unlock][software locked]] but available as cloud offerings (grid etc)
       - https://github.com/Arc-Compute/LibVF.IO for supported cards
       - https://github.com/OpenMdev/GVM-user for supported cards
+  - ~free-page-reporting=on~ to return guest memory to host (disable transparent huge pages on the guest as they will never be freed)
 - firecracker
   - 5.10 lts kernel
   - snapshots for faster boot after creation

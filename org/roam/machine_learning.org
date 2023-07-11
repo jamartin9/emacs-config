@@ -20,9 +20,11 @@
 - LoRA is a finetunning mechanism
 - multi modal models (ViTS) combine visual image and text
 - steering vectors cache activation layer results and swap them for alignment at the same layer
-- transformers context length prediction can be expanded from the size used in training by using [[https://arxiv.org/pdf/2108.12409.pdf][ALiBi]] (or 0.5 scale on the positional embeddings like in SUPERHOT?)
+- transformers context length prediction can be expanded from the size used in training by using [[https://arxiv.org/pdf/2108.12409.pdf][ALiBi in MPT]] (or 0.5 scale on the positional embeddings like in SUPERHOT?)
   - [[https://github.com/salesforce/xGen][xGen 8k context]]
   - [[https://huggingface.co/lmsys/longchat-13b-16k][longchat 16k context]]
+  - [[https://huggingface.co/syzymon/long_llama_3b][long llama 256k]]
+- https://github.com/EleutherAI/lm-evaluation-harness
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
@@ -32,7 +34,7 @@
     - [[https://github.com/riffusion/riffusion-app][Generate music from spectrograph]]
     - [[https://github.com/lllyasviel/ControlNet][Controlnet]] guided Stable diffusion from scribbles/images/depth maps
     - [[https://github.com/facebookresearch/segment-anything][inpainting selection with Segment Anything Model]]
-    - fine tune with [[https://github.com/cloneofsimo/lora][lora]]
+    - fine tune with [[https://github.com/cloneofsimo/lora][lora]] and [[https://github.com/huggingface/diffusers/tree/main/examples/dreambooth][dreambooth]]
 ** Large Language Models
   - chinchilla paper showed most models are over parameterized without enough data
   - [[https://github.com/facebookresearch/llama][Llama]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]] (gpt-neox tokenizer) and [[https://huggingface.co/openlm-research/open_llama_7b][OpenLLaMa]] on 1T tokens

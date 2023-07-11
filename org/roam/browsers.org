@@ -139,6 +139,6 @@ self.addEventListener('fetch', function(e) {
 - https://nr4.d-snf.net/
 - https://z-lib.org/
 - https://libgen.is/
-- https://zoro.to
+- https://aniwatch.to
 - https://cs.rin.ru
 - https://rutracker.org

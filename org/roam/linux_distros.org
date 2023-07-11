@@ -28,6 +28,7 @@ Having many flavors makes some lovely hot garbage...
 - arch based
 - pamac and pacman for packages
 - mkinitcpio for initraramfs
+- ~blacklist nouveau~ and ~options nvidia_drm modeset=1~ in ~/etc/modprobe.d/mwhd-gpu.conf~ for nvidia gpu direct render management
 *** [[id:18ebc285-c771-4420-a040-011fd3b96b51][openwrt]]
 *** RHEL
 - dracut for initraramfs
