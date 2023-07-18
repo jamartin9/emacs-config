@@ -19,6 +19,7 @@ This your brain on the internet
 - offline webapp manifest support with service worker
 - ARIA elements for accessibility
 - third-party iframe service workers can only register themselves if third party cookies are enabled ~chrome://settings/cookies~
+- URL hash fragments can store information that the browser should not send to backend (customization)
 *** pwa
 - managed under ~brave://apps/~ or ~chrome://apps~
 - progressive web apps have a manifest and service worker for offline installable apps

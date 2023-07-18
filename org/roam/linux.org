@@ -45,3 +45,4 @@ Finally some hardware support!
   - ~readelf -d~ to check the dynamic section of the elf for ~rpath~ (searched before library path) or ~runpath~ (searched after library path) or ~FLAGS~ such as ~NODEFLIB~
     - each shared lib is searched for in the following order:  rpath, libary path, runpath, ld cache, system lib (skipped if compiled with ~ld -z nodefaultlib~)
 - strace for system call debugging
+- ~smartctl~ or ~gsmartcontrol~ and ~nvme smart-log /dev/nvme0~ for disk stats

@@ -40,4 +40,6 @@ _install_stuff(){
 # run and cleanup
 _install_stuff
 unset _install_stuff
+THING=$(<somefile.txt)
+wg set %i private-key <(su user -c "export PASSWORD_STORE_DIR=/path/to/your/store/; pass WireGuard/private-keys/%i")
 #+END_SRC

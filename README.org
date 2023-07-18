@@ -80,6 +80,7 @@ git submodule foreach 'git checkout master'
 Emacs untangles the script from the org file (using noweb to copy/eval code) while expanding INCLUDE directives.
 Tangling is rerun when the org file is newer than the script (if present) and the html file.
 Cleanup is done via the ~clean~ arguments to the ~make-el~ wrapper.
+The wrapper is needed for org-roam, org-ids and html export tags.
 
 #+NAME: tangle
 #+BEGIN_SRC sh :tangle no

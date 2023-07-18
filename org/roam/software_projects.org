@@ -17,6 +17,11 @@ The coding will continue until morale improves!
   - supports passphrase encryption and decryption of ssh/gpg
   - added onion service secret file generation
     - so you can take 1 set of words and make a hidden service behind ssh with pgp signing/encryption for that set of bytes
+  - *Service Worker require third party cookies* ~chrome://settings/cookies~
+#+ATTR_HTML: :src https://jamartin9.github.io/key2words/index.html :width 100% :height 300
+#+BEGIN_iframe
+#+END_iframe
+
 - guix-channel
   - guile scheme guix channel for custom packages
   - mostly packages that are in process or unsuitable for nonguix or other repos
@@ -62,6 +67,8 @@ The coding will continue until morale improves!
   - use of linux compat for even more drivers via netbsd
 - org-mode reloadable code block runner in wasm for personal website :wip:
   - wasm code block runner with reloading (see https://github.com/wingo/wasm-jit for example)
+    - interop with libs like sympy (sagemath cowasm) for utils on site.
+- sqlite wasm full text search using http vfs of site :wip:
 ** old
 - matching
   - CUDA project for implementing the stable matching algorithm
@@ -71,6 +78,7 @@ The coding will continue until morale improves!
       - limited by find minimum (reduction) kernel which depends on the results of other parallel processes to finish the step in log n. (maybe solve with eventually consistent atmoic ops queue to avoid blocking?) nvidia's reduction kernel is O(n log n) as it is unbounded size despite extensive optimizations like block unrolling.
       - removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation
   - done as REU
+  - obe [[https://ashvardanian.com/posts/searching-stable-marriages/][for vector db]] (measuring closeness representation for large sets)
 - angular-stock-table :obe:
   - used beta angular material table and 3 way javascript sort
   - [[https://spaz.gitlab.io/angular-stock-table/][published as gitlab page]] (click two columns for double sort ordering)

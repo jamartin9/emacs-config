@@ -79,3 +79,12 @@ Steps taken:
 3. Went to hidden page ~192.168.1.1/Thermal_FAN.htm~ and verify the Fan temp sensor is  NaNC (broken) (set fan speed level?)
 4. Went to hidden page ~192.168.1.1/debug.htm~ and enabled fan always
 5. Returned the PoS and got a refund!
+* 2023
+** 2023-07 July
+*** 2023-07-15 Saturday
+:PROPERTIES:
+:ID:       1f164ab0-9f1e-4ca3-909f-0b8ba5113747
+:END:
+**** DONE oil change for 2017 f150-raptor 24350 miles <2023-07-15 Sat 14:16>
+- Fram filter again
+- add anti freeze/coolant (red/pink asian even tho ford calls for orange...)

@@ -22,6 +22,11 @@ Simulate the simulation
       - https://github.com/Arc-Compute/LibVF.IO for supported cards
       - https://github.com/OpenMdev/GVM-user for supported cards
   - ~free-page-reporting=on~ to return guest memory to host (disable transparent huge pages on the guest as they will never be freed)
+#+NAME: qemu-run-script
+#+BEGIN_SRC shell :tangle no
+#!/usr/bin/env bash
+qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::8081-:8081,hostfwd=tcp::8080-:8080 -enable-kvm -m 2570 -device virtio-blk,drive=myhd -drive if=none,file=/My-image.qcow2,id=myhd -spice port=5930,disable-ticketing
+#+END_SRC
 - firecracker
   - 5.10 lts kernel
   - snapshots for faster boot after creation

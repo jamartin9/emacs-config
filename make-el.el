@@ -65,6 +65,7 @@ NO-RUN: do not run the tangled argument"
                              (require 'ob-tangle)
                              (require 'ox)
                              (org-export-expand-include-keyword)
+                             (add-to-list 'org-html-html5-elements "iframe") ; export custom iframe tags
                              ;(add-to-list 'org-babel-default-lob-header-args '(:sync))
                              (org-babel-tangle nil nil nil)
                              (ignore-errors

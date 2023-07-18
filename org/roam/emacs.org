@@ -13,8 +13,10 @@
 - magit-generate-changelog for commit msg
 - gnus needs app password from google for 2fa or oauth token from gcloud
 - webkit environment variable(s) for built-in browser
-  - ~WEBKIT_FORCE_SANDBOX="0"~
+  - ~WEBKIT_FORCE_SANDBOX="0"~ is obe use ~WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=1~
+    - maybe set ~GST_PLUGIN_PATH~
 - android port manual entry specifies enabling 'special app permissions' for all files to access ~/sdcard~
+  - android port of fdroid is old and branch is unmerged; newer builds are on [[https://sourceforge.net/projects/android-ports-for-gnu-emacs/][sourceforge]]
 - signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
 - German air control ATC ran on emacs in the 90's
 *** org-mode notes

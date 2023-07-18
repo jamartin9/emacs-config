@@ -8,12 +8,6 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
-** 10XGenomics/rust-boomphf
-  - Fast and scalable minimal perfect hashing for massive key sets
-** 117HD/RLHD
-  - Old School RuneScape GPU renderer with a suite of graphical enhancements.
-** 1991viet/QuickDraw
-  - Implementation of Quickdraw - an online game developed by Google
 ** 1Password/typeshare
   - Typeshare is the ultimate tool for synchronizing your type definitions between Rust and other languages for seamless FFI.
 ** 200ok-ch/org-parser
@@ -32,16 +26,10 @@
   - Monospaced font family for user interface and coding environments
 ** AdoptOpenJDK/jitwatch
   - Log analyser / visualiser for Java HotSpot JIT compiler. Inspect inlining decisions, hot methods, bytecode, and assembly. View results in the JavaFX user interface.
-** advancedresearch/prop
-  - Propositional logic with types in Rust
-** AFLplusplus/AFLplusplus
-  - The fuzzer afl++ is afl with community patches, qemu 5.1 upgrade, collision-free coverage, enhanced laf-intel & redqueen, AFLfast++ power schedules, MOpt mutators, unicorn_mode, and a lot more!
 ** AFLplusplus/LibAFL
   - Advanced Fuzzing Library - Slot your Fuzzer together in Rust! Scales across cores and machines. For Windows, Android, MacOS, Linux, no_std, ...
 ** ahmedbougacha/dagger
   - Binary Translator to LLVM IR
-** alacritty/alacritty
-  - A cross-platform, OpenGL terminal emulator.
 ** alecmuffett/eotk
   - Enterprise Onion Toolkit
 ** AlexAltea/orbital
@@ -70,8 +58,6 @@
   - Molecule aids in the development and testing of Ansible roles
 ** ansible-semaphore/semaphore
   - Modern UI for Ansible
-** ansible/ansible
-  - Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain. Automate everything from code deployment to network configuration to cloud management, in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com.
 ** ansible/awx
   - AWX provides a web-based user interface, REST API, and task engine built on top of Ansible. It is one of the upstream projects for Red Hat Ansible Automation Platform.
 ** anthraxx/linux-hardened
@@ -108,8 +94,6 @@
   - Linux Runtime Security and Forensics using eBPF
 ** Arc-Compute/GVM-user
   - GVM-user.
-** Arc-Compute/LibVF.IO
-  - A vendor neutral GPU multiplexing tool driven by VFIO & YAML.
 ** archlinux/svntogit-community
   - Automatic import of svn 'community' repo (read-only mirror)
 ** arduino/Arduino
@@ -124,8 +108,6 @@
   - ArrayFire: a general purpose GPU library.
 ** Artomatix/infinity_tile_shader
   - Shader snippets for Artomatix Infinity Tiles (Wang Tiles)
-** AsamK/signal-cli
-  - signal-cli provides an unofficial commandline and dbus interface for signalapp/libsignal-service-java
 ** AscEmu/AscEmu
   - Official AscEmu repo... a never ending place to work. With cutting edge technologies XD
 ** asn-d6/onionbalance
@@ -142,20 +124,14 @@
   - Atmosphère is a work-in-progress customized firmware for the Nintendo Switch.
 ** atom0s/Steamless
   - Steamless is a DRM remover of the SteamStub variants.  The goal of Steamless is to make a single solution for unpacking all Steam DRM-packed files. Steamless aims to support as many games as possible.
-** audacity/audacity
-  - Audio Editor
 ** autobrr/autobrr
   - Automation for downloads.
 ** automerge/automerge
   - A JSON-like data structure (a CRDT) that can be modified concurrently by different users, and merged again automatically.
 ** avast/retdec
   - RetDec is a retargetable machine-code decompiler based on LLVM.
-** AVENTER-UG/mesos-m3s
-  - Apache Mesos Framework to run multiple Kubernetes
 ** aws/eks-anywhere
   - Run Amazon EKS on your own infrastructure
-** aya-rs/aya
-  - Aya is an eBPF library for the Rust programming language, built with a focus on developer experience and operability.
 ** babashka/scittle
   - Execute Clojure(Script) directly from browser script tags via SCI
 ** bard/emacs-director
@@ -168,34 +144,20 @@
   - Public repository of the QuickJS Javascript Engine. Pull requests are not accepted. Use the mailing list to submit patches.
 ** benbjohnson/litestream
   - Streaming replication for SQLite.
-** bevyengine/bevy
-  - A refreshingly simple data-driven game engine built in Rust
 ** bhauman/figwheel-main
   - Figwheel Main provides tooling for developing ClojureScript applications
 ** bhauman/lein-figwheel
   - Figwheel builds your ClojureScript code and hot loads it into the browser as you are coding!
-** bheisler/criterion.rs
-  - Statistics-driven benchmarking library for Rust
-** BiglySoftware/BiglyBT
-  - Feature-filled Bittorrent client based on the Azureus open source project
 ** binaryage/cljs-devtools
   - A collection of Chrome DevTools enhancements for ClojureScript developers
-** BishopFox/sliver
-  - Adversary Emulation Framework
 ** bitcoin/bitcoin
   - Bitcoin Core integration/staging tree
 ** bitwiseshiftleft/sjcl
   - Stanford Javascript Crypto Library
 ** bjorn3/browser_wasi_shim
   -  A WASI shim for in the browser
-** BLAKE3-team/BLAKE3
-  - the official Rust and C implementations of the BLAKE3 cryptographic hash function
-** blender/blender
-  - Official mirror of Blender
 ** BlinkDL/RWKV-LM
   - RWKV is an RNN with transformer-level LLM performance. It can be directly trained like a GPT (parallelizable). So it's combining the best of RNN and transformer - great performance, fast inference, saves VRAM, fast training, "infinite" ctx_len, and free sentence embedding.
-** bluecatengineering/dora
-  - A Rust DHCP server
 ** blueturtleai/gimp-stable-diffusion
   - Gimp plugin for stable diffusion
 ** blunt-instruments/MevWallet
@@ -208,8 +170,6 @@
   - A faithful port of the clojure CLI bash script to Clojure
 ** borkdude/lein2deps
   - Lein project.clj to deps.edn converter
-** bounce-rs/bounce
-  - The uncomplicated Yew State management library
 ** boyter/scc
   - Sloc, Cloc and Code: scc is a very fast accurate code counter with complexity calculations and COCOMO estimates written in pure Go
 ** brendangregg/FlameGraph
@@ -218,26 +178,14 @@
   - Safe, fast, small crypto using Rust
 ** brunoborges/webfx
   - WebFX runs FXML and Javascript based JavaFX applications remotely
-** btcpayserver/btcpayserver
-  - Accept Bitcoin payments. Free, open-source & self-hosted, Bitcoin payment processor.
 ** bugfest/tor-controller
   - Tor toolkit for Kubernetes (Tor instances, onion services and more)
-** build-trust/ockam
-  - Build secure-by-design applications that can Trust Data-in-Motion. Orchestrate end-to-end encryption, mutual authentication, key management, credential management & authorization policy enforcement — at scale.
 ** buildbot/buildbot
   - Python-based continuous integration testing framework; your pull requests are more than welcome!
 ** BuilderIO/partytown
-  - Relocate resource intensive third-party scripts off of the main thread and into a web worker. 🎉
+  - Relocate resource intensive third-party scripts off of the main thread and into a web worker.
 ** bulwarkid/virtual-fido
   - A Virtual FIDO2 USB Device
-** burn-rs/burn
-  - BURN: Burn Unstoppable Rusty Neurons
-** BurntSushi/ripgrep
-  - ripgrep recursively searches directories for a regex pattern while respecting your gitignore
-** bytecodealliance/cap-std
-  - Capability-oriented version of the Rust standard library
-** bytecodealliance/rustix
-  - Safe Rust bindings to POSIX-ish APIs
 ** bytecodealliance/wasi-nn
   - High-level bindings for wasi-nn system calls
 ** bytecodealliance/wasm-micro-runtime
@@ -250,8 +198,6 @@
   - A script that can be used to balance lightning channels of a lnd node
 ** C0nw0nk/Nginx-Lua-Anti-DDoS
   - A Anti-DDoS script to protect Nginx web servers using Lua with a HTML Javascript based authentication puzzle inspired by Cloudflare I am under attack mode an Anti-DDoS authentication page protect yourself from every attack type All Layer 7 Attacks Mitigating Historic Attacks DoS DoS Implications DDoS All Brute Force Attacks Zero day exploits Social Engineering Rainbow Tables Password Cracking Tools Password Lists Dictionary Attacks Time Delay Any Hosting Provider Any CMS or Custom Website Unlimited Attempt Frequency Search Attacks HTTP Basic Authentication HTTP Digest Authentication HTML Form Based Authentication Mask Attacks Rule-Based Search Attacks Combinator Attacks Botnet Attacks Unauthorized IPs IP Whitelisting Bruter THC Hydra John the Ripper Brutus Ophcrack unauthorized logins Injection Broken Authentication and Session Management Sensitive Data Exposure XML External Entities (XXE) Broken Access Control Security Misconfiguration Cross-Site Scripting (XSS) Insecure Deserialization Using Components with Known Vulnerabilities Insufficient Logging & Monitoring Drupal WordPress Joomla Flash Magento PHP Plone WHMCS Atlassian Products malicious traffic Adult video script avs KVS Kernel Video Sharing Clip Bucket Tube sites Content Management Systems Social networks scripts backends proxy proxies PHP Python Porn sites xxx adult gaming networks servers sites forums vbulletin phpbb mybb smf simple machines forum xenforo web hosting video streaming buffering ldap upstream downstream download upload rtmp vod video over dl hls dash hds mss livestream drm mp4 mp3 swf css js html php python sex m3u zip rar archive compressed mitigation code source sourcecode chan 4chan 4chan.org 8chan.net 8ch 8ch.net infinite chan 8kun 8kun.net anonymous anon tor services .onion torproject.org nginx.org nginx.com openresty.org darknet dark net deepweb deep web darkweb dark web mirror vpn reddit reddit.com adobe flash hackthissite.org dreamhack hack hacked hacking hacker hackers hackerz hackz hacks code coding script scripting scripter source leaks leaked leaking cve vulnerability great firewall china america japan russia .gov government http1 http2 http3 quic q3 litespeedtech litespeed apache torrents torrent torrenting webtorrent bittorrent bitorrent bit-torrent cyberlocker cyberlockers cyber locker cyberbunker warez keygen key generator free irc internet relay chat peer-to-peer p2p cryptocurrency crypto bitcoin miner browser xmr monero coinhive coin hive coin-hive litecoin ethereum cpu cycles popads pop-ads advert advertisement networks banner ads protect ovh blazingfast.io amazon steampowered valve store.steampowered.com steamcommunity thepiratebay lulzsec antisec xhamster pornhub porn.com pornhub.com xhamster.com xvideos xvdideos.com xnxx xnxx.com popads popcash cpm ppc
-** caddyserver/caddy
-  - Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS
 ** cake-tech/cake_wallet
   - The open source repository for Cake Wallet, a noncustodial multi-currency wallet, and Monero.com, a noncustodial Monero-only wallet. Need help? Check out https://guides.cakewallet.com
 ** can1357/NoVmp
@@ -264,10 +210,6 @@
   - vanity address generator for tor onion v3 (ed25519) hidden services
 ** CEA-LIST/Cingulata
   - Cingulata (pronounced "tchingulata") is a compiler toolchain and RTE for running C++ programs over encrypted data by means of fully homomorphic encryption techniques.
-** CeleritasCelery/rune
-  - Rust VM for Emacs
-** ceph/ceph
-  - Ceph is a distributed object, block, and file storage platform
 ** cert-manager/cert-manager
   - Automatically provision and manage TLS certificates in Kubernetes
 ** certbot/certbot
@@ -280,8 +222,6 @@
   - A Chaos Engineering Platform for Kubernetes.
 ** checkly/headless-recorder
   - Chrome extension that records your browser interactions and generates a Playwright or Puppeteer script.
-** Chia-Network/chia-blockchain
-  - Chia blockchain python implementation (full node, farmer, harvester, timelord, and wallet)
 ** Chia-Network/internal-custody
   - Smart coins to secure funds with M of N signature thresholds, re-keying, clawbacks, and timelock spends
 ** chip-red-pill/MicrocodeDecryptor
@@ -302,12 +242,8 @@
   - Distributed PostgreSQL as an extension
 ** cjdelisle/cjdns
   - An encrypted IPv6 network using public-key cryptography for address allocation and a distributed hash table for routing.
-** clap-rs/clap
-  - A full featured, fast Command Line Argument Parser for Rust
 ** clasp-developers/clasp
   - clasp Common Lisp environment
-** ClementTsang/bottom
-  - Yet another cross-platform graphical process/system monitor.
 ** clienthax/VirtueOS
   - VirtueOS for OSRS
 ** clj-commons/aleph
@@ -344,20 +280,12 @@
   - Clojure reader in Clojure
 ** cloud-hypervisor/cloud-hypervisor
   - A Virtual Machine Monitor for modern Cloud workloads. Features include CPU, memory and device hotplug, support for running Windows and Linux guests, device offload with vhost-user and a minimal compact footprint. Written in Rust with a strong focus on security.
-** cloudflare/boringtun
-  - Userspace WireGuard Implementation in Rust
 ** cloudflare/ebpf_exporter
   -  Prometheus exporter for custom eBPF metrics
-** cloudflare/lol-html
-  - Low output latency streaming HTML parser/rewriter with CSS selector-based API
 ** cloudflare/miniflare
   - Fully-local simulator for Cloudflare Workers
 ** cloudflare/slirpnetstack
   - slirp4netns implementation using gvisor/netstack
-** cloudflare/workerd
-  - The JavaScript / Wasm runtime that powers Cloudflare Workers
-** cloudflare/workers-rs
-  - Write Cloudflare Workers in 100% Rust via WebAssembly
 ** cloudflare/workers-sdk
   - Home to Wrangler, the CLI for Cloudflare Workers
 ** cloudnative-pg/cloudnative-pg
@@ -370,22 +298,12 @@
   - Master programming by recreating your favorite technologies from scratch.
 ** colesbury/nogil
   - Multithreaded Python without the GIL
-** comfyanonymous/ComfyUI
-  - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
 ** comit-network/xmr-btc-swap
   - Bitcoin–Monero Cross-chain Atomic Swap
-** commaai/openpilot
-  - openpilot is an open source driver assistance system. openpilot performs the functions of Automated Lane Centering and Adaptive Cruise Control for over 200 supported car makes and models.
 ** company-mode/company-mode
   - Modular in-buffer completion framework for Emacs
-** compiler-explorer/compiler-explorer
-  - Run compilers interactively from your web browser and interact with the assembly
 ** consp/apim-asbuilt-decode
   - Decoding of the Ford Sync 3 APIM AsBuilt data
-** containers/bubblewrap
-  - Unprivileged sandboxing tool
-** containers/podman
-  - Podman: A tool for managing OCI containers and pods.
 ** Cookie-AutoDelete/Cookie-AutoDelete
   - Firefox and Chrome WebExtension that deletes cookies and other browsing site data as soon as the tab closes, domain changes, browser restarts, or a combination of those events.
 ** copy/v86
@@ -406,28 +324,20 @@
   - Decrypt video from a streaming site with MPEG-DASH Widevine DRM encryption.
 ** cri-o/cri-o
   - Open Container Initiative-based implementation of Kubernetes Container Runtime Interface
-** cross-rs/cross
-  - “Zero setup” cross compilation and “cross testing” of Rust crates
 ** crossplane-contrib/provider-kubernetes
   - Crossplane provider to provision and manage Kubernetes objects on (remote) Kubernetes clusters.
-** crossplane/crossplane
-  - Cloud Native Control Planes
 ** crossplane/terrajet
   - Generate Crossplane Providers from any Terraform Provider
 ** CrunchyData/postgres-operator
   - Production PostgreSQL for Kubernetes, from high availability Postgres clusters to full-scale database-as-a-service.
 ** CryptoGrampy/HotShop
   - An Ephemeral, browser-based, no-server point of sale for receiving and validating Monero payments
-** curl/curl
-  - A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features
 ** curl/trurl
 - trurl is a command line tool for URL parsing and manipulation.
 ** Cxbx-Reloaded/Cxbx-Reloaded
   - Xbox (Original) Emulator
 ** DadSchoorse/vkBasalt
   - a vulkan post processing layer for linux
-** dalek-cryptography/bulletproofs
-  -  A pure-Rust implementation of Bulletproofs using Ristretto.
 ** danielkrupinski/Osiris
   - Free open-source game cheat for Counter-Strike: Global Offensive, written in modern C++. GUI powered by Dear ImGui.
 ** day8/re-com
@@ -436,8 +346,6 @@
   - A ClojureScript framework for building user interfaces, leveraging React
 ** dcos/dcos
   - DC/OS - The Datacenter Operating System
-** decathorpe/mitmproxy_wireguard
-  - WireGuard frontend for mitmproxy
 ** deep-floyd/IF
   - text-to-image model with a high degree of photorealism and language understanding
 ** deepfakes/faceswap
@@ -448,8 +356,6 @@
   - fast tensor library
 ** deepmind/mctx
   - Monte Carlo tree search in JAX
-** deepnight/ldtk
-  - Modern, lightweight and efficient 2D level editor
 ** DefinitelyTyped/DefinitelyTyped
   - The repository for high quality TypeScript type definitions.
 ** delphix/sdb
@@ -458,8 +364,6 @@
   - The missing puzzle piece for NVPTX experience with Rust
 ** dessant/buster
   - Captcha solver extension for humans
-** dgoulet/torsocks
-  - Library to torify application - NOTE: upstream has been moved to https://gitweb.torproject.org/torsocks.git
 ** DioxusLabs/dioxus
   - Friendly React-like GUI library for desktop, web, mobile, and more.
 ** DNSCrypt/dnscrypt-proxy
@@ -474,14 +378,6 @@
   - MCRT renderer
 ** DSecurity/efiSeek
   - Ghidra analyzer for UEFI firmware.
-** dslotter/HamPi
-  - HamPi
-** dtolnay/anyhow
-  - Flexible concrete Error type built on std::error::Error
-** dtolnay/thiserror
-  - derive(Error) for struct and enum error types
-** DualCoder/vgpu_unlock
-  - Unlock vGPU functionality for consumer grade GPUs.
 ** dubhater/vapoursynth-fillborders
   - Fills the borders of a clip
 ** dubhater/vapoursynth-mvtools
@@ -522,20 +418,12 @@
   - Emacs :heart: Debug Adapter Protocol
 ** emacs-lsp/lsp-mode
   - Emacs client/library for the Language Server Protocol
-** emacs-mirror/emacs
-  - Mirror of GNU Emacs
 ** emacscollective/no-littering
   - Help keeping ~/.emacs.d clean
 ** emacsmirror/rmsbolt
   - A compiler output viewer
-** emilk/egui
-  - egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native
 ** emscripten-core/emscripten
   - Emscripten: An LLVM-to-WebAssembly Compiler
-** endrazine/wcc
-  - The Witchcraft Compiler Collection
-** envoyproxy/envoy
-  - Cloud-native high-performance edge/middle/service proxy
 ** EpistasisLab/tpot
   - A Python Automated Machine Learning tool that optimizes machine learning pipelines using genetic programming.
 ** etcd-io/etcd
@@ -548,10 +436,6 @@
   - Build, Distribute and Run CO-RE eBPF programs easier with JSON and Webassembly
 ** evergreen-xch/cult-lite-farmer
   - A lite farmer and harvester for the Chia Blockchain.
-** evilsocket/opensnitch
-  - OpenSnitch is a GNU/Linux interactive application firewall inspired by Little Snitch.
-** extism/extism
-  - The Universal Plug-in System. Extend anything with WebAssembly.
 ** facebook/prophet
   - Tool for producing high quality forecasts for time series data that has multiple seasonality with linear or non-linear growth.
 ** facebook/relay
@@ -582,30 +466,18 @@
   - Farcaster cross-chain atomic swap node.
 ** faster-cpython/ideas
   - faster cpython ideas
-** fathyb/carbonyl
-  - Chromium running inside your terminal
 ** fauxpilot/fauxpilot
   - FauxPilot - an open-source GitHub Copilot server
 ** federicodotta/Brida
   - The new bridge between Burp Suite and Frida!
 ** federicodotta/ghidra2frida
   - The new bridge between Ghidra and Frida!
-** FeralInteractive/gamemode
-  - Optimise Linux system performance on demand
-** fereidani/kanal
-  - The fast sync and async channel that Rust deserves
 ** fesh0r/fernflower
   - Unofficial mirror of FernFlower Java decompiler (All pulls should be submitted upstream)
-** FFmpeg/FFmpeg
-  - Mirror of https://git.ffmpeg.org/ffmpeg.git
 ** FFMS/ffms2
   - An FFmpeg based source library and Avisynth/VapourSynth plugin for easy frame accurate access
-** firecracker-microvm/firecracker
-  - Secure and fast microVMs for serverless computing.
 ** firefox-devtools/profiler
   - Firefox Profiler — Web app for Firefox performance analysis
-** flamegraph-rs/flamegraph
-  - Easy flamegraphs for Rust projects and everything else, without Perl or pipes <3
 ** FlareSolverr/FlareSolverr
   - Proxy server to bypass Cloudflare protection
 ** flatwhatson/flycheck-guile
@@ -628,22 +500,14 @@
   - API Documentation Browser
 ** freedesktop/virglrenderer
   - VirGL virtual OpenGL renderer
-** frida/frida
-  - Clone this repo to build Frida
 ** Frogging-Family/mingw-on-arch-automator
   - Automate the (annoying) installation of mingw on Arch and Arch-based distros
 ** fsfe/reuse-tool
   - reuse is a tool for compliance with the REUSE recommendations.
-** futursolo/stylist-rs
-  - A CSS-in-Rust styling solution for WebAssembly Applications
 ** GalactechsLLC/dg_xch_utils
   - A collection of packages made for working with the Chia Blockchain using Rust
 ** GaloisInc/reopt
   - A tool for analyzing x86-64 binaries.
-** gcc-mirror/gcc
-  - Gnu compiler collection
-** ge0rg/aprsdroid
-  - APRSdroid - Geo-Location for Radio Amateurs
 ** generic-ebpf/generic-ebpf
   - Generic eBPF runtime
 ** geohot/qira
@@ -654,16 +518,10 @@
   - Official GeoServer repository
 ** geraldneale/py-blink_mojo-secure
   - Chialisp money privacy tool using non-interactive aggregated BLS signatures for security
-** gfx-rs/naga
-  - Universal shader translation in Rust
-** gfx-rs/wgpu
-  - Safe and portable GPU abstraction in Rust, implementing WebGPU API.
 ** GiovineItalia/Gadfly.jl
   - Crafty statistical graphics for Julia.
 ** git-lfs/git-lfs
   - Git extension for versioning large files
-** git/git
-  - Git Source Code Mirror - This is a publish-only repository but pull requests can be turned into patches to the mailing list via GitGitGadget (https://gitgitgadget.github.io/). Please follow Documentation/SubmittingPatches procedure for any of your improvements.
 ** gitbucket/gitbucket
   - A Git platform powered by Scala with easy installation, high extensibility & GitHub API compatibility
 ** glfw/glfw
@@ -676,16 +534,8 @@
   - Create native Java(FX) apps for desktop, mobile and embedded
 ** gnl/ghostwheel
   - Hassle-free inline clojure.spec with semi-automatic generative testing and side effect detection
-** GNOME/gimp
-  - Read-only mirror of https://gitlab.gnome.org/GNOME/gimp
 ** Gnucash/gnucash
   - GnuCash Double-Entry Accounting Program.
-** GNUnet-Mirror/GNUnet
-  -  Read-only mirror of GNUnet repository, updated periodically. NOTE: do not make pull requests here, nor comment any commits. Maintainers are not tracking this git mirror. -- Submit patches via https://bugs.gnunet.org or https://gnunet.org/en/contact.html -- Official Repo: https://git.gnunet.org/gnunet.git/ - Issues: https://bugs.gnunet.org -
-** gnuradio/gnuradio
-  - GNU Radio – the Free and Open Software Radio Ecosystem
-** go-gitea/gitea
-  - Git with a cup of tea, painless self-hosted git service
 ** go-vgo/robotgo
   - RobotGo, Go Native cross-platform GUI automation  @vcaesar
 ** godot-rust/gdext
@@ -738,36 +588,24 @@
   - Language focused docker images, minus the operating system.
 ** GoogleContainerTools/jib
   - Build container images for your Java applications.
-** gorhill/uBlock
-  - uBlock Origin - An efficient blocker for Chromium and Firefox. Fast and lean.
 ** gorhill/uMatrix
   - uMatrix: Point and click matrix to filter net requests according to source, destination and type
 ** gperftools/gperftools
   - Main gperftools repository
-** gpg/gnupg
-  - The GNU Privacy Guard. NOTE: Maintainers are not tracking this mirror. Do not make pull requests here, nor comment any commits, submit them usual way to bug tracker (https://www.gnupg.org/documentation/bts.html) or to the mailing list (https://www.gnupg.org/documentation/mailing-lists.html).
 ** graalvm/native-build-tools
   - Native-image plugins for various build tools
-** greatest-ape/aquatic
-  - High-performance open BitTorrent tracker (UDP, HTTP, WebTorrent)
 ** greenpau/caddy-git
   - Git Plugin for Caddy v2
 ** gridcoin-community/Gridcoin-Research
   - Gridcoin-Research
 ** gschup/bevy_ggrs
   - Bevy plugin for the GGRS P2P rollback networking library.
-** gschup/ggrs
-  - GGRS is a reimagination of GGPO, enabling P2P rollback networking in Rust. Rollback to the future!
 ** guardianproject/haven
   - Haven is for people who need a way to protect their personal spaces and possessions without compromising their own privacy, through an Android app and on-device sensors
 ** Guardsquare/proguard
   - ProGuard, Java optimizer and obfuscator
-** guix-mirror/guix
-  - Read-only mirror of GNU Guix — pull requests are ignored, see https://guix.gnu.org/en/manual/en/guix.html#Submitting-Patches instead
 ** hamsolo474/stable-diffusion-gimp-plugin
   - Gimp plugin for Stable Diffusion, based on the Krita Plugin
-** HandBrake/HandBrake
-  - HandBrake's main development repository
 ** haproxy/haproxy
   - HAProxy Load Balancer's development branch (mirror of git.haproxy.org)
 ** harubaru/waifu-diffusion
@@ -780,12 +618,8 @@
   - Define infrastructure resources using programming constructs and provision them using HashiCorp Terraform
 ** hashicorp/vagrant
   - Vagrant is a tool for building and distributing development environments.
-** hashicorp/vault
-  - A tool for secrets management, encryption as a service, and privileged access management
 ** hashworks/srrdb-Terminal-Client
   - A terminal client to access srrdb.com
-** hasse69/rar2fs
-  - FUSE file system for reading RAR archives
 ** helidon-io/helidon
   - Java libraries for writing microservices
 ** hensm/fx_cast
@@ -796,8 +630,6 @@
   - A basic gameboy emulator with terminal "Cloud Gaming" support
 ** hibernate/hibernate-orm
   - Hibernate's core Object/Relational Mapping functionality
-** HigherOrderCO/HVM
-  - A massively parallel, optimal functional runtime in Rust
 ** homenc/HElib
   - HElib is an open-source software library that implements homomorphic encryption. It supports the BGV scheme with bootstrapping and the Approximate Number CKKS scheme. HElib also includes optimizations for efficient homomorphic evaluation, focusing on effective use of ciphertext packing techniques and on the Gentry-Halevi-Smart optimizations.
 ** HomeOfVapourSynthEvolution/havsfunc
@@ -842,12 +674,14 @@
   - The InitWare Suite of Middleware allows you to manage services and system resources as logical entities called units. Its main component is a service management ("init") system.
 ** Instagram/MonkeyType
   - A Python library that generates static type annotations by collecting runtime types
+** intel/neural-compressor
+  - Intel Neural Compressor (formerly known as Intel® Low Precision Optimization Tool), targeting to provide unified APIs for network compression technologies, such as low precision quantization, sparsity, pruning, knowledge distillation, across different deep learning frameworks to pursue optimal inference performance.
 ** ionic-team/capacitor
   - Build cross-platform Native Progressive Web Apps for iOS, Android, and the Web
+** iopsystems/rezolus
+  - Systems performance telemetry
 ** iovisor/bcc
   - BCC - Tools for BPF-based Linux IO analysis, networking, monitoring, and more
-** iovisor/bpftrace
-  - High-level tracing language for Linux eBPF
 ** iovisor/ubpf
   - Userspace eBPF VM
 ** ipfs/ipfs
@@ -862,8 +696,6 @@
   - A collection of general purpose Vapoursynth functions to be reused in modules and scripts
 ** irulast/chia-crypto-utils
   - Cryptographic utilities in Dart for the Chia blockchain with a functional object model for manipulating Chia primitive types.
-** itmettkeDE/cargo-patch
-  - Cargo Subcommand for patching dependencies using patch files
 ** iv-org/invidious
   - Invidious is an alternative front-end to YouTube
 ** Jackett/Jackett
@@ -884,18 +716,12 @@
   - A modern, portable, easy to use crypto library.
 ** JeffBezanson/femtolisp
   - a lightweight, robust, scheme-like lisp implementation
-** jellyfin/jellyfin
-  - The Free Software Media System
 ** jepsen-io/jepsen
   -  A framework for distributed systems verification, with fault injection
 ** JetBrains/intellij-community
   - IntelliJ IDEA Community Edition & IntelliJ Platform
-** jgm/pandoc
-  - Universal markup converter
-** jgthms/bulma
-  - Modern CSS framework based on Flexbox
-** jitsi/jitsi-meet
-  - Jitsi Meet - Secure, Simple and Scalable Video Conferences that you use as a standalone app or embed in your web application.
+** JiauZhang/DragGAN
+  - Implementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
 ** jitsi/jitsi-videobridge
   - Jitsi Videobridge is a WebRTC compatible video router or SFU that lets build highly scalable video conferencing infrastructure (i.e., up to hundreds of conferences per server).
 ** joaotavora/eglot
@@ -912,8 +738,6 @@
   - Triton is a dynamic binary analysis library. Build your own program analysis tools, automate your reverse engineering, perform software verification or just emulate code.
 ** jonhoo/inferno
   - A Rust port of FlameGraph
-** jonls/redshift
-  - Redshift adjusts the color temperature of your screen according to your surroundings. This may help your eyes hurt less if you are working in front of the screen at night.
 ** JoonasVali/NaturalMouseMotion
   - This library provides a way to move cursor to specified coordinates on screen reliably, while being randomly arced to look like real hand moved it there by using a mouse. The default settings should look good enough for most cases, but if user wishes, they can heavily customize the settings and implementations responsible for the trajectory of the cursor for specific use cases.
 ** jp7677/dxvk-nvapi
@@ -956,10 +780,6 @@
   - Simple library for asynchronous processing in Emacs
 ** jwiegley/use-package
   - A use-package declaration for simplifying your .emacs
-** kahst/BirdNET-Analyzer
-  - BirdNET analyzer for scientific audio data processing.
-** kanidm/webauthn-rs
-  - An implementation of webauthn components for Rustlang servers
 ** karpathy/nanoGPT
   - The simplest, fastest repository for training/finetuning medium-sized GPTs.
 ** kateinoigakukun/wasi-vfs
@@ -974,8 +794,6 @@
   - WebRTC Pluggable Transport - the original snowflake repo
 ** keybase/saltpack
   - a modern crypto messaging format
-** keylase/nvidia-patch
-  - This patch removes restriction on maximum number of simultaneous NVENC video encoding sessions imposed by Nvidia to consumer-grade GPUs.
 ** keystone-engine/keystone
   - Keystone assembler framework: Core (Arm, Arm64, Hexagon, Mips, PowerPC, Sparc, SystemZ & X86) + bindings
 ** KhronosGroup/glslang
@@ -984,32 +802,18 @@
   - Open-Source Vulkan C++ API
 ** kiliman/operator-mono-lig
   - Add ligatures to Operator Mono similar to Fira Code
-** kimono-koans/httm
-  - Interactive, file-level Time Machine-like tool for ZFS/btrfs/nilfs2
-** kiwix/kiwix-android
-  - Kiwix for Android
-** klausw/hackerskeyboard
-  - Hacker's Keyboard (official)
-** koalaman/shellcheck
-  - ShellCheck, a static analysis tool for shell scripts
 ** kohya-ss/sd-scripts
   - This repository contains training, generation and utility scripts for Stable Diffusion XL.
 ** konsoletyper/teavm
   - Compiler of Java bytecode to JavaScript
-** kovidgoyal/calibre
-  - The official source code repository for the calibre ebook manager
 ** ktock/container2wasm
   - Container to WASM converter
-** kube-rs/kube
-  - Rust Kubernetes client and controller runtime
 ** kubearmor/KubeArmor
   - Cloud-native Runtime Security Enforcement System. [CNCF Sandbox Project]
 ** kubernetes-el/kubernetes-el
   - Manage Kubernetes clusters with Emacs.
 ** kubernetes-sigs/bom
   - A utility to generate SPDX-compliant Bill of Materials manifests
-** kubernetes-sigs/kind
-  - Kubernetes IN Docker - local clusters for testing Kubernetes
 ** kubernetes/kubeadm
   - Aggregator for issues filed against kubeadm
 ** kubernetes/kubernetes
@@ -1028,10 +832,6 @@
   - toybox like busybox
 ** languagetool-org/languagetool
   - Style and Grammar Checker for 25+ Languages
-** LaurentMazare/diffusers-rs
-  - An implementation of the diffusers api in Rust
-** LaurentMazare/tch-rs
-  - Rust bindings for the C++ api of PyTorch.
 ** leaningtech/cheerpj-appletrunner
   - CheerpJ Applet Runner - Chrome Extension to Enable Java Applets
 ** learnk8s/xlskubectl
@@ -1046,18 +846,12 @@
   - Event notification library
 ** libfuse/libfuse
   - The reference implementation of the Linux FUSE (Filesystem in Userspace) interface
-** libp2p/rust-libp2p
-  - The Rust Implementation of the libp2p networking stack.
-** libretro/RetroArch
-  - Cross-platform, sophisticated frontend for the libretro API. Licensed GPLv3.
 ** libsql/libsql
   - libSQL is a fork of SQLite that is both Open Source, and Open Contributions.
 ** libsql/sqld
   - sqld is a server mode for libSQL
 ** libuv/libuv
   - Cross-platform asynchronous I/O
-** lichess-org/lila
-  - lichess.org: the forever free, adless and open source chess server
 ** lightningnetwork/lnd
   - Lightning Network Daemon
 ** liquibase/liquibase
@@ -1074,12 +868,12 @@
   - The JTS Topology Suite is a Java library for creating and manipulating vector geometry.
 ** lokke-org/lokke
   - Lokke: Clojure for Guile
+** lucidrains/toolformer-pytorch
+  - Implementation of Toolformer, Language Models That Can Use Tools, by MetaAI
 ** Luodian/Otter
   - Otter, a multi-modal model based on OpenFlamingo (open-sourced version of DeepMind's Flamingo), trained on MIMIC-IT and showcasing improved instruction-following and in-context learning ability.
 ** lurk-lang/lurk-rs
   - lisp snark
-** lutris/lutris
-  - Lutris desktop client in Python / PyGObject
 ** maciejhirsz/tiny-bip39
   - A Rust implementation of BIP-0039
 ** madler/pigz
@@ -1116,10 +910,6 @@
   - Rust library for single assignment cells and lazy statics without macros
 ** Matoking/protontricks
   - A wrapper that does winetricks things for Proton enabled games, requires Winetricks.
-** matthieu-m/ghost-cell
-  - An implementation of Joshua Yanovski's Ghost Cell paper.
-** matthieu-m/static-rc
-  - Compile-time reference counting
 ** mayadata-io/cstor
   - CAS Data Engine - User Space implementation of a popular COW Data Engine - ZFS
 ** mc1arke/sonarqube-community-branch-plugin
@@ -1158,6 +948,8 @@
   - mimalloc is a compact general purpose allocator with excellent performance.
 ** microsoft/Nova
   - Nova: Recursive SNARKs without trusted setup
+** microsoft/onnxruntime
+  - ONNX Runtime: cross-platform, high performance ML inferencing and training accelerator
 ** microsoft/Picnic
   - Reference implementation of the Picnic post-quantum signature scheme
 ** microsoft/PQCrypto-SIDH
@@ -1192,18 +984,10 @@
   - vertico.el - VERTical Interactive COmpletion
 ** mindsdb/mindsdb
   - An emerging platform to help developers build #AI solutions
-** miniupnp/miniupnp
-  - UPnP IGD implementation
 ** mirkosertic/Bytecoder
   - Framework to interpret and transpile JVM bytecode to JavaScript, OpenCL or WebAssembly.
-** mitmproxy/mitmproxy
-  - An interactive TLS-capable intercepting HTTP proxy for penetration testers and software developers.
-** mitsuhiko/fragile
-  - Utility wrapper to send non send types to other threads safely
 ** miukimiu/react-kawaii
   - Cute SVG React Components
-** mjuhasz/BDSup2Sub
-  - Blu-Ray/DVD subtitle editor
 ** mmhelloworld/idris-jvm
   - JVM bytecode back end for Idris
 ** moby/buildkit
@@ -1212,16 +996,10 @@
   - A toolkit for embedding hypervisor capabilities in your application
 ** moby/moby
   - Moby Project - a collaborative project for the container ecosystem to assemble container-based systems
-** model-checking/kani
-  - Kani Rust Verifier
 ** Modernizr/Modernizr
   - Modernizr is a JavaScript library that detects HTML5 and CSS3 features in the user’s browser.
 ** moditect/jfrunit
   - A JUnit extension for asserting JDK Flight Recorder events
-** monero-project/monero
-  - Monero: the secure, private, untraceable cryptocurrency
-** monero-project/monero-gui
-  - Monero: the secure, private, untraceable cryptocurrency
 ** MonoS/VS-ContinuityFixer
   - Continuity Fixer port for Vapoursynth
 ** mozilla-mobile/fenix
@@ -1234,10 +1012,6 @@
   - Firefox Multi-Account Containers lets you keep parts of your online life separated into color-coded tabs that preserve your privacy. Cookies are separated by container, allowing you to use the web with multiple identities or accounts simultaneously.
 ** mozilla/sccache
   - sccache is ccache with cloud storage
-** mozilla/uniffi-rs
-  - a multi-language bindings generator for rust
-** mpv-player/mpv
-  - Command line video player
 ** mre/cargo-inspect
   - Pssst!... see what Rust is doing behind the curtains
 ** mtth/avsc
@@ -1256,8 +1030,6 @@
   - The NASA WorldWind Javascript SDK (WebWW) includes the library and examples for creating geo-browser web applications and for embedding a 3D globe in HTML5 web pages.
 ** nasser/magic
   - Morgan And Grand Iron Clojure
-** NationalSecurityAgency/ghidra
-  - Ghidra is a software reverse engineering (SRE) framework
 ** NationalSecurityAgency/SIMP
   - A system automation and configuration management stack targeted toward operational flexibility and policy compliance.
 ** naver/sqlova
@@ -1280,8 +1052,6 @@
   - Chaos Monkey is a resiliency tool that helps applications tolerate random instance failures.
 ** Netflix/SimianArmy
   - Tools for keeping your cloud operating in top form. Chaos Monkey is a resiliency tool that helps applications tolerate random instance failures.
-** Netflix/vmaf
-  - Perceptual video quality assessment based on multi-method fusion.
 ** netty/netty
   - Netty project - an event-driven asynchronous network application framework
 ** nextdns/piracy-blocklists
@@ -1292,8 +1062,6 @@
   - Turn IP sockets into Unix domain sockets
 ** NixOS/mobile-nixos
   - nixos on mobile
-** nmap/nmap
-  - Nmap - the Network Mapper. Github mirror of official SVN repository.
 ** nobiot/org-transclusion
   - Emacs package to enable transclusion with Org Mode
 ** novnc/noVNC
@@ -1316,8 +1084,6 @@
   - Tools for monitoring NVIDIA GPUs on Linux
 ** NVIDIA/libcudacxx
   - The C++ Standard Library for your entire system.
-** NVIDIA/nvidia-container-toolkit
-  - Build and run containers leveraging NVIDIA GPUs
 ** NVIDIA/nvidia-docker
   - Build and run Docker containers leveraging NVIDIA GPUs
 ** NVIDIA/nvidia-installer
@@ -1332,28 +1098,20 @@
   - NVIDIA PhysX SDK
 ** nysenate/OpenLegislation
   - OpenLegislation is a web service that delivers legislative information from the New York State Senate and Assembly to the public in near-real time.  It is used internally to serve up legislative data for nysenate.gov and the Bluebird-CRM.
-** nzbget/nzbget
-  - Efficient Usenet Downloader
 ** o2sh/onefetch
   - Command-line Git information tool
 ** obhq/obliteration
   - Experimental PS4 emulator written in Rust for Windows, macOS and Linux
-** obsproject/obs-studio
-  - OBS Studio - Free and open source software for live streaming and screen recording
 ** offensive-security/exploitdb
   - The legacy Exploit Database repository - New repo located at https://gitlab.com/exploit-database/exploitdb
 ** onionltd/EndGame
   - EndGame DDoS filter.
 ** onionshare/onionshare
   - Securely and anonymously share files, host websites, and chat with friends using the Tor network
-** oobabooga/text-generation-webui
-  - A gradio web UI for running Large Language Models like GPT-J 6B, OPT, GALACTICA, LLaMA, and Pygmalion.
 ** open-deepnude/open-deepnude
   - Open source reverse-engineered clone of DeepNude
 ** open-mpi/ompi
   - Open MPI main development repository
-** open-osrs/runelite
-  - Actually open source Old School RuneScape client
 ** open-quantum-safe/liboqs
   - C library for prototyping and experimenting with quantum-resistant cryptography
 ** open5gs/open5gs
@@ -1372,8 +1130,6 @@
   - Robust Speech Recognition via Large-Scale Weak Supervision
 ** OpenAPITools/openapi-generator
   - OpenAPI Generator allows generation of API client libraries (SDK generation), server stubs, documentation and configuration automatically given an OpenAPI Spec (v2, v3)
-** OpenBB-finance/OpenBBTerminal
-  - Investment Research for Everyone, Anywhere.
 ** opendtrace/opendtrace
   - Code for the cross platform, single source, OpenDTrace implementation
 ** openebs/openebs
@@ -1390,28 +1146,16 @@
   - https://openjdk.org/projects/code-tools/jmh
 ** openjdk/tsan
   - https://openjdk.org/projects/tsan
-** openssl/openssl
-  - TLS/SSL and crypto library
 ** openstack/openstack
   - Repository tracking all OpenStack repositories as submodules. Mirror of code maintained at opendev.org.
 ** openstyles/stylus
   - Stylus - Userstyles Manager
 ** OpenVPN/openvpn
   - OpenVPN  is  an open source VPN daemon
-** openwall/john
-  - John the Ripper jumbo - advanced offline password cracker, which supports hundreds of hash and cipher types, and runs on many operating systems, CPUs, GPUs, and even some FPGAs
-** openwrt/openwrt
-  - This repository is a mirror of https://git.openwrt.org/openwrt/openwrt.git It is for reference only and is not active for check-ins.  We will continue to accept Pull Requests here. They will be merged via staging trees then into openwrt.git.
 ** openxla/iree
   - A retargetable MLIR-based machine learning compiler and runtime toolkit.
-** openzfs/zfs
-  - OpenZFS on Linux and FreeBSD
 ** operator-framework/operator-sdk
   - SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding.
-** oracle-samples/bpftune
-  - bpftune uses BPF to auto-tune Linux systems
-** oracle/adaptivemm
-  - adaptivemm - A userspace daemon for proactive free memory management
 ** oracle/graal
   - GraalVM: Run Programs Faster Anywhere :rocket:
 ** oracle/graalvm-reachability-metadata
@@ -1420,8 +1164,6 @@
   - VisualVM is an All-in-One Java Troubleshooting Tool
 ** org-roam/org-roam
   - Rudimentary Roam replica with Org-mode
-** org-rs/org-rs
-  - org-mode parser rewrite in Rust
 ** osandov/drgn
   - Programmable debugger
 ** ozoneplatform/owf-framework
@@ -1432,26 +1174,16 @@
   - An extremely fast CSS parser, transformer, bundler, and minifier written in Rust.
 ** PCSX2/pcsx2
   - PCSX2 - The Playstation 2 Emulator
-** pelikan-io/pelikan
-  - Pelikan is a framework for building local or distributed caches. It comes with a highly extensible architecture, best-in-class performance, and superb operational ergonomics. You can use it to replace most of Memcached or a subset of Redis features.
-** pendulum-project/ntpd-rs
-  - An NTP implementation in Rust, supported by Internet Security Research Group's Prossimo project.
 ** pgmodeler/pgmodeler
   - Open-source data modeling tool designed for PostgreSQL. No more typing DDL commands. Let pgModeler do the work for you!
 ** phoenixframework/phoenix_live_view
   - Rich, real-time user experiences with server-rendered HTML
-** pi-hole/pi-hole
-  - A black hole for Internet advertisements
-** pingcap/ossinsight
-  - Open Source Software Insights - Analysis, Comparison, Trends, Rankings of Open Source Software, you can also get insight from more than 5 billion with natural language (powered by OpenAI). Follow us on Twitter: https://twitter.com/ossinsight
 ** pingcap/tidb
   - TiDB is an open-source, cloud-native, distributed, MySQL-Compatible database for elastic scale and real-time analytics. Try AI-powered Chat2Query free at : https://tidbcloud.com/free-trial
 ** PistonDevelopers/music
   - A high level library for playing music and sound effects
 ** PixarAnimationStudios/USD
   - Universal Scene Description
-** Plagman/gamescope
-  - SteamOS session compositing window manager
 ** PlatformLab/HomaModule
   - A Linux kernel module that implements the Homa transport protocol.
 ** pola-rs/polars
@@ -1464,10 +1196,6 @@
   - Mirror of the official PostgreSQL GIT repository. Note that this is just a *mirror* - we don't work with pull requests on github. To contribute, please see https://wiki.postgresql.org/wiki/Submitting_a_Patch
 ** powerline/fonts
   - Patched fonts for Powerline users.
-** ppy/osu
-  - rhythm is just a *click* away!
-** princeton-vl/infinigen
-  - Infinite Photorealistic Worlds using Procedural Generation
 ** processone/ejabberd
   - Robust, Ubiquitous and Massively Scalable Messaging Platform (XMPP, MQTT, SIP Server)
 ** protocolbuffers/protobuf
@@ -1476,10 +1204,6 @@
   - Proton Mail Bridge application
 ** ProtonMail/proton-mail-android
   - Proton Mail Android app
-** Prowlarr/Prowlarr
-  - Arr stack search aggregator
-** prusa3d/PrusaSlicer
-  - G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 ** psanford/sqlite3vfshttp
   - Go sqlite3 http vfs: query sqlite databases over http with range headers
 ** pulsar-edit/pulsar
@@ -1490,10 +1214,6 @@
   - Kubernetes for Everyone
 ** puppeteer/puppeteer
   - Headless Chrome Node.js API
-** PurpleI2P/i2pd
-  - I2P: End-to-End encrypted and anonymous Internet
-** PurpleI2P/i2pd-tools
-  - Some useful tools for I2P
 ** pybind/pybind11
   - Seamless operability between C++11 and Python
 ** python/cpython
@@ -1506,8 +1226,6 @@
   - Tensors and Dynamic neural networks in Python with strong GPU acceleration
 ** qarmin/Win32Fuzzer
   - Winapi fuzzer to help Wine project in creating better Windows "emulator"
-** qemu/qemu
-  - Official QEMU mirror. Please see http://wiki.qemu.org/Contribute/SubmitAPatch for how to submit changes to QEMU. Pull Requests are ignored. Please only use release tarballs from the QEMU website.
 ** qilingframework/qiling
   - A True Instrumentable Binary Emulation Framework
 ** quay/clair
@@ -1520,12 +1238,6 @@
   - A precise specification for "Rust lite / MIR plus"
 ** raphw/byte-buddy
   - Runtime code generation for the Java virtual machine.
-** rapid7/metasploit-framework
-  - Metasploit Framework
-** ravynsoft/ravynos
-  - A BSD-based OS project that aims to provide an experience like and some compatibility with macOS (formerly known as airyxOS)
-** rayon-rs/rayon
-  - Rayon: A data parallelism library for Rust
 ** reactos/reactos
   - A free Windows-compatible Operating System
 ** reagent-project/reagent
@@ -1560,38 +1272,22 @@
   - Spike, a RISC-V ISA Simulator
 ** rjsf-team/react-jsonschema-form
   - A React component for building Web forms from JSON Schema.
-** rkyv/rkyv
-  - Zero-copy deserialization framework for Rust
 ** robertfeldt/BlackBoxOptim.jl
   - Black-box optimization for Julia
 ** romkatv/powerlevel10k
   - A Zsh theme
 ** rose-compiler/rose-develop
   - The latest development version of rose. It may not pass all regression tests.
-** rosefromthedead/effing-mad
-  -  Algebraic effects for Rust
-** RosettaCommons/RFdiffusion
-  -  Code for running RFdiffusion protein creation
 ** rougier/nano-sidebar
   - Emacs package to have configurable sidebars on a per frame basis.
 ** rougier/nano-theme
   - GNU Emacs / N Λ N O Theme
-** roxasthenobody98/phoenixpilot
-  - Reborn from the ashes. L2 Autonomous for Ford.
 ** RPCS3/rpcs3
   - PS3 emulator/debugger
 ** rpgp/rpgp
   - Pure rust implementation of OpenPGP
 ** rqlite/rqlite
   - The lightweight, distributed relational database built on SQLite
-** rr-debugger/rr
-  - Record and Replay Framework
-** rrweb-io/rrweb
-  - record and replay the web
-** ruediger/VobSub2SRT
-  - Converts VobSub subtitles (.idx/.srt format) into .srt subtitles.
-** rui314/mold
-  - Mold: A Modern Linker
 ** runwayml/stable-diffusion
   - Latent Text-to-Image Diffusion
 ** rurban/smhasher
@@ -1600,36 +1296,8 @@
   - Ergonomic bindings to SQLite for Rust
 ** rust-console/gba
   - A crate that helps you make GBA games
-** Rust-GCC/gccrs
-  - GCC Front-End for Rust
-** rust-lang/book
-  - The Rust Programming Language
-** rust-lang/cc-rs
-  - Rust library for build scripts to compile C/C++ code into a Rust library
-** rust-lang/miri
-  - An interpreter for Rust's mid-level intermediate representation
-** rust-lang/rust
-  - Empowering everyone to build reliable and efficient software.
-** rust-lang/rust-analyzer
-  - A Rust compiler front-end for IDEs
-** rust-lang/rust-bindgen
-  - Automatically generates Rust FFI bindings to C (and some C++) libraries.
-** rust-lang/rustc_codegen_gcc
-  - libgccjit AOT codegen for rustc
-** rust-lang/rustup
-  - The Rust toolchain installer
-** RustCrypto/formats
-  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
-** rustwasm/wasm-bindgen
-  - Facilitating high-level interactions between Wasm modules and JavaScript
 ** Ryujinx/Ryujinx
   - Experimental Nintendo Switch Emulator written in C#
-** s-rah/onionscan
-  - OnionScan is a free and open source tool for investigating the Dark Web.
-** s0md3v/sd-webui-roop
-  - roop extension for StableDiffusion web-ui for face swap
-** sagemathinc/cowasm
-  - CoWasm: Collaborative WebAssembly for Servers and Browsers. Built using Zig. Supports Python with extension modules, including numpy.
 ** samrawal/emacs-secondmate
   - An open-source, mini imitation of GitHub Copilot for Emacs.
 ** samuelkarp/runj
@@ -1640,12 +1308,8 @@
   - Image inpainting tool powered by SOTA AI Model. Remove any unwanted object, defect, people from your pictures or erase and replace(powered by stable diffusion) any thing on your pictures.
 ** SAPikachu/flash3kyuu_deband
   - A deband library and filter for avisynth/vapoursynth
-** sbstp/rust-igd
-  - Internet Gateway Device (UPNP) client
 ** scala-native/scala-native
   - Your favorite language gets closer to bare metal.
-** SChernykh/p2pool
-  - Decentralized pool for Monero mining
 ** schism-lang/schism
   - A self-hosting Scheme to WebAssembly compiler
 ** screeps/screeps
@@ -1656,8 +1320,6 @@
   - The compiler is available for download. Get it!
 ** seancorfield/honeysql
   - Turn Clojure data structures into SQL
-** searx/searx
-  - Privacy-respecting metasearch engine
 ** seL4/l4v
   - seL4 specification and proofs
 ** seL4/seL4
@@ -1666,10 +1328,6 @@
   - The Deepfake Offensive Toolkit
 ** SerenityOS/ladybird
   - The Ladybird web browser
-** sharkdp/fd
-  - A simple, fast and user-friendly alternative to 'find'
-** sharkdp/hyperfine
-  - A command-line benchmarking tool
 ** SheetJS/sheetjs
   - SheetJS Spreadsheet Data Toolkit -- New home https://git.sheetjs.com/SheetJS/sheetjs
 ** sigma/pcache
@@ -1684,8 +1342,6 @@
   - Server supporting the Signal Private Messenger applications on Android, Desktop, and iOS
 ** simias/rustation
   - Playstation emulator in the Rust programing language
-** simons-public/protonfixes
-  -  A module for applying fixes at runtime to unsupported games with Steam Proton without changing game installation files
 ** skeeto/elfeed
   - An Emacs web feeds client
 ** skeeto/endlessh
@@ -1696,8 +1352,6 @@
   - Run Nintendo Switch homebrew & games on your Android device!
 ** skylot/jadx
   - Dex to Java decompiler
-** smoltcp-rs/smoltcp
-  - a smol tcp/ip stack
 ** snaplet/postgres-wasm
   - A PostgresQL server running in your browser
 ** Sonarr/Sonarr
@@ -1706,8 +1360,6 @@
   - Continuous Inspection
 ** spaceflint7/bluebonnet
   - Implementation of the .NET platform on top of the Java Virtual Machine
-** spacejam/tla-rust
-  - writing correct lock-free and distributed stateful systems in Rust, assisted by TLA+
 ** spdk/spdk
   - Storage Performance Development Kit
 ** Speedi13/ROP-COMPILER
@@ -1720,12 +1372,10 @@
   - A javascript library to run SQLite on the web.
 ** sqlcipher/sqlcipher
   - SQLCipher is a standalone fork of SQLite that adds 256 bit AES encryption of database files and other security features.
-** sqlitebrowser/sqlitebrowser
-  - Official home of the DB Browser for SQLite (DB4S) project. Previously known as "SQLite Database Browser" and "Database Browser for SQLite". Website at:
-** srrDB/pyrescene
-  - recreate scene releases
 ** sslab-gatech/Rudra
   - Rust Memory Safety & Undefined Behavior Detection
+** Stability-AI/generative-models
+  - Generative Models by Stability AI such as Stable Diffusion XL
 ** Stability-AI/StableLM
   - StableLM: Stability AI Language Models
 ** stackblitz/webcontainer-core
@@ -1734,10 +1384,6 @@
   - Infer Clojure specs from sample data. Inspired by F#'s type providers.
 ** stevenknown/xgen
   - code generator for risc, cisc, vliw machine
-** strace/strace
-  - strace is a diagnostic, debugging and instructional userspace utility for Linux
-** sunfishcode/mustang
-  - Rust programs written entirely in Rust
 ** Sunscreen-tech/Sunscreen
   - A compiler for the BFV fully homomorphic encryption scheme
 ** supabase/pg_crdt
@@ -1774,10 +1420,6 @@
   - The systemd System and Service Manager
 ** t184256/nix-on-droid
   - Nix-enabled environment for your Android device.
-** tadfisher/pass-otp
-  - A pass extension for managing one-time-password (OTP) tokens
-** tauri-apps/tauri
-  - Build smaller, faster, and more secure desktop applications with a web frontend.
 ** tcdi/pgx
   - Build Postgres Extensions with Rust!
 ** technomancy/leiningen
@@ -1790,8 +1432,6 @@
   - GFPGAN aims at developing Practical Algorithms for Real-world Face Restoration.
 ** tensorflow/tfjs
   - A WebGL accelerated JavaScript library for training and deploying ML models.
-** testcontainers/testcontainers-rs
-  - A library for integration-testing against docker containers from within Rust.
 ** tevador/polyseed
   - Mnemonic seed library for Monero and other CryptoNote-based currencies.
 ** tevador/RandomX
@@ -1800,18 +1440,12 @@
   - A web-penetration testing toolkit, presently suited for reconnaissance purposes.
 ** the-modem-distro/pinephone_modem_sdk
   - Pinephone Modem SDK: Tools to build your own bootloader, kernel and rootfs
-** thedodd/ybc
-  - A Yew component library based on the Bulma CSS framework.
 ** thesecretclub/BottlEye
   - BottlEye is a usermode emulator for the popular anti-cheat BattlEye
 ** thestr4ng3r/chiaki
   - Moved to https://git.sr.ht/~thestr4ng3r/chiaki - Free and Open Source PS4 Remote Play Client
 ** thundernest/k-9
   - K-9 Mail – Open Source Email App for Android
-** tikv/jemallocator
-  - Rust allocator using jemalloc as a backend
-** tikv/pprof-rs
-  - A Rust CPU profiler implemented with the help of backtrace-rs
 ** tikv/tikv
   - Distributed transactional key-value database, originally created to complement TiDB
 ** timescale/timescaledb
@@ -1824,8 +1458,6 @@
   - The `io_uring` library for Rust
 ** tokio-rs/loom
   - Concurrency permutation testing tool for Rust.
-** tokio-rs/tokio
-  - A runtime for writing reliable asynchronous applications with Rust. Provides I/O, networking, scheduling, timers, ...
 ** tokio-rs/tokio-metrics
   - Utilities for collecting metrics from a Tokio application
 ** tokio-rs/tracing
@@ -1838,14 +1470,8 @@
   - Uberjar builder for deps.edn
 ** torproject/stem
   - Python controller library for Tor
-** torproject/tor
-  - unofficial git repo -- report bugs/issues/pull requests on https://gitlab.torproject.org/
-** torvalds/linux
-  - Linux kernel source tree
 ** transcranial/keras-js
   - Run Keras models in the browser, with GPU support using WebGL
-** transmission/transmission
-  - Official Transmission BitTorrent client repository
 ** tree-sitter/tree-sitter
   - An incremental parsing system for programming tools
 ** trickster0/OffensiveRust
@@ -1864,8 +1490,6 @@
   - tui-rs revival project
 ** turbolinks/turbolinks
   - Turbolinks makes navigating your web application faster
-** twitter/rezolus
-  - Systems performance telemetry
 ** typeorm/typeorm
   - ORM for TypeScript and JavaScript. Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL databases. Works in NodeJS, Browser, Ionic, Cordova and Electron platforms.
 ** umgefahren/libp2p-tor
@@ -1874,32 +1498,20 @@
   - Google Chromium, sans integration with Google
 ** unicode-org/icu4x
   - Solving i18n for client-side and resource-constrained environments.
-** upx/upx
-  - UPX - the Ultimate Packer for eXecutables
 ** ustaxes/UsTaxes
   - Tax filing web application
-** uutils/coreutils
-  - Cross-platform Rust rewrite of the GNU coreutils
+** uvipen/QuickDraw
+  - Implementation of Quickdraw - an online game developed by Google
 ** v8/v8
   - The official mirror of the V8 Git repository
-** ValveSoftware/Proton
-  - Compatibility tool for Steam Play based on Wine and additional components
 ** ValveSoftware/wine
   - Wine with a bit of extra spice
-** vanhauser-thc/thc-hydra
-  - hydra
-** vapoursynth/vapoursynth
-  - A video processing framework with simplicity in mind
 ** varmd/wine-wayland
   - Wine-wayland allows playing DX9/DX11 and Vulkan games using pure wayland and Wine/DXVK.
 ** vector-im/element-web
   - A glossy Matrix collaboration client for the web.
-** veracrypt/VeraCrypt
-  - Disk encryption with strong security based on TrueCrypt
 ** Victorwz/LongMem
   - adding long term memory to LLMs
-** videolan/vlc
-  - VLC media player - All pull requests are ignored, please follow https://wiki.videolan.org/Sending_Patches_VLC/
 ** virtualagc/virtualagc
   - Virtual Apollo Guidance Computer (AGC) software
 ** visualboyadvance-m/visualboyadvance-m
@@ -1924,14 +1536,10 @@
   - Virtual-machine Translation Intermediate Language
 ** vtil-project/VTIL-NativeLifters
   - Lifting from native architecture to VTIL. (WIP)
-** wagoodman/dive
-  - A tool for exploring each layer in a docker image
 ** waliedyassen/RuneScript
   - The RuneScript scripting language
 ** wangyu-/udp2raw
   - A Tunnel which Turns UDP Traffic into Encrypted UDP/FakeTCP/ICMP Traffic by using Raw Socket,helps you Bypass UDP FireWalls(or Unstable UDP Environment)
-** wasix-org/cargo-wasix
-  - Cargo wrapper for working with Webassembly wasi(x).
 ** WasmEdge/WasmEdge
   - WasmEdge is a lightweight, high-performance, and extensible WebAssembly runtime for cloud native, edge, and decentralized applications. It powers serverless apps, embedded functions, microservices, smart contracts, and IoT devices.
 ** wasmerio/kernel-wasm
@@ -1950,16 +1558,10 @@
   - Optimizer and compiler/toolchain library for WebAssembly
 ** webfx-project/webfx
   - A JavaFX application transpiler. Write your Web Application in JavaFX and WebFX will transpile it in pure JS.
-** webrecorder/pywb
-  - Core Python Web Archiving Toolkit for replay and recording of web archives
 ** webtorrent/webtorrent
   - Streaming torrent client for the web
 ** webview/webview
   - Tiny cross-platform webview library for C/C++/Golang. Uses WebKit (Gtk/Cocoa) and Edge (Windows)
-** wg/wrk
-  - Modern HTTP benchmarking tool
-** Wilfred/difftastic
-  - a structural diff that understands syntax
 ** Wilfred/helpful
   - A better Emacs *help* buffer
 ** Wilfred/ht.el
@@ -1968,10 +1570,6 @@
   - discover elisp functions that do what you want
 ** Wilfred/tco.el
   - Tail call optimisation in Emacs lisp
-** wine-mirror/wine
-  - WINE is not a emulator for windows but a windows api on linux
-** Winetricks/winetricks
-  - Winetricks is an easy way to work around problems in Wine
 ** wingo/fibers
   - Concurrent ML-like concurrency for Guile
 ** wingo/wasm-jit
@@ -1980,8 +1578,6 @@
   - A work-in-progress garbage collector for Guile
 ** WireGuard/wireguard-rs
   - Mirror only. Official repository is at https://git.zx2c4.com/wireguard-rs
-** wireshark/wireshark
-  - Read-only mirror of Wireshark's Git repository at https://gitlab.com/wireshark/wireshark. GitHub won't let us disable pull requests. ☞ THEY WILL BE IGNORED HERE ☜ Please upload them at GitLab.
 ** wolfpld/tracy
   - Frame profiler
 ** WolframRhodium/muvsfunc
@@ -2022,24 +1618,16 @@
   - chia swap. TibetSwap v1, a.k.a. yakSwap
 ** Yelp/dumb-init
   - A minimal init system for Linux containers
-** yewstack/yew
-  - Rust / Wasm framework for building client web apps
-** yt-dlp/yt-dlp
-  - A youtube-dl fork with additional features and fixes
 ** ytdl-org/youtube-dl
   - Command-line program to download videos from YouTube.com and other video sites
 ** yuzu-emu/yuzu
   - Nintendo Switch Emulator
 ** z0z0z/mf-install
   - Media Foundation workaround for Wine
-** Z3Prover/z3
-  - The Z3 Theorem Prover
 ** zama-ai/concrete
   - Concrete: TFHE Compiler that converts python programs into FHE equivalent
 ** zama-ai/tfhe-rs
   - TFHE-rs: Pure Rust implementation of the TFHE scheme for boolean and integers FHE arithmetics.
-** zaproxy/zaproxy
-  - The OWASP ZAP core project
 ** zbm-dev/zfsbootmenu
   - ZFS Bootloader for root-on-ZFS systems with support for snapshots and native full disk encryption
 ** zboxfs/zbox
@@ -2060,14 +1648,8 @@
   - ZeroMQ core engine in C++, implements ZMTP/3.1
 ** zetzit/zz
   - ZetZ a zymbolic verifier and tranzpiler to bare metal C
-** ziglang/zig
-  - General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software.
 ** zjc062/mind-vis
   - Code base for MinD-Vis
-** zkonduit/ezkl
-  - Deep learning with ZK-Snarks
-** zx2c4/password-store
-  - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
 
 * machine learning
 ** ashawkey/stable-dreamfusion
@@ -2076,6 +1658,10 @@
   - Stable Diffusion web UI
 ** carson-katri/dream-textures
   - Stable Diffusion built-in to Blender
+** comfyanonymous/ComfyUI
+  - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
+** commaai/openpilot
+  - openpilot is an open source driver assistance system. openpilot performs the functions of Automated Lane Centering and Adaptive Cruise Control for over 200 supported car makes and models.
 ** continue-revolution/sd-webui-segment-anything
   - Segment Anything for Stable Diffusion WebUI
 ** coqui-ai/TTS
@@ -2090,6 +1676,10 @@
   - Port of Facebook's LLaMA model in C/C++
 ** ggerganov/whisper.cpp
   - Port of OpenAI's Whisper model in C/C++
+** guoyww/AnimateDiff
+  - Official implementation of AnimateDiff.
+** huggingface/optimum
+  - rocket Accelerate training and inference of hugs Transformers and hugs Diffusers with easy to use hardware optimization tools
 ** huggingface/safetensors
   - Simple, safe way to store and distribute tensors
 ** huggingface/tokenizers
@@ -2100,10 +1690,8 @@
   - Open source package for accelerated symbolic discovery of fundamental laws.
 ** IDEA-Research/Grounded-Segment-Anything
   - Marrying Grounding DINO with Segment Anything & Stable Diffusion & BLIP & Whisper - Automatically Detect , Segment and Generate Anything with Image, Text, and Speech Inputs
-** intel/neural-compressor
-  - Intel Neural Compressor (formerly known as Intel® Low Precision Optimization Tool), targeting to provide unified APIs for network compression technologies, such as low precision quantization, sparsity, pruning, knowledge distillation, across different deep learning frameworks to pursue optimal inference performance.
-** JiauZhang/DragGAN
-  - Implementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
+** kahst/BirdNET-Analyzer
+  - BirdNET analyzer for scientific audio data processing.
 ** lllyasviel/ControlNet
   - Let us control diffusion models!
 ** lucidrains/make-a-video-pytorch
@@ -2112,18 +1700,24 @@
   - Implementation of MusicLM, Google's new SOTA model for music generation using attention networks, in Pytorch
 ** lucidrains/PaLM-rlhf-pytorch
   - Implementation of RLHF (Reinforcement Learning with Human Feedback) on top of the PaLM architecture. Basically ChatGPT but with PaLM
-** lucidrains/toolformer-pytorch
-  - Implementation of Toolformer, Language Models That Can Use Tools, by MetaAI
-** microsoft/onnxruntime
-  - ONNX Runtime: cross-platform, high performance ML inferencing and training accelerator
 ** Mikubill/sd-webui-controlnet
   - WebUI extension for ControlNet
 ** mlc-ai/web-llm
   -  Bringing large-language models and chat to web browsers. Everything runs inside the browser with no server support.
 ** mlc-ai/web-stable-diffusion
   - Bringing stable diffusion models to web browsers. Everything runs inside the browser with no server support.
+** oobabooga/text-generation-webui
+  - A gradio web UI for running Large Language Models like GPT-J 6B, OPT, GALACTICA, LLaMA, and Pygmalion.
+** princeton-vl/infinigen
+  - Infinite Photorealistic Worlds using Procedural Generation
 ** riffusion/riffusion-app
   - Stable diffusion for real-time music generation (web app)
+** RosettaCommons/RFdiffusion
+  -  Code for running RFdiffusion protein creation
+** roxasthenobody98/phoenixpilot
+  - Reborn from the ashes. L2 Autonomous for Ford.
+** s0md3v/sd-webui-roop
+  - roop extension for StableDiffusion web-ui for face swap
 ** SciML/DataDrivenDiffEq.jl
   - Data driven modeling and automated discovery of dynamical systems for the SciML Scientific Machine Learning organization
 ** SciML/DiffEqFlux.jl
@@ -2134,12 +1728,12 @@
   - An acausal modeling framework for automatically parallelized scientific machine learning (SciML) in Julia. A computer algebra system for integrated symbolics for physics-informed machine learning and automated transformations of differential equations
 ** SciML/Optimization.jl
   - Local, global, and beyond optimization for scientific machine learning (SciML)
-** Stability-AI/generative-models
-  - Generative Models by Stability AI such as Stable Diffusion XL
 ** TencentARC/T2I-Adapter
   - T2I-Adapter
 ** XingangPan/DragGAN
   - Official Code for DragGAN (SIGGRAPH 2023)
+** zkonduit/ezkl
+  - Deep learning with ZK-Snarks
 * android
 ** f-droid/fdroidclient
   - Android client application.
@@ -2147,8 +1741,14 @@
   - F-Droid server and build tools.
 ** flowdriveai/flowpilot
   - flow-pilot is an openpilot based driver assistance system that runs on linux, windows and android powered machines.
+** ge0rg/aprsdroid
+  - APRSdroid - Geo-Location for Radio Amateurs
 ** guardianproject/orbot
   - The Github home of Orbot: Tor on Android (Also available on gitlab!)
+** kiwix/kiwix-android
+  - Kiwix for Android
+** klausw/hackerskeyboard
+  - Hacker's Keyboard (official)
 ** LineageOS/android
   - OSS android
 ** organicmaps/organicmaps
@@ -2166,26 +1766,442 @@
 ** WireGuard/wireguard-android
   - Mirror only. Official repository is at https://git.zx2c4.com/wireguard-android
 
-* kewl
-** chrislgarry/Apollo-11
-  - Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
+* games
+** 117HD/RLHD
+  - Old School RuneScape GPU renderer with a suite of graphical enhancements.
 ** DFHack/stonesense
   - A retro isometric visualizer for Dwarf Fortress
-** fulldecent/system-bus-radio
-  - Transmits AM radio on computers without radio transmitting hardware.
-** jart/sectorlisp
-  - Bootstrapping LISP in a Boot Sector
-** kristerw/pysmtgcc
-  - Some experiments with SMT solvers and GIMPLE IR
+** FeralInteractive/gamemode
+  - Optimise Linux system performance on demand
+** libretro/RetroArch
+  - Cross-platform, sophisticated frontend for the libretro API. Licensed GPLv3.
+** lichess-org/lila
+  - lichess.org: the forever free, adless and open source chess server
+** lutris/lutris
+  - Lutris desktop client in Python / PyGObject
 ** NVIDIAGameWorks/rtx-remix
   - Combined repo for the RTX-Remix runtime. dxd9 game modding.
 ** open-goal/jak-project
   - Reviving the language that brought us the Jak & Daxter Series
+** open-osrs/runelite
+  - Actually open source Old School RuneScape client
+** Plagman/gamescope
+  - SteamOS session compositing window manager
+** ppy/osu
+  - rhythm is just a *click* away!
 ** shyamsn97/mario-gpt
   - Generating Mario Levels with GPT2. Code for the paper "MarioGPT: Open-Ended Text2Level Generation through Large Language Models" https://arxiv.org/abs/2302.05981
-** TritonVM/triton-vm
-  - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
+** simons-public/protonfixes
+  -  A module for applying fixes at runtime to unsupported games with Steam Proton without changing game installation files
+** ValveSoftware/Proton
+  - Compatibility tool for Steam Play based on Wine and additional components
+
+
+* rust
+** 10XGenomics/rust-boomphf
+  - Fast and scalable minimal perfect hashing for massive key sets
+** advancedresearch/prop
+  - Propositional logic with types in Rust
+** AFLplusplus/AFLplusplus
+  - The fuzzer afl++ is afl with community patches, qemu 5.1 upgrade, collision-free coverage, enhanced laf-intel & redqueen, AFLfast++ power schedules, MOpt mutators, unicorn_mode, and a lot more!
+** aya-rs/aya
+  - Aya is an eBPF library for the Rust programming language, built with a focus on developer experience and operability.
+** bevyengine/bevy
+  - A refreshingly simple data-driven game engine built in Rust
+** bheisler/criterion.rs
+  - Statistics-driven benchmarking library for Rust
+** bluecatengineering/dora
+  - A Rust DHCP server
+** bounce-rs/bounce
+  - The uncomplicated Yew State management library
+** build-trust/ockam
+  - Build secure-by-design applications that can Trust Data-in-Motion. Orchestrate end-to-end encryption, mutual authentication, key management, credential management & authorization policy enforcement — at scale.
+** burn-rs/burn
+  - BURN: Burn Unstoppable Rusty Neurons
+** bytecodealliance/cap-std
+  - Capability-oriented version of the Rust standard library
+** bytecodealliance/rustix
+  - Safe Rust bindings to POSIX-ish APIs
+** CeleritasCelery/rune
+  - Rust VM for Emacs
+** clap-rs/clap
+  - A full featured, fast Command Line Argument Parser for Rust
+** cloudflare/boringtun
+  - Userspace WireGuard Implementation in Rust
+** cloudflare/lol-html
+  - Low output latency streaming HTML parser/rewriter with CSS selector-based API
+** cloudflare/workers-rs
+  - Write Cloudflare Workers in 100% Rust via WebAssembly
+** cross-rs/cross
+  - “Zero setup” cross compilation and “cross testing” of Rust crates
+** dalek-cryptography/bulletproofs
+  -  A pure-Rust implementation of Bulletproofs using Ristretto.
+** dtolnay/anyhow
+  - Flexible concrete Error type built on std::error::Error
+** dtolnay/thiserror
+  - derive(Error) for struct and enum error types
+** emilk/egui
+  - egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native
+** extism/extism
+  - The Universal Plug-in System. Extend anything with WebAssembly.
+** fathyb/carbonyl
+  - Chromium running inside your terminal
+** fereidani/kanal
+  - The fast sync and async channel that Rust deserves
+** flamegraph-rs/flamegraph
+  - Easy flamegraphs for Rust projects and everything else, without Perl or pipes <3
+** futursolo/stylist-rs
+  - A CSS-in-Rust styling solution for WebAssembly Applications
+** gfx-rs/naga
+  - Universal shader translation in Rust
+** gfx-rs/wgpu
+  - Safe and portable GPU abstraction in Rust, implementing WebGPU API.
+** greatest-ape/aquatic
+  - High-performance open BitTorrent tracker (UDP, HTTP, WebTorrent)
+** gschup/ggrs
+  - GGRS is a reimagination of GGPO, enabling P2P rollback networking in Rust. Rollback to the future!
+** itmettkeDE/cargo-patch
+  - Cargo Subcommand for patching dependencies using patch files
+** kanidm/webauthn-rs
+  - An implementation of webauthn components for Rustlang servers
+** kube-rs/kube
+  - Rust Kubernetes client and controller runtime
+** LaurentMazare/diffusers-rs
+  - An implementation of the diffusers api in Rust
+** LaurentMazare/tch-rs
+  - Rust bindings for the C++ api of PyTorch.
+** libp2p/rust-libp2p
+  - The Rust Implementation of the libp2p networking stack.
+** matthieu-m/ghost-cell
+  - An implementation of Joshua Yanovski's Ghost Cell paper.
+** matthieu-m/static-rc
+  - Compile-time reference counting
+** mitsuhiko/fragile
+  - Utility wrapper to send non send types to other threads safely
+
+** model-checking/kani
+  - Kani Rust Verifier
+** mozilla/uniffi-rs
+  - a multi-language bindings generator for rust
+** org-rs/org-rs
+  - org-mode parser rewrite in Rust
+** pelikan-io/pelikan
+  - Pelikan is a framework for building local or distributed caches. It comes with a highly extensible architecture, best-in-class performance, and superb operational ergonomics. You can use it to replace most of Memcached or a subset of Redis features.
+** pendulum-project/ntpd-rs
+  - An NTP implementation in Rust, supported by Internet Security Research Group's Prossimo project.
+** rayon-rs/rayon
+  - Rayon: A data parallelism library for Rust
+** rkyv/rkyv
+  - Zero-copy deserialization framework for Rust
+** rosefromthedead/effing-mad
+  -  Algebraic effects for Rust
+** Rust-GCC/gccrs
+  - GCC Front-End for Rust
+** rust-lang/book
+  - The Rust Programming Language
+** rust-lang/cc-rs
+  - Rust library for build scripts to compile C/C++ code into a Rust library
+** rust-lang/miri
+  - An interpreter for Rust's mid-level intermediate representation
+** rust-lang/rust-analyzer
+  - A Rust compiler front-end for IDEs
+** rust-lang/rust-bindgen
+  - Automatically generates Rust FFI bindings to C (and some C++) libraries.
+** rust-lang/rustc_codegen_gcc
+  - libgccjit AOT codegen for rustc
+** rust-lang/rustup
+  - The Rust toolchain installer
+** RustCrypto/formats
+  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
+** rustwasm/wasm-bindgen
+  - Facilitating high-level interactions between Wasm modules and JavaScript
+** sbstp/rust-igd
+  - Internet Gateway Device (UPNP) client
+** smoltcp-rs/smoltcp
+  - a smol tcp/ip stack
+** spacejam/tla-rust
+  - writing correct lock-free and distributed stateful systems in Rust, assisted by TLA+
+** sunfishcode/mustang
+  - Rust programs written entirely in Rust
+** tauri-apps/tauri
+  - Build smaller, faster, and more secure desktop applications with a web frontend.
+** testcontainers/testcontainers-rs
+  - A library for integration-testing against docker containers from within Rust.
+** thedodd/ybc
+  - A Yew component library based on the Bulma CSS framework.
+** tikv/jemallocator
+  - Rust allocator using jemalloc as a backend
+** tikv/pprof-rs
+  - A Rust CPU profiler implemented with the help of backtrace-rs
+** tokio-rs/tokio
+  - A runtime for writing reliable asynchronous applications with Rust. Provides I/O, networking, scheduling, timers, ...
+** wasix-org/cargo-wasix
+  - Cargo wrapper for working with Webassembly wasi(x).
+** yewstack/yew
+  - Rust / Wasm framework for building client web apps
+* utils
+** alacritty/alacritty
+  - A cross-platform, OpenGL terminal emulator.
+** ansible/ansible
+  - Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain. Automate everything from code deployment to network configuration to cloud management, in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com.
+** Arc-Compute/LibVF.IO
+  - A vendor neutral GPU multiplexing tool driven by VFIO & YAML.
+** AsamK/signal-cli
+  - signal-cli provides an unofficial commandline and dbus interface for signalapp/libsignal-service-java
+** audacity/audacity
+  - Audio Editor
+** AVENTER-UG/mesos-m3s
+  - Apache Mesos Framework to run multiple Kubernetes
+** BiglySoftware/BiglyBT
+  - Feature-filled Bittorrent client based on the Azureus open source project
+** BishopFox/sliver
+  - Adversary Emulation Framework
+** BLAKE3-team/BLAKE3
+  - the official Rust and C implementations of the BLAKE3 cryptographic hash function
+** blender/blender
+  - Official mirror of Blender
+** btcpayserver/btcpayserver
+  - Accept Bitcoin payments. Free, open-source & self-hosted, Bitcoin payment processor.
+** BurntSushi/ripgrep
+  - ripgrep recursively searches directories for a regex pattern while respecting your gitignore
+** caddyserver/caddy
+  - Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS
+** ceph/ceph
+  - Ceph is a distributed object, block, and file storage platform
+** Chia-Network/chia-blockchain
+  - Chia blockchain python implementation (full node, farmer, harvester, timelord, and wallet)
+** ClementTsang/bottom
+  - Yet another cross-platform graphical process/system monitor.
+** cloudflare/workerd
+  - The JavaScript / Wasm runtime that powers Cloudflare Workers
+** compiler-explorer/compiler-explorer
+  - Run compilers interactively from your web browser and interact with the assembly
+** containers/bubblewrap
+  - Unprivileged sandboxing tool
+** containers/podman
+  - Podman: A tool for managing OCI containers and pods.
+** crossplane/crossplane
+  - Cloud Native Control Planes
+** curl/curl
+  - A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features
+** decathorpe/mitmproxy_wireguard
+  - WireGuard frontend for mitmproxy
+** deepnight/ldtk
+  - Modern, lightweight and efficient 2D level editor
+** dgoulet/torsocks
+  - Library to torify application - NOTE: upstream has been moved to https://gitweb.torproject.org/torsocks.git
+** DualCoder/vgpu_unlock
+  - Unlock vGPU functionality for consumer grade GPUs.
+** endrazine/wcc
+  - The Witchcraft Compiler Collection
+** envoyproxy/envoy
+  - Cloud-native high-performance edge/middle/service proxy
+** evilsocket/opensnitch
+  - OpenSnitch is a GNU/Linux interactive application firewall inspired by Little Snitch.
+** FFmpeg/FFmpeg
+  - Mirror of https://git.ffmpeg.org/ffmpeg.git
+** firecracker-microvm/firecracker
+  - Secure and fast microVMs for serverless computing.
+** frida/frida
+  - Clone this repo to build Frida
+** gcc-mirror/gcc
+  - Gnu compiler collection
+** git/git
+  - Git Source Code Mirror - This is a publish-only repository but pull requests can be turned into patches to the mailing list via GitGitGadget (https://gitgitgadget.github.io/). Please follow Documentation/SubmittingPatches procedure for any of your improvements.
+** GNOME/gimp
+  - Read-only mirror of https://gitlab.gnome.org/GNOME/gimp
+** gnuradio/gnuradio
+  - GNU Radio – the Free and Open Software Radio Ecosystem
+** go-gitea/gitea
+  - Git with a cup of tea, painless self-hosted git service
+** gorhill/uBlock
+  - uBlock Origin - An efficient blocker for Chromium and Firefox. Fast and lean.
+** HandBrake/HandBrake
+  - HandBrake's main development repository
+** hashicorp/vault
+  - A tool for secrets management, encryption as a service, and privileged access management
+** hasse69/rar2fs
+  - FUSE file system for reading RAR archives
+** iovisor/bpftrace
+  - High-level tracing language for Linux eBPF
+** jellyfin/jellyfin
+  - The Free Software Media System
+** jgm/pandoc
+  - Universal markup converter
+** jitsi/jitsi-meet
+  - Jitsi Meet - Secure, Simple and Scalable Video Conferences that you use as a standalone app or embed in your web application.
+** jonls/redshift
+  - Redshift adjusts the color temperature of your screen according to your surroundings. This may help your eyes hurt less if you are working in front of the screen at night.    
+** keylase/nvidia-patch
+  - This patch removes restriction on maximum number of simultaneous NVENC video encoding sessions imposed by Nvidia to consumer-grade GPUs.
+** kimono-koans/httm
+  - Interactive, file-level Time Machine-like tool for ZFS/btrfs/nilfs2
+** koalaman/shellcheck
+  - ShellCheck, a static analysis tool for shell scripts
+** kovidgoyal/calibre
+  - The official source code repository for the calibre ebook manager
+** kubernetes-sigs/kind
+  - Kubernetes IN Docker - local clusters for testing Kubernetes
+** minio/minio
+  - High Performance Object Storage for AI
+** miniupnp/miniupnp
+  - UPnP IGD implementation
+** mitmproxy/mitmproxy
+  - An interactive TLS-capable intercepting HTTP proxy for penetration testers and software developers.
+** mjuhasz/BDSup2Sub
+  - Blu-Ray/DVD subtitle editor
+** monero-project/monero
+  - Monero: the secure, private, untraceable cryptocurrency
+** monero-project/monero-gui
+  - Monero: the secure, private, untraceable cryptocurrency
+** mpv-player/mpv
+  - Command line video player
+** NationalSecurityAgency/ghidra
+  - Ghidra is a software reverse engineering (SRE) framework
+** Netflix/vmaf
+  - Perceptual video quality assessment based on multi-method fusion.
+** nmap/nmap
+  - Nmap - the Network Mapper. Github mirror of official SVN repository.
+** NVIDIA/nvidia-container-toolkit
+  - Build and run containers leveraging NVIDIA GPUs
+** nzbget/nzbget
+  - Efficient Usenet Downloader
+** obsproject/obs-studio
+  - OBS Studio - Free and open source software for live streaming and screen recording
+** OpenBB-finance/OpenBBTerminal
+  - Investment Research for Everyone, Anywhere.
+** openssl/openssl
+  - TLS/SSL and crypto library
+** openwall/john
+  - John the Ripper jumbo - advanced offline password cracker, which supports hundreds of hash and cipher types, and runs on many operating systems, CPUs, GPUs, and even some FPGAs
+** oracle-samples/bpftune
+  - bpftune uses BPF to auto-tune Linux systems
+** oracle/adaptivemm
+  - adaptivemm - A userspace daemon for proactive free memory management
+** pi-hole/pi-hole
+  - A black hole for Internet advertisements
+** pingcap/ossinsight
+  - Open Source Software Insights - Analysis, Comparison, Trends, Rankings of Open Source Software, you can also get insight from more than 5 billion with natural language (powered by OpenAI). Follow us on Twitter: https://twitter.com/ossinsight
+** Prowlarr/Prowlarr
+  - Arr stack search aggregator
+** PurpleI2P/i2pd
+  - I2P: End-to-End encrypted and anonymous Internet
+** PurpleI2P/i2pd-tools
+  - Some useful tools for I2P
+** qemu/qemu
+  - Official QEMU mirror. Please see http://wiki.qemu.org/Contribute/SubmitAPatch for how to submit changes to QEMU. Pull Requests are ignored. Please only use release tarballs from the QEMU website.
+** rapid7/metasploit-framework
+  - Metasploit Framework
+** rr-debugger/rr
+  - Record and Replay Framework
+** rrweb-io/rrweb
+  - record and replay the web
+** ruediger/VobSub2SRT
+  - Converts VobSub subtitles (.idx/.srt format) into .srt subtitles.
+** rui314/mold
+  - Mold: A Modern Linker
+** s-rah/onionscan
+  - OnionScan is a free and open source tool for investigating the Dark Web.
+** sagemathinc/cowasm
+  - CoWasm: Collaborative WebAssembly for Servers and Browsers. Built using Zig. Supports Python with extension modules, including numpy.
+** SChernykh/p2pool
+  - Decentralized pool for Monero mining
+** searx/searx
+  - Privacy-respecting metasearch engine
+** sharkdp/fd
+  - A simple, fast and user-friendly alternative to 'find'
+** sharkdp/hyperfine
+  - A command-line benchmarking tool
+** sqlitebrowser/sqlitebrowser
+  - Official home of the DB Browser for SQLite (DB4S) project. Previously known as "SQLite Database Browser" and "Database Browser for SQLite". Website at:
+** srrDB/pyrescene
+  - recreate scene releases
+** strace/strace
+  - strace is a diagnostic, debugging and instructional userspace utility for Linux
+** torproject/tor
+  - unofficial git repo -- report bugs/issues/pull requests on https://gitlab.torproject.org/
+** transmission/transmission
+  - Official Transmission BitTorrent client repository
+** upx/upx
+  - UPX - the Ultimate Packer for eXecutables
+** uutils/coreutils
+  - Cross-platform Rust rewrite of the GNU coreutils
+** vanhauser-thc/thc-hydra
+  - hydra
+** vapoursynth/vapoursynth
+  - A video processing framework with simplicity in mind
+** veracrypt/VeraCrypt
+  - Disk encryption with strong security based on TrueCrypt
+** videolan/vlc
+  - VLC media player - All pull requests are ignored, please follow https://wiki.videolan.org/Sending_Patches_VLC/
+** wagoodman/dive
+  - A tool for exploring each layer in a docker image
+** webrecorder/pywb
+  - Core Python Web Archiving Toolkit for replay and recording of web archives
+** wg/wrk
+  - Modern HTTP benchmarking tool
+** Wilfred/difftastic
+  - a structural diff that understands syntax
+** wine-mirror/wine
+  - WINE is not a emulator for windows but a windows api on linux
+** Winetricks/winetricks
+  - Winetricks is an easy way to work around problems in Wine
+** wireshark/wireshark
+  - Read-only mirror of Wireshark's Git repository at https://gitlab.com/wireshark/wireshark. GitHub won't let us disable pull requests. ☞ THEY WILL BE IGNORED HERE ☜ Please upload them at GitLab.
 ** worldreboot/twitch-reloaded-roku
   - An Improvable™ Twitch app for Roku
 ** x-hw/amazing-qr
   - amazing QRCode generator in Python (supporting animated gif)
+** yt-dlp/yt-dlp
+  - A youtube-dl fork with additional features and fixes
+** Z3Prover/z3
+  - The Z3 Theorem Prover
+** zaproxy/zaproxy
+  - The OWASP ZAP core project
+** ziglang/zig
+  - General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software.
+
+* kewl
+** chrislgarry/Apollo-11
+  - Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
+** dslotter/HamPi
+  - HamPi
+** fulldecent/system-bus-radio
+  - Transmits AM radio on computers without radio transmitting hardware.
+** GNUnet-Mirror/GNUnet
+  -  Read-only mirror of GNUnet repository, updated periodically. NOTE: do not make pull requests here, nor comment any commits. Maintainers are not tracking this git mirror. -- Submit patches via https://bugs.gnunet.org or https://gnunet.org/en/contact.html -- Official Repo: https://git.gnunet.org/gnunet.git/ - Issues: https://bugs.gnunet.org -
+** HigherOrderCO/HVM
+  - A massively parallel, optimal functional runtime in Rust
+** jart/sectorlisp
+  - Bootstrapping LISP in a Boot Sector
+** kristerw/pysmtgcc
+  - Some experiments with SMT solvers and GIMPLE IR
+** prusa3d/PrusaSlicer
+  - G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
+** ravynsoft/ravynos
+  - A BSD-based OS project that aims to provide an experience like and some compatibility with macOS (formerly known as airyxOS)
+** TritonVM/triton-vm
+  - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
+
+
+* Stack
+** emacs-mirror/emacs
+  - Mirror of GNU Emacs
+** gpg/gnupg
+  - The GNU Privacy Guard. NOTE: Maintainers are not tracking this mirror. Do not make pull requests here, nor comment any commits, submit them usual way to bug tracker (https://www.gnupg.org/documentation/bts.html) or to the mailing list (https://www.gnupg.org/documentation/mailing-lists.html).
+** guix-mirror/guix
+  - Read-only mirror of GNU Guix — pull requests are ignored, see https://guix.gnu.org/en/manual/en/guix.html#Submitting-Patches instead
+** jgthms/bulma
+  - Modern CSS framework based on Flexbox
+** openwrt/openwrt
+  - This repository is a mirror of https://git.openwrt.org/openwrt/openwrt.git It is for reference only and is not active for check-ins.  We will continue to accept Pull Requests here. They will be merged via staging trees then into openwrt.git.
+** openzfs/zfs
+  - OpenZFS on Linux and FreeBSD
+** rust-lang/rust
+  - Empowering everyone to build reliable and efficient software.
+** tadfisher/pass-otp
+  - A pass extension for managing one-time-password (OTP) tokens
+** torvalds/linux
+  - Linux kernel source tree
+** zx2c4/password-store
+  - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .

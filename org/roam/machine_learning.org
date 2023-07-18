@@ -29,6 +29,7 @@
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
     - ~stable-diffusion-webui/webui.sh --listen --no-half --use-cpu all~ for cpu only inside container
+      - ~podman run --security-opt label=type:nvidia_container_t -p 7860:7860 -v /home/jam/git/stable-diffusion-webui/:/tmp/stable-diffusion-webui:Z -v /home/jam/.local:/.local:Z -v /home/jam/.cache:/.cache:Z -v /home/jam/.config:/.config --userns keep-id --rm -it jam/cuda:1 /bin/bash # COMMANDLINE_ARGS="--listen --no-half --use-cpu all --xformers --no-half-vae --opt-sdp-attention" /tmp/stable-diffusion-webui/webui.sh~
     - [[https://github.com/andreasjansson/cog-stable-diffusion/tree/animate][animation with interpolation]]
     - [[https://github.com/carson-katri/dream-textures][dreambooth plugin for blender textures]]
     - [[https://github.com/riffusion/riffusion-app][Generate music from spectrograph]]
@@ -38,6 +39,7 @@
 ** Large Language Models
   - chinchilla paper showed most models are over parameterized without enough data
   - [[https://github.com/facebookresearch/llama][Llama]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]] (gpt-neox tokenizer) and [[https://huggingface.co/openlm-research/open_llama_7b][OpenLLaMa]] on 1T tokens
+    - llama tokenizer does not make multiple whitespace significant (thus cant code in python) unlike GPT-NEOX
     - context length of 2048
     - weights unpublished
       - torrent ~magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA~ (hugginface has several copies too)
@@ -96,4 +98,63 @@ Begin! Remember the following: {context}
 
 Question: {input}
 {agent_scratchpad}
+#+END_SRC
+** transformers examples
+#+NAME: hugginface.py
+#+BEGIN_SRC python :tangle no
+#!/usr/bin/env python3
+# sentiment analysis
+from transformers import pipeline
+# from transformers import load_dataset
+classifier = pipeline("sentiment-analysis")
+print(classifier("ara ara"))
+
+# LLM
+import torch
+import transformers
+from transformers import AutoTokenizer, AutoModelForCausalLM
+MIN_TRANSFORMERS_VERSION = '4.25.1'
+print("checking transformers version")
+# check transformers version
+assert transformers.__version__ >= MIN_TRANSFORMERS_VERSION, f'Please upgrade transformers to version {MIN_TRANSFORMERS_VERSION} or higher.'
+print("Getting tokenizer")
+# init
+tokenizer = AutoTokenizer.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1")
+print("getting model")
+model = AutoModelForCausalLM.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1", torch_dtype=torch.bfloat16) # , device_map='auto', load_in_8bit=True
+# infern
+print("Feeding prompt")
+prompt = "<human>: Where is Jimmy Hoffa?\n<bot>:"
+inputs = tokenizer(prompt, return_tensors='pt').to(model.device)
+input_length = inputs.input_ids.shape[1]
+print("Generating")
+outputs = model.generate(
+    ,**inputs, max_new_tokens=128, do_sample=True, temperature=0.7, top_p=0.7, top_k=50, return_dict_in_generate=True
+)
+token = outputs.sequences[0, input_length:]
+output_str = tokenizer.decode(token)
+print(output_str)
+
+# Agents
+import torch
+from transformers import LocalAgent
+model = "bigcode/tiny_starcoder_py"
+agent = LocalAgent.from_pretrained(model, torch_dtype=torch.bfloat16)
+text = "Sally sold sea shells down by the seashore."
+prompt = "Summarize the text given in the variable `text` and read it out loud."
+agent.run(prompt, text=text)#return_code=True
+#https://huggingface.co/datasets/huggingface-tools/default-prompts
+# quant with offload
+model = AutoModelForCausalLm.from_pretrained("bigcode/starcoder", device_map="auto", load_in_8bit=True, offload_folder="offload", offload_state_dict=True)
+# distribute weights on cpu/gpu
+from accelerate import infer_auto_device_map
+from accelerate import init_empty_weights
+from transformers import GPTBigCodeConfig, GPTBigCodeForCausalLM
+
+device_map = {}
+model_config = GPTBigCodeConfig()
+with init_empty_weights(): # get device_map without loading model weights
+    model = GPTBigCodeForCausalLM(model_config)
+    device_map = infer_auto_device_map(model, max_memory={0: "0GiB", "cpu": "24GiB"})
+
 #+END_SRC
