@@ -30,8 +30,6 @@
   - [[https://github.com/yewstack/yew/issues/359][suggested workaround]] for users getting setup
 - mesosphere/spark-build
   - showed same error to user of [[https://github.com/mesosphere/spark-build/issues/69][json having a trailing comma]]
-- docker/registry
-  - patched AWS IAM role regression until rollback
 - [[https://github.com/jlxip/DiscordInjector/pull/1][jlxip/DiscordInjector]]
   - patched to use discord public test beta and respect XDG config vars
 - clj-easy/graalvm-clojure
