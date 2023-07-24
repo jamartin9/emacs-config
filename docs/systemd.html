@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgfefde51">
-<div class="navbar-brand" id="org39f1921">
-<div class="navbar-item" id="orgb8df012">
+<nav class="navbar is-black" id="orgbd446e2">
+<div class="navbar-brand" id="orgaf748c7">
+<div class="navbar-item" id="orgdb91470">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org6a574f6">
-<div class="navbar-start" id="org0fafc3c">
-<div class="navbar-item" id="orgbd0c2e1">
+<div class="navbar-menu" id="org19d873c">
+<div class="navbar-start" id="org9ff8fe9">
+<div class="navbar-item" id="orgcfac799">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,48 +29,49 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgd268603">
+<div class="navbar-end" id="orgb6dc391">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgfebd809" class="outline-2">
-<h2 id="orgfebd809">Systemd</h2>
-<div class="outline-text-2" id="text-orgfebd809">
+<div id="outline-container-org3a0a7f1" class="outline-2">
+<h2 id="org3a0a7f1">Systemd</h2>
+<div class="outline-text-2" id="text-org3a0a7f1">
 </div>
-<div id="outline-container-orgce7aa74" class="outline-3">
-<h3 id="orgce7aa74">systemd</h3>
-<div class="outline-text-3" id="text-orgce7aa74">
+<div id="outline-container-org6ddbfee" class="outline-3">
+<h3 id="org6ddbfee">systemd</h3>
+<div class="outline-text-3" id="text-org6ddbfee">
 </div>
-<div id="outline-container-orge36e9ce" class="outline-4">
-<h4 id="orge36e9ce">journalctl</h4>
-<div class="outline-text-4" id="text-orge36e9ce">
+<div id="outline-container-orgf51c984" class="outline-4">
+<h4 id="orgf51c984">journalctl</h4>
+<div class="outline-text-4" id="text-orgf51c984">
 <ul class="org-ul">
 <li><code>/etc/systemd/journald.conf</code>
 <ul class="org-ul">
 <li><code>SystemMaxUse=100M</code></li>
 </ul></li>
 <li><code>journalctl -u SERVICE</code></li>
+<li>previous boots dmesg log <code>journalctl -k -b -1</code></li>
 <li>coredumpctl</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org595282b" class="outline-4">
-<h4 id="org595282b">sysctl</h4>
-<div class="outline-text-4" id="text-org595282b">
+<div id="outline-container-orge43ee6b" class="outline-4">
+<h4 id="orge43ee6b">sysctl</h4>
+<div class="outline-text-4" id="text-orge43ee6b">
 <ul class="org-ul">
 <li><code>net.ipv4.icmp_echo_ignore_all = 1</code> in <code>/etc/sysctl.conf</code> or <code>/etc/sysctl.d/90-override.conf</code> to disable icmp</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgad065f3" class="outline-4">
-<h4 id="orgad065f3">systemctl</h4>
-<div class="outline-text-4" id="text-orgad065f3">
+<div id="outline-container-org08bca80" class="outline-4">
+<h4 id="org08bca80">systemctl</h4>
+<div class="outline-text-4" id="text-org08bca80">
 </div>
 <ul class="org-ul">
-<li><a id="org918d844"></a>services<br>
-<div class="outline-text-5" id="text-org918d844">
+<li><a id="org600409b"></a>services<br>
+<div class="outline-text-5" id="text-org600409b">
 <ul class="org-ul">
 <li><code>edit</code> doesn't require <code>daemon-reload</code></li>
 <li>hooks within services like <code>ExecStartPost/ExecStopPost</code></li>
@@ -80,23 +81,24 @@
 <li>mask with <code>systemctl mask swap.target</code></li>
 <li>remote management with ssh <code>systemctl --host=user@somesuchhost.com status SERVICE.unit</code></li>
 <li>restart interval with <code>RestartSec=5</code></li>
+<li>cron like with a <code>service.timer</code> containing a schedule like <code>OnCalendar=Sunday *-*-* 4:00:00</code> and a service with the <code>Type=oneshot</code></li>
 </ul>
 </div>
 </li>
 </ul>
 </div>
-<div id="outline-container-orgd2dc2a5" class="outline-4">
-<h4 id="orgd2dc2a5">timedatectl</h4>
-<div class="outline-text-4" id="text-orgd2dc2a5">
+<div id="outline-container-orge2e6f2a" class="outline-4">
+<h4 id="orge2e6f2a">timedatectl</h4>
+<div class="outline-text-4" id="text-orge2e6f2a">
 <ul class="org-ul">
 <li>systemd-timesyncd <code>timedatectl set-ntp true</code></li>
 <li><code>set-local-rtc</code> to set hardware clock to localtime instead of UTC</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdd8f7b4" class="outline-4">
-<h4 id="orgdd8f7b4">NetworkManager</h4>
-<div class="outline-text-4" id="text-orgdd8f7b4">
+<div id="outline-container-org8cfd25a" class="outline-4">
+<h4 id="org8cfd25a">NetworkManager</h4>
+<div class="outline-text-4" id="text-org8cfd25a">
 <ul class="org-ul">
 <li><code>/usr/lib/NetworkManager/conf.d/20-connectivity.conf</code> pings out
 <ul class="org-ul">
@@ -110,9 +112,9 @@ enabled=false</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2b3cc6f" class="outline-4">
-<h4 id="org2b3cc6f">misc</h4>
-<div class="outline-text-4" id="text-org2b3cc6f">
+<div id="outline-container-orgeb8a473" class="outline-4">
+<h4 id="orgeb8a473">misc</h4>
+<div class="outline-text-4" id="text-orgeb8a473">
 <ul class="org-ul">
 <li><code>systemd-analyze blame</code> for boot times</li>
 <li><code>systemd-analyze security my-service.unit</code> for sec settings</li>

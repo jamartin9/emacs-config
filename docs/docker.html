@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>docker</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org3835d6d">
+<div class="navbar-brand" id="orge53e73f">
+<div class="navbar-item" id="org906848e">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org707ee94">
+<div class="navbar-start" id="org9a10aba">
+<div class="navbar-item" id="orgb8325db">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org29346c6">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org42ee8b1" class="outline-2">
+<h2 id="org42ee8b1">docker</h2>
+<div class="outline-text-2" id="text-org42ee8b1">
+</div>
+<div id="outline-container-orgddef88f" class="outline-3">
+<h3 id="orgddef88f">dockerfile of multi image builder</h3>
+<div class="outline-text-3" id="text-orgddef88f">
+<div class="org-src-container">
+<pre class="src src-dockerfile" id="org29df00c">FROM clojure as builder
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY project.clj /usr/src/app/
+RUN lein deps
+COPY src /usr/src/app/src
+RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" app-standalone.jar
+
+FROM jam/graal as native
+WORKDIR /tmp
+COPY --from=builder /usr/src/app/app-standalone.jar ./
+# graal reflection json config for snakeyaml.
+COPY graal.json .
+RUN graalvm-ce-${GRAALVM_V}/bin/native-image \
+  --no-server \
+  --static \
+  -H:ReflectionConfigurationFiles=/tmp/graal.json \
+#  -H:+ReportUnsupportedElementsAtRuntime \
+  -jar /tmp/app-standalone.jar
+
+FROM scratch
+COPY --from=native /tmp/app-standalone .
+ENTRYPOINT ["/app-standalone"]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

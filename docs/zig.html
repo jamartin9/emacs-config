@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>zig</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org4194bd9">
+<div class="navbar-brand" id="orgac1d0ce">
+<div class="navbar-item" id="org42aff71">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org081ad7c">
+<div class="navbar-start" id="org1d226d1">
+<div class="navbar-item" id="org2209d4e">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org4fe63e4">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgdbb7d80" class="outline-2">
+<h2 id="orgdbb7d80">zig</h2>
+<div class="outline-text-2" id="text-orgdbb7d80">
+</div>
+<div id="outline-container-org9e821f8" class="outline-3">
+<h3 id="org9e821f8">Using linked C libraries</h3>
+<div class="outline-text-3" id="text-org9e821f8">
+<div class="org-src-container">
+<pre class="src src-zig" id="org379f498">const std = @import("std");
+
+pub fn build(b: *std.build.Builder) !void {
+    const target = b.standardTargetOptions(.{});
+    const mode = b.standardReleaseOptions();
+    const exe = b.addExecutable("zgl", "src/main.zig");
+    //exe.is_dynamic = false;
+    exe.setTarget(target);
+    exe.setBuildMode(mode);
+    exe.linkLibC();
+    exe.addIncludeDir("/gnu/store/6l9rix46ydxyldf74dvpgr60rf5ily0c-guile-3.0.7/include/guile/3.0/");
+    exe.addLibPath("/gnu/store/6l9rix46ydxyldf74dvpgr60rf5ily0c-guile-3.0.7/lib");
+    exe.addPackagePath("guile-3.0", "/gnu/store/6l9rix46ydxyldf74dvpgr60rf5ily0c-guile-3.0.7/lib/pkgconfig/guile-3.0.pc");
+    exe.linkSystemLibrary("guile-3.0");
+    exe.install();
+    const run_cmd = exe.run();
+    run_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_cmd.addArgs(args);
+    }
+    const run_step = b.step("run", "run the app");
+    run_step.dependOn(&amp;run_cmd.step);
+}
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-zig" id="orge3e0db1">const std = @import("std");
+
+const c = @cImport({
+    @cInclude("libguile.h");
+});
+
+pub fn main() anyerror!void {
+    std.log.info("starting", .{});
+    c.scm_init_guile();
+    std.log.info("loaded guile", .{});
+//    var prog_flag = [_]u8{ 'z', 'g', 'l', 0 };
+    var prog_flag = "zgl";
+//    var ex_flag = [_]u8{ '-', 'v', 0 };
+    var args = [_][*c]u8{
+        &amp;prog_flag,
+//        &amp;ex_flag,
+    };
+    std.log.info("loading shell", .{});
+    c.scm_shell(args.len, &amp;args);
+}
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-zig" id="org1c48693">const std = @import("std");
+
+const c = @cImport({
+    @cDefine("JULIA_DEFINE_FAST_TLS()", {});
+    @cInclude("julia.h");
+});
+
+pub fn main() anyerror!void {
+    std.log.info("starting", .{});
+    c.jl_init();
+    std.log.info("loaded julia", .{});
+    _ = c.jl_eval_string("print(sqrt(2.0))");
+    c.jl_atexit_hook(0);
+}
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-zig" id="org7550658">const std = @import("std");
+
+pub fn build(b: *std.build.Builder) void {
+    const target = b.standardTargetOptions(.{});
+    const mode = b.standardReleaseOptions();
+    const exe = b.addExecutable("zjl", "src/main.zig");
+    exe.setTarget(target);
+    exe.setBuildMode(mode);
+    exe.addIncludeDir("/usr/include/julia");
+    exe.addLibPath("/usr/lib/julia");
+    exe.linkLibC();
+    exe.linkSystemLibrary("julia");
+    exe.linkSystemLibrary("openlibm");
+    exe.install();
+    const run_cmd = exe.run();
+    run_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_cmd.addArgs(args);
+    }
+    const run_step = b.step("run", "run the app");
+    run_step.dependOn(&amp;run_cmd.step);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

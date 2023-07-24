@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgfeb8947">
-<div class="navbar-brand" id="org3a56526">
-<div class="navbar-item" id="org37f0eff">
+<nav class="navbar is-black" id="org904443e">
+<div class="navbar-brand" id="org846b3bc">
+<div class="navbar-item" id="orgf3b34ec">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgd6a549b">
-<div class="navbar-start" id="org37cfd81">
-<div class="navbar-item" id="orge714ccd">
+<div class="navbar-menu" id="orga98960f">
+<div class="navbar-start" id="orgc6fb9a9">
+<div class="navbar-item" id="org359a786">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,44 +29,342 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org66c5868">
+<div class="navbar-end" id="orge5bb8bc">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orge011044" class="outline-2">
-<h2 id="orge011044">make</h2>
-<div class="outline-text-2" id="text-orge011044">
+<div id="outline-container-orgaecfd7f" class="outline-2">
+<h2 id="orgaecfd7f">make</h2>
+<div class="outline-text-2" id="text-orgaecfd7f">
 </div>
-<div id="outline-container-orgac49551" class="outline-3">
-<h3 id="orgac49551">snippets</h3>
-<div class="outline-text-3" id="text-orgac49551">
+<div id="outline-container-org138c592" class="outline-3">
+<h3 id="org138c592">snippets</h3>
+<div class="outline-text-3" id="text-org138c592">
 </div>
-<div id="outline-container-org5a4e334" class="outline-4">
-<h4 id="org5a4e334">makefile for emacs site</h4>
-<div class="outline-text-4" id="text-org5a4e334">
+<div id="outline-container-org172b3b4" class="outline-4">
+<h4 id="org172b3b4">makefile for docker copy</h4>
+<div class="outline-text-4" id="text-org172b3b4">
 <div class="org-src-container">
-<pre class="src src-makefile" id="org769446d">EMACS_PROG ?= emacs # emacsclient
-EMACS_FLAGS ?= -nw --no-splash --kill # -Q --batch
+<pre class="src src-makefile" id="org1eba2b1">DOCKER ?= docker
+DOCKER_PREFIX ?= jam
+
+DOCKER_BUILD_IMG_NAME ?= jyvert
+DOCKER_BUILDER_IMG_NAME ?= graal
+
+DOCKER_BUILD_VERSION ?= latest
+DOCKER_BUILDER_VERSION ?= latest
+
+DOCKER_BUILD_FILE ?= Dockerfile
+DOCKER_BUILDER_FILE ?= Dockerfile-graal
+
+DOCKER_BUILD_DIR ?= .
+
+SOURCES ?= $(wildcard src/jyvert/*.clj) project.clj
+
+OUTPUT_DIR ?= target/
+
+OUTPUT_FILE := app-standalone
+OUTPUT := $(OUTPUT_DIR)$(OUTPUT_FILE)
+
+DOCKER_BUILD_NAME := $(DOCKER_PREFIX)/$(DOCKER_BUILD_IMG_NAME):$(DOCKER_BUILD_VERSION)
+DOCKER_BUILDER_NAME := $(DOCKER_PREFIX)/$(DOCKER_BUILDER_IMG_NAME):$(DOCKER_BUILDER_VERSION)
+
+DOCKER_BUILD_CMD := $(DOCKER) build -t $(DOCKER_BUILD_NAME) -f $(DOCKER_BUILD_FILE) $(DOCKER_BUILD_DIR)
+DOCKER_BUILDER_CMD := $(DOCKER) build -t $(DOCKER_BUILDER_NAME) -f $(DOCKER_BUILDER_FILE) $(DOCKER_BUILD_DIR)
+
+DOCKER_CREATE_CMD := $(DOCKER) create $(DOCKER_BUILD_NAME)
+
+.PHONY: clean all
+
+all: $(OUTPUT)
+
+clean:
+        rm -f $(OUTPUT)
+        rm -f build-graal
+        rm -f build-base
+
+build-graal: $(DOCKER_BUILDER_FILE)
+        $(DOCKER_BUILDER_CMD)
+        touch build-graal
+
+build-base: build-graal $(DOCKER_BUILD_FILE) $(SOURCES)
+        $(DOCKER_BUILD_CMD)
+        touch build-base
+
+$(OUTPUT): build-base
+        mkdir -p $(OUTPUT_DIR)
+        CID=$$($(DOCKER_CREATE_CMD)) ; \
+        $(DOCKER) cp $$CID:/$(OUTPUT_FILE) $(OUTPUT) ; \
+        $(DOCKER) rm $$CID
+        touch -c $(OUTPUT)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgceef3c4" class="outline-4">
+<h4 id="orgceef3c4">makefile for emacs</h4>
+<div class="outline-text-4" id="text-orgceef3c4">
+<div class="org-src-container">
+<pre class="src src-makefile" id="org57b38de">EMACS_PROG ?= emacs
+EMACS_FLAGS ?= -Q --batch
 EMACS_CMD ::= $(EMACS_PROG) $(EMACS_FLAGS)
 
 ORG_FILES ::= $(wildcard *.org)
 FILES ::=
+FILES += $(patsubst %.org, %.pdf, $(ORG_FILES)) # pdf
+FILES += $(patsubst %.org, %.md, $(ORG_FILES)) # md
+FILES += $(patsubst %.org, %-beamer.pdf, $(ORG_FILES)) # beamer
 FILES += $(patsubst %.org, %.html, $(ORG_FILES)) # html
+FILES += $(patsubst %.org, %.txt, $(ORG_FILES)) # ascii
+FILES += $(patsubst %.org, %.ics, $(ORG_FILES)) # icalendar
+FILES += $(patsubst %.org, %.man, $(ORG_FILES)) # man
+FILES += $(patsubst %.org, %.texi, $(ORG_FILES)) # texinfo
+FILES += $(patsubst %.org, %.odt, $(ORG_FILES)) # open document
+FILES += $(patsubst %.org, %.sh, $(ORG_FILES)) # tangle script
+
+FILES += index.html # site
+
+index.html: README.html
+        ln -f $&lt; $@
 
 .PHONY: all prune clean
 
 all: $(FILES)
 
 prune:
-        rm -f *.html\~
+        rm -f *.nav *.tex *.toc *.snm *.log *.aux *.out *.vrb *.tex\~ *.md\~ *.txt\~ *.html\~ *.ics\~ *.texi\~ *.pdf\~ *.man\~ *.sh\~
 
 clean : prune
-        rm -f *.html
+        rm -f *.pdf *.md *.html *.odt *.man *.ics *.texi *.txt *.sh
+
+%.pdf : %.org
+        $(EMACS_CMD) $&lt; -f org-latex-export-to-pdf
+
+%-beamer.pdf : %.org
+        $(EMACS_CMD) $&lt; -f org-beamer-export-as-latex --eval='(write-file "$@")'
+        pdflatex $@
+
+%.md : %.org
+        $(EMACS_CMD) $&lt; -f org-md-export-to-markdown
 
 %.html : %.org
         $(EMACS_CMD) $&lt; -f org-html-export-to-html
+
+%.txt : %.org
+        $(EMACS_CMD) $&lt; -f org-ascii-export-to-ascii
+
+%.ics : %.org
+        $(EMACS_CMD) $&lt; -f org-icalendar-export-to-ics
+
+%.odt : %.org
+        $(EMACS_CMD) $&lt; -f org-odt-export-to-odt
+
+%.man : %.org
+        $(EMACS_CMD) $&lt; --eval="(require 'ox-man)" -f org-man-export-to-man # org-man-export-to-pdf
+
+%.texi : %.org
+        $(EMACS_CMD) $&lt; -f org-texinfo-export-to-texinfo # org-texinfo-export-to-info
+
+%.sh : %.org
+        $(EMACS_CMD) $&lt; --eval="(org-mode)" -f org-babel-tangle # org-babel-detangle
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3f78367" class="outline-4">
+<h4 id="org3f78367">makefile for executable guile wrapper</h4>
+<div class="outline-text-4" id="text-org3f78367">
+<div class="org-src-container">
+<pre class="src src-makefile" id="org0175a26"># simple makefile using guile for libs/linking
+#TODO: static-pie
+
+# sources
+C_FILES ::= $(wildcard *.c)
+OBJ_FILES ::= $(patsubst %.c, %.o, $(C_FILES))
+
+#2.2 3.0
+GUILE_VER ?= 2.2
+
+TARGET ?= eg-${GUILE_VER}
+
+# lib paths
+LIB_DIR ?= $$HOME/.guix-profile/lib
+LIB_DIR_LINK ::= ${LIB_DIR:%=-L %}
+PKG_CONFIG_PATH ?= ${LIB_DIR:%=%/pkgconfig}
+PKG_CONFIG_PATH_VAR ::= ${PKG_CONFIG_PATH:%=PKG_CONFIG_PATH=%}
+
+# builtins
+LDFLAGS ?= -pie
+CFLAGS ?= -fPIC -Wall `${PKG_CONFIG_PATH_VAR} pkg-config --static --cflags guile-${GUILE_VER}`
+LDLIBS ?= -pthread ${LIB_DIR_LINK} `${PKG_CONFIG_PATH_VAR} pkg-config --static --libs guile-${GUILE_VER}` -ldl
+
+# runtime
+RUN_ARGS ?= -v
+
+GUILE_LOAD_PATH ?= $$HOME/.guix-profile/share/guile/${GUILE_VER}
+GUILE_LOAD_PATH_VAR ::= ${GUILE_LOAD_PATH:%=GUILE_LOAD_PATH=%}
+
+GUILE_LOAD_COMPILED_PATH ?= $$HOME/.guix-profile/lib/guile/${GUILE_VER:%=%/ccache}
+GUILE_LOAD_COMPILED_PATH_VAR ::= ${GUILE_LOAD_COMPILED_PATH:%=GUILE_LOAD_COMPILED_PATH=%}
+
+LD_LIB_PATH ?= ${LIB_DIR}
+LD_LIBRARY_PATH_VAR ::= ${LD_LIB_PATH:%=LD_LIBRARY_PATH=%}
+
+LD_PRE ?= #${LIB_DIR:%=%/libguile-${GUILE_VER}.so.1}
+LD_PRELOAD_VAR ::= ${LD_PRE:%=LD_PRELOAD=%}
+
+LD_PATH ?= ${LIB_DIR:%=%/ld-linux-x86-64.so.2}
+LD_PATH_VAR ::= ${LD_PATH:%=%}
+
+.PHONY: all clean run test clean-test
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ_FILES)
+        ${CC} ${LDFLAGS} $&lt; ${LDLIBS} -o $@
+
+clean:
+        rm -f ${TARGET} *.o
+
+run: all
+        ${GUILE_LOAD_PATH_VAR} ${GUILE_LOAD_COMPILED_PATH_VAR} ${LD_LIBRARY_PATH_VAR} ${LD_PRELOAD_VAR} ${LD_PATH_VAR} ./${TARGET} ${RUN_ARGS}
+
+clean-test: clean
+        rm -f *.test
+
+# test all the targets/config flags supported
+test: Makefile.bak
+  # guile-3.0
+        TARGET=eg-3.0-shared.test GUILE_VER=3.0 LDFLAGS="-shared" make -f $&lt; clean all
+        TARGET=eg-3.0-static.test GUILE_VER=3.0 LDFLAGS="-static" LD_PATH="" make -f $&lt; clean all run # run static
+        TARGET=eg-3.0-dyn.test GUILE_VER=3.0 make -f $&lt; clean all run # guix libs
+        TARGET=eg-3.0-dyn.test GUILE_VER=3.0 LD_PATH="" LD_LIB_PATH="" LD_PRE="${LIB_DIR:%=%/libguile-3.0.so.1}" make -f $&lt; clean all run # system libs (missing lib so preload)
+  # guile-2.2
+        TARGET=eg-2.2-shared.test LDFLAGS="-shared" make -f $&lt; clean all
+        TARGET=eg-2.2-static.test LDFLAGS="-static" LD_PATH="" make -f $&lt; clean all run # run static
+        TARGET=eg-2.2-dyn.test make -f $&lt; clean all run # guix libs
+        TARGET=eg-2.2-dyn.test LD_PATH="" LD_LIB_PATH="" LD_PRE="" make -f $&lt; clean all run # system libs
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd8dec1c" class="outline-3">
+<h3 id="orgd8dec1c">autotools</h3>
+<div class="outline-text-3" id="text-orgd8dec1c">
+</div>
+<div id="outline-container-org9ecb6e2" class="outline-4">
+<h4 id="org9ecb6e2">auto conf</h4>
+<div class="outline-text-4" id="text-org9ecb6e2">
+<ul class="org-ul">
+<li>Uses m4 text macros</li>
+<li>relies on env variables such as <code>PKG_CONFIG_PATH</code> or <code>LDFLAGS</code></li>
+<li>generated with <code>autoreconf -vif</code> and <code>./configure --prefix=$PWD --enable-arg-here</code></li>
+<li>example of guile autoconf file</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-autoconf" id="orgeb832f8"># at least
+AC_PREREQ([2.69])
+AC_INIT([eg], [1.0])
+
+# src file that not in other dir
+AC_CONFIG_SRCDIR([src/simple-guile.c])
+#AC_CONFIG_HEADERS([config.h])
+
+# keep clean
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([m4])
+
+# init automake
+AM_INIT_AUTOMAKE([1.16 subdir-objects -Wall parallel-tests color-tests foreign -Werror])
+AM_PROG_AR
+
+# check for libtool
+LT_PREREQ([2.4.6])
+LT_INIT
+
+# Checks for c compiler
+AC_PROG_CC
+
+# Check for Guile 3 or 2.2
+GUILE_PKG([3.0])
+GUILE_FLAGS
+GUILE_SITE_DIR
+
+# Change libtool link opts
+AC_ARG_ENABLE(static-prog,
+AS_HELP_STRING([--enable-static-prog], [link statically]),
+enable_static_prog=$enableval, enable_static_prog=no)
+AM_CONDITIONAL(ENABLE_STATIC_PROG, test "$enable_static_prog" != "no")
+
+# Generate a Makefile, based on the results.
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2602b7a" class="outline-4">
+<h4 id="org2602b7a">automake</h4>
+<div class="outline-text-4" id="text-org2602b7a">
+<ul class="org-ul">
+<li>example of guile automake file</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-automake" id="orgda4d953"># This is an automake file; process in automake
+ACLOCAL_AMFLAGS = -I m4 --install
+EXTRA_DIST = example.sh guix-channel/ src/hello.scm README.org Makefile.bak
+
+# .go and .scm files
+GUILECOMPILED = ${GUILE_SITE:%/share/guile/site/@GUILE_EFFECTIVE_VERSION@=%/lib/guile/@GUILE_EFFECTIVE_VERSION@/ccache}
+GUILESOURCE = ${GUILE_SITE:%/site/@GUILE_EFFECTIVE_VERSION@=%/@GUILE_EFFECTIVE_VERSION@}
+
+# exe
+pkglibexec_PROGRAMS = eg
+eg_SOURCES = src/simple-guile.c src/hello.scm.h
+eg_CFLAGS = ${GUILE_CFLAGS}
+eg_LDFLAGS = ${GUILE_LDFLAGS}
+if ENABLE_STATIC_PROG
+eg_LDFLAGS += -all-static
+endif
+
+# shared
+pkglib_LTLIBRARIES = eg.la
+eg_la_SOURCES = src/simple-guile.c
+eg_la_CFLAGS = ${GUILE_CFLAGS}
+eg_la_LDFLAGS = ${GUILE_LTLIBS} -module
+
+# local hooks for guile files as they are not in the project or binary
+install-data-local:
+        mkdir -p ${DESTDIR}${pkgdatadir}
+        chmod -R u+w ${DESTDIR}${pkgdatadir}
+        cp -r ${GUILECOMPILED} ${DESTDIR}${pkgdatadir}
+        cp -r ${GUILESOURCE} ${DESTDIR}${pkgdatadir}
+        chmod -R u+w ${DESTDIR}${pkgdatadir}
+
+uninstall-local:
+        rm -rf ${DESTDIR}${pkgdatadir}
+
+# runtime
+RUN_ARGS ?= -v
+
+GUILE_LOAD_PATH ?= ${GUILESOURCE}
+GUILE_LOAD_PATH_VAR = GUILE_LOAD_PATH=${GUILE_LOAD_PATH}
+
+GUILE_LOAD_COMPILED_PATH ?= ${GUILECOMPILED}
+GUILE_LOAD_COMPILED_PATH_VAR = GUILE_LOAD_COMPILED_PATH=${GUILE_LOAD_COMPILED_PATH}
+
+# libtool can generate a wrapper too
+LD_PRE_VAR ?= #"LD_PRELOAD=/usr/lib/libc.so.6:/usr/lib/libpthread.so.0"
+LD_LIB_VAR ?= #"LD_LIBRARY_PATH=~/.guix-profile/lib"
+LD_PATH ?= #"/usr/lib/ld-linux-x86-64.so.2"
+
+.PHONY: run
+run: eg
+        ${GUILE_LOAD_PATH_VAR} ${GUILE_LOAD_COMPILED_PATH_VAR} ${LD_LIB_VAR} ${LD_PRE_VAR} ${LD_PATH} ./$&lt; ${RUN_ARGS}
+#xxd -i hello.scm | sed 's/unsigned//g' | sed 's/\([0-9a-f]\)$/\0, 0x00/' &gt; hello.scm.h
 </pre>
 </div>
 </div>

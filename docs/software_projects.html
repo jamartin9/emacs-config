@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgf6b82e7">
-<div class="navbar-brand" id="orgd9979b8">
-<div class="navbar-item" id="orga2e5004">
+<nav class="navbar is-black" id="orgeabaa02">
+<div class="navbar-brand" id="orgd10e433">
+<div class="navbar-item" id="orgcd0c6c3">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org57a19ab">
-<div class="navbar-start" id="org48f52b4">
-<div class="navbar-item" id="org157ab47">
+<div class="navbar-menu" id="org8b396f7">
+<div class="navbar-start" id="org94bcfef">
+<div class="navbar-item" id="org2928c90">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,49 +29,41 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org687488e">
+<div class="navbar-end" id="orgbf941a5">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org32eab5f" class="outline-2">
-<h2 id="org32eab5f"><span class="todo TODO">TODO</span> add links to html export for projects</h2>
-</div>
-<div id="outline-container-orgd9b398a" class="outline-2">
-<h2 id="orgd9b398a">software projects</h2>
-<div class="outline-text-2" id="text-orgd9b398a">
+<div id="outline-container-orgf1cfae8" class="outline-2">
+<h2 id="orgf1cfae8">software projects</h2>
+<div class="outline-text-2" id="text-orgf1cfae8">
 <p>
 The coding will continue until morale improves!
 </p>
 </div>
-<div id="outline-container-org143ed76" class="outline-3">
-<h3 id="org143ed76">working</h3>
-<div class="outline-text-3" id="text-org143ed76">
+<div id="outline-container-org2d4e717" class="outline-3">
+<h3 id="org2d4e717">working</h3>
+<div class="outline-text-3" id="text-org2d4e717">
 <ul class="org-ul">
 <li>key2words
 <ul class="org-ul">
-<li>rust cli executable that uses bip39 to generate mneumonics from ed25519 keys.</li>
+<li>rust cli executable that uses bip39 to generate mneumonics from ed25519 keys.
+<ul class="org-ul">
+<li>bulma/yew web ui form too</li>
+</ul></li>
 <li>supports passphrase encryption and decryption of ssh/gpg</li>
 <li>added onion service secret file generation
 <ul class="org-ul">
 <li>so you can take 1 set of words and make a hidden service behind ssh with pgp signing/encryption for that set of bytes</li>
 </ul></li>
+<li><b>Service Worker require third party cookies</b> <code>chrome://settings/cookies</code></li>
 </ul></li>
-<li>matching
+</ul>
+<iframe src="https://jamartin9.github.io/key2words/index.html" width="100%" height="300" id="orgd5a6c7f">
+</iframe>
+
 <ul class="org-ul">
-<li>CUDA project for implementing the stable matching algorithm
-<ul class="org-ul">
-<li>uses flattened 2d matrix structure to avoid pointer deref and multiplex access for the third dimension of block threads</li>
-<li>uses managed malloc api to avoid pinning/pointer deference performance issues</li>
-<li>limitation of 1024 x 3 concurrent problem size (api limit of x + y + z of threads in block execution) with respect to O(n log n ^2) complexity :wip:
-<ul class="org-ul">
-<li>limited by find minimum (reduction) kernel which depends on the results of other parallel processes to finish the step in log n. (maybe solve with eventually consistent atmoic ops queue to avoid blocking?) nvidia's reduction kernel is O(n log n) as it is unbounded size despite extensive optimizations like block unrolling.</li>
-<li>removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation</li>
-</ul></li>
-</ul></li>
-<li>done as REU</li>
-</ul></li>
 <li>guix-channel
 <ul class="org-ul">
 <li>guile scheme guix channel for custom packages</li>
@@ -89,7 +81,7 @@ The coding will continue until morale improves!
 <ul class="org-ul">
 <li>elisp/org configuration for emacs</li>
 <li>uses elisp wrapper script to untangle/eval org file code for setup</li>
-<li>uses submodules for the repo of emacs distribution and guix-channel</li>
+<li>uses submodules for guix-channel of with custom emacs packages</li>
 <li>publishes site from org-mode files
 <ul class="org-ul">
 <li>does not use org-publish but each page is customizable from the org-roam-capture-template header</li>
@@ -99,23 +91,40 @@ The coding will continue until morale improves!
 <ul class="org-ul">
 <li>org file of my resume for latex to pdf export</li>
 <li>includes stencil cover letter</li>
-<li>pgp public key in profile picture qr code</li>
+<li>pgp public key in profile picture qr code
+<ul class="org-ul">
+<li>customize qr code image?</li>
+</ul></li>
 <li>PDF links to projects/pages</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfa6c19e" class="outline-3">
-<h3 id="orgfa6c19e">Currently studying</h3>
-<div class="outline-text-3" id="text-orgfa6c19e">
+<div id="outline-container-org5c83543" class="outline-3">
+<h3 id="org5c83543">Currently studying</h3>
+<div class="outline-text-3" id="text-org5c83543">
 <ul class="org-ul">
-<li>Algorithms for use in physical world problems using mathematical tools via computational science</li>
+<li>zk/fhe cryptography
+<ul class="org-ul">
+<li>potential higher security/scaling than current probabilistic models</li>
+</ul></li>
+<li>machine learning
+<ul class="org-ul">
+<li>statically correct* interpretation of arbitrary patterns</li>
+</ul></li>
+<li>p2p systems
+<ul class="org-ul">
+<li>censorship resistance</li>
+</ul></li>
+<li>compilers/jits/vms
+<ul class="org-ul">
+<li>efficient computation</li>
+</ul></li>
 </ul>
 </div>
-
-<div id="outline-container-org2f53160" class="outline-4">
-<h4 id="org2f53160">wip projects</h4>
-<div class="outline-text-4" id="text-org2f53160">
+<div id="outline-container-org4038dbe" class="outline-4">
+<h4 id="org4038dbe">wip projects</h4>
+<div class="outline-text-4" id="text-org4038dbe">
 <ul class="org-ul">
 <li>Automatic differentiation of ssa via conversion of cps to ssa for guile bytecode (guile uses cps unlike llvm/jvm with are ssa) :wip:
 <ul class="org-ul">
@@ -132,6 +141,10 @@ The coding will continue until morale improves!
 guiles compiler tower supports some js, elisp and guile. <a href="https://savannah.nongnu.org/projects/nyacc">https://savannah.nongnu.org/projects/nyacc</a> can output C as sxml for transformation. <a href="https://www.nongnu.org/nyacc/ffi-help.html">https://www.nongnu.org/nyacc/ffi-help.html</a> for example generation of scheme code. By static linking only specific call sites the optimizer can eliminate overhead of ffi and have potential better native generation; as the bytecode optimizer will get a chance to run before the template jit for native specific code</li>
 </ul></li>
 </ul></li>
+<li>Neural Network for runtime profile guided optimizations in Guile's JIT
+<ul class="org-ul">
+<li><a href="https://apexapps.oracle.com/pls/apex/f?p=LABS:0:112476512352389:APPLICATION_PROCESS=GETDOC_INLINE:::DOC_ID:3085">graalvm example paper</a></li>
+</ul></li>
 <li>Porting netbsd Rumpkernel for GNU HURD to guix :wip:
 <ul class="org-ul">
 <li>debian example <a href="https://salsa.debian.org/hurd-team/rumpkernel">https://salsa.debian.org/hurd-team/rumpkernel</a></li>
@@ -139,16 +152,35 @@ guiles compiler tower supports some js, elisp and guile. <a href="https://savann
 </ul></li>
 <li>org-mode reloadable code block runner in wasm for personal website :wip:
 <ul class="org-ul">
-<li>wasm code block runner with reloading (see <a href="https://github.com/wingo/wasm-jit">https://github.com/wingo/wasm-jit</a> for example)</li>
+<li>wasm code block runner with reloading (see <a href="https://github.com/wingo/wasm-jit">https://github.com/wingo/wasm-jit</a> for example)
+<ul class="org-ul">
+<li>interop with libs like sympy (sagemath cowasm) for utils on site.</li>
 </ul></li>
+</ul></li>
+<li>sqlite wasm full text search using http vfs of site :wip:</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orgee97abc" class="outline-3">
-<h3 id="orgee97abc">old</h3>
-<div class="outline-text-3" id="text-orgee97abc">
+<div id="outline-container-orgce49c45" class="outline-3">
+<h3 id="orgce49c45">old</h3>
+<div class="outline-text-3" id="text-orgce49c45">
 <ul class="org-ul">
+<li>matching
+<ul class="org-ul">
+<li>CUDA project for implementing the stable matching algorithm
+<ul class="org-ul">
+<li>uses flattened 2d matrix structure to avoid pointer deref and multiplex access for the third dimension of block threads</li>
+<li>uses managed malloc api to avoid pinning/pointer deference performance issues</li>
+<li>limitation of 1024 x 3 concurrent problem size (api limit of x + y + z of threads in block execution) with respect to O(n log n ^2) complexity :wip:
+<ul class="org-ul">
+<li>limited by find minimum (reduction) kernel which depends on the results of other parallel processes to finish the step in log n. (maybe solve with eventually consistent atmoic ops queue to avoid blocking?) nvidia's reduction kernel is O(n log n) as it is unbounded size despite extensive optimizations like block unrolling.</li>
+<li>removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation</li>
+</ul></li>
+</ul></li>
+<li>done as REU</li>
+<li>obe <a href="https://ashvardanian.com/posts/searching-stable-marriages/">for vector db</a> (measuring closeness representation for large sets)</li>
+</ul></li>
 <li>angular-stock-table :obe:
 <ul class="org-ul">
 <li>used beta angular material table and 3 way javascript sort</li>
@@ -159,34 +191,9 @@ guiles compiler tower supports some js, elisp and guile. <a href="https://savann
 <li>used primeng with angular to add DVR controls to NASAs worldwind</li>
 <li><a href="https://spaz.gitlab.io/angular-worldwind/">published as gitlab page</a> (click layers -&gt; new -&gt; blue marble to get started)</li>
 </ul></li>
-<li>ansible-free-gcp :obe:
-<ul class="org-ul">
-<li>ansible yaml playbooks for free gcp vm, disk and network</li>
-</ul></li>
-<li>aggregator :obe:
-<ul class="org-ul">
-<li>gradle script to aggregate monorepo</li>
-</ul></li>
-<li>clj-fx-example :obe:
-<ul class="org-ul">
-<li>clojure graalvm javafx project using maven and gluonhq client plugin</li>
-</ul></li>
-<li>docker-remote-saver :obe:
-<ul class="org-ul">
-<li>ruby sinatra endpoint for creating composite docker images</li>
-</ul></li>
-<li>dotfiles :obe:
-<ul class="org-ul">
-<li>ansible playbooks and shell script for setting up emacs/zsh/ansible</li>
-</ul></li>
 <li>font :obe:
 <ul class="org-ul">
 <li>added cursive monospace letters to fira code with ligatures</li>
-</ul></li>
-<li>gnag :obe:
-<ul class="org-ul">
-<li>chrome is removing http2 push support</li>
-<li>uses golang builtin http2 server with push for resource loading</li>
 </ul></li>
 <li>guile-sample :obe:
 <ul class="org-ul">
@@ -204,36 +211,10 @@ guiles compiler tower supports some js, elisp and guile. <a href="https://savann
 <ul class="org-ul">
 <li>static jquery webpage for humanitarian cancer charity relay for life.</li>
 </ul></li>
-<li>hop :obe:
-<ul class="org-ul">
-<li>uses java to add reactive stream wrapper to spark websockets server</li>
-</ul></li>
-<li>jyvert :obe:
-<ul class="org-ul">
-<li>graalvm native-image clojure project using snakeyaml to convert between yaml and json.</li>
-</ul></li>
-<li>kafka-streams-sample :obe:
-<ul class="org-ul">
-<li>java kafka streams stackable topology example</li>
-</ul></li>
-<li>make-org :obe:
-<ul class="org-ul">
-<li>example makefile for using emacs to publish org documents in various formats</li>
-</ul></li>
-<li>piston-example :obe:
-<ul class="org-ul">
-<li>piston game engine with SDL sample of movable texture, sound and ai</li>
-<li>exposes window options for resizing and fullscreen</li>
-</ul></li>
 <li>puppet-train :obe:
 <ul class="org-ul">
 <li>puppet conf training modules</li>
 <li>uses hostname as dns with roles and profiles pattern</li>
-</ul></li>
-<li>scape :obe:
-<ul class="org-ul">
-<li>clojure project using webdriver with firefox headless (geckodriver) to scrape store website for deals.</li>
-<li>added branch for scraping router interface for reboots</li>
 </ul></li>
 <li>tileD :obe:
 <ul class="org-ul">
@@ -243,15 +224,6 @@ guiles compiler tower supports some js, elisp and guile. <a href="https://savann
 <li>ticTacToe :obe:
 <ul class="org-ul">
 <li>java tictactoe game using swt and minimax algorithm</li>
-</ul></li>
-<li>yamlnjson :obe:
-<ul class="org-ul">
-<li>ruby script to convert json to yaml despite <a href="https://metacpan.org/pod/JSON::XS#JSON-and-YAML">not being a superset</a></li>
-</ul></li>
-<li>zsh-config :obe:
-<ul class="org-ul">
-<li>zsh configuration using powerlevel10k and zinit</li>
-<li>zinit async loads all plugins and auto compiles all scripts with module</li>
 </ul></li>
 <li>metrics-paper :obe:
 <ul class="org-ul">

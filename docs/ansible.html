@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org583a120">
-<div class="navbar-brand" id="org711721c">
-<div class="navbar-item" id="org4502c7b">
+<nav class="navbar is-black" id="org5a30da6">
+<div class="navbar-brand" id="orgcea42c4">
+<div class="navbar-item" id="org5a5e33e">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org4b55f12">
-<div class="navbar-start" id="orgdb22a1b">
-<div class="navbar-item" id="org385ed3f">
+<div class="navbar-menu" id="org26eede6">
+<div class="navbar-start" id="org53402b4">
+<div class="navbar-item" id="orgb664fb0">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,15 +29,15 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org13468b0">
+<div class="navbar-end" id="orge7a33fa">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org8547bcb" class="outline-2">
-<h2 id="org8547bcb">ansible</h2>
-<div class="outline-text-2" id="text-org8547bcb">
+<div id="outline-container-org7cdf493" class="outline-2">
+<h2 id="org7cdf493">ansible</h2>
+<div class="outline-text-2" id="text-org7cdf493">
 <ul class="org-ul">
 <li>mitogen
 <ul class="org-ul">
@@ -49,6 +49,295 @@
 <li>turn on ssh pipelining</li>
 </ul></li>
 </ul>
+</div>
+<div id="outline-container-org0e47926" class="outline-3">
+<h3 id="org0e47926">gcp playbooks</h3>
+<div class="outline-text-3" id="text-org0e47926">
+<ul class="org-ul">
+<li>uses tags for instance selection (webserver for instance and http-server/https-server/ssh-server for firewall)</li>
+<li>export GCP<sub>SERVICE</sub><sub>ACCOUNT</sub><sub>FILE</sub>, GCP<sub>PROJECT</sub>, SSH<sub>PUB</sub><sub>KEY</sub>, and USER environment variables</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="orgee582d8">---
+# Provision free gce instance:
+- name: Create instance(s)
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  vars_files:
+  - group_vars/all
+  - group_vars/gce
+  vars:
+    credentials_file: "{{ lookup('env', 'GCP_SERVICE_ACCOUNT_FILE') }}"
+    project_id: "{{ lookup('env', 'GCP_PROJECT') }}"
+    ssh_pub_key_file: "{{ lookup('env','SSH_PUB_KEY') }}"
+    ssh_pub_key: "{{ lookup('file', ssh_pub_key_file) }}"
+    user: "{{ lookup('env', 'USER') }}"
+    metadata: "{'sshKeys': '{{ user }}:{{ ssh_pub_key }}'}"
+
+  tasks:
+   - name: create a disk
+     gcp_compute_disk:
+         name: "{{ disk_name }}"
+         size_gb: "{{ disk_size }}"
+         source_image: "{{ image }}"
+         zone: "{{ zone }}"
+         project: "{{ project_id }}"
+         auth_kind: "{{ auth }}"
+         service_account_file: "{{ credentials_file }}"
+         scopes:
+           - https://www.googleapis.com/auth/compute
+         state: present
+     register: disk
+   - name: create a network
+     gcp_compute_network:
+         name: "{{ network_name }}"
+         project: "{{ project_id }}"
+         auth_kind: "{{ auth }}"
+         service_account_file: "{{ credentials_file }}"
+         scopes:
+           - https://www.googleapis.com/auth/compute
+         state: present
+     register: network
+   - name: create a firewall rule
+     gcp_compute_firewall:
+       name: "{{ ssh_firewall_name }}"
+       allowed:
+         - ip_protocol: tcp
+           ports:
+             - 22
+       target_tags:
+         - ssh-server
+       project: "{{ project_id }}"
+       auth_kind: "{{ auth }}"
+       service_account_file: "{{ credentials_file }}"
+       network: "{{ network.selfLink }}"
+       source_ranges: '0.0.0.0/0'
+       state: present
+   - name: create a address
+     gcp_compute_address:
+         name: "{{ address_name }}"
+         region: "{{ region }}"
+         project: "{{ project_id }}"
+         auth_kind: "{{ auth }}"
+         service_account_file: "{{ credentials_file }}"
+         scopes:
+           - https://www.googleapis.com/auth/compute
+         state: present
+     register: address
+   - name: create a instance
+     gcp_compute_instance:
+         state: present
+         metadata: "{{ metadata }}"
+         name: "{{ instance_name_1 }}"
+         machine_type: "{{ machine_type }}"
+         disks:
+           - auto_delete: true
+             boot: true
+             source: "{{ disk }}"
+         network_interfaces:
+             - network: "{{ network }}"
+               access_configs:
+                 - name: 'External NAT'
+                   nat_ip: "{{ address }}"
+                   type: 'ONE_TO_ONE_NAT'
+         zone: "{{ zone }}"
+         tags:
+           items:
+             - webserver
+             - http-server
+             - https-server
+             - ssh-server
+         project: "{{ project_id }}"
+         auth_kind: "{{ auth }}"
+         service_account_file: "{{ credentials_file }}"
+         scopes:
+           - https://www.googleapis.com/auth/compute
+     register: instance
+
+  post_tasks:
+    - name: Wait for SSH to come up
+      wait_for: host={{ address.address }} port=22 delay=10 timeout=60
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org7bf015e">---
+# Destroys free gce instance.
+- name: Remove instance(s)
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  vars_files:
+  - group_vars/all
+  - group_vars/gce
+  vars:
+    credentials_file: "{{ lookup('env', 'GCP_SERVICE_ACCOUNT_FILE') }}"
+    project_id: "{{ lookup('env', 'GCP_PROJECT') }}"
+
+  tasks:
+   - name: delete the instance
+     gcp_compute_instance:
+         state: absent
+         name: "{{ instance_name_1 }}"
+         zone: "{{ zone }}"
+         project: "{{ project_id }}"
+         auth_kind: "{{ auth }}"
+         service_account_file: "{{ credentials_file }}"
+         scopes:
+           - https://www.googleapis.com/auth/compute
+     tags: delete
+   - name: delete address free-address-instance
+     gcp_compute_address:
+         name: "{{ address_name }}"
+         region: "{{ region }}"
+         project: "{{ project_id }}"
+         auth_kind: "{{ auth }}"
+         service_account_file: "{{ credentials_file }}"
+         scopes:
+           - https://www.googleapis.com/auth/compute
+         state: absent
+   - name: delete firewall rule for https
+     gcp_compute_firewall:
+       name: "{{ network_name }}-allow-https"
+       project: "{{ project_id }}"
+       auth_kind: "{{ auth }}"
+       service_account_file: "{{ credentials_file }}"
+       state: absent
+   - name: delete firewall rule for http
+     gcp_compute_firewall:
+       name: "{{ network_name }}-allow-http"
+       project: "{{ project_id }}"
+       auth_kind: "{{ auth }}"
+       service_account_file: "{{ credentials_file }}"
+       state: absent
+   - name: delete firewall rule for ssh
+     gcp_compute_firewall:
+       name: "{{ ssh_firewall_name }}"
+       project: "{{ project_id }}"
+       auth_kind: "{{ auth }}"
+       service_account_file: "{{ credentials_file }}"
+       state: absent
+   - name: delete network
+     gcp_compute_network:
+         name: "{{ network_name }}"
+         project: "{{ project_id }}"
+         auth_kind: "{{ auth }}"
+         service_account_file: "{{ credentials_file }}"
+         scopes:
+           - https://www.googleapis.com/auth/compute
+         state: absent
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org229c177">- hosts: tag_webserver
+  serial: 1
+  become: true
+  # These are the tasks to run before applying updates:
+  #pre_tasks:
+  #- name: clear directory
+  #- file: path=/opt state=absent
+  #- file: path=/opt state=directory
+
+  roles:
+  - common
+  - web
+
+  # These tasks run after the roles:
+  #post_tasks:
+  #- name: wait for webserver to come up
+  #  wait_for: 'host={{ inventory_hostname }} port=80 state=started timeout=80'
+</pre>
+</div>
+<ul class="org-ul">
+<li><code>group_vars/gce</code>, <code>group_vars/all</code></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="orgccc4763">machine_type: f1-micro
+image: projects/debian-cloud/global/images/family/debian-9
+zone: us-east1-b
+instance_name_1: free-1
+auth: serviceaccount
+region: us-east1
+network_name: free-network-instance
+address_name: free-address-instance
+ssh_firewall_name: free-ssh-instance
+disk_size: 30
+disk_name: free-disk-instance
+</pre>
+</div>
+<ul class="org-ul">
+<li><code>inventory/gce-inventory.gcp.yml</code></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org36ea6de">plugin: gcp_compute
+projects:
+  - jamin-42069
+auth_kind: serviceaccount
+service_account_file: ~/.gcloud/jam.json
+scopes:
+  - https://www.googleapis.com/auth/compute
+keyed_groups:
+  - prefix: tag
+    key: tags['items']
+filters:
+</pre>
+</div>
+<ul class="org-ul">
+<li><code>ansible.cfg</code></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org2928253">[inventory]
+enable_plugins = auto
+#host_list, script, yaml, ini, auto
+</pre>
+</div>
+<ul class="org-ul">
+<li><code>roles/common/tasks/main.yml</code>, <code>roles/web/tasks/main.yml</code></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="orgba66dfa">---
+# This role contains common plays that will run on all nodes.
+
+- name: System update
+  apt: name=* state=latest force_apt_get=true
+---
+# This role contains web plays that will run on all nodes.
+
+- name: Install web server deps
+  apt: name={{ item }} state=present force_apt_get=true
+  with_items:
+   - git
+   - curl
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd724a4e" class="outline-3">
+<h3 id="orgd724a4e">misc playbooks</h3>
+<div class="outline-text-3" id="text-orgd724a4e">
+<div class="org-src-container">
+<pre class="src src-yaml" id="orga02c1c3">---
+- name: packages-config
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+   - name: install packages and updates
+     package: name={{ item }} state=present
+     with_items:
+       - emacs
+       - chromium # browsers
+   - name: upgrades and updates packages
+     pacman:
+       update_cache: yes
+       upgrade: yes
+     become: true
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>

@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org8e7e96b">
-<div class="navbar-brand" id="org8a73c56">
-<div class="navbar-item" id="org5d9d3a4">
+<nav class="navbar is-black" id="orgbee1dc0">
+<div class="navbar-brand" id="org0fd06b2">
+<div class="navbar-item" id="orgd757791">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgef833b5">
-<div class="navbar-start" id="orgaa0ab0a">
-<div class="navbar-item" id="org08ec1a4">
+<div class="navbar-menu" id="orgec3b238">
+<div class="navbar-start" id="org99cf97f">
+<div class="navbar-item" id="org1094e6e">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org9d21106">
+<div class="navbar-end" id="org0836b7e">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgb038652" class="outline-2">
-<h2 id="orgb038652">sqlite</h2>
-<div class="outline-text-2" id="text-orgb038652">
+<div id="outline-container-org897c14e" class="outline-2">
+<h2 id="org897c14e">sqlite</h2>
+<div class="outline-text-2" id="text-org897c14e">
 </div>
-<div id="outline-container-orgb995bd3" class="outline-3">
-<h3 id="orgb995bd3">notes</h3>
-<div class="outline-text-3" id="text-orgb995bd3">
+<div id="outline-container-org0df4311" class="outline-3">
+<h3 id="org0df4311">notes</h3>
+<div class="outline-text-3" id="text-org0df4311">
 <ul class="org-ul">
 <li><a href="https://www.sqlite.org/limits.html">https://www.sqlite.org/limits.html</a></li>
 <li>stores each index and table as separate b-tree over the database pages
@@ -99,6 +99,12 @@
 <li>optimizer can create temporary index's automatically.
 dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</code> query output</li>
 <li>import csv as virtual table or database</li>
+<li><code>pragma journal_mode = WAL;</code> for write ahead log (replaced shared cache)</li>
+<li><code>pragma synchronous = normal;</code></li>
+<li><code>pragma temp_store = memory;</code> to disable temp writes</li>
+<li><code>pragma mmap_size = 30000000000;</code> for memory mapping</li>
+<li>open in memory database with <code>:memory:</code></li>
+<li>foreign keys disabled in transactions and by default <code>PRAGMA foreign keys</code></li>
 </ul>
 </div>
 </div>

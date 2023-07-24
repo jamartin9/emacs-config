@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org0f29060">
-<div class="navbar-brand" id="org192e84c">
-<div class="navbar-item" id="orgf0dd366">
+<nav class="navbar is-black" id="orgb47ab89">
+<div class="navbar-brand" id="org9f6c727">
+<div class="navbar-item" id="org41feb05">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org74fca63">
-<div class="navbar-start" id="org127b8d7">
-<div class="navbar-item" id="org2aaf36b">
+<div class="navbar-menu" id="org0194456">
+<div class="navbar-start" id="orgc50d3cd">
+<div class="navbar-item" id="org8a38301">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,94 +29,203 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org0dab89c">
+<div class="navbar-end" id="org76b4f52">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org0131d74" class="outline-2">
-<h2 id="org0131d74">Emacs</h2>
-<div class="outline-text-2" id="text-org0131d74">
+<div id="outline-container-orgfb06db4" class="outline-2">
+<h2 id="orgfb06db4">Emacs</h2>
+<div class="outline-text-2" id="text-orgfb06db4">
 </div>
-<div id="outline-container-org30eb7a8" class="outline-3">
-<h3 id="org30eb7a8">emacs notes</h3>
-<div class="outline-text-3" id="text-org30eb7a8">
+<div id="outline-container-org6e69e60" class="outline-3">
+<h3 id="org6e69e60">emacs notes</h3>
+<div class="outline-text-3" id="text-org6e69e60">
 <ul class="org-ul">
 <li>pgtk enabled <code>broadwayd</code> port 8080 with apps env var <code>GDK_BACKEND=broadway</code></li>
 <li>magit-generate-changelog for commit msg</li>
 <li>gnus needs app password from google for 2fa or oauth token from gcloud</li>
 <li>webkit environment variable(s) for built-in browser
 <ul class="org-ul">
-<li><code>WEBKIT_FORCE_SANDBOX="0"</code></li>
+<li><code>WEBKIT_FORCE_SANDBOX="0"</code> is obe use <code>WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=1</code>
+<ul class="org-ul">
+<li>maybe set <code>GST_PLUGIN_PATH</code></li>
+</ul></li>
+</ul></li>
+<li>android port manual entry specifies enabling 'special app permissions' for all files to access <code>/sdcard</code>
+<ul class="org-ul">
+<li>android port of fdroid is old and branch is unmerged; newer builds are on <a href="https://sourceforge.net/projects/android-ports-for-gnu-emacs/">sourceforge</a></li>
 </ul></li>
 <li>signal-cli integration init <code>signal-cli link --name device_name | head -1 | qrencode --type=UTF8</code></li>
 <li>German air control ATC ran on emacs in the 90's</li>
 </ul>
 </div>
-<div id="outline-container-orga0c04a3" class="outline-4">
-<h4 id="orga0c04a3">org-mode notes</h4>
-<div class="outline-text-4" id="text-orga0c04a3">
+<div id="outline-container-orgcbc2c3d" class="outline-4">
+<h4 id="orgcbc2c3d">org-mode notes</h4>
+<div class="outline-text-4" id="text-orgcbc2c3d">
 <ul class="org-ul">
-<li>noweb can link code verbatium with <a id="orgbc945ce"></a> or evaluate it with <a id="orgbccf4a4"></a>()</li>
+<li>noweb can link code verbatium with <a id="org2b05914"></a> or evaluate it with <a id="org42af2a6"></a>()</li>
 <li><code>#+INCLUDE "file.org::selector" :only-contents t</code> to select heading contents to include from other files</li>
 <li>disable tangling with <code>:tangle no</code> on src blocks</li>
 </ul>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="org8df6c66">(ignore-errors
+  (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
+         (readme (concat base-dir (file-name-as-directory "..") (file-name-as-directory "..") "README.org"))
+         (readme-time (file-attribute-modification-time (file-attributes readme)))
+         (emacs-org (concat base-dir "emacs.org"))
+         (emacs-org-time (file-attribute-modification-time (file-attributes emacs-org))))
+    (if (time-less-p emacs-org-time readme-time); set timestamp of emacs.org when readme.org has edits
+      (set-file-times emacs-org readme-time))))
+</pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org0200ced" class="outline-3">
-<h3 id="org0200ced">emacs-config README</h3>
-<div class="outline-text-3" id="text-org0200ced">
+</div>
+
+<div id="outline-container-orgac7a6fb" class="outline-3">
+<h3 id="orgac7a6fb">emacs-config README</h3>
+<div class="outline-text-3" id="text-orgac7a6fb">
 <p>
 This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
-The dependencies are: emacs &gt;= 29/28, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store/pass-otp), aspell (flyspell), vlc/mpv (emms), notification-daemon (erc), c compiler (vterm), sqlite (forge/roam), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
+</p>
+
+<p>
+The dependencies are: emacs &gt;= 29/28, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store/pass-otp), aspell (flyspell), mpv (emms), notification-daemon (erc), sqlite (forge/roam), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
 </p>
 
 <p>
 Current package considerations:
+embark for dwim shortcuts
+consult for commands
+combobulate for structural editing
+ts-fold for structural folding
 </p>
-
 
 <p>
 Third party package choices:
+</p>
+
+<p>
 gcmh: collect garbage when idle to avoid pauses. alternative is increase gc-cons-threshold per workflow
+</p>
+
+<p>
 emms: frontend for music/video player with radio. alternative mpv.el or cli
+</p>
+
+<p>
 rmsbolt: decompiler explorer. alternative is external decompiler.
+</p>
+
+<p>
 guix: package/environment management. alternative is ensure/pinning with use-packages and setting exec-path-from-shell
+</p>
+
+<p>
 pass/pass-otp: frontend to password-store. alternative is git repo of authinfo.gpg store and totp app.
-vterm: graphical terminal emulation. alternative built-in multi-term lacks visual command support
+</p>
+
+<p>
+eat: graphical terminal emulation. alternative built-in multi-term w/o visual commands
+</p>
+
+<p>
 magit/forge/code-review: git/forge manipulation. alternative built-in vc lacks complex workflows like interactive rebase, forge pull requests or code-review
-debbugs: track emacs/guix bugs. alternative is bookmarking websites
+</p>
+
+<p>
+debbugs: track emacs/guix bugs. alternative is bookmarking websites/mailing lists
+</p>
+
+<p>
 transmission: manage torrent client. alternative is scripting transmission-cli
+</p>
+
+<p>
 org-roam: tag system for note database. alternative is self devised naming/search scheme with org-captured datetree journal
+</p>
+
+<p>
 fd-dired: speedup dired operations with rg/fd. alternative is find/grep
+</p>
+
+<p>
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
+</p>
+
+<p>
 flycheck: lsp, guile, rust checkers. alternative built-in flymake only has 10 backends w/o external packages
+</p>
+
+<p>
 company: automatic typing suggestions. alternatives corfu lacks backends w/o cape and auto-complete is obe
+</p>
+
+<p>
 lsp-ui: debugging with dap-mode. alternative: eglot, realgud, lang specific packages (ex. jedi for python)
+</p>
+
+<p>
 treemacs: workspace/project drawer with lsp/flycheck/company features. alternative is manual workspaces with built-in project.el
+</p>
+
+<p>
 smartparens: saves typing closing delimiters and strict matching speeds up font highlighting by avoiding broken/missing matches
+</p>
+
+<p>
 minions-mode: keeps the modeline visually brief with retained information. alternative: diminish/delight packages and config for each mode
-multiple-cursors: mass editing. alternative: reinvent with a function of marks and operations.
+</p>
+
+<p>
+multiple-cursors: mass editing. alternative: reinvent with a function of marks and operations
+</p>
+
+<p>
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
-expand-region: select semantic units of text. alternative is set mark and search/select
+</p>
+
+<p>
+expand-region: select semantic units of text. alternative is set mark and search/select or treesit with combobulate
+</p>
+
+<p>
 langs: rustic, guile-geiser, pyvenv/pyls/debugpy. alternative is only use elisp
+</p>
+
+<p>
 which-key: show keymap keybinds. alternative is describe-* functions for bind discovery
+</p>
+
+<p>
 osm: Map tile viewer. alternative is web browser viewing
+</p>
+
+<p>
 pcre2el: regex converter. alternative is a smooth big brain
+</p>
+
+<p>
+drag-stuff: move text around. alternative is treesit with combobulate
+</p>
+
+<p>
+link-hint: copy link urls (using avy). alternative is regex buffer contents
 </p>
 </div>
 
-<div id="outline-container-org6ceae97" class="outline-4">
-<h4 id="org6ceae97">Clone</h4>
-<div class="outline-text-4" id="text-org6ceae97">
+<div id="outline-container-orgea19ba6" class="outline-4">
+<h4 id="orgea19ba6">Clone</h4>
+<div class="outline-text-4" id="text-orgea19ba6">
 <p>
 Branch names diverging and "." complicate fetching the correct heads.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org901e027">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
+<pre class="src src-sh" id="orgbd11076">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
 # get branch heads
 git submodule foreach 'git checkout master'
 </pre>
@@ -124,41 +233,42 @@ git submodule foreach 'git checkout master'
 </div>
 </div>
 
-<div id="outline-container-orgba1736e" class="outline-4">
-<h4 id="orgba1736e">Tangle Install</h4>
-<div class="outline-text-4" id="text-orgba1736e">
+<div id="outline-container-org52fa525" class="outline-4">
+<h4 id="org52fa525">Tangle Install</h4>
+<div class="outline-text-4" id="text-org52fa525">
 <p>
 Emacs untangles the script from the org file (using noweb to copy/eval code) while expanding INCLUDE directives.
 Tangling is rerun when the org file is newer than the script (if present) and the html file.
 Cleanup is done via the <code>clean</code> arguments to the <code>make-el</code> wrapper.
+The wrapper is needed for org-roam, org-ids and html export tags.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgb1140f0">pwsh make-el.ps1 install
+<pre class="src src-sh" id="org5ac9b7f">pwsh make-el.ps1 install
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6bdfe07" class="outline-4">
-<h4 id="org6bdfe07">Link</h4>
-<div class="outline-text-4" id="text-org6bdfe07">
+<div id="outline-container-org6348810" class="outline-4">
+<h4 id="org6348810">Link</h4>
+<div class="outline-text-4" id="text-org6348810">
 <p>
 Installable org files tangle to a script of the same name for installation.
 The script needs itself and emacs on the PATH or CWD.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org82373d6">(ignore-errors
+<pre class="src src-emacs-lisp" id="orga46e25b">(ignore-errors
       (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org75255b7" class="outline-4">
-<h4 id="org75255b7">Run</h4>
-<div class="outline-text-4" id="text-org75255b7">
+<div id="outline-container-orgd7c408d" class="outline-4">
+<h4 id="orgd7c408d">Run</h4>
+<div class="outline-text-4" id="text-orgd7c408d">
 <p>
 The one line org-mode sesquicolon 'shebang' is a multipart shell/powershell wrapper.
 Passed arguments to the elisp script are available by argv (ignoring “–” and “$@”).
@@ -166,21 +276,42 @@ To run with powershell use the same wrapper format with a .ps1 extension.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgc5b23ee">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
+<pre class="src src-sh" id="orgd5c1c2d">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7ca00c5" class="outline-4">
-<h4 id="org7ca00c5">Cherry Picking</h4>
-<div class="outline-text-4" id="text-org7ca00c5">
+<div id="outline-container-org3fd096e" class="outline-4">
+<h4 id="org3fd096e">Cherry Picking</h4>
+<div class="outline-text-4" id="text-org3fd096e">
 <p>
 Copy files by url with emacs
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp" id="org0227201">(url-copy-file "https://github.com/jamartin9/emacs-config/blob/master/init.el" "init.el")
-(url-copy-file "https://github.com/jamartin9/emacs-config/blob/master/early-init.el" "early-init.el")
+<pre class="src src-elisp" id="org25efce1">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
+(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4c10f6a" class="outline-4">
+<h4 id="org4c10f6a">Site</h4>
+<div class="outline-text-4" id="text-org4c10f6a">
+<p>
+Clone the site
+</p>
+<div class="org-src-container">
+<pre class="src src-sh" id="orgf3ccbba">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
+</pre>
+</div>
+
+<p>
+Build the updated site
+</p>
+<div class="org-src-container">
+<pre class="src src-sh" id="org19b755d">pwsh make-el.ps1 site
 </pre>
 </div>
 </div>

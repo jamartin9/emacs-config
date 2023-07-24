@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgf64be40">
-<div class="navbar-brand" id="orgea7c8d9">
-<div class="navbar-item" id="org58c701f">
+<nav class="navbar is-black" id="org96dcf2c">
+<div class="navbar-brand" id="org9227629">
+<div class="navbar-item" id="orgf02bfab">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org5ca0a55">
-<div class="navbar-start" id="orgc51f364">
-<div class="navbar-item" id="org31efe6d">
+<div class="navbar-menu" id="org9d34cf8">
+<div class="navbar-start" id="org8768b76">
+<div class="navbar-item" id="org77941ff">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,15 +29,15 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org6248c2f">
+<div class="navbar-end" id="org3ad625f">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orga23f9f2" class="outline-2">
-<h2 id="orga23f9f2">Virtualization</h2>
-<div class="outline-text-2" id="text-orga23f9f2">
+<div id="outline-container-orgdb44cda" class="outline-2">
+<h2 id="orgdb44cda">Virtualization</h2>
+<div class="outline-text-2" id="text-orgdb44cda">
 <p>
 Simulate the simulation
 </p>
@@ -61,7 +61,15 @@ Simulate the simulation
 <li><a href="https://github.com/OpenMdev/GVM-user">https://github.com/OpenMdev/GVM-user</a> for supported cards</li>
 </ul></li>
 </ul></li>
+<li><code>free-page-reporting=on</code> to return guest memory to host (disable transparent huge pages on the guest as they will never be freed)</li>
 </ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-shell" id="orgbb6757e">#!/usr/bin/env bash
+qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::8081-:8081,hostfwd=tcp::8080-:8080 -enable-kvm -m 2570 -device virtio-blk,drive=myhd -drive if=none,file=/My-image.qcow2,id=myhd -spice port=5930,disable-ticketing
+</pre>
+</div>
+<ul class="org-ul">
 <li>firecracker
 <ul class="org-ul">
 <li>5.10 lts kernel</li>

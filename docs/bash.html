@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>bash</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org6b2b34d">
+<div class="navbar-brand" id="org5a92db1">
+<div class="navbar-item" id="org27d85ad">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orge9f2ebd">
+<div class="navbar-start" id="org5bf92a1">
+<div class="navbar-item" id="orgffa6666">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org9c796af">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org0197823" class="outline-2">
+<h2 id="org0197823">bash</h2>
+<div class="outline-text-2" id="text-org0197823">
+<ul class="org-ul">
+<li>array syntax <code>[@]</code></li>
+<li><code>--posix</code> for sh mode</li>
+<li><code>&amp;&gt;</code> <code>2&gt;&amp;1</code> redirects stderr and stdout</li>
+</ul>
+</div>
+<div id="outline-container-org3809298" class="outline-3">
+<h3 id="org3809298">snippets</h3>
+<div class="outline-text-3" id="text-org3809298">
+<div class="org-src-container">
+<pre class="src src-bash" id="org62d2df2">#!/usr/bin/env bash
+# trap errors
+set -Eeuxo pipefail
+trap "ERROR TRAPPED" ERR
+_install_stuff(){
+    # setup dir
+    local OLD_DIR="$( pwd )"
+    local CUR_DIR="$( dirname $0 )"
+    cd ${CUR_DIR}
+    # ensure binary
+    local ANSIBLE_CMD="ansible-playbook"
+    if ! [ -x "$(command -v ${ANSIBLE_CMD})" ]; then
+        ANSIBLE_CMD="${HOME}/.local/bin/ansible-playbook"
+    fi
+    # glob
+    for dir in ${CUR_DIR}/*/; do
+        cd ${dir}
+        ${ANSIBLE_CMD} ./*-playbook.yaml
+        cd ..
+    done
+    # return to calling dir
+    cd ${OLD_DIR}
+}
+# run and cleanup
+_install_stuff
+unset _install_stuff
+THING=$(&lt;somefile.txt)
+wg set %i private-key &lt;(su user -c "export PASSWORD_STORE_DIR=/path/to/your/store/; pass WireGuard/private-keys/%i")
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

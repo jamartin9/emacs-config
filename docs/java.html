@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>java</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org646c26b">
+<div class="navbar-brand" id="orgba60462">
+<div class="navbar-item" id="orgc1a314c">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgc2c4491">
+<div class="navbar-start" id="org45fa56f">
+<div class="navbar-item" id="org4973f14">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgdb529c9">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org0ad7153" class="outline-2">
+<h2 id="org0ad7153">java</h2>
+<div class="outline-text-2" id="text-org0ad7153">
+<ul class="org-ul">
+<li><code>alias javaListProps="java -server -XX:+PrintFlagsFinal -XX:+UnlockDiagnosticVMOptions --version"</code></li>
+<li><code>alias javaToolOptions="export JAVA_TOOL_OPTIONS='-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=heapdump.hprof -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true -Xlog:gc:gc.log:utctime,uptime,tid,level:filecount=10,filesize=128m -XX:NativeMemoryTracking=detail -XX:+PreserveFramePointer'"</code></li>
+<li>6 months release</li>
+<li>3 year lts release</li>
+<li>espresso for java on java (graalvm)</li>
+<li>microprofile for javaee</li>
+<li>sealed classes</li>
+<li>records</li>
+</ul>
+</div>
+<div id="outline-container-org75f6370" class="outline-3">
+<h3 id="org75f6370">spark jetty websocket wrapper</h3>
+<div class="outline-text-3" id="text-org75f6370">
+<div class="org-src-container">
+<pre class="src src-java" id="orge664d5c">import io.reactivex.*;
+import org.eclipse.jetty.websocket.api.Session;
+import wrapper.SocketWrapper;
+import static spark.Spark.*;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+public class Main{
+    public static void main(String [] args) throws InterruptedException {
+        // socket server
+        webSocket("/echo", SocketWrapper.class);
+        init();
+        // poll connections and print out all messages async
+        Map&lt;Session, Flowable&lt;String&gt;&gt; sessions = SocketWrapper.getConnections();
+        while(true){
+            int socketcount = 0;
+            for(Session session: sessions.keySet()){
+                socketcount++;
+                int mycount = socketcount;
+                // get the flowable of messages
+                Flowable&lt;String&gt; source_one = sessions.get(session);
+                // background thread
+                //source_one.subscribeOn(Schedulers.newThread()).subscribe((String s) -&gt; {
+                //        System.out.println("Subscriber "+mycount+" "+s);
+                //});
+                source_one.subscribe((String s) -&gt; {
+                    System.out.println("Subscriber "+mycount+" "+s);
+                });
+            }
+            Thread.sleep(TimeUnit.MILLISECONDS.toMillis(10));
+        }
+    }
+}
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-java" id="org7c0b455">package wrapper;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import org.eclipse.jetty.websocket.api.*;
+import org.eclipse.jetty.websocket.api.annotations.*;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
+@WebSocket
+public class SocketWrapper {
+    private static final Map&lt;Session, Flowable&lt;String&gt;&gt; sessions = new ConcurrentHashMap&lt;&gt;();
+    private static final Map&lt;Session, Queue&lt;String&gt;&gt; buffers = new ConcurrentHashMap&lt;&gt;();
+    public static Map&lt;Session, Flowable&lt;String&gt;&gt; getConnections(){
+        return sessions;
+    }
+    @OnWebSocketConnect
+    public void connected(Session session) {
+        // create buffer
+        buffers.put(session, new ConcurrentLinkedQueue&lt;&gt;());
+        // flowable to consume buffer
+        Flowable&lt;String&gt; flow = Flowable.create(
+                // called on each subscriptions, no history
+                (FlowableEmitter&lt;String&gt; emitter) -&gt; {
+                    // get the queue of incoming messages
+                    Queue&lt;String&gt; buffer = buffers.get(session);
+                    // poll while the session is active
+                    while(sessions.containsKey(session)) {
+                        // user hipster
+                        // db datum
+                        // pass roflcopter
+                        // port 5432
+                        // address 127.0.0.1
+                        //Database db = Database.from("jdbc:postgresql://localhost/datum?user=hipster&amp;password=roflcopter");
+                        //Database adb = db.asynchronous();
+                        // db results
+                        // from sync request publish when done
+                        //emitter.onNext(db.select("select * from user").getAs(String.class).toBlocking().single());
+                        //emitter.onNext(adb.select("select * from user").getAs(String.class).limit(1).toBlocking().single());
+                        // async request
+                        // get all off buffer
+                        while(!buffer.isEmpty()){
+                            //re publish
+                            emitter.onNext(buffer.poll());
+                        }
+                        Thread.sleep(1);
+                    }
+                    // session is done
+                    emitter.onComplete();
+                }, BackpressureStrategy.BUFFER);
+        // session with flowable for connections
+        sessions.put(session, flow);
+    }
+    @OnWebSocketClose
+    public void closed(Session session, int statusCode, String reason) {
+        buffers.get(session).add("Session Closed: "+reason+" Status Code: "+statusCode);
+        sessions.remove(session);
+        buffers.remove(session);
+    }
+    @OnWebSocketMessage
+    public void message(Session session, String message) throws IOException {
+        buffers.get(session).add(message);
+        session.getRemote().sendString(message);
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>golang</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgd88c1ed">
+<div class="navbar-brand" id="org79a87bf">
+<div class="navbar-item" id="org95df813">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="org4ec2b44">
+<div class="navbar-start" id="orgefe2060">
+<div class="navbar-item" id="orgb79cdd9">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org96a3184">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgc95e6ae" class="outline-2">
+<h2 id="orgc95e6ae">golang</h2>
+<div class="outline-text-2" id="text-orgc95e6ae">
+<ul class="org-ul">
+<li>GOMEMLIMIT to control heap size to avoid GC</li>
+<li>disable default proxy
+<ul class="org-ul">
+<li>go env -w GOPROXY=direct</li>
+<li>go env -w GOSUMDB=off</li>
+</ul></li>
+<li>raw syscalls vs libc
+<ul class="org-ul">
+<li>CGO<sub>ENABLED</sub> to toggle libc linkage</li>
+</ul></li>
+<li>6 month release cycle</li>
+<li>export with capitalization</li>
+<li>vendors dependencies by default</li>
+<li>large std library
+<ul class="org-ul">
+<li>can have ossification issues such as ed25519 signature malleability update cadence
+<ul class="org-ul">
+<li><img src="https://hdevalence.ca/images/ed25519-comparison.png" alt="ed25519-comparison.png"></li>
+</ul></li>
+</ul></li>
+<li>TCP <code>NODELAY</code> set by default (no batching with nagle's algorithm)</li>
+<li>http2 pusher (chrome removing support)</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-golang" id="orgf943203">// Send HTML and push image
+func handlerHtml(w http.ResponseWriter, r *http.Request) {
+        pusher, ok := w.(http.Pusher)
+        if ok {
+                Info.Println("Pushing image")
+                pusher.Push("/image", nil)
+        }
+        Info.Println("Writing HTML")
+        w.Header().Add("Content-Type", "text/html")
+        fmt.Fprintf(w, `&lt;html&gt;&lt;body&gt;&lt;img src="/image"&gt;&lt;/body&gt;&lt;/html&gt;`)
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>One can use generate<sub>cert.go</sub> in crypto/tls to generate cert.pem and key.pem.</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

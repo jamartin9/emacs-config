@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ruby</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org4f410ed">
+<div class="navbar-brand" id="orgff13a5b">
+<div class="navbar-item" id="orgda06fd9">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgad26a19">
+<div class="navbar-start" id="org8801227">
+<div class="navbar-item" id="org2b1a863">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org799a807">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-orgbe5ef82" class="outline-2">
+<h2 id="orgbe5ef82">ruby</h2>
+<div class="outline-text-2" id="text-orgbe5ef82">
+<ul class="org-ul">
+<li>ruby script to convert json to yaml despite <a href="https://metacpan.org/pod/JSON::XS#JSON-and-YAML">not being a superset</a></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-ruby" id="org9c2aec8">#!/usr/bin/env ruby
+# Simple script to convert .json to .yaml and .yaml to .json.
+require 'json'
+require 'yaml'
+if ARGV.empty?
+  puts 'Supply either a .yaml or .json file'
+  exit
+end
+def self.convert(file)
+  yaml_formats = ['.yaml']
+  json_formats = ['.json']
+  if !File.file? file
+    puts "File #{file} doesn't exist"
+  elsif yaml_formats.include? File.extname(file)
+    output = "#{File.basename(file, '.yaml')}.json"
+    puts "Converting #{file} to json file #{output}"
+    data = YAML.load_file(file)
+    json = JSON.dump(data)
+    File.write(output, json)
+  elsif json_formats.include? File.extname(file)
+    output = "#{File.basename(file, '.json')}.yml"
+    puts "Converting #{file} to yaml file #{output}"
+    data = JSON.parse(File.read(file))
+    yaml = YAML.dump(data)
+    File.write(output, yaml)
+  else
+    puts "Skipping #{file} due to extension"
+  end
+end
+commands = ARGV
+commands.each { |command| convert(command) }
+</pre>
+</div>
+<ul class="org-ul">
+<li>ruby script for docker images</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-ruby" id="orga1621e2">#!/usr/bin/env ruby
+# Cobbled together endpoint for gettings tars.
+require 'docker-api'
+require 'sinatra'
+require 'json'
+
+# config parsing
+def parse_port
+  '9001' if ENV['PORT'].to_s.empty?
+end
+
+# config
+set :environment, :production
+set :port, parse_port
+set :dump_errors, false
+set :static, false
+# concurrency lock
+# set :lock, true
+# defaults to views
+# set :views, '/var/www/views/'
+# enabled by default when public directory exists
+# set :public_folder, '/var/www'
+
+# creates downloable gziped docker tar
+def create_downloadable(image_name, tar_name, tar_gzip_name)
+  # Save the image off to tar
+  # names = %w( my_image1 my_image2:not_latest )
+  Docker::Image.save(image_name, tar_name)
+  # gzip tar with stamps
+  Zlib::GzipWriter.open(tar_gzip_name) do |gz|
+    gz.mtime = File.mtime(tar_name)
+    gz.orig_name = tar_name
+    gz.write IO.binread(tar_name)
+    gz.close
+  end
+  # cleanup tar
+  File.delete(tar_name)
+end
+
+# version config to endpoint
+def check_version(version)
+  return 'latest' if version.to_s.empty?
+end
+
+# user config to endpoint
+def check_user(user)
+  if user.to_s.empty?
+    'docker.io'
+  else
+    user
+  end
+end
+
+# docker image name creation
+def create_image_name(user, name, version)
+  if user == 'docker.io'
+    name + ':' + version
+  else
+    # set to user supplied image name
+    user + '/' + name + ':' + version
+  end
+end
+
+# singular rest endpoint
+# returns help without required path
+# returns error on not found/disk full
+# returns download of docker image as tar.gz on success
+# optional params: version and user
+get '/?:name?/?' do
+  # validate name or return help page
+  name = params['name']
+  if name.to_s.empty?
+    send_file File.join('help.html')
+    return
+  end
+  # validate version or turn into latest
+  version = check_version(params['version'])
+  # default to docker.io
+  user = check_user(params['user'])
+  # name vars
+  image_name = create_image_name(user, name, version)
+  tar_name = user + '_' + name + '_' + version + '.tar'
+  tar_gzip_name = tar_name + '.gz'
+  # check if the gzip exists yet
+  unless File.file?(tar_gzip_name)
+    # Search image and return error not found page upon fails
+    unless Docker::Image.exist?(image_name)
+      begin
+        Docker::Image.create('fromImage' =&gt; image_name)
+      rescue
+        send_file File.join('error.html')
+        return
+      end
+    end
+    create_downloadable(image_name, tar_name, tar_gzip_name)
+  end
+  headers['Content-Disposition'] = 'attachment'
+  # send gzipped file
+  send_file File.join(tar_gzip_name)
+end
+</pre>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

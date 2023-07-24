@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>gradle</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgda1f631">
+<div class="navbar-brand" id="org39416c2">
+<div class="navbar-item" id="org0d4116e">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgcb3f6fa">
+<div class="navbar-start" id="org761e8f6">
+<div class="navbar-item" id="orgc316869">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="orgcb83188">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org8758340" class="outline-2">
+<h2 id="org8758340">gradle</h2>
+<div class="outline-text-2" id="text-org8758340">
+<ul class="org-ul">
+<li>build DSL for jvm</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-gradle" id="org27a64fb">rootProject.name = 'aggregator'
+// include all gradle builds
+
+fileTree('.') {
+    include '**/build.gradle'
+    exclude 'build.gradle', '**/node_modules/**/build.gradle', '' // Exclude the root build file and node modules
+}.collect { relativePath(it.parent).replace(File.separator, ':') }
+        .each {
+    def shortName = it.tokenize(':')[-1]
+    def projName = ':' + shortName
+    def folder = new File(it.replace(':', File.separator) + '/settings.gradle')
+    if (folder.exists()) {
+        println('includeBuild ' + it.replace(':', File.separator))
+        //includeBuild it.replace(':', File.separator)
+    }else{
+        // allow referencing projects by their short name with the path set
+        println("including regular " + shortName)
+        include(it)
+        //project(projName).projectDir = new File(it.replace(':', File.separator))
+        //Properties props = new Properties()
+        //props.load(new FileInputStream(it.replace(':', File.separator)+'/gradle.properties'))
+        //props.each { prop -&gt;
+        //project(projName).ext.set(prop.key, prop.value)
+        //}
+    }
+
+}
+
+// add all composite builds marked by no build.gradle
+fileTree('.') {
+    include '**/settings.gradle'
+    exclude 'settings.gradle', '**/node_modules/**/settings.gradle' // Exclude the root build file and node modules
+}.collect { relativePath(it.parent).replace(File.separator, ':') }
+        .each {
+    def folder = new File(it.replace(':', File.separator) + '/build.gradle')
+    if (folder.exists()) {
+        println('Skipping Composite '+ it)
+    }else{
+        println("including composite " + it)
+        include(it)
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

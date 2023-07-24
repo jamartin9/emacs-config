@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgb8b41e7">
-<div class="navbar-brand" id="org889f25f">
-<div class="navbar-item" id="org75f8b27">
+<nav class="navbar is-black" id="orgbfd6b63">
+<div class="navbar-brand" id="org918a74b">
+<div class="navbar-item" id="org4966b95">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org899e799">
-<div class="navbar-start" id="org19813b6">
-<div class="navbar-item" id="orgd057755">
+<div class="navbar-menu" id="orgd856ffd">
+<div class="navbar-start" id="org86df24b">
+<div class="navbar-item" id="orgb346f0a">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org165d52d">
+<div class="navbar-end" id="org71da092">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgde3297b" class="outline-2">
-<h2 id="orgde3297b">julia</h2>
-<div class="outline-text-2" id="text-orgde3297b">
+<div id="outline-container-org081fb94" class="outline-2">
+<h2 id="org081fb94">julia</h2>
+<div class="outline-text-2" id="text-org081fb94">
 </div>
-<div id="outline-container-org3b2e813" class="outline-3">
-<h3 id="org3b2e813">julia notes</h3>
-<div class="outline-text-3" id="text-org3b2e813">
+<div id="outline-container-org8daf2ef" class="outline-3">
+<h3 id="org8daf2ef">julia notes</h3>
+<div class="outline-text-3" id="text-org8daf2ef">
 <ul class="org-ul">
 <li>some <a href="https://yuri.is/not-julia/">heisenbugs</a></li>
 <li>lisp for hoisting (used to be guile in early versions) <code>julia --lisp</code></li>
@@ -52,7 +52,7 @@
 <li>automatic differentiation and optimization libraries turn grammar into symbolic variables</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-julia" id="org9bad139">using ModelingToolkit, GalacticOptim
+<pre class="src src-julia" id="org90cf20f">using ModelingToolkit, GalacticOptim
 
 @variables x y
 @parameters a b
@@ -70,6 +70,77 @@ p = [
 
 prob = OptimizationProblem(sys,u0,p,grad=true,hess=true)
 solve(prob,Newton())
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-julia" id="org3ba53a3">@enum MatchType unmatched=0 matched=1 unstable=2 nm1gen=3 nm1=4 nm2=5
+mutable struct Element
+    x::Int
+    y::Int
+    l::Int
+    r::Int
+    matchtype::MatchType
+   nm2gen::Bool
+   nm2cpointer::Element
+   nm2rpointer::Element
+   lpointer::Element
+   Element(x,y,l,r) = (me = new();
+                       me.x = x; me.y = y; me.l = l; me.r = r; me.matchtype = unmatched; me.nm2gen = false;
+                       me.nm2cpointer = me;
+                       me.nm2rpointer = me;
+                       me.lpointer = me;
+                       me)
+
+end
+
+using Random
+"""
+create n x n Element matrix with cartesian coordinates and random l/r values
+"""
+function createMatrix(n::Int)
+    matrix = Array{Element}(undef, n, n) # nxn matrix
+    rng = MersenneTwister(n);
+    randomMens = shuffle(rng, Vector(1:n)) # random prefs for each row/col
+    randomWomens = shuffle(rng, Vector(1:n))# FUTURE add by col instead of row
+    x = 1;
+    y = 1;
+    for i in eachindex(matrix)
+        matrix[i] = Element(x, y, randomMens[x], randomWomens[x])
+        x = x + 1
+        if (x &gt; n)
+            x = 1
+            y = y + 1
+            randomMens = shuffle(rng, Vector(1:n)) # random prefs for new row/col
+            randomWomens = shuffle(rng, Vector(1:n))
+        end
+    end
+    matrix # return built up matrix
+end
+
+"""
+prints each element of the array
+"""
+function printElements(matrix::Array{Element})
+    for i in eachindex(matrix)
+        print("\nElement: ", i,
+              " x is ", matrix[i].x,
+              " y is ", matrix[i].y,
+              " l is ", matrix[i].l,
+              " r is ", matrix[i].r,
+              #" matchtype is ", matrix[i].matchtype,
+              #" nm2gen is ", matrix[i].nm2gen,
+              #" lpointer is ", matrix[i].lpointer,
+              #" cpointer is ", matrix[i].nm2cpointer,
+              #" rpointer is ", matrix[i].nm2rpointer,
+              " \n")
+    end
+end
+
+rng = rand((2,10))
+print("RNG is : ", rng, " \n")
+
+matrix = createMatrix(rng)
+printElements(matrix)
 </pre>
 </div>
 </div>

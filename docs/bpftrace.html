@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org70a2622">
-<div class="navbar-brand" id="org31c7993">
-<div class="navbar-item" id="orgc735fcc">
+<nav class="navbar is-black" id="orgf4122ee">
+<div class="navbar-brand" id="org4de886d">
+<div class="navbar-item" id="orgc4f00c9">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org39b6089">
-<div class="navbar-start" id="orgb02ea85">
-<div class="navbar-item" id="orgc45a4aa">
+<div class="navbar-menu" id="org504ab5c">
+<div class="navbar-start" id="orgea8946e">
+<div class="navbar-item" id="org06ba93b">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,33 +29,33 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org909463a">
+<div class="navbar-end" id="org99c7e90">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org2a522a9" class="outline-2">
-<h2 id="org2a522a9">bpftrace</h2>
-<div class="outline-text-2" id="text-org2a522a9">
+<div id="outline-container-org36062a7" class="outline-2">
+<h2 id="org36062a7">bpftrace</h2>
+<div class="outline-text-2" id="text-org36062a7">
 </div>
-<div id="outline-container-org7e6c615" class="outline-3">
-<h3 id="org7e6c615">notes</h3>
-<div class="outline-text-3" id="text-org7e6c615">
+<div id="outline-container-orgde6cb47" class="outline-3">
+<h3 id="orgde6cb47">notes</h3>
+<div class="outline-text-3" id="text-orgde6cb47">
 <ul class="org-ul">
 <li>needs cap or sudo</li>
 <li>&lt;EVENT&gt;/&lt;FILTER&gt;/&lt;BLOCK&gt; structure</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc2ec07b" class="outline-3">
-<h3 id="orgc2ec07b">oneliners</h3>
-<div class="outline-text-3" id="text-orgc2ec07b">
+<div id="outline-container-org63f4360" class="outline-3">
+<h3 id="org63f4360">oneliners</h3>
+<div class="outline-text-3" id="text-org63f4360">
 <ul class="org-ul">
 <li>tools for oneline usually installed in /usr/share/bpftrace/tools/*.bt</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org0d6204a"># print results on internval. Add to end to poll probe
+<pre class="src src-sh" id="orga257218"># print results on internval. Add to end to poll probe
 BPF_POLL='interval:s:1 { print(@); clear(@); }'
 # profile pid 6969
 BPF_PROFILE='profile:hz:99 /pid == 6969/ { @[ustack] = count(); }'

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>guile</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="orgc9a768e">
+<div class="navbar-brand" id="org86b7237">
+<div class="navbar-item" id="org641635a">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgaff9498">
+<div class="navbar-start" id="org1584c95">
+<div class="navbar-item" id="orga416261">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org7a72ed7">
+
+</div>
+
+</div>
+</nav>
+<div id="outline-container-org96dfe5a" class="outline-2">
+<h2 id="org96dfe5a">guile</h2>
+<div class="outline-text-2" id="text-org96dfe5a">
+<ul class="org-ul">
+<li>goops for objects instead of records</li>
+<li>can embed precise gc <a href="https://github.com/wingo/whippet-gc">whippet</a></li>
+<li>goblins adding wasm support for distributed objects</li>
+<li>guile wasm <a href="https://gitlab.com/spritely/guile-hoot-updates/">https://gitlab.com/spritely/guile-hoot-updates/</a></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-guile" id="orgd0de9d3">":"; guile -e main -s $0 $@; exit $?
+
+(define (main args)
+        (map (lambda (arg) (display arg) (display " "))
+             (cdr args))
+        (newline))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
