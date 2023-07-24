@@ -213,3 +213,10 @@ testing/preview of changes is a wip
   }
 
 #+END_SRC
+
+#+NAME: timestamp-css
+#+BEGIN_SRC emacs-lisp :tangle css.sh :shebang "\":\"; emacs -Q --script css.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
+(ignore-errors
+  (let ((base-dir (file-name-directory (or load-file-name buffer-file-name))))
+    (set-file-times (concat base-dir "org-default.css") (time-add (file-attribute-modification-time (file-attributes (concat base-dir "css.org"))) (seconds-to-time 1)))))
+#+END_SRC

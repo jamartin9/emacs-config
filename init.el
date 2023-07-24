@@ -253,7 +253,7 @@
                         ("-" . dired-jump)
                         ("f" . make-frame))
             (bind-keys :prefix-map jam/insert :prefix "C-c i"
-                        ("y" .  cua-paste)
+                        ("y" . cua-paste)
                         ("u" . insert-char)
                         ("s" . yas-insert-snippet)
                         ("e" . emojify-insert-emoji))
@@ -479,6 +479,9 @@
               ("r" . org-roam-node-find)))
 
 (use-package fd-dired ; fd/rg
+  :init (bind-keys :map jam/search
+                   ("n" . fd-dired)
+                   ("r" . find-grep-dired))
   :after dired
   ;:vc (:url "https://github.com/yqrashawn/fd-dired.git" :rev :newest)
   :config (bind-key [remap find-dired] 'fd-dired)
@@ -550,8 +553,12 @@
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
 (use-package treemacs
-  :init (bind-keys ("<f9>" . treemacs))
-  (bind-keys :map jam/projects ("w" . treemacs-switch-workspace))
+  :init ;(bind-keys ("<f9>" . treemacs))
+  (bind-keys :map jam/projects
+             ("o" . treemacs)
+             ("w" . treemacs-switch-workspace)
+             ("d" . treemacs-delete-workspace)
+             ("n" . treemacs-create-workspace))
   (setq treemacs-persist-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "treemacs-persist"))
   :commands (treemacs treemacs-find-file treemacs-switch-workspace))
 

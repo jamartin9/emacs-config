@@ -50,5 +50,6 @@ PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_
 - vault
   - manages ca and cert rotation
   - init/unseal with pgp keys
-  - operator has webhook to avoid sidecare
+  - operator has webhook to avoid sidecar
     - configured through annotations and env vars
+- cluster api instead of federation

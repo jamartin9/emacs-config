@@ -25,3 +25,10 @@
     - single role
 - hashing
   - mapembed hashing is perfect hashing that supports dynamic updates; still with O(1) lookup time
+** Proverbs
+- Murphy's law - If something can go wrong, it will.
+- Goodhart's Law - When a measure becomes a target, it ceases to be a good measure
+- Conway's law - Any piece of software reflects the organizational structure that produced it.
+- Pareto principle - For many phenomena, 80% of consequences stem from 20% of the causes.
+- Peter principle - In a hierarchy, every employee tends to rise to his level of incompetence.
+- Moore's law - The power of computers per unit cost doubles every 24 month.

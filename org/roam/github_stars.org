@@ -1734,6 +1734,7 @@
   - Official Code for DragGAN (SIGGRAPH 2023)
 ** zkonduit/ezkl
   - Deep learning with ZK-Snarks
+
 * android
 ** f-droid/fdroidclient
   - Android client application.
@@ -1780,7 +1781,7 @@
 ** lutris/lutris
   - Lutris desktop client in Python / PyGObject
 ** NVIDIAGameWorks/rtx-remix
-  - Combined repo for the RTX-Remix runtime. dxd9 game modding.
+  - Combined repo for the RTX-Remix runtime. dxd9 game modding. (require RTX GPU for mod creation)
 ** open-goal/jak-project
   - Reviving the language that brought us the Jak & Daxter Series
 ** open-osrs/runelite
@@ -1840,6 +1841,8 @@
   - Flexible concrete Error type built on std::error::Error
 ** dtolnay/thiserror
   - derive(Error) for struct and enum error types
+** embassy-rs/embassy
+  - Modern embedded framework, using Rust and async.
 ** emilk/egui
   - egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native
 ** extism/extism
@@ -1878,7 +1881,6 @@
   - Compile-time reference counting
 ** mitsuhiko/fragile
   - Utility wrapper to send non send types to other threads safely
-
 ** model-checking/kani
   - Kani Rust Verifier
 ** mozilla/uniffi-rs
@@ -1889,6 +1891,8 @@
   - Pelikan is a framework for building local or distributed caches. It comes with a highly extensible architecture, best-in-class performance, and superb operational ergonomics. You can use it to replace most of Memcached or a subset of Redis features.
 ** pendulum-project/ntpd-rs
   - An NTP implementation in Rust, supported by Internet Security Research Group's Prossimo project.
+** pop-os/cosmic-text
+  - Pure Rust multi-line text handling
 ** rayon-rs/rayon
   - Rayon: A data parallelism library for Rust
 ** rkyv/rkyv

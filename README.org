@@ -114,3 +114,16 @@ Copy files by url with emacs
 (url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
 (url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
 #+END_SRC
+
+** Site
+Clone the site
+#+NAME: clone-gh-pages
+#+BEGIN_SRC sh :tangle no
+git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
+#+END_SRC
+
+Build the updated site
+#+NAME: tangle
+#+BEGIN_SRC sh :tangle no
+pwsh make-el.ps1 site
+#+END_SRC

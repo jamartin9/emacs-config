@@ -38,7 +38,10 @@
     - fine tune with [[https://github.com/cloneofsimo/lora][lora]] and [[https://github.com/huggingface/diffusers/tree/main/examples/dreambooth][dreambooth]]
 ** Large Language Models
   - chinchilla paper showed most models are over parameterized without enough data
-  - [[https://github.com/facebookresearch/llama][Llama]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]] (gpt-neox tokenizer) and [[https://huggingface.co/openlm-research/open_llama_7b][OpenLLaMa]] on 1T tokens
+  - llama 2
+    - 4096 context length (7B, 13B, 70B)
+    - 2 trillion tokens (~8% programming data, tokenizer replaces spaces with underscores)
+  -  [[https://github.com/facebookresearch/llama][Llama 1]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]] (gpt-neox tokenizer) and [[https://huggingface.co/openlm-research/open_llama_7b][OpenLLaMa]] on 1T tokens
     - llama tokenizer does not make multiple whitespace significant (thus cant code in python) unlike GPT-NEOX
     - context length of 2048
     - weights unpublished
@@ -51,6 +54,7 @@
       - [[https://github.com/lm-sys/FastChat][Vicuna]] is refined alpaca with sharegpt with 'conversation format'
     - WizardLM is fine tuned with  'Evol-Instruct' (llm generated) data for 'deep knowledge'
       - VicunaWizard combines the Vicuna and Wizardlm
+    - Orca is Supervised Fine Tuned GPT4 output in alpaca format (top of llm leaderboard with llama2)
     - Can be fine tuned with [[https://github.com/tloen/alpaca-lora][LoRA]]
   - Flan-T5 for text summary
   - Donut for document image question answering
@@ -100,6 +104,7 @@ Question: {input}
 {agent_scratchpad}
 #+END_SRC
 ** transformers examples
+- can set accelerate device with cli ~accelerate launch --cpu main.py~, env ~ACCELERATE_USE_CPU=True~ or python ~accelerator = Accelerator(cpu=True)~
 #+NAME: hugginface.py
 #+BEGIN_SRC python :tangle no
 #!/usr/bin/env python3
@@ -156,5 +161,63 @@ model_config = GPTBigCodeConfig()
 with init_empty_weights(): # get device_map without loading model weights
     model = GPTBigCodeForCausalLM(model_config)
     device_map = infer_auto_device_map(model, max_memory={0: "0GiB", "cpu": "24GiB"})
+
+# Tools for load_tool: 
+#"document-question-answering"
+#"image-captioning"
+#"image-question-answering"
+#"image-segmentation"
+#"speech-to-text"
+#"summarization"
+#"text-classification"
+#"text-question-answering"
+#"text-to-speech"
+#"translation"
+#
+# Extra tools from hub
+#"text-to-image"
+from transformers import load_tool
+
+text = "Sally sold sea shells down by the seashore. She was trying to pay off her student loans. She is homeless and hungry. She owes the IRS too."
+summarizer = load_tool("summarization")
+summarized_text = summarizer(text)
+print(f"Summary: {summarized_text}")
+
+text = "Sally sold sea shells down by the seashore. She was trying to pay off her student loans. She is homeless and hungry. She owes the IRS too."
+question = "What is being sold?"
+text_qa = load_tool("text-question-answering")
+answer = text_qa(text=text, question=question)
+print(f"The answer is {answer}.")
+
+from PIL import Image
+image = Image.open("dog.png")#.resize((256, 256))# 384 - 640 px on Vilt images
+question = "What color is the dog?"
+image_qa = load_tool("image-question-answering")
+answer = image_qa(image=image, question=question)
+print(f"The answer is {answer}")
+
+# document is a png of pdf
+from pdf2image import convert_from_path
+#import os
+#os.environ["PROTOCOL_BUFFERS_PYTHON"] = "python"
+images = convert_from_path('./bitcoin.pdf')
+question = "What the document about?"
+document = images[0]
+document_qa = load_tool("document-question-answering", device="cpu")
+answer = document_qa(document, question=question)
+print(f"The answer is {answer}.")
+
+import torch
+image_generator = load_tool("huggingface-tools/text-to-image")
+image_generator.device = torch.device("cpu")
+#image_generator.default_checkpoint = "runwayml/stable-diffusion-v1-5"
+image_generator.setup()
+image_generator.pipeline.to("cpu")
+image_generator.pipeline.enable_attention_slicing()
+image_generator.pipeline.enable_sequential_cpu_offload()
+
+prompt = "Dog, noble, majestic, realistic, high definition, pitbull"
+image = image_generator(prompt=prompt)
+image.save("test.png")
 
 #+END_SRC

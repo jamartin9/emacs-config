@@ -11,13 +11,13 @@ NO-RUN: do not run the tangled argument"
           ("all" (jam/parse-args (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                               "\.org$" nil
                                                               #'(lambda (local-dir)
-                                                                  (if (string-match-p "\\(\.git$\\|.local$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))
+                                                                  (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))
                                  t))
           ("install" (jam/parse-args (list "README.org")))
           ("install-all" (jam/parse-args (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                                       "\.org$" nil
                                                                       #'(lambda (local-dir)
-                                                                          (if (string-match-p "\\(\.git$\\|.local$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))))
+                                                                          (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))))
           ("update" (let ((dir (file-name-directory (or load-file-name buffer-file-name))))
                       (message "%s" (process-lines "git" "-C" dir "submodule" "update" "--recursive" "--remote"))))
 
@@ -32,11 +32,26 @@ NO-RUN: do not run the tangled argument"
                            (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                 "\\(\.sh$\\|\.yml$\\|^\.torrc$\\|\.py$\\|\.scm$\\|\.css$\\|\.html$\\|.html~$\\)" nil
                                                 #'(lambda (local-dir)
-                                                    (if (string-match-p "\\(\.git$\\|.local$\\|guix-channel$\\|profile$\\)" local-dir) nil t)))))
+                                                    (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))))
           ("clean-guix" (message "%s" (process-lines "guix" "package" "-d"))
                         (message "%s" (process-lines "guix" "pull" "-d"))
                         (message "%s" (process-lines "guix" "home" "delete-generations"))
                         (message "%s" (process-lines "guix" "gc")))
+          ("site" (jam/parse-args (list "install-all")); use install to run scripts for timestamps (css, emacs, etc)
+                  (let* ((init-dir (file-name-directory (or load-file-name buffer-file-name)))
+                         (org-dir (concat init-dir (file-name-as-directory "org") "roam"))
+                         (site-dir (concat init-dir (file-name-as-directory "gh-pages") "docs")))
+                    (jam/parse-args (list (concat (file-name-as-directory org-dir) "emacs.org"))) ; re-export html for timestamp after run script updates it the readme include
+                    (if (not (file-directory-p site-dir)) ; add gh-pages as worktree
+                        (message "%s" (process-lines "git" "worktree" "add" "--track" "-b" "gh-pages" (concat init-dir "gh-pages") "origin/gh-pages")))
+                    (mapc #'(lambda (cpy-file); copy files (pngs, css, html) to site-dir if html export is newer than site
+                              (message "checking file %s" cpy-file)
+                              (let ((dst-file (concat (file-name-as-directory site-dir) (file-name-nondirectory cpy-file))))
+                                (if (file-newer-than-file-p cpy-file dst-file)
+                                    (progn
+                                      (message "copying %s to %s" cpy-file dst-file)
+                                      (copy-file cpy-file dst-file t t)))))
+                          (directory-files org-dir t "\\(\.png$\\|\\.css$\\|\.html$\\)"))))
           ((or "-h" "--h" "--help" "help") (message (concat
                            "Usage Information: \n"
                            " all - tangles all org files and runs install scripts \n"
@@ -73,10 +88,11 @@ NO-RUN: do not run the tangled argument"
                                (org-id-locations-load) ; resolve id links
                                (ignore-errors (require 'org-roam-export))
                                (org-html-export-to-html)
-                               (message "Tangled html file %s" html-file))))
+                               (message "Tangled html file %s" html-file) ; set time on html for site diff
+                               (set-file-times html-file (time-add (file-attribute-modification-time (file-attributes backup)) (seconds-to-time 1))))))
                        (ignore-errors (copy-file backup org-file t t))
                        (ignore-errors (delete-file backup))))
-                 (message "org-file %s is older than sh-file %s \n" org-file sh-file))
+                 (message "org-file %s is older than sh-file %s" org-file sh-file))
                (if (or no-run (not (file-exists-p sh-file)))
                    (message "Tangle Finished for %s \n" org-file)
                  (message "Running script %s \n" sh-file)

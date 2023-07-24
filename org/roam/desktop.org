@@ -22,7 +22,10 @@ More ricing less productivity!
 - gnome
   - javascript based desktop (leaked memory)
 - kde
+  - manjaro desktop package is plasma-meta
+    - added konsole, unarchiver, kio-admin, gnustep-base, dolphin, ark, sweeper, sddm-breath-theme
   - qt based
     - qt project withholds patches for up to a year
 - aero (windows)
 - quartz (mac)
+- gamescope compositor for wayland desktops supports experimental HDR

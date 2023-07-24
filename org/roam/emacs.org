@@ -23,5 +23,18 @@
 - noweb can link code verbatium with <<CodeBlockName>> or evaluate it with <<CodeBlockName>>()
 - ~#+INCLUDE "file.org::selector" :only-contents t~ to select heading contents to include from other files
 - disable tangling with ~:tangle no~ on src blocks
+
+#+NAME: timestamp-readme
+#+BEGIN_SRC emacs-lisp :tangle emacs.sh :shebang "\":\"; emacs -Q --script emacs.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
+(ignore-errors
+  (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
+         (readme (concat base-dir (file-name-as-directory "..") (file-name-as-directory "..") "README.org"))
+         (readme-time (file-attribute-modification-time (file-attributes readme)))
+         (emacs-org (concat base-dir "emacs.org"))
+         (emacs-org-time (file-attribute-modification-time (file-attributes emacs-org))))
+    (if (time-less-p emacs-org-time readme-time); set timestamp of emacs.org when readme.org has edits
+      (set-file-times emacs-org readme-time))))
+#+END_SRC
+
 ** emacs-config README
 #+INCLUDE: "../../README.org::emacs-config" :only-contents t
