@@ -280,7 +280,14 @@
             (if (not (memq window-system '(android))) ; disable menu-bar on non android
                 (progn
                   (setq menu-bar-mode nil)
-                  (add-to-list 'default-frame-alist '(menu-bar-lines . 0))))
+                  (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
+              ;; set android termux paths for call-process
+              (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
+		                             (getenv "PATH")))
+              (setenv "LD_LIBRARY_PATH" (format "%s:%s"
+				                                "/data/data/com.termux/files/usr/lib"
+				                                (getenv "LD_LIBRARY_PATH")))
+              (push "/data/data/com.termux/files/usr/bin" exec-path))
             (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
             (add-to-list 'default-frame-alist '(vertical-scroll-bars))
             (set-frame-parameter nil 'alpha-background 80)
@@ -357,7 +364,125 @@
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   :commands guix-popup guix-set-emacs-environment)
-) ; treemacs/flycheck/rmsbolt/minions/drag-stuff only require melpa and not other external programs.
+
+(use-package geiser ; guile
+  :init (add-hook 'scheme-mode-hook #'geiser-mode)
+  :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
+  :config
+  (setq geiser-repl-per-project-p t
+        geiser-repl-current-project-function #'geiser-repl-project-root
+        geiser-repl-history-filename (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-history"))
+  (require 'geiser-guile)
+  (require 'flycheck-guile)); geiser call per buffer?
+
+(use-package macrostep-geiser ; guile
+  :init
+  (add-hook 'geiser-mode-hook #'macrostep-geiser-setup)
+  (add-hook 'geiser-repl-mode-hook #'macrostep-geiser-setup)
+  :commands macrostep-geiser-setup)
+
+(use-package geiser-guile ; guile
+  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "XDG_CONFIG_HOME")) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
+                              (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")))
+  :commands geiser-guile)
+
+(use-package flycheck-guile ; guile
+  :after geiser)
+
+(use-package flyspell ; aspell
+  :ensure nil ; built-in
+  :init (bind-keys :map jam/toggle ("s" . flyspell-mode))
+  (add-hook 'org-mode-hook #'flyspell-mode)
+  (add-hook 'markdown-mode-hook #'flyspell-mode)
+  (add-hook 'TeX-mode-hook #'flyspell-mode)
+  (add-hook 'rst-mode-hook #'flyspell-mode)
+  (add-hook 'message-mode-hook #'flyspell-mode)
+  (add-hook 'git-commit-mode-hook #'flyspell-mode)
+  (add-hook 'yaml-mode-hook #'flyspell-prog-mode)
+  (add-hook 'conf-mode-hook #'flyspell-prog-mode)
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+  :config (setq flyspell-issue-welcome-flag nil
+                flyspell-issue-message-flag nil
+                ispell-program-name "aspell" ; runs as own process
+                ispell-extra-args '("--sug-mode=ultra"
+                                    "--run-together")
+                ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
+                ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
+                ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
+
+(use-package lsp-mode ; use eglot for android
+  :commands (lsp-install-server lsp-mode lsp)
+  :hook ((python-mode . lsp))
+  :config (bind-keys :map jam/code
+                      ("a" . lsp-execute-code-action)
+                      ("f" . lsp-format-buffer)
+                      ("r" . lsp-rename))
+  (require 'lsp-diagnostics) ; flycheck enable?
+  (require 'lsp-lens) ; default enabled
+  (require 'lsp-modeline)
+  :init (setq lsp-enable-on-type-formatting nil
+              lsp-response-timeout 60
+              lsp-headerline-breadcrumb-enable nil
+              lsp-session-file (expand-file-name ".lsp-session-v1" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+              lsp-enable-folding nil))
+
+(use-package lsp-treemacs ; use eglot for android
+  :config (bind-keys :map jam/code
+                      ("X" . lsp-treemacs-errors-list)
+                      ("y" . lsp-treemacs-call-hierarchy))
+  :after (treemacs lsp))
+
+(use-package lsp-ui ; use eglot for android
+  :init (add-hook 'lsp-mode-hook #'lsp-ui-mode)
+  :commands lsp-ui-mode
+  :config (setq lsp-ui-peek-enable t))
+
+(use-package dap-mode ; BUG guix: icons not included in package ; use eglot
+  :init (bind-keys :map jam/code ("d" . dap-debug))
+  :commands (dap-debug dap-debug-edit-template)
+  :after lsp-mode
+  :config
+  (require 'dap-mouse)
+  (require 'dap-ui)
+  (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls tooltip))
+  (require 'dap-gdb-lldb)
+  ;;;###package gdb
+  (setq gdb-show-main t ; MAYBE use gdb dap interface
+        gdb-many-windows t)
+  ;(dap-gdb-lldb-setup) ; BUG download/unzip fails? redirect?
+  (dap-register-debug-template "Rust::GDB Run Configuration"
+                               (list :type "gdb"
+                                     :request "attach"; "launch"
+                                     :name "Rust::GDB"
+                                     :gdbpath "rust-gdb"
+                                     :target nil; 666; pid
+                                     ;:executable "/somesuchfile"
+                                     ;:arguments "-h" ; dap-debug-edit-template
+                                     ;debugger_args ""
+                                     :cwd nil))
+  (require 'dap-python)
+  (setq dap-python-executable "python3" ; use guix-home's python for debug module
+        dap-python-debugger 'debugpy
+        dap-utils-extension-path (expand-file-name ".extension" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+        dap-breakpoints-file (expand-file-name ".dap-breakpoints" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))))
+
+(use-package rustic ; rustc/cargo
+  ;:init (setq rustic-treesitter-derive t) ; MAYBE add when rustic supports treesit
+  :config (jam/set-rust-path)
+  :mode ("\\.rs$" . rustic-mode))
+
+(use-package undo-tree
+  ;:pin gnu
+  :init (add-hook 'after-init-hook #'global-undo-tree-mode)
+  :commands (global-undo-tree-mode)
+  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
+  :config (setq undo-tree-visualizer-diff t
+                undo-tree-auto-save-history t
+                undo-limit 800000 ; 800 kb (default 160kb)
+                undo-strong-limit 12000000 ; 12mb (default 240kb)
+                undo-outer-limit 128000000 ; 128mb (default 24mb)
+                undo-tree-enable-undo-in-region t))
+) ; BUG the above have package issues on android atm. (use call-process to run external utils)
 
 (use-package pass ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
@@ -490,30 +615,6 @@
   (bind-key [remap find-name-dired] 'fd-name-dired)
   :commands (fd-dired fd-grep-dired fd-name-dired))
 
-(use-package geiser ; guile
-  :init (add-hook 'scheme-mode-hook #'geiser-mode)
-  :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
-  :config
-  (setq geiser-repl-per-project-p t
-        geiser-repl-current-project-function #'geiser-repl-project-root
-        geiser-repl-history-filename (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-history"))
-  (require 'geiser-guile)
-  (require 'flycheck-guile)); geiser call per buffer?
-
-(use-package macrostep-geiser ; guile
-  :init
-  (add-hook 'geiser-mode-hook #'macrostep-geiser-setup)
-  (add-hook 'geiser-repl-mode-hook #'macrostep-geiser-setup)
-  :commands macrostep-geiser-setup)
-
-(use-package geiser-guile ; guile
-  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "XDG_CONFIG_HOME")) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
-                              (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")))
-  :commands geiser-guile)
-
-(use-package flycheck-guile ; guile
-  :after geiser)
-
 (use-package flycheck
   :init ;(add-hook 'after-init-hook #'global-flycheck-mode)
   (add-hook 'prog-mode-hook #'flycheck-mode)
@@ -532,27 +633,6 @@
   :init (add-hook 'flycheck-mode-hook #'flycheck-popup-tip-mode)
   :commands (flycheck-popup-tip-mode flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup))
 
-(use-package flyspell ; aspell
-  :ensure nil ; built-in
-  :init (bind-keys :map jam/toggle ("s" . flyspell-mode))
-  (add-hook 'org-mode-hook #'flyspell-mode)
-  (add-hook 'markdown-mode-hook #'flyspell-mode)
-  (add-hook 'TeX-mode-hook #'flyspell-mode)
-  (add-hook 'rst-mode-hook #'flyspell-mode)
-  (add-hook 'message-mode-hook #'flyspell-mode)
-  (add-hook 'git-commit-mode-hook #'flyspell-mode)
-  (add-hook 'yaml-mode-hook #'flyspell-prog-mode)
-  (add-hook 'conf-mode-hook #'flyspell-prog-mode)
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
-  :config (setq flyspell-issue-welcome-flag nil
-                flyspell-issue-message-flag nil
-                ispell-program-name "aspell" ; runs as own process
-                ispell-extra-args '("--sug-mode=ultra"
-                                    "--run-together")
-                ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
-                ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
-                ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
-
 (use-package treemacs
   :init ;(bind-keys ("<f9>" . treemacs))
   (bind-keys :map jam/projects
@@ -567,62 +647,6 @@
   :ensure nil ; BUG guix package needs for treemacs
   :commands cfrs-read
   :after treemacs)
-
-(use-package lsp-mode ; use eglot for android
-  :commands (lsp-install-server lsp-mode lsp)
-  :hook ((python-mode . lsp))
-  :config (bind-keys :map jam/code
-                      ("a" . lsp-execute-code-action)
-                      ("f" . lsp-format-buffer)
-                      ("r" . lsp-rename))
-  (require 'lsp-diagnostics) ; flycheck enable?
-  (require 'lsp-lens) ; default enabled
-  (require 'lsp-modeline)
-  :init (setq lsp-enable-on-type-formatting nil
-              lsp-response-timeout 60
-              lsp-headerline-breadcrumb-enable nil
-              lsp-session-file (expand-file-name ".lsp-session-v1" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-              lsp-enable-folding nil))
-
-(use-package lsp-treemacs ; use eglot for android
-  :config (bind-keys :map jam/code
-                      ("X" . lsp-treemacs-errors-list)
-                      ("y" . lsp-treemacs-call-hierarchy))
-  :after (treemacs lsp))
-
-(use-package lsp-ui ; use eglot for android
-  :init (add-hook 'lsp-mode-hook #'lsp-ui-mode)
-  :commands lsp-ui-mode
-  :config (setq lsp-ui-peek-enable t))
-
-(use-package dap-mode ; BUG guix: icons not included in package ; use eglot
-  :init (bind-keys :map jam/code ("d" . dap-debug))
-  :commands (dap-debug dap-debug-edit-template)
-  :after lsp-mode
-  :config
-  (require 'dap-mouse)
-  (require 'dap-ui)
-  (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls tooltip))
-  (require 'dap-gdb-lldb)
-  ;;;###package gdb
-  (setq gdb-show-main t ; MAYBE use gdb dap interface
-        gdb-many-windows t)
-  ;(dap-gdb-lldb-setup) ; BUG download/unzip fails? redirect?
-  (dap-register-debug-template "Rust::GDB Run Configuration"
-                               (list :type "gdb"
-                                     :request "attach"; "launch"
-                                     :name "Rust::GDB"
-                                     :gdbpath "rust-gdb"
-                                     :target nil; 666; pid
-                                     ;:executable "/somesuchfile"
-                                     ;:arguments "-h" ; dap-debug-edit-template
-                                     ;debugger_args ""
-                                     :cwd nil))
-  (require 'dap-python)
-  (setq dap-python-executable "python3" ; use guix-home's python for debug module
-        dap-python-debugger 'debugpy
-        dap-utils-extension-path (expand-file-name ".extension" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-        dap-breakpoints-file (expand-file-name ".dap-breakpoints" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))))
 
 (use-package osm ; curl
   ;:pin gnu
@@ -640,11 +664,6 @@
           (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
           ;(push '(python-mode . python-ts-mode) major-mode-remap-alist)
           (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
-
-(use-package rustic ; rustc/cargo
-  ;:init (setq rustic-treesitter-derive t) ; MAYBE add when rustic supports treesit
-  :config (jam/set-rust-path)
-  :mode ("\\.rs$" . rustic-mode))
 
 (use-package python ; python
   :commands (python-mode python-mode-hook python-mode-local-vars-hook))
@@ -667,18 +686,6 @@
            ("<M-down>" . drag-stuff-down)
            ("<M-left>" . drag-stuff-left)
            ("<M-right>" . drag-stuff-right)))
-
-(use-package undo-tree
-  ;:pin gnu
-  :init (add-hook 'after-init-hook #'global-undo-tree-mode)
-  :commands (global-undo-tree-mode)
-  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
-  :config (setq undo-tree-visualizer-diff t
-                undo-tree-auto-save-history t
-                undo-limit 800000 ; 800 kb (default 160kb)
-                undo-strong-limit 12000000 ; 12mb (default 240kb)
-                undo-outer-limit 128000000 ; 128mb (default 24mb)
-                undo-tree-enable-undo-in-region t))
 
 (use-package debbugs
   ;:pin gnu
