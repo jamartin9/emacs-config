@@ -53,4 +53,11 @@
 (setq use-package-always-defer t
       use-package-verbose t)
 
-
+(if (memq window-system '(android))
+    (progn ;; add termux to path on android
+      (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
+		                     (getenv "PATH")))
+      (setenv "LD_LIBRARY_PATH" (format "%s:%s"
+				                        "/data/data/com.termux/files/usr/lib"
+				                        (getenv "LD_LIBRARY_PATH")))
+      (push "/data/data/com.termux/files/usr/bin" exec-path)))

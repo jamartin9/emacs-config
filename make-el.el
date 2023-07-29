@@ -54,7 +54,7 @@ NO-RUN: do not run the tangled argument"
                           (directory-files org-dir t "\\(\.png$\\|\\.css$\\|\.html$\\)"))))
           ((or "-h" "--h" "--help" "help") (message (concat
                            "Usage Information: \n"
-                           " all - tangles all org files and runs install scripts \n"
+                           " all - tangles all org files \n"
                            " install - runs README.org's script \n"
                            " install-all - tangles all org files and runs their scripts \n"
                            " update - updates doom packages \n"

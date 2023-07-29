@@ -32,3 +32,4 @@
 - Pareto principle - For many phenomena, 80% of consequences stem from 20% of the causes.
 - Peter principle - In a hierarchy, every employee tends to rise to his level of incompetence.
 - Moore's law - The power of computers per unit cost doubles every 24 month.
+- Aumann's agreement theorem - There is no agreeing to disagree

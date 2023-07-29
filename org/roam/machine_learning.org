@@ -15,6 +15,8 @@
 - Forward Forward is alternative back propagation
 - wasi-nn for evaluating ml models in wasm via SIMD extensions with either wasmedge (pytorch) or wasmtime(openvino)
 - [[https://github.com/microsoft/onnxruntime][ONNX]] for browser evaluation of pytorch models
+  - protobuf 2gb single file limitation for model weights (issues with model slicing).
+  - lacks offload support for disk, cpu, gpu
 - usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
   - 4bit with GPTQ compression
 - LoRA is a finetunning mechanism
@@ -25,11 +27,13 @@
   - [[https://huggingface.co/lmsys/longchat-13b-16k][longchat 16k context]]
   - [[https://huggingface.co/syzymon/long_llama_3b][long llama 256k]]
 - https://github.com/EleutherAI/lm-evaluation-harness
+- [[https://www.evanmiller.org/attention-is-off-by-one.html][adding one to softmax denominator inside the attention head may memory by smoothing distribution for quantized punctuation?]]
+  - [[https://github.com/google/flaxformer/blob/ee62754ebe5a5eeb111493622de5537133822e3e/flaxformer/components/attention/dense_attention.py#L50][already used by other models in the past]]
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
     - ~stable-diffusion-webui/webui.sh --listen --no-half --use-cpu all~ for cpu only inside container
-      - ~podman run --security-opt label=type:nvidia_container_t -p 7860:7860 -v /home/jam/git/stable-diffusion-webui/:/tmp/stable-diffusion-webui:Z -v /home/jam/.local:/.local:Z -v /home/jam/.cache:/.cache:Z -v /home/jam/.config:/.config --userns keep-id --rm -it jam/cuda:1 /bin/bash # COMMANDLINE_ARGS="--listen --no-half --use-cpu all --xformers --no-half-vae --opt-sdp-attention" /tmp/stable-diffusion-webui/webui.sh~
+      - ~podman run --security-opt label=type:nvidia_container_t -p 7860:7860 -v /home/jam/git/stable-diffusion-webui/:/tmp/stable-diffusion-webui:Z -v /home/jam/.local:/.local:Z -v /home/jam/.cache:/.cache:Z -v /home/jam/.config:/.config --userns keep-id --rm -it jam/cuda:1 /bin/bash # COMMANDLINE_ARGS="--listen --no-half --use-cpu all --no-half-vae --opt-sdp-attention" /tmp/stable-diffusion-webui/webui.sh~
     - [[https://github.com/andreasjansson/cog-stable-diffusion/tree/animate][animation with interpolation]]
     - [[https://github.com/carson-katri/dream-textures][dreambooth plugin for blender textures]]
     - [[https://github.com/riffusion/riffusion-app][Generate music from spectrograph]]
@@ -139,6 +143,41 @@ outputs = model.generate(
 token = outputs.sequences[0, input_length:]
 output_str = tokenizer.decode(token)
 print(output_str)
+
+# Diffusers
+## manual image gen
+import torch
+from diffusers import StableDiffusionXLImg2ImgPipeline, StableDiffusionXLPipeline, StableDiffusionXLInpaintPipeline
+from diffusers.utils import load_image
+from PIL import Image
+use_refiner = True
+#num_inference_steps = 15
+#strength = 0.80
+prompt_one = "realistic, high definition, photograph"
+prompt_two = "realistic, high definition, photograph"
+negative_prompt_one = "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, ugly, disfigured, nsfw"
+negative_prompt_two = "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, ugly, disfigured, nsfw"
+#init_image = Image.open("/image.png").convert("RGB").resize((768, 768))
+#mask_image = Image.open("mask.png").convert("RGB")#.resize((1024, 1024))
+
+# setup
+pipe_base = StableDiffusionXLPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", use_safetensors=True) # torch_dtype=torch.float16, variant="fp16",
+#pipe_inpaint = StableDiffusionXLInpaintPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", use_safetensors=True)#torch_dtype=torch.float16, variant="fp16",
+pipe_refine = StableDiffusionXLImg2ImgPipeline.from_pretrained("stabilityai/stable-diffusion-xl-refiner-1.0", use_safetensors=True, text_encoder_2=pipe_base.text_encoder_2, vae=pipe_base.vae)# torch_dtype=torch.float16, variant="fp16",
+
+# optimize
+pipe_base = pipe_base.to("cpu")
+pipe_refine = pipe_refine.to("cpu")
+#pipe_refine.enable_model_cpu_offload()
+#pipe_refine.enable_attention_slicing()
+#pipe_refine.enable_sequential_cpu_offload()
+#pipe_base.unet = torch.compile(pipe_base.unet, mode="reduce-overhead", fullgraph=True)
+#pipe_refine.unet = torch.compile(pipe_refine.unet, mode="reduce-overhead", fullgraph=True)
+
+# process
+init_image = pipe_base(promt=prompt, prompt_2=prompt_two, negative_prompt=negative_prompt_one, negative_prompt_2=negative_prompt_two, output_type="latent" if use_refiner else "pil").images[0]
+image = pipe_refine(prompt=prompt, image=init_image).images[0]
+image.save("test.png")
 
 # Agents
 import torch

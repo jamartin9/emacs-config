@@ -331,7 +331,6 @@
                 dired-create-destination-dirs 'ask)
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
 
-(when (not (memq window-system '(android))) ; BUG android native build does not enable gnutls which is needed for melpa packages
 (use-package emms ; mpv
   :init (bind-keys :map jam/open
                    ("l" . jam/librefm-stream)
@@ -352,11 +351,13 @@
   (require 'emms-playing-time)
   (emms-playing-time 1))
 
+(when (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
 (use-package guix ; guix
   :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   :commands guix-popup guix-set-emacs-environment)
+) ; treemacs/flycheck/rmsbolt/minions/drag-stuff only require melpa and not other external programs.
 
 (use-package pass ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
@@ -666,8 +667,6 @@
            ("<M-down>" . drag-stuff-down)
            ("<M-left>" . drag-stuff-left)
            ("<M-right>" . drag-stuff-right)))
-
-) ; treemacs/flycheck/rmsbolt/minions/drag-stuff only require melpa and not other external programs.
 
 (use-package undo-tree
   ;:pin gnu

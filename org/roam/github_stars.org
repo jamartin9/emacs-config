@@ -801,9 +801,7 @@
 ** KhronosGroup/Vulkan-Hpp
   - Open-Source Vulkan C++ API
 ** kiliman/operator-mono-lig
-  - Add ligatures to Operator Mono similar to Fira Code
-** kohya-ss/sd-scripts
-  - This repository contains training, generation and utility scripts for Stable Diffusion XL.
+  - Add ligatures to Operator Mono similar to Fira Code.
 ** konsoletyper/teavm
   - Compiler of Java bytecode to JavaScript
 ** ktock/container2wasm
@@ -1730,6 +1728,8 @@
   - Local, global, and beyond optimization for scientific machine learning (SciML)
 ** TencentARC/T2I-Adapter
   - T2I-Adapter
+** TheStageAI/TorchIntegral
+  - Integral Neural Networks in PyTorch
 ** XingangPan/DragGAN
   - Official Code for DragGAN (SIGGRAPH 2023)
 ** zkonduit/ezkl
@@ -1943,6 +1943,7 @@
   - Cargo wrapper for working with Webassembly wasi(x).
 ** yewstack/yew
   - Rust / Wasm framework for building client web apps
+
 * utils
 ** alacritty/alacritty
   - A cross-platform, OpenGL terminal emulator.
@@ -2046,6 +2047,8 @@
   - The official source code repository for the calibre ebook manager
 ** kubernetes-sigs/kind
   - Kubernetes IN Docker - local clusters for testing Kubernetes
+** learningequality/kolibri
+  - Kolibri Learning Platform: the offline app for universal education (offline khan)
 ** minio/minio
   - High Performance Object Storage for AI
 ** miniupnp/miniupnp

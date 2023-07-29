@@ -57,6 +57,7 @@
     - Linux 4.12+ udev IO rule for ~zfs_vdev_scheduler~ to reduce cpu for manual partition
 - When expanding rebalancing is not done leaving potentially higher resilver times in the future increasing the chance of cascading failure.
   - snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset
+    - manual de-dupe can be done with ~cp --reflink~ as of 2.2.0
 - Sparse files can be useful for testing/migrating setups if the enough storage is actually present(piecemeal the datasets)
   - ~dd if=/dev/zero of=/zpool-file bs=1M count=1024~
     - ~zpool create test /zpool-file~

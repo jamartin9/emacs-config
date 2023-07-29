@@ -17,6 +17,7 @@
     - maybe set ~GST_PLUGIN_PATH~
 - android port manual entry specifies enabling 'special app permissions' for all files to access ~/sdcard~
   - android port of fdroid is old and branch is unmerged; newer builds are on [[https://sourceforge.net/projects/android-ports-for-gnu-emacs/][sourceforge]]
+    - custom build of termux for supporting utils
 - signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
 - German air control ATC ran on emacs in the 90's
 *** org-mode notes

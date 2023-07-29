@@ -106,11 +106,11 @@
                                              "ripgrep"
                                              "nss-certs"
                                              "aspell-dict-en"
-                                             "mpv"; "vlc"
+                                             ;"mpv"; "vlc"; TODO add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
                                              "gnupg"
                                              "password-store" "pass-otp"
                                              "qemu" ;"virt-viewer"; for spice remote-viewer
-                                             "alacritty"; "xterm"
+                                             "alacritty"; "xterm" ; TODO add guix package for alacritty with nvidia-libs
                                              "curl"; emacs-osm needs for CA's
                                              "screen"
                                              "python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli" "emacs-pyvenv"
@@ -940,7 +940,7 @@
                      ;         (zfs-configuration
                      ;          (kernel my-kernel)))
 
-                     (service nftables-service-type
+                     (service nftables-service-type; TODO add guix package for opensnitch: import needs step added for protoc header generation
                               (nftables-configuration
                                (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -> input/output/forward -> postrouting
     # flush all the rules.
@@ -1399,9 +1399,3 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
   :END:
   [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
   [2022-05-27 Fri] Last modified
-
-** guix pending packages
-*** TODO add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
-*** TODO add guix package for alacritty with nvidia-libs
-*** TODO add guix package for opensnitch
-- import needs step added for protoc header generation
