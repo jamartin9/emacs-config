@@ -113,6 +113,7 @@ Copy files by url with emacs
 #+BEGIN_SRC elisp :tangle no
 (url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
 (url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
+(call-process "git" nil t nil "clone" "https://github.com/jamartin9/emacs-config")
 #+END_SRC
 
 ** Site
