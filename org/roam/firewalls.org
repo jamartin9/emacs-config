@@ -13,6 +13,7 @@ much wall, such fire, very wow
 - ufw accepts all localhost in ufw-before-input (so it can't be blocked in the INPUT chain)
 - iptables replaced by nftables replaced by bpfilter
 - [[https://github.com/evilsocket/opensnitch][opensnitch]] added nftables incoming rule support in v1.6.0-rc.2
+- ~nft list ruleset~ to view
 - upnpc
   - 1900 udp for ssdp
   - 5350 udp for pcp

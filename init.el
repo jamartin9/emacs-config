@@ -282,6 +282,7 @@
                   (setq menu-bar-mode nil)
                   (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
               ;; set android termux paths for call-process
+              (setenv "XDG_CONFIG_HOME" user-emacs-directory)
               (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
 		                             (getenv "PATH")))
               (setenv "LD_LIBRARY_PATH" (format "%s:%s"
@@ -364,6 +365,7 @@
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   :commands guix-popup guix-set-emacs-environment)
+)
 
 (use-package geiser ; guile
   :init (add-hook 'scheme-mode-hook #'geiser-mode)
@@ -468,7 +470,7 @@
 
 (use-package rustic ; rustc/cargo
   ;:init (setq rustic-treesitter-derive t) ; MAYBE add when rustic supports treesit
-  :config (jam/set-rust-path)
+  ;:config (jam/set-rust-path)
   :mode ("\\.rs$" . rustic-mode))
 
 (use-package undo-tree
@@ -482,7 +484,6 @@
                 undo-strong-limit 12000000 ; 12mb (default 240kb)
                 undo-outer-limit 128000000 ; 128mb (default 24mb)
                 undo-tree-enable-undo-in-region t))
-) ; BUG the above have package issues on android atm. (use call-process to run external utils)
 
 (use-package pass ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
