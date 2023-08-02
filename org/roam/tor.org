@@ -72,11 +72,7 @@ https://www.reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad.onion/ is r
 #+NAME: link-torrc-el
 #+BEGIN_SRC emacs-lisp :tangle no :shebang "\":\"; emacs -Q --script tor.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
 (ignore-errors
-  (let* ((tor-confdir (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME")
-                                                          (getenv "XDG_CONFIG_HOME")
-                                                        (concat (file-name-as-directory (getenv "HOME"))
-                                                                ".config")))
-                              "tor"))
+  (let* ((tor-confdir (concat (file-name-as-directory (xdg-config-home) "tor"))
         (tor-conf (concat (file-name-as-directory tor-confdir) ".torrc")))
     (if (not (file-exists-p tor-confdir))
         (progn (make-directory tor-confdir)
@@ -87,20 +83,12 @@ https://www.reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad.onion/ is r
 ** Data Directory
 #+NAME: datadir
 #+BEGIN_SRC emacs-lisp :tangle no
-(concat (if (getenv "XDG_CONFIG_HOME")
-            (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
-          (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
-        "tor")
+(concat (file-name-as-directory (xdg-config-home)) "tor")
 #+END_SRC
 ** Control Socket
 #+NAME: socket
 #+BEGIN_SRC emacs-lisp :tangle no
-(concat (file-name-as-directory
-         (concat (if (getenv "XDG_CONFIG_HOME")
-                     (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
-                   (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
-                 "tor"))
-        "torSocket")
+(concat (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "tor")) "torSocket")
 #+END_SRC
 ** .torrc
 #+NAME: .torrc

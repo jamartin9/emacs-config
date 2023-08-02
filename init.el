@@ -59,10 +59,10 @@
   "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
   (interactive)
   (setenv "PATH" (concat (getenv "PATH")
-                         path-separator (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+                         path-separator (concat (file-name-as-directory (xdg-data-home))
                                                 (file-name-as-directory "cargo") "bin")))
-  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "rustup"))
-  (setenv "CARGO_HOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "cargo"))
+  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup"))
+  (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo"))
   (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
 
 ;;;###autoload
@@ -164,11 +164,13 @@
                 redisplay-skip-fontification-on-input t
                 shift-select-mode t
                 read-process-output-max (* 64 1024)
+                ;desktop-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session")) ; MAYBE add desktop-save-mode for sessions
                 ;load-prefer-newer t; noninteractive
                 auto-mode-case-fold nil
                 kill-do-not-save-duplicates t
                 edebug-print-length nil ; print whole edebug result
                 browse-url-browser-function 'xwidget-webkit-browse-url ; libxml-parse-html-region w/ shr
+                shr-use-xwidgets-for-media t ; eww display video tags
                 display-time-format "%m-%d-%Y %R"
                 display-time-default-load-average nil
                 find-file-visit-truename t ; files
@@ -282,7 +284,6 @@
                   (setq menu-bar-mode nil)
                   (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
               ;; set android termux paths for call-process
-              (setenv "XDG_CONFIG_HOME" user-emacs-directory)
               (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
 		                             (getenv "PATH")))
               (setenv "LD_LIBRARY_PATH" (format "%s:%s"
@@ -322,6 +323,7 @@
   :ensure nil ; built-in
   :commands (org-mode org-agenda org-capture org-todo-list org-id-update-id-locations)
   :init (setq org-timer-default-timer 60
+              ;org-src-tab-acts-natively nil
               org-clock-sound t); org-timer-set-timer
   (bind-keys :map jam/notes
               ("D" . org-id-update-id-locations)
@@ -361,7 +363,7 @@
 
 (when (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
 (use-package guix ; guix
-  :config (require 'guix-autoloads)
+  :config (require 'guix-autoloads) ; MAYBE restart-emacs for EMACSLOADPATH
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   :commands guix-popup guix-set-emacs-environment)
@@ -384,7 +386,7 @@
   :commands macrostep-geiser-setup)
 
 (use-package geiser-guile ; guile
-  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "XDG_CONFIG_HOME")) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
+  :init (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
                               (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")))
   :commands geiser-guile)
 
@@ -488,8 +490,8 @@
 (use-package pass ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
   :config
-  (setenv "GNUPGHOME" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "gnupg"))
-  (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (getenv "XDG_DATA_HOME")) "pass"))
+  (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg"))
+  (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
   :commands pass)
 
 (use-package password-store-otp; pass
@@ -519,7 +521,7 @@
                               ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
                               ("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
-                              ("Reddit-news" "https://teddit.net/r/news?api&type=rss"); reddit ex: https://www.reddit.com/r/news/.rss
+                              ("Reddit-news" "https://www.reddit.com/r/news/.rss"); teddit(dead?) ex: https://teddit.net/r/news?api&type=rss
                               ("Lobste" "https://lobste.rs/rss")
                               ("Phoronix" "https://www.phoronix.com/rss.php")
                               ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
@@ -948,25 +950,25 @@
 (defun jam/guix-env()
   "Guix variables for local guix daemon/client"
   (interactive)
-  (setenv "GUIX_DAEMON_SOCKET" (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+  (setenv "GUIX_DAEMON_SOCKET" (concat (file-name-as-directory (xdg-data-home))
                                        (file-name-as-directory "guix")
                                        (file-name-as-directory "var")
                                        (file-name-as-directory "guix")
                                        (file-name-as-directory "daemon-socket") "socket"))
-  (setenv "GUIX_DATABASE_DIRECTORY" (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+  (setenv "GUIX_DATABASE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home))
                                             (file-name-as-directory "guix")
                                             (file-name-as-directory "var")
                                             (file-name-as-directory "guix") "db"))
-  (setenv "GUIX_LOG_DIRECTORY" (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+  (setenv "GUIX_LOG_DIRECTORY" (concat (file-name-as-directory (xdg-data-home))
                                        (file-name-as-directory "guix")
                                        (file-name-as-directory "var")
                                        (file-name-as-directory "log") "guix"))
-  (setenv "GUIX_STATE_DIRECTORY" (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+  (setenv "GUIX_STATE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home))
                                          (file-name-as-directory "guix")
                                          (file-name-as-directory "var") "guix"))
-  (setenv "GUIX_CONFIGURATION_DIRECTORY" (concat (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
+  (setenv "GUIX_CONFIGURATION_DIRECTORY" (concat (file-name-as-directory (xdg-config-home))
                                                  (file-name-as-directory "guix") "etc"))
-  (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+  (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (xdg-data-home))
                                  (file-name-as-directory "guix")
                                  (file-name-as-directory "var")
                                  (file-name-as-directory "guix")
@@ -975,11 +977,11 @@
                                  (file-name-as-directory "root")
                                  (file-name-as-directory "guix-profile")
                                  (file-name-as-directory "lib") "locale"))
-  (setenv "NIX_STORE" (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+  (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home))
                               (file-name-as-directory "guix")
                               (file-name-as-directory "gnu") "store"))
   (setenv "PATH" (concat (getenv "PATH")
-                         path-separator (concat (file-name-as-directory (getenv "XDG_DATA_HOME"))
+                         path-separator (concat (file-name-as-directory (xdg-data-home))
                                      (file-name-as-directory "guix") "bin")))
   )
 ;;;###autoload

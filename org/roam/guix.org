@@ -13,9 +13,7 @@
 #+NAME: link-guix-el
 #+BEGIN_SRC elisp :tangle guix.sh :shebang "\":\"; emacs -Q --script guix.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
 (ignore-errors
-(let* ((manifest-dir (file-name-as-directory (concat (if (getenv "XDG_CONFIG_HOME") (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
-                                                    (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
-                                                  "guix-manifests")))
+(let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
         (make-directory manifest-dir))
@@ -1046,7 +1044,7 @@
                     ;          (wireguard-configuration
                     ;           (addresses '("10.0.0.5/32"))
                                ;(port 51820)
-                               ;(private-key "/etc/wiregaurd/private.key"); autogened if doesn't exist
+                               ;(private-key "/etc/wireguard/private.key"); autogened if doesn't exist
                     ;           (peers (list
                     ;                   (wireguard-peer
                     ;                    (name "my-peer")
@@ -1085,7 +1083,7 @@
                          (guix-service-type config =>
                                              (guix-configuration
                                               (inherit config)
-                                              (log-compression 'none); use btrfs compression
+                                              ;(log-compression 'none); use btrfs compression
                                               (guix (current-guix))
                                               (substitute-urls
                                      (append (list "https://substitutes.nonguix.org/"); 4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion

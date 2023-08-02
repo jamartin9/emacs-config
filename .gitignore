@@ -8,6 +8,9 @@
 *.css
 *.yaml
 *.gz
+*.sql
+*.sqlite
+*.js
 .torrc
 shepherd.log
 searx.yml

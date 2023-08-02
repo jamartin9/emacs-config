@@ -82,7 +82,7 @@ Tangling is rerun when the org file is newer than the script (if present) and th
 Cleanup is done via the ~clean~ arguments to the ~make-el~ wrapper.
 The wrapper is needed for org-roam, org-ids and html export tags.
 
-#+NAME: tangle
+#+NAME: tangle-install
 #+BEGIN_SRC sh :tangle no
 pwsh make-el.ps1 install
 #+END_SRC
@@ -101,11 +101,11 @@ The script needs itself and emacs on the PATH or CWD.
 The one line org-mode sesquicolon 'shebang' is a multipart shell/powershell wrapper.
 Passed arguments to the elisp script are available by argv (ignoring “–” and “$@”).
 To run with powershell use the same wrapper format with a .ps1 extension.
-
 #+NAME: run-wrapper
 #+BEGIN_SRC sh :tangle no
 ":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 #+END_SRC
+(BUG? Scripts that require packages need load-path from early-init; so make-el uses ~--batch -l early-init.el~ instead)
 
 ** Cherry Picking
 Copy files by url with emacs
@@ -124,7 +124,7 @@ git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
 #+END_SRC
 
 Build the updated site
-#+NAME: tangle
+#+NAME: tangle-site
 #+BEGIN_SRC sh :tangle no
 pwsh make-el.ps1 site
 #+END_SRC

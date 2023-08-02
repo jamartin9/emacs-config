@@ -201,7 +201,7 @@ with init_empty_weights(): # get device_map without loading model weights
     model = GPTBigCodeForCausalLM(model_config)
     device_map = infer_auto_device_map(model, max_memory={0: "0GiB", "cpu": "24GiB"})
 
-# Tools for load_tool: 
+# Tools for load_tool:
 #"document-question-answering"
 #"image-captioning"
 #"image-question-answering"

@@ -33,8 +33,8 @@
          (readme-time (file-attribute-modification-time (file-attributes readme)))
          (emacs-org (concat base-dir "emacs.org"))
          (emacs-org-time (file-attribute-modification-time (file-attributes emacs-org))))
-    (if (time-less-p emacs-org-time readme-time); set timestamp of emacs.org when readme.org has edits
-      (set-file-times emacs-org readme-time))))
+    (if (time-less-p emacs-org-time readme-time); set timestamp of emacs.html when readme.org has newer edits
+      (set-file-times (concat base-dir "emacs.html") (time-add readme-time (seconds-to-time 1))))))
 #+END_SRC
 
 ** emacs-config README

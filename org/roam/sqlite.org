@@ -51,3 +51,133 @@
 - ~pragma mmap_size = 30000000000;~ for memory mapping
 - open in memory database with ~:memory:~
 - foreign keys disabled in transactions and by default ~PRAGMA foreign keys~
+- site database
+#+NAME: tangle-sql
+#+BEGIN_SRC sql :tangle db.sql
+-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+-- setup db
+PRAGMA page_size=1024;
+SAVEPOINT ar;
+DROP TABLE IF EXISTS sqlar;
+CREATE TABLE IF NOT EXISTS sqlar(
+  name TEXT PRIMARY KEY,  -- name of the file
+  mode INT,               -- access permissions
+  mtime INT,              -- last modification time
+  sz INT,                 -- original file size
+  data BLOB               -- compressed content
+);
+-- add uncompressed org files
+REPLACE INTO sqlar(name,mode,mtime,sz,data)
+  SELECT
+    name,
+    mode,
+    mtime,
+    CASE substr(lsmode(mode),1,1)
+      WHEN '-' THEN length(data)
+      WHEN 'd' THEN 0
+      ELSE -1 END,
+    data
+  FROM fsdir('.',NULL) AS disk
+  WHERE lsmode(mode) NOT LIKE '?%' AND name GLOB '*.org';
+RELEASE ar;
+-- setup fts
+DROP TABLE IF EXISTS site_pages;
+CREATE VIRTUAL TABLE site_pages USING fts5(name, data);
+-- add data to index
+INSERT INTO site_pages
+SELECT name, data
+FROM sqlar;
+-- optimize fts index
+INSERT INTO site_pages(site_pages) VALUES('optimize');
+#+END_SRC
+- view query ex:
+#+NAME: sql-view
+#+BEGIN_SRC sql :tangle no
+-- get pages and preview from query (json?)
+.mode box --wrap 30
+.param set $query 'emacs'
+SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '<b>','</b>', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
+#+END_SRC
+#+NAME: sqlite-run
+#+BEGIN_SRC emacs-lisp :tangle sqlite.sh :shebang "\":\"; emacs -Q --script sqlite.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
+  (ignore-errors ; create db and set mtime to newest
+    (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
+           (db (concat base-dir "sqlar.sqlite")))
+      (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
+      (set-file-times db (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org")))); set timestamps
+      (mapc #'(lambda (org-file) ; MAYBE change to sql query by mtime for newest
+                (let ((db-ts (file-attribute-modification-time (file-attributes db)))
+                      (org-ts (file-attribute-modification-time (file-attributes org-file))))
+                  (if (time-less-p db-ts org-ts)
+                    (progn
+                      (message "setting %s timestamp to %s's" db org-file)
+                      (set-file-times db org-ts)))))
+              (directory-files base-dir t "\.org$"))
+      (set-file-times (concat base-dir "sqlite-query.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))))
+#+END_SRC
+
+** site search js/sql
+#+NAME: sql-js
+#+BEGIN_SRC javascript :tangle sqlite-query.js
+    /*
+    // MAYBE add service-worker caching with http.vfs splitting
+    // MAYBE use 3.43 opfsSAHPoolVfs
+    new Worker("sqlite-worker.js"); worker.onmessage = function(msg){}; worker.postMessage(msg); onmessage = function(msg)
+    sqlite3.install.OpfsSAHPoolVfs().then((poolUtil) => {}).catch(); db = PoolUtil.OpfsSAHPoolDb('/filename');
+    poolUtil.importDb(name, byteArray); poolUtil.getFileNames();
+    // ex. html
+    <script src="sqlite3.js"></script>
+    <article class="panel is-primary">
+      <div class="panel-block">
+        <input class="input" type="text" placeholder="Search" id="mySearch">
+        <button id="mySearchBtn" class="button">&#128269;</button>
+      </div>
+    </article>
+    <dialog id="myModal" class="modal">
+      <div class="modal-content">
+        <button id="modalClose" class="modal-close is-large" aria-label="close">&times;</button>
+        <div id="modalDiv"></div>
+      </div>
+    </dialog>
+    ,*/
+  document.addEventListener('DOMContentLoaded',() => {
+      document.getElementById("modalClose").onclick = function() {
+          document.getElementById("myModal").classList.remove("is-active");
+          document.getElementById("myModal").close();
+      }
+      document.getElementById("mySearchBtn").onclick = function() {
+          if (typeof globalThis.db === 'undefined') { // load sqlite db
+              window.sqlite3InitModule().then((sqlite3)=>{
+                  const capi = sqlite3.capi,
+                        oo = sqlite3.oo1,
+                        wasm = sqlite3.wasm;
+                  const db = new oo.DB();
+                  fetch('sqlar.sqlite').then(response => response.arrayBuffer()).then(arrayBuffer => {
+                      const bytes = new Uint8Array(arrayBuffer);
+                      const p = sqlite3.wasm.allocFromTypedArray(bytes);
+                      const rc = sqlite3.capi.sqlite3_deserialize(db.pointer, 'main', p, bytes.length, bytes.length,sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+                      //db.checkRc(rc);
+                      globalThis.db = db;
+                      // click with global now defined
+                      document.getElementById("mySearchBtn").click();
+                  });
+              });
+          } else {
+              // write results as links and snippets
+              let query = document.getElementById("mySearch").value;
+              const res = querydb(query);
+              let html = '<table class="table has-background-dark">';
+              res.forEach((row) => { html = html + "<tr><td><a href='" +row[0]+"'>"+row[1]+"</a></td></tr>"});
+              html = html + "</table>";
+              document.getElementById("modalDiv").innerHTML = html;
+              document.getElementById("myModal").classList.add("is-active");
+              document.getElementById("myModal").showModal();
+          }
+      }
+  });
+  function querydb(query) {
+      opt = {"returnValue": "resultRows"};
+      const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '<b>','</b>', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ query +"' ORDER BY rank;";
+      return globalThis.db.exec([sql], opt);
+    }
+#+END_SRC

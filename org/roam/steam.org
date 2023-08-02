@@ -19,9 +19,7 @@
 ** Link localfixes
 #+NAME: link-localfixes-el
 #+BEGIN_SRC elisp :tangle no :shebang "\":\"; emacs -Q --script steam.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
-  (ignore-errors (let* ((proton-dir (concat (if (getenv "XDG_CONFIG_HOME") (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
-                                       (file-name-as-directory (concat (file-name-as-directory (getenv "HOME")) ".config")))
-                                     "protonfixes"))
+  (ignore-errors (let* ((proton-dir (concat (file-name-as-directory (xdg-config-home)) "protonfixes"))
                         (localfixes-dir (concat (file-name-as-directory proton-dir) "localfixes")))
     (if (not (or (file-exists-p localfixes-dir) (file-symlink-p localfixes-dir)))
         (progn (make-directory localfixes-dir 1)

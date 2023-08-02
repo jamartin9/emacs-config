@@ -14,10 +14,7 @@ The http(s) proxies are changed to socks5 for tor.
 #+NAME: link-searx-el
 #+BEGIN_SRC emacs-lisp :tangle no :shebang "\":\"; emacs -Q --script searx.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
 (ignore-errors
-  (let* ((searx-confdir (concat (if (getenv "XDG_CONFIG_HOME")
-                                    (file-name-as-directory (getenv "XDG_CONFIG_HOME"))
-                                  (concat (file-name-as-directory (getenv "HOME"))
-                                          (file-name-as-directory ".config"))) "searx"))
+  (let* ((searx-confdir (concat (file-name-as-directory (xdg-config-home)) "searx"))
         (searx-conf (concat (file-name-as-directory searx-confdir) "searx.yml")))
     (if (not (file-exists-p searx-confdir))
         (progn (make-directory searx-confdir)

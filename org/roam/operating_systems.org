@@ -14,7 +14,7 @@
 ** Misc
 *** Hurd
 - debian/arch/guix variants
-  - ia32 only
+  - ia32 and x86_64 (GNU Binutils 2.40+ and GCC 13+)
   - userspace kernel drivers using netbsd rumpkernel
 *** freebsd
 - pkg for package manager
