@@ -88,7 +88,7 @@ NO-RUN: do not run the tangled argument"
                              (ignore-errors
                                (require 'org-id)
                                (org-id-locations-load) ; resolve id links
-                               (ignore-errors (require 'org-roam-export)); TODO fails due to load-path not being set from early-init...
+                               (ignore-errors (require 'org-roam-export))
                                (org-html-export-to-html)
                                (message "Tangled html file %s" html-file) ; set time on html for site diff
                                (set-file-times html-file (time-add (file-attribute-modification-time (file-attributes backup)) (seconds-to-time 1))))))
