@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgb47ab89">
-<div class="navbar-brand" id="org9f6c727">
-<div class="navbar-item" id="org41feb05">
+<nav class="navbar is-black" id="org7180127">
+<div class="navbar-brand" id="org4b9b9c1">
+<div class="navbar-item" id="orgc6c5e33">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org0194456">
-<div class="navbar-start" id="orgc50d3cd">
-<div class="navbar-item" id="org8a38301">
+<div class="navbar-menu" id="orgfd88708">
+<div class="navbar-start" id="org83669c6">
+<div class="navbar-item" id="org9d5f395">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org76b4f52">
+<div class="navbar-end" id="orga47f2b2">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgfb06db4" class="outline-2">
-<h2 id="orgfb06db4">Emacs</h2>
-<div class="outline-text-2" id="text-orgfb06db4">
+<div id="outline-container-orgc1c95db" class="outline-2">
+<h2 id="orgc1c95db">Emacs</h2>
+<div class="outline-text-2" id="text-orgc1c95db">
 </div>
-<div id="outline-container-org6e69e60" class="outline-3">
-<h3 id="org6e69e60">emacs notes</h3>
-<div class="outline-text-3" id="text-org6e69e60">
+<div id="outline-container-org4949a29" class="outline-3">
+<h3 id="org4949a29">emacs notes</h3>
+<div class="outline-text-3" id="text-org4949a29">
 <ul class="org-ul">
 <li>pgtk enabled <code>broadwayd</code> port 8080 with apps env var <code>GDK_BACKEND=broadway</code></li>
 <li>magit-generate-changelog for commit msg</li>
@@ -55,39 +55,42 @@
 </ul></li>
 <li>android port manual entry specifies enabling 'special app permissions' for all files to access <code>/sdcard</code>
 <ul class="org-ul">
-<li>android port of fdroid is old and branch is unmerged; newer builds are on <a href="https://sourceforge.net/projects/android-ports-for-gnu-emacs/">sourceforge</a></li>
+<li>android port of fdroid is old and branch is unmerged; newer builds are on <a href="https://sourceforge.net/projects/android-ports-for-gnu-emacs/">sourceforge</a>
+<ul class="org-ul">
+<li>custom build of termux for supporting utils</li>
+</ul></li>
 </ul></li>
 <li>signal-cli integration init <code>signal-cli link --name device_name | head -1 | qrencode --type=UTF8</code></li>
 <li>German air control ATC ran on emacs in the 90's</li>
 </ul>
 </div>
-<div id="outline-container-orgcbc2c3d" class="outline-4">
-<h4 id="orgcbc2c3d">org-mode notes</h4>
-<div class="outline-text-4" id="text-orgcbc2c3d">
+<div id="outline-container-org1948cc3" class="outline-4">
+<h4 id="org1948cc3">org-mode notes</h4>
+<div class="outline-text-4" id="text-org1948cc3">
 <ul class="org-ul">
-<li>noweb can link code verbatium with <a id="org2b05914"></a> or evaluate it with <a id="org42af2a6"></a>()</li>
+<li>noweb can link code verbatium with <a id="orgfcae598"></a> or evaluate it with <a id="org9cafd8a"></a>()</li>
 <li><code>#+INCLUDE "file.org::selector" :only-contents t</code> to select heading contents to include from other files</li>
 <li>disable tangling with <code>:tangle no</code> on src blocks</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org8df6c66">(ignore-errors
+<pre class="src src-emacs-lisp" id="orgba8a6a6">(ignore-errors
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (readme (concat base-dir (file-name-as-directory "..") (file-name-as-directory "..") "README.org"))
          (readme-time (file-attribute-modification-time (file-attributes readme)))
          (emacs-org (concat base-dir "emacs.org"))
          (emacs-org-time (file-attribute-modification-time (file-attributes emacs-org))))
-    (if (time-less-p emacs-org-time readme-time); set timestamp of emacs.org when readme.org has edits
-      (set-file-times emacs-org readme-time))))
+    (if (time-less-p emacs-org-time readme-time); set timestamp of emacs.html when readme.org has newer edits
+      (set-file-times (concat base-dir "emacs.html") (time-add readme-time (seconds-to-time 1))))))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgac7a6fb" class="outline-3">
-<h3 id="orgac7a6fb">emacs-config README</h3>
-<div class="outline-text-3" id="text-orgac7a6fb">
+<div id="outline-container-orgf432c4d" class="outline-3">
+<h3 id="orgf432c4d">emacs-config README</h3>
+<div class="outline-text-3" id="text-orgf432c4d">
 <p>
 This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
 </p>
@@ -217,15 +220,15 @@ link-hint: copy link urls (using avy). alternative is regex buffer contents
 </p>
 </div>
 
-<div id="outline-container-orgea19ba6" class="outline-4">
-<h4 id="orgea19ba6">Clone</h4>
-<div class="outline-text-4" id="text-orgea19ba6">
+<div id="outline-container-orgbb72eaf" class="outline-4">
+<h4 id="orgbb72eaf">Clone</h4>
+<div class="outline-text-4" id="text-orgbb72eaf">
 <p>
 Branch names diverging and "." complicate fetching the correct heads.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgbd11076">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
+<pre class="src src-sh" id="orgc1f919c">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
 # get branch heads
 git submodule foreach 'git checkout master'
 </pre>
@@ -233,9 +236,9 @@ git submodule foreach 'git checkout master'
 </div>
 </div>
 
-<div id="outline-container-org52fa525" class="outline-4">
-<h4 id="org52fa525">Tangle Install</h4>
-<div class="outline-text-4" id="text-org52fa525">
+<div id="outline-container-orgaa23f85" class="outline-4">
+<h4 id="orgaa23f85">Tangle Install</h4>
+<div class="outline-text-4" id="text-orgaa23f85">
 <p>
 Emacs untangles the script from the org file (using noweb to copy/eval code) while expanding INCLUDE directives.
 Tangling is rerun when the org file is newer than the script (if present) and the html file.
@@ -244,66 +247,67 @@ The wrapper is needed for org-roam, org-ids and html export tags.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org5ac9b7f">pwsh make-el.ps1 install
+<pre class="src src-sh" id="org5211ea0">pwsh make-el.ps1 install
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6348810" class="outline-4">
-<h4 id="org6348810">Link</h4>
-<div class="outline-text-4" id="text-org6348810">
+<div id="outline-container-orge760cb7" class="outline-4">
+<h4 id="orge760cb7">Link</h4>
+<div class="outline-text-4" id="text-orge760cb7">
 <p>
 Installable org files tangle to a script of the same name for installation.
 The script needs itself and emacs on the PATH or CWD.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orga46e25b">(ignore-errors
+<pre class="src src-emacs-lisp" id="org6e9ed3d">(ignore-errors
       (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd7c408d" class="outline-4">
-<h4 id="orgd7c408d">Run</h4>
-<div class="outline-text-4" id="text-orgd7c408d">
+<div id="outline-container-org36b9dd5" class="outline-4">
+<h4 id="org36b9dd5">Run</h4>
+<div class="outline-text-4" id="text-org36b9dd5">
 <p>
 The one line org-mode sesquicolon 'shebang' is a multipart shell/powershell wrapper.
 Passed arguments to the elisp script are available by argv (ignoring “–” and “$@”).
 To run with powershell use the same wrapper format with a .ps1 extension.
+(BUG? Scripts that require packages need load-path from early-init; so make-el uses <code>--batch -l early-init.el</code> instead)
 </p>
-
 <div class="org-src-container">
-<pre class="src src-sh" id="orgd5c1c2d">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
+<pre class="src src-sh" id="org57805ee">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3fd096e" class="outline-4">
-<h4 id="org3fd096e">Cherry Picking</h4>
-<div class="outline-text-4" id="text-org3fd096e">
+<div id="outline-container-org8d3e66f" class="outline-4">
+<h4 id="org8d3e66f">Cherry Picking</h4>
+<div class="outline-text-4" id="text-org8d3e66f">
 <p>
 Copy files by url with emacs
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp" id="org25efce1">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
+<pre class="src src-elisp" id="org0a563e6">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
 (url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
+(call-process "git" nil t nil "clone" "https://github.com/jamartin9/emacs-config")
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4c10f6a" class="outline-4">
-<h4 id="org4c10f6a">Site</h4>
-<div class="outline-text-4" id="text-org4c10f6a">
+<div id="outline-container-orgd11ca15" class="outline-4">
+<h4 id="orgd11ca15">Site</h4>
+<div class="outline-text-4" id="text-orgd11ca15">
 <p>
 Clone the site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgf3ccbba">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
+<pre class="src src-sh" id="orga03cd2a">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
 </pre>
 </div>
 
@@ -311,7 +315,7 @@ Clone the site
 Build the updated site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org19b755d">pwsh make-el.ps1 site
+<pre class="src src-sh" id="org753f954">pwsh make-el.ps1 site
 </pre>
 </div>
 </div>

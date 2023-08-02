@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgbee1dc0">
-<div class="navbar-brand" id="org0fd06b2">
-<div class="navbar-item" id="orgd757791">
+<nav class="navbar is-black" id="org8110899">
+<div class="navbar-brand" id="orgac57f44">
+<div class="navbar-item" id="orgf017b77">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgec3b238">
-<div class="navbar-start" id="org99cf97f">
-<div class="navbar-item" id="org1094e6e">
+<div class="navbar-menu" id="org7c15568">
+<div class="navbar-start" id="org0054aa9">
+<div class="navbar-item" id="org3a749cb">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org0836b7e">
+<div class="navbar-end" id="orgf611bfc">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org897c14e" class="outline-2">
-<h2 id="org897c14e">sqlite</h2>
-<div class="outline-text-2" id="text-org897c14e">
+<div id="outline-container-orgd1bd33c" class="outline-2">
+<h2 id="orgd1bd33c">sqlite</h2>
+<div class="outline-text-2" id="text-orgd1bd33c">
 </div>
-<div id="outline-container-org0df4311" class="outline-3">
-<h3 id="org0df4311">notes</h3>
-<div class="outline-text-3" id="text-org0df4311">
+<div id="outline-container-orgd92f34f" class="outline-3">
+<h3 id="orgd92f34f">notes</h3>
+<div class="outline-text-3" id="text-orgd92f34f">
 <ul class="org-ul">
 <li><a href="https://www.sqlite.org/limits.html">https://www.sqlite.org/limits.html</a></li>
 <li>stores each index and table as separate b-tree over the database pages
@@ -105,7 +105,143 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 <li><code>pragma mmap_size = 30000000000;</code> for memory mapping</li>
 <li>open in memory database with <code>:memory:</code></li>
 <li>foreign keys disabled in transactions and by default <code>PRAGMA foreign keys</code></li>
+<li>site database</li>
 </ul>
+<div class="org-src-container">
+<pre class="src src-sql" id="org594ca31">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+-- setup db
+PRAGMA page_size=1024;
+SAVEPOINT ar;
+DROP TABLE IF EXISTS sqlar;
+CREATE TABLE IF NOT EXISTS sqlar(
+  name TEXT PRIMARY KEY,  -- name of the file
+  mode INT,               -- access permissions
+  mtime INT,              -- last modification time
+  sz INT,                 -- original file size
+  data BLOB               -- compressed content
+);
+-- add uncompressed org files
+REPLACE INTO sqlar(name,mode,mtime,sz,data)
+  SELECT
+    name,
+    mode,
+    mtime,
+    CASE substr(lsmode(mode),1,1)
+      WHEN '-' THEN length(data)
+      WHEN 'd' THEN 0
+      ELSE -1 END,
+    data
+  FROM fsdir('.',NULL) AS disk
+  WHERE lsmode(mode) NOT LIKE '?%' AND name GLOB '*.org';
+RELEASE ar;
+-- setup fts
+DROP TABLE IF EXISTS site_pages;
+CREATE VIRTUAL TABLE site_pages USING fts5(name, data);
+-- add data to index
+INSERT INTO site_pages
+SELECT name, data
+FROM sqlar;
+-- optimize fts index
+INSERT INTO site_pages(site_pages) VALUES('optimize');
+</pre>
+</div>
+<ul class="org-ul">
+<li>view query ex:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql" id="org1c180a9">-- get pages and preview from query (json?)
+.mode box --wrap 30
+.param set $query 'emacs'
+SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="orgb3eef4f">(ignore-errors ; create db and set mtime to newest
+  (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
+         (db (concat base-dir "sqlar.sqlite")))
+    (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
+    (set-file-times db (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org")))); set timestamps
+    (mapc #'(lambda (org-file) ; MAYBE change to sql query by mtime for newest
+              (let ((db-ts (file-attribute-modification-time (file-attributes db)))
+                    (org-ts (file-attribute-modification-time (file-attributes org-file))))
+                (if (time-less-p db-ts org-ts)
+                  (progn
+                    (message "setting %s timestamp to %s's" db org-file)
+                    (set-file-times db org-ts)))))
+            (directory-files base-dir t "\.org$"))
+    (set-file-times (concat base-dir "sqlite-query.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5acd0a4" class="outline-3">
+<h3 id="org5acd0a4">site search js/sql</h3>
+<div class="outline-text-3" id="text-org5acd0a4">
+<div class="org-src-container">
+<pre class="src src-javascript" id="org13d7473">  /*
+  // MAYBE add service-worker caching with http.vfs splitting
+  // MAYBE use 3.43 opfsSAHPoolVfs
+  new Worker("sqlite-worker.js"); worker.onmessage = function(msg){}; worker.postMessage(msg); onmessage = function(msg)
+  sqlite3.install.OpfsSAHPoolVfs().then((poolUtil) =&gt; {}).catch(); db = PoolUtil.OpfsSAHPoolDb('/filename');
+  poolUtil.importDb(name, byteArray); poolUtil.getFileNames();
+  // ex. html
+  &lt;script src="sqlite3.js"&gt;&lt;/script&gt;
+  &lt;article class="panel is-primary"&gt;
+    &lt;div class="panel-block"&gt;
+      &lt;input class="input" type="text" placeholder="Search" id="mySearch"&gt;
+      &lt;button id="mySearchBtn" class="button"&gt;&amp;#128269;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/article&gt;
+  &lt;dialog id="myModal" class="modal"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;button id="modalClose" class="modal-close is-large" aria-label="close"&gt;&amp;times;&lt;/button&gt;
+      &lt;div id="modalDiv"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/dialog&gt;
+  */
+document.addEventListener('DOMContentLoaded',() =&gt; {
+    document.getElementById("modalClose").onclick = function() {
+        document.getElementById("myModal").classList.remove("is-active");
+        document.getElementById("myModal").close();
+    }
+    document.getElementById("mySearchBtn").onclick = function() {
+        if (typeof globalThis.db === 'undefined') { // load sqlite db
+            window.sqlite3InitModule().then((sqlite3)=&gt;{
+                const capi = sqlite3.capi,
+                      oo = sqlite3.oo1,
+                      wasm = sqlite3.wasm;
+                const db = new oo.DB();
+                fetch('sqlar.sqlite').then(response =&gt; response.arrayBuffer()).then(arrayBuffer =&gt; {
+                    const bytes = new Uint8Array(arrayBuffer);
+                    const p = sqlite3.wasm.allocFromTypedArray(bytes);
+                    const rc = sqlite3.capi.sqlite3_deserialize(db.pointer, 'main', p, bytes.length, bytes.length,sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+                    //db.checkRc(rc);
+                    globalThis.db = db;
+                    // click with global now defined
+                    document.getElementById("mySearchBtn").click();
+                });
+            });
+        } else {
+            // write results as links and snippets
+            let query = document.getElementById("mySearch").value;
+            const res = querydb(query);
+            let html = '&lt;table class="table has-background-dark"&gt;';
+            res.forEach((row) =&gt; { html = html + "&lt;tr&gt;&lt;td&gt;&lt;a href='" +row[0]+"'&gt;"+row[1]+"&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;"});
+            html = html + "&lt;/table&gt;";
+            document.getElementById("modalDiv").innerHTML = html;
+            document.getElementById("myModal").classList.add("is-active");
+            document.getElementById("myModal").showModal();
+        }
+    }
+});
+function querydb(query) {
+    opt = {"returnValue": "resultRows"};
+    const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ query +"' ORDER BY rank;";
+    return globalThis.db.exec([sql], opt);
+  }
+</pre>
+</div>
 </div>
 </div>
 </div>

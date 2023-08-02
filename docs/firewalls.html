@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgcd80b2c">
-<div class="navbar-brand" id="org8b36c43">
-<div class="navbar-item" id="org258b628">
+<nav class="navbar is-black" id="org20ac81b">
+<div class="navbar-brand" id="org8305ae8">
+<div class="navbar-item" id="orgcf60f1e">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgf04089f">
-<div class="navbar-start" id="orgb2b17d9">
-<div class="navbar-item" id="org8a8ea67">
+<div class="navbar-menu" id="org1589350">
+<div class="navbar-start" id="org335bbb3">
+<div class="navbar-item" id="org8fb87d3">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,26 +29,27 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgf75296e">
+<div class="navbar-end" id="org099d2e6">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org1e64f58" class="outline-2">
-<h2 id="org1e64f58">firewalls</h2>
-<div class="outline-text-2" id="text-org1e64f58">
+<div id="outline-container-org01cbbea" class="outline-2">
+<h2 id="org01cbbea">firewalls</h2>
+<div class="outline-text-2" id="text-org01cbbea">
 <p>
 much wall, such fire, very wow
 </p>
 </div>
-<div id="outline-container-org134c71d" class="outline-3">
-<h3 id="org134c71d">firewalls</h3>
-<div class="outline-text-3" id="text-org134c71d">
+<div id="outline-container-orgcb1060a" class="outline-3">
+<h3 id="orgcb1060a">firewalls</h3>
+<div class="outline-text-3" id="text-orgcb1060a">
 <ul class="org-ul">
 <li>ufw accepts all localhost in ufw-before-input (so it can't be blocked in the INPUT chain)</li>
 <li>iptables replaced by nftables replaced by bpfilter</li>
 <li><a href="https://github.com/evilsocket/opensnitch">opensnitch</a> added nftables incoming rule support in v1.6.0-rc.2</li>
+<li><code>nft list ruleset</code> to view</li>
 <li>upnpc
 <ul class="org-ul">
 <li>1900 udp for ssdp</li>
@@ -69,7 +70,7 @@ much wall, such fire, very wow
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org50ae82c">curl 'http://10.0.0.1:5000/Public_UPNP_C3' \
+<pre class="src src-sh" id="org7935880">curl 'http://10.0.0.1:5000/Public_UPNP_C3' \
   -X 'POST' \
   -H 'Content-Type: text/xml; charset="utf-8"' \
   -H 'Connection: close' \
