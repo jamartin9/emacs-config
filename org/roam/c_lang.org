@@ -34,7 +34,24 @@ Standards not correctness are all that matters when the world is a PDP-11
 - C23 added ~constexpr~
 - C23 adds ~nullptr~ constant
 - C23 adds ~auto~ typing
-- reserved names that start with [[https://www.iso-9899.info/n1570.html#7.31][to, is,]] [[https://devblogs.microsoft.com/oldnewthing/20230109-00/?p=107685][etc]]
+- reserved names that start with [[https://www.iso-9899.info/n1570.html#7.31][to, is, ]][[https://devblogs.microsoft.com/oldnewthing/20230109-00/?p=107685][etc]] (externally linked names are limited to ~36chars C99)
+  - in standard library
+  - begin with underscore and have external linkage
+  - begin with an underscore followed by a capital letter or another underscore
+  - begin with is or to followed by a lowercase letter
+  - begin with str or wcs followed by a lowercase letter
+  - begin with ~cr_~
+  - begin with ~atomic_~ or ~memory_~ followed by a lowercase letter
+  - begin with ~cnd_~, ~mtx_~, ~thrd_~ or ~tss_~ followed by a lowercase letter
+  - begin with int or uint and ending with ~_t~
+  - begin with E followed by a number or uppercase letter
+  - begin with ~FE_~ followed by an uppercase letter
+  - begin with INT or UINT and ending with ~_MAX~, ~_MIN~, or ~_C~
+  - begin with ~LC_~ or ~FP_~ followed by an uppercase letter
+  - begin with ~MATH_~ followed by an uppercase letter
+  - begin with SIG or ~SIG_~ followed by an uppercase letter
+  - begin with ~TIME_~ or ~ATOMIC_~ followed by an uppercase letter
+  - gnu reserves names ending with ~_t~, names begginning with ~mem~ then lowercase letter, names prefixed with any of ~d_ l_ F_ O_ S_ gr_ pw_ sa_ SA_ st_ tms_ c_ V I O TC~, Names ending with ~_MAX~, B followed by a number
 #+NAME: c-signal-handler
 #+BEGIN_SRC c :tangle no
 // function to create signal handlers

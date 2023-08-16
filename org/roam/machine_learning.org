@@ -18,7 +18,7 @@
   - protobuf 2gb single file limitation for model weights (issues with model slicing).
   - lacks offload support for disk, cpu, gpu
 - usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
-  - 4bit with GPTQ compression
+  - 4bit with GPT-Q compression (groupsize 128)
 - LoRA is a finetunning mechanism
 - multi modal models (ViTS) combine visual image and text
 - steering vectors cache activation layer results and swap them for alignment at the same layer
@@ -45,6 +45,10 @@
   - llama 2
     - 4096 context length (7B, 13B, 70B)
     - 2 trillion tokens (~8% programming data, tokenizer replaces spaces with underscores)
+    - 70B uses group query attention for inference
+    - 70B uses ghost attention for control of dialogue flow in CHAT variant
+      - creates a sft dataset to finetune llama2-chat to stick to system message by changes in training data instead of injecting on every prompt
+      - works for ~20 rounds until end of context
   -  [[https://github.com/facebookresearch/llama][Llama 1]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]] (gpt-neox tokenizer) and [[https://huggingface.co/openlm-research/open_llama_7b][OpenLLaMa]] on 1T tokens
     - llama tokenizer does not make multiple whitespace significant (thus cant code in python) unlike GPT-NEOX
     - context length of 2048
@@ -54,12 +58,12 @@
       - 1000 tons of CO2 (2.6 million KWh hours)
       - [[https://github.com/ggerganov/llama.cpp][ggml is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
         - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
-    - [[https://github.com/antimatter15/alpaca.cpp][Alpaca]] is [[https://github.com/tatsu-lab/stanford_alpaca][refined by standford]] for chat instructions
-      - [[https://github.com/lm-sys/FastChat][Vicuna]] is refined alpaca with sharegpt with 'conversation format'
-    - WizardLM is fine tuned with  'Evol-Instruct' (llm generated) data for 'deep knowledge'
-      - VicunaWizard combines the Vicuna and Wizardlm
-    - Orca is Supervised Fine Tuned GPT4 output in alpaca format (top of llm leaderboard with llama2)
-    - Can be fine tuned with [[https://github.com/tloen/alpaca-lora][LoRA]]
+  - [[https://github.com/antimatter15/alpaca.cpp][Alpaca]] is [[https://github.com/tatsu-lab/stanford_alpaca][refined by standford]] for chat instructions
+    - [[https://github.com/lm-sys/FastChat][Vicuna]] is refined alpaca with sharegpt with 'conversation format'
+  - WizardLM is fine tuned with  'Evol-Instruct' (llm generated) data for 'deep knowledge'
+    - VicunaWizard combines the Vicuna and Wizardlm
+  - Orca is Supervised Fine Tuned GPT4 output in alpaca format (top of llm leaderboard with llama2)
+  - Can be fine tuned with [[https://github.com/tloen/alpaca-lora][LoRA]]
   - Flan-T5 for text summary
   - Donut for document image question answering
   - Vilt for image question answering
@@ -112,6 +116,27 @@ Question: {input}
 #+NAME: hugginface.py
 #+BEGIN_SRC python :tangle no
 #!/usr/bin/env python3
+# PEP 722 deps
+#
+# Script Dependencies:
+#    transformers[agents]>=4.31
+#    diffusers>=0.19.3
+#    datasets
+#    torch
+#    torchaudio
+#    soundfile
+#    sentencepiece
+#    opencv-python
+#    bitsandbytes
+#    accelerate
+#    scipy
+#    pdf2image
+#    protobuf
+#    invisible-watermark>=0.2.0
+
+#optimum[onnxruntime]>=1.10.0
+#sympy
+
 # sentiment analysis
 from transformers import pipeline
 # from transformers import load_dataset
@@ -164,6 +189,8 @@ negative_prompt_two = "lowres, bad anatomy, bad hands, text, error, missing fing
 pipe_base = StableDiffusionXLPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", use_safetensors=True) # torch_dtype=torch.float16, variant="fp16",
 #pipe_inpaint = StableDiffusionXLInpaintPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", use_safetensors=True)#torch_dtype=torch.float16, variant="fp16",
 pipe_refine = StableDiffusionXLImg2ImgPipeline.from_pretrained("stabilityai/stable-diffusion-xl-refiner-1.0", use_safetensors=True, text_encoder_2=pipe_base.text_encoder_2, vae=pipe_base.vae)# torch_dtype=torch.float16, variant="fp16",
+
+#pipe_base.load_lora_weights("./pixel-art-xl.safetensors", use_safetensors=True)
 
 # optimize
 pipe_base = pipe_base.to("cpu")

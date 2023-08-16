@@ -101,7 +101,7 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 * bitcoin
 - double sha256
 - fixed block size
-- fixed supply 21m
+- fixed supply ~21m
 - lightning
   - hash time locked contacts
     - moving to point time locked contracts
@@ -111,6 +111,7 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
     - monitor channel transactions and punish bad actors incase of attack on your node (publishing false state to chain) by publishing new state and penalizing
   - taro for colored coins/assets
 - bip 351 payment codes for private transactions
+- fedimint - protocol for multisig group m:n (federation) that issues 'ecash' that is backed by sats. Tradable with other federation members (half-online). No/lower fees are not written to chain unless ecash is turned into sats by federation.
 * btcpayserver
 - crypto payment server that supports invoices (multiple payments, refunds, tolerances etc)
 - xmr config requires the view only wallet.keys, wallet and password file be available before sync can complete

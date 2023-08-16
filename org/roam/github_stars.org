@@ -230,6 +230,8 @@
   - ActivityPub-federated video streaming platform using P2P directly in your web browser
 ** Chris2011/Cucumberbeans
   - Cucumberbeans: the only feature file assistant you'll ever need.
+** chrislgarry/Apollo-11
+  - Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
 ** chrismaltby/gb-studio
   - A quick and easy to use drag and drop retro game creator for your favourite handheld video game system
 ** cilium/cilium
@@ -320,6 +322,8 @@
   - A Language and Compiler for Homomorphic Encryption Made easY
 ** crablang/crab
   - A community fork of a language named after a plant fungus. All of the memory-safe features you love, now with 100% less bureaucracy!
+** CRaC/docs
+  - Coordinated Restore at Checkpoint is an OpenJDK feature that provides a fast start and immediate performance for Java applications.
 ** CrackerCat/video_decrypter
   - Decrypt video from a streaming site with MPEG-DASH Widevine DRM encryption.
 ** cri-o/cri-o
@@ -378,6 +382,8 @@
   - MCRT renderer
 ** DSecurity/efiSeek
   - Ghidra analyzer for UEFI firmware.
+** dslotter/HamPi
+  - HamPi
 ** dubhater/vapoursynth-fillborders
   - Fills the borders of a clip
 ** dubhater/vapoursynth-mvtools
@@ -536,6 +542,8 @@
   - Hassle-free inline clojure.spec with semi-automatic generative testing and side effect detection
 ** Gnucash/gnucash
   - GnuCash Double-Entry Accounting Program.
+** GNUnet-Mirror/GNUnet
+  -  Read-only mirror of GNUnet repository, updated periodically. NOTE: do not make pull requests here, nor comment any commits. Maintainers are not tracking this git mirror. -- Submit patches via https://bugs.gnunet.org or https://gnunet.org/en/contact.html -- Official Repo: https://git.gnunet.org/gnunet.git/ - Issues: https://bugs.gnunet.org -
 ** go-vgo/robotgo
   - RobotGo, Go Native cross-platform GUI automation  @vcaesar
 ** godot-rust/gdext
@@ -614,10 +622,6 @@
   - World's fastest and most advanced password recovery utility
 ** hashgreen/cypher-chialisp
   - A chialisp library to develop smart coins on the Chia Blockchain
-** hashicorp/terraform-cdk
-  - Define infrastructure resources using programming constructs and provision them using HashiCorp Terraform
-** hashicorp/vagrant
-  - Vagrant is a tool for building and distributing development environments.
 ** hashworks/srrdb-Terminal-Client
   - A terminal client to access srrdb.com
 ** helidon-io/helidon
@@ -698,6 +702,8 @@
   - Cryptographic utilities in Dart for the Chia blockchain with a functional object model for manipulating Chia primitive types.
 ** iv-org/invidious
   - Invidious is an alternative front-end to YouTube
+** j-fu/VoronoiFVM.jl
+  - Solution of nonlinear multiphysics partial differential equation systems using the Voronoi finite volume method
 ** Jackett/Jackett
   - API Support for your favorite torrent trackers
 ** jagotu/BACIL
@@ -1198,12 +1204,16 @@
   - Open Source fork of HuggingFace's LLM api-inference widgets after they changed the license.
 ** processone/ejabberd
   - Robust, Ubiquitous and Massively Scalable Messaging Platform (XMPP, MQTT, SIP Server)
+** PromyLOPh/guix-install-action
+  - GitHub action to install GNU Guix
 ** protocolbuffers/protobuf
   - Protocol Buffers - Google's data interchange format
 ** ProtonMail/proton-bridge
   - Proton Mail Bridge application
 ** ProtonMail/proton-mail-android
   - Proton Mail Android app
+** prusa3d/PrusaSlicer
+  - G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 ** psanford/sqlite3vfshttp
   - Go sqlite3 http vfs: query sqlite databases over http with range headers
 ** pulsar-edit/pulsar
@@ -1238,6 +1248,8 @@
   - A precise specification for "Rust lite / MIR plus"
 ** raphw/byte-buddy
   - Runtime code generation for the Java virtual machine.
+** ravynsoft/ravynos
+  - A BSD-based OS project that aims to provide an experience like and some compatibility with macOS (formerly known as airyxOS)
 ** reactos/reactos
   - A free Windows-compatible Operating System
 ** reagent-project/reagent
@@ -1865,6 +1877,8 @@
   - High-performance open BitTorrent tracker (UDP, HTTP, WebTorrent)
 ** gschup/ggrs
   - GGRS is a reimagination of GGPO, enabling P2P rollback networking in Rust. Rollback to the future!
+** huggingface/candle
+  - Minimalist ML framework for Rust
 ** itmettkeDE/cargo-patch
   - Cargo Subcommand for patching dependencies using patch files
 ** kanidm/webauthn-rs
@@ -1893,6 +1907,8 @@
   - Pelikan is a framework for building local or distributed caches. It comes with a highly extensible architecture, best-in-class performance, and superb operational ergonomics. You can use it to replace most of Memcached or a subset of Redis features.
 ** pendulum-project/ntpd-rs
   - An NTP implementation in Rust, supported by Internet Security Research Group's Prossimo project.
+** pendulum-project/statime
+  - Implementation of the Precision Time Protocol (PTP) in Rust
 ** pop-os/cosmic-text
   - Pure Rust multi-line text handling
 ** rayon-rs/rayon
@@ -1941,6 +1957,8 @@
   - A Rust CPU profiler implemented with the help of backtrace-rs
 ** tokio-rs/tokio
   - A runtime for writing reliable asynchronous applications with Rust. Provides I/O, networking, scheduling, timers, ...
+** warp-tech/russh
+  - Rust SSH client & server library
 ** wasix-org/cargo-wasix
   - Cargo wrapper for working with Webassembly wasi(x).
 ** yewstack/yew
@@ -1975,6 +1993,8 @@
   - Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS
 ** ceph/ceph
   - Ceph is a distributed object, block, and file storage platform
+** checkpoint-restore/criu
+  - Checkpoint/Restore tool
 ** Chia-Network/chia-blockchain
   - Chia blockchain python implementation (full node, farmer, harvester, timelord, and wallet)
 ** ClementTsang/bottom
@@ -2025,8 +2045,6 @@
   - uBlock Origin - An efficient blocker for Chromium and Firefox. Fast and lean.
 ** HandBrake/HandBrake
   - HandBrake's main development repository
-** hashicorp/vault
-  - A tool for secrets management, encryption as a service, and privileged access management
 ** hasse69/rar2fs
   - FUSE file system for reading RAR archives
 ** iovisor/bpftrace
@@ -2038,7 +2056,7 @@
 ** jitsi/jitsi-meet
   - Jitsi Meet - Secure, Simple and Scalable Video Conferences that you use as a standalone app or embed in your web application.
 ** jonls/redshift
-  - Redshift adjusts the color temperature of your screen according to your surroundings. This may help your eyes hurt less if you are working in front of the screen at night.    
+  - Redshift adjusts the color temperature of your screen according to your surroundings. This may help your eyes hurt less if you are working in front of the screen at night.
 ** keylase/nvidia-patch
   - This patch removes restriction on maximum number of simultaneous NVENC video encoding sessions imposed by Nvidia to consumer-grade GPUs.
 ** kimono-koans/httm
@@ -2171,27 +2189,18 @@
   - General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software.
 
 * kewl
-** chrislgarry/Apollo-11
-  - Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
-** dslotter/HamPi
-  - HamPi
 ** fulldecent/system-bus-radio
   - Transmits AM radio on computers without radio transmitting hardware.
-** GNUnet-Mirror/GNUnet
-  -  Read-only mirror of GNUnet repository, updated periodically. NOTE: do not make pull requests here, nor comment any commits. Maintainers are not tracking this git mirror. -- Submit patches via https://bugs.gnunet.org or https://gnunet.org/en/contact.html -- Official Repo: https://git.gnunet.org/gnunet.git/ - Issues: https://bugs.gnunet.org -
 ** HigherOrderCO/HVM
   - A massively parallel, optimal functional runtime in Rust
 ** jart/sectorlisp
   - Bootstrapping LISP in a Boot Sector
 ** kristerw/pysmtgcc
   - Some experiments with SMT solvers and GIMPLE IR
-** prusa3d/PrusaSlicer
-  - G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
-** ravynsoft/ravynos
-  - A BSD-based OS project that aims to provide an experience like and some compatibility with macOS (formerly known as airyxOS)
 ** TritonVM/triton-vm
   - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
-
+** https://gitlab.com/veilid/veilidchat
+  - veilid node chat (coming?)
 
 * Stack
 ** emacs-mirror/emacs

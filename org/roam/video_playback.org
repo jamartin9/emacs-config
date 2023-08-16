@@ -20,3 +20,5 @@ ooh ahh the colors... with a generic plot to boot!
 *** mpv
 - ffmpeg based
 - supports custom scripts
+*** vlc
+- ffmpeg based

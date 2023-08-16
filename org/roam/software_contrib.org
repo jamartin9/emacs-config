@@ -8,13 +8,41 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * software contributions
-- [[https://github.com/PistonDevelopers/music/pull/64][PistonDevelopers/music]]
-  - used rust to add optional constructor to reuse sdl context avoiding already initialized error
-  - [[https://github.com/PistonDevelopers/piston_window/issues/191#issuecomment-427959481][provided example code for dynamic window resizing]]
+- huggingface/transformers
+  - [[https://github.com/huggingface/transformers/pull/24736][typo bugfix to allow models to be ran with LocalAgent]]
+- ClementTsang/bottom
+  - use the ~debug!~ macro to get a log file
+  - [[https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f][added zfs arc support]]
+    - enables more arc and disk io stats in future
+    - enables more freebsd/mac/old linux metrics with sysctl
+      - freebsd used sysctl support for hw temp sensors and zfs
+    - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
+    - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
+  - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
+    - hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle
+    - enables gpu power and processes information
+  - [[https://github.com/ClementTsang/bottom/pull/836][update docs, enable cli arg and update default config]]
+- wine/wine
+  - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
+- ValveSoftware/wine
+  - [[https://github.com/ValveSoftware/wine/pull/56][cherry picked upstream]] wine for my fix
+- ValveSoftware/Proton
+  - [[https://github.com/ValveSoftware/Proton/pull/2937][update sample]] with ~no_fsync~ option
+  - [[https://github.com/ValveSoftware/Proton/issues/2832][opened blazblue crosstag issue]] and upstreamed patches to make it work on dxd9
+- simons-public/protonfixes
+  - added python support for proton [[https://github.com/simons-public/protonfixes/pull/80][4.11 option for d9vk]]
+- guix/guix
+  - patched [[https://issues.guix.gnu.org/53711][home services for i18n]] guix module and fix setlocale
+- zdharma-continuum/zinit
+  - [[https://github.com/zdharma-continuum/zinit/commit/5828f7202967a4be159c32153139876d994fbd42][added 'cloneopts' ice option]]
+    - owner deleted original repo
 - [[https://github.com/rust-lang/book/pull/1222][rust-lang/book]]
   - fixed unit to be base 2 based instead of base 10 for v1 of book
 - [[https://github.com/libp2p/rust-libp2p/pull/577][libp2p/rust-libp2p]]
   - rewrote thread tests for newer tokio api in rust
+- [[https://github.com/PistonDevelopers/music/pull/64][PistonDevelopers/music]]
+  - used rust to add optional constructor to reuse sdl context avoiding already initialized error
+  - [[https://github.com/PistonDevelopers/piston_window/issues/191#issuecomment-427959481][provided example code for dynamic window resizing]]
 - syl20bnr/spacemacs
   - added [[https://github.com/syl20bnr/spacemacs/pull/11355][lsp integration to rust layer]] with company, flycheck etc
     - one user had [[https://github.com/syl20bnr/spacemacs/pull/11882][issues]]
@@ -26,43 +54,15 @@
   - elisp change to exlcude the [[https://github.com/kwrooijen/cargo.el/pull/70][manifest argument]] from cargo search and format while support was broken upstream (might be fixed now?)
 - [[https://github.com/zcot/conky-manager2/pull/6][zcot/conky-manager2]]
   - removed BOM (byte order mark) from utf nvidia theme to fix error on linux
+- clj-easy/graalvm-clojure
+  - [[https://github.com/clj-easy/graalvm-clojure/pull/20][updated aleph]] to compile with graalvm native image
+  - [[https://github.com/clj-easy/graalvm-clojure/pull/19][updated ring-jetty]] version to compile with graalvm native image
 - yewstack/yew
   - [[https://github.com/yewstack/yew/issues/359][suggested workaround]] for users getting setup
 - mesosphere/spark-build
   - showed same error to user of [[https://github.com/mesosphere/spark-build/issues/69][json having a trailing comma]]
 - [[https://github.com/jlxip/DiscordInjector/pull/1][jlxip/DiscordInjector]]
   - patched to use discord public test beta and respect XDG config vars
-- clj-easy/graalvm-clojure
-  - [[https://github.com/clj-easy/graalvm-clojure/pull/20][updated aleph]] to compile with graalvm native image
-  - [[https://github.com/clj-easy/graalvm-clojure/pull/19][updated ring-jetty]] version to compile with graalvm native image
-- zdharma-continuum/zinit
-  - [[https://github.com/zdharma-continuum/zinit/commit/5828f7202967a4be159c32153139876d994fbd42][added 'cloneopts' ice option]]
-    - owner deleted original repo
-- guix/guix
-  - patched [[https://issues.guix.gnu.org/53711][home services for i18n]] guix module and fix setlocale
-- simons-public/protonfixes
-  - added python support for proton [[https://github.com/simons-public/protonfixes/pull/80][4.11 option for d9vk]]
-- ValveSoftware/Proton
-  - [[https://github.com/ValveSoftware/Proton/pull/2937][update sample]] with ~no_fsync~ option
-  - [[https://github.com/ValveSoftware/Proton/issues/2832][opened blazblue crosstag issue]] and upstreamed patches to make it work on dxd9
-- ValveSoftware/wine
-  - [[https://github.com/ValveSoftware/wine/pull/56][cherry picked upstream]] wine for my fix
-- wine/wine
-  - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
-- ClementTsang/bottom
-  - use the ~debug!~ macro to get a log file
-  - [[https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f][added zfs arc support]]
-    - enables more arc and disk io stats in future
-    - enables more freebsd/mac/old linux metrics with sysctl
-      - freebsd used sysctl support for hw temp sensors
-    - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
-    - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
-  - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
-    - hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle
-    - enables gpu power and processes information
-  - [[https://github.com/ClementTsang/bottom/pull/836][update docs, enable cli arg and update default config]]
-- huggingface/transformers
-  - [[https://github.com/huggingface/transformers/pull/24736][typo bugfix to allow models to be ran with LocalAgent]]
 - borkdude/deps.clj :notupstream:
   - not upstream as author said it was 'not important'
   - [[https://github.com/jamartin9/deps.clj/commit/80c5973a7889cb3ab06764384a72c5509711317e][added musl static build]]

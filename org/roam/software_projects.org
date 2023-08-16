@@ -78,9 +78,6 @@ The coding will continue until morale improves!
       - removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation
   - done as REU
   - obe [[https://ashvardanian.com/posts/searching-stable-marriages/][for vector db]] (measuring closeness representation for large sets)
-- angular-stock-table :obe:
-  - used beta angular material table and 3 way javascript sort
-  - [[https://spaz.gitlab.io/angular-stock-table/][published as gitlab page]] (click two columns for double sort ordering)
 - angular-worldwind :obe:
   - used primeng with angular to add DVR controls to NASAs worldwind
   - [[https://spaz.gitlab.io/angular-worldwind/][published as gitlab page]] (click layers -> new -> blue marble to get started)

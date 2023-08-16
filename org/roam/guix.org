@@ -22,7 +22,7 @@
 #+END_SRC
 ** guix home
 #+NAME: home-scm
-#+BEGIN_SRC scheme :tangle home.scm
+#+BEGIN_SRC scheme :tangle home.scm :noweb yes
   (use-modules (gnu home)
                (gnu home services)
                (gnu home services guix)
@@ -104,11 +104,11 @@
                                              "ripgrep"
                                              "nss-certs"
                                              "aspell-dict-en"
-                                             ;"mpv"; "vlc"; TODO add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
+                                             ;"mpv"; "vlc"; MAYBE add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
                                              "gnupg"
                                              "password-store" "pass-otp"
                                              "qemu" ;"virt-viewer"; for spice remote-viewer
-                                             "alacritty"; "xterm" ; TODO add guix package for alacritty with nvidia-libs
+                                             "alacritty"; "xterm" ; MAYBE add guix package for alacritty with nvidia-libs
                                              "curl"; emacs-osm needs for CA's
                                              "screen"
                                              "python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli" "emacs-pyvenv"
@@ -120,23 +120,8 @@
     (list
      (simple-service 'my-channel-services
                      home-channels-service-type
-                     (list
-                      (channel
-                       (name 'guix)
-                       (url "https://git.savannah.gnu.org/git/guix.git")
-                       (introduction
-                        (make-channel-introduction
-                         "9edb3f66fd807b096b48283debdcddccfea34bad"
-                         (openpgp-fingerprint
-                          "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
-                      (channel
-                       (name 'mychannel)
-                       (url "https://github.com/jamartin9/guix-channel");; GUIX_PACKAGE_PATH and (url "file:///home/.../guix-channel")
-                       (introduction
-                        (make-channel-introduction
-                         "a8de09ac62260319e6376f21c995f713c1b09279"
-                         (openpgp-fingerprint
-                          "34AF BE87 8193 580F F441  AB3F 95AF 699C 293E 302B"))))))
+                     <<guixchannels-scm>>
+                     )
      (service home-shepherd-service-type (home-shepherd-configuration
                                           (shepherd (specification->package "shepherd"))
                                           ;(auto-start? #f)
@@ -291,7 +276,7 @@
       unset GUIX_PREV_ENV
       for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
           local ref=\"GUIX_PREV_ENV_${mani}[@]\"
-          local \"stash_${mani}=${!ref}\" # TODO indirect variable expansion portable
+          local \"stash_${mani}=${!ref}\" # MAYBE indirect variable expansion portable
           unset \"GUIX_PREV_ENV_${mani}\"
       done
       local prev=(\"$(env)\") # save current env
@@ -299,7 +284,7 @@
       export GUIX_PREV_ENV=(\"${stash[@]}\") # restore prev envs
       for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
           local ref_stash=\"stash_${mani}\"
-          export \"GUIX_PREV_ENV_${mani}=${!ref_stash}\" # TODO indirect variable expansion portable
+          export \"GUIX_PREV_ENV_${mani}=${!ref_stash}\" # MAYBE indirect variable expansion portable
       done
       GUIX_ACTIVE_PROFILES+=(\"${arg}\")
       export GUIX_ACTIVE_PROFILES
@@ -307,8 +292,8 @@
   _guix_deactivate_profile(){
       local arg=\"${1}\"
       local ref=\"GUIX_PREV_ENV_${arg}\"
-      if [ -n \"${!ref}\" ]; then # the prev env exists # TODO indirect variable expansion portable
-          for entry in ${!ref}; do # unset vars of profile # TODO indirect variable expansion portable
+      if [ -n \"${!ref}\" ]; then # the prev env exists # MAYBE indirect variable expansion portable
+          for entry in ${!ref}; do # unset vars of profile # MAYBE indirect variable expansion portable
               if [[ ! \"${entry%%=*}\" =~ GUIX_PREV_ENV.* ]] &&
                  [ \"${entry%%=*}\" != \"GUIX_ACTIVE_PROFILES\" ] ;then
                   unset \"${entry%%=*}\"
@@ -439,14 +424,7 @@
                                    (const '("wl")))))
        (default-value '())
        (description "Install broadcom kernel module and service")))
-    ;; * TODO guix nvidia-driver(xorg/ko), tor/i2p service
-    ;;   TODO change the %desktop-services elogind-service-type file-system
-    ;;                 (file-system
-    ;;                   (device "none")
-    ;;	                 (mount-point "/sys/fs/cgroup")
-    ;;	                 (type "cgroup2")
-    ;;	                 (check? #f)
-    ;;	                 (create-mount-point? #f))
+    ;; * MAYBE guix nvidia-driver(xorg/ko), tor/i2p service
 
     (define my-kernel (corrupt-linux linux-libre-with-bpf))
 
@@ -836,20 +814,16 @@
 
       (kernel linux-libre-with-bpf); my-kernel
       (initrd microcode-initrd)
-      (kernel-arguments %kicksecure-kernel-arguments);(append %default-kernel-arguments ("modprobe.blacklist=b43,b43legacy,ssb,bcm43xx,brcm80211,brcmfmac,brcmsmac,bcma,nouveau") ("systemd.unified_cgroup_hierarchy=1")))
+      (kernel-arguments %kicksecure-kernel-arguments);(append %default-kernel-arguments ("modprobe.blacklist=b43,b43legacy,ssb,bcm43xx,brcm80211,brcmfmac,brcmsmac,bcma,nouveau")))
 
-      ;; Label for the GRUB boot menu.
       (label (string-append "GNU Guix " (package-version guix)))
 
       ;(firmware (list linux-firmware))
 
-      ;; Below we assume /dev/vda is the VM's hard disk.
-      ;; Adjust as needed.
       (bootloader (bootloader-configuration
                    (bootloader grub-bootloader)
-                   (targets '("/dev/vda"))
                    ;(terminal-outputs '(console))
-                   ))
+                   (targets '("/dev/vda"))))
 
       (file-systems (cons (file-system
                             (mount-point "/")
@@ -861,14 +835,13 @@
       (users (cons (user-account
                     (name "guest")
                     (comment "GNU Guix Live")
-                    (password "")                     ;no password
+                    (password "") ; no password
                     (group "users")
                     (supplementary-groups '("wheel" "netdev"
                                             "audio" "video")))
                    %base-user-accounts))
 
-      ;; Our /etc/sudoers file.  Since 'guest' initially has an empty password,
-      ;; allow for password-less sudo.
+      ;; Our /etc/sudoers file.  Since 'guest' initially has an empty password; allow for password-less sudo.
       (sudoers-file (plain-file "sudoers" "\
     root ALL=(ALL) ALL
     %wheel ALL=NOPASSWD: ALL\n"))
@@ -886,8 +859,7 @@
                                (default-user "guest")
                                (xorg-configuration
                                 (xorg-configuration
-                                 ;; The QXL virtual GPU driver is added to provide
-                                 ;; a better SPICE experience.
+                                 ;; The QXL virtual GPU driver is added to provide a better SPICE experience.
                                  (modules (cons xf86-video-qxl
                                                 %default-xorg-modules))
                                  (keyboard-layout keyboard-layout)))))
@@ -903,42 +875,43 @@
                                                      (port-number 8080)
                                                      (password-authentication? #f)
                                                      (authorized-keys `(("guest" ,(plain-file "jam.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjfouQY9m8opK3Sq5G81FuqlMEa5no1Jy1UywweZY3u jam@jam-pc"))
-                                                                        ("guest" ,(plain-file "jaming.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK+JSxpOM9X8rM6bS0VEfmBeOaQi98o0+aDzYaWIhTBp jam@jam-workstation"))))
-                                                     ))
+                                                                        ("guest" ,(plain-file "jaming.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK+JSxpOM9X8rM6bS0VEfmBeOaQi98o0+aDzYaWIhTBp jam@jam-workstation"))))))
 
                      (service cuirass-service-type
-                              (cuirass-configuration (specifications #~(list (specification ;; TODO add rss notification
+                              (cuirass-configuration (specifications #~(list (specification
                                                                               (name "my-channel-packages")
-                                                                              (build '(packages "rust-bottom" "rust-httm"))
-                     ;                                                         ;(build '(channels my-channel))
+                                                                              (build '(channels my-channel))
                                                                               (channels (cons (channel
                                                                                                (name 'my-channel)
                                                                                                (url "https://github.com/jamartin9/guix-channel.git"))
                                                                                               %default-channels))
-                                                                              ;(period 600)
-                                                                              ;(build-outputs (list
-                                                                              ;                (build-output
-                                                                              ;                 (job "hello*")
-                                                                              ;                 (type "archive")
-                                                                              ;                 (output "out")
-                                                                              ;                 (path ""))))
+                                                                              ;(notifications (list (rss-feed))); add import for (cuirass rss)
+                                                                              (period 600)
+                                                                             ;(build-outputs (list
+                                                                             ;                (build-output
+                                                                             ;                 (job "binary-tarball")
+                                                                             ;                 (type "archive")
+                                                                             ;                 (output "out")
+                                                                             ;                 (path ""))))
                                                                               )))
                                                      (use-substitutes? #t)
                                                      (host "0.0.0.0")))
 
                      (simple-service 'os-file etc-service-type
                                      (list `("guix-os.scm" ,(local-file "guix-os.scm"))))
+                     (simple-service 'os-file etc-service-type
+                                     (list `("home.scm" ,(local-file "home.scm"))))
 
-                     (simple-service 'channel-file etc-service-type ; TODO remove after guix-home integrated
+                     (simple-service 'channel-file etc-service-type ; link to ~/.config/guix/channels.scm
                                      (list `("channels.scm" ,(local-file "channels.scm"))))
                      (simple-service 'channel-file etc-service-type
                                      (list `("nonguix-pub.scm" ,(local-file "nonguix-pub.scm"))))
 
-                     ;(service zfs-service-type
-                     ;         (zfs-configuration
-                     ;          (kernel my-kernel)))
+                     (service zfs-service-type
+                              (zfs-configuration
+                               (kernel my-kernel)))
 
-                     (service nftables-service-type; TODO add guix package for opensnitch: import needs step added for protoc header generation
+                     (service nftables-service-type; MAYBE add guix package for opensnitch: import needs step added for protoc header generation
                               (nftables-configuration
                                (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -> input/output/forward -> postrouting
     # flush all the rules.
@@ -1009,8 +982,8 @@
         udp sport bootpc udp dport bootps ip saddr 0.0.0.0 ip daddr 255.255.255.255 accept comment \"Accept DHCPDISCOVER (for DHCP-Proxy)\"
 
         # allow mdns
-        udp dport mdns ip6 daddr ff02::fb accept comment \"Accept mDNS\"
-        udp dport mdns ip daddr 224.0.0.251 accept comment \"Accept mDNS\"
+        #udp dport mdns ip6 daddr ff02::fb accept comment \"Accept mDNS\"
+        #udp dport mdns ip daddr 224.0.0.251 accept comment \"Accept mDNS\"
 
         # reject everything else
         reject with icmpx type port-unreachable
@@ -1053,9 +1026,7 @@
                                         ;(preshared-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=")
                     ;                    (allowed-ips '("10.0.0.1/24")))))))
 
-                     ;; Add support for the SPICE protocol, which enables dynamic
-                     ;; resizing of the guest screen resolution, clipboard
-                     ;; integration with the host, etc.
+                     ;; Add support for the SPICE protocol. Enables dynamic resizing of the guest screen resolution, clipboard and integration with the host.
                      (service spice-vdagent-service-type)
 
                      ;; Use the DHCP client service rather than NetworkManager.
@@ -1077,8 +1048,8 @@
                          (sysctl-service-type config =>
                                               (sysctl-configuration
                                                (settings (append `(,@%kicksecure-sysctl-rules
-                                                                   ("net.ipv4.ip_forward" . "1")
-                                                                   ("net.ipv6.conf.all.forwarding" . "1"))
+                                                                   ;("net.ipv6.conf.all.forwarding" . "1")
+                                                                   ("net.ipv4.ip_forward" . "1"))
                                                                  %default-sysctl-settings))))
                          (guix-service-type config =>
                                              (guix-configuration
@@ -1092,8 +1063,8 @@
                                      (append (list (local-file "./nonguix-pub.scm"))
                                              %default-authorized-guix-keys))))))))
 
-      ;; Allow resolution of '.local' host names with mDNS.
-      (name-service-switch %mdns-host-lookup-nss))
+      ;(name-service-switch %mdns-host-lookup-nss) ;; Allow resolution of '.local' host names with mDNS.
+      )
 #+END_SRC
 ** User manifest
 #+NAME: manifest-scm
@@ -1249,7 +1220,6 @@
          "a8de09ac62260319e6376f21c995f713c1b09279"
          (openpgp-fingerprint
           "34AF BE87 8193 580F F441  AB3F 95AF 699C 293E 302B")))))
-
 #+END_SRC
 ** non guix key
 #+NAME: nonguix-pubkey
@@ -1292,8 +1262,8 @@
       - ~qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22 -enable-kvm -m 1024 -device virtio-blk,drive=myhd -drive if=none,file=$MY_IMAGE,id=myhd -spice port=5930,disable-ticketing~
     - grow vm disk
       - ~qemu-image resize IMAGE.qcow2 +10G~
-      - ~growpart /dev/vda1~
-      - ~resize2fs /dev/vda 1~
+      - ~growpart /dev/vda 2~
+      - ~resize2fs /dev/vda2~
   - ~guix hash -xr .~ for the checksum of a repo
   - ~guix publish~ substitutes after exporting/importing key with ~guix archive~ or use nars with ~guix archive --export -r~
 - packages are standard SRFI-9 guile records (set-fields, etc...)
@@ -1397,3 +1367,115 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
   :END:
   [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
   [2022-05-27 Fri] Last modified
+#+NAME: guix-manifest-cuirass
+#+BEGIN_SRC scheme :tangle no
+; WIP This does not work as it can't find patches? (ghostscript)
+(define-module (etc httm-manifest)
+ #:use-module (guix scripts pack)
+ #:use-module (guix gexp)
+ #:use-module (guix monads)
+ #:use-module (guix profiles)
+ #:use-module (guix store)
+ #:use-module (guix derivations)
+ #:use-module (guix modules)
+ #:use-module (gnu packages)
+ #:use-module (gnu packages gnupg)
+ #:use-module (gnu packages guile)
+ #:use-module (gnu packages ghostscript)
+
+ )
+
+;(display (source-module-closure '((guix scripts pack)
+;                                  (guix monads)
+;                                  (guix profiles)
+;                                  (guix store)
+;                                  (guix derivations))))
+
+  (manifest
+   (list
+    (manifest-entry
+     (name "httm-binary-tarball")
+     (version "0.30.0")
+     (item (computed-file "httm-directory"
+                          (with-extensions (list guile-gcrypt guile-zlib guile-git guile-bytestructures guile-json-4)
+                                           (with-imported-modules (source-module-closure
+                                                                   '(;(guix packages)
+                                                                     ;(guix utils)
+                                                                     ;(gnu compression)
+                                                                     ;(gnu packages ghostscript)
+                                                                     ;(gnu packages)
+                                                                     (guix scripts pack)
+                                                                     (guix monads)
+                                                                     (guix profiles)
+                                                                     (guix store)
+                                                                     (guix derivations))
+                                                                   ;(append %load-path (%patch-path)); load-path
+                                                                   )
+                          #~(let ((bin (string-append #$output "/bin")))
+                              (mkdir #$output) (mkdir bin)
+                              (use-modules ;(guix packages)
+                                           ;(guix gexp)
+                                           ;(guix utils)
+                                           ;(gnu compression)
+                                           ;(gnu packages ghostscript)
+                                           ;(gnu packages)
+                                           (guix scripts pack)
+                                           (guix monads)
+                                           (guix profiles)
+                                           (guix store)
+                                           (guix derivations))
+                              (define (build-tarballs)
+                                (run-with-store (open-connection)
+                                                (mbegin %store-monad
+                                                        ;(set-guile-for-build (default-guile))
+                                                        (>>= (profile-derivation (packages->manifest (list "rust-httm-0.30")))
+                                                             (lambda (profile)
+                                                               (self-contained-tarball "httm-binary" profile
+                                                                                       #:profile-name "rust-httm"
+                                                                                      ;#:localstatedir? #t
+                                                                                      ;#:compressor (lookup-compressor "xz")
+                                                                                       ))))
+                                                #:system "x86_64-linux"))
+                              (symlink (derivation->output-path (build-tarballs)) (string-append bin "rust-httm.tar.xz"))))))))))
+
+#+END_SRC
+#+NAME: cuirass-jobs
+#+BEGIN_SRC scheme :tangle no
+; WIP This does not work as no build is done when using 'custom'
+(define-module (jam packages jobs)
+  #:use-module (jam packages httm)
+  #:use-module (jam packages bottom)
+  #:use-module (gnu ci)
+  #:use-module (gnu compression)
+  #:use-module ((guix scripts pack) #:select (self-contained-tarball))
+  #:use-module (guix gexp)
+  #:use-module (guix store)
+  #:use-module (guix monads)
+  #:use-module (guix packages)
+  #:use-module (guix profiles)
+  #:use-module (guix utils))
+
+(define-public (cuirass-jobs store arguments)
+  "Register Cuirass jobs."
+  (tarball-jobs store (arguments->system arguments)))
+
+
+(define (tarball-jobs store system)
+  "Return jobs to build the self-contained Guix binary tarball."
+  (define (->job name drv)
+    (let ((name (string-append name "." system)))
+      (parameterize ((%graft? #f))
+        (derivation->job name drv))))
+  (list
+   (->job "binary-tarball-httm"
+          (run-with-store store
+            (mbegin %store-monad
+              (set-guile-for-build (default-guile))
+              (>>= (profile-derivation (packages->manifest (list rust-httm-0.30)))
+                   (lambda (profile)
+                     (self-contained-tarball "rust-httm-binary" profile
+                                             #:profile-name "rust-httm"
+                                             ;#:localstatedir? #t
+                                             #:compressor (lookup-compressor "xz")))))
+            #:system system))))
+#+END_SRC

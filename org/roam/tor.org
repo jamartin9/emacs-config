@@ -107,7 +107,7 @@ EntryNodes {us}
 #ExitNodes {us}
 
 # obfs4proxy configuration
-#ClientTransportPlugin obfs4 exec /usr/share/tor/PluggableTransports/obfs4proxy
+#ClientTransportPlugin obfs4 exec /usr/share/tor/PluggableTransports/lyrebird
 
 DataDirectory <<datadir()>>
 ControlSocket <<socket()>>

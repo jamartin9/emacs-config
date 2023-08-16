@@ -128,6 +128,7 @@ self.addEventListener('fetch', function(e) {
 - [[https://wasm-test.libreoffice.org/][libreoffice wasm]]
 ** data
 - https://ossinsight.io/#trending-repos
+- https://sourcegraph.com/search
 - https://search.marginalia.nu/
 - Shodan
 - Zoomeye

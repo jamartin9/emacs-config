@@ -22,6 +22,7 @@ More ricing less productivity!
 - gnome
   - javascript based desktop (leaked memory)
 - kde
+  - runs desktops with ~kioclient exec file.desktop~
   - manjaro desktop package is plasma-meta
     - added konsole, unarchiver, kio-admin, gnustep-base, dolphin, ark, sweeper, sddm-breath-theme
   - qt based
