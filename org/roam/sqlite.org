@@ -56,7 +56,7 @@
 #+BEGIN_SRC sql :tangle db.sql
 -- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
-PRAGMA page_size=1024;
+PRAGMA page_size=512;
 SAVEPOINT ar;
 DROP TABLE IF EXISTS sqlar;
 CREATE TABLE IF NOT EXISTS sqlar(
@@ -79,7 +79,6 @@ REPLACE INTO sqlar(name,mode,mtime,sz,data)
     data
   FROM fsdir('.',NULL) AS disk
   WHERE lsmode(mode) NOT LIKE '?%' AND name GLOB '*.org';
-RELEASE ar;
 -- setup fts
 DROP TABLE IF EXISTS site_pages;
 CREATE VIRTUAL TABLE site_pages USING fts5(name, data);
@@ -89,6 +88,10 @@ SELECT name, data
 FROM sqlar;
 -- optimize fts index
 INSERT INTO site_pages(site_pages) VALUES('optimize');
+-- keep only fts's copy of content
+DROP TABLE IF EXISTS sqlar;
+RELEASE ar;
+VACUUM;
 #+END_SRC
 - view query ex:
 #+NAME: sql-view
@@ -139,7 +142,7 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '<b>','</b
         <div id="modalDiv"></div>
       </div>
     </dialog>
-    ,*/
+    */
   document.addEventListener('DOMContentLoaded',() => {
       document.getElementById("modalClose").onclick = function() {
           document.getElementById("myModal").classList.remove("is-active");
@@ -151,6 +154,25 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '<b>','</b
                   const capi = sqlite3.capi,
                         oo = sqlite3.oo1,
                         wasm = sqlite3.wasm;
+                /*sqlite3.installOpfsSAHPoolVfs().then((poolUtil)=> {
+                    console.log("installing opfs");
+                    if poolUtil.getFileCount() == 0 { // MAYBE check name/date with transparent naming
+                        console.log("fetching files");
+                        fetch('sqlar.sqlite').then(response => response.arrayBuffer()).then(arrayBuffer => {
+                            //const bytes = new Uint8Array(arrayBuffer);
+                            console.log("importing database");
+                            poolUtil.importDb('sqlar.sqlite', arrayBuffer);
+                            const db = new PoolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
+                            globalThis.db = db;
+                            // click with global now defined
+                            document.getElementById("mySearchBtn").click();
+                        });
+
+                    } else {
+                      console.log(poolUtil.getFileNames());
+                      //const db = new PoolUtil.OpfsSAHPoolDb('/sqlar.sqlite')
+                    }
+                }).catch( console.log("Failed to use opfs"); ); */ // maybe fallback or hide search
                   const db = new oo.DB();
                   fetch('sqlar.sqlite').then(response => response.arrayBuffer()).then(arrayBuffer => {
                       const bytes = new Uint8Array(arrayBuffer);

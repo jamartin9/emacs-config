@@ -15,6 +15,10 @@
 - https://rust-lang.github.io/api-guidelines/checklist.html
 - reference counting can be checked by [[https://github.com/matthieu-m/static-rc][statically]]
 - default allocator can be changed to jemalloc to avoid heap fragmentation
+- cargo feature flag propagation can break for not additive features
+  - libraries could use ~RUSTFLAGS='--cfg feature_name="FEATURE_VAL"'~ and a ~build.rs~ like the curve25519-dalek crate (cross compilation?)
+- ~cargo update -p PACKAGE --precise VERSION"~ to pin Cargo.lock.
+- ~cargo tree~ for dependency tree visual
 - ~CROSS_CONTAINER_ENGINE=podman cross build --target x86_64-unknown-freebsd~
   - freebsd tests only run on qemu runner
   - set the image tag for newer cross

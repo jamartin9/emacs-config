@@ -363,9 +363,10 @@
 
 (when (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
 (use-package guix ; guix
-  :config (require 'guix-autoloads) ; MAYBE guix-emacs-autoload-packages for EMACSLOADPATH
+  :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
+  ;(guix-emacs-autoload-packages); set EMACSLOADPATH
   :commands guix-popup guix-set-emacs-environment)
 )
 
@@ -420,7 +421,7 @@
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
 (use-package lsp-mode ; use eglot for android
-  :commands (lsp-install-server lsp-mode lsp)
+  :commands (lsp-install-server lsp-mode lsp lsp-restart-workspace)
   :hook ((python-mode . lsp))
   :config (bind-keys :map jam/code
                       ("a" . lsp-execute-code-action)
@@ -477,7 +478,8 @@
 
 (use-package rustic ; rustc/cargo
   ;:init (setq rustic-treesitter-derive t) ; MAYBE add when rustic supports treesit
-  ;:config (jam/set-rust-path)
+         ;(add-hook 'rustic-mode-hook #'lsp-deferred)
+  :config (jam/set-rust-path)
   :mode ("\\.rs$" . rustic-mode))
 
 (use-package undo-tree
@@ -670,15 +672,16 @@
   (if (treesit-available-p)
       (progn
           (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
-          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist)
+          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist) ; MAYBE after lsp-mode > 8
           (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 (use-package python ; python
   :commands (python-mode python-mode-hook python-mode-local-vars-hook))
 
-(use-package pyvenv ; activate before lsp or restart workspace ; python
-  :init (add-hook 'python-mode-local-vars-hook #'pyvenv-tracking-mode)
-  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode))
+(use-package pyvenv ; python
+  :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
+  (add-hook 'pyvenv-post-activate-hooks #'lsp-restart-workspace)
+  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
 
 (use-package rmsbolt
   :init (bind-keys :map jam/toggle ("r" . rmsbolt-mode))
