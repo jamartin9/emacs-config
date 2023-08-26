@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org62a2c50">
-<div class="navbar-brand" id="orgeefce17">
-<div class="navbar-item" id="orgf74877e">
+<nav class="navbar is-black" id="orgb3ebc10">
+<div class="navbar-brand" id="orgd3a653e">
+<div class="navbar-item" id="org554c0c1">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org2d0d034">
-<div class="navbar-start" id="org419fd44">
-<div class="navbar-item" id="org3ed3314">
+<div class="navbar-menu" id="orgdb510a0">
+<div class="navbar-start" id="org089f48a">
+<div class="navbar-item" id="orgab51525">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgee430cc">
+<div class="navbar-end" id="orgbdb23ad">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgd6180e0" class="outline-2">
-<h2 id="orgd6180e0">Machine learning</h2>
-<div class="outline-text-2" id="text-orgd6180e0">
+<div id="outline-container-org007cf57" class="outline-2">
+<h2 id="org007cf57">Machine learning</h2>
+<div class="outline-text-2" id="text-org007cf57">
 </div>
-<div id="outline-container-org921820d" class="outline-3">
-<h3 id="org921820d">notes</h3>
-<div class="outline-text-3" id="text-org921820d">
+<div id="outline-container-orge7850c9" class="outline-3">
+<h3 id="orge7850c9">notes</h3>
+<div class="outline-text-3" id="text-orge7850c9">
 <ul class="org-ul">
 <li>huggingface is a hub for models with api libs using pytorch/tensorflow/jax
 <ul class="org-ul">
@@ -57,11 +57,12 @@
 </ul></li>
 <li>usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
 <ul class="org-ul">
-<li>4bit with GPTQ compression</li>
+<li>4bit with GPT-Q compression (groupsize 128)</li>
 </ul></li>
 <li>LoRA is a finetunning mechanism</li>
 <li>multi modal models (ViTS) combine visual image and text</li>
 <li>steering vectors cache activation layer results and swap them for alignment at the same layer</li>
+<li>vector databases can be used for Retrieval Augmented Generation by finding content close to query for context</li>
 <li>transformers context length prediction can be expanded from the size used in training by using <a href="https://arxiv.org/pdf/2108.12409.pdf">ALiBi in MPT</a> (or 0.5 scale on the positional embeddings like in SUPERHOT?)
 <ul class="org-ul">
 <li><a href="https://github.com/salesforce/xGen">xGen 8k context</a></li>
@@ -76,9 +77,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org6d82c48" class="outline-3">
-<h3 id="org6d82c48">image generation</h3>
-<div class="outline-text-3" id="text-org6d82c48">
+<div id="outline-container-org5cab892" class="outline-3">
+<h3 id="org5cab892">image generation</h3>
+<div class="outline-text-3" id="text-org5cab892">
 <ul class="org-ul">
 <li>dalle mini</li>
 <li><a href="https://github.com/hlky/stable-diffusion">stable diffusion</a>
@@ -97,15 +98,21 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org72f1aaf" class="outline-3">
-<h3 id="org72f1aaf">Large Language Models</h3>
-<div class="outline-text-3" id="text-org72f1aaf">
+<div id="outline-container-orgf77a912" class="outline-3">
+<h3 id="orgf77a912">Large Language Models</h3>
+<div class="outline-text-3" id="text-orgf77a912">
 <ul class="org-ul">
 <li>chinchilla paper showed most models are over parameterized without enough data</li>
 <li>llama 2
 <ul class="org-ul">
 <li>4096 context length (7B, 13B, 70B)</li>
 <li>2 trillion tokens (~8% programming data, tokenizer replaces spaces with underscores)</li>
+<li>70B uses group query attention for inference</li>
+<li>70B uses ghost attention for control of dialogue flow in CHAT variant
+<ul class="org-ul">
+<li>creates a sft dataset to finetune llama2-chat to stick to system message by changes in training data instead of injecting on every prompt</li>
+<li>works for ~20 rounds until end of context</li>
+</ul></li>
 </ul></li>
 <li><a href="https://github.com/facebookresearch/llama">Llama 1</a> (chinchilla optimal) recreated 3B and 7B as <a href="https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1">RedPajama</a> (gpt-neox tokenizer) and <a href="https://huggingface.co/openlm-research/open_llama_7b">OpenLLaMa</a> on 1T tokens
 <ul class="org-ul">
@@ -123,6 +130,7 @@
 <li>set params to <code>top_k=40</code>, <code>temperature=0.7</code>, <code>top_p=0</code> and a repeat penalty <code>repeat_last_n=64</code> and <code>repeat_penalty=1.3</code></li>
 </ul></li>
 </ul></li>
+</ul></li>
 <li><a href="https://github.com/antimatter15/alpaca.cpp">Alpaca</a> is <a href="https://github.com/tatsu-lab/stanford_alpaca">refined by standford</a> for chat instructions
 <ul class="org-ul">
 <li><a href="https://github.com/lm-sys/FastChat">Vicuna</a> is refined alpaca with sharegpt with 'conversation format'</li>
@@ -133,15 +141,14 @@
 </ul></li>
 <li>Orca is Supervised Fine Tuned GPT4 output in alpaca format (top of llm leaderboard with llama2)</li>
 <li>Can be fine tuned with <a href="https://github.com/tloen/alpaca-lora">LoRA</a></li>
-</ul></li>
 <li>Flan-T5 for text summary</li>
 <li>Donut for document image question answering</li>
 <li>Vilt for image question answering</li>
 </ul>
 </div>
-<div id="outline-container-org4bcf05d" class="outline-4">
-<h4 id="org4bcf05d">Codegen</h4>
-<div class="outline-text-4" id="text-org4bcf05d">
+<div id="outline-container-orgb306c07" class="outline-4">
+<h4 id="orgb306c07">Codegen</h4>
+<div class="outline-text-4" id="text-orgb306c07">
 <ul class="org-ul">
 <li><a href="https://github.com/bigcode-project/starcoder">StarCoder</a></li>
 <li><a href="https://github.com/salesforce/CodeT5">CodeT5+</a></li>
@@ -157,14 +164,14 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org6f803fd" class="outline-3">
-<h3 id="org6f803fd">Speech to text</h3>
-<div class="outline-text-3" id="text-org6f803fd">
+<div id="outline-container-org235999d" class="outline-3">
+<h3 id="org235999d">Speech to text</h3>
+<div class="outline-text-3" id="text-org235999d">
 <ul class="org-ul">
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgcdcafec">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="orgc90df54">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -173,9 +180,9 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-orgf56da94" class="outline-3">
-<h3 id="orgf56da94">Text to speech</h3>
-<div class="outline-text-3" id="text-orgf56da94">
+<div id="outline-container-org292979c" class="outline-3">
+<h3 id="org292979c">Text to speech</h3>
+<div class="outline-text-3" id="text-org292979c">
 <ul class="org-ul">
 <li><a href="https://github.com/neonbjb/tortoise-tts">tortoise-tts</a> based on dalle</li>
 <li><a href="https://github.com/coqui-ai/TTS">coqui-ai</a> with YourTTS/FreeVC voice cloning
@@ -185,11 +192,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfca86d0" class="outline-3">
-<h3 id="orgfca86d0">Agent prompts</h3>
-<div class="outline-text-3" id="text-orgfca86d0">
+<div id="outline-container-orgdebfc68" class="outline-3">
+<h3 id="orgdebfc68">Agent prompts</h3>
+<div class="outline-text-3" id="text-orgdebfc68">
 <div class="org-src-container">
-<pre class="src src-text" id="org47df374">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-text" id="orgc378b3b">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -212,14 +219,35 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-orgcdd0c92" class="outline-3">
-<h3 id="orgcdd0c92">transformers examples</h3>
-<div class="outline-text-3" id="text-orgcdd0c92">
+<div id="outline-container-org5aa5265" class="outline-3">
+<h3 id="org5aa5265">transformers examples</h3>
+<div class="outline-text-3" id="text-org5aa5265">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="orgda2e513">#!/usr/bin/env python3
+<pre class="src src-python" id="org1eb3f65">#!/usr/bin/env python3
+# PEP 722 deps
+#
+# Script Dependencies:
+#    transformers[agents]&gt;=4.31
+#    diffusers&gt;=0.19.3
+#    datasets
+#    torch
+#    torchaudio
+#    soundfile
+#    sentencepiece
+#    opencv-python
+#    bitsandbytes
+#    accelerate
+#    scipy
+#    pdf2image
+#    protobuf
+#    invisible-watermark&gt;=0.2.0
+
+#optimum[onnxruntime]&gt;=1.10.0
+#sympy
+
 # sentiment analysis
 from transformers import pipeline
 # from transformers import load_dataset
@@ -272,6 +300,8 @@ negative_prompt_two = "lowres, bad anatomy, bad hands, text, error, missing fing
 pipe_base = StableDiffusionXLPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", use_safetensors=True) # torch_dtype=torch.float16, variant="fp16",
 #pipe_inpaint = StableDiffusionXLInpaintPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", use_safetensors=True)#torch_dtype=torch.float16, variant="fp16",
 pipe_refine = StableDiffusionXLImg2ImgPipeline.from_pretrained("stabilityai/stable-diffusion-xl-refiner-1.0", use_safetensors=True, text_encoder_2=pipe_base.text_encoder_2, vae=pipe_base.vae)# torch_dtype=torch.float16, variant="fp16",
+
+#pipe_base.load_lora_weights("./pixel-art-xl.safetensors", use_safetensors=True)
 
 # optimize
 pipe_base = pipe_base.to("cpu")

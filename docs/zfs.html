@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org4bf263b">
-<div class="navbar-brand" id="org6344f06">
-<div class="navbar-item" id="org62ae835">
+<nav class="navbar is-black" id="orgf5c4c50">
+<div class="navbar-brand" id="org2b9b05e">
+<div class="navbar-item" id="org68937e5">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orge035c0c">
-<div class="navbar-start" id="org6befdea">
-<div class="navbar-item" id="orge65feda">
+<div class="navbar-menu" id="org43c3178">
+<div class="navbar-start" id="org38bfe78">
+<div class="navbar-item" id="org5897a4a">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,23 +29,23 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org5f78da0">
+<div class="navbar-end" id="orgd24ecc7">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org0f7dfb4" class="outline-2">
-<h2 id="org0f7dfb4">ZFS</h2>
-<div class="outline-text-2" id="text-org0f7dfb4">
+<div id="outline-container-org63bff3b" class="outline-2">
+<h2 id="org63bff3b">ZFS</h2>
+<div class="outline-text-2" id="text-org63bff3b">
 </div>
-<div id="outline-container-orge9bc47d" class="outline-3">
-<h3 id="orge9bc47d">openzfs</h3>
-<div class="outline-text-3" id="text-orge9bc47d">
+<div id="outline-container-org6728b3a" class="outline-3">
+<h3 id="org6728b3a">openzfs</h3>
+<div class="outline-text-3" id="text-org6728b3a">
 </div>
-<div id="outline-container-org6a14585" class="outline-4">
-<h4 id="org6a14585">install</h4>
-<div class="outline-text-4" id="text-org6a14585">
+<div id="outline-container-orgdb4a33d" class="outline-4">
+<h4 id="orgdb4a33d">install</h4>
+<div class="outline-text-4" id="text-orgdb4a33d">
 <ul class="org-ul">
 <li>If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
 That small space is useful for uefi bootloader via:
@@ -64,7 +64,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org5102a1b">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="orgd8aca71">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -105,18 +105,18 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcbf849a" class="outline-4">
-<h4 id="orgcbf849a">usage</h4>
-<div class="outline-text-4" id="text-orgcbf849a">
+<div id="outline-container-orgfcd5948" class="outline-4">
+<h4 id="orgfcd5948">usage</h4>
+<div class="outline-text-4" id="text-orgfcd5948">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0309866" class="outline-4">
-<h4 id="org0309866">notes</h4>
-<div class="outline-text-4" id="text-org0309866">
+<div id="outline-container-orgfba6b14" class="outline-4">
+<h4 id="orgfba6b14">notes</h4>
+<div class="outline-text-4" id="text-orgfba6b14">
 <ul class="org-ul">
 <li>If you lose a vdev in a pool you LOSE THE POOL</li>
 <li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
@@ -159,7 +159,7 @@ password   include      zfs-key</li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-C" id="org8d17c67">sysctlbyname("kstat.zfs.misc.arcstats.size")
+<pre class="src src-C" id="orge6ec438">sysctlbyname("kstat.zfs.misc.arcstats.size")
 </pre>
 </div>
 <ul class="org-ul">

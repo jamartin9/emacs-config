@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgbd446e2">
-<div class="navbar-brand" id="orgaf748c7">
-<div class="navbar-item" id="orgdb91470">
+<nav class="navbar is-black" id="orgf505de0">
+<div class="navbar-brand" id="org8faa1e5">
+<div class="navbar-item" id="orgd044139">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org19d873c">
-<div class="navbar-start" id="org9ff8fe9">
-<div class="navbar-item" id="orgcfac799">
+<div class="navbar-menu" id="org8add634">
+<div class="navbar-start" id="orgfff25cc">
+<div class="navbar-item" id="org7de57ff">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,23 +29,23 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgb6dc391">
+<div class="navbar-end" id="org481f817">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org3a0a7f1" class="outline-2">
-<h2 id="org3a0a7f1">Systemd</h2>
-<div class="outline-text-2" id="text-org3a0a7f1">
+<div id="outline-container-org208b180" class="outline-2">
+<h2 id="org208b180">Systemd</h2>
+<div class="outline-text-2" id="text-org208b180">
 </div>
-<div id="outline-container-org6ddbfee" class="outline-3">
-<h3 id="org6ddbfee">systemd</h3>
-<div class="outline-text-3" id="text-org6ddbfee">
+<div id="outline-container-org13bfb88" class="outline-3">
+<h3 id="org13bfb88">systemd</h3>
+<div class="outline-text-3" id="text-org13bfb88">
 </div>
-<div id="outline-container-orgf51c984" class="outline-4">
-<h4 id="orgf51c984">journalctl</h4>
-<div class="outline-text-4" id="text-orgf51c984">
+<div id="outline-container-orgb4fbccf" class="outline-4">
+<h4 id="orgb4fbccf">journalctl</h4>
+<div class="outline-text-4" id="text-orgb4fbccf">
 <ul class="org-ul">
 <li><code>/etc/systemd/journald.conf</code>
 <ul class="org-ul">
@@ -57,21 +57,21 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orge43ee6b" class="outline-4">
-<h4 id="orge43ee6b">sysctl</h4>
-<div class="outline-text-4" id="text-orge43ee6b">
+<div id="outline-container-orgb9bb42d" class="outline-4">
+<h4 id="orgb9bb42d">sysctl</h4>
+<div class="outline-text-4" id="text-orgb9bb42d">
 <ul class="org-ul">
 <li><code>net.ipv4.icmp_echo_ignore_all = 1</code> in <code>/etc/sysctl.conf</code> or <code>/etc/sysctl.d/90-override.conf</code> to disable icmp</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org08bca80" class="outline-4">
-<h4 id="org08bca80">systemctl</h4>
-<div class="outline-text-4" id="text-org08bca80">
+<div id="outline-container-org69aa010" class="outline-4">
+<h4 id="org69aa010">systemctl</h4>
+<div class="outline-text-4" id="text-org69aa010">
 </div>
 <ul class="org-ul">
-<li><a id="org600409b"></a>services<br>
-<div class="outline-text-5" id="text-org600409b">
+<li><a id="org6a11953"></a>services<br>
+<div class="outline-text-5" id="text-org6a11953">
 <ul class="org-ul">
 <li><code>edit</code> doesn't require <code>daemon-reload</code></li>
 <li>hooks within services like <code>ExecStartPost/ExecStopPost</code></li>
@@ -87,18 +87,18 @@
 </li>
 </ul>
 </div>
-<div id="outline-container-orge2e6f2a" class="outline-4">
-<h4 id="orge2e6f2a">timedatectl</h4>
-<div class="outline-text-4" id="text-orge2e6f2a">
+<div id="outline-container-org65939e7" class="outline-4">
+<h4 id="org65939e7">timedatectl</h4>
+<div class="outline-text-4" id="text-org65939e7">
 <ul class="org-ul">
 <li>systemd-timesyncd <code>timedatectl set-ntp true</code></li>
 <li><code>set-local-rtc</code> to set hardware clock to localtime instead of UTC</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org8cfd25a" class="outline-4">
-<h4 id="org8cfd25a">NetworkManager</h4>
-<div class="outline-text-4" id="text-org8cfd25a">
+<div id="outline-container-orgb2376d9" class="outline-4">
+<h4 id="orgb2376d9">NetworkManager</h4>
+<div class="outline-text-4" id="text-orgb2376d9">
 <ul class="org-ul">
 <li><code>/usr/lib/NetworkManager/conf.d/20-connectivity.conf</code> pings out
 <ul class="org-ul">
@@ -112,9 +112,9 @@ enabled=false</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgeb8a473" class="outline-4">
-<h4 id="orgeb8a473">misc</h4>
-<div class="outline-text-4" id="text-orgeb8a473">
+<div id="outline-container-org822ecb4" class="outline-4">
+<h4 id="org822ecb4">misc</h4>
+<div class="outline-text-4" id="text-org822ecb4">
 <ul class="org-ul">
 <li><code>systemd-analyze blame</code> for boot times</li>
 <li><code>systemd-analyze security my-service.unit</code> for sec settings</li>

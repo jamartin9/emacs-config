@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org8110899">
-<div class="navbar-brand" id="orgac57f44">
-<div class="navbar-item" id="orgf017b77">
+<nav class="navbar is-black" id="org316969c">
+<div class="navbar-brand" id="orgfb3803b">
+<div class="navbar-item" id="orgb6c9fcc">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org7c15568">
-<div class="navbar-start" id="org0054aa9">
-<div class="navbar-item" id="org3a749cb">
+<div class="navbar-menu" id="orgc11966a">
+<div class="navbar-start" id="orgc0dba17">
+<div class="navbar-item" id="orgf76f232">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgf611bfc">
+<div class="navbar-end" id="orgce98e91">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgd1bd33c" class="outline-2">
-<h2 id="orgd1bd33c">sqlite</h2>
-<div class="outline-text-2" id="text-orgd1bd33c">
+<div id="outline-container-orgca78ca6" class="outline-2">
+<h2 id="orgca78ca6">sqlite</h2>
+<div class="outline-text-2" id="text-orgca78ca6">
 </div>
-<div id="outline-container-orgd92f34f" class="outline-3">
-<h3 id="orgd92f34f">notes</h3>
-<div class="outline-text-3" id="text-orgd92f34f">
+<div id="outline-container-org185d32b" class="outline-3">
+<h3 id="org185d32b">notes</h3>
+<div class="outline-text-3" id="text-org185d32b">
 <ul class="org-ul">
 <li><a href="https://www.sqlite.org/limits.html">https://www.sqlite.org/limits.html</a></li>
 <li>stores each index and table as separate b-tree over the database pages
@@ -108,9 +108,9 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 <li>site database</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org594ca31">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="org21964f7">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
-PRAGMA page_size=1024;
+PRAGMA page_size=512;
 SAVEPOINT ar;
 DROP TABLE IF EXISTS sqlar;
 CREATE TABLE IF NOT EXISTS sqlar(
@@ -133,7 +133,6 @@ REPLACE INTO sqlar(name,mode,mtime,sz,data)
     data
   FROM fsdir('.',NULL) AS disk
   WHERE lsmode(mode) NOT LIKE '?%' AND name GLOB '*.org';
-RELEASE ar;
 -- setup fts
 DROP TABLE IF EXISTS site_pages;
 CREATE VIRTUAL TABLE site_pages USING fts5(name, data);
@@ -143,20 +142,24 @@ SELECT name, data
 FROM sqlar;
 -- optimize fts index
 INSERT INTO site_pages(site_pages) VALUES('optimize');
+-- keep only fts's copy of content
+DROP TABLE IF EXISTS sqlar;
+RELEASE ar;
+VACUUM;
 </pre>
 </div>
 <ul class="org-ul">
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org1c180a9">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="orgbd02fc4">-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgb3eef4f">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="org13c7d38">(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -175,39 +178,88 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
 </div>
 </div>
 
-<div id="outline-container-org5acd0a4" class="outline-3">
-<h3 id="org5acd0a4">site search js/sql</h3>
-<div class="outline-text-3" id="text-org5acd0a4">
+<div id="outline-container-org23cf9ad" class="outline-3">
+<h3 id="org23cf9ad">site search js/sql</h3>
+<div class="outline-text-3" id="text-org23cf9ad">
 <div class="org-src-container">
-<pre class="src src-javascript" id="org13d7473">  /*
-  // MAYBE add service-worker caching with http.vfs splitting
-  // MAYBE use 3.43 opfsSAHPoolVfs
-  new Worker("sqlite-worker.js"); worker.onmessage = function(msg){}; worker.postMessage(msg); onmessage = function(msg)
-  sqlite3.install.OpfsSAHPoolVfs().then((poolUtil) =&gt; {}).catch(); db = PoolUtil.OpfsSAHPoolDb('/filename');
-  poolUtil.importDb(name, byteArray); poolUtil.getFileNames();
-  // ex. html
-  &lt;script src="sqlite3.js"&gt;&lt;/script&gt;
-  &lt;article class="panel is-primary"&gt;
-    &lt;div class="panel-block"&gt;
-      &lt;input class="input" type="text" placeholder="Search" id="mySearch"&gt;
-      &lt;button id="mySearchBtn" class="button"&gt;&amp;#128269;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/article&gt;
-  &lt;dialog id="myModal" class="modal"&gt;
-    &lt;div class="modal-content"&gt;
-      &lt;button id="modalClose" class="modal-close is-large" aria-label="close"&gt;&amp;times;&lt;/button&gt;
-      &lt;div id="modalDiv"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/dialog&gt;
-  */
+<pre class="src src-javascript" id="org09dfb02">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+    // MAYBE add service-worker caching with http.vfs splitting
+    // MAYBE use opfs vfs with sync support (multiple tabs)
+    // example page:
+    &lt;script src="sqlite3.js"&gt;&lt;/script&gt;
+    &lt;script src="sqlite-query.js"&gt;&lt;/script&gt;
+
+    &lt;article class="panel is-primary"&gt;
+      &lt;div class="panel-block"&gt;
+        &lt;input class="input" type="text" placeholder="Search" id="mySearch"&gt;
+        &lt;button id="mySearchBtn" class="button"&gt;&amp;#128269;&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+    &lt;dialog id="myModal" class="modal"&gt;
+      &lt;div class="modal-content"&gt;
+        &lt;button id="modalClose" class="modal-close is-large" aria-label="close"&gt;&amp;times;&lt;/button&gt;
+        &lt;div id="modalDiv"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/dialog&gt;
+    */
 document.addEventListener('DOMContentLoaded',() =&gt; {
     document.getElementById("modalClose").onclick = function() {
         document.getElementById("myModal").classList.remove("is-active");
         document.getElementById("myModal").close();
     }
     document.getElementById("mySearchBtn").onclick = function() {
-        if (typeof globalThis.db === 'undefined') { // load sqlite db
-            window.sqlite3InitModule().then((sqlite3)=&gt;{
+        if (typeof globalThis.w === 'undefined') { // load sqlite worker
+            console.log("creating worker");
+                const workerArgs = [];
+                workerArgs.push("sql-worker.js");
+                const w = new Worker(...workerArgs);
+                w.onmessage = (msg) =&gt; { // write results as table rows and links
+                    let html = '&lt;table class="table has-background-dark"&gt;';
+                    msg.data.forEach((row) =&gt; { html = html + "&lt;tr&gt;&lt;td&gt;&lt;a href='" +row[0]+"'&gt;"+row[1]+"&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;"});
+                    html = html + "&lt;/table&gt;";
+                    document.getElementById("modalDiv").innerHTML = html;
+                    document.getElementById("myModal").classList.add("is-active");
+                    document.getElementById("myModal").showModal();
+                };
+                globalThis.w = w; // query worker
+                let query = document.getElementById("mySearch").value;
+                globalThis.w.postMessage(query);
+        } else {
+            let query = document.getElementById("mySearch").value;
+            globalThis.w.postMessage(query);
+        }
+    }
+});
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-javascript" id="org5f1ddec">onmessage = (e) =&gt; {
+    const opt = {"returnValue": "resultRows"};
+    const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
+    if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
+        importScripts('sqlite3.js');
+        globalThis.sqlite3InitModule().then((sqlite3)=&gt; {
+            sqlite3.installOpfsSAHPoolVfs().then((poolUtil)=&gt; { // use opfs for storage
+                //poolUtil.wipeFiles().await;
+                if (poolUtil.getFileCount() == 0) { // TODO add versioning
+                    console.log("fetching sqlite opfs files");
+                    fetch('sqlar.sqlite').then(response =&gt; response.arrayBuffer()).then(arrayBuffer =&gt; {
+                        //const bytes = new Uint8Array(arrayBuffer);
+                        poolUtil.importDb('/sqlar.sqlite', arrayBuffer); // this requires the / for name...(transparent naming?)
+                        const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
+                        globalThis.db = db;
+                        const res = db.exec([sql], opt);
+                        postMessage(res);
+                    });
+                } else {
+                    console.log("using existing sqlite opfs files" + poolUtil.getFileNames());
+                    const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
+                    globalThis.db = db;
+                    const res = db.exec([sql], opt);
+                    postMessage(res);
+                }
+            }).catch((error) =&gt; {
+                console.log("Failed to use opfs using temp db");
                 const capi = sqlite3.capi,
                       oo = sqlite3.oo1,
                       wasm = sqlite3.wasm;
@@ -218,28 +270,16 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
                     const rc = sqlite3.capi.sqlite3_deserialize(db.pointer, 'main', p, bytes.length, bytes.length,sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
                     //db.checkRc(rc);
                     globalThis.db = db;
-                    // click with global now defined
-                    document.getElementById("mySearchBtn").click();
+                    const res = globalThis.db.exec([sql], opt);
+                    postMessage(res);
                 });
             });
-        } else {
-            // write results as links and snippets
-            let query = document.getElementById("mySearch").value;
-            const res = querydb(query);
-            let html = '&lt;table class="table has-background-dark"&gt;';
-            res.forEach((row) =&gt; { html = html + "&lt;tr&gt;&lt;td&gt;&lt;a href='" +row[0]+"'&gt;"+row[1]+"&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;"});
-            html = html + "&lt;/table&gt;";
-            document.getElementById("modalDiv").innerHTML = html;
-            document.getElementById("myModal").classList.add("is-active");
-            document.getElementById("myModal").showModal();
-        }
+        });
+    }else {
+        const res = globalThis.db.exec([sql], opt);
+        postMessage(res);
     }
-});
-function querydb(query) {
-    opt = {"returnValue": "resultRows"};
-    const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ query +"' ORDER BY rank;";
-    return globalThis.db.exec([sql], opt);
-  }
+};
 </pre>
 </div>
 </div>

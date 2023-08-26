@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org30a2e84">
-<div class="navbar-brand" id="org34a1498">
-<div class="navbar-item" id="org37120d0">
+<nav class="navbar is-black" id="orgd78517f">
+<div class="navbar-brand" id="orgf84fce0">
+<div class="navbar-item" id="org621d784">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org7ca679f">
-<div class="navbar-start" id="org7f53455">
-<div class="navbar-item" id="orgc2daa4a">
+<div class="navbar-menu" id="org8d4cf65">
+<div class="navbar-start" id="org438a0cb">
+<div class="navbar-item" id="orgddb6519">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,20 +29,67 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org5ef8c2f">
+<div class="navbar-end" id="org80563a5">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgc982d0b" class="outline-2">
-<h2 id="orgc982d0b">software contributions</h2>
-<div class="outline-text-2" id="text-orgc982d0b">
+<div id="outline-container-org0e775d6" class="outline-2">
+<h2 id="org0e775d6">software contributions</h2>
+<div class="outline-text-2" id="text-org0e775d6">
 <ul class="org-ul">
-<li><a href="https://github.com/PistonDevelopers/music/pull/64">PistonDevelopers/music</a>
+<li>huggingface/transformers
 <ul class="org-ul">
-<li>used rust to add optional constructor to reuse sdl context avoiding already initialized error</li>
-<li><a href="https://github.com/PistonDevelopers/piston_window/issues/191#issuecomment-427959481">provided example code for dynamic window resizing</a></li>
+<li><a href="https://github.com/huggingface/transformers/pull/24736">typo bugfix to allow models to be ran with LocalAgent</a></li>
+</ul></li>
+<li>ClementTsang/bottom
+<ul class="org-ul">
+<li>use the <code>debug!</code> macro to get a log file</li>
+<li><a href="https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f">added zfs arc support</a>
+<ul class="org-ul">
+<li>enables more arc and disk io stats in future</li>
+<li>enables more freebsd/mac/old linux metrics with sysctl
+<ul class="org-ul">
+<li>freebsd used sysctl support for hw temp sensors and zfs</li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1044">kept feature working between release refactors</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1248">added zpool dataset io stats</a></li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/794">added gpu vram support</a>
+<ul class="org-ul">
+<li>hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle</li>
+<li>enables gpu power and processes information</li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/836">update docs, enable cli arg and update default config</a></li>
+</ul></li>
+<li>wine/wine
+<ul class="org-ul">
+<li><a href="https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34">implement extended</a> render options and enable tests</li>
+</ul></li>
+<li>ValveSoftware/wine
+<ul class="org-ul">
+<li><a href="https://github.com/ValveSoftware/wine/pull/56">cherry picked upstream</a> wine for my fix</li>
+</ul></li>
+<li>ValveSoftware/Proton
+<ul class="org-ul">
+<li><a href="https://github.com/ValveSoftware/Proton/pull/2937">update sample</a> with <code>no_fsync</code> option</li>
+<li><a href="https://github.com/ValveSoftware/Proton/issues/2832">opened blazblue crosstag issue</a> and upstreamed patches to make it work on dxd9</li>
+</ul></li>
+<li>simons-public/protonfixes
+<ul class="org-ul">
+<li>added python support for proton <a href="https://github.com/simons-public/protonfixes/pull/80">4.11 option for d9vk</a></li>
+</ul></li>
+<li>guix/guix
+<ul class="org-ul">
+<li>patched <a href="https://issues.guix.gnu.org/53711">home services for i18n</a> guix module and fix setlocale</li>
+</ul></li>
+<li>zdharma-continuum/zinit
+<ul class="org-ul">
+<li><a href="https://github.com/zdharma-continuum/zinit/commit/5828f7202967a4be159c32153139876d994fbd42">added 'cloneopts' ice option</a>
+<ul class="org-ul">
+<li>owner deleted original repo</li>
+</ul></li>
 </ul></li>
 <li><a href="https://github.com/rust-lang/book/pull/1222">rust-lang/book</a>
 <ul class="org-ul">
@@ -51,6 +98,11 @@
 <li><a href="https://github.com/libp2p/rust-libp2p/pull/577">libp2p/rust-libp2p</a>
 <ul class="org-ul">
 <li>rewrote thread tests for newer tokio api in rust</li>
+</ul></li>
+<li><a href="https://github.com/PistonDevelopers/music/pull/64">PistonDevelopers/music</a>
+<ul class="org-ul">
+<li>used rust to add optional constructor to reuse sdl context avoiding already initialized error</li>
+<li><a href="https://github.com/PistonDevelopers/piston_window/issues/191#issuecomment-427959481">provided example code for dynamic window resizing</a></li>
 </ul></li>
 <li>syl20bnr/spacemacs
 <ul class="org-ul">
@@ -71,6 +123,11 @@
 <ul class="org-ul">
 <li>removed BOM (byte order mark) from utf nvidia theme to fix error on linux</li>
 </ul></li>
+<li>clj-easy/graalvm-clojure
+<ul class="org-ul">
+<li><a href="https://github.com/clj-easy/graalvm-clojure/pull/20">updated aleph</a> to compile with graalvm native image</li>
+<li><a href="https://github.com/clj-easy/graalvm-clojure/pull/19">updated ring-jetty</a> version to compile with graalvm native image</li>
+</ul></li>
 <li>yewstack/yew
 <ul class="org-ul">
 <li><a href="https://github.com/yewstack/yew/issues/359">suggested workaround</a> for users getting setup</li>
@@ -82,63 +139,6 @@
 <li><a href="https://github.com/jlxip/DiscordInjector/pull/1">jlxip/DiscordInjector</a>
 <ul class="org-ul">
 <li>patched to use discord public test beta and respect XDG config vars</li>
-</ul></li>
-<li>clj-easy/graalvm-clojure
-<ul class="org-ul">
-<li><a href="https://github.com/clj-easy/graalvm-clojure/pull/20">updated aleph</a> to compile with graalvm native image</li>
-<li><a href="https://github.com/clj-easy/graalvm-clojure/pull/19">updated ring-jetty</a> version to compile with graalvm native image</li>
-</ul></li>
-<li>zdharma-continuum/zinit
-<ul class="org-ul">
-<li><a href="https://github.com/zdharma-continuum/zinit/commit/5828f7202967a4be159c32153139876d994fbd42">added 'cloneopts' ice option</a>
-<ul class="org-ul">
-<li>owner deleted original repo</li>
-</ul></li>
-</ul></li>
-<li>guix/guix
-<ul class="org-ul">
-<li>patched <a href="https://issues.guix.gnu.org/53711">home services for i18n</a> guix module and fix setlocale</li>
-</ul></li>
-<li>simons-public/protonfixes
-<ul class="org-ul">
-<li>added python support for proton <a href="https://github.com/simons-public/protonfixes/pull/80">4.11 option for d9vk</a></li>
-</ul></li>
-<li>ValveSoftware/Proton
-<ul class="org-ul">
-<li><a href="https://github.com/ValveSoftware/Proton/pull/2937">update sample</a> with <code>no_fsync</code> option</li>
-<li><a href="https://github.com/ValveSoftware/Proton/issues/2832">opened blazblue crosstag issue</a> and upstreamed patches to make it work on dxd9</li>
-</ul></li>
-<li>ValveSoftware/wine
-<ul class="org-ul">
-<li><a href="https://github.com/ValveSoftware/wine/pull/56">cherry picked upstream</a> wine for my fix</li>
-</ul></li>
-<li>wine/wine
-<ul class="org-ul">
-<li><a href="https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34">implement extended</a> render options and enable tests</li>
-</ul></li>
-<li>ClementTsang/bottom
-<ul class="org-ul">
-<li>use the <code>debug!</code> macro to get a log file</li>
-<li><a href="https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f">added zfs arc support</a>
-<ul class="org-ul">
-<li>enables more arc and disk io stats in future</li>
-<li>enables more freebsd/mac/old linux metrics with sysctl
-<ul class="org-ul">
-<li>freebsd used sysctl support for hw temp sensors</li>
-</ul></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/1044">kept feature working between release refactors</a></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/1248">added zpool dataset io stats</a></li>
-</ul></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/794">added gpu vram support</a>
-<ul class="org-ul">
-<li>hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle</li>
-<li>enables gpu power and processes information</li>
-</ul></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/836">update docs, enable cli arg and update default config</a></li>
-</ul></li>
-<li>huggingface/transformers
-<ul class="org-ul">
-<li><a href="https://github.com/huggingface/transformers/pull/24736">typo bugfix to allow models to be ran with LocalAgent</a></li>
 </ul></li>
 <li>borkdude/deps.clj :notupstream:
 <ul class="org-ul">
@@ -154,6 +154,16 @@
 <li><a href="https://github.com/jamartin9/cargo-patch/commit/da103f64d0a8001d6a9479ea31ac9642467ade1b">removed trailing</a> context after git range header</li>
 <li><a href="https://github.com/jamartin9/cargo-patch/commit/b9ad3400f1aad471d787d7a5a0aae1609f736957">removed broken</a> support for new files</li>
 <li>Still needs the a/ b/ stripped and delete/create file support (diff format normalization)</li>
+</ul></li>
+<li><a href="https://github.com/thedodd/ybc/pull/42">thedodd/ybc</a> :notupstream:
+<ul class="org-ul">
+<li>Update textarea for is-loading control</li>
+<li>Add navbar menu css configuration</li>
+</ul></li>
+<li>evergreen-xch/cult-lite-farmer :notupstream:
+<ul class="org-ul">
+<li>added launcher id to cli for nft plot discovery</li>
+<li>added lto/codgen to release flags</li>
 </ul></li>
 </ul>
 </div>

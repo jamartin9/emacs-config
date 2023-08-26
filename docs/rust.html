@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org817631c">
-<div class="navbar-brand" id="org70d4962">
-<div class="navbar-item" id="orgbdd1490">
+<nav class="navbar is-black" id="org3c84cee">
+<div class="navbar-brand" id="orgd6c8196">
+<div class="navbar-item" id="org383d553">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org9f48a03">
-<div class="navbar-start" id="org6c8965f">
-<div class="navbar-item" id="org985c229">
+<div class="navbar-menu" id="org106e069">
+<div class="navbar-start" id="orgc87fb4d">
+<div class="navbar-item" id="org095159f">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,15 +29,15 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgf336ce8">
+<div class="navbar-end" id="orge81cacb">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org2b8012c" class="outline-2">
-<h2 id="org2b8012c">rust</h2>
-<div class="outline-text-2" id="text-org2b8012c">
+<div id="outline-container-orgaa458e9" class="outline-2">
+<h2 id="orgaa458e9">rust</h2>
+<div class="outline-text-2" id="text-orgaa458e9">
 <ul class="org-ul">
 <li><code>cargo test -- --nocapture</code> for <code>println!()</code></li>
 <li>rls removed in 1.65 for rust-analyzer</li>
@@ -48,6 +48,12 @@
 <li><a href="https://rust-lang.github.io/api-guidelines/checklist.html">https://rust-lang.github.io/api-guidelines/checklist.html</a></li>
 <li>reference counting can be checked by <a href="https://github.com/matthieu-m/static-rc">statically</a></li>
 <li>default allocator can be changed to jemalloc to avoid heap fragmentation</li>
+<li>cargo feature flag propagation can break for not additive features
+<ul class="org-ul">
+<li>libraries could use <code>RUSTFLAGS='--cfg feature_name="FEATURE_VAL"'</code> and a <code>build.rs</code> like the curve25519-dalek crate (cross compilation?)</li>
+</ul></li>
+<li><code>cargo update -p PACKAGE --precise VERSION"</code> to pin Cargo.lock.</li>
+<li><code>cargo tree</code> for dependency tree visual</li>
 <li><code>CROSS_CONTAINER_ENGINE=podman cross build --target x86_64-unknown-freebsd</code>
 <ul class="org-ul">
 <li>freebsd tests only run on qemu runner</li>
@@ -55,7 +61,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-toml" id="org9711b5a">[target.x86_64-unknown-freebsd]
+<pre class="src src-toml" id="org10a5680">[target.x86_64-unknown-freebsd]
 image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:main"
 #runner = "qemu-user"
 </pre>
@@ -64,7 +70,7 @@ image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:main"
 <li>rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-toml" id="orgd06eaf7">[profile.release]
+<pre class="src src-toml" id="orgf549395">[profile.release]
 lto = true
 codegen-units = 1 # reduce parallel codegen for increased optimization
 strip = true

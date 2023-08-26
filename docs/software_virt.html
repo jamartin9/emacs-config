@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org96dcf2c">
-<div class="navbar-brand" id="org9227629">
-<div class="navbar-item" id="orgf02bfab">
+<nav class="navbar is-black" id="org6587d85">
+<div class="navbar-brand" id="org80fd46d">
+<div class="navbar-item" id="org5b0b356">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org9d34cf8">
-<div class="navbar-start" id="org8768b76">
-<div class="navbar-item" id="org77941ff">
+<div class="navbar-menu" id="org3b4d717">
+<div class="navbar-start" id="org2a20693">
+<div class="navbar-item" id="org8066f83">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,15 +29,15 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org3ad625f">
+<div class="navbar-end" id="orgb29d454">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgdb44cda" class="outline-2">
-<h2 id="orgdb44cda">Virtualization</h2>
-<div class="outline-text-2" id="text-orgdb44cda">
+<div id="outline-container-org32b051c" class="outline-2">
+<h2 id="org32b051c">Virtualization</h2>
+<div class="outline-text-2" id="text-org32b051c">
 <p>
 Simulate the simulation
 </p>
@@ -65,7 +65,7 @@ Simulate the simulation
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="orgbb6757e">#!/usr/bin/env bash
+<pre class="src src-shell" id="org3f3e1bd">#!/usr/bin/env bash
 qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::8081-:8081,hostfwd=tcp::8080-:8080 -enable-kvm -m 2570 -device virtio-blk,drive=myhd -drive if=none,file=/My-image.qcow2,id=myhd -spice port=5930,disable-ticketing
 </pre>
 </div>
