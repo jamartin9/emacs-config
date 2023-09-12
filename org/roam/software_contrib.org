@@ -22,6 +22,10 @@
     - hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle
     - enables gpu power and processes information
   - [[https://github.com/ClementTsang/bottom/pull/836][update docs, enable cli arg and update default config]]
+  - [[https://github.com/ClementTsang/bottom/pull/1276][added gpu process, power and utilization support]]
+    - bugfixed battery out of bounds in same pr
+    - maintainer chose to remove util/power until separate widget
+      - future gpu widget will probably use the gpu data from vram upon removal from the memory widget
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine
@@ -72,3 +76,9 @@
   - [[https://github.com/jamartin9/cargo-patch/commit/da103f64d0a8001d6a9479ea31ac9642467ade1b][removed trailing]] context after git range header
   - [[https://github.com/jamartin9/cargo-patch/commit/b9ad3400f1aad471d787d7a5a0aae1609f736957][removed broken]] support for new files
   - Still needs the a/ b/ stripped and delete/create file support (diff format normalization)
+- [[https://github.com/thedodd/ybc/pull/42][thedodd/ybc]] :notupstream:
+  - Update textarea for is-loading control
+  - Add navbar menu css configuration
+- [[https://github.com/evergreen-xch/cult-lite-farmer/pull/6][evergreen-xch/cult-lite-farmer]] :notupstream:
+  - added launcher id to cli for nft plot discovery
+  - added lto/codgen to release flags

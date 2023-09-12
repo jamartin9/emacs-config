@@ -21,6 +21,8 @@
   - trolled usenet postings mitigations
     - encrypted/scrambled/password protected files
     - remove 1 piece to make invalid but other providers remove different pieces to enable reconstruction
+- CLA signage usually gives away right to project
+  - allows proprietary forks later that violate original license
 ** GPL
 *** LGPL
 - non viral when linking but must allow replacement

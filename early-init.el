@@ -11,7 +11,7 @@
           (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
         (setq native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
       (setq native-comp-deferred-compilation t
-            comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln") ; renamed with native- in 29.1
+            native-comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln") ; renamed with native- in 29.1
             native-comp-async-report-warnings-errors nil
             native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
 
@@ -35,12 +35,9 @@
 	(require 'use-package-ensure)
     ;(if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
     (setq use-package-always-ensure t
-          package-pinned-packages '((smartparens . "nongnu")
-                                    (pcre2el . "nongnu")
-                                    (multiple-cursors . "nongnu")
+          package-pinned-packages '((pcre2el . "nongnu")
                                     (eat . "nongnu")
                                     (which-key . "gnu")
-                                    (expand-region . "gnu")
                                     (gcmh . "gnu")
                                     (company . "gnu")
                                     (osm . "gnu")

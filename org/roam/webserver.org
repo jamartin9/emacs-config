@@ -25,6 +25,8 @@
   - 80k r/s default settings file serving 5ms response (45ms response w/1 worker)
   - sendfile on; reduces r/s to 65k 3ms with t1 and 7k 5ms with t12
 - worker process per core with auto
+*** nginx unit
+- can run php without php-fpm
 ** kong
 ** apache
 ** lighttpd

@@ -82,6 +82,33 @@
   (interactive)
   (eshell t))
 
+;;;###autoload
+(defun jam/move-line-up ()
+  "Move line up"
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2))
+
+;;;###autoload
+(defun jam/move-line-down ()
+  "Move line down"
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1))
+
+;;;###autoload
+(defun jam/move-word-right ()
+  "Move word right"
+  (interactive)
+  (transpose-words 1))
+
+;;;###autoload
+(defun jam/move-word-left ()
+  "Move word left"
+  (interactive)
+  (transpose-words -1))
+
 ;; Movement: f b n p, a e, M-g-g
 (use-package emacs ; built-in
   :init (setq user-full-name "Justin Martin"
@@ -121,11 +148,17 @@
                 ad-redefinition-action 'accept ; ignore warnings
                 completion-auto-help nil; '?' for help w/mouse click
                 completion-cycle-threshold nil ; flex narrowing instead of cycling
+                completions-format 'one-column
+                completions-group t
+                completion-styles '(basic initials substring partial-completion)
+                completions-detailed t
+                ;completion-auto-select 'second-tab
                 column-number-mode t
                 sentence-end-double-space nil
                 require-final-newline t
                 bidi-inhibit-bpa t ; some naughty unicodes
                 auto-revert-remote-files nil ; dired
+                auto-revert-interval 1
                 use-short-answers t ; annoying
                 confirm-kill-processes nil
                 visible-bell nil
@@ -138,6 +171,7 @@
                 tool-bar-mode nil
                 scroll-bar-mode nil
                 mouse-yank-at-point t
+                mouse-drag-and-drop-region t
                 x-stretch-cursor nil
                 indicate-buffer-boundaries nil
                 indicate-empty-lines nil
@@ -154,6 +188,8 @@
                 resize-mini-windows 'grow-only
                 truncate-partial-width-windows nil
                 auto-window-vscroll nil ; scrolling
+                mouse-wheel-tilt-scroll t ; horizontal scrolling
+                mouse-wheel-flip-direction t ; horizontal scrolling
                 scroll-conservatively 101
                 scroll-margin 0
                 scroll-preserve-screen-position t
@@ -198,11 +234,11 @@
                       (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
                     (setq native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
                   (setq native-comp-deferred-compilation t
-                        comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln") ; renamed with native- in 29.1
+                        native-comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln") ; renamed with native- in 29.1
                         native-comp-async-report-warnings-errors nil
                         native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
             (if (>= emacs-major-version 29) ; remove after emacs-29
-                (bind-keys :map window-prefix-map ; C-x 1 C-x o
+                (bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
                            ("w" . windmove-up)
                            ("a" . windmove-left)
                            ("s" . windmove-down)
@@ -223,6 +259,13 @@
             (add-hook 'tty-setup-hook #'xterm-mouse-mode)
             (add-hook 'after-init-hook #'(lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))))
             (blink-cursor-mode -1)
+            (pixel-scroll-precision-mode 1) ; smooth scrolling
+            (electric-pair-mode 1) ; less typing
+            (context-menu-mode 1); mouse right click menu
+            (bind-keys ("<M-up>" . jam/move-line-up)
+                       ("<M-down>" . jam/move-line-down)
+                       ("<M-left>" . jam/move-word-left)
+                       ("<M-right>" . jam/move-word-right))
             (bind-keys :map ctl-x-map ("C-S-s" . jam/save-all))
             (bind-keys :map help-map ("D" . shortdoc))
             (bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
@@ -258,7 +301,8 @@
                         ("y" . cua-paste)
                         ("u" . insert-char)
                         ("s" . yas-insert-snippet)
-                        ("e" . emojify-insert-emoji))
+                        ("e" . emojify-insert-emoji)
+                        ("b" . string-insert-rectangle))
             (bind-keys :prefix-map jam/code :prefix "C-c c"
                         ("j" . xref-find-definitions)
                         ("c" . compile))
@@ -278,7 +322,7 @@
                        ("r" . restart-emacs)
                        ("Q" . save-buffers-kill-terminal)
                        ("K" . save-buffers-kill-emacs))
-            (load-theme 'modus-vivendi); built-in does not need to hook after-make-frame-hook for daemonp
+            (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
             (if (not (memq window-system '(android))) ; disable menu-bar on non android
                 (progn
                   (setq menu-bar-mode nil)
@@ -323,7 +367,8 @@
   :ensure nil ; built-in
   :commands (org-mode org-agenda org-capture org-todo-list org-id-update-id-locations)
   :init (setq org-timer-default-timer 60
-              ;org-src-tab-acts-natively nil
+              org-src-tab-acts-natively nil
+              org-edit-src-content-indentation 0
               org-clock-sound t); org-timer-set-timer
   (bind-keys :map jam/notes
               ("D" . org-id-update-id-locations)
@@ -345,8 +390,9 @@
   :init (bind-keys :map jam/open
                    ("l" . jam/librefm-stream)
                    ("m" . emms-play-file)
-                   ("M" . emms-play-directory))
-  :commands (emms-play-file emms-librefm-stream emms-browser emms-play-url emms-play-directory)
+                   ("M" . emms-play-directory)
+                   ("z" . emms-next))
+  :commands (emms-play-file emms-librefm-stream emms-browser emms-play-url emms-play-directory emms-next)
   :config
   (require 'emms-setup)
   (emms-minimalistic)
@@ -399,6 +445,9 @@
 (use-package flycheck-guile ; guile
   :after geiser)
 
+;(use-package flymake-guile
+;  :hook (scheme-mode-hook . flymake-guile))
+
 (use-package flyspell ; aspell
   :ensure nil ; built-in
   :init (bind-keys :map jam/toggle ("s" . flyspell-mode))
@@ -419,6 +468,12 @@
                 ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
                 ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
+
+;(use-package eglot
+  ;:hook (((python-mode ruby-mode elixir-mode) . eglot))
+  ;:custom (eglot-send-changes-idle-time 0.1)
+  ;:config (fset #'jsonrpc--log-event #'ignore); stop logging
+  ; (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server-wrapper" "--lsp"))))
 
 (use-package lsp-mode ; use eglot for android
   :commands (lsp-install-server lsp-mode lsp lsp-restart-workspace)
@@ -521,7 +576,7 @@
         newsticker-automatically-mark-items-as-old nil
         newsticker-automatically-mark-visited-items-as-old t
         newsticker-url-list-defaults nil
-        newsticker-url-list '(("Guix" "https://guix.gnu.org/feeds/blog.atom")
+        newsticker-url-list '(("Guix" "https://guix.gnu.org/feeds/blog.atom") ; supports atom feeds unlike gnus
                               ("Lwn" "https://lwn.net/headlines/newrss")
                               ("Tor" "https://blog.torproject.org/rss.xml")
                               ("emacs-tags" "https://github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
@@ -532,7 +587,7 @@
                               ("Lobste" "https://lobste.rs/rss")
                               ("Phoronix" "https://www.phoronix.com/rss.php")
                               ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
-                              ("BramCohen" "https://nitter.net/bramcohen/rss")
+                              ("BramCohen" "https://bramcohen.substack.com/feed"); https://nitter.net/bramcohen/rss
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package magit ; git
@@ -606,7 +661,7 @@
                                                                                       "#+INCLUDE: \"css.org::navbar\" :only-contents t \n"))
                                             :unnarrowed t)))
   (bind-keys :map jam/notes
-              ("T" .  org-roam-dailies-capture-today)
+              ("T" . org-roam-dailies-capture-today)
               ("d" . org-roam-dailies-goto-date)
               ("n" . org-roam-capture)
               ("N" . org-roam-dailies-capture-date)
@@ -675,6 +730,13 @@
           ;(push '(python-mode . python-ts-mode) major-mode-remap-alist) ; MAYBE after lsp-mode > 8
           (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
+;(use-package combobulate
+;  :if (>= emacs-major-version 29)
+;  :init (setq combobulate-key-prefix "C-c e")
+;  :hook ((python-ts-mode . combobulate-mode)
+;         (yaml-ts-mode . combobulate-mode))
+;  :load-path ("/gnu/git/combobulate"))
+
 (use-package python ; python
   :commands (python-mode python-mode-hook python-mode-local-vars-hook))
 
@@ -690,13 +752,6 @@
 (use-package minions ; hide minor modes on modeline
   :init (add-hook 'after-init-hook #'minions-mode)
   :commands minions-mode)
-
-(use-package drag-stuff
-  :commands (drag-stuff-up drag-stuff-down drag-stuff-left drag-stuff-right)
-  :init (bind-keys ("<M-up>" . drag-stuff-up)
-           ("<M-down>" . drag-stuff-down)
-           ("<M-left>" . drag-stuff-left)
-           ("<M-right>" . drag-stuff-right)))
 
 (use-package debbugs
   ;:pin gnu
@@ -739,7 +794,7 @@
                 erc-nickserv-identify-mode 'both
                 ;erc-dcc-auto-masks '(".*!.*@.*") ; accept dcc files from anyone with 'auto send-requests
                 ;erc-dcc-send-request 'auto ; BUG /dcc get NICK FILE fails with unknown filename (spaces/brackets in name) and daemon default-directory not respected
-                ;erc-server-auto-reconnect nil ; /reconnect
+                erc-server-auto-reconnect nil ; /reconnect
                 erc-auto-query 'bury
                 erc-join-buffer 'bury
                 erc-fill-column 80
@@ -752,6 +807,7 @@
                                               ("Rizon" "#subsplease")
                                               ("EFnet" "#srrdb")
                                               ("Corrupt" "#Pre" "#Pre.Nuke"))
+                erc-hide-list '("JOIN" "PART" "QUIT")
                 erc-network-hide-list '(("Libera.Chat" "JOIN" "PART" "QUIT")
                                        ("Rizon" "JOIN" "PART" "QUIT")
                                        ("EFnet" "JOIN" "PART" "QUIT")
@@ -913,16 +969,6 @@
          (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
          (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
-(use-package multiple-cursors
-  ;:pin nongnu
-  :commands (multiple-cursors-mode mc/add-cursor-on-click mc/vertical-align
-             mc/mark-next-like-this mc/mark-previous-like-this mc/mark-more-like-this-extended
-             mc/mark-pop mc/unmark-previous-like-this mc/unmark-next-like-this
-             mc/edit-lines mc/edit-beginnings-of-lines mc/edit-ends-of-lines
-             mc/mark-all-in-region mc/mark-all-dwim mc/mark-all-like-this
-             set-rectangular-region-anchor mc/edit-lines mc/vertical-align mc/mark-sgml-tag-pair)
-  :config (setq mc/list-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "mc-lists.el")))
-
 (use-package explain-pause-mode
   ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; MAYBE install from source with package.el or url-copy-file
   :ensure nil ; BUG not in melpa
@@ -937,17 +983,6 @@
              rxt-convert-elisp-to-rx
              rxt-toggle-elisp-rx
              rxt-mode rxt-global-mode))
-
-(use-package smartparens
-  ;:pin nongnu
-  :init (add-hook 'after-init-hook #'smartparens-global-mode) ; less typing
-  (bind-keys :map jam/toggle ("p" . smartparens-strict-mode))
-  :commands (sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string smartparens-global-mode smartparens-strict-mode))
-
-(use-package expand-region
-  ;:pin gnu
-  :init (bind-key "C-=" #'er/expand-region)
-  :commands (er/contract-region er/mark-symbol er/mark-word er/expand-region))
 
 (use-package which-key
   ;:pin gnu

@@ -10,3 +10,4 @@
 * Notes
 ** [[id:58117d5b-95be-438f-938c-89b3cf2684c1][Journal]]
 ** [[id:30bb227f-2ad1-45e1-8773-d87445e6c910][Tech Notes]]
+** [[id:0eb2a6b0-459c-4027-ae5d-81dbee3607b1][Cooking]]

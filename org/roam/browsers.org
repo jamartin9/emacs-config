@@ -90,6 +90,7 @@ self.addEventListener('fetch', function(e) {
   - https://chrome.google.com/webstore/detail/perfetto-ui/lfmkphfpdbjijhpomgecfikhfohaoine is the ui.perfetto.dev extension for tracing
 - dev tools wasm dwarf debug extension https://chrome.google.com/webstore/detail/cc%20%20-devtools-support-dwa/pdcpmagijalfljmkmjngeonclgbbannb
 - enable wayland scaling with ~--enable-features=UseOzonePlatform --ozone-platform=wayland~ cli args
+- set size at launch ~window-size=1920,1080~
 - ~--ignore-certificate-errors~ cli arg to enable expired certs
 - pozzed by google
   - changed to suit their needs
@@ -135,6 +136,7 @@ self.addEventListener('fetch', function(e) {
 - https://search.marginalia.nu/
 - Shodan
 - Zoomeye
+- censys
 ** alternative frontends
 - [[https://github.com/teddit-net/teddit][teddit.net]]
 - youtube

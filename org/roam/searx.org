@@ -1,26 +1,26 @@
 :PROPERTIES:
 :ID:       b4a6be9e-1cb6-416a-b6e0-392ee9a28734
 :END:
-#+title: searx
+#+title: searxng
 #+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
 #+HTML_CONTENT_CLASS: container content
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
-* Searx config
+* Searxng config
 The ~secret_key~ is dynamically generated.
 The http(s) proxies are changed to socks5 for tor.
-** Link searx
+** Link searxng
 #+NAME: link-searx-el
 #+BEGIN_SRC emacs-lisp :tangle no :shebang "\":\"; emacs -Q --script searx.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
 (ignore-errors
-  (let* ((searx-confdir (concat (file-name-as-directory (xdg-config-home)) "searx"))
-        (searx-conf (concat (file-name-as-directory searx-confdir) "searx.yml")))
+  (let* ((searx-confdir (concat (file-name-as-directory (xdg-config-home)) "searxng"))
+        (searx-conf (concat (file-name-as-directory searx-confdir) "searxng.yml")))
     (if (not (file-exists-p searx-confdir))
         (progn (make-directory searx-confdir)
                (set-file-modes searx-confdir #o700)))
     (if (not (or (file-exists-p searx-conf) (file-symlink-p searx-conf)))
-        (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "searx.yml") searx-conf 1))))
+        (make-symbolic-link (concat (file-name-directory (or load-file-name buffer-file-name)) "searxng.yml") searx-conf 1))))
 #+END_SRC
 ** Tor Proxy
 ** Secret Key
@@ -29,9 +29,9 @@ The http(s) proxies are changed to socks5 for tor.
 (random t) ; seed
 (number-to-string (random 999999999999999999999))
 #+END_SRC
-** searx.yml
+** searxng.yml
 #+NAME: searx.yml
-#+BEGIN_SRC yaml :tangle searx.yml :noweb yes
+#+BEGIN_SRC yaml :tangle searxng.yml :noweb yes
 general:
     debug : False # Debug mode, only for development
     instance_name : "jam-searx" # displayed name

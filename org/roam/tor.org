@@ -36,6 +36,7 @@ https://5gdvpfoh6kb2iqbizb37lzk2ddzrwa47m6rpdueg2m656fovmbhoptqd.onion/ is riseu
 http://zlibrary24tuxziyiyfr7zd46ytefdqbqd2axkmxm4o5374ptpc52fad.onion/ is zlib
 https://bookszlibb74ugqojhzhg2a63w5i2atv5bqarulgczawnbmsb6s6qead.onion/ - zlib books
 https://www.reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad.onion/ is reddit
+btdigggink2pdqzqrik3blmqemsbntpzwxottujilcdjfz56jumzfsyd.onion/ is btdigg
 #+END_SRC
 - digicert offers ev wildcard certs for .onion and harica.gr offers .onion
 - ensure multi point check or pinned HTTPS verified to avoid bgp att

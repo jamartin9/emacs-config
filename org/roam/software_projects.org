@@ -15,12 +15,13 @@ The coding will continue until morale improves!
     - bulma/yew web ui form too
   - supports passphrase encryption and decryption of ssh/gpg
   - added onion service secret file generation
-    - so you can take 1 set of words and make a hidden service behind ssh with pgp signing/encryption for that set of bytes
+    - takes 1 set of words and makes a hidden service behind ssh with pgp signing/encryption for that set of bytes
   - *Service Worker require third party cookies* ~chrome://settings/cookies~
 #+ATTR_HTML: :src https://jamartin9.github.io/key2words/index.html :width 100% :height 300
 #+BEGIN_iframe
 #+END_iframe
 
+*** personal
 - guix-channel
   - guile scheme guix channel for custom packages
   - mostly packages that are in process or unsuitable for nonguix or other repos
@@ -40,15 +41,6 @@ The coding will continue until morale improves!
   - pgp public key in profile picture qr code
     - customize qr code image?
   - PDF links to projects/pages
-** Currently studying
-- zk/fhe cryptography
-  - potential higher security/scaling than current probabilistic models
-- machine learning
-  - statically correct* interpretation of arbitrary patterns
-- p2p systems
-  - censorship resistance
-- compilers/jits/vms
-  - efficient computation
 *** wip projects
 - Automatic differentiation of ssa via conversion of cps to ssa for guile bytecode (guile uses cps unlike llvm/jvm with are ssa) :wip:
   - https://dl.acm.org/doi/10.1145/202529.202532 cps -> ssa
@@ -64,10 +56,6 @@ The coding will continue until morale improves!
 - Porting netbsd Rumpkernel for GNU HURD to guix :wip:
   - debian example https://salsa.debian.org/hurd-team/rumpkernel
   - use of linux compat for even more drivers via netbsd
-- org-mode reloadable code block runner in wasm for personal website :wip:
-  - wasm code block runner with reloading (see https://github.com/wingo/wasm-jit for example)
-    - interop with libs like sympy (sagemath cowasm) for utils on site.
-- sqlite wasm full text search using http vfs of site :wip:
 ** old
 - matching
   - CUDA project for implementing the stable matching algorithm
@@ -78,26 +66,3 @@ The coding will continue until morale improves!
       - removing the concurrent requirement of several steps would raise the max problem size to 1024 X 3 X 65535 per step invocation
   - done as REU
   - obe [[https://ashvardanian.com/posts/searching-stable-marriages/][for vector db]] (measuring closeness representation for large sets)
-- angular-worldwind :obe:
-  - used primeng with angular to add DVR controls to NASAs worldwind
-  - [[https://spaz.gitlab.io/angular-worldwind/][published as gitlab page]] (click layers -> new -> blue marble to get started)
-- font :obe:
-  - added cursive monospace letters to fira code with ligatures
-- guile-sample :obe:
-  - uses automake, autotools, pkg-config with guix to create a patched statically relocatable guile executable.
-  - example makefile for setting running with custom linker libs
-  - embeds arbitrary script with ~xxd~ as C array
-    - C23 adds ~#embed~ pre-processor directive to do the same
-      - can be constexpr in c++ for compile time checking
-- hhrelay :obe:
-  - static jquery webpage for humanitarian cancer charity relay for life.
-- puppet-train :obe:
-  - puppet conf training modules
-  - uses hostname as dns with roles and profiles pattern
-- tileD :obe:
-  - java game with lwjgl from scratch
-  - mixes overhead exploration with 2D side scrolling fighter combat
-- ticTacToe :obe:
-  - java tictactoe game using swt and minimax algorithm
-- metrics-paper :obe:
-  - latex paper written in IEEE template on inconsistency of software estimation.

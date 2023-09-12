@@ -178,6 +178,8 @@
   - Safe, fast, small crypto using Rust
 ** brunoborges/webfx
   - WebFX runs FXML and Javascript based JavaFX applications remotely
+** btdig/dhtcrawler2
+  - dhtcrawler is a DHT crawler written in erlang. It can join a DHT network and crawl many P2P torrents. The program save all torrent info into database and provide an http interface to search a torrent by a keyword
 ** bugfest/tor-controller
   - Tor toolkit for Kubernetes (Tor instances, onion services and more)
 ** buildbot/buildbot
@@ -1514,6 +1516,8 @@
   - Solving i18n for client-side and resource-constrained environments.
 ** ustaxes/UsTaxes
   - Tax filing web application
+** uswds/uswds
+  - The U.S. Web Design System helps the federal government build fast, accessible, mobile-friendly websites.
 ** uvipen/QuickDraw
   - Implementation of Quickdraw - an online game developed by Google
 ** v8/v8
@@ -1926,6 +1930,8 @@
   - An NTP implementation in Rust, supported by Internet Security Research Group's Prossimo project.
 ** pendulum-project/statime
   - Implementation of the Precision Time Protocol (PTP) in Rust
+** phylum-dev/birdcage
+  - Cross-platform embeddable sandboxing
 ** pop-os/cosmic-text
   - Pure Rust multi-line text handling
 ** rayon-rs/rayon
@@ -2148,8 +2154,8 @@
   - CoWasm: Collaborative WebAssembly for Servers and Browsers. Built using Zig. Supports Python with extension modules, including numpy.
 ** SChernykh/p2pool
   - Decentralized pool for Monero mining
-** searx/searx
-  - Privacy-respecting metasearch engine
+** searxng/searxng
+  - SearXNG is a free internet metasearch engine which aggregates results from various search services and databases. Users are neither tracked nor profiled.
 ** sharkdp/fd
   - A simple, fast and user-friendly alternative to 'find'
 ** sharkdp/hyperfine

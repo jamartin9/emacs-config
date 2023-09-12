@@ -38,6 +38,31 @@
 - Peter principle - In a hierarchy, every employee tends to rise to his level of incompetence.
 - Moore's law - The power of computers per unit cost doubles every 24 month.
 - Aumann's agreement theorem - There is no agreeing to disagree
+- Law of Large Numbers - large results over time trend toward the average
+  - ex. more code, more bugs
+** Common
+- Birthday Problem - 50% chance for 23 random people to share a birthday
+- release cadence schedule sets expectations
+  - large breaking changes fracture and stagnate
+    - python2 to python3
+    - perl 5 to perl 6
+    - scala 2 to scala 3
+  - incremental changes are incorporated into ecosystem over time
+    - rust editions
+    - jdk releases
+    - c++14/17/20/23
+    - objective C to swift
+*** Code review
+- Humility should be paramount when submitting code to a location you do not *OWN*
+- Code is meant to be updated by humans but ran by processors
+  - machine semantics
+    - iterator vectorization of loops (can allow simd)
+  - stylistic clarity/future updates
+    - linters/formatters
+- Version control hygiene
+  - messages should have a semi standardized format (like gnu changelog messages)
+    - write in present tense
+  - useful for developers for bug bisection and release changelog generation
 ** [[id:faee0cd2-0648-4539-bfc2-c8533ac755c4][service-discovery]]
 ** [[id:b6230d85-cd0e-4bc7-aba2-b7b068897d4f][shells]]
 ** [[id:92a1c0fc-707f-4d2c-86af-a55206f51c17][software-contrib]]

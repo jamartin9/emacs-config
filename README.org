@@ -5,8 +5,8 @@ This configuration relies on a few utilities. Built-in functionality is preferre
 The dependencies are: emacs >= 29/28, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store/pass-otp), aspell (flyspell), mpv (emms), notification-daemon (erc), sqlite (forge/roam), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
 
 Current package considerations:
-embark for dwim shortcuts
-consult for commands
+embark for improved context menu
+consult for improved isearch, switch-buffer, etc
 combobulate for structural editing
 ts-fold for structural folding
 
@@ -44,15 +44,9 @@ lsp-ui: debugging with dap-mode. alternative: eglot, realgud, lang specific pack
 
 treemacs: workspace/project drawer with lsp/flycheck/company features. alternative is manual workspaces with built-in project.el
 
-smartparens: saves typing closing delimiters and strict matching speeds up font highlighting by avoiding broken/missing matches
-
 minions-mode: keeps the modeline visually brief with retained information. alternative: diminish/delight packages and config for each mode
 
-multiple-cursors: mass editing. alternative: reinvent with a function of marks and operations
-
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
-
-expand-region: select semantic units of text. alternative is set mark and search/select or treesit with combobulate
 
 langs: rustic, guile-geiser, pyvenv/pyls/debugpy. alternative is only use elisp
 
@@ -61,8 +55,6 @@ which-key: show keymap keybinds. alternative is describe-* functions for bind di
 osm: Map tile viewer. alternative is web browser viewing
 
 pcre2el: regex converter. alternative is a smooth big brain
-
-drag-stuff: move text around. alternative is treesit with combobulate
 
 link-hint: copy link urls (using avy). alternative is regex buffer contents
 

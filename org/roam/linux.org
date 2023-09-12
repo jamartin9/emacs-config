@@ -26,3 +26,4 @@ Finally some hardware support!
     - each shared lib is searched for in the following order:  rpath, libary path, runpath, ld cache, system lib (skipped if compiled with ~ld -z nodefaultlib~)
 - strace for system call debugging
 - ~smartctl~ or ~gsmartcontrol~ and ~nvme smart-log /dev/nvme0~ for disk stats
+- ~iftop~ for network interface rates

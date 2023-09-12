@@ -571,9 +571,27 @@ The following settings, for now, probably don't merit an in-depth explanation as
 
 --no-weightb May help quality retention on CGI material. Otherwise, don't use this parameter.
 * ripping
+** tools
+- AnyDVDHD (redfox) free trail
+  - anystream
+- dvdfab
+  - streamfab
 #+NAME: youtube-dl
 #+BEGIN_SRC sh :tangle no
 youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
 #+END_SRC
 * remux
 - mkvmerge -o "${file%.*}.mkv" "$file"
+- Some bluray players limit the number of subs to 64
+* rescene
+- use srrdb for reference files
+- ~srr.py FILE.srr~
+- ~srs.py FILE.srs FILE.mkv~
+** m2ts samples
+- tsmuxer ~2.6.12 https://www.videohelp.com/software/tsMuxeR/old-versions
+- First start by looking for the date this movie was released by the scene, don’t use any tsmuxer version newer than this date.
+- Mount the ISO and load the main movie m2ts into tsmuxer, select the output as M2TS muxing and set a filename for the output. On the Split & Cut tab select split by duration every 60 sec and hit Start Muxing. This will create multiple m2ts files, each 60 seconds long - don’t wait for it to finish, click cancel after it outputs atleast 10 files. Look at the byte size of each 60 second m2ts file, and see if one of them has the same byte size, if so then check the crc32.
+- If you have the same bytes size but different crc32, go back to tsmuxer and on the blu-ray tab enter 524280 into the 45 khz clock field, this just tells tsmuxer to set the start mux time to 0:00:11.6506666666 which is the standard for retail BD disks. Look for the resulting m2ts file again with same byte size and the crc32 should match this time.
+- If the above doesn’t work, start again with default settings, load the main movie m2ts and select M2TS muxing, then on the Split & Cut tab select Enable cutting, try initially with Start = 0:05:00.000 and End = 0:06:00.000, check the byte size against whats in srrdb.com 1, if no match then try again with Start = 0:06:00.000 and End = 0:07:00.000, or any other 60 second block in the first 10 min of the movie. Extend the End time by a few seconds if the byte size is a little short.
+- Try different versions of tsmuxer, you should eventually get the correct sample file with same crc32.
+- Samples are usually taken from within the first 10 min of the movie.

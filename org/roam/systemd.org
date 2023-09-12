@@ -38,7 +38,18 @@
         uri=http://ping.manjaro.org/check_network_status.txt
         interval=0
         enabled=false
-   - conflicts with ~systemd-networkd~ & ~systemd-resolvd~
+   - conflicts with ~systemd-networkd~
+   - configure for dnsmasq with ~[main] dns=dnsmasq~
+*** resolvectl
+- dns cache
+- ~resolvectl statistics~ and ~resolvectl status~
+- ~/etc/systemd/resolved.conf~
+- enable ~systemd-resolved~ and start
+- ~DNSStubListener~ listens on 127.0.0.53 127.0.0.1.54 for udp/tcp port 53
+  - ~ln -sf ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf~
+    - alternatively configure NetworkManager with ~[main] dns=systemd-resolved~
+  - for local dnsmasq set to no, add dnsmasq/localhost to DNS servers
+    - may require ~bind-interfaces~ for dnsmasq config (binds 127.0.0.1 port 53)
 *** misc
 - ~systemd-analyze blame~ for boot times
 - ~systemd-analyze security my-service.unit~ for sec settings
