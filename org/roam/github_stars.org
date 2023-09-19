@@ -512,6 +512,8 @@
   - Automate the (annoying) installation of mingw on Arch and Arch-based distros
 ** fsfe/reuse-tool
   - reuse is a tool for compliance with the REUSE recommendations.
+** fulldecent/system-bus-radio
+  - Transmits AM radio on computers without radio transmitting hardware.
 ** GalactechsLLC/dg_xch_utils
   - A collection of packages made for working with the Chia Blockchain using Rust
 ** GaloisInc/reopt
@@ -716,6 +718,8 @@
   - ANSI Standard X3.64 Teletypewriter Command Session Library
 ** jart/cosmopolitan
   - build-once run-anywhere c library
+** jart/sectorlisp
+  - Bootstrapping LISP in a Boot Sector
 ** java-decompiler/jd-gui
   - A standalone Java Decompiler GUI
 ** javafxports/openjdk-jfx
@@ -812,6 +816,8 @@
   - Add ligatures to Operator Mono similar to Fira Code.
 ** konsoletyper/teavm
   - Compiler of Java bytecode to JavaScript
+** kristerw/pysmtgcc
+  - Some experiments with SMT solvers and GIMPLE IR
 ** ktock/container2wasm
   - Container to WASM converter
 ** kubearmor/KubeArmor
@@ -1502,6 +1508,8 @@
   - NetBSD/pkgsrc fork for our binary package repositories
 ** TritonDataCenter/smartos-live
   - For more information, please see http://smartos.org/  For any questions that aren't answered there, please join the SmartOS discussion list: https://smartos.topicbox.com/groups/smartos-discuss
+** TritonVM/triton-vm
+  - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
 ** tui-rs-revival/ratatui
   - tui-rs revival project
 ** turbolinks/turbolinks
@@ -1894,6 +1902,8 @@
   - High-performance open BitTorrent tracker (UDP, HTTP, WebTorrent)
 ** gschup/ggrs
   - GGRS is a reimagination of GGPO, enabling P2P rollback networking in Rust. Rollback to the future!
+** HigherOrderCO/HVM
+  - A massively parallel, optimal functional runtime in Rust
 ** huggingface/candle
   - Minimalist ML framework for Rust
 ** itmettkeDE/cargo-patch
@@ -1972,6 +1982,8 @@
   - Build smaller, faster, and more secure desktop applications with a web frontend.
 ** testcontainers/testcontainers-rs
   - A library for integration-testing against docker containers from within Rust.
+** TheDan64/inkwell
+  - It's a New Kind of Wrapper for Exposing LLVM (Safely)
 ** thedodd/ybc
   - A Yew component library based on the Bulma CSS framework.
 ** tikv/jemallocator
@@ -2204,18 +2216,6 @@
   - The OWASP ZAP core project
 ** ziglang/zig
   - General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software.
-
-* kewl
-** fulldecent/system-bus-radio
-  - Transmits AM radio on computers without radio transmitting hardware.
-** HigherOrderCO/HVM
-  - A massively parallel, optimal functional runtime in Rust
-** jart/sectorlisp
-  - Bootstrapping LISP in a Boot Sector
-** kristerw/pysmtgcc
-  - Some experiments with SMT solvers and GIMPLE IR
-** TritonVM/triton-vm
-  - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
 ** https://gitlab.com/veilid/veilidchat
   - veilid node chat (coming?)
 

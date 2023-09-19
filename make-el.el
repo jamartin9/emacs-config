@@ -43,7 +43,7 @@ NO-RUN: do not run the tangled argument"
                          (site-dir (concat init-dir (file-name-as-directory "gh-pages") "docs")))
                     (if (not (file-directory-p site-dir)) ; add gh-pages as worktree
                         (message "%s" (process-lines "git" "worktree" "add" "--track" "-b" "gh-pages" (concat init-dir "gh-pages") "origin/gh-pages")))
-                    (mapc #'(lambda (cpy-file); copy files (pngs, css, html, sqlite) to site-dir if export is newer than site
+                    (mapc #'(lambda (cpy-file); copy files (pngs, css, html, sqlite, js) to site-dir if export is newer than site
                               (message "checking file %s" cpy-file)
                               (let ((dst-file (concat (file-name-as-directory site-dir) (file-name-nondirectory cpy-file))))
                                 (if (file-newer-than-file-p cpy-file dst-file)

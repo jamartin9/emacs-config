@@ -11,9 +11,9 @@
 *.sql
 *.sqlite
 *.js
+*.yml
 .torrc
 shepherd.log
-searx.yml
 .orgids
 package-quickstart.el
 package-quickstart.elc

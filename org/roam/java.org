@@ -16,6 +16,8 @@
 - microprofile for javaee
 - sealed classes
 - records
+- ~jcmd <pid> JFR.view~ in 21+
+- AutoCloseable interface for try with resources
 ** spark jetty websocket wrapper
 #+NAME: java-jetty-main
 #+BEGIN_SRC java :tangle no

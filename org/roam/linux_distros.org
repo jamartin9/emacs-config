@@ -24,11 +24,57 @@ Having many flavors makes some lovely hot garbage...
   - build own ova https://github.com/aws/eks-distro-build-tooling
   - can run locally with containers (based on amazon linux 2)
     - requires docker with cgroupsv1
-*** manjaro
+*** arch/manjaro
 - arch based
 - pamac and pacman for packages
 - mkinitcpio for initraramfs
 - ~blacklist nouveau~ and ~options nvidia_drm modeset=1~ in ~/etc/modprobe.d/mwhd-gpu.conf~ for nvidia gpu direct render management
+- ~pacman -U *.zst~ to install local
+- ~makepkg~ to build
+- ~pacman -Syu~ to update
+#+NAME: x86_64-w64-mingw32-gdb
+#+BEGIN_SRC sh :tangle no
+pkgname=cross-mingw-w64-gdb
+pkgver=13.1
+pkgrel=1
+pkgdesc="The GNU Debugger (compiled to debug target mingw-w64)"
+arch=('i686' 'x86_64')
+url="http://www.gnu.org/software/gdb/"
+license=('LGPL')
+depends=('ncurses' 'expat' 'xz' 'readline' 'source-highlight')
+makedepends=('gcc' 'texinfo')
+options=('staticlibs' '!buildflags')
+source=("http://ftp.gnu.org/gnu/gdb/gdb-${pkgver}.tar.xz")
+sha256sums=('115ad5c18d69a6be2ab15882d365dda2a2211c14f480b3502c6eba576e2e95a0')
+_architectures="i686-w64-mingw32 x86_64-w64-mingw32"
+build() {
+  cd "$srcdir/gdb-$pkgver"
+  for _arch in ${_architectures}; do
+    unset LDFLAGS
+    mkdir -p build-${_arch} && pushd build-${_arch}
+    ../configure --prefix=/usr \
+                 --target=${_arch} \
+                 --enable-lto \
+                 --disable-nls \
+                 --with-system-readline \
+                 --with-expat
+    make
+    popd
+  done
+}
+package() {
+  for _arch in ${_architectures}; do
+    cd "$srcdir"/gdb-${pkgver}/build-${_arch}
+    make install DESTDIR="$pkgdir"
+    rm -rf "$pkgdir"/usr/share/{info,locale,gdb}
+    rm -f  "$pkgdir"/usr/share/man/man1/*-w64-mingw32-gdbserver.1*
+    rm -rf "$pkgdir"/usr/share/man/man5
+    rm -rf "$pkgdir"/usr/lib
+    rm -rf "$pkgdir"/usr/include
+  done
+}
+#+END_SRC
+
 *** [[id:18ebc285-c771-4420-a040-011fd3b96b51][openwrt]]
 *** RHEL
 - dracut for initraramfs

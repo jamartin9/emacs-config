@@ -146,7 +146,7 @@
                 xterm-extra-capabilities '(getSelection setSelection) ; osc term copy/paste
                 visible-cursor nil
                 ad-redefinition-action 'accept ; ignore warnings
-                completion-auto-help nil; '?' for help w/mouse click
+                completion-auto-help 'lazy; '?' for help w/mouse click
                 completion-cycle-threshold nil ; flex narrowing instead of cycling
                 completions-format 'one-column
                 completions-group t
@@ -789,7 +789,7 @@
                 erc-keywords '("jaming")
                 ;erc-prompt-for-nickserv-password nil
                 ;erc-nickserv-passwords '((Corrupt (("nickname" . "password"))))
-                erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password
+                ;erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password
                 erc-prompt-for-password nil
                 erc-nickserv-identify-mode 'both
                 ;erc-dcc-auto-masks '(".*!.*@.*") ; accept dcc files from anyone with 'auto send-requests
@@ -814,7 +814,7 @@
                                        ("Corrupt" "JOIN" "PART" "QUIT")))
   (add-to-list 'erc-server-alist '("EFnet: New York reverse proxy scanner" EFnet "irc.choopa.net" ((6665 6669)) 7000 9999))
   (add-to-list 'erc-server-alist '("Corrupt-Net" Corrupt "irc.corrupt-net.org" ((6666 6669)) 8067 6697 7000))
-  ;(add-to-list 'erc-nickserv-alist '(Corrupt "NickServ!services@shd.u" "This\\s-nickname\\s-is\\s-registered\\s-and\\s-protected.\\s-\\s-If\\s-it\\s-is\\s-your" "NickServ" "IDENTIFY" nil))
+  ;(add-to-list 'erc-nickserv-alist '(Corrupt "NickServ!services@shd.u" "This\\s-nickname\\s-is\\s-registered\\s-and\\s-protected.\\s-\\s-If\\s-it\\s-is\\s-your" "NickServ" "IDENTIFY" nil nil "Password\\s-accepted\\s--\\s-you\\s-are\\s-now\\s-recognized."))
   (add-to-list 'erc-modules 'dcc);/dcc list and /dcc get -s nick file
   ;(add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
   (add-to-list 'erc-modules 'log)

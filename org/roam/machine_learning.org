@@ -92,6 +92,7 @@ whisper "/content/${VID}.m4a" --model small --language English
 - [[https://github.com/neonbjb/tortoise-tts][tortoise-tts]] based on dalle
 - [[https://github.com/coqui-ai/TTS][coqui-ai]] with YourTTS/FreeVC voice cloning
   - [[https://github.com/coqui-ai/TTS/blob/dev/TTS/tts/utils/text/cleaners.py][english cleaner]] for abbrevations/dates/times/numbers
+  - xtts-v1 uses tortoise for 3 second voice clone
 ** Agent prompts
 #+NAME: chain-of-thought-tools
 #+BEGIN_SRC text :tangle no

@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * hardware
 - Backdoors
+  - [[https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf][ubiquity devices]](unifi)
   - intel management engine
   - amd platform security processor
   - firmware level malware (disk controller, usb controller, flashable uefi/bios etc)
@@ -57,16 +58,35 @@
 
 - /r/unclebens rice packets to cultivate mushrooms
 
-- 2021 F150 has 'self driving' BlueCruise
-  - raptor does not due to software issues with off road mode
-  - [[https://github.com/flowdriveai/flowpilot][generic openpilot]]
-  - [[https://github.com/roxasthenobody98/phoenixpilot][open pilot fork for lariat and above]]
-    - OBED connector with ForScan can enable Lane assist without the technology package
-      - [[https://www.f150forum.com/f118/openpilot-469489/index6/#post7077158][need short/button to toggle while driving]]
-
 - BaoFeng programmable in unregistered frequency with CHIRP
 
 - intel optane persistent high write nvme SSD cache
   - [[https://ieeexplore.ieee.org/document/9387168][ULTRARAM]] quantum RAM paper
 
 - 'auto sear' plastic converts gun to fully automatic
+
+** vehicle
+- forscan
+  - [[https://forscan.org/support/prepare_trial_el_request.php?lang=en][Require extended license for modification]]. can request multiple.
+  - Add user to the ~dialout~ group (debian/fedora) or the ~uucp~ (arch) group then reboot.
+  - wine v8.6.0 (used 8.3), forscan v 2.3.53
+    - switch should be in the HS position. Forscan will prompt for MS toggle.
+    - ~ln -s /dev/ttyUSB0 ~/.wine/dosdevices/com1~
+    - under Configuration and Programming
+      - EASY MODE (Regular configuration of popular newer models)
+        - Run the module APIM
+          - edit siriusxm travel link to off
+        - BdyCM
+          - Fog lights on (bambi mode: high and low beams)
+      - MANUAL (AS BUILT) ~not recommended without spreadsheet of values~
+        - ~MAKE SURE TO HIT SAVE ALL BEFORE ANY CHANGES~ name the file stock_MODULE.abt
+        - Run the Module BdyCM(AS BUILT FORMAT)
+          - To disable double honk Edit the entry for: ~726-41-02~ and change the FIRST box to ~0000~ instead of ~0001~. Then click write. LAST DIGIT
+        - Run the module IPC(AS BUILT FORMAT)
+          - To disable seatbelt chime Edit the entry for IPC ~720-01-01~ Edit the SECOND box to have the THIRD digit be ~0~ (2 for driver only, 4 is passenger, 0 is both). Then click write
+- 2021 F150 has 'self driving' BlueCruise
+  - raptor does not due to software issues with off road mode
+  - [[https://github.com/flowdriveai/flowpilot][generic openpilot]]
+  - [[https://github.com/roxasthenobody98/phoenixpilot][open pilot fork for lariat and above]]
+    - OBD 2 connector with ForScan can enable Lane assist without the technology package
+      - [[https://www.f150forum.com/f118/openpilot-469489/index6/#post7077158][need short/button to toggle while driving]]

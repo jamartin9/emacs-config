@@ -99,6 +99,7 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - lockable spends with ~locked_transfer~
 
 * bitcoin
+- reuse of ECDSA signatures can lead to key compromise (polynonce attack). use deterministic dsa instead (eddsa or RFC 6979)
 - double sha256
 - fixed block size
 - fixed supply ~21m

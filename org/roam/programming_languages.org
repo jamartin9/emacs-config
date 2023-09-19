@@ -46,6 +46,7 @@ The tower of babel is your type system as a macro
 - [[https://github.com/xtuc/wasm-coredump/tree/main][wasm core dump debugging with wasmgdb]]
 - [[id:3d101bb5-0125-41bc-9678-e43487122c7d][gdb]]
 ** [[id:a168933c-6a2b-456e-9fd0-760c5bc180dc][css]]
+- colors with hex or oklch
 ** [[id:7c407252-45a1-41a6-901a-cfdb19a6ac36][make]]
 ** [[id:0713d4b4-4d66-495b-9d1b-192c91a8ab9f][elixir]]
 ** [[id:b4f4114e-75e8-4312-8c96-5567ca6d6b80][julia]]

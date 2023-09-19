@@ -107,7 +107,7 @@
                                              ;"mpv"; "vlc"; MAYBE add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
                                              "gnupg"
                                              "password-store" "pass-otp"
-                                             "qemu" "virt-viewer"; for spice remote-viewer
+                                             "virt-viewer" "qemu"; for spice remote-viewer
                                              "alacritty"; "xterm" ; MAYBE add guix package for alacritty with nvidia-libs
                                              "curl"; emacs-osm needs for CA's
                                              "screen"

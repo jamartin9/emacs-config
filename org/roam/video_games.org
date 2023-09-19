@@ -22,6 +22,8 @@ The only winning move is not to play
 - binding of isaac
   - drop trink/item in first few floors boss/item room for red key peice
   - bomb skull with 'x' to get tele card for after polaroid boss fight
+- wow classic
+  - ~/script MacroFrameText:Insert("")~
 - dark alliance 2
   - max 16 runestones (+5) in non extreme(extreme 176 +15 only for boots/rings/amulets)
 one runestone per gem
