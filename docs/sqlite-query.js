@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded',() => {
     }
     document.getElementById("mySearchBtn").onclick = function() {
         if (typeof globalThis.w === 'undefined') { // load sqlite worker
-            console.log("creating worker");
+                console.log("creating worker");
                 const workerArgs = [];
                 workerArgs.push("sql-worker.js");
                 const w = new Worker(...workerArgs);
@@ -45,4 +45,9 @@ document.addEventListener('DOMContentLoaded',() => {
             globalThis.w.postMessage(query);
         }
     }
+    document.getElementById("mySearch").addEventListener("keyup", function(event){
+        if (event.keyCode == 13) { // on enter press call button
+            document.getElementById("mySearchBtn").click();
+        }
+    });
 });

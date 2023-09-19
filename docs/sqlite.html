@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org316969c">
-<div class="navbar-brand" id="orgfb3803b">
-<div class="navbar-item" id="orgb6c9fcc">
+<nav class="navbar is-black" id="org60679f8">
+<div class="navbar-brand" id="orgec8764e">
+<div class="navbar-item" id="org1d42947">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgc11966a">
-<div class="navbar-start" id="orgc0dba17">
-<div class="navbar-item" id="orgf76f232">
+<div class="navbar-menu" id="org877540a">
+<div class="navbar-start" id="orgb715713">
+<div class="navbar-item" id="org4966b1f">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgce98e91">
+<div class="navbar-end" id="org7ef8ea1">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgca78ca6" class="outline-2">
-<h2 id="orgca78ca6">sqlite</h2>
-<div class="outline-text-2" id="text-orgca78ca6">
+<div id="outline-container-org2bf5d79" class="outline-2">
+<h2 id="org2bf5d79">sqlite</h2>
+<div class="outline-text-2" id="text-org2bf5d79">
 </div>
-<div id="outline-container-org185d32b" class="outline-3">
-<h3 id="org185d32b">notes</h3>
-<div class="outline-text-3" id="text-org185d32b">
+<div id="outline-container-org530dd67" class="outline-3">
+<h3 id="org530dd67">notes</h3>
+<div class="outline-text-3" id="text-org530dd67">
 <ul class="org-ul">
 <li><a href="https://www.sqlite.org/limits.html">https://www.sqlite.org/limits.html</a></li>
 <li>stores each index and table as separate b-tree over the database pages
@@ -108,7 +108,7 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 <li>site database</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org21964f7">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="org57e0907">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
 PRAGMA page_size=512;
 SAVEPOINT ar;
@@ -152,14 +152,14 @@ VACUUM;
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="orgbd02fc4">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="org16e0be4">-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org13c7d38">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="orgc17ddce">(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -172,17 +172,18 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
                     (message "setting %s timestamp to %s's" db org-file)
                     (set-file-times db org-ts)))))
             (directory-files base-dir t "\.org$"))
-    (set-file-times (concat base-dir "sqlite-query.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))))
+    (set-file-times (concat base-dir "sqlite-query.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))
+    (set-file-times (concat base-dir "sql-worker.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org23cf9ad" class="outline-3">
-<h3 id="org23cf9ad">site search js/sql</h3>
-<div class="outline-text-3" id="text-org23cf9ad">
+<div id="outline-container-orgff46a41" class="outline-3">
+<h3 id="orgff46a41">site search js/sql</h3>
+<div class="outline-text-3" id="text-orgff46a41">
 <div class="org-src-container">
-<pre class="src src-javascript" id="org09dfb02">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+<pre class="src src-javascript" id="org5c2af21">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:
@@ -209,7 +210,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
     }
     document.getElementById("mySearchBtn").onclick = function() {
         if (typeof globalThis.w === 'undefined') { // load sqlite worker
-            console.log("creating worker");
+                console.log("creating worker");
                 const workerArgs = [];
                 workerArgs.push("sql-worker.js");
                 const w = new Worker(...workerArgs);
@@ -229,34 +230,66 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
             globalThis.w.postMessage(query);
         }
     }
+    document.getElementById("mySearch").addEventListener("keyup", function(event){
+        if (event.keyCode == 13) { // on enter press call button
+            document.getElementById("mySearchBtn").click();
+        }
+    });
 });
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org5f1ddec">onmessage = (e) =&gt; {
+<pre class="src src-javascript" id="org95fdf9a">onmessage = (e) =&gt; {
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
-        importScripts('sqlite3.js');
+        importScripts('sqlite3.js'); // mjs module?
         globalThis.sqlite3InitModule().then((sqlite3)=&gt; {
             sqlite3.installOpfsSAHPoolVfs().then((poolUtil)=&gt; { // use opfs for storage
-                //poolUtil.wipeFiles().await;
-                if (poolUtil.getFileCount() == 0) { // TODO add versioning
+                if (poolUtil.getFileCount() == 0) {
                     console.log("fetching sqlite opfs files");
                     fetch('sqlar.sqlite').then(response =&gt; response.arrayBuffer()).then(arrayBuffer =&gt; {
-                        //const bytes = new Uint8Array(arrayBuffer);
-                        poolUtil.importDb('/sqlar.sqlite', arrayBuffer); // this requires the / for name...(transparent naming?)
+                        poolUtil.importDb('/sqlar.sqlite', arrayBuffer); // requires absolute path (lack of transparent naming obscures real name)
                         const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
                         globalThis.db = db;
                         const res = db.exec([sql], opt);
                         postMessage(res);
                     });
                 } else {
-                    console.log("using existing sqlite opfs files" + poolUtil.getFileNames());
-                    const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
-                    globalThis.db = db;
-                    const res = db.exec([sql], opt);
-                    postMessage(res);
+                    console.log("checking existing sqlite opfs files" + poolUtil.getFileNames());
+                    fetch('sqlar.sqlite', {method: "HEAD"}).then(response =&gt; {
+                        console.log("Response headers are: " + response.headers.get("Content-Length"));
+                        const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite'); // load existing db to check size against headers
+                        console.log("loaded db");
+                        const header_size = response.headers.get("Content-Length");
+                        const size_sql = "SELECT page_count * page_size as size FROM pragma_page_count(), pragma_page_size();";
+                        const size = db.selectArray(size_sql); // selectArray to not include results in db.exec
+                        console.log("Header size is: " + header_size + " DB size is: " + size);
+                        if (size == header_size) {
+                            console.log("Database is up to date");
+                            globalThis.db = db;
+                            const res = db.exec([sql], opt);
+                            postMessage(res);
+                        } else {
+                            console.log("Updating database with fetch");
+                            db.close(); // close before wiping
+                            fetch('sqlar.sqlite').then(response =&gt; response.arrayBuffer()).then(arrayBuffer =&gt; {
+                                poolUtil.wipeFiles().then(_ =&gt; {
+                                    poolUtil.importDb('/sqlar.sqlite', arrayBuffer);
+                                    const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
+                                    globalThis.db = db;
+                                    const res = db.exec([sql], opt);
+                                    postMessage(res);
+                                });
+                            });
+                        }
+                    }).catch((error) =&gt; {
+                        console.log("Failed to fetch HEAD. Using Existing DB.");
+                        const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
+                        globalThis.db = db;
+                        const res = db.exec([sql], opt);
+                        postMessage(res);
+                    });
                 }
             }).catch((error) =&gt; {
                 console.log("Failed to use opfs using temp db");
@@ -269,6 +302,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
                     const p = sqlite3.wasm.allocFromTypedArray(bytes);
                     const rc = sqlite3.capi.sqlite3_deserialize(db.pointer, 'main', p, bytes.length, bytes.length,sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
                     //db.checkRc(rc);
+
                     globalThis.db = db;
                     const res = globalThis.db.exec([sql], opt);
                     postMessage(res);
