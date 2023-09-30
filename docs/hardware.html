@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org0d9733e">
-<div class="navbar-brand" id="org1fb8203">
-<div class="navbar-item" id="orgfdeeddd">
+<nav class="navbar is-black" id="org3914a25">
+<div class="navbar-brand" id="org1c95e2e">
+<div class="navbar-item" id="org811e1ec">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org1ea1b48">
-<div class="navbar-start" id="org043a584">
-<div class="navbar-item" id="org63a0698">
+<div class="navbar-menu" id="org06ea347">
+<div class="navbar-start" id="orgf13682e">
+<div class="navbar-item" id="org5f1c42f">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,18 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orga7ff30c">
+<div class="navbar-end" id="org0ee4888">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org1c6892e" class="outline-2">
-<h2 id="org1c6892e">hardware</h2>
-<div class="outline-text-2" id="text-org1c6892e">
+<div id="outline-container-orgdb9e3ca" class="outline-2">
+<h2 id="orgdb9e3ca">hardware</h2>
+<div class="outline-text-2" id="text-orgdb9e3ca">
 <ul class="org-ul">
 <li>Backdoors
 <ul class="org-ul">
+<li><a href="https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf">ubiquity devices</a>(unifi)</li>
 <li>intel management engine</li>
 <li>amd platform security processor</li>
 <li>firmware level malware (disk controller, usb controller, flashable uefi/bios etc)</li>
@@ -114,19 +115,6 @@
 
 <li>/r/unclebens rice packets to cultivate mushrooms</li>
 
-<li>2021 F150 has 'self driving' BlueCruise
-<ul class="org-ul">
-<li>raptor does not due to software issues with off road mode</li>
-<li><a href="https://github.com/flowdriveai/flowpilot">generic openpilot</a></li>
-<li><a href="https://github.com/roxasthenobody98/phoenixpilot">open pilot fork for lariat and above</a>
-<ul class="org-ul">
-<li>OBED connector with ForScan can enable Lane assist without the technology package
-<ul class="org-ul">
-<li><a href="https://www.f150forum.com/f118/openpilot-469489/index6/#post7077158">need short/button to toggle while driving</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
-
 <li>BaoFeng programmable in unregistered frequency with CHIRP</li>
 
 <li>intel optane persistent high write nvme SSD cache
@@ -136,6 +124,72 @@
 
 <li>'auto sear' plastic converts gun to fully automatic</li>
 </ul>
+</div>
+
+<div id="outline-container-org25e74b9" class="outline-3">
+<h3 id="org25e74b9">vehicle</h3>
+<div class="outline-text-3" id="text-org25e74b9">
+<ul class="org-ul">
+<li>forscan
+<ul class="org-ul">
+<li><a href="https://forscan.org/support/prepare_trial_el_request.php?lang=en">Require extended license for modification</a>. can request multiple.</li>
+<li>Add user to the <code>dialout</code> group (debian/fedora) or the <code>uucp</code> (arch) group then reboot.</li>
+<li>wine v8.6.0 (used 8.3), forscan v 2.3.53
+<ul class="org-ul">
+<li>switch should be in the HS position. Forscan will prompt for MS toggle.</li>
+<li><code>ln -s /dev/ttyUSB0 ~/.wine/dosdevices/com1</code></li>
+<li>under Configuration and Programming
+<ul class="org-ul">
+<li>EASY MODE (Regular configuration of popular newer models)
+<ul class="org-ul">
+<li>Run the module APIM
+<ul class="org-ul">
+<li>edit siriusxm travel link to off</li>
+</ul></li>
+<li>BdyCM
+<ul class="org-ul">
+<li>Fog lights on (bambi mode: high and low beams)</li>
+</ul></li>
+</ul></li>
+<li>MANUAL (AS BUILT) <code>not recommended without spreadsheet of values</code>
+<ul class="org-ul">
+<li><code>MAKE SURE TO HIT SAVE ALL BEFORE ANY CHANGES</code> name the file stock<sub>MODULE.abt</sub></li>
+<li>Run the Module BdyCM(AS BUILT FORMAT)
+<ul class="org-ul">
+<li>To disable double honk Edit the entry for: <code>726-41-02</code> and change the FIRST box to <code>0000</code> instead of <code>0001</code>. Then click write. LAST DIGIT</li>
+</ul></li>
+<li>Run the module IPC(AS BUILT FORMAT)
+<ul class="org-ul">
+<li>To disable seatbelt chime Edit the entry for IPC <code>720-01-01</code> Edit the SECOND box to have the THIRD digit be <code>0</code> (2 for driver only, 4 is passenger, 0 is both). Then click write</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>2021 F150 has 'self driving' BlueCruise
+<ul class="org-ul">
+<li>raptor does not due to software issues with off road mode</li>
+<li><a href="https://github.com/flowdriveai/flowpilot">generic openpilot</a></li>
+<li><a href="https://github.com/roxasthenobody98/phoenixpilot">open pilot fork for lariat and above</a>
+<ul class="org-ul">
+<li>OBD 2 connector with ForScan can enable Lane assist without the technology package
+<ul class="org-ul">
+<li><a href="https://www.f150forum.com/f118/openpilot-469489/index6/#post7077158">need short/button to toggle while driving</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7f745cb" class="outline-3">
+<h3 id="org7f745cb">board games</h3>
+<div class="outline-text-3" id="text-org7f745cb">
+<ul class="org-ul">
+<li>pathfinder system like dnd 3.3</li>
+<li>dnd 5e cap 20</li>
+<li>whitewolf d10 had games in 90's</li>
+</ul>
+</div>
 </div>
 </div>
 </div>

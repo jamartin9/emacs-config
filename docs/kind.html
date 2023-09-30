@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org5dfa1de">
-<div class="navbar-brand" id="org7bad705">
-<div class="navbar-item" id="orgcc8088c">
+<nav class="navbar is-black" id="orgd2dd239">
+<div class="navbar-brand" id="orgb7a3c97">
+<div class="navbar-item" id="orgbf28d3d">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgfc73a8c">
-<div class="navbar-start" id="org29b2059">
-<div class="navbar-item" id="orga112a6a">
+<div class="navbar-menu" id="orgbf22ff5">
+<div class="navbar-start" id="orgafc3873">
+<div class="navbar-item" id="orgb34f457">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orga2ecf7f">
+<div class="navbar-end" id="orgfa9f0fc">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orga055ec0" class="outline-2">
-<h2 id="orga055ec0">kind</h2>
-<div class="outline-text-2" id="text-orga055ec0">
+<div id="outline-container-org90c442e" class="outline-2">
+<h2 id="org90c442e">kind</h2>
+<div class="outline-text-2" id="text-org90c442e">
 </div>
-<div id="outline-container-org9261fcb" class="outline-3">
-<h3 id="org9261fcb">kind</h3>
-<div class="outline-text-3" id="text-org9261fcb">
+<div id="outline-container-org94e187f" class="outline-3">
+<h3 id="org94e187f">kind</h3>
+<div class="outline-text-3" id="text-org94e187f">
 <ul class="org-ul">
 <li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster</code></li>
 <li>KIND<sub>EXPERIMENTAL</sub><sub>CONTAINERD</sub><sub>SNAPSHOTTER</sub>=native for zfs in kind &gt;= 0.12</li>
@@ -58,7 +58,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgaaf99f5">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
+<pre class="src src-sh" id="org552e5da">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
 kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </pre>
 </div>
@@ -66,7 +66,7 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 <li>default connection</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgedf9244">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
+<pre class="src src-sh" id="org9e2813f">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
 </pre>
 </div>
 <ul class="org-ul">

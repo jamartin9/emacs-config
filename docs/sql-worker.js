@@ -1,4 +1,9 @@
 onmessage = (e) => {
+    if (e.data == "close") {
+        console.log("closing db");
+        globalThis.db.close();
+        return;
+    }
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '<b>','</b>', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
@@ -12,6 +17,7 @@ onmessage = (e) => {
                         const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
                         globalThis.db = db;
                         const res = db.exec([sql], opt);
+                        db.close(); // REE
                         postMessage(res);
                     });
                 } else {
@@ -28,6 +34,7 @@ onmessage = (e) => {
                             console.log("Database is up to date");
                             globalThis.db = db;
                             const res = db.exec([sql], opt);
+                            db.close(); // REE
                             postMessage(res);
                         } else {
                             console.log("Updating database with fetch");
@@ -38,6 +45,7 @@ onmessage = (e) => {
                                     const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
                                     globalThis.db = db;
                                     const res = db.exec([sql], opt);
+                                    db.close(); // REE
                                     postMessage(res);
                                 });
                             });
@@ -47,6 +55,7 @@ onmessage = (e) => {
                         const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
                         globalThis.db = db;
                         const res = db.exec([sql], opt);
+                        db.close(); // REE
                         postMessage(res);
                     });
                 }

@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org06becf4">
-<div class="navbar-brand" id="orgbb92c4e">
-<div class="navbar-item" id="orga2e3691">
+<nav class="navbar is-black" id="org221eaa7">
+<div class="navbar-brand" id="org29cfd63">
+<div class="navbar-item" id="org59ada7b">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orga8cf759">
-<div class="navbar-start" id="orgebbf15d">
-<div class="navbar-item" id="orga97f6b0">
+<div class="navbar-menu" id="org6f6fae1">
+<div class="navbar-start" id="org0a1d311">
+<div class="navbar-item" id="org8dbb25a">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,15 +29,15 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgb0597aa">
+<div class="navbar-end" id="org82d13b5">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org05a723a" class="outline-2">
-<h2 id="org05a723a">notes</h2>
-<div class="outline-text-2" id="text-org05a723a">
+<div id="outline-container-org65eebcf" class="outline-2">
+<h2 id="org65eebcf">notes</h2>
+<div class="outline-text-2" id="text-org65eebcf">
 <ul class="org-ul">
 <li>fallacies of crypto haters
 <ul class="org-ul">
@@ -64,9 +64,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org01979f4" class="outline-2">
-<h2 id="org01979f4">chia</h2>
-<div class="outline-text-2" id="text-org01979f4">
+<div id="outline-container-orge464e3f" class="outline-2">
+<h2 id="orge464e3f">chia</h2>
+<div class="outline-text-2" id="text-orge464e3f">
 <ul class="org-ul">
 <li><code>CHIA_ROOT</code> env variable configuration
 <ul class="org-ul">
@@ -74,7 +74,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-org" id="orgaa3c643">- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
+<pre class="src src-org" id="org84ceea6">- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
 - sends to puzzle hash 0x000000000000000000000000000000000000000000000000000000000000dead
 - testnet burn txch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ksh7qddh
 </pre>
@@ -124,7 +124,7 @@
 <li>each CAT v2 is worth 1000 mojos. smallest unit is thus 0.001 CAT or one mojo.</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgc242251">chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
+<pre class="src src-sh" id="org38f45ea">chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
 </pre>
 </div>
 <ul class="org-ul">
@@ -146,17 +146,14 @@
 </ul></li>
 <li>ex of video sharing with datalayer <a href="https://github.com/jjldv/ChiaTubi">https://github.com/jjldv/ChiaTubi</a></li>
 </ul></li>
-<li>Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling
-<ul class="org-ul">
-<li>chia wrapper BTC scam because their reserves were 0.59 and they require 1btc or more of wrapped to withdraw (double the btc they have).</li>
-</ul></li>
+<li>Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling</li>
 <li><a href="https://mojonode.com/explorer?q=select%20date_trunc(%27week%27,%20gs.ts)%20as%20datetime,%20coalesce(max(reorgs),%200)%20as%20%22max%20seq%20block%20reorgs%20per%20week%22%20from%0A%20%20generate_series(%272022-03-10%2000:00:00%27::timestamp,%20%0A%20%20%272023-03-21%2023:55:00%27::timestamp,%20interval%20%271%20day%27)%20gs(ts)%20%0A%20%20left%20join%20%0A%20%20(%0Aselect%20min(dt)%20as%20dt,%20count(seq)%20as%20reorgs%20from%20(%0A%20%20select%20height,%20max(created_at)%20as%20dt,%0A%20%20%20%20case%20when%20height%20-%20row_number()%20over%20(order%20by%20height)%20=%20-1%20then%20height%20%20%0A%20%20%20%20else%20height%20-%20row_number()%20over%20(order%20by%20height)%20end%20as%20seq%20from%20block_records%20%0Awhere%20reverted=true%0Agroup%20by%20height%0A)%20as%20t%0Agroup%20by%20seq%0A%20%20%20having%20count(seq)%20%3E%200%0A%20%20%20)%20as%20b%20%0A%20%20%20%20%20%0A%20%20%20%20%20on%20date_trunc(%27week%27,%20b.dt)%20=%20date_trunc(%27week%27,%20gs.ts)%0A%20%20%0A%20group%20by%20date_trunc(%27week%27,%20gs.ts)%0Aorder%20by%20date_trunc(%27week%27,%20gs.ts)%20">mojo node sql for block reorg</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5b792ab" class="outline-2">
-<h2 id="org5b792ab">monero</h2>
-<div class="outline-text-2" id="text-org5b792ab">
+<div id="outline-container-orgf5e8ba3" class="outline-2">
+<h2 id="orgf5e8ba3">monero</h2>
+<div class="outline-text-2" id="text-orgf5e8ba3">
 <ul class="org-ul">
 <li>use block &gt; 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)</li>
 <li>supports tor with sending tx's and wallets
@@ -208,10 +205,11 @@
 </div>
 </div>
 
-<div id="outline-container-org7599883" class="outline-2">
-<h2 id="org7599883">bitcoin</h2>
-<div class="outline-text-2" id="text-org7599883">
+<div id="outline-container-orgda9f52d" class="outline-2">
+<h2 id="orgda9f52d">bitcoin</h2>
+<div class="outline-text-2" id="text-orgda9f52d">
 <ul class="org-ul">
+<li>reuse of ECDSA signatures can lead to key compromise (polynonce attack). use deterministic dsa instead (eddsa or RFC 6979)</li>
 <li>double sha256</li>
 <li>fixed block size</li>
 <li>fixed supply ~21m</li>
@@ -234,16 +232,16 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfd0eec2" class="outline-2">
-<h2 id="orgfd0eec2">btcpayserver</h2>
-<div class="outline-text-2" id="text-orgfd0eec2">
+<div id="outline-container-orgac04957" class="outline-2">
+<h2 id="orgac04957">btcpayserver</h2>
+<div class="outline-text-2" id="text-orgac04957">
 <ul class="org-ul">
 <li>crypto payment server that supports invoices (multiple payments, refunds, tolerances etc)</li>
 <li>xmr config requires the view only wallet.keys, wallet and password file be available before sync can complete</li>
 <li>sync MUST be completed before the FIRST store can be created</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgecd5af6">apiVersion: apps/v1
+<pre class="src src-yaml" id="org8216554">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: btcpay-deployment

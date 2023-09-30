@@ -17,7 +17,11 @@
         <div id="modalDiv"></div>
       </div>
     </dialog>
-    */
+*/
+
+window.addEventListener('beforeunload', function (e) {
+    globalThis.w.postMessage("close");
+});
 document.addEventListener('DOMContentLoaded',() => {
     document.getElementById("modalClose").onclick = function() {
         document.getElementById("myModal").classList.remove("is-active");

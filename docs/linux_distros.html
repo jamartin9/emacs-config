@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgdbe4670">
-<div class="navbar-brand" id="org436077f">
-<div class="navbar-item" id="orgeec9ed6">
+<nav class="navbar is-black" id="orge735bf0">
+<div class="navbar-brand" id="orgbef3f84">
+<div class="navbar-item" id="orgb0da0ac">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgd013c02">
-<div class="navbar-start" id="orge21033f">
-<div class="navbar-item" id="orgc81d20f">
+<div class="navbar-menu" id="orge40544c">
+<div class="navbar-start" id="org25784fd">
+<div class="navbar-item" id="orge4c9f14">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,25 +29,25 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgcf1bcb9">
+<div class="navbar-end" id="org626cdef">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org8a2a81b" class="outline-2">
-<h2 id="org8a2a81b">Linux distributions</h2>
-<div class="outline-text-2" id="text-org8a2a81b">
+<div id="outline-container-org4c3bc51" class="outline-2">
+<h2 id="org4c3bc51">Linux distributions</h2>
+<div class="outline-text-2" id="text-org4c3bc51">
 <p>
 Having many flavors makes some lovely hot garbage&#x2026;
 </p>
 </div>
-<div id="outline-container-org3db3e4d" class="outline-4">
-<h4 id="org3db3e4d"><a href="android.html#ID-8005808d-1b21-48df-9706-6b999ee9aff6">android</a></h4>
+<div id="outline-container-orgf2fde5b" class="outline-4">
+<h4 id="orgf2fde5b"><a href="android.html#ID-8005808d-1b21-48df-9706-6b999ee9aff6">android</a></h4>
 </div>
-<div id="outline-container-org6c40eea" class="outline-4">
-<h4 id="org6c40eea">ubuntu</h4>
-<div class="outline-text-4" id="text-org6c40eea">
+<div id="outline-container-orgfd298f8" class="outline-4">
+<h4 id="orgfd298f8">ubuntu</h4>
+<div class="outline-text-4" id="text-orgfd298f8">
 <ul class="org-ul">
 <li>debian based</li>
 <li>snaps and apt for packages</li>
@@ -71,23 +71,69 @@ Having many flavors makes some lovely hot garbage&#x2026;
 </ul>
 </div>
 </div>
-<div id="outline-container-org47dbbd6" class="outline-4">
-<h4 id="org47dbbd6">manjaro</h4>
-<div class="outline-text-4" id="text-org47dbbd6">
+<div id="outline-container-org0351fce" class="outline-4">
+<h4 id="org0351fce">arch/manjaro</h4>
+<div class="outline-text-4" id="text-org0351fce">
 <ul class="org-ul">
 <li>arch based</li>
 <li>pamac and pacman for packages</li>
 <li>mkinitcpio for initraramfs</li>
 <li><code>blacklist nouveau</code> and <code>options nvidia_drm modeset=1</code> in <code>/etc/modprobe.d/mwhd-gpu.conf</code> for nvidia gpu direct render management</li>
+<li><code>pacman -U *.zst</code> to install local</li>
+<li><code>makepkg</code> to build</li>
+<li><code>pacman -Syu</code> to update</li>
 </ul>
+<div class="org-src-container">
+<pre class="src src-sh" id="orgd3be33c">pkgname=cross-mingw-w64-gdb
+pkgver=13.1
+pkgrel=1
+pkgdesc="The GNU Debugger (compiled to debug target mingw-w64)"
+arch=('i686' 'x86_64')
+url="http://www.gnu.org/software/gdb/"
+license=('LGPL')
+depends=('ncurses' 'expat' 'xz' 'readline' 'source-highlight')
+makedepends=('gcc' 'texinfo')
+options=('staticlibs' '!buildflags')
+source=("http://ftp.gnu.org/gnu/gdb/gdb-${pkgver}.tar.xz")
+sha256sums=('115ad5c18d69a6be2ab15882d365dda2a2211c14f480b3502c6eba576e2e95a0')
+_architectures="i686-w64-mingw32 x86_64-w64-mingw32"
+build() {
+  cd "$srcdir/gdb-$pkgver"
+  for _arch in ${_architectures}; do
+    unset LDFLAGS
+    mkdir -p build-${_arch} &amp;&amp; pushd build-${_arch}
+    ../configure --prefix=/usr \
+                 --target=${_arch} \
+                 --enable-lto \
+                 --disable-nls \
+                 --with-system-readline \
+                 --with-expat
+    make
+    popd
+  done
+}
+package() {
+  for _arch in ${_architectures}; do
+    cd "$srcdir"/gdb-${pkgver}/build-${_arch}
+    make install DESTDIR="$pkgdir"
+    rm -rf "$pkgdir"/usr/share/{info,locale,gdb}
+    rm -f  "$pkgdir"/usr/share/man/man1/*-w64-mingw32-gdbserver.1*
+    rm -rf "$pkgdir"/usr/share/man/man5
+    rm -rf "$pkgdir"/usr/lib
+    rm -rf "$pkgdir"/usr/include
+  done
+}
+</pre>
 </div>
 </div>
-<div id="outline-container-org17a0320" class="outline-4">
-<h4 id="org17a0320"><a href="openwrt.html#ID-18ebc285-c771-4420-a040-011fd3b96b51">openwrt</a></h4>
 </div>
-<div id="outline-container-org5231c28" class="outline-4">
-<h4 id="org5231c28">RHEL</h4>
-<div class="outline-text-4" id="text-org5231c28">
+
+<div id="outline-container-org5e9cd1f" class="outline-4">
+<h4 id="org5e9cd1f"><a href="openwrt.html#ID-18ebc285-c771-4420-a040-011fd3b96b51">openwrt</a></h4>
+</div>
+<div id="outline-container-org2a9bb0c" class="outline-4">
+<h4 id="org2a9bb0c">RHEL</h4>
+<div class="outline-text-4" id="text-org2a9bb0c">
 <ul class="org-ul">
 <li>dracut for initraramfs</li>
 <li>yum/dnf for package managers</li>
@@ -99,9 +145,9 @@ Having many flavors makes some lovely hot garbage&#x2026;
 </ul>
 </div>
 </div>
-<div id="outline-container-orge8dc0f9" class="outline-4">
-<h4 id="orge8dc0f9">gentoo</h4>
-<div class="outline-text-4" id="text-orge8dc0f9">
+<div id="outline-container-org15014d0" class="outline-4">
+<h4 id="org15014d0">gentoo</h4>
+<div class="outline-text-4" id="text-org15014d0">
 <ul class="org-ul">
 <li>portage for packages
 <ul class="org-ul">

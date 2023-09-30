@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgf505de0">
-<div class="navbar-brand" id="org8faa1e5">
-<div class="navbar-item" id="orgd044139">
+<nav class="navbar is-black" id="org7ea1f9c">
+<div class="navbar-brand" id="org16505de">
+<div class="navbar-item" id="org4654469">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org8add634">
-<div class="navbar-start" id="orgfff25cc">
-<div class="navbar-item" id="org7de57ff">
+<div class="navbar-menu" id="org37ad443">
+<div class="navbar-start" id="orgb2b96c3">
+<div class="navbar-item" id="org8a848fb">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,23 +29,23 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org481f817">
+<div class="navbar-end" id="org6dc5d75">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org208b180" class="outline-2">
-<h2 id="org208b180">Systemd</h2>
-<div class="outline-text-2" id="text-org208b180">
+<div id="outline-container-org1c368a3" class="outline-2">
+<h2 id="org1c368a3">Systemd</h2>
+<div class="outline-text-2" id="text-org1c368a3">
 </div>
-<div id="outline-container-org13bfb88" class="outline-3">
-<h3 id="org13bfb88">systemd</h3>
-<div class="outline-text-3" id="text-org13bfb88">
+<div id="outline-container-orgccf562e" class="outline-3">
+<h3 id="orgccf562e">systemd</h3>
+<div class="outline-text-3" id="text-orgccf562e">
 </div>
-<div id="outline-container-orgb4fbccf" class="outline-4">
-<h4 id="orgb4fbccf">journalctl</h4>
-<div class="outline-text-4" id="text-orgb4fbccf">
+<div id="outline-container-org722f90b" class="outline-4">
+<h4 id="org722f90b">journalctl</h4>
+<div class="outline-text-4" id="text-org722f90b">
 <ul class="org-ul">
 <li><code>/etc/systemd/journald.conf</code>
 <ul class="org-ul">
@@ -57,21 +57,21 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb9bb42d" class="outline-4">
-<h4 id="orgb9bb42d">sysctl</h4>
-<div class="outline-text-4" id="text-orgb9bb42d">
+<div id="outline-container-orgb8d47ed" class="outline-4">
+<h4 id="orgb8d47ed">sysctl</h4>
+<div class="outline-text-4" id="text-orgb8d47ed">
 <ul class="org-ul">
 <li><code>net.ipv4.icmp_echo_ignore_all = 1</code> in <code>/etc/sysctl.conf</code> or <code>/etc/sysctl.d/90-override.conf</code> to disable icmp</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org69aa010" class="outline-4">
-<h4 id="org69aa010">systemctl</h4>
-<div class="outline-text-4" id="text-org69aa010">
+<div id="outline-container-org2999ec5" class="outline-4">
+<h4 id="org2999ec5">systemctl</h4>
+<div class="outline-text-4" id="text-org2999ec5">
 </div>
 <ul class="org-ul">
-<li><a id="org6a11953"></a>services<br>
-<div class="outline-text-5" id="text-org6a11953">
+<li><a id="org1aa7ed1"></a>services<br>
+<div class="outline-text-5" id="text-org1aa7ed1">
 <ul class="org-ul">
 <li><code>edit</code> doesn't require <code>daemon-reload</code></li>
 <li>hooks within services like <code>ExecStartPost/ExecStopPost</code></li>
@@ -87,18 +87,18 @@
 </li>
 </ul>
 </div>
-<div id="outline-container-org65939e7" class="outline-4">
-<h4 id="org65939e7">timedatectl</h4>
-<div class="outline-text-4" id="text-org65939e7">
+<div id="outline-container-org67c5a71" class="outline-4">
+<h4 id="org67c5a71">timedatectl</h4>
+<div class="outline-text-4" id="text-org67c5a71">
 <ul class="org-ul">
 <li>systemd-timesyncd <code>timedatectl set-ntp true</code></li>
 <li><code>set-local-rtc</code> to set hardware clock to localtime instead of UTC</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb2376d9" class="outline-4">
-<h4 id="orgb2376d9">NetworkManager</h4>
-<div class="outline-text-4" id="text-orgb2376d9">
+<div id="outline-container-org18c3ae6" class="outline-4">
+<h4 id="org18c3ae6">NetworkManager</h4>
+<div class="outline-text-4" id="text-org18c3ae6">
 <ul class="org-ul">
 <li><code>/usr/lib/NetworkManager/conf.d/20-connectivity.conf</code> pings out
 <ul class="org-ul">
@@ -108,13 +108,39 @@ uri=<a href="http://ping.manjaro.org/check_network_status.txt">http://ping.manja
 interval=0
 enabled=false</li>
 </ul></li>
-<li>conflicts with <code>systemd-networkd</code> &amp; <code>systemd-resolvd</code></li>
+<li>conflicts with <code>systemd-networkd</code></li>
+<li>configure for dnsmasq with <code>[main] dns=dnsmasq</code></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org822ecb4" class="outline-4">
-<h4 id="org822ecb4">misc</h4>
-<div class="outline-text-4" id="text-org822ecb4">
+<div id="outline-container-org5adec77" class="outline-4">
+<h4 id="org5adec77">resolvectl</h4>
+<div class="outline-text-4" id="text-org5adec77">
+<ul class="org-ul">
+<li>dns cache
+<ul class="org-ul">
+<li>issue with long running process? Several weeks of uptime and lockup of dns request despite ping working&#x2026;</li>
+</ul></li>
+<li><code>resolvectl statistics</code> and <code>resolvectl status</code></li>
+<li><code>/etc/systemd/resolved.conf</code></li>
+<li>enable <code>systemd-resolved</code> and start</li>
+<li><code>DNSStubListener</code> listens on 127.0.0.53 127.0.0.1.54 for udp/tcp port 53
+<ul class="org-ul">
+<li><code>ln -sf ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf</code>
+<ul class="org-ul">
+<li>alternatively configure NetworkManager with <code>[main] dns=systemd-resolved</code></li>
+</ul></li>
+<li>for local dnsmasq set to no, add dnsmasq/localhost to DNS servers
+<ul class="org-ul">
+<li>may require <code>bind-interfaces</code> for dnsmasq config (binds 127.0.0.1 port 53)</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org25ba383" class="outline-4">
+<h4 id="org25ba383">misc</h4>
+<div class="outline-text-4" id="text-org25ba383">
 <ul class="org-ul">
 <li><code>systemd-analyze blame</code> for boot times</li>
 <li><code>systemd-analyze security my-service.unit</code> for sec settings</li>

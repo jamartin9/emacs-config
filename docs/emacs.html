@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org7180127">
-<div class="navbar-brand" id="org4b9b9c1">
-<div class="navbar-item" id="orgc6c5e33">
+<nav class="navbar is-black" id="org93e8eba">
+<div class="navbar-brand" id="org16dd56f">
+<div class="navbar-item" id="orgf57a79a">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgfd88708">
-<div class="navbar-start" id="org83669c6">
-<div class="navbar-item" id="org9d5f395">
+<div class="navbar-menu" id="orgf8dd4e3">
+<div class="navbar-start" id="orgcb9883f">
+<div class="navbar-item" id="orgfa0e774">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orga47f2b2">
+<div class="navbar-end" id="org4807072">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgc1c95db" class="outline-2">
-<h2 id="orgc1c95db">Emacs</h2>
-<div class="outline-text-2" id="text-orgc1c95db">
+<div id="outline-container-org47c59fd" class="outline-2">
+<h2 id="org47c59fd">Emacs</h2>
+<div class="outline-text-2" id="text-org47c59fd">
 </div>
-<div id="outline-container-org4949a29" class="outline-3">
-<h3 id="org4949a29">emacs notes</h3>
-<div class="outline-text-3" id="text-org4949a29">
+<div id="outline-container-org96f9c53" class="outline-3">
+<h3 id="org96f9c53">emacs notes</h3>
+<div class="outline-text-3" id="text-org96f9c53">
 <ul class="org-ul">
 <li>pgtk enabled <code>broadwayd</code> port 8080 with apps env var <code>GDK_BACKEND=broadway</code></li>
 <li>magit-generate-changelog for commit msg</li>
@@ -64,17 +64,17 @@
 <li>German air control ATC ran on emacs in the 90's</li>
 </ul>
 </div>
-<div id="outline-container-org1948cc3" class="outline-4">
-<h4 id="org1948cc3">org-mode notes</h4>
-<div class="outline-text-4" id="text-org1948cc3">
+<div id="outline-container-orgbcb45b6" class="outline-4">
+<h4 id="orgbcb45b6">org-mode notes</h4>
+<div class="outline-text-4" id="text-orgbcb45b6">
 <ul class="org-ul">
-<li>noweb can link code verbatium with <a id="orgfcae598"></a> or evaluate it with <a id="org9cafd8a"></a>()</li>
+<li>noweb can link code verbatium with <a id="org3b1d6f2"></a> or evaluate it with <a id="org6bfe8d6"></a>()</li>
 <li><code>#+INCLUDE "file.org::selector" :only-contents t</code> to select heading contents to include from other files</li>
 <li>disable tangling with <code>:tangle no</code> on src blocks</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgba8a6a6">(ignore-errors
+<pre class="src src-emacs-lisp" id="orga6a0b7e">(ignore-errors
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (readme (concat base-dir (file-name-as-directory "..") (file-name-as-directory "..") "README.org"))
          (readme-time (file-attribute-modification-time (file-attributes readme)))
@@ -88,21 +88,21 @@
 </div>
 </div>
 
-<div id="outline-container-orgf432c4d" class="outline-3">
-<h3 id="orgf432c4d">emacs-config README</h3>
-<div class="outline-text-3" id="text-orgf432c4d">
+<div id="outline-container-orgbe00cd3" class="outline-3">
+<h3 id="orgbe00cd3">emacs-config README</h3>
+<div class="outline-text-3" id="text-orgbe00cd3">
 <p>
 This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
 </p>
 
 <p>
-The dependencies are: emacs &gt;= 29/28, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store/pass-otp), aspell (flyspell), mpv (emms), notification-daemon (erc), sqlite (forge/roam), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
+The dependencies are: emacs &gt;= 29, guix (guix.el), gnupg (authinfo), git (magit), rg/fd (dired), pass (password-store/pass-otp), aspell (flyspell), mpv (emms), notification-daemon (erc), sqlite (forge/roam), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
 </p>
 
 <p>
 Current package considerations:
-embark for dwim shortcuts
-consult for commands
+embark for improved context menu
+consult for improved isearch, switch-buffer, etc
 combobulate for structural editing
 ts-fold for structural folding
 </p>
@@ -176,23 +176,11 @@ treemacs: workspace/project drawer with lsp/flycheck/company features. alternati
 </p>
 
 <p>
-smartparens: saves typing closing delimiters and strict matching speeds up font highlighting by avoiding broken/missing matches
-</p>
-
-<p>
 minions-mode: keeps the modeline visually brief with retained information. alternative: diminish/delight packages and config for each mode
 </p>
 
 <p>
-multiple-cursors: mass editing. alternative: reinvent with a function of marks and operations
-</p>
-
-<p>
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
-</p>
-
-<p>
-expand-region: select semantic units of text. alternative is set mark and search/select or treesit with combobulate
 </p>
 
 <p>
@@ -212,23 +200,19 @@ pcre2el: regex converter. alternative is a smooth big brain
 </p>
 
 <p>
-drag-stuff: move text around. alternative is treesit with combobulate
-</p>
-
-<p>
 link-hint: copy link urls (using avy). alternative is regex buffer contents
 </p>
 </div>
 
-<div id="outline-container-orgbb72eaf" class="outline-4">
-<h4 id="orgbb72eaf">Clone</h4>
-<div class="outline-text-4" id="text-orgbb72eaf">
+<div id="outline-container-org558b45b" class="outline-4">
+<h4 id="org558b45b">Clone</h4>
+<div class="outline-text-4" id="text-org558b45b">
 <p>
 Branch names diverging and "." complicate fetching the correct heads.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgc1f919c">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
+<pre class="src src-sh" id="orgeb62006">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
 # get branch heads
 git submodule foreach 'git checkout master'
 </pre>
@@ -236,9 +220,9 @@ git submodule foreach 'git checkout master'
 </div>
 </div>
 
-<div id="outline-container-orgaa23f85" class="outline-4">
-<h4 id="orgaa23f85">Tangle Install</h4>
-<div class="outline-text-4" id="text-orgaa23f85">
+<div id="outline-container-org6bf11c5" class="outline-4">
+<h4 id="org6bf11c5">Tangle Install</h4>
+<div class="outline-text-4" id="text-org6bf11c5">
 <p>
 Emacs untangles the script from the org file (using noweb to copy/eval code) while expanding INCLUDE directives.
 Tangling is rerun when the org file is newer than the script (if present) and the html file.
@@ -247,52 +231,54 @@ The wrapper is needed for org-roam, org-ids and html export tags.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org5211ea0">pwsh make-el.ps1 install
+<pre class="src src-sh" id="org66904e0">pwsh make-el.ps1 install
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge760cb7" class="outline-4">
-<h4 id="orge760cb7">Link</h4>
-<div class="outline-text-4" id="text-orge760cb7">
+<div id="outline-container-orgd8f02c4" class="outline-4">
+<h4 id="orgd8f02c4">Link</h4>
+<div class="outline-text-4" id="text-orgd8f02c4">
 <p>
 Installable org files tangle to a script of the same name for installation.
 The script needs itself and emacs on the PATH or CWD.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org6e9ed3d">(ignore-errors
+<pre class="src src-emacs-lisp" id="org9784344">(ignore-errors
       (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org36b9dd5" class="outline-4">
-<h4 id="org36b9dd5">Run</h4>
-<div class="outline-text-4" id="text-org36b9dd5">
+<div id="outline-container-org94fdbf7" class="outline-4">
+<h4 id="org94fdbf7">Run</h4>
+<div class="outline-text-4" id="text-org94fdbf7">
 <p>
 The one line org-mode sesquicolon 'shebang' is a multipart shell/powershell wrapper.
 Passed arguments to the elisp script are available by argv (ignoring “–” and “$@”).
 To run with powershell use the same wrapper format with a .ps1 extension.
-(BUG? Scripts that require packages need load-path from early-init; so make-el uses <code>--batch -l early-init.el</code> instead)
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org57805ee">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
+<pre class="src src-sh" id="orgf659e26">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 </pre>
 </div>
+<p>
+(BUG? Scripts that require packages need load-path from early-init; so make-el uses <code>--batch -l early-init.el</code> instead)
+</p>
 </div>
 </div>
 
-<div id="outline-container-org8d3e66f" class="outline-4">
-<h4 id="org8d3e66f">Cherry Picking</h4>
-<div class="outline-text-4" id="text-org8d3e66f">
+<div id="outline-container-orgcf6d838" class="outline-4">
+<h4 id="orgcf6d838">Cherry Picking</h4>
+<div class="outline-text-4" id="text-orgcf6d838">
 <p>
 Copy files by url with emacs
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp" id="org0a563e6">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
+<pre class="src src-elisp" id="org84f0069">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
 (url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
 (call-process "git" nil t nil "clone" "https://github.com/jamartin9/emacs-config")
 </pre>
@@ -300,14 +286,14 @@ Copy files by url with emacs
 </div>
 </div>
 
-<div id="outline-container-orgd11ca15" class="outline-4">
-<h4 id="orgd11ca15">Site</h4>
-<div class="outline-text-4" id="text-orgd11ca15">
+<div id="outline-container-org4099caa" class="outline-4">
+<h4 id="org4099caa">Site</h4>
+<div class="outline-text-4" id="text-org4099caa">
 <p>
 Clone the site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="orga03cd2a">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
+<pre class="src src-sh" id="org91786ae">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
 </pre>
 </div>
 
@@ -315,7 +301,7 @@ Clone the site
 Build the updated site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org753f954">pwsh make-el.ps1 site
+<pre class="src src-sh" id="orga2e5e33">pwsh make-el.ps1 site
 </pre>
 </div>
 </div>
