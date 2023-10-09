@@ -28,6 +28,7 @@ This your brain on the internet
   - service workers should not cache the manifest, itself or icons (16x16 and 32x32 should be cached for browser favicons)
   - service workers require https or ~chrome://flags/#unsafely-treat-insecure-origin-as-secure~ to be set locally
 - add the manifest to the html ~<head>~ as ~<link rel="manifest" href="./manifest.json">~
+- Isolated Web Apps for signed updates
 #+NAME: manifest.json
 #+BEGIN_SRC javascript :tangle no
 {

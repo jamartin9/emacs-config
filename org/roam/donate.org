@@ -10,10 +10,9 @@
 
 * internet tin cup
 - Chia (xch):
-  - https://___errorism.xch.am/
 #+NAME: chia-addr
 #+BEGIN_SRC conf :tangle no
-xch1x03zfge97kc2m5ne0v0qrqrahkrhvmj4au9vsczvwyel5d4f0swsp9xkry
+xch1l3x9jskhk87gruq4j333wnk4nwcs3dwpg6shs2ujhfkm9vf3um8s5e70s3
 #+END_SRC
 - Monero (xmr):
 #+NAME: xmr-addr

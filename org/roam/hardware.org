@@ -10,6 +10,8 @@
 * hardware
 - Backdoors
   - [[https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf][ubiquity devices]](unifi)
+    - any calvium processor
+    - amazon hsm
   - intel management engine
   - amd platform security processor
   - firmware level malware (disk controller, usb controller, flashable uefi/bios etc)
@@ -46,6 +48,7 @@
     - some NTP nodes use them (NTP is millisecond precision)
 
 - egpus for external gpu
+  - OCuLink (optical-copper link) for PCIe connectivity
 
 - RISC-V
   - free ISA
@@ -90,3 +93,7 @@
   - [[https://github.com/roxasthenobody98/phoenixpilot][open pilot fork for lariat and above]]
     - OBD 2 connector with ForScan can enable Lane assist without the technology package
       - [[https://www.f150forum.com/f118/openpilot-469489/index6/#post7077158][need short/button to toggle while driving]]
+** board games
+- pathfinder system like dnd 3.3
+- dnd 5e cap 20
+- whitewolf d10 had games in 90's

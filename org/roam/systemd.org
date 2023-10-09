@@ -42,6 +42,7 @@
    - configure for dnsmasq with ~[main] dns=dnsmasq~
 *** resolvectl
 - dns cache
+  - issue with long running process? Several weeks of uptime and lockup of dns request despite ping working...
 - ~resolvectl statistics~ and ~resolvectl status~
 - ~/etc/systemd/resolved.conf~
 - enable ~systemd-resolved~ and start

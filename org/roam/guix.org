@@ -107,14 +107,13 @@
                                              ;"mpv"; "vlc"; MAYBE add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
                                              "gnupg"
                                              "password-store" "pass-otp"
-                                             "virt-viewer" "qemu"; for spice remote-viewer
-                                             "alacritty"; "xterm" ; MAYBE add guix package for alacritty with nvidia-libs
+                                             "virt-viewer" ; "qemu"; for spice remote-viewer
+                                             ; "alacritty"; "xterm" ; MAYBE add guix package for alacritty with nvidia-libs
                                              "curl"; emacs-osm needs for CA's
                                              "screen"
-                                             "python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli" "emacs-pyvenv"
-                                             "tree-sitter-yaml" ; "tree-sitter-python" ; "tree-sitter-rust" ; "tree-sitter" ; "emacs-yaml-mode"; ; "emacs-flymake-guile"
-                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-flycheck-popup-tip" "emacs-rmsbolt" "emacs-guix" "emacs-emms" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-macrostep-geiser" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-which-key" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-gcmh" "emacs-cfrs" "emacs-fd"
-                                             "emacs-use-package" ; remove emacs-29
+                                             ;"python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli" "emacs-pyvenv" ; "tree-sitter-python"
+                                             "tree-sitter-yaml" ; "tree-sitter-rust" ; "tree-sitter" ; "emacs-yaml-mode"; ; "emacs-flymake-guile" ; "emacs-explain-pause-mode"
+                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-flycheck-popup-tip" "emacs-rmsbolt" "emacs-guix" "emacs-emms" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-macrostep-geiser" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-which-key" "emacs-pcre2el" "emacs-gcmh" "emacs-cfrs" "emacs-fd"
                                              ))))
    (services
     (list

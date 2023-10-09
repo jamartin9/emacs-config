@@ -1286,6 +1286,8 @@
   - Simple makefile-based build for musl cross compiler
 ** Ride-The-Lightning/RTL
   - Ride The Lightning - A full function web browser app for LND, C-Lightning and Eclair
+** rino-wallet/frontend
+  - RINO wallet frontend code
 ** ripienaar/free-for-dev
   - A list of SaaS, PaaS and IaaS offerings that have free tiers of interest to devops and infradev
 ** riscv-collab/riscv-gnu-toolchain
@@ -1764,6 +1766,8 @@
   - T2I-Adapter
 ** TheStageAI/TorchIntegral
   - Integral Neural Networks in PyTorch
+** vitoplantamura/OnnxStream
+  - Stable Diffusion XL 1.0 Base on a Raspberry Pi Zero 2 (or in 298MB of RAM)
 ** XingangPan/DragGAN
   - Official Code for DragGAN (SIGGRAPH 2023)
 ** zkonduit/ezkl
@@ -1834,6 +1838,8 @@
   - Compatibility tool for Steam Play based on Wine and additional components
 
 * rust
+** ferrocene/ferrocene
+  - toolchain to enable the use of the Rust programming language in safety-critical environments
 ** 10XGenomics/rust-boomphf
   - Fast and scalable minimal perfect hashing for massive key sets
 ** advancedresearch/prop
@@ -1932,6 +1938,8 @@
   - Kani Rust Verifier
 ** mozilla/uniffi-rs
   - a multi-language bindings generator for rust
+** nvzqz/divan
+  - Fast, simple, reliable benchmarking for Rust projects
 ** org-rs/org-rs
   - org-mode parser rewrite in Rust
 ** pelikan-io/pelikan

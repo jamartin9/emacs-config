@@ -230,21 +230,19 @@
 
             (if (native-comp-available-p)
                 (progn
-                  (if (>= emacs-major-version 29) ; set eln-cache & remove after emacs-29
-                      (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
-                    (setq native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
+                  (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
                   (setq native-comp-deferred-compilation t
-                        native-comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln") ; renamed with native- in 29.1
+                        native-comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln")
                         native-comp-async-report-warnings-errors nil
+                        native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
                         native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
-            (if (>= emacs-major-version 29) ; remove after emacs-29
-                (bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
-                           ("w" . windmove-up)
-                           ("a" . windmove-left)
-                           ("s" . windmove-down)
-                           ("d" . windmove-right)
-                           ("f" . select-frame-by-name)
-                           ("o" . other-frame)))
+            (bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
+                       ("w" . windmove-up)
+                       ("a" . windmove-left)
+                       ("s" . windmove-down)
+                       ("d" . windmove-right)
+                       ("f" . select-frame-by-name)
+                       ("o" . other-frame))
             (setq-default indent-tabs-mode nil
                 tab-width 4
                 tab-always-indent 'complete
@@ -477,7 +475,7 @@
 
 (use-package lsp-mode ; use eglot for android
   :commands (lsp-install-server lsp-mode lsp lsp-restart-workspace)
-  :hook ((python-mode . lsp))
+;  :hook ((python-mode . lsp))
   :config (bind-keys :map jam/code
                       ("a" . lsp-execute-code-action)
                       ("f" . lsp-format-buffer)
@@ -525,9 +523,9 @@
                                      ;:arguments "-h" ; dap-debug-edit-template
                                      ;debugger_args ""
                                      :cwd nil))
-  (require 'dap-python)
-  (setq dap-python-executable "python3" ; use guix-home's python for debug module
-        dap-python-debugger 'debugpy
+;  (require 'dap-python)
+  (setq ;dap-python-executable "python3" ; use guix-home's python for debug module
+        ;dap-python-debugger 'debugpy
         dap-utils-extension-path (expand-file-name ".extension" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
         dap-breakpoints-file (expand-file-name ".dap-breakpoints" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))))
 
@@ -721,7 +719,6 @@
   :custom (osm-copyright nil))
 
 (use-package treesit ; libtreesitter-*.so
-  :if (>= emacs-major-version 29) ; remove after emacs-29
   :ensure nil ; built-in
   :init
   (if (treesit-available-p)
@@ -731,19 +728,18 @@
           (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 ;(use-package combobulate
-;  :if (>= emacs-major-version 29)
 ;  :init (setq combobulate-key-prefix "C-c e")
 ;  :hook ((python-ts-mode . combobulate-mode)
 ;         (yaml-ts-mode . combobulate-mode))
 ;  :load-path ("/gnu/git/combobulate"))
 
-(use-package python ; python
-  :commands (python-mode python-mode-hook python-mode-local-vars-hook))
+;(use-package python ; python
+;  :commands (python-mode python-mode-hook python-mode-local-vars-hook))
 
-(use-package pyvenv ; python
-  :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
-  (add-hook 'pyvenv-post-activate-hooks #'lsp-restart-workspace)
-  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
+;(use-package pyvenv ; python
+;  :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
+;  (add-hook 'pyvenv-post-activate-hooks #'lsp-restart-workspace)
+;  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
 
 (use-package rmsbolt
   :init (bind-keys :map jam/toggle ("r" . rmsbolt-mode))
@@ -895,8 +891,8 @@
   (setq
    gnus-save-newsrc-file nil
    gnus-read-newsrc-file nil
-   gnus-use-dribble-file t
-   gnus-always-read-dribble-file t
+   ;gnus-use-dribble-file t
+   ;gnus-always-read-dribble-file t
    gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
    gnus-select-method
@@ -969,11 +965,11 @@
          (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
          (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
-(use-package explain-pause-mode
+;(use-package explain-pause-mode
   ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; MAYBE install from source with package.el or url-copy-file
-  :ensure nil ; BUG not in melpa
-  :init (bind-keys :map jam/open ("T" . explain-pause-top))
-  :commands (explain-pause-top explain-pause-mode))
+;  :ensure nil ; BUG not in melpa
+;  :init (bind-keys :map jam/open ("T" . explain-pause-top))
+;  :commands (explain-pause-top explain-pause-mode))
 
 (use-package pcre2el
   ;:pin nongnu

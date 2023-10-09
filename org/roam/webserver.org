@@ -11,6 +11,8 @@
 ** webserver notes
 - Alt-Svc headers for http3/onion service
 - http3 is udp (quic)
+  - header compression is vulnerable to CRIME attack.
+    - disable compression or use high entropy to avoid
 - http2 requires tls
 - ~./wrk -t1 -c400 -d30s http://127.0.0.1:42000/index.html~
 - https://blog.tjll.net/reverse-proxy-hot-dog-eating-contest-caddy-vs-nginx/
