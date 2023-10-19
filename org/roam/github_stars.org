@@ -308,6 +308,8 @@
   - Modular in-buffer completion framework for Emacs
 ** consp/apim-asbuilt-decode
   - Decoding of the Ford Sync 3 APIM AsBuilt data
+** containers/libkrun
+  - A dynamic library providing Virtualization-based process isolation capabilities
 ** Cookie-AutoDelete/Cookie-AutoDelete
   - Firefox and Chrome WebExtension that deletes cookies and other browsing site data as soon as the tab closes, domain changes, browser restarts, or a combination of those events.
 ** copy/v86
@@ -792,6 +794,8 @@
   - Simple library for asynchronous processing in Emacs
 ** jwiegley/use-package
   - A use-package declaration for simplifying your .emacs
+** k3d-io/k3d
+  - Little helper to run CNCF's k3s in Docker
 ** karpathy/nanoGPT
   - The simplest, fastest repository for training/finetuning medium-sized GPTs.
 ** kateinoigakukun/wasi-vfs
@@ -1252,6 +1256,8 @@
   - Vulnerability Static Analysis for Containers
 ** quelpa/quelpa
   - Build and install your Emacs Lisp packages on-the-fly directly from source
+** Quexington/tree-sitter-chialisp
+  - A tree-sitter language parser for the language used to build smart contracts on top of the Chia Blockchain: Chialisp
 ** Radarr/Radarr
   - A fork of Sonarr to work with movies à la Couchpotato.
 ** RalfJung/minirust

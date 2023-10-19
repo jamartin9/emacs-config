@@ -83,6 +83,12 @@
   (eshell t))
 
 ;;;###autoload
+(defun jam/eshell ()
+  "Open new eshell"
+  (interactive)
+  (eshell t))
+
+;;;###autoload
 (defun jam/move-line-up ()
   "Move line up"
   (interactive)
@@ -109,239 +115,241 @@
   (interactive)
   (transpose-words -1))
 
-;; Movement: f b n p, a e, M-g-g
+;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
-  :init (setq user-full-name "Justin Martin"
-                user-mail-address "jaming@protonmail.com"
-                backup-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
-                auto-save-list-file-prefix (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "auto-save-list") ".saves-")
-                recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-                bookmark-default-file (expand-file-name "bookmarks" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))) ; bookmarks support annotations
-                project-list-file (expand-file-name "projects" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-                url-cookie-file (expand-file-name "cookies" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-                url-cache-directory (expand-file-name "cache" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-                nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-                auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo.gpg")) ; auth
-                epa-file-cache-passphrase-for-symmetric-encryption t
-                modus-themes-mode-line '(accented borderless moody) ; theme
-                modus-themes-box-buttons '(underline faint accented)
-                modus-themes-paren-match '(bold underline)
-                modus-themes-org-blocks '(tinted-background)
-                modus-themes-headings '((t . (rainbow)))
-                modus-themes-subtle-line-numbers t
-                modus-themes-markup '(bold intense)
-                modus-themes-org-agenda '((header-block . (1.5 variable-pitch))
-                                          (header-date . (bold-today))
-                                          (event . (accented varied))
-                                          (scheduled . rainbow)
-                                          (habit . nil))
-                modus-themes-prompts '(background)
-                modus-themes-region '(accented bg-only no-extend)
-                modus-themes-completions '((matches . (extrabold background intense))
-                                           (selection . (semibold accented intense))
-                                           (popup . (accented)))
-                display-line-numbers-type t ; defaults
-                apropos-do-all t
-                xterm-set-window-title t
-                xterm-extra-capabilities '(getSelection setSelection) ; osc term copy/paste
-                visible-cursor nil
-                ad-redefinition-action 'accept ; ignore warnings
-                completion-auto-help 'lazy; '?' for help w/mouse click
-                completion-cycle-threshold nil ; flex narrowing instead of cycling
-                completions-format 'one-column
-                completions-group t
-                completion-styles '(basic initials substring partial-completion)
-                completions-detailed t
-                ;completion-auto-select 'second-tab
-                column-number-mode t
-                sentence-end-double-space nil
-                require-final-newline t
-                bidi-inhibit-bpa t ; some naughty unicodes
-                auto-revert-remote-files nil ; dired
-                auto-revert-interval 1
-                use-short-answers t ; annoying
-                confirm-kill-processes nil
-                visible-bell nil
-                ring-bell-function #'ignore
-                uniquify-buffer-name-style 'forward
-                confirm-nonexistent-file-or-buffer nil
-                confirm-kill-emacs nil
-                blink-matching-paren nil
-                enable-recursive-minibuffers t
-                tool-bar-mode nil
-                scroll-bar-mode nil
-                mouse-yank-at-point t
-                mouse-drag-and-drop-region t
-                x-stretch-cursor nil
-                indicate-buffer-boundaries nil
-                indicate-empty-lines nil
-                shift-select-mode t
-                frame-resize-pixelwise t ; frames/windows
-                frame-inhibit-implied-resize t
-                highlight-nonselected-windows nil
-                window-resize-pixelwise nil
-                window-divider-default-places t
-                window-divider-default-bottom-width 1
-                window-divider-default-right-width 1
-                split-height-threshold nil
-                split-width-threshold 160
-                resize-mini-windows 'grow-only
-                truncate-partial-width-windows nil
-                auto-window-vscroll nil ; scrolling
-                mouse-wheel-tilt-scroll t ; horizontal scrolling
-                mouse-wheel-flip-direction t ; horizontal scrolling
-                scroll-conservatively 101
-                scroll-margin 0
-                scroll-preserve-screen-position t
-                hscroll-margin 2
-                hscroll-step 1
-                fast-but-imprecise-scrolling t
-                inhibit-compacting-font-caches t
-                redisplay-skip-fontification-on-input t
-                shift-select-mode t
-                read-process-output-max (* 64 1024)
-                ;desktop-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session")) ; MAYBE add desktop-save-mode for sessions
-                ;load-prefer-newer t; noninteractive
-                auto-mode-case-fold nil
-                kill-do-not-save-duplicates t
-                edebug-print-length nil ; print whole edebug result
-                browse-url-browser-function 'xwidget-webkit-browse-url ; libxml-parse-html-region w/ shr
-                shr-use-xwidgets-for-media t ; eww display video tags
-                display-time-format "%m-%d-%Y %R"
-                display-time-default-load-average nil
-                find-file-visit-truename t ; files
-                vc-follow-symlinks t
-                find-file-suppress-same-file-warnings t
-                create-lockfiles nil
-                make-backup-files nil
-                version-control t
-                backup-by-copying t
-                delete-old-versions t
-                kept-old-versions 5
-                kept-new-versions 5
-                auto-save-default t
-                auto-save-include-big-deletions t
-                initial-major-mode 'fundamental-mode ; startup
-                initial-scratch-message nil
-                default-input-method nil
-                inhibit-startup-screen t
-                inhibit-startup-echo-area-message user-login-name
-                inhibit-default-init t)
+  :init (setq ;user-full-name "Justin Martin"
+              ;user-mail-address "jaming@protonmail.com"
+              backup-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
+              auto-save-list-file-prefix (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "auto-save-list") ".saves-")
+              recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+              bookmark-default-file (expand-file-name "bookmarks" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))) ; bookmarks support annotations
+              project-list-file (expand-file-name "projects" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+              url-cookie-file (expand-file-name "cookies" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+              url-cache-directory (expand-file-name "cache" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+              nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
+              auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo.gpg")) ; auth
+              epa-file-cache-passphrase-for-symmetric-encryption t
+              modus-themes-mode-line '(accented borderless moody) ; theme
+              modus-themes-box-buttons '(underline faint accented)
+              modus-themes-paren-match '(bold underline)
+              modus-themes-org-blocks '(tinted-background)
+              modus-themes-headings '((t . (rainbow)))
+              modus-themes-subtle-line-numbers t
+              modus-themes-markup '(bold intense)
+              modus-themes-org-agenda '((header-block . (1.5 variable-pitch))
+                                        (header-date . (bold-today))
+                                        (event . (accented varied))
+                                        (scheduled . rainbow)
+                                        (habit . nil))
+              modus-themes-prompts '(background)
+              modus-themes-region '(accented bg-only no-extend)
+              modus-themes-completions '((matches . (extrabold background intense))
+                                         (selection . (semibold accented intense))
+                                         (popup . (accented)))
+              display-line-numbers-type t ; defaults
+              apropos-do-all t
+              xterm-set-window-title t
+              xterm-extra-capabilities '(getSelection setSelection) ; osc term copy/paste
+              visible-cursor nil
+              ad-redefinition-action 'accept ; ignore warnings
+              completion-auto-help 'lazy; '?' for help w/mouse click
+              completion-cycle-threshold nil ; flex narrowing instead of cycling
+              completions-format 'one-column
+              completions-group t
+              completion-styles '(basic initials substring partial-completion)
+              completions-detailed t
+              ;completion-auto-select 'second-tab
+              column-number-mode t
+              sentence-end-double-space nil
+              require-final-newline t
+              bidi-inhibit-bpa t ; some naughty unicodes
+              auto-revert-remote-files nil ; dired
+              auto-revert-interval 1
+              use-short-answers t ; annoying
+              confirm-kill-processes nil
+              visible-bell nil
+              ring-bell-function #'ignore
+              uniquify-buffer-name-style 'forward
+              confirm-nonexistent-file-or-buffer nil
+              confirm-kill-emacs nil
+              blink-matching-paren nil
+              enable-recursive-minibuffers t
+              tool-bar-mode nil
+              scroll-bar-mode nil
+              mouse-yank-at-point t
+              mouse-drag-and-drop-region t
+              x-stretch-cursor nil
+              indicate-buffer-boundaries nil
+              indicate-empty-lines nil
+              shift-select-mode t
+              frame-resize-pixelwise t ; frames/windows
+              frame-inhibit-implied-resize t
+              highlight-nonselected-windows nil
+              window-resize-pixelwise nil
+              window-divider-default-places t
+              window-divider-default-bottom-width 1
+              window-divider-default-right-width 1
+              split-height-threshold nil
+              split-width-threshold 160
+              resize-mini-windows 'grow-only
+              truncate-partial-width-windows nil
+              auto-window-vscroll nil ; scrolling
+              mouse-wheel-tilt-scroll t ; horizontal scrolling
+              mouse-wheel-flip-direction t ; horizontal scrolling
+              scroll-conservatively 101
+              scroll-margin 0
+              scroll-preserve-screen-position t
+              hscroll-margin 2
+              hscroll-step 1
+              fast-but-imprecise-scrolling t
+              inhibit-compacting-font-caches t
+              redisplay-skip-fontification-on-input t
+              shift-select-mode t
+              read-process-output-max (* 64 1024)
+              ;desktop-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session")) ; MAYBE add desktop-save-mode for sessions
+              ;load-prefer-newer t; noninteractive
+              auto-mode-case-fold nil
+              kill-do-not-save-duplicates t
+              edebug-print-length nil ; print whole edebug result
+              browse-url-browser-function 'xwidget-webkit-browse-url ; libxml-parse-html-region w/ shr
+              shr-use-xwidgets-for-media t ; eww display video tags
+              display-time-format "%m-%d-%Y %R"
+              display-time-default-load-average nil
+              find-file-visit-truename t ; files
+              vc-follow-symlinks t
+              find-file-suppress-same-file-warnings t
+              create-lockfiles nil
+              make-backup-files nil
+              version-control t
+              backup-by-copying t
+              delete-old-versions t
+              kept-old-versions 5
+              kept-new-versions 5
+              auto-save-default t
+              auto-save-include-big-deletions t
+              initial-major-mode 'fundamental-mode ; startup
+              initial-scratch-message nil
+              default-input-method nil
+              inhibit-startup-screen t
+              inhibit-startup-echo-area-message user-login-name
+              inhibit-default-init t)
 
-            (if (native-comp-available-p)
-                (progn
-                  (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
-                  (setq native-comp-deferred-compilation t
-                        native-comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln")
-                        native-comp-async-report-warnings-errors nil
-                        native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
-                        native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
-            (bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
-                       ("w" . windmove-up)
-                       ("a" . windmove-left)
-                       ("s" . windmove-down)
-                       ("d" . windmove-right)
-                       ("f" . select-frame-by-name)
-                       ("o" . other-frame))
-            (setq-default indent-tabs-mode nil
+  (if (native-comp-available-p)
+      (progn
+        (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
+        (setq native-comp-deferred-compilation t
+              native-comp-enable-subr-trampolines (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln")
+              native-comp-async-report-warnings-errors nil
+              native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
+              native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
+  (bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
+             ("w" . windmove-up)
+             ("a" . windmove-left)
+             ("s" . windmove-down)
+             ("d" . windmove-right)
+             ("f" . select-frame-by-name)
+             ("o" . other-frame))
+  (setq-default indent-tabs-mode nil
                 tab-width 4
                 tab-always-indent 'complete
                 word-wrap t)
-            (add-hook 'prog-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
-            (add-hook 'text-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
-            (fido-vertical-mode 1) ; M-j to ignore completion
-            (cua-mode 1)
-            (window-divider-mode 1)
-            (display-time-mode 1)
-            (delete-selection-mode 1)
-            (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-            (add-hook 'after-init-hook #'(lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))))
-            (blink-cursor-mode -1)
-            (pixel-scroll-precision-mode 1) ; smooth scrolling
-            (electric-pair-mode 1) ; less typing
-            (context-menu-mode 1); mouse right click menu
-            (bind-keys ("<M-up>" . jam/move-line-up)
-                       ("<M-down>" . jam/move-line-down)
-                       ("<M-left>" . jam/move-word-left)
-                       ("<M-right>" . jam/move-word-right))
-            (bind-keys :map ctl-x-map ("C-S-s" . jam/save-all))
-            (bind-keys :map help-map ("D" . shortdoc))
-            (bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
-            (bind-keys :map minibuffer-local-completion-map
-                       ;("<mouse-1>" . minibuffer-choose-completion)
-                       ("C-TAB" . icomplete-fido-ret)
-                       ("C-<tab>" . icomplete-fido-ret)
-                       ("S-TAB" . icomplete-backward-completions) ; wraparound?
-                       ("<backtab>" . icomplete-backward-completions)
-                       ("TAB" . icomplete-forward-completions)
-                       ("<tab>" . icomplete-forward-completions)
-                       ("<mouse-4>" . icomplete-backward-completions)
-                       ("<wheel-up>" . icomplete-backward-completions)
-                       ("<mouse-5>" . icomplete-forward-completions)
-                       ("<wheel-down>" . icomplete-forward-completions))
-            (bind-keys :prefix-map jam/vcs :prefix "C-c v")
-            (bind-keys :prefix-map jam/notes :prefix "C-c n")
-            (bind-keys :prefix-map jam/projects :prefix "C-c p"
-                       ("d" . jam/draw)); C-x p g
-            (bind-keys :prefix-map jam/toggle :prefix "C-c t"
-                       ("v" . visible-mode)
-                       ("w" . visual-line-mode)
-                       ("x" . xterm-mouse-mode)
-                       ("c" . global-display-fill-column-indicator-mode)
-                       ("F" . toggle-frame-fullscreen))
-            (bind-keys :prefix-map jam/open :prefix "C-c o"
-                        ("s" . jam/sudo-edit)
-                        ("S" . speedbar-frame-mode)
-                        ("b" . browse-url-of-file)
-                        ("-" . dired-jump)
-                        ("f" . make-frame))
-            (bind-keys :prefix-map jam/insert :prefix "C-c i"
-                        ("y" . cua-paste)
-                        ("u" . insert-char)
-                        ("s" . yas-insert-snippet)
-                        ("e" . emojify-insert-emoji)
-                        ("b" . string-insert-rectangle))
-            (bind-keys :prefix-map jam/code :prefix "C-c c"
-                        ("j" . xref-find-definitions)
-                        ("c" . compile))
-            (bind-keys :prefix-map jam/search :prefix "C-c s"
-                        ("l" . link-hint-copy-link)
-                        ("L" . ffap-menu)
-                        ("i" . imenu)
-                        ("a" . apropos)
-                        ("m" . bookmark-jump))
-            (bind-keys :prefix-map jam/file :prefix "C-c f"
-                       ("f" . find-file)
-                       ("r" . recentf-open)
-                       ("d" . dired))
-            (bind-keys :prefix-map jam/quit :prefix "C-c q"
-                       ("f" . delete-frame)
-                       ("q" . kill-emacs)
-                       ("r" . restart-emacs)
-                       ("Q" . save-buffers-kill-terminal)
-                       ("K" . save-buffers-kill-emacs))
-            (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
-            (if (not (memq window-system '(android))) ; disable menu-bar on non android
-                (progn
-                  (setq menu-bar-mode nil)
-                  (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
-              ;; set android termux paths for call-process
-              (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
-		                             (getenv "PATH")))
-              (setenv "LD_LIBRARY_PATH" (format "%s:%s"
-				                                "/data/data/com.termux/files/usr/lib"
-				                                (getenv "LD_LIBRARY_PATH")))
-              (push "/data/data/com.termux/files/usr/bin" exec-path))
-            (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
-            (add-to-list 'default-frame-alist '(vertical-scroll-bars))
-            (set-frame-parameter nil 'alpha-background 80)
-            ;(add-to-list 'default-frame-alist '(width  . 190))
-            ;(add-to-list 'default-frame-alist '(height  . 96))
-            (add-to-list 'default-frame-alist '(alpha-background  . 80))
-            ;(add-to-list 'initial-frame-alist '(width  . 190))
-            ;(add-to-list 'initial-frame-alist '(height  . 96))
-            (add-to-list 'initial-frame-alist '(alpha-background  . 80))
-            (set-language-environment "UTF-8"))
+  (add-hook 'prog-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
+  (add-hook 'text-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
+  (fido-vertical-mode 1) ; M-j to ignore completion
+  (cua-mode 1)
+  (window-divider-mode 1)
+  (display-time-mode 1)
+  (delete-selection-mode 1)
+  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
+  (add-hook 'after-init-hook #'(lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))))
+  (blink-cursor-mode -1)
+  (pixel-scroll-precision-mode 1) ; smooth scrolling
+  (electric-pair-mode 1) ; less typing
+  (context-menu-mode 1); mouse right click menu
+  (bind-keys ("<M-up>" . jam/move-line-up)
+             ("<M-down>" . jam/move-line-down)
+             ("<M-left>" . jam/move-word-left)
+             ("<M-right>" . jam/move-word-right))
+  (bind-keys :map ctl-x-map ("C-S-s" . jam/save-all))
+  (bind-keys :map help-map ("D" . shortdoc))
+  (bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
+  (bind-keys :map minibuffer-local-completion-map
+             ;("<mouse-1>" . minibuffer-choose-completion)
+             ("C-TAB" . icomplete-fido-ret)
+             ("C-<tab>" . icomplete-fido-ret)
+             ("S-TAB" . icomplete-backward-completions) ; wraparound?
+             ("<backtab>" . icomplete-backward-completions)
+             ("TAB" . icomplete-forward-completions)
+             ("<tab>" . icomplete-forward-completions)
+             ("<mouse-4>" . icomplete-backward-completions)
+             ("<wheel-up>" . icomplete-backward-completions)
+             ("<mouse-5>" . icomplete-forward-completions)
+             ("<wheel-down>" . icomplete-forward-completions))
+  (bind-keys :prefix-map jam/vcs :prefix "C-c v")
+  (bind-keys :prefix-map jam/notes :prefix "C-c n")
+  (bind-keys :prefix-map jam/projects :prefix "C-c p"); C-x p g
+  (bind-keys :prefix-map jam/toggle :prefix "C-c t"
+             ("v" . visible-mode)
+             ("w" . visual-line-mode)
+             ("x" . xterm-mouse-mode)
+             ("c" . global-display-fill-column-indicator-mode)
+             ("F" . toggle-frame-fullscreen)
+             ("f" . flymake-mode)
+             ("r" . recentf-mode))
+  (bind-keys :prefix-map jam/open :prefix "C-c o"
+             ("r" . recentf-open)
+             ("s" . jam/sudo-edit)
+             ("S" . speedbar-frame-mode)
+             ("b" . browse-url-of-file)
+             ("-" . dired-jump)
+             ("f" . make-frame)
+             ("d" . jam/draw))
+  (bind-keys :prefix-map jam/insert :prefix "C-c i"
+             ("y" . cua-paste)
+             ("u" . insert-char)
+             ("s" . yas-insert-snippet)
+             ("e" . emojify-insert-emoji)
+             ("b" . string-insert-rectangle))
+  (bind-keys :prefix-map jam/code :prefix "C-c c"
+             ("j" . xref-find-definitions)
+             ("c" . compile))
+  (bind-keys :prefix-map jam/search :prefix "C-c s"
+             ("l" . link-hint-copy-link)
+             ("L" . ffap-menu)
+             ("i" . imenu)
+             ("a" . apropos)
+             ("m" . bookmark-jump))
+  (bind-keys :prefix-map jam/file :prefix "C-c f"
+             ("f" . find-file)
+             ("d" . dired))
+  (bind-keys :prefix-map jam/quit :prefix "C-c q"
+             ("f" . delete-frame)
+             ("q" . kill-emacs)
+             ("r" . restart-emacs)
+             ("Q" . save-buffers-kill-terminal)
+             ("K" . save-buffers-kill-emacs))
+  (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
+  (if (not (memq window-system '(android))) ; disable menu-bar on non android
+      (progn
+        (setq menu-bar-mode nil)
+        (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
+    ;; set android termux paths for call-process
+    (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
+                           (getenv "PATH")))
+    (setenv "LD_LIBRARY_PATH" (format "%s:%s"
+                                      "/data/data/com.termux/files/usr/lib"
+                                      (getenv "LD_LIBRARY_PATH")))
+    (push "/data/data/com.termux/files/usr/bin" exec-path))
+  (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
+  (add-to-list 'default-frame-alist '(vertical-scroll-bars))
+  (set-frame-parameter nil 'alpha-background 80)
+  ;(add-to-list 'default-frame-alist '(width  . 190))
+  ;(add-to-list 'default-frame-alist '(height  . 96))
+  (add-to-list 'default-frame-alist '(alpha-background  . 80))
+  ;(add-to-list 'initial-frame-alist '(width  . 190))
+  ;(add-to-list 'initial-frame-alist '(height  . 96))
+  (add-to-list 'initial-frame-alist '(alpha-background  . 80))
+  (set-language-environment "UTF-8"))
 
 (use-package gcmh ; gc when idle
   :init (setq gcmh-idle-delay 'auto ; gc startup
@@ -392,9 +400,10 @@
                    ("z" . emms-next))
   :commands (emms-play-file emms-librefm-stream emms-browser emms-play-url emms-play-directory emms-next)
   :config
+  (setq emms-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "emms"))
   (require 'emms-setup)
   (emms-minimalistic)
-  (setq emms-player-list '(emms-player-mpv)) ; emms-player-vlc
+  (setq emms-player-list '(emms-player-mpv)); emms-player-vlc
   (require 'emms-librefm-stream)
   (emms-librefm-scrobbler-disable) ; BUG make work without login
   (setq emms-source-file-default-directory (concat (file-name-as-directory (getenv "HOME")) "Music")
@@ -421,8 +430,7 @@
   (setq geiser-repl-per-project-p t
         geiser-repl-current-project-function #'geiser-repl-project-root
         geiser-repl-history-filename (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-history"))
-  (require 'geiser-guile)
-  (require 'flycheck-guile)); geiser call per buffer?
+  (require 'geiser-guile)); geiser call per buffer?
 
 (use-package macrostep-geiser ; guile
   :init
@@ -440,11 +448,14 @@
                         (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
   :commands geiser-guile)
 
-(use-package flycheck-guile ; guile
-  :after geiser)
+(use-package flymake ; MAYBE add flycheck backends
+  :ensure nil ; built-in
+  :commands flymake-mode)
 
-;(use-package flymake-guile
-;  :hook (scheme-mode-hook . flymake-guile))
+(use-package flymake-guile ; guile/guild
+  :commands flymake-guile
+  :hook (scheme-mode . flymake-guile)
+  :hook (scheme-mode . flymake-mode))
 
 (use-package flyspell ; aspell
   :ensure nil ; built-in
@@ -467,73 +478,17 @@
                 ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
-;(use-package eglot
-  ;:hook (((python-mode ruby-mode elixir-mode) . eglot))
-  ;:custom (eglot-send-changes-idle-time 0.1)
-  ;:config (fset #'jsonrpc--log-event #'ignore); stop logging
-  ; (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server-wrapper" "--lsp"))))
+(use-package eglot
+  :hook (((python-mode rust-mode) . eglot-ensure))
+  :custom (eglot-send-changes-idle-time 0.1)
+  :config (fset #'jsonrpc--log-event #'ignore); stop logging
+  (add-to-list 'eglot-server-programs
+               '((rust-ts-mode rust-mode) .
+                 ("rust-analyzer" :initializationOptions (:checkOnSave (:command "clippy"))))))
 
-(use-package lsp-mode ; use eglot for android
-  :commands (lsp-install-server lsp-mode lsp lsp-restart-workspace)
-;  :hook ((python-mode . lsp))
-  :config (bind-keys :map jam/code
-                      ("a" . lsp-execute-code-action)
-                      ("f" . lsp-format-buffer)
-                      ("r" . lsp-rename))
-  (require 'lsp-diagnostics) ; flycheck enable?
-  (require 'lsp-lens) ; default enabled
-  (require 'lsp-modeline)
-  :init (setq lsp-enable-on-type-formatting nil
-              lsp-response-timeout 60
-              lsp-headerline-breadcrumb-enable nil
-              lsp-session-file (expand-file-name ".lsp-session-v1" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-              lsp-enable-folding nil))
-
-(use-package lsp-treemacs ; use eglot for android
-  :config (bind-keys :map jam/code
-                      ("X" . lsp-treemacs-errors-list)
-                      ("y" . lsp-treemacs-call-hierarchy))
-  :after (treemacs lsp))
-
-(use-package lsp-ui ; use eglot for android
-  :init (add-hook 'lsp-mode-hook #'lsp-ui-mode)
-  :commands lsp-ui-mode
-  :config (setq lsp-ui-peek-enable t))
-
-(use-package dap-mode ; BUG guix: icons not included in package ; use eglot
-  :init (bind-keys :map jam/code ("d" . dap-debug))
-  :commands (dap-debug dap-debug-edit-template)
-  :after lsp-mode
-  :config
-  (require 'dap-mouse)
-  (require 'dap-ui)
-  (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls tooltip))
-  (require 'dap-gdb-lldb)
-  ;;;###package gdb
-  (setq gdb-show-main t ; MAYBE use gdb dap interface
-        gdb-many-windows t)
-  ;(dap-gdb-lldb-setup) ; BUG download/unzip fails? redirect?
-  (dap-register-debug-template "Rust::GDB Run Configuration"
-                               (list :type "gdb"
-                                     :request "attach"; "launch"
-                                     :name "Rust::GDB"
-                                     :gdbpath "rust-gdb"
-                                     :target nil; 666; pid
-                                     ;:executable "/somesuchfile"
-                                     ;:arguments "-h" ; dap-debug-edit-template
-                                     ;debugger_args ""
-                                     :cwd nil))
-;  (require 'dap-python)
-  (setq ;dap-python-executable "python3" ; use guix-home's python for debug module
-        ;dap-python-debugger 'debugpy
-        dap-utils-extension-path (expand-file-name ".extension" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-        dap-breakpoints-file (expand-file-name ".dap-breakpoints" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))))
-
-(use-package rustic ; rustc/cargo
-  ;:init (setq rustic-treesitter-derive t) ; MAYBE add when rustic supports treesit
-         ;(add-hook 'rustic-mode-hook #'lsp-deferred)
-  :config (jam/set-rust-path)
-  :mode ("\\.rs$" . rustic-mode))
+(use-package rust-mode
+  :commands rust-mode
+  :config (jam/set-rust-path))
 
 (use-package undo-tree
   ;:pin gnu
@@ -667,50 +622,6 @@
               ("R" . org-roam-db-sync)
               ("r" . org-roam-node-find)))
 
-(use-package fd-dired ; fd/rg
-  :init (bind-keys :map jam/search
-                   ("n" . fd-dired)
-                   ("r" . find-grep-dired))
-  :after dired
-  ;:vc (:url "https://github.com/yqrashawn/fd-dired.git" :rev :newest)
-  :config (bind-key [remap find-dired] 'fd-dired)
-  (bind-key [remap find-grep-dired] 'fd-grep-dired)
-  (bind-key [remap find-name-dired] 'fd-name-dired)
-  :commands (fd-dired fd-grep-dired fd-name-dired))
-
-(use-package flycheck
-  :init ;(add-hook 'after-init-hook #'global-flycheck-mode)
-  (add-hook 'prog-mode-hook #'flycheck-mode)
-  (bind-keys :map jam/toggle ("f" . flycheck-mode))
-  :commands (flycheck-list-errors flycheck-buffer global-flycheck-mode flycheck-mode-hook flycheck-mode)
-  :custom (flycheck-display-errors-function #'display-error-messages)
-  :config
-  (delq 'new-line flycheck-check-syntax-automatically)
-  (setq flycheck-emacs-lisp-load-path 'inherit
-        flycheck-idle-change-delay 1.0
-        flycheck-buffer-switch-check-intermediate-buffers t
-        flycheck-display-errors-delay 0.25)
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-
-(use-package flycheck-popup-tip ; flycheck tty popups
-  :init (add-hook 'flycheck-mode-hook #'flycheck-popup-tip-mode)
-  :commands (flycheck-popup-tip-mode flycheck-popup-tip-show-popup flycheck-popup-tip-delete-popup))
-
-(use-package treemacs
-  :init ;(bind-keys ("<f9>" . treemacs))
-  (bind-keys :map jam/projects
-             ("o" . treemacs)
-             ("w" . treemacs-switch-workspace)
-             ("d" . treemacs-delete-workspace)
-             ("n" . treemacs-create-workspace))
-  (setq treemacs-persist-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "treemacs-persist"))
-  :commands (treemacs treemacs-find-file treemacs-switch-workspace))
-
-(use-package cfrs
-  :ensure nil ; BUG guix package needs for treemacs
-  :commands cfrs-read
-  :after treemacs)
-
 (use-package osm ; curl
   ;:pin gnu
   :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
@@ -742,7 +653,7 @@
 ;  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
 
 (use-package rmsbolt
-  :init (bind-keys :map jam/toggle ("r" . rmsbolt-mode))
+  :init (bind-keys :map jam/toggle ("R" . rmsbolt-mode))
   :commands rmsbolt-mode)
 
 (use-package minions ; hide minor modes on modeline
@@ -822,14 +733,12 @@
   :init (add-hook 'eshell-mode-hook #'(lambda () (add-to-list 'eshell-visual-commands "btm")))
   (bind-keys :map jam/open ("e" . jam/eshell))
   :commands (eshell)
-  :config
-  (require 'em-smart)
+  :config (require 'em-smart)
   (setq eshell-directory-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eshell")
         eshell-prefer-lisp-functions nil
         eshell-cmpl-cycle-completions t; replace # with : for prompt regex using /ssh:jam@10.0.0.1#6969:/tmp
         eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
-                                                  (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white"))))))
-  (add-to-list 'eshell-modules-list 'eshell-tramp))
+                                                    (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white")))))))
 
 (use-package eat
   ;:pin nongnu
@@ -856,7 +765,6 @@
         company-require-match 'never
         company-global-modes
         '(not erc-mode
-              circe-mode
               message-mode
               help-mode
               ;eshell-mode
@@ -883,6 +791,7 @@
 ;; ! to save for offline/cache
 ;; U to manually subscribe
 ;; L list all groups
+;; M-g to rescan group
 (use-package gnus
   :ensure nil ; built-in
   :init (bind-keys :map jam/open ("g" . gnus))
@@ -1021,8 +930,8 @@
                               (file-name-as-directory "gnu") "store"))
   (setenv "PATH" (concat (getenv "PATH")
                          path-separator (concat (file-name-as-directory (xdg-data-home))
-                                     (file-name-as-directory "guix") "bin")))
-  )
+                                                (file-name-as-directory "guix") "bin"))))
+
 ;;;###autoload
 (defun jam/replace-unicode ()
   "Replaces the following unicode characters:
@@ -1034,23 +943,3 @@ LEFT-TO-RIGHT MARK ‎(8206, #x200e)
 OBJECT REPLACEMENT CHARACTER (65532, #xfffc)"
   (interactive)
   (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" ""))
-
-;;;###autoload
-(defun jam/chia-lsp-setup () ;; MAYBE use https://github.com/Quexington/tree-sitter-chialisp for syntax
-  "Adds syntax highlighting to chialisp and lsp client"
-  (interactive)
-  (define-generic-mode 'chialisp-mode
-    '(";;")
-    '("mod" "defun" "defun-inline" "defmacro" "defconstant")
-    '(("\\(A\\(?:GG_SIG_\\(?:\\(?:M\\|UNSAF\\)E\\)\\|SSERT_\\(?:COIN_ANNOUNCEMENT\\|HEIGHT_\\(?:\\(?:ABSOLUT\\|RELATIV\\)E\\)\\|MY_\\(?:AMOUNT\\|COIN_ID\\|P\\(?:ARENT_ID\\|UZZLEHASH\\)\\)\\|PUZZLE_ANNOUNCEMENT\\|SECONDS_\\(?:\\(?:ABSOLUT\\|RELATIV\\)E\\)\\)\\)\\|CREATE_\\(?:COIN\\(?:_ANNOUNCEMENT\\)?\\|PUZZLE_ANNOUNCEMENT\\)\\|RESERVE_FEE\\)" 1 'font-lock-variable-name-face)
-      ("\\(i\\(?:f\\|nclude\\)\\|list\\|sha256\\)" . 'font-lock-constant-face))
-    '(".cl\\(sp\\|vm\\|ib\\)\\'")
-    nil
-    "Generic mode for chialisp syntax highlighting")
-  (with-eval-after-load 'lsp-mode
-    (add-to-list 'lsp-language-id-configuration
-                 '(chialisp-mode . "chialisp"))
-    (lsp-register-client ;; needs unzipped VSX extension in path
-     (make-lsp-client :new-connection (lsp-stdio-connection `("node" ,(concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".vscode") (file-name-as-directory "extension") (file-name-as-directory "runner") (file-name-as-directory "build") "runner.js")))
-                      :activation-fn (lsp-activate-on "chialisp")
-                      :server-id 'chialisp))))

@@ -21,3 +21,21 @@ a os for my routers
       - need linksys tftp client as they use a nonstandard password
         - router does not allow empty password
     - flashes the 'rollback' firmware
+
+** TP-LINK Archer AC 1750 v2
+- region coded firmware (us version)
+
+** Linksys 6500RE
+- default bootloader password 1234567890
+
+** Wireless Repeater
+- disable dhcp interface on lan and ipv6 ra-service/dhcp-v6 service
+- One radio connected as client
+  - lan firewall rules and wwan default
+- set the lan default gateway to that of the client
+- One radio access point
+- install luci-proto-relay after updating package list then reboot
+- add bridge interface between the two networks
+
+*** travelmate
+- install package and configure for AP and client

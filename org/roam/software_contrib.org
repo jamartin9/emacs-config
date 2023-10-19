@@ -70,15 +70,17 @@
 - borkdude/deps.clj :notupstream:
   - not upstream as author said it was 'not important'
   - [[https://github.com/jamartin9/deps.clj/commit/80c5973a7889cb3ab06764384a72c5509711317e][added musl static build]]
+- [[https://github.com/thedodd/ybc/pull/42][thedodd/ybc]] :notupstream:
+  - Update textarea for is-loading control
+  - Add navbar menu css configuration
+  - patched for newer yew-agent
 - itmettkeDE/cargo-patch :notupstream:
   - not upstream as 'proper' fix is to change input parsing
     - only used to patch old version of ssh-key for exposing private key in key2words until updated version was pushed
   - [[https://github.com/jamartin9/cargo-patch/commit/da103f64d0a8001d6a9479ea31ac9642467ade1b][removed trailing]] context after git range header
   - [[https://github.com/jamartin9/cargo-patch/commit/b9ad3400f1aad471d787d7a5a0aae1609f736957][removed broken]] support for new files
   - Still needs the a/ b/ stripped and delete/create file support (diff format normalization)
-- [[https://github.com/thedodd/ybc/pull/42][thedodd/ybc]] :notupstream:
-  - Update textarea for is-loading control
-  - Add navbar menu css configuration
 - [[https://github.com/evergreen-xch/cult-lite-farmer/pull/6][evergreen-xch/cult-lite-farmer]] :notupstream:
   - added launcher id to cli for nft plot discovery
   - added lto/codgen to release flags
+  - closed after several months

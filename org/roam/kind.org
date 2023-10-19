@@ -53,3 +53,8 @@ PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_
   - operator has webhook to avoid sidecar
     - configured through annotations and env vars
 - cluster api instead of federation
+- Gateway api instead of ingress api
+- [[https://github.com/k3s-io/kine][kine]] is a shim for etcd to use mysql, postgres or sqlite as a backing store
+  - used with k3s along with tunnel proxy for simple kube setups
+- k8s device plugin for gpus as resource selectors
+- set system-reserved, kube-reserved, eviction-threshold for node allocatable limit if memory pressure/cpu starvation.

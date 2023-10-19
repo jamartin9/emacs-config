@@ -16,3 +16,9 @@ Systems need filing!
 - ~fallocate -l 2G /swapfile && mkswap /swapfile~ to create
 - ~swapon /swapfile~ to enable
   - load zram module and setup swap partition for compression
+** ntfs
+- journal file system
+- ~ntfsfix -d /dev/sdd1~ to fix dirty bit on unclear shutdown
+- mount ntfs
+  - ~sudo mkdir -p /run/media/$USER/Elements/~
+  - ~sudo mount.ntfs /dev/sdd1 /run/media/jam/Elements -o rw,nodev,nosuid,uid=1000,gid=1000,windows_names,uhelper=udisks2~
