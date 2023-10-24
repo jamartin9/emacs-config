@@ -27,6 +27,11 @@ a os for my routers
 
 ** Linksys 6500RE
 - default bootloader password 1234567890
+- set tftp server ip to 192.168.1.100
+- disable dnsmasq dns and set tftp-root
+- disable firewall for tftp
+- failed to boot 23.05.0
+  - used 23.03.1 (roll forward?)
 
 ** Wireless Repeater
 - disable dhcp interface on lan and ipv6 ra-service/dhcp-v6 service

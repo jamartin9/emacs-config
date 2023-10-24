@@ -2,7 +2,7 @@
 * emacs-config
 This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
 
-The dependencies are: emacs >= 29, guix (guix.el), gnupg (authinfo), git (magit), grep/find (dired), pass (password-store/pass-otp), aspell (flyspell), mpv (emms), notification-daemon (erc), sqlite (forge/roam), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
+The dependencies are: emacs >= 29 (with features gnupg (authinfo), sqlite (forge/roam)), git (magit), guix (guix.el), grep/find (dired), pass (password-store/pass-otp), aspell (flyspell), mpv (emms), notification-daemon (erc), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
 
 Current package considerations:
 embark for improved context menu
@@ -12,8 +12,6 @@ ts-fold for structural folding
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
 
 Third party package choices:
-
-gcmh: collect garbage when idle to avoid pauses. alternative is increase gc-cons-threshold per workflow
 
 emms: frontend for music/video player with radio. alternative mpv.el or cli
 

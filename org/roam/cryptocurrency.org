@@ -18,6 +18,8 @@
   - 'trapped energy'
     - sets lower bound on energy production price beyond the government; thus encourages more production regardless of means
     - wasting compute cycles on hashing random numbers instead of folding proteins, simulating fluid dynamics, SETI etc (need internet connection for blockchain sync); price should not be the primary factor for investing in hard research problems.
+- cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
+  - sigma protocols are alternative (COMINT)
 * chia
 - ~CHIA_ROOT~ env variable configuration
   - burn if not able to melt

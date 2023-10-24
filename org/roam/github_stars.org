@@ -1844,8 +1844,6 @@
   - Compatibility tool for Steam Play based on Wine and additional components
 
 * rust
-** ferrocene/ferrocene
-  - toolchain to enable the use of the Rust programming language in safety-critical environments
 ** 10XGenomics/rust-boomphf
   - Fast and scalable minimal perfect hashing for massive key sets
 ** advancedresearch/prop
@@ -1890,8 +1888,6 @@
   - A modern runtime for JavaScript and TypeScript.
 ** dtolnay/anyhow
   - Flexible concrete Error type built on std::error::Error
-** dtolnay/thiserror
-  - derive(Error) for struct and enum error types
 ** embassy-rs/embassy
   - Modern embedded framework, using Rust and async.
 ** emilk/egui
@@ -1902,6 +1898,8 @@
   - Chromium running inside your terminal
 ** fereidani/kanal
   - The fast sync and async channel that Rust deserves
+** ferrocene/ferrocene
+  - toolchain to enable the use of the Rust programming language in safety-critical environments
 ** flamegraph-rs/flamegraph
   - Easy flamegraphs for Rust projects and everything else, without Perl or pipes <3
 ** futursolo/stylist-rs
@@ -1914,6 +1912,8 @@
   - High-performance open BitTorrent tracker (UDP, HTTP, WebTorrent)
 ** gschup/ggrs
   - GGRS is a reimagination of GGPO, enabling P2P rollback networking in Rust. Rollback to the future!
+** hermit-os/hermit-rs
+  - Hermit Unikernel for Rust
 ** HigherOrderCO/HVM
   - A massively parallel, optimal functional runtime in Rust
 ** huggingface/candle
@@ -1922,6 +1922,8 @@
   - Cargo Subcommand for patching dependencies using patch files
 ** jamesmunns/postcard
   - A no_std + serde compatible message library for Rust
+** JelteF/derive_more
+  - Some more derive(Trait) options
 ** kanidm/webauthn-rs
   - An implementation of webauthn components for Rustlang servers
 ** Kobzol/cargo-pgo

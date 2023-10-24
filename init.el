@@ -117,9 +117,7 @@
 
 ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
-  :init (setq ;user-full-name "Justin Martin"
-              ;user-mail-address "jaming@protonmail.com"
-              backup-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
+  :init (setq backup-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
               auto-save-list-file-prefix (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "auto-save-list") ".saves-")
               recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               bookmark-default-file (expand-file-name "bookmarks" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))) ; bookmarks support annotations
@@ -167,7 +165,7 @@
               auto-revert-interval 1
               use-short-answers t ; annoying
               confirm-kill-processes nil
-              visible-bell nil
+              visible-bell t
               ring-bell-function #'ignore
               uniquify-buffer-name-style 'forward
               confirm-nonexistent-file-or-buffer nil
@@ -206,7 +204,8 @@
               redisplay-skip-fontification-on-input t
               shift-select-mode t
               read-process-output-max (* 64 1024)
-              ;desktop-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session")) ; MAYBE add desktop-save-mode for sessions
+              gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
+              desktop-path `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session"))) ; create dir before saving
               ;load-prefer-newer t; noninteractive
               auto-mode-case-fold nil
               kill-do-not-save-duplicates t
@@ -261,7 +260,10 @@
   (display-time-mode 1)
   (delete-selection-mode 1)
   (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-  (add-hook 'after-init-hook #'(lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))))
+  (add-hook 'after-init-hook #'(lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
+                                 (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
+                                       default-file-name-handler-alist nil)))
+  (run-with-idle-timer 15 t (lambda () (garbage-collect))) ; collect gc every 15s while idle
   (blink-cursor-mode -1)
   (pixel-scroll-precision-mode 1) ; smooth scrolling
   (electric-pair-mode 1) ; less typing
@@ -303,7 +305,8 @@
              ("b" . browse-url-of-file)
              ("-" . dired-jump)
              ("f" . make-frame)
-             ("d" . jam/draw))
+             ("D" . jam/draw)
+             ("d" . desktop-read))
   (bind-keys :prefix-map jam/insert :prefix "C-c i"
              ("y" . cua-paste)
              ("u" . insert-char)
@@ -321,7 +324,8 @@
              ("m" . bookmark-jump))
   (bind-keys :prefix-map jam/file :prefix "C-c f"
              ("f" . find-file)
-             ("d" . dired))
+             ("d" . dired)
+             ("D" . desktop-save-in-desktop-dir))
   (bind-keys :prefix-map jam/quit :prefix "C-c q"
              ("f" . delete-frame)
              ("q" . kill-emacs)
@@ -343,22 +347,9 @@
   (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
   (add-to-list 'default-frame-alist '(vertical-scroll-bars))
   (set-frame-parameter nil 'alpha-background 80)
-  ;(add-to-list 'default-frame-alist '(width  . 190))
-  ;(add-to-list 'default-frame-alist '(height  . 96))
   (add-to-list 'default-frame-alist '(alpha-background  . 80))
-  ;(add-to-list 'initial-frame-alist '(width  . 190))
-  ;(add-to-list 'initial-frame-alist '(height  . 96))
   (add-to-list 'initial-frame-alist '(alpha-background  . 80))
   (set-language-environment "UTF-8"))
-
-(use-package gcmh ; gc when idle
-  :init (setq gcmh-idle-delay 'auto ; gc startup
-              gcmh-auto-idle-delay-factor 10
-              gcmh-high-cons-threshold (* 16 1024 1024)) ; 16 MiB
-  (add-hook 'after-init-hook #'gcmh-mode)
-  ;:pin gnu ; pin to gnu for android
-  :config (setq gc-cons-threshold (* 16 1024 1024))
-  :commands gcmh-mode)
 
 (use-package org-crypt
   :ensure nil ; built-in
@@ -644,8 +635,9 @@
 ;         (yaml-ts-mode . combobulate-mode))
 ;  :load-path ("/gnu/git/combobulate"))
 
-;(use-package python ; python
-;  :commands (python-mode python-mode-hook python-mode-local-vars-hook))
+(use-package python ; python
+  :ensure nil ; built-in
+  :commands (python-mode python-mode-hook python-mode-local-vars-hook))
 
 ;(use-package pyvenv ; python
 ;  :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
@@ -687,13 +679,13 @@
                 erc-save-buffer-on-part t
                 erc-log-insert-log-on-open t
                 erc-log-channels-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "erc")
-                erc-nick '("jaming" "jamin" "jam")
-                erc-user-full-name "jaming"
+                ;erc-nick '("jaming" "jamin" "jam")
+                ;erc-user-full-name "jaming"
+                ;erc-keywords '("jaming")
                 erc-server-history-list '("irc.rizon.net" "irc.libera.chat" "irc.choopa.net" "irc.corrupt-net.org")
                 erc-autojoin-timing 'ident
                 erc-autojoin-delay 30
                 ;erc-max-buffer-size 20000
-                erc-keywords '("jaming")
                 ;erc-prompt-for-nickserv-password nil
                 ;erc-nickserv-passwords '((Corrupt (("nickname" . "password"))))
                 ;erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password
@@ -739,7 +731,6 @@
         eshell-cmpl-cycle-completions t; replace # with : for prompt regex using /ssh:jam@10.0.0.1#6969:/tmp
         eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
                                                     (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white")))))))
-
 (use-package eat
   ;:pin nongnu
   :init (bind-keys :map jam/open ("t" . eat))
@@ -787,11 +778,7 @@
   (company-tng-configure-default))
 
 ;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
-;; C-u RET for unread and read
-;; ! to save for offline/cache
-;; U to manually subscribe
-;; L list all groups
-;; M-g to rescan group
+;; C-u RET for unread and read, ! to save for offline/cache, U to manually subscribe, L list all groups, M-g to rescan group
 (use-package gnus
   :ensure nil ; built-in
   :init (bind-keys :map jam/open ("g" . gnus))

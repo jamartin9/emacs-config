@@ -1,8 +1,10 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 (setq package-enable-at-startup nil ;; skip packages
       package-quickstart t ;; concat autoloads ; (package-quickstart-refresh)
-      load-prefer-newer noninteractive ;; skip newer checks
-      gc-cons-threshold most-positive-fixnum) ;; skip gc
+      load-prefer-newer noninteractive ;; avoid stale bytecode
+      gc-cons-threshold most-positive-fixnum ;; skip gc
+      default-file-name-handler-alist file-name-handler-alist ;; skip regex matching on startup
+      file-name-handler-alist nil)
 
 (if (native-comp-available-p)
     (progn
