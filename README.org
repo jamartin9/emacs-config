@@ -2,7 +2,7 @@
 * emacs-config
 This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
 
-The dependencies are: emacs >= 29 (with features gnupg (authinfo), sqlite (forge/roam)), git (magit), guix (guix.el), grep/find (dired), pass (password-store/pass-otp), aspell (flyspell), mpv (emms), notification-daemon (erc), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
+The dependencies are: emacs >= 29 (with features gnutls (melpa), sqlite (forge/roam)), git (magit), guix (guix.el), pass/gpg (password-store/pass-otp/authinfo), aspell (flyspell), mpv (emms), notification-daemon (erc), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
 
 Current package considerations:
 embark for improved context menu
@@ -44,6 +44,8 @@ osm: Map tile viewer. alternative is web browser viewing
 pcre2el: regex converter. alternative is a smooth big brain
 
 link-hint: copy link urls (using avy). alternative is regex buffer contents
+
+geiser-guile/rust-mode/yaml-mode: language specific modes
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

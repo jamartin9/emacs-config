@@ -31,8 +31,8 @@
         (setq use-package-always-ensure t
               package-pinned-packages '((pcre2el . "nongnu")
                                         (eat . "nongnu")
+                                        (yaml-mode . "nongnu")
                                         (which-key . "gnu")
-                                        (gcmh . "gnu")
                                         (company . "gnu")
                                         (osm . "gnu")
                                         (debbugs . "gnu")

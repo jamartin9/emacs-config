@@ -110,9 +110,8 @@
                                              ; "alacritty"; "xterm" ; MAYBE add guix package for alacritty with nvidia-libs
                                              "curl"; emacs-osm needs for CA's
                                              "screen"
-                                             ;"python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli" "emacs-pyvenv" ; "tree-sitter-python"
-                                             "tree-sitter-yaml" ; "tree-sitter-rust" ; "tree-sitter" ; "emacs-yaml-mode"; ; "emacs-explain-pause-mode"
-                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-rmsbolt" "emacs-guix" "emacs-emms" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-macrostep-geiser" "emacs-company" "emacs-geiser-guile" "emacs-link-hint" "emacs-which-key" "emacs-pcre2el" "emacs-flymake-guile" "emacs-rust-mode";
+                                             ;"python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli"
+                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-rmsbolt" "emacs-guix" "emacs-emms" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-macrostep-geiser" "emacs-company" "emacs-geiser-guile" "emacs-link-hint" "emacs-which-key" "emacs-pcre2el" "emacs-flymake-guile" "emacs-rust-mode" "emacs-yaml-mode" "emacs-pyvenv"; "emacs-explain-pause-mode"
                                              ))))
    (services
     (list

@@ -149,6 +149,7 @@
               xterm-set-window-title t
               xterm-extra-capabilities '(getSelection setSelection) ; osc term copy/paste
               visible-cursor nil
+              isearch-wrap-pause 'no-ding ; wrap isearch
               ad-redefinition-action 'accept ; ignore warnings
               completion-auto-help 'lazy; '?' for help w/mouse click
               completion-cycle-threshold nil ; flex narrowing instead of cycling
@@ -306,7 +307,9 @@
              ("-" . dired-jump)
              ("f" . make-frame)
              ("D" . jam/draw)
-             ("d" . desktop-read))
+             ("d" . desktop-read)
+             ("u" . xwidget-webkit-browse-url)
+             ("U" . eww-browse))
   (bind-keys :prefix-map jam/insert :prefix "C-c i"
              ("y" . cua-paste)
              ("u" . insert-char)
@@ -388,6 +391,7 @@
                    ("l" . jam/librefm-stream)
                    ("m" . emms-play-file)
                    ("M" . emms-play-directory)
+                   ("L" . emms-play-url)
                    ("z" . emms-next))
   :commands (emms-play-file emms-librefm-stream emms-browser emms-play-url emms-play-directory emms-next)
   :config
@@ -470,7 +474,7 @@
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
 (use-package eglot
-  :hook (((python-mode rust-mode) . eglot-ensure))
+  :hook (((rust-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
   (add-to-list 'eglot-server-programs
@@ -620,29 +624,14 @@
   :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
   :custom (osm-copyright nil))
 
-(use-package treesit ; libtreesitter-*.so
-  :ensure nil ; built-in
-  :init
-  (if (treesit-available-p)
-      (progn
-          (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
-          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist) ; MAYBE after lsp-mode > 8
-          (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
-
-;(use-package combobulate
-;  :init (setq combobulate-key-prefix "C-c e")
-;  :hook ((python-ts-mode . combobulate-mode)
-;         (yaml-ts-mode . combobulate-mode))
-;  :load-path ("/gnu/git/combobulate"))
-
 (use-package python ; python
   :ensure nil ; built-in
   :commands (python-mode python-mode-hook python-mode-local-vars-hook))
 
-;(use-package pyvenv ; python
-;  :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
-;  (add-hook 'pyvenv-post-activate-hooks #'lsp-restart-workspace)
-;  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
+(use-package pyvenv ; python
+  :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
+  (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
+  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
 
 (use-package rmsbolt
   :init (bind-keys :map jam/toggle ("R" . rmsbolt-mode))
@@ -861,12 +850,6 @@
          (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
          (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
-;(use-package explain-pause-mode
-  ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; MAYBE install from source with package.el or url-copy-file
-;  :ensure nil ; BUG not in melpa
-;  :init (bind-keys :map jam/open ("T" . explain-pause-top))
-;  :commands (explain-pause-top explain-pause-mode))
-
 (use-package pcre2el
   ;:pin nongnu
   :commands (rxt-pcre-to-elisp
@@ -880,6 +863,33 @@
   ;:pin gnu
   :init (add-hook 'after-init-hook #'which-key-mode)
   :commands (which-key-mode))
+
+(use-package yaml-mode
+  ;:pin nongnu
+  :commands yaml-mode
+  :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
+
+;(use-package explain-pause-mode
+  ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; MAYBE install from source with package.el or url-copy-file
+;  :ensure nil ; BUG not in melpa
+;  :init (bind-keys :map jam/open ("T" . explain-pause-top))
+;  :commands (explain-pause-top explain-pause-mode))
+
+;(use-package treesit ; libtreesitter-*.so
+;  :ensure nil ; built-in
+;  :init
+;  (if (treesit-available-p)
+;      (progn
+;          (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
+;          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist) ; MAYBE after lsp-mode > 8
+;          (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
+
+;(use-package combobulate
+;  :init (setq combobulate-key-prefix "C-c e")
+;  :hook ((python-ts-mode . combobulate-mode)
+;         (yaml-ts-mode . combobulate-mode))
+;  :load-path ("/gnu/git/combobulate"))
+
 
 ;;;###autoload
 (defun jam/guix-env()
