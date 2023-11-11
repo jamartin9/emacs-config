@@ -2,13 +2,10 @@
 * emacs-config
 This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
 
-The dependencies are: emacs >= 29 (with features gnutls (melpa), sqlite (forge/roam)), git (magit), guix (guix.el), pass/gpg (password-store/pass-otp/authinfo), aspell (flyspell), mpv (emms), notification-daemon (erc), osc terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
+The dependencies are: emacs >= 29 (with features gnutls (melpa), sqlite (forge/roam)), git (magit), guix (guix.el), pass/gpg (password-store/pass-otp/authinfo), aspell (flyspell), mpv (emms), notification-daemon (erc), osc 52 terminal emulator (xterm.el), curl (osm), wget (newsticker), transmission and a shell.
 
 Current package considerations:
-embark for improved context menu
-consult for improved isearch, switch-buffer, etc
-combobulate for structural editing
-ts-fold for structural folding
+combobulate for structural editing/folding
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
 
 Third party package choices:
@@ -42,8 +39,6 @@ which-key: show keymap keybinds. alternative is describe-* functions for bind di
 osm: Map tile viewer. alternative is web browser viewing
 
 pcre2el: regex converter. alternative is a smooth big brain
-
-link-hint: copy link urls (using avy). alternative is regex buffer contents
 
 geiser-guile/rust-mode/yaml-mode: language specific modes
 

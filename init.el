@@ -298,7 +298,8 @@
              ("c" . global-display-fill-column-indicator-mode)
              ("F" . toggle-frame-fullscreen)
              ("f" . flymake-mode)
-             ("r" . recentf-mode))
+             ("r" . recentf-mode)
+             ("g" . auto-revert-mode))
   (bind-keys :prefix-map jam/open :prefix "C-c o"
              ("r" . recentf-open)
              ("s" . jam/sudo-edit)
@@ -320,7 +321,7 @@
              ("j" . xref-find-definitions)
              ("c" . compile))
   (bind-keys :prefix-map jam/search :prefix "C-c s"
-             ("l" . link-hint-copy-link)
+             ("l" . shr-copy-url)
              ("L" . ffap-menu)
              ("i" . imenu)
              ("a" . apropos)

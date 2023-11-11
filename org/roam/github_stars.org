@@ -1714,6 +1714,8 @@
   - Port of Facebook's LLaMA model in C/C++
 ** ggerganov/whisper.cpp
   - Port of OpenAI's Whisper model in C/C++
+** Gryphe/BlockMerge_Gradient
+  - Merge Transformers language models by use of gradient parameters.
 ** guoyww/AnimateDiff
   - Official implementation of AnimateDiff.
 ** huggingface/optimum

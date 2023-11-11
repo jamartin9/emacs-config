@@ -23,13 +23,16 @@
 - multi modal models (ViTS) combine visual image and text
 - steering vectors cache activation layer results and swap them for alignment at the same layer
 - vector databases can be used for Retrieval Augmented Generation by finding content close to query for context
-- transformers context length prediction can be expanded from the size used in training by using [[https://arxiv.org/pdf/2108.12409.pdf][ALiBi in MPT]] (or 0.5 scale on the positional embeddings like in SUPERHOT?)
+- transformers context length prediction can be expanded from the size used in training by using [[https://arxiv.org/pdf/2108.12409.pdf][ALiBi in MPT]], ROPE, sliding context window
   - [[https://github.com/salesforce/xGen][xGen 8k context]]
   - [[https://huggingface.co/lmsys/longchat-13b-16k][longchat 16k context]]
   - [[https://huggingface.co/syzymon/long_llama_3b][long llama 256k]]
 - https://github.com/EleutherAI/lm-evaluation-harness
 - [[https://www.evanmiller.org/attention-is-off-by-one.html][adding one to softmax denominator inside the attention head may memory by smoothing distribution for quantized punctuation?]]
   - [[https://github.com/google/flaxformer/blob/ee62754ebe5a5eeb111493622de5537133822e3e/flaxformer/components/attention/dense_attention.py#L50][already used by other models in the past]]
+- RAG dataset summary on dataset may help QnA
+  - [[https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat]['Extended Mind']] aka active externalism may out preform RAG with citations
+- Chain of thought synthetic dataset to improve implicit deductions (orca/phi)
 ** image generation
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
