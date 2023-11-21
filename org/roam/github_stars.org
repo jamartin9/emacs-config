@@ -516,6 +516,8 @@
   - reuse is a tool for compliance with the REUSE recommendations.
 ** fulldecent/system-bus-radio
   - Transmits AM radio on computers without radio transmitting hardware.
+** GalactechsLLC/dg_fast_farmer
+  - A Lite farmer for the Chia Blockchain currently supporting Bladebit CPU Compression
 ** GalactechsLLC/dg_xch_utils
   - A collection of packages made for working with the Chia Blockchain using Rust
 ** GaloisInc/reopt
@@ -1360,6 +1362,8 @@
   - The Ladybird web browser
 ** SheetJS/sheetjs
   - SheetJS Spreadsheet Data Toolkit -- New home https://git.sheetjs.com/SheetJS/sheetjs
+** shyamsn97/mario-gpt
+  - Generating Mario Levels with GPT2. Code for the paper "MarioGPT: Open-Ended Text2Level Generation through Large Language Models" https://arxiv.org/abs/2302.05981
 ** sigma/pcache
   - persistent caching for Emacs
 ** signalapp/libsignal
@@ -1778,6 +1782,8 @@
   - Stable Diffusion XL 1.0 Base on a Raspberry Pi Zero 2 (or in 298MB of RAM)
 ** XingangPan/DragGAN
   - Official Code for DragGAN (SIGGRAPH 2023)
+** yl4579/StyleTTS2
+  - StyleTTS 2: Towards Human-Level Text-to-Speech through Style Diffusion and Adversarial Training with Large Speech Language Models
 ** zkonduit/ezkl
   - Deep learning with ZK-Snarks
 
@@ -1838,8 +1844,6 @@
   - SteamOS session compositing window manager
 ** ppy/osu
   - rhythm is just a *click* away!
-** shyamsn97/mario-gpt
-  - Generating Mario Levels with GPT2. Code for the paper "MarioGPT: Open-Ended Text2Level Generation through Large Language Models" https://arxiv.org/abs/2302.05981
 ** simons-public/protonfixes
   -  A module for applying fixes at runtime to unsupported games with Steam Proton without changing game installation files
 ** ValveSoftware/Proton
@@ -1952,6 +1956,8 @@
   - Fast, simple, reliable benchmarking for Rust projects
 ** org-rs/org-rs
   - org-mode parser rewrite in Rust
+** panamax-rs/panamax
+  - Mirror rustup and crates.io repositories, for offline Rust and cargo usage.
 ** pelikan-io/pelikan
   - Pelikan is a framework for building local or distributed caches. It comes with a highly extensible architecture, best-in-class performance, and superb operational ergonomics. You can use it to replace most of Memcached or a subset of Redis features.
 ** pendulum-project/ntpd-rs
@@ -1994,6 +2000,8 @@
   - a smol tcp/ip stack
 ** spacejam/tla-rust
   - writing correct lock-free and distributed stateful systems in Rust, assisted by TLA+
+** sunfishcode/eyra
+  - Rust programs written entirely in Rust
 ** sunfishcode/mustang
   - Rust programs written entirely in Rust
 ** tauri-apps/tauri

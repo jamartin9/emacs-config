@@ -98,9 +98,8 @@
             ;(map transform-emacs-build-git (list emacs-fd))
             (map specification->package (list "guile"
                                              ;"emacs-pgtk-xwidgets" ; managed by default profile
-                                             ;"fd"
+                                             ;"ripgrep" ;"fd"
                                              "git"
-                                             ;"ripgrep"
                                              "nss-certs"
                                              "aspell-dict-en"
                                              ;"mpv"; "vlc"; MAYBE add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
@@ -843,8 +842,8 @@
   root ALL=(ALL) ALL
   %wheel ALL=NOPASSWD: ALL\n"))
 
-    (packages (append (list font-bitstream-vera nss-certs nvi wget cloud-utils); cloud-utils for growpart with resize2fs after img resize
-                      %base-packages)) ; podman flatpak blueman
+    (packages (append (list font-bitstream-vera nss-certs nvi cloud-utils); cloud-utils for growpart with resize2fs after img resize
+                      %base-packages)) ; wget blueman podman flatpak
 
     (services
      (append (list (service xfce-desktop-service-type)
@@ -907,7 +906,7 @@
                             (zfs-configuration
                              (kernel my-kernel)))
 
-                   (service nftables-service-type; MAYBE add guix package for opensnitch: import needs step added for protoc header generation
+                   (service nftables-service-type
                             (nftables-configuration
                              (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -> input/output/forward -> postrouting
   # flush all the rules.

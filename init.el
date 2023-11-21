@@ -355,6 +355,16 @@
   (add-to-list 'initial-frame-alist '(alpha-background  . 80))
   (set-language-environment "UTF-8"))
 
+(use-package proced
+  :ensure nil ; built-in
+  :commands proced
+  :init (bind-keys :map jam/open ("P" . proced)) ; T to toggle tree, k/x to kill, f filter
+  (bind-keys :map jam/toggle ("P" . proced-toggle-auto-update))
+  :config (setq-default proced-filter 'all
+                        proced-show-remote-processes t
+                        proced-tree-flag t
+                        proced-auto-update-flag t))
+
 (use-package org-crypt
   :ensure nil ; built-in
   :commands (org-encrypt-entries org-encrypt-entry org-decrypt-entries org-decrypt-entry))
@@ -475,6 +485,7 @@
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
 (use-package eglot
+  :ensure nil ; built-in
   :hook (((rust-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
@@ -513,7 +524,7 @@
   :config (setq password-store-password-length 12)
           (auth-source-pass-enable))
 
-(use-package newsticker ; wget
+(use-package newsticker
   :ensure nil ; built-in
   :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
   :config
@@ -529,6 +540,9 @@
                               ("Lwn" "https://lwn.net/headlines/newrss")
                               ("Tor" "https://blog.torproject.org/rss.xml")
                               ("emacs-tags" "https://github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
+                              ("openwrt-release" "https://github.com/openwrt/openwrt/releases.atom")
+                              ("p2pool-release" "https://github.com/SChernykh/p2pool/releases.atom")
+                              ("monero-release" "https://github.com/monero-project/monero/releases.atom")
                               ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
                               ("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
@@ -584,7 +598,7 @@
   :commands (orgit-topic-store orgit-topic-open))
 
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
-(use-package org-roam ; sqlite ; emacs-29 >= (sqlite-available-p)
+(use-package org-roam ; sqlite-available-p
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
   :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
               org-directory org-roam-directory
@@ -663,7 +677,7 @@
 (use-package erc
   :ensure nil ; built-in
   :init (bind-keys :map jam/open ("i" . erc-tls))
-  :commands erc-tls erc ; MAYBE add bot msg to erc-nickserv-identified-hook, erc-login function override/erc-join-hook for SASL support
+  :commands erc-tls erc ; MAYBE add bot msg to erc-nickserv-identified-hook
   :config (setq erc-rename-buffers t
                 erc-interpret-mirc-color t
                 erc-save-buffer-on-part t
@@ -679,6 +693,7 @@
                 ;erc-prompt-for-nickserv-password nil
                 ;erc-nickserv-passwords '((Corrupt (("nickname" . "password"))))
                 ;erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password
+                ;erc-sasl-mechanism 'ecdsa-nist256p-challenge ; expects key file for erc-sasl-password
                 erc-prompt-for-password nil
                 erc-nickserv-identify-mode 'both
                 ;erc-dcc-auto-masks '(".*!.*@.*") ; accept dcc files from anyone with 'auto send-requests
@@ -707,6 +722,7 @@
   (add-to-list 'erc-modules 'dcc);/dcc list and /dcc get -s nick file
   ;(add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
   (add-to-list 'erc-modules 'log)
+  ;(add-to-list 'erc-modules 'sasl)
   ;(add-to-list 'erc-modules 'services); nickserv
   (erc-update-modules))
 
@@ -721,6 +737,7 @@
         eshell-cmpl-cycle-completions t; replace # with : for prompt regex using /ssh:jam@10.0.0.1#6969:/tmp
         eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
                                                     (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white")))))))
+
 (use-package eat
   ;:pin nongnu
   :init (bind-keys :map jam/open ("t" . eat))
@@ -890,6 +907,12 @@
 ;  :hook ((python-ts-mode . combobulate-mode)
 ;         (yaml-ts-mode . combobulate-mode))
 ;  :load-path ("/gnu/git/combobulate"))
+
+;(use-package dape
+;  :vc (:url "https://github.com/svaante/dape" :rev :newest)
+;  :commands dape
+;  :load-path ("/gnu/git/dape")
+;)
 
 
 ;;;###autoload

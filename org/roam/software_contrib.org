@@ -25,7 +25,6 @@
   - [[https://github.com/ClementTsang/bottom/pull/1276][added gpu process, power and utilization support]]
     - bugfixed battery out of bounds in same pr
     - maintainer chose to remove util/power until separate widget
-      - future gpu widget will probably use the gpu data from vram upon removal from the memory widget
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine
