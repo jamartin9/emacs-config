@@ -8,6 +8,8 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** 117HD/RLHD
+  - Old School RuneScape GPU renderer with a suite of graphical enhancements.
 ** 1Password/typeshare
   - Typeshare is the ultimate tool for synchronizing your type definitions between Rust and other languages for seamless FFI.
 ** 200ok-ch/org-parser
@@ -1132,6 +1134,8 @@
   - Open source reverse-engineered clone of DeepNude
 ** open-mpi/ompi
   - Open MPI main development repository
+** open-osrs/runelite
+  - Actually open source Old School RuneScape client
 ** open-quantum-safe/liboqs
   - C library for prototyping and experimenting with quantum-resistant cryptography
 ** open5gs/open5gs
@@ -1820,8 +1824,6 @@
   - Mirror only. Official repository is at https://git.zx2c4.com/wireguard-android
 
 * games
-** 117HD/RLHD
-  - Old School RuneScape GPU renderer with a suite of graphical enhancements.
 ** Arc-Compute/LibVF.IO
   - A vendor neutral GPU multiplexing tool driven by VFIO & YAML.
 ** DFHack/stonesense
@@ -1838,8 +1840,6 @@
   - Combined repo for the RTX-Remix runtime. dxd9 game modding. (require RTX GPU for mod creation)
 ** open-goal/jak-project
   - Reviving the language that brought us the Jak & Daxter Series
-** open-osrs/runelite
-  - Actually open source Old School RuneScape client
 ** Plagman/gamescope
   - SteamOS session compositing window manager
 ** ppy/osu

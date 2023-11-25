@@ -5,7 +5,7 @@ This configuration relies on a few utilities. Built-in functionality is preferre
 The dependencies are: emacs >= 29, git (magit), guix (guix.el), pass/gpg (password-store/pass-otp/authinfo), aspell (flyspell), mpv (emms), curl (osm), transmission and a shell.
 
 Current package considerations:
-combobulate for structural editing/folding
+combobulate: for structural editing/folding
 dape: debug adapter protocol frontend
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
 

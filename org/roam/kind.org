@@ -58,3 +58,7 @@ PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_
   - used with k3s along with tunnel proxy for simple kube setups
 - k8s device plugin for gpus as resource selectors
 - set system-reserved, kube-reserved, eviction-threshold for node allocatable limit if memory pressure/cpu starvation.
+- KEDA for scaling to zero cluster deployments with prometheus trigger on ingress
+- knative does not support non http (gateway extension?)
+- cilium cluster mesh routes across kubernetes cluster services
+  - uses ebpf and envoy
