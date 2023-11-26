@@ -110,7 +110,7 @@
                                              "curl"; emacs-osm needs for CA's
                                              "screen"
                                              ;"python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli"
-                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-rmsbolt" "emacs-guix" "emacs-emms" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-company" "emacs-which-key" "emacs-pcre2el" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-rust-mode" "emacs-yaml-mode" "emacs-pyvenv"; "emacs-explain-pause-mode"
+                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-rmsbolt" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-company" "emacs-which-key" "emacs-pcre2el" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-rust-mode" "emacs-yaml-mode" "emacs-pyvenv"; "emacs-explain-pause-mode"
                                              ))))
    (services
     (list

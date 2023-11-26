@@ -1,20 +1,6 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
-(defun jam/librefm-stream (station)
-  "Start default stream with emms. Uses pass for login information."
-  (interactive
-   (list
-    (read-string
-     (format "Station (librefm://globaltags/Classical): ")
-     nil nil
-     "librefm://globaltags/Classical")))
-  (message "station is %s" station)
-  (setq emms-librefm-scrobbler-username "jaming"
-        emms-librefm-scrobbler-password (alist-get 'secret (auth-source-pass-parse-entry "librefm/jaming")))
-  (emms-librefm-stream station))
-
-;;;###autoload
 (defun jam/sudo-edit (file)
   "Edit file with sudo. Defaults to current buffer's file name."
   (interactive
@@ -44,7 +30,7 @@
                         (expand-file-name (newsticker--title (newsticker--treeview-get-selected-item))
                                           (expand-file-name feedname (expand-file-name "newsticker" temporary-file-directory))))))
   (newsticker-download-enclosures feedname item)
-  (emms-play-directory download-dir)));(delete-directory download-dir t)
+  (message download-dir)));(delete-directory download-dir t)
 
 ;;;###autoload
 (defun jam/draw ()
@@ -83,12 +69,6 @@
   (eshell t))
 
 ;;;###autoload
-(defun jam/eshell ()
-  "Open new eshell"
-  (interactive)
-  (eshell t))
-
-;;;###autoload
 (defun jam/move-line-up ()
   "Move line up"
   (interactive)
@@ -114,6 +94,17 @@
   "Move word left"
   (interactive)
   (transpose-words -1))
+
+;;;###autoload
+(defun jam/mpv-play (url)
+  "Run mpv in eat terminal"
+  (interactive
+   (list
+    (read-string
+     (format "Arguments (https://zeno.fm/radio/gangsta49/): ")
+     nil nil
+     "https://zeno.fm/radio/gangsta49/")))
+  (eat (concat "mpv " url) 69))
 
 ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
@@ -311,6 +302,7 @@
              ("f" . make-frame)
              ("D" . jam/draw)
              ("d" . desktop-read)
+             ("z" . jam/mpv-play)
              ("u" . xwidget-webkit-browse-url)
              ("U" . eww-browse))
   (bind-keys :prefix-map jam/insert :prefix "C-c i"
@@ -398,29 +390,6 @@
                 dired-recursive-deletes 'top
                 dired-create-destination-dirs 'ask)
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
-
-(use-package emms ; mpv
-  :init (bind-keys :map jam/open
-                   ("l" . jam/librefm-stream)
-                   ("m" . emms-play-file)
-                   ("M" . emms-play-directory)
-                   ("L" . emms-play-url)
-                   ("z" . emms-next))
-  :commands (emms-play-file emms-librefm-stream emms-browser emms-play-url emms-play-directory emms-next)
-  :config
-  (setq emms-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "emms"))
-  (require 'emms-setup)
-  (emms-minimalistic)
-  (setq emms-player-list '(emms-player-mpv)); emms-player-vlc
-  (require 'emms-librefm-stream)
-  (emms-librefm-scrobbler-disable) ; BUG make work without login
-  (setq emms-source-file-default-directory (concat (file-name-as-directory (getenv "HOME")) "Music")
-        emms-playlist-buffer-name "*Music*"
-        emms-info-asynchronously t)
-  (require 'emms-mode-line)
-  (emms-mode-line 1)
-  (require 'emms-playing-time)
-  (emms-playing-time 1))
 
 (when (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
 (use-package guix ; guix
