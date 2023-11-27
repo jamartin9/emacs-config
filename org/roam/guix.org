@@ -134,7 +134,7 @@
                ;(environment-variables (list '("EDITOR" . "emacs")))
                (bashrc (list (plain-file "guix.alias" "\
   #!/usr/bin/env bash
-  # shellcheck disable=SC2068,SC1090,SC1091
+  # shellcheck disable=SC2155,SC2076,SC2068,SC1090,SC1091
 
   export TMPDIR=\"/tmp\"
 
@@ -296,8 +296,15 @@
               fi
           done
           unset \"GUIX_PREV_ENV_${arg}\"
+          local prev_entry
           for entry in ${GUIX_PREV_ENV[@]}; do # restore init env
-              export \"${entry%%=*}=${entry#*=}\"
+              if [[ ! \"${entry}\"  =~ \"=\" ]]; then # append onto the prev_entry for the space seperated args without equality assignment
+                  prev_entry=\"${prev_entry} ${entry}\"
+                  export \"${prev_entry?}\"
+              else
+                  prev_entry=\"${entry}\"
+                  export \"${entry%%=*}=${entry#*=}\"
+              fi
           done
           # active manifests again
           local active_stash=(\"${GUIX_ACTIVE_PROFILES[@]}\") # export GUIX_ACTIVE_PROFILES=(\"${GUIX_ACTIVE_PROFILES[@]/$arg}\")
@@ -337,7 +344,7 @@
           local arg=\"${1}\"
           case \"${arg}\" in
               -a|--activate)
-                  if [[ \"${GUIX_ACTIVE_PROFILES[*]}\" =~ ${2} ]]; then
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
                       printf '%s is already active \n' \"${2}\"
                   else
                       _guix_activate_profile \"${2}\"
@@ -345,9 +352,11 @@
                   shift 2
                   ;;
               -d|--deactivate)
-                  if [[ \"${GUIX_ACTIVE_PROFILES[*]}\" =~ ${2} ]]; then
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
                       _guix_deactivate_profile \"${2}\"
                       cd . # restore ps1 prompt dir/info
+                  else
+                    printf '%s is not active \n' \"${2}\"
                   fi
                   shift 2
                   ;;
@@ -364,7 +373,7 @@
                   shift 2
                   ;;
               ,*)
-                  if [[ \"${GUIX_ACTIVE_PROFILES[*]}\" =~ ${1} ]]; then
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${1} \" ]]; then
                       printf '%s is already active \n' \"${1}\"
                   else
                       _guix_activate_profile \"${1}\"

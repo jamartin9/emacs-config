@@ -12,7 +12,8 @@ much wall, such fire, very wow
 ** firewalls linux
 - ufw accepts all localhost in ufw-before-input (so it can't be blocked in the INPUT chain)
 - iptables replaced by nftables replaced by bpfilter
-- [[https://github.com/evilsocket/opensnitch][opensnitch]] added nftables incoming rule support in v1.6.0-rc.2
+- [[https://github.com/evilsocket/opensnitch][opensnitch]] added nftables incoming rule support in v1.6.0
+  - manual edit json rules for masquerade forwarding
 - ~nft list ruleset~ to view
 - upnpc
   - 1900 udp for ssdp
