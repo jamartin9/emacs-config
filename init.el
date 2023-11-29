@@ -153,6 +153,7 @@
               sentence-end-double-space nil
               require-final-newline t
               bidi-inhibit-bpa t ; some naughty unicodes
+              bidi-paragraph-direction 'left-to-right
               auto-revert-remote-files nil ; dired
               auto-revert-interval 1
               use-short-answers t ; annoying
@@ -546,7 +547,7 @@
 ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
 (use-package forge ; git
   :after magit
-  :commands forge-create-pullreq forge-create-issue
+  :commands (forge-pull forge-add-repository forge-list-issues forge-list-pullreqs forge-list-notifications forge-list-repositories forge-create-issue forge-create-pullreq)
   :init
   (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
   (setq forge-add-default-bindings t))

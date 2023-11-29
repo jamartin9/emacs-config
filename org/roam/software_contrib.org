@@ -25,6 +25,7 @@
   - [[https://github.com/ClementTsang/bottom/pull/1276][added gpu process, power and utilization support]]
     - bugfixed battery out of bounds in same pr
     - maintainer chose to remove util/power until separate widget
+      - outlined plan for linux intel support with memfd drm proc info
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine
@@ -83,3 +84,4 @@
   - added launcher id to cli for nft plot discovery
   - added lto/codgen to release flags
   - closed after several months
+    - same team released dg_fast_farmer instead with compression support

@@ -44,6 +44,7 @@
     - [[https://github.com/lllyasviel/ControlNet][Controlnet]] guided Stable diffusion from scribbles/images/depth maps
     - [[https://github.com/facebookresearch/segment-anything][inpainting selection with Segment Anything Model]]
     - fine tune with [[https://github.com/cloneofsimo/lora][lora]] and [[https://github.com/huggingface/diffusers/tree/main/examples/dreambooth][dreambooth]]
+    - sdxl turbo for single pass gan like generation
 ** Large Language Models
   - Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)
   - chinchilla paper showed most models are over parameterized without enough data

@@ -10,7 +10,8 @@
 * kind
 ** kind
 - kubernetes in docker with podman ~KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster~
-- KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native for zfs in kind >= 0.12
+  - BUG with worker node failing. Needs runc 1.2 (unreleased) for resolv.conf
+- ~KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native~ for zfs in kind >= 0.12
 - ~kind load docker-image IMAGE IMAGE~ to load images or mount path through config
 - postgresql (crunchydata)
   - clone ~https://github.com/CrunchyData/postgres-operator-examples/~
