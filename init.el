@@ -1,110 +1,6 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-;;;###autoload
-(defun jam/sudo-edit (file)
-  "Edit file with sudo. Defaults to current buffer's file name."
-  (interactive
-   (list
-    (read-string
-     (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer)))
-     nil nil
-     (buffer-file-name (current-buffer)))))
-  (message "sudo-edited file: %s" file)
-  (find-file (format "/sudo::%s" file)))
-
-;;;###autoload
-(defun jam/save-all ()
-  "Save all buffers"
-  (interactive)
-  (save-some-buffers t))
-
-;;;###autoload
-(defun jam/newsticker-download ()
-  "Download the current newsticker enclosure to tmpdir/newsticker/feed/title"
-  (interactive)
-  (let* ((item (newsticker--treeview-get-selected-item))
-         (feedname "jam")
-         (title (newsticker--title item))
-         (enclosure (newsticker--enclosure item))
-         (download-dir (file-name-as-directory
-                        (expand-file-name (newsticker--title (newsticker--treeview-get-selected-item))
-                                          (expand-file-name feedname (expand-file-name "newsticker" temporary-file-directory))))))
-  (newsticker-download-enclosures feedname item)
-  (message download-dir)));(delete-directory download-dir t)
-
-;;;###autoload
-(defun jam/draw ()
-  "Activate artist-mode polygon in *scratch* buffer."
-  (interactive)
-  (switch-to-buffer "*scratch*")
-  (artist-mode 1); (picture-mode)
-  (artist-select-op-poly-line))
-
-;;;###autoload
-(defun jam/set-rust-path ()
-  "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
-  (interactive)
-  (setenv "PATH" (concat (getenv "PATH")
-                         path-separator (concat (file-name-as-directory (xdg-data-home))
-                                                (file-name-as-directory "cargo") "bin")))
-  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup"))
-  (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo"))
-  (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
-
-;;;###autoload
-(defun jam/compile-init-bytecode ()
-  "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)"
-  (interactive)
-  (byte-recompile-file (concat user-emacs-directory "init.el"))
-  (byte-recompile-file (concat user-emacs-directory "early-init.el"))
-  (byte-recompile-file (concat user-emacs-directory "make-el.el"))
-  (require 'package) ; recompile autoloads
-  (package-quickstart-refresh)
-  (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
-
-;;;###autoload
-(defun jam/eshell ()
-  "Open new eshell"
-  (interactive)
-  (eshell t))
-
-;;;###autoload
-(defun jam/move-line-up ()
-  "Move line up"
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-;;;###autoload
-(defun jam/move-line-down ()
-  "Move line down"
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
-
-;;;###autoload
-(defun jam/move-word-right ()
-  "Move word right"
-  (interactive)
-  (transpose-words 1))
-
-;;;###autoload
-(defun jam/move-word-left ()
-  "Move word left"
-  (interactive)
-  (transpose-words -1))
-
-;;;###autoload
-(defun jam/mpv-play (url)
-  "Run mpv in eat terminal"
-  (interactive
-   (list
-    (read-string
-     (format "Arguments (https://zeno.fm/radio/gangsta49/): ")
-     nil nil
-     "https://zeno.fm/radio/gangsta49/")))
-  (eat (concat "mpv " url) 69))
+(setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
 
 ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
@@ -118,7 +14,7 @@
               nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo.gpg")) ; auth
               epa-file-cache-passphrase-for-symmetric-encryption t
-              modus-themes-mode-line '(accented borderless moody) ; theme
+              modus-themes-mode-line '(accented borderless); moody has warnings ; theme
               modus-themes-box-buttons '(underline faint accented)
               modus-themes-paren-match '(bold underline)
               modus-themes-org-blocks '(tinted-background)
@@ -197,9 +93,9 @@
               redisplay-skip-fontification-on-input t
               shift-select-mode t
               read-process-output-max (* 64 1024)
-              gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
+              ;gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
               desktop-path `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session"))) ; create dir before saving
-              ;load-prefer-newer t; noninteractive
+              load-prefer-newer t; noninteractive
               auto-mode-case-fold nil
               kill-do-not-save-duplicates t
               edebug-print-length nil ; print whole edebug result
@@ -354,7 +250,6 @@
   :ensure nil ; built-in
   :commands proced
   :init (bind-keys :map jam/open ("P" . proced)) ; T to toggle tree, k/x to kill, f filter
-  (bind-keys :map jam/toggle ("P" . proced-toggle-auto-update))
   :config (setq-default proced-filter 'all
                         proced-show-remote-processes t
                         proced-tree-flag t
@@ -417,13 +312,14 @@
   :commands macrostep-geiser-setup)
 
 (use-package geiser-guile ; guile
-  :init (require 'xdg)
-  (with-eval-after-load 'geiser-guile (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")) ; source
-                        (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache")) ; compiled
-                        (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
-                        (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") "3.0"))
-                        (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache"))
-                        (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
+  :init (with-eval-after-load 'geiser-guile
+          (require 'xdg)
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")) ; source
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache")) ; compiled
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") "3.0"))
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache"))
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
   :commands geiser-guile)
 
 (use-package flymake ; MAYBE add flycheck backends
@@ -447,6 +343,7 @@
   (add-hook 'yaml-mode-hook #'flyspell-prog-mode)
   (add-hook 'conf-mode-hook #'flyspell-prog-mode)
   (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+  :commands flyspell-mode
   :config (setq flyspell-issue-welcome-flag nil
                 flyspell-issue-message-flag nil
                 ispell-program-name "aspell" ; runs as own process
@@ -493,6 +390,7 @@
 
 (use-package password-store ; pass
   :ensure nil ; built-in ; info:auth#The Unix password store
+  :after pass
   :config (setq password-store-password-length 12)
           (auth-source-pass-enable))
 
@@ -615,7 +513,7 @@
   :ensure nil ; built-in
   :commands (python-mode python-mode-hook python-mode-local-vars-hook))
 
-(use-package pyvenv ; python
+(use-package pyvenv ; python ; projects can install pydebug and pylsp inside venv
   :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
   (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
@@ -859,6 +757,10 @@
   :commands yaml-mode
   :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
 
+;(use-package esup
+;  :commands (esup)
+;  :config (setq esup-depth 0))
+;
 ;(use-package explain-pause-mode
   ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; MAYBE install from source with package.el or url-copy-file
 ;  :ensure nil ; BUG not in melpa
@@ -886,6 +788,111 @@
 ;  :load-path ("/gnu/git/dape")
 ;)
 
+;;;###autoload
+(defun jam/sudo-edit (file)
+  "Edit file with sudo. Defaults to current buffer's file name."
+  (interactive
+   (list
+    (read-string
+     (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer)))
+     nil nil
+     (buffer-file-name (current-buffer)))))
+  (message "sudo-edited file: %s" file)
+  (find-file (format "/sudo::%s" file)))
+
+;;;###autoload
+(defun jam/save-all ()
+  "Save all buffers"
+  (interactive)
+  (save-some-buffers t))
+
+;;;###autoload
+(defun jam/newsticker-download ()
+  "Download the current newsticker enclosure to tmpdir/newsticker/feed/title"
+  (interactive)
+  (let* ((item (newsticker--treeview-get-selected-item))
+         (feedname "jam")
+         (title (newsticker--title item))
+         (enclosure (newsticker--enclosure item))
+         (download-dir (file-name-as-directory
+                        (expand-file-name (newsticker--title (newsticker--treeview-get-selected-item))
+                                          (expand-file-name feedname (expand-file-name "newsticker" temporary-file-directory))))))
+  (newsticker-download-enclosures feedname item)
+  (message download-dir)));(delete-directory download-dir t)
+
+;;;###autoload
+(defun jam/draw ()
+  "Activate artist-mode polygon in *scratch* buffer."
+  (interactive)
+  (switch-to-buffer "*scratch*")
+  (artist-mode 1); (picture-mode)
+  (artist-select-op-poly-line))
+
+;;;###autoload
+(defun jam/set-rust-path ()
+  "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
+  (interactive)
+  (setenv "PATH" (concat (getenv "PATH")
+                         path-separator (concat (file-name-as-directory (xdg-data-home))
+                                                (file-name-as-directory "cargo") "bin")))
+  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup"))
+  (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo"))
+  (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
+
+;;;###autoload
+(defun jam/compile-init-bytecode ()
+  "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)"
+  (interactive)
+  (byte-recompile-file (concat user-emacs-directory "init.el"))
+  (byte-recompile-file (concat user-emacs-directory "early-init.el"))
+  (byte-recompile-file (concat user-emacs-directory "make-el.el"))
+  (require 'package) ; recompile autoloads
+  (package-quickstart-refresh)
+  (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
+
+;;;###autoload
+(defun jam/eshell ()
+  "Open new eshell"
+  (interactive)
+  (eshell t))
+
+;;;###autoload
+(defun jam/move-line-up ()
+  "Move line up"
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2))
+
+;;;###autoload
+(defun jam/move-line-down ()
+  "Move line down"
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1))
+
+;;;###autoload
+(defun jam/move-word-right ()
+  "Move word right"
+  (interactive)
+  (transpose-words 1))
+
+;;;###autoload
+(defun jam/move-word-left ()
+  "Move word left"
+  (interactive)
+  (transpose-words -1))
+
+;;;###autoload
+(defun jam/mpv-play (url)
+  "Run mpv in eat terminal"
+  (interactive
+   (list
+    (read-string
+     (format "Arguments (https://zeno.fm/radio/gangsta49/): ")
+     nil nil
+     "https://zeno.fm/radio/gangsta49/")))
+  (eat (concat "mpv " url) 69))
 
 ;;;###autoload
 (defun jam/guix-env()

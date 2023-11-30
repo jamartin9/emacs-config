@@ -8,6 +8,7 @@ Current package considerations:
 combobulate: for structural editing/folding
 dape: debug adapter protocol frontend
 explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
+esup: startup profiling
 
 Third party package choices:
 

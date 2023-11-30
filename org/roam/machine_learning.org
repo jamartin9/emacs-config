@@ -20,6 +20,7 @@
 - usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
   - 4bit with GPT-Q compression (groupsize 128)
 - LoRA is a finetunning mechanism
+  - QLoRA is quantized version (4/8 bit). [[https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md][cpu version]]
 - multi modal models (ViTS) combine visual image and text
 - steering vectors cache activation layer results and swap them for alignment at the same layer
 - vector databases can be used for Retrieval Augmented Generation by finding content close to query for context
@@ -44,7 +45,8 @@
     - [[https://github.com/lllyasviel/ControlNet][Controlnet]] guided Stable diffusion from scribbles/images/depth maps
     - [[https://github.com/facebookresearch/segment-anything][inpainting selection with Segment Anything Model]]
     - fine tune with [[https://github.com/cloneofsimo/lora][lora]] and [[https://github.com/huggingface/diffusers/tree/main/examples/dreambooth][dreambooth]]
-    - sdxl turbo for single pass gan like generation
+      - quantized aware training and token merging for [[https://github.com/huggingface/optimum-intel/tree/main/examples/openvino/stable-diffusion][better results]]
+    - sdxl turbo for single(4) pass gan like generation
 ** Large Language Models
   - Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)
   - chinchilla paper showed most models are over parameterized without enough data

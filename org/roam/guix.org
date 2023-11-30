@@ -109,7 +109,7 @@
                                              ;"alacritty"; "xterm" ; MAYBE add guix package for alacritty with nvidia-libs
                                              "curl"; emacs-osm needs for CA's
                                              "screen"
-                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-rmsbolt" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-company" "emacs-which-key" "emacs-pcre2el" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-rust-mode" "emacs-yaml-mode" "emacs-pyvenv"; "emacs-explain-pause-mode"
+                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-rmsbolt" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-company" "emacs-which-key" "emacs-pcre2el" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-rust-mode" "emacs-yaml-mode" "emacs-pyvenv";"emacs-esup" "emacs-explain-pause-mode"
                                              ))))
    (services
     (list
