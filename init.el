@@ -1,6 +1,83 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
+(bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
+           ("w" . windmove-up)
+           ("a" . windmove-left)
+           ("s" . windmove-down)
+           ("d" . windmove-right)
+           ("f" . select-frame-by-name)
+           ("o" . other-frame))
+(bind-keys ("<M-up>" . jam/move-line-up)
+           ("<M-down>" . jam/move-line-down)
+           ("<M-left>" . jam/move-word-left)
+           ("<M-right>" . jam/move-word-right)
+           ("C-+" . text-scale-increase)
+           ("C--" . text-scale-decrease))
+(bind-keys :map ctl-x-map ("C-S-s" . jam/save-all))
+(bind-keys :map help-map ("D" . shortdoc))
+(bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
+(bind-keys :map minibuffer-local-completion-map
+           ;("<mouse-1>" . minibuffer-choose-completion)
+           ("C-TAB" . icomplete-fido-ret)
+           ("C-<tab>" . icomplete-fido-ret)
+           ("S-TAB" . icomplete-backward-completions) ; wraparound?
+           ("<backtab>" . icomplete-backward-completions)
+           ("TAB" . icomplete-forward-completions)
+           ("<tab>" . icomplete-forward-completions)
+           ("<mouse-4>" . icomplete-backward-completions)
+           ("<wheel-up>" . icomplete-backward-completions)
+           ("<mouse-5>" . icomplete-forward-completions)
+           ("<wheel-down>" . icomplete-forward-completions))
+(bind-keys :prefix-map jam/vcs :prefix "C-c v")
+(bind-keys :prefix-map jam/notes :prefix "C-c n")
+(bind-keys :prefix-map jam/projects :prefix "C-c p"); C-x p g
+(bind-keys :prefix-map jam/toggle :prefix "C-c t"
+           ("v" . visible-mode)
+           ("w" . visual-line-mode)
+           ("x" . xterm-mouse-mode)
+           ("c" . global-display-fill-column-indicator-mode)
+           ("F" . toggle-frame-fullscreen)
+           ("f" . flymake-mode)
+           ("r" . recentf-mode)
+           ("g" . auto-revert-mode))
+(bind-keys :prefix-map jam/open :prefix "C-c o"
+           ("r" . recentf-open)
+           ("s" . jam/sudo-edit)
+           ("S" . speedbar-frame-mode)
+           ("b" . browse-url-of-file)
+           ("-" . dired-jump)
+           ("f" . make-frame)
+           ("D" . jam/draw)
+           ("d" . desktop-read)
+           ("z" . jam/mpv-play)
+           ("u" . xwidget-webkit-browse-url)
+           ("U" . eww-browse))
+(bind-keys :prefix-map jam/insert :prefix "C-c i"
+           ("y" . cua-paste)
+           ("u" . insert-char)
+           ("s" . yas-insert-snippet)
+           ("e" . emojify-insert-emoji)
+           ("b" . string-insert-rectangle))
+(bind-keys :prefix-map jam/code :prefix "C-c c"
+           ("j" . xref-find-definitions)
+           ("c" . compile))
+(bind-keys :prefix-map jam/search :prefix "C-c s"
+           ("l" . shr-copy-url)
+           ("L" . ffap-menu)
+           ("i" . imenu)
+           ("a" . apropos)
+           ("m" . bookmark-jump))
+(bind-keys :prefix-map jam/file :prefix "C-c f"
+           ("f" . find-file)
+           ("d" . dired)
+           ("D" . desktop-save-in-desktop-dir))
+(bind-keys :prefix-map jam/quit :prefix "C-c q"
+           ("f" . delete-frame)
+           ("q" . kill-emacs)
+           ("r" . restart-emacs)
+           ("Q" . save-buffers-kill-terminal)
+           ("K" . save-buffers-kill-emacs))
 
 ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
@@ -130,13 +207,6 @@
               native-comp-async-report-warnings-errors nil
               native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
               native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
-  (bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
-             ("w" . windmove-up)
-             ("a" . windmove-left)
-             ("s" . windmove-down)
-             ("d" . windmove-right)
-             ("f" . select-frame-by-name)
-             ("o" . other-frame))
   (setq-default indent-tabs-mode nil
                 tab-width 4
                 tab-always-indent 'complete
@@ -157,76 +227,6 @@
   (pixel-scroll-precision-mode 1) ; smooth scrolling
   (electric-pair-mode 1) ; less typing
   (context-menu-mode 1); mouse right click menu
-  (bind-keys ("<M-up>" . jam/move-line-up)
-             ("<M-down>" . jam/move-line-down)
-             ("<M-left>" . jam/move-word-left)
-             ("<M-right>" . jam/move-word-right)
-             ("C-+" . text-scale-increase)
-             ("C--" . text-scale-decrease))
-  (bind-keys :map ctl-x-map ("C-S-s" . jam/save-all))
-  (bind-keys :map help-map ("D" . shortdoc))
-  (bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
-  (bind-keys :map minibuffer-local-completion-map
-             ;("<mouse-1>" . minibuffer-choose-completion)
-             ("C-TAB" . icomplete-fido-ret)
-             ("C-<tab>" . icomplete-fido-ret)
-             ("S-TAB" . icomplete-backward-completions) ; wraparound?
-             ("<backtab>" . icomplete-backward-completions)
-             ("TAB" . icomplete-forward-completions)
-             ("<tab>" . icomplete-forward-completions)
-             ("<mouse-4>" . icomplete-backward-completions)
-             ("<wheel-up>" . icomplete-backward-completions)
-             ("<mouse-5>" . icomplete-forward-completions)
-             ("<wheel-down>" . icomplete-forward-completions))
-  (bind-keys :prefix-map jam/vcs :prefix "C-c v")
-  (bind-keys :prefix-map jam/notes :prefix "C-c n")
-  (bind-keys :prefix-map jam/projects :prefix "C-c p"); C-x p g
-  (bind-keys :prefix-map jam/toggle :prefix "C-c t"
-             ("v" . visible-mode)
-             ("w" . visual-line-mode)
-             ("x" . xterm-mouse-mode)
-             ("c" . global-display-fill-column-indicator-mode)
-             ("F" . toggle-frame-fullscreen)
-             ("f" . flymake-mode)
-             ("r" . recentf-mode)
-             ("g" . auto-revert-mode))
-  (bind-keys :prefix-map jam/open :prefix "C-c o"
-             ("r" . recentf-open)
-             ("s" . jam/sudo-edit)
-             ("S" . speedbar-frame-mode)
-             ("b" . browse-url-of-file)
-             ("-" . dired-jump)
-             ("f" . make-frame)
-             ("D" . jam/draw)
-             ("d" . desktop-read)
-             ("z" . jam/mpv-play)
-             ("u" . xwidget-webkit-browse-url)
-             ("U" . eww-browse))
-  (bind-keys :prefix-map jam/insert :prefix "C-c i"
-             ("y" . cua-paste)
-             ("u" . insert-char)
-             ("s" . yas-insert-snippet)
-             ("e" . emojify-insert-emoji)
-             ("b" . string-insert-rectangle))
-  (bind-keys :prefix-map jam/code :prefix "C-c c"
-             ("j" . xref-find-definitions)
-             ("c" . compile))
-  (bind-keys :prefix-map jam/search :prefix "C-c s"
-             ("l" . shr-copy-url)
-             ("L" . ffap-menu)
-             ("i" . imenu)
-             ("a" . apropos)
-             ("m" . bookmark-jump))
-  (bind-keys :prefix-map jam/file :prefix "C-c f"
-             ("f" . find-file)
-             ("d" . dired)
-             ("D" . desktop-save-in-desktop-dir))
-  (bind-keys :prefix-map jam/quit :prefix "C-c q"
-             ("f" . delete-frame)
-             ("q" . kill-emacs)
-             ("r" . restart-emacs)
-             ("Q" . save-buffers-kill-terminal)
-             ("K" . save-buffers-kill-emacs))
   (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
   (if (not (memq window-system '(android))) ; disable menu-bar on non android
       (progn
@@ -322,7 +322,7 @@
           (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
   :commands geiser-guile)
 
-(use-package flymake ; MAYBE add flycheck backends
+(use-package flymake ; add flycheck backends?
   :ensure nil ; built-in
   :commands flymake-mode)
 
@@ -381,6 +381,7 @@
 (use-package pass ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
   :config
+  (require 'xdg)
   (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg"))
   (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
   :commands pass)
@@ -518,10 +519,6 @@
   (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
 
-(use-package rmsbolt
-  :init (bind-keys :map jam/toggle ("R" . rmsbolt-mode))
-  :commands rmsbolt-mode)
-
 (use-package minions ; hide minor modes on modeline
   :init (add-hook 'after-init-hook #'minions-mode)
   :commands minions-mode)
@@ -547,7 +544,7 @@
 (use-package erc
   :ensure nil ; built-in
   :init (bind-keys :map jam/open ("i" . erc-tls))
-  :commands erc-tls erc ; MAYBE add bot msg to erc-nickserv-identified-hook
+  :commands (erc-tls erc) ; add bot msg to erc-nickserv-identified-hook?
   :config (setq erc-rename-buffers t
                 erc-interpret-mirc-color t
                 erc-save-buffer-on-part t
@@ -738,15 +735,6 @@
          (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
          (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
-(use-package pcre2el
-  ;:pin nongnu
-  :commands (rxt-pcre-to-elisp
-             rxt-elisp-to-pcre
-             rxt-convert-pcre-to-rx
-             rxt-convert-elisp-to-rx
-             rxt-toggle-elisp-rx
-             rxt-mode rxt-global-mode))
-
 (use-package which-key
   ;:pin gnu
   :init (add-hook 'after-init-hook #'which-key-mode)
@@ -757,12 +745,25 @@
   :commands yaml-mode
   :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
 
+;(use-package rmsbolt
+;  :init (bind-keys :map jam/toggle ("R" . rmsbolt-mode))
+;  :commands rmsbolt-mode)
+
+;(use-package pcre2el
+  ;:pin nongnu
+;  :commands (rxt-pcre-to-elisp
+;             rxt-elisp-to-pcre
+;             rxt-convert-pcre-to-rx
+;             rxt-convert-elisp-to-rx
+;             rxt-toggle-elisp-rx
+;             rxt-mode rxt-global-mode))
+
 ;(use-package esup
 ;  :commands (esup)
 ;  :config (setq esup-depth 0))
-;
+
 ;(use-package explain-pause-mode
-  ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; MAYBE install from source with package.el or url-copy-file
+  ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; install from source with package.el or url-copy-file
 ;  :ensure nil ; BUG not in melpa
 ;  :init (bind-keys :map jam/open ("T" . explain-pause-top))
 ;  :commands (explain-pause-top explain-pause-mode))
@@ -773,7 +774,7 @@
 ;  (if (treesit-available-p)
 ;      (progn
 ;          (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
-;          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist) ; MAYBE after lsp-mode > 8
+;          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist)
 ;          (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 ;(use-package combobulate
@@ -832,6 +833,7 @@
 (defun jam/set-rust-path ()
   "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
   (interactive)
+  (require 'xdg)
   (setenv "PATH" (concat (getenv "PATH")
                          path-separator (concat (file-name-as-directory (xdg-data-home))
                                                 (file-name-as-directory "cargo") "bin")))
@@ -898,6 +900,7 @@
 (defun jam/guix-env()
   "Guix variables for local guix daemon/client"
   (interactive)
+  (require 'xdg)
   (setenv "GUIX_DAEMON_SOCKET" (concat (file-name-as-directory (xdg-data-home))
                                        (file-name-as-directory "guix")
                                        (file-name-as-directory "var")

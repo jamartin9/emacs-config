@@ -32,3 +32,37 @@ sudo bpftrace /usr/share/bpftrace/tools/tcpconnect.bt
 # print tcp passive connections
 sudo bpftrace /usr/share/bpftrace/tools/tcpaccept.bt
 #+END_SRC
+#+NAME: bpftrace-script
+- script to monitor tcp/udp/zfs
+#+BEGIN_SRC bpf :tangle no
+BEGIN
+{
+	printf("Tracing operations... Hit Ctrl-C to end.\n");
+    printf("%-8s %-16s ", "PID", "COMM \n");
+}
+kprobe:tcp_connect
+{
+  printf("%-8d %-16s TCP Connect \n", pid, comm)
+}
+kretprobe:inet_csk_accept
+{
+//	$sk = (struct sock *)retval;
+  printf("%-8d %-16s TCP accepted \n", pid, comm)
+}
+//kprobe:ip4_datagram_connect, kprobe:ip6_datagram_connect
+//kretprobe:udp_sendmsg, kretprobe:udp_recvmsg // /@birth[(struct sock *)arg0]/
+kprobe:udp_sendmsg, kprobe:udp_recvmsg
+{
+//	$sk = (struct sock *)arg0;
+//  @skpid[$sk] = pid;
+//  @skcomm[$sk] = comm;
+  printf("%-8d %-16s UDP send/recv \n", pid, comm)
+}
+// kprobe:zpl_iter_read, kprobe:zpl_iter_write, kprobe:zpl_aio_read, kprobe:zpl_aio_write, kprobe:zpl_read, kprobe:zpl_write, kprobe:zpl_open, kprobe:zpl_fsync
+// kretprobe:zpl_iter_read, kretprobe:zpl_iter_write, kretprobe:zpl_aio_read, kretprobe:zpl_aio_write, kretprobe:zpl_read, kretprobe:zpl_write, kretprobe:zpl_open, kretprobe:zpl_fsync
+END
+{
+//	clear(@skpid);
+//	clear(@skcomm);
+}
+#+END_SRC

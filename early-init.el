@@ -29,7 +29,7 @@
 	    (require 'use-package-ensure)
         ;(if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
         (setq use-package-always-ensure t
-              package-pinned-packages '((pcre2el . "nongnu")
+              package-pinned-packages '(;(pcre2el . "nongnu")
                                         (eat . "nongnu")
                                         ;(yaml-mode . "nongnu")
                                         (which-key . "gnu")

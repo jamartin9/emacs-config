@@ -135,7 +135,7 @@ clean : prune
 #+NAME: make-guile-wrapper
 #+BEGIN_SRC makefile :tangle no
 # simple makefile using guile for libs/linking
-# MAYBE static-pie
+# make static-pie ?
 
 # sources
 C_FILES ::= $(wildcard *.c)

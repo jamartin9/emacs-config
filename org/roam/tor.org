@@ -136,5 +136,5 @@ HiddenServiceEnableIntroDoSDefense 1
 #HiddenServiceNonAnonymousMode 1
 #HiddenServiceSingleHopMode 1
 
-#AllowSingleHopCircuits 1 # MAYBE set self as own Rendezvous point
+#AllowSingleHopCircuits 1 # set self as own Rendezvous point
 #+END_SRC

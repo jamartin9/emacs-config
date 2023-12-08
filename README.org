@@ -1,18 +1,8 @@
 
 * emacs-config
-This configuration relies on a few utilities. Built-in functionality is preferred when functionality is close to identical.
+This configuration is for emacs >= 29
 
-The dependencies are: emacs >= 29, git (magit), guix (guix.el), pass/gpg (password-store/pass-otp/authinfo), aspell (flyspell), curl (osm), transmission and a shell.
-
-Current package considerations:
-combobulate: for structural editing/folding
-dape: debug adapter protocol frontend
-explain-pause-mode: profiler top like realtime view. alternative is profiler-report snapshots
-esup: startup profiling
-
-Third party package choices:
-
-rmsbolt: decompiler explorer. alternative is external decompiler.
+Third party packages:
 
 guix: package/environment management. alternative is ensure/pinning with use-packages and setting exec-path-from-shell
 
@@ -38,9 +28,7 @@ which-key: show keymap keybinds. alternative is describe-* functions for bind di
 
 osm: Map tile viewer. alternative is web browser viewing
 
-pcre2el: regex converter. alternative is a smooth big brain
-
-geiser-guile/rust-mode/yaml-mode: language specific modes
+geiser-guile/rust-mode/yaml-mode/pyvenv: language specific modes
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

@@ -72,12 +72,6 @@
 - L2ARC/ssd cache with persistence(2.0+) for arc speed
   - L2ARC has default ~l2arc_write_max~ of 8MiB/s and 8MiB/s burst (to fill up cache)
   - uses arc ram (more for smaller blocks) to index
-- arc stats on linux ~cat /proc/spl/kstat/zfs/arcstats~
-  - freebsd/darwin (removed in linux 5.5)
-#+NAME: zfs-arc-sysctl
-#+BEGIN_SRC C :tangle no
-sysctlbyname("kstat.zfs.misc.arcstats.size")
-#+END_SRC
 - [[https://www.brendangregg.com/blog/2021-09-06/zfs-is-mysteriously-eating-my-cpu.html][zfs using cpu despite not being in use]]
 - https://github.com/kimono-koans/httm for snapshot traversal
 - record size for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)
@@ -89,3 +83,4 @@ sysctlbyname("kstat.zfs.misc.arcstats.size")
 - RAM ECC check for ARC ~modprobe zfs zfs_flags=16~
 - https://jro.io/truenas/openzfs/
   - 6 vdev raidz2 eliminates allocation overhead, 3/5/9/17 raidz1, 7/11/19 raidz3
+- slop space for reserved space under high usage to ensure operations can complete
