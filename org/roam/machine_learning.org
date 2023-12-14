@@ -76,6 +76,8 @@
   - Flan-T5 for text summary
   - Donut for document image question answering
   - Vilt for image question answering
+  - [[https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1][Mixtral]] uses mixture of experts for better 7B results
+    - mixture of experts can potentially quantize and sparsify better than dense LLMs
 *** Codegen
   - [[https://github.com/bigcode-project/starcoder][StarCoder]]
   - [[https://github.com/salesforce/CodeT5][CodeT5+]]

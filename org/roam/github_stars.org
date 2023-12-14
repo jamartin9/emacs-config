@@ -1154,6 +1154,8 @@
   - Robust Speech Recognition via Large-Scale Weak Supervision
 ** OpenAPITools/openapi-generator
   - OpenAPI Generator allows generation of API client libraries (SDK generation), server stubs, documentation and configuration automatically given an OpenAPI Spec (v2, v3)
+** openbao/openbao
+  - OSS fork of vault
 ** opendtrace/opendtrace
   - Code for the cross platform, single source, OpenDTrace implementation
 ** openebs/openebs

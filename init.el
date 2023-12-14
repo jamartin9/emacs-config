@@ -380,10 +380,9 @@
 
 (use-package pass ; gpg/pass/sh
   :init (bind-keys :map jam/open ("p" . pass))
-  :config
   (require 'xdg)
-  (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg"))
   (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
+  (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg"))
   :commands pass)
 
 (use-package password-store-otp; pass
