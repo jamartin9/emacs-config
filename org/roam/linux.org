@@ -28,3 +28,4 @@ Finally some hardware support!
 - ~smartctl~ or ~gsmartcontrol~ and ~nvme smart-log /dev/nvme0~ for disk stats
 - ~iftop~ for network interface rates
 - netconsole can be configured for last gasp udp packet sending(spanner, titus)
+- ~/usr/lib/ld-linux-x86-64.so.2 --help~ to check for ~x86_64-v3~

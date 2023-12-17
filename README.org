@@ -28,7 +28,7 @@ which-key: show keymap keybinds. alternative is describe-* functions for bind di
 
 osm: Map tile viewer. alternative is web browser viewing
 
-geiser-guile/rust-mode/yaml-mode/pyvenv: language specific modes
+geiser-guile/pyvenv/rust-tree-sitter/yaml-tree-sitter: language specific modes
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

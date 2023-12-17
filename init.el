@@ -1,34 +1,6 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
-(bind-keys :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
-           ("w" . windmove-up)
-           ("a" . windmove-left)
-           ("s" . windmove-down)
-           ("d" . windmove-right)
-           ("f" . select-frame-by-name)
-           ("o" . other-frame))
-(bind-keys ("<M-up>" . jam/move-line-up)
-           ("<M-down>" . jam/move-line-down)
-           ("<M-left>" . jam/move-word-left)
-           ("<M-right>" . jam/move-word-right)
-           ("C-+" . text-scale-increase)
-           ("C--" . text-scale-decrease))
-(bind-keys :map ctl-x-map ("C-S-s" . jam/save-all))
-(bind-keys :map help-map ("D" . shortdoc))
-(bind-keys :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer))
-(bind-keys :map minibuffer-local-completion-map
-           ;("<mouse-1>" . minibuffer-choose-completion)
-           ("C-TAB" . icomplete-fido-ret)
-           ("C-<tab>" . icomplete-fido-ret)
-           ("S-TAB" . icomplete-backward-completions) ; wraparound?
-           ("<backtab>" . icomplete-backward-completions)
-           ("TAB" . icomplete-forward-completions)
-           ("<tab>" . icomplete-forward-completions)
-           ("<mouse-4>" . icomplete-backward-completions)
-           ("<wheel-up>" . icomplete-backward-completions)
-           ("<mouse-5>" . icomplete-forward-completions)
-           ("<wheel-down>" . icomplete-forward-completions))
 (bind-keys :prefix-map jam/vcs :prefix "C-c v")
 (bind-keys :prefix-map jam/notes :prefix "C-c n")
 (bind-keys :prefix-map jam/projects :prefix "C-c p"); C-x p g
@@ -81,6 +53,34 @@
 
 ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
+  :bind (("<M-up>" . jam/move-line-up)
+         ("<M-down>" . jam/move-line-down)
+         ("<M-left>" . jam/move-word-left)
+         ("<M-right>" . jam/move-word-right)
+         ("C-+" . text-scale-increase)
+         ("C--" . text-scale-decrease)
+         :map ctl-x-map ("C-S-s" . jam/save-all)
+         :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer)
+         :map help-map ("D" . shortdoc)
+         :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
+           ("w" . windmove-up)
+           ("a" . windmove-left)
+           ("s" . windmove-down)
+           ("d" . windmove-right)
+           ("f" . select-frame-by-name)
+           ("o" . other-frame)
+         :map minibuffer-local-completion-map
+           ;("<mouse-1>" . minibuffer-choose-completion)
+           ("C-TAB" . icomplete-fido-ret)
+           ("C-<tab>" . icomplete-fido-ret)
+           ("S-TAB" . icomplete-backward-completions) ; wraparound?
+           ("<backtab>" . icomplete-backward-completions)
+           ("TAB" . icomplete-forward-completions)
+           ("<tab>" . icomplete-forward-completions)
+           ("<mouse-4>" . icomplete-backward-completions)
+           ("<wheel-up>" . icomplete-backward-completions)
+           ("<mouse-5>" . icomplete-forward-completions)
+           ("<wheel-down>" . icomplete-forward-completions))
   :init (setq backup-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
               auto-save-list-file-prefix (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "auto-save-list") ".saves-")
               recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
@@ -249,7 +249,7 @@
 (use-package proced
   :ensure nil ; built-in
   :commands proced
-  :init (bind-keys :map jam/open ("P" . proced)) ; T to toggle tree, k/x to kill, f filter
+  :bind (:map jam/open ("P" . proced)) ; T to toggle tree, k/x to kill, f filter
   :config (setq-default proced-filter 'all
                         proced-show-remote-processes t
                         proced-tree-flag t
@@ -261,7 +261,7 @@
 
 (use-package org-clock
   :ensure nil ; built-in
-  :init (bind-keys :map jam/notes ("g" . org-clock-goto))
+  :bind (:map jam/notes ("g" . org-clock-goto))
   :commands (org-clock-goto org-clock-in org-clock-cancel))
 
 (use-package org
@@ -271,7 +271,7 @@
               org-src-tab-acts-natively nil
               org-edit-src-content-indentation 0
               org-clock-sound t); org-timer-set-timer
-  (bind-keys :map jam/notes
+  :bind (:map jam/notes
               ("D" . org-id-update-id-locations)
               ("t" . org-todo-list)
               ("a" . org-agenda)))
@@ -332,8 +332,9 @@
   :hook (scheme-mode . flymake-mode))
 
 (use-package flyspell ; aspell
+  :bind (:map jam/toggle ("s" . flyspell-mode))
   :ensure nil ; built-in
-  :init (bind-keys :map jam/toggle ("s" . flyspell-mode))
+  :init
   (add-hook 'org-mode-hook #'flyspell-mode)
   (add-hook 'markdown-mode-hook #'flyspell-mode)
   (add-hook 'TeX-mode-hook #'flyspell-mode)
@@ -355,16 +356,19 @@
 
 (use-package eglot
   :ensure nil ; built-in
-  :hook (((rust-mode) . eglot-ensure))
+  :hook (((rust-ts-mode rust-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) .
                  ("rust-analyzer" :initializationOptions (:checkOnSave (:command "clippy"))))))
 
-(use-package rust-mode
-  :commands rust-mode
+(use-package rust-ts-mode
+  :ensure nil ; built-in
+  :mode "\\.rs\\'"
+  :commands rust-ts-mode
   :config (jam/set-rust-path))
+
 
 (use-package undo-tree
   ;:pin gnu
@@ -379,8 +383,8 @@
                 undo-tree-enable-undo-in-region t))
 
 (use-package pass ; gpg/pass/sh
-  :init (bind-keys :map jam/open ("p" . pass))
-  (require 'xdg)
+  :bind (:map jam/open ("p" . pass))
+  :init (require 'xdg)
   (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
   (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg"))
   :commands pass)
@@ -397,10 +401,10 @@
 (use-package newsticker
   :ensure nil ; built-in
   :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
-  :config
-  (bind-keys :map newsticker-treeview-item-mode-map ("d" . jam/newsticker-download))
-  :init (bind-keys :map jam/open ("n" . newsticker-treeview))
-  (bind-keys :map jam/toggle ("n" . newsticker-stop))
+  :bind (:map newsticker-treeview-item-mode-map ("d" . jam/newsticker-download)
+         :map jam/open ("n" . newsticker-treeview)
+         :map jam/toggle ("n" . newsticker-stop))
+  :init
   (setq newsticker-frontend 'newsticker-treeview
         newsticker-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "newsticker")
         newsticker-automatically-mark-items-as-old nil
@@ -425,8 +429,10 @@
 
 (use-package magit ; git
   :commands magit-file-delete magit-status
+  :bind (:map jam/vcs ("s" . magit-status)
+         :map magit-mode-map ("q" . kill-buffer)
+         :map transient-map ([escape] . transient-quit-one))
   :init
-  (bind-keys :map jam/vcs ("s" . magit-status))
   (setq magit-auto-revert-mode nil)
   (setq transient-levels-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "levels")
         transient-values-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "values")
@@ -438,9 +444,7 @@
         magit-save-repository-buffers nil
         magit-revision-insert-related-refs nil
         magit-bury-buffer-function #'magit-mode-quit-window)
-  (add-hook 'magit-process-mode-hook #'goto-address-mode)
-  (bind-keys :map magit-mode-map ("q" . kill-buffer))
-  (bind-keys :map transient-map ([escape] . transient-quit-one)))
+  (add-hook 'magit-process-mode-hook #'goto-address-mode))
 
 ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
 (use-package forge ; git
@@ -470,6 +474,14 @@
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
 (use-package org-roam ; sqlite-available-p
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
+  :bind (:map jam/notes
+              ("T" . org-roam-dailies-capture-today)
+              ("d" . org-roam-dailies-goto-date)
+              ("n" . org-roam-capture)
+              ("N" . org-roam-dailies-capture-date)
+              ("i" . org-roam-node-insert)
+              ("R" . org-roam-db-sync)
+              ("r" . org-roam-node-find))
   :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
               org-directory org-roam-directory
               org-id-locations-file (expand-file-name ".orgids" org-directory) ; org-id-update-id-locations org-roam-db-sync
@@ -492,29 +504,22 @@
                                                                                       "#+HTML_CONTENT_CLASS: container content \n"
                                                                                       "#+HTML_DOCTYPE: html5 \n"
                                                                                       "#+INCLUDE: \"css.org::navbar\" :only-contents t \n"))
-                                            :unnarrowed t)))
-  (bind-keys :map jam/notes
-              ("T" . org-roam-dailies-capture-today)
-              ("d" . org-roam-dailies-goto-date)
-              ("n" . org-roam-capture)
-              ("N" . org-roam-dailies-capture-date)
-              ("i" . org-roam-node-insert)
-              ("R" . org-roam-db-sync)
-              ("r" . org-roam-node-find)))
+                                            :unnarrowed t))))
 
 (use-package osm ; curl
   ;:pin gnu
-  :init (bind-keys :map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
+  :bind (:map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
   :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
   :custom (osm-copyright nil))
 
 (use-package python ; python
   :ensure nil ; built-in
-  :commands (python-mode python-mode-hook python-mode-local-vars-hook))
+  :commands (python-mode python-mode-hook python-mode-local-vars-hook python-ts-mode python-ts-mode-hook))
 
 (use-package pyvenv ; python ; projects can install pydebug and pylsp inside venv
   :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
+  (add-hook 'python-ts-mode-hook #'pyvenv-tracking-mode)
   (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
 
@@ -524,7 +529,7 @@
 
 (use-package debbugs
   ;:pin gnu
-  :init (bind-keys :map jam/search ("b" . debbugs-gnu-bugs)); bug number search
+  :bind (:map jam/search ("b" . debbugs-gnu-bugs)); bug number search
   :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
   :config ;(setq org-link-elisp-confirm-function nil)
   (setq debbugs-gnu-default-packages '("guix-patches"))
@@ -535,14 +540,14 @@
 
 (use-package hideshow
   :ensure nil ; built-in
-  :init (bind-keys :map jam/toggle ("z" . hs-minor-mode))
-  (bind-keys :map jam/code ("z" . hs-toggle-hiding)
-                           ("v" . hs-hide-block))
+  :bind (:map jam/toggle ("z" . hs-minor-mode)
+         :map jam/code ("z" . hs-toggle-hiding)
+                       ("v" . hs-hide-block))
   :commands (hs-minor-mode hs-toggle-hiding hs-hide-block hs-hide-level hs-show-all hs-hide-all))
 
 (use-package erc
   :ensure nil ; built-in
-  :init (bind-keys :map jam/open ("i" . erc-tls))
+  :bind (:map jam/open ("i" . erc-tls))
   :commands (erc-tls erc) ; add bot msg to erc-nickserv-identified-hook?
   :config (setq erc-rename-buffers t
                 erc-interpret-mirc-color t
@@ -595,7 +600,7 @@
 (use-package eshell
   :ensure nil ; built-in
   :init (add-hook 'eshell-mode-hook #'(lambda () (add-to-list 'eshell-visual-commands "btm")))
-  (bind-keys :map jam/open ("e" . jam/eshell))
+  :bind (:map jam/open ("e" . jam/eshell))
   :commands (eshell)
   :config (require 'em-smart)
   (setq eshell-directory-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eshell")
@@ -606,11 +611,12 @@
 
 (use-package eat
   ;:pin nongnu
-  :init (bind-keys :map jam/open ("t" . eat))
+  :bind (:map jam/open ("t" . eat)
+         :map eat-mode-map ("C-S-v" . eat-yank))
+  :init
   (add-hook 'eshell-load-hook #'eat-eshell-mode)
   (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
-  :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode)
-  :config (bind-keys :map eat-mode-map ("C-S-v" . eat-yank)))
+  :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
 
 (use-package tramp
   :ensure nil ; built-in
@@ -621,8 +627,8 @@
 
 (use-package company
   ;:pin gnu ; pin gnu for android
+  :bind (:map jam/toggle ("a" . global-company-mode))
   :init (add-hook 'after-init-hook #'global-company-mode)
-  (bind-keys :map jam/toggle ("a" . global-company-mode))
   (setq company-minimum-prefix-length 2
         company-tooltip-limit 14
         company-tooltip-align-annotations t
@@ -654,7 +660,7 @@
 ;; C-u RET for unread and read, ! to save for offline/cache, U to manually subscribe, L list all groups, M-g to rescan group
 (use-package gnus
   :ensure nil ; built-in
-  :init (bind-keys :map jam/open ("g" . gnus))
+  :bind (:map jam/open ("g" . gnus))
   :commands (gnus)
   :config
   (setq
@@ -739,54 +745,31 @@
   :init (add-hook 'after-init-hook #'which-key-mode)
   :commands (which-key-mode))
 
-(use-package yaml-mode
+;(use-package yaml-mode
   ;:pin nongnu
-  :commands yaml-mode
-  :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
+;  :commands yaml-mode
+;  :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
 
-;(use-package rmsbolt
-;  :init (bind-keys :map jam/toggle ("R" . rmsbolt-mode))
-;  :commands rmsbolt-mode)
-
-;(use-package pcre2el
-  ;:pin nongnu
-;  :commands (rxt-pcre-to-elisp
-;             rxt-elisp-to-pcre
-;             rxt-convert-pcre-to-rx
-;             rxt-convert-elisp-to-rx
-;             rxt-toggle-elisp-rx
-;             rxt-mode rxt-global-mode))
-
-;(use-package esup
-;  :commands (esup)
-;  :config (setq esup-depth 0))
-
-;(use-package explain-pause-mode
-  ;:vc (:url "https://github.com/lastquestion/explain-pause-mode" :rev :newest) ; install from source with package.el or url-copy-file
-;  :ensure nil ; BUG not in melpa
-;  :init (bind-keys :map jam/open ("T" . explain-pause-top))
-;  :commands (explain-pause-top explain-pause-mode))
-
-;(use-package treesit ; libtreesitter-*.so
-;  :ensure nil ; built-in
-;  :init
-;  (if (treesit-available-p)
-;      (progn
-;          (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
-;          ;(push '(python-mode . python-ts-mode) major-mode-remap-alist)
-;          (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
+(use-package treesit ; libtreesitter-*.so
+  :ensure nil ; built-in
+  :init
+  (if (treesit-available-p)
+      (progn
+          (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
+          (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+          (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 ;(use-package combobulate
 ;  :init (setq combobulate-key-prefix "C-c e")
 ;  :hook ((python-ts-mode . combobulate-mode)
 ;         (yaml-ts-mode . combobulate-mode))
+  ;:vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
 ;  :load-path ("/gnu/git/combobulate"))
 
-;(use-package dape
-;  :vc (:url "https://github.com/svaante/dape" :rev :newest)
-;  :commands dape
-;  :load-path ("/gnu/git/dape")
-;)
+(use-package dape
+  :bind (:map jam/code ("d" . dape))
+  :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
+  :commands (dape))
 
 ;;;###autoload
 (defun jam/sudo-edit (file)

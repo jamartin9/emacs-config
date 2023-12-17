@@ -102,14 +102,15 @@
                                              "git"
                                              "nss-certs"
                                              "aspell-dict-en"
-                                             ;"mpv"; "vlc"; MAYBE add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
+                                             ;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
                                              "gnupg"
                                              "password-store" "pass-otp"
                                              ;"virt-viewer" ; "qemu"; for spice remote-viewer
                                              ;"alacritty"; "xterm"
                                              "curl"; emacs-osm needs for CA's
                                              "screen"
-                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-company" "emacs-which-key" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-rust-mode" "emacs-yaml-mode" "emacs-pyvenv";"emacs-esup" "emacs-explain-pause-mode" "emacs-pcre2el" "emacs-rmsbolt"
+                                             "tree-sitter-rust" "tree-sitter-yaml" "tree-sitter-python"
+                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-company" "emacs-which-key" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-pyvenv" "emacs-code-review" "emacs-dape"
                                              ))))
    (services
     (list

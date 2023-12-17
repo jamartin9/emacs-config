@@ -1944,6 +1944,8 @@
   - Rust bindings for the C++ api of PyTorch.
 ** libp2p/rust-libp2p
   - The Rust Implementation of the libp2p networking stack.
+** Lokathor/tinyvec
+  - Just, really the littlest Vec you could need. So smol. Stack/Heap allocated vector.
 ** matthieu-m/ghost-cell
   - An implementation of Joshua Yanovski's Ghost Cell paper.
 ** matthieu-m/static-rc
@@ -1976,6 +1978,8 @@
   - Zero-copy deserialization framework for Rust
 ** rosefromthedead/effing-mad
   -  Algebraic effects for Rust
+** RustCrypto/formats
+  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
 ** Rust-GCC/gccrs
   - GCC Front-End for Rust
 ** rust-lang/book
@@ -1992,8 +1996,6 @@
   - libgccjit AOT codegen for rustc
 ** rust-lang/rustup
   - The Rust toolchain installer
-** RustCrypto/formats
-  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
 ** rustwasm/wasm-bindgen
   - Facilitating high-level interactions between Wasm modules and JavaScript
 ** sbstp/rust-igd
