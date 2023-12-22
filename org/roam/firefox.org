@@ -40,6 +40,7 @@ network.dns.use_https_rr_as_altsvc
 - responsive design mode for various device resolutions
 - pdf editing tools
 - no PWA support on desktop
+- ~MOZ_ENABLE_WAYLAND=1 firefox~ for wayland support
 *** addons
 - ublock origin
 - multi account containers

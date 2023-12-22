@@ -195,6 +195,7 @@
               initial-major-mode 'fundamental-mode ; startup
               initial-scratch-message nil
               default-input-method nil
+              xref-search-program 'ripgrep ; replace grep with ripgrep
               inhibit-startup-screen t
               inhibit-startup-echo-area-message user-login-name
               inhibit-default-init t)
@@ -282,7 +283,7 @@
   :config (setq dired-dwim-target t
                 dired-hide-details-hide-symlink-targets nil
                 dired-auto-revert-buffer #'dired-buffer-stale-p
-                dired-recursive-copies  'always
+                dired-recursive-copies 'always
                 dired-recursive-deletes 'top
                 dired-create-destination-dirs 'ask)
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
@@ -428,7 +429,7 @@
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package magit ; git
-  :commands magit-file-delete magit-status
+  :commands (magit-file-delete magit-status)
   :bind (:map jam/vcs ("s" . magit-status)
          :map magit-mode-map ("q" . kill-buffer)
          :map transient-map ([escape] . transient-quit-one))
@@ -444,7 +445,7 @@
         magit-save-repository-buffers nil
         magit-revision-insert-related-refs nil
         magit-bury-buffer-function #'magit-mode-quit-window)
-  (add-hook 'magit-process-mode-hook #'goto-address-mode))
+  (add-hook 'magit-process-mode-hook #'goto-address-mode)); magit-generate-changelog after magit-create-commit for commit msg
 
 ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
 (use-package forge ; git

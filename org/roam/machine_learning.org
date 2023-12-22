@@ -71,13 +71,16 @@
     - [[https://github.com/lm-sys/FastChat][Vicuna]] is refined alpaca with sharegpt with 'conversation format'
   - WizardLM is fine tuned with  'Evol-Instruct' (llm generated) data for 'deep knowledge'
     - VicunaWizard combines the Vicuna and Wizardlm
-  - Orca is Supervised Fine Tuned GPT4 output in alpaca format (top of llm leaderboard with llama2)
+  - Orca is Supervised Fine Tuned GPT4 output in alpaca format
   - Can be fine tuned with [[https://github.com/tloen/alpaca-lora][LoRA]]
   - Flan-T5 for text summary
   - Donut for document image question answering
   - Vilt for image question answering
+  - Models can be merged with various method to combine strengths
+  - Models can be pruned for less inference cost with little result degradation
   - [[https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1][Mixtral]] uses mixture of experts for better 7B results
     - mixture of experts can potentially quantize and sparsify better than dense LLMs
+    - freeze gate weights when fine tuning(or use method to balance)
 *** Codegen
   - [[https://github.com/bigcode-project/starcoder][StarCoder]]
   - [[https://github.com/salesforce/CodeT5][CodeT5+]]
