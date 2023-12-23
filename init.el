@@ -292,7 +292,7 @@
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   ;(guix-emacs-autoload-packages); set EMACSLOADPATH
-  :commands guix-popup guix-set-emacs-environment)
+  :commands (guix-popup guix-set-emacs-environment))
 ;)
 
 (use-package geiser ; guile
@@ -308,7 +308,7 @@
   :init
   (add-hook 'geiser-mode-hook #'macrostep-geiser-setup)
   (add-hook 'geiser-repl-mode-hook #'macrostep-geiser-setup)
-  :commands macrostep-geiser-setup)
+  :commands (macrostep-geiser-setup))
 
 (use-package geiser-guile ; guile
   :init (with-eval-after-load 'geiser-guile
@@ -319,39 +319,16 @@
           (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") "3.0"))
           (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache"))
           (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
-  :commands geiser-guile)
+  :commands (geiser-guile))
 
 (use-package flymake ; add flycheck backends?
   :ensure nil ; built-in
-  :commands flymake-mode)
+  :commands (flymake-mode))
 
 (use-package flymake-guile ; guile/guild
-  :commands flymake-guile
+  :commands (flymake-guile)
   :hook (scheme-mode . flymake-guile)
   :hook (scheme-mode . flymake-mode))
-
-(use-package flyspell ; aspell
-  :bind (:map jam/toggle ("s" . flyspell-mode))
-  :ensure nil ; built-in
-  :init
-  (add-hook 'org-mode-hook #'flyspell-mode)
-  (add-hook 'markdown-mode-hook #'flyspell-mode)
-  (add-hook 'TeX-mode-hook #'flyspell-mode)
-  (add-hook 'rst-mode-hook #'flyspell-mode)
-  (add-hook 'message-mode-hook #'flyspell-mode)
-  (add-hook 'git-commit-mode-hook #'flyspell-mode)
-  (add-hook 'yaml-mode-hook #'flyspell-prog-mode)
-  (add-hook 'conf-mode-hook #'flyspell-prog-mode)
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
-  :commands flyspell-mode
-  :config (setq flyspell-issue-welcome-flag nil
-                flyspell-issue-message-flag nil
-                ispell-program-name "aspell" ; runs as own process
-                ispell-extra-args '("--sug-mode=ultra"
-                                    "--run-together")
-                ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
-                ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
-                ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
 (use-package eglot
   :ensure nil ; built-in
@@ -365,7 +342,7 @@
 (use-package rust-ts-mode
   :ensure nil ; built-in
   :mode "\\.rs\\'"
-  :commands rust-ts-mode
+  :commands (rust-ts-mode)
   :config (jam/set-rust-path))
 
 (use-package undo-tree
@@ -385,7 +362,7 @@
   :init (require 'xdg)
   (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
   (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg"))
-  :commands pass)
+  :commands (pass))
 
 (use-package password-store-otp; pass
   :after pass)
@@ -518,7 +495,7 @@
 
 (use-package minions ; hide minor modes on modeline
   :init (add-hook 'after-init-hook #'minions-mode)
-  :commands minions-mode)
+  :commands (minions-mode))
 
 (use-package debbugs
   ;:pin gnu
@@ -739,8 +716,8 @@
   :commands (which-key-mode))
 
 (use-package yaml-ts-mode
-  ;:pin nongnu ; built-in with ts
-  :commands yaml-ts-mode)
+  :ensure nil ; built-in
+  :commands (yaml-ts-mode))
 
 (use-package treesit ; libtreesitter-*.so
   :ensure nil ; built-in
@@ -755,6 +732,29 @@
   :bind (:map jam/code ("d" . dape))
   :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
   :commands (dape))
+
+(use-package flyspell ; aspell
+  :bind (:map jam/toggle ("s" . flyspell-mode))
+  :ensure nil ; built-in
+  :init
+  (add-hook 'org-mode-hook #'flyspell-mode)
+  (add-hook 'markdown-mode-hook #'flyspell-mode)
+  (add-hook 'TeX-mode-hook #'flyspell-mode)
+  (add-hook 'rst-mode-hook #'flyspell-mode)
+  (add-hook 'message-mode-hook #'flyspell-mode)
+  (add-hook 'git-commit-mode-hook #'flyspell-mode)
+  (add-hook 'yaml-mode-hook #'flyspell-prog-mode)
+  (add-hook 'conf-mode-hook #'flyspell-prog-mode)
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+  :commands (flyspell-mode)
+  :config (setq flyspell-issue-welcome-flag nil
+                flyspell-issue-message-flag nil
+                ispell-program-name "aspell" ; runs as own process
+                ispell-extra-args '("--sug-mode=ultra"
+                                    "--run-together")
+                ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
+                ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
+                ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
 ;(use-package combobulate
 ;  :init (setq combobulate-key-prefix "C-c e")
