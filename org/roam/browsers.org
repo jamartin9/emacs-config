@@ -139,7 +139,6 @@ self.addEventListener('fetch', function(e) {
 - Zoomeye
 - censys
 ** alternative frontends
-- [[https://github.com/teddit-net/teddit][teddit.net]]
 - youtube
   - [[https://piped.video/trending][piped.video]]
   - [[https://github.com/iv-org/invidious][yewtu.be]]

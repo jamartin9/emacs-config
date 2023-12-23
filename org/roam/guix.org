@@ -85,7 +85,7 @@
      (auto-start? #f)))
 
   (define ssh-service ; writes to /etc/dropbear for keys
-    (set-fields       ; make-forkexec-constructor/container to contain
+    (set-fields       ; least-authority-wrapper to contain
      (car ((@@ (gnu services ssh) dropbear-shepherd-service) (dropbear-configuration (port-number 2222)
                                                                                      (syslog-output? #f)
                                                                                      (password-authentication? #f)

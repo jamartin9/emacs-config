@@ -1,20 +1,20 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
-(bind-keys :prefix-map jam/vcs :prefix "C-c v")
-(bind-keys :prefix-map jam/notes :prefix "C-c n")
-(bind-keys :prefix-map jam/projects :prefix "C-c p"); C-x p g
-(bind-keys :prefix-map jam/toggle :prefix "C-c t"
+(bind-keys :prefix-map jam/code :prefix "C-c c" ; contains all bind maps
+           ("j" . xref-find-definitions)
+           ("c" . compile))
+(bind-keys :prefix-map jam/toggle :prefix "C-c c t"
            ("v" . visible-mode)
            ("w" . visual-line-mode)
            ("x" . xterm-mouse-mode)
            ("c" . global-display-fill-column-indicator-mode)
-           ("F" . toggle-frame-fullscreen)
-           ("f" . flymake-mode)
+           ("t" . toggle-frame-maximized)
+           ("f" . toggle-frame-fullscreen)
+           ("F" . flymake-mode)
            ("r" . recentf-mode)
            ("g" . auto-revert-mode))
-(bind-keys :prefix-map jam/open :prefix "C-c o"
-           ("r" . recentf-open)
+(bind-keys :prefix-map jam/open :prefix "C-c c o"
            ("s" . jam/sudo-edit)
            ("S" . speedbar-frame-mode)
            ("b" . browse-url-of-file)
@@ -25,31 +25,29 @@
            ("z" . jam/mpv-play)
            ("u" . xwidget-webkit-browse-url)
            ("U" . eww-browse))
-(bind-keys :prefix-map jam/insert :prefix "C-c i"
+(bind-keys :prefix-map jam/insert :prefix "C-c c i"
            ("y" . cua-paste)
            ("u" . insert-char)
            ("s" . yas-insert-snippet)
            ("e" . emojify-insert-emoji)
            ("b" . string-insert-rectangle))
-(bind-keys :prefix-map jam/code :prefix "C-c c"
-           ("j" . xref-find-definitions)
-           ("c" . compile))
-(bind-keys :prefix-map jam/search :prefix "C-c s"
+(bind-keys :prefix-map jam/search :prefix "C-c c s"
            ("l" . shr-copy-url)
            ("L" . ffap-menu)
            ("i" . imenu)
            ("a" . apropos)
            ("m" . bookmark-jump))
-(bind-keys :prefix-map jam/file :prefix "C-c f"
-           ("f" . find-file)
+(bind-keys :prefix-map jam/file :prefix "C-c c f"
            ("d" . dired)
+           ("f" . recentf-open)
            ("D" . desktop-save-in-desktop-dir))
-(bind-keys :prefix-map jam/quit :prefix "C-c q"
+(bind-keys :prefix-map jam/quit :prefix "C-c c q"
            ("f" . delete-frame)
            ("q" . kill-emacs)
            ("r" . restart-emacs)
            ("Q" . save-buffers-kill-terminal)
            ("K" . save-buffers-kill-emacs))
+(bind-keys :prefix-map jam/notes :prefix "C-c c n")
 
 ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
@@ -288,14 +286,14 @@
                 dired-create-destination-dirs 'ask)
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
 
-(when (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
+;(when (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
 (use-package guix ; guix
   :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   ;(guix-emacs-autoload-packages); set EMACSLOADPATH
   :commands guix-popup guix-set-emacs-environment)
-)
+;)
 
 (use-package geiser ; guile
   :init (add-hook 'scheme-mode-hook #'geiser-mode)
@@ -370,7 +368,6 @@
   :commands rust-ts-mode
   :config (jam/set-rust-path))
 
-
 (use-package undo-tree
   ;:pin gnu
   :init (add-hook 'after-init-hook #'global-undo-tree-mode)
@@ -420,8 +417,8 @@
                               ("monero-release" "https://github.com/monero-project/monero/releases.atom")
                               ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
-                              ("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
-                              ("Reddit-news" "https://www.reddit.com/r/news/.rss"); teddit(dead?) ex: https://teddit.net/r/news?api&type=rss
+                              ;("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
+                              ("Reddit-news" "https://www.reddit.com/r/news/.rss")
                               ("Lobste" "https://lobste.rs/rss")
                               ("Phoronix" "https://www.phoronix.com/rss.php")
                               ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
@@ -430,7 +427,7 @@
 
 (use-package magit ; git
   :commands (magit-file-delete magit-status)
-  :bind (:map jam/vcs ("s" . magit-status)
+  :bind (:map jam/open ("m" . magit-status)
          :map magit-mode-map ("q" . kill-buffer)
          :map transient-map ([escape] . transient-quit-one))
   :init
@@ -466,23 +463,18 @@
 (use-package transmission ; C-u universal arg for directory prompt ; transmission
   :commands (transmission transmission-add))
 
-(use-package orgit ; git
-  :commands (orgit-store-link))
-
-(use-package orgit-forge ; git
-  :commands (orgit-topic-store orgit-topic-open))
-
 ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
 (use-package org-roam ; sqlite-available-p
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
-  :bind (:map jam/notes
+  :bind (:map jam/file ("r" . org-roam-node-find)
+         :map jam/notes
               ("T" . org-roam-dailies-capture-today)
               ("d" . org-roam-dailies-goto-date)
-              ("n" . org-roam-capture)
-              ("N" . org-roam-dailies-capture-date)
+              ("r" . org-roam-capture)
+              ("R" . org-roam-dailies-capture-date)
               ("i" . org-roam-node-insert)
-              ("R" . org-roam-db-sync)
-              ("r" . org-roam-node-find))
+              ("N" . org-roam-db-sync)
+              ("n" . org-roam-node-find))
   :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
               org-directory org-roam-directory
               org-id-locations-file (expand-file-name ".orgids" org-directory) ; org-id-update-id-locations org-roam-db-sync
@@ -746,10 +738,9 @@
   :init (add-hook 'after-init-hook #'which-key-mode)
   :commands (which-key-mode))
 
-;(use-package yaml-mode
-  ;:pin nongnu
-;  :commands yaml-mode
-;  :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
+(use-package yaml-ts-mode
+  ;:pin nongnu ; built-in with ts
+  :commands yaml-ts-mode)
 
 (use-package treesit ; libtreesitter-*.so
   :ensure nil ; built-in
@@ -760,17 +751,17 @@
           (push '(python-mode . python-ts-mode) major-mode-remap-alist)
           (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
+(use-package dape
+  :bind (:map jam/code ("d" . dape))
+  :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
+  :commands (dape))
+
 ;(use-package combobulate
 ;  :init (setq combobulate-key-prefix "C-c e")
 ;  :hook ((python-ts-mode . combobulate-mode)
 ;         (yaml-ts-mode . combobulate-mode))
   ;:vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
 ;  :load-path ("/gnu/git/combobulate"))
-
-(use-package dape
-  :bind (:map jam/code ("d" . dape))
-  :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
-  :commands (dape))
 
 ;;;###autoload
 (defun jam/sudo-edit (file)
