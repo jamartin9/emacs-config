@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgd2dd239">
-<div class="navbar-brand" id="orgb7a3c97">
-<div class="navbar-item" id="orgbf28d3d">
+<nav class="navbar is-black" id="org31a563d">
+<div class="navbar-brand" id="orgd238e22">
+<div class="navbar-item" id="org6549f5e">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgbf22ff5">
-<div class="navbar-start" id="orgafc3873">
-<div class="navbar-item" id="orgb34f457">
+<div class="navbar-menu" id="org079a381">
+<div class="navbar-start" id="org9ad011f">
+<div class="navbar-item" id="orgd1ca74f">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,22 +29,25 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgfa9f0fc">
+<div class="navbar-end" id="org6f150bb">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org90c442e" class="outline-2">
-<h2 id="org90c442e">kind</h2>
-<div class="outline-text-2" id="text-org90c442e">
+<div id="outline-container-org9415f4f" class="outline-2">
+<h2 id="org9415f4f">kind</h2>
+<div class="outline-text-2" id="text-org9415f4f">
 </div>
-<div id="outline-container-org94e187f" class="outline-3">
-<h3 id="org94e187f">kind</h3>
-<div class="outline-text-3" id="text-org94e187f">
+<div id="outline-container-org0bad90f" class="outline-3">
+<h3 id="org0bad90f">kind</h3>
+<div class="outline-text-3" id="text-org0bad90f">
 <ul class="org-ul">
-<li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster</code></li>
-<li>KIND<sub>EXPERIMENTAL</sub><sub>CONTAINERD</sub><sub>SNAPSHOTTER</sub>=native for zfs in kind &gt;= 0.12</li>
+<li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster</code>
+<ul class="org-ul">
+<li>BUG with worker node failing. Needs runc 1.2 (unreleased) for resolv.conf</li>
+</ul></li>
+<li><code>KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native</code> for zfs in kind &gt;= 0.12</li>
 <li><code>kind load docker-image IMAGE IMAGE</code> to load images or mount path through config</li>
 <li>postgresql (crunchydata)
 <ul class="org-ul">
@@ -58,7 +61,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org552e5da">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
+<pre class="src src-sh" id="org58c086b">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
 kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </pre>
 </div>
@@ -66,7 +69,7 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 <li>default connection</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org9e2813f">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
+<pre class="src src-sh" id="orgabdb74d">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
 </pre>
 </div>
 <ul class="org-ul">
@@ -105,6 +108,19 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </ul></li>
 </ul></li>
 <li>cluster api instead of federation</li>
+<li>Gateway api instead of ingress api</li>
+<li><a href="https://github.com/k3s-io/kine">kine</a> is a shim for etcd to use mysql, postgres or sqlite as a backing store
+<ul class="org-ul">
+<li>used with k3s along with tunnel proxy for simple kube setups</li>
+</ul></li>
+<li>k8s device plugin for gpus as resource selectors</li>
+<li>set system-reserved, kube-reserved, eviction-threshold for node allocatable limit if memory pressure/cpu starvation.</li>
+<li>KEDA for scaling to zero cluster deployments with prometheus trigger on ingress</li>
+<li>knative does not support non http (gateway extension?)</li>
+<li>cilium cluster mesh routes across kubernetes cluster services
+<ul class="org-ul">
+<li>uses ebpf and envoy</li>
+</ul></li>
 </ul>
 </div>
 </div>

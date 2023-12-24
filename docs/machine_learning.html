@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgd689ce5">
-<div class="navbar-brand" id="orgf9a0177">
-<div class="navbar-item" id="org8c6cf7a">
+<nav class="navbar is-black" id="org7c821c8">
+<div class="navbar-brand" id="org4d057b2">
+<div class="navbar-item" id="org7b02f50">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org722fd19">
-<div class="navbar-start" id="orgf3d9a37">
-<div class="navbar-item" id="orgc190189">
+<div class="navbar-menu" id="org82759dd">
+<div class="navbar-start" id="org43d618c">
+<div class="navbar-item" id="orgb913bd6">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org91585a9">
+<div class="navbar-end" id="org5dde0a3">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgfe764f9" class="outline-2">
-<h2 id="orgfe764f9">Machine learning</h2>
-<div class="outline-text-2" id="text-orgfe764f9">
+<div id="outline-container-org2505586" class="outline-2">
+<h2 id="org2505586">Machine learning</h2>
+<div class="outline-text-2" id="text-org2505586">
 </div>
-<div id="outline-container-org087b8b5" class="outline-3">
-<h3 id="org087b8b5">notes</h3>
-<div class="outline-text-3" id="text-org087b8b5">
+<div id="outline-container-org105f564" class="outline-3">
+<h3 id="org105f564">notes</h3>
+<div class="outline-text-3" id="text-org105f564">
 <ul class="org-ul">
 <li>huggingface is a hub for models with api libs using pytorch/tensorflow/jax
 <ul class="org-ul">
@@ -59,11 +59,14 @@
 <ul class="org-ul">
 <li>4bit with GPT-Q compression (groupsize 128)</li>
 </ul></li>
-<li>LoRA is a finetunning mechanism</li>
+<li>LoRA is a finetunning mechanism
+<ul class="org-ul">
+<li>QLoRA is quantized version (4/8 bit). <a href="https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md">cpu version</a></li>
+</ul></li>
 <li>multi modal models (ViTS) combine visual image and text</li>
 <li>steering vectors cache activation layer results and swap them for alignment at the same layer</li>
 <li>vector databases can be used for Retrieval Augmented Generation by finding content close to query for context</li>
-<li>transformers context length prediction can be expanded from the size used in training by using <a href="https://arxiv.org/pdf/2108.12409.pdf">ALiBi in MPT</a> (or 0.5 scale on the positional embeddings like in SUPERHOT?)
+<li>transformers context length prediction can be expanded from the size used in training by using <a href="https://arxiv.org/pdf/2108.12409.pdf">ALiBi in MPT</a>, ROPE, sliding context window
 <ul class="org-ul">
 <li><a href="https://github.com/salesforce/xGen">xGen 8k context</a></li>
 <li><a href="https://huggingface.co/lmsys/longchat-13b-16k">longchat 16k context</a></li>
@@ -74,12 +77,17 @@
 <ul class="org-ul">
 <li><a href="https://github.com/google/flaxformer/blob/ee62754ebe5a5eeb111493622de5537133822e3e/flaxformer/components/attention/dense_attention.py#L50">already used by other models in the past</a></li>
 </ul></li>
+<li>RAG dataset summary on dataset may help QnA
+<ul class="org-ul">
+<li><a href="https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat">'Extended Mind'</a> aka active externalism may out preform RAG with citations</li>
+</ul></li>
+<li>Chain of thought synthetic dataset to improve implicit deductions (orca/phi)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge8c72e4" class="outline-3">
-<h3 id="orge8c72e4">image generation</h3>
-<div class="outline-text-3" id="text-orge8c72e4">
+<div id="outline-container-orgcdfd656" class="outline-3">
+<h3 id="orgcdfd656">image generation</h3>
+<div class="outline-text-3" id="text-orgcdfd656">
 <ul class="org-ul">
 <li>dalle mini</li>
 <li><a href="https://github.com/hlky/stable-diffusion">stable diffusion</a>
@@ -93,14 +101,18 @@
 <li><a href="https://github.com/riffusion/riffusion-app">Generate music from spectrograph</a></li>
 <li><a href="https://github.com/lllyasviel/ControlNet">Controlnet</a> guided Stable diffusion from scribbles/images/depth maps</li>
 <li><a href="https://github.com/facebookresearch/segment-anything">inpainting selection with Segment Anything Model</a></li>
-<li>fine tune with <a href="https://github.com/cloneofsimo/lora">lora</a> and <a href="https://github.com/huggingface/diffusers/tree/main/examples/dreambooth">dreambooth</a></li>
+<li>fine tune with <a href="https://github.com/cloneofsimo/lora">lora</a> and <a href="https://github.com/huggingface/diffusers/tree/main/examples/dreambooth">dreambooth</a>
+<ul class="org-ul">
+<li>quantized aware training and token merging for <a href="https://github.com/huggingface/optimum-intel/tree/main/examples/openvino/stable-diffusion">better results</a></li>
+</ul></li>
+<li>sdxl turbo for single(4) pass gan like generation</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge1fdb48" class="outline-3">
-<h3 id="orge1fdb48">Large Language Models</h3>
-<div class="outline-text-3" id="text-orge1fdb48">
+<div id="outline-container-org49d0b46" class="outline-3">
+<h3 id="org49d0b46">Large Language Models</h3>
+<div class="outline-text-3" id="text-org49d0b46">
 <ul class="org-ul">
 <li>Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)</li>
 <li>chinchilla paper showed most models are over parameterized without enough data</li>
@@ -141,16 +153,23 @@
 <ul class="org-ul">
 <li>VicunaWizard combines the Vicuna and Wizardlm</li>
 </ul></li>
-<li>Orca is Supervised Fine Tuned GPT4 output in alpaca format (top of llm leaderboard with llama2)</li>
+<li>Orca is Supervised Fine Tuned GPT4 output in alpaca format</li>
 <li>Can be fine tuned with <a href="https://github.com/tloen/alpaca-lora">LoRA</a></li>
 <li>Flan-T5 for text summary</li>
 <li>Donut for document image question answering</li>
 <li>Vilt for image question answering</li>
+<li>Models can be merged with various method to combine strengths</li>
+<li>Models can be pruned for less inference cost with little result degradation</li>
+<li><a href="https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral</a> uses mixture of experts for better 7B results
+<ul class="org-ul">
+<li>mixture of experts can potentially quantize and sparsify better than dense LLMs</li>
+<li>freeze gate weights when fine tuning(or use method to balance)</li>
+</ul></li>
 </ul>
 </div>
-<div id="outline-container-org1f41943" class="outline-4">
-<h4 id="org1f41943">Codegen</h4>
-<div class="outline-text-4" id="text-org1f41943">
+<div id="outline-container-orgdb237a7" class="outline-4">
+<h4 id="orgdb237a7">Codegen</h4>
+<div class="outline-text-4" id="text-orgdb237a7">
 <ul class="org-ul">
 <li><a href="https://github.com/bigcode-project/starcoder">StarCoder</a></li>
 <li><a href="https://github.com/salesforce/CodeT5">CodeT5+</a></li>
@@ -166,15 +185,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orga16f1ac" class="outline-3">
-<h3 id="orga16f1ac">Speech to text</h3>
-<div class="outline-text-3" id="text-orga16f1ac">
+<div id="outline-container-org54e2132" class="outline-3">
+<h3 id="org54e2132">Speech to text</h3>
+<div class="outline-text-3" id="text-org54e2132">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orga4809b6">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="orga180e2c">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -183,9 +202,9 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-org2c61d84" class="outline-3">
-<h3 id="org2c61d84">Text to speech</h3>
-<div class="outline-text-3" id="text-org2c61d84">
+<div id="outline-container-org238c113" class="outline-3">
+<h3 id="org238c113">Text to speech</h3>
+<div class="outline-text-3" id="text-org238c113">
 <ul class="org-ul">
 <li><a href="https://github.com/neonbjb/tortoise-tts">tortoise-tts</a> based on dalle</li>
 <li><a href="https://github.com/coqui-ai/TTS">coqui-ai</a> with YourTTS/FreeVC voice cloning
@@ -196,11 +215,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf776890" class="outline-3">
-<h3 id="orgf776890">Agent prompts</h3>
-<div class="outline-text-3" id="text-orgf776890">
+<div id="outline-container-org3e87a6b" class="outline-3">
+<h3 id="org3e87a6b">Agent prompts</h3>
+<div class="outline-text-3" id="text-org3e87a6b">
 <div class="org-src-container">
-<pre class="src src-text" id="org613cba7">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-text" id="org02ae095">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -223,14 +242,14 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-org7a8ba82" class="outline-3">
-<h3 id="org7a8ba82">transformers examples</h3>
-<div class="outline-text-3" id="text-org7a8ba82">
+<div id="outline-container-org28e0e16" class="outline-3">
+<h3 id="org28e0e16">transformers examples</h3>
+<div class="outline-text-3" id="text-org28e0e16">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org8bb20ec">#!/usr/bin/env python3
+<pre class="src src-python" id="orga760f46">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:

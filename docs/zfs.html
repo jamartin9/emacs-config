@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org26568b8">
-<div class="navbar-brand" id="orgda8a6a2">
-<div class="navbar-item" id="orgc80c67a">
+<nav class="navbar is-black" id="org8911687">
+<div class="navbar-brand" id="org43ae8a0">
+<div class="navbar-item" id="org54db07a">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org8425213">
-<div class="navbar-start" id="org6f8c5b4">
-<div class="navbar-item" id="orgd1b2de9">
+<div class="navbar-menu" id="orgf111f69">
+<div class="navbar-start" id="org65c18c5">
+<div class="navbar-item" id="org32378cc">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,26 +29,26 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgacaf683">
+<div class="navbar-end" id="org9b89767">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgcb7873e" class="outline-2">
-<h2 id="orgcb7873e">ZFS</h2>
-<div class="outline-text-2" id="text-orgcb7873e">
+<div id="outline-container-org23100d1" class="outline-2">
+<h2 id="org23100d1">ZFS</h2>
+<div class="outline-text-2" id="text-org23100d1">
 </div>
-<div id="outline-container-org53d64f4" class="outline-3">
-<h3 id="org53d64f4">openzfs</h3>
-<div class="outline-text-3" id="text-org53d64f4">
+<div id="outline-container-org24730e9" class="outline-3">
+<h3 id="org24730e9">openzfs</h3>
+<div class="outline-text-3" id="text-org24730e9">
 </div>
-<div id="outline-container-orgd46a8cf" class="outline-4">
-<h4 id="orgd46a8cf">install</h4>
-<div class="outline-text-4" id="text-orgd46a8cf">
+<div id="outline-container-org60ec6c8" class="outline-4">
+<h4 id="org60ec6c8">install</h4>
+<div class="outline-text-4" id="text-org60ec6c8">
 <ul class="org-ul">
 <li>If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
-That small space is useful for uefi bootloader via:
+That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
 <code>mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX</code> and
 <code>grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1</code>.
 A larger partition can allow proper fat32 fs type, grub installation(<code>--boot-directory</code>) and kernel/initramfs storage.</li>
@@ -64,7 +64,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org607b4b0">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="org4228b7c">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -105,18 +105,18 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9a67c5a" class="outline-4">
-<h4 id="org9a67c5a">usage</h4>
-<div class="outline-text-4" id="text-org9a67c5a">
+<div id="outline-container-orgce0bcac" class="outline-4">
+<h4 id="orgce0bcac">usage</h4>
+<div class="outline-text-4" id="text-orgce0bcac">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0c16df1" class="outline-4">
-<h4 id="org0c16df1">notes</h4>
-<div class="outline-text-4" id="text-org0c16df1">
+<div id="outline-container-orgf8d4549" class="outline-4">
+<h4 id="orgf8d4549">notes</h4>
+<div class="outline-text-4" id="text-orgf8d4549">
 <ul class="org-ul">
 <li>If you lose a vdev in a pool you LOSE THE POOL</li>
 <li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
@@ -153,16 +153,6 @@ password   include      zfs-key</li>
 <li>L2ARC has default <code>l2arc_write_max</code> of 8MiB/s and 8MiB/s burst (to fill up cache)</li>
 <li>uses arc ram (more for smaller blocks) to index</li>
 </ul></li>
-<li>arc stats on linux <code>cat /proc/spl/kstat/zfs/arcstats</code>
-<ul class="org-ul">
-<li>freebsd/darwin (removed in linux 5.5)</li>
-</ul></li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-C" id="org5e7d32a">sysctlbyname("kstat.zfs.misc.arcstats.size")
-</pre>
-</div>
-<ul class="org-ul">
 <li><a href="https://www.brendangregg.com/blog/2021-09-06/zfs-is-mysteriously-eating-my-cpu.html">zfs using cpu despite not being in use</a></li>
 <li><a href="https://github.com/kimono-koans/httm">https://github.com/kimono-koans/httm</a> for snapshot traversal</li>
 <li>record size for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)</li>
@@ -180,6 +170,7 @@ password   include      zfs-key</li>
 <ul class="org-ul">
 <li>6 vdev raidz2 eliminates allocation overhead, 3/5/9/17 raidz1, 7/11/19 raidz3</li>
 </ul></li>
+<li>slop space for reserved space under high usage to ensure operations can complete</li>
 </ul>
 </div>
 </div>

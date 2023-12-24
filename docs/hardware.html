@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org3914a25">
-<div class="navbar-brand" id="org1c95e2e">
-<div class="navbar-item" id="org811e1ec">
+<nav class="navbar is-black" id="org2614c5d">
+<div class="navbar-brand" id="org88a2923">
+<div class="navbar-item" id="org1592d59">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org06ea347">
-<div class="navbar-start" id="orgf13682e">
-<div class="navbar-item" id="org5f1c42f">
+<div class="navbar-menu" id="org010286f">
+<div class="navbar-start" id="org56ea7a0">
+<div class="navbar-item" id="org17a9f07">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,25 +29,32 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org0ee4888">
+<div class="navbar-end" id="orgcb5ea90">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgdb9e3ca" class="outline-2">
-<h2 id="orgdb9e3ca">hardware</h2>
-<div class="outline-text-2" id="text-orgdb9e3ca">
+<div id="outline-container-org3d059c8" class="outline-2">
+<h2 id="org3d059c8">hardware</h2>
+<div class="outline-text-2" id="text-org3d059c8">
+</div>
+<div id="outline-container-org14b4582" class="outline-3">
+<h3 id="org14b4582">Backdoors</h3>
+<div class="outline-text-3" id="text-org14b4582">
 <ul class="org-ul">
-<li>Backdoors
+<li><a href="https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf">ubiquity devices</a>(unifi)
 <ul class="org-ul">
-<li><a href="https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf">ubiquity devices</a>(unifi)</li>
+<li>any calvium processor</li>
+<li>amazon hsm</li>
+</ul></li>
 <li>intel management engine</li>
 <li>amd platform security processor</li>
 <li>firmware level malware (disk controller, usb controller, flashable uefi/bios etc)</li>
 <li>side channel data transmission such as AM <a href="https://github.com/fulldecent/system-bus-radio">https://github.com/fulldecent/system-bus-radio</a> or differential power analysis</li>
 <li>printers watermark pages and refuse to print without yellow ink</li>
-</ul></li>
+</ul>
+<ul class="org-ul">
 <li>Commonly defective (cheap companies and lack of quality control even with standards)
 <ul class="org-ul">
 <li>HDMI cables (no hdcp, artifacts and non spec bandwidth limits)</li>
@@ -61,27 +68,60 @@
 </ul></li>
 <li>Used GPUs (cryptocurreny mining wear and cheap factory solder)</li>
 </ul></li>
+</ul>
+</div>
+</div>
 
-<li>GPS
+<div id="outline-container-org999eb47" class="outline-3">
+<h3 id="org999eb47">GPS</h3>
+<div class="outline-text-3" id="text-org999eb47">
 <ul class="org-ul">
 <li>CoCom Limits is the limit placed on GPS devices that disables tracking when it is faster than 1,000 knots and/or an higher than 18,000m.
 <ul class="org-ul">
 <li>Intended to prevent GPS in intercontinental ballistic missile applications.</li>
 <li>SDR may not enforce limits (ex. GNSS-SDR)</li>
 </ul></li>
-</ul></li>
-<li>SDR
+</ul>
+</div>
+</div>
+<div id="outline-container-org7c6c0c5" class="outline-3">
+<h3 id="org7c6c0c5">SDR</h3>
+<div class="outline-text-3" id="text-org7c6c0c5">
 <ul class="org-ul">
 <li>krakensdr passive receiver ITAR restricted and censored after IEEE spectrum paper</li>
-</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org660ab91" class="outline-3">
+<h3 id="org660ab91">storage</h3>
+<div class="outline-text-3" id="text-org660ab91">
+<ul class="org-ul">
 <li>Project silica (quartz/glass hard drives)
 <ul class="org-ul">
 <li><a href="https://www.microsoft.com/en-us/research/project/project-silica/">research project by microsoft</a></li>
 <li>10000 year degrade time instead of 10 year like most optical mediums</li>
 </ul></li>
+<li>intel optane persistent high write nvme SSD cache
+<ul class="org-ul">
+<li><a href="https://ieeexplore.ieee.org/document/9387168">ULTRARAM</a> quantum RAM paper</li>
+</ul></li>
+</ul>
+</div>
+</div>
 
+<div id="outline-container-org1cdf631" class="outline-3">
+<h3 id="org1cdf631">sim</h3>
+<div class="outline-text-3" id="text-org1cdf631">
+<ul class="org-ul">
 <li>iphone14 removed sim card for esim.</li>
+</ul>
+</div>
+</div>
 
+<div id="outline-container-org51ae960" class="outline-3">
+<h3 id="org51ae960">clock</h3>
+<div class="outline-text-3" id="text-org51ae960">
+<ul class="org-ul">
 <li>atomic clocks
 <ul class="org-ul">
 <li><a href="https://www.physics.ox.ac.uk/news/quantum-network-entangled-atomic-clocks">https://www.physics.ox.ac.uk/news/quantum-network-entangled-atomic-clocks</a>
@@ -97,9 +137,26 @@
 <li>some NTP nodes use them (NTP is millisecond precision)</li>
 </ul></li>
 </ul></li>
+</ul>
+</div>
+</div>
 
-<li>egpus for external gpu</li>
+<div id="outline-container-orgba6f10d" class="outline-3">
+<h3 id="orgba6f10d">gpu</h3>
+<div class="outline-text-3" id="text-orgba6f10d">
+<ul class="org-ul">
+<li>egpus for external gpu
+<ul class="org-ul">
+<li>OCuLink (optical-copper link) for PCIe connectivity</li>
+</ul></li>
+</ul>
+</div>
+</div>
 
+<div id="outline-container-orgc49d7cd" class="outline-3">
+<h3 id="orgc49d7cd">ISA</h3>
+<div class="outline-text-3" id="text-orgc49d7cd">
+<ul class="org-ul">
 <li>RISC-V
 <ul class="org-ul">
 <li>free ISA</li>
@@ -107,28 +164,53 @@
 <li>32 (16 embeded) int registers</li>
 <li>32 floating point registers</li>
 </ul></li>
+</ul>
+</div>
+</div>
 
+<div id="outline-container-org69be0dd" class="outline-3">
+<h3 id="org69be0dd">sim</h3>
+<div class="outline-text-3" id="text-org69be0dd">
+<ul class="org-ul">
 <li>Breadboard
 <ul class="org-ul">
 <li>simulation <a href="https://www.withdiode.com/">https://www.withdiode.com/</a></li>
 </ul></li>
-
-<li>/r/unclebens rice packets to cultivate mushrooms</li>
-
-<li>BaoFeng programmable in unregistered frequency with CHIRP</li>
-
-<li>intel optane persistent high write nvme SSD cache
-<ul class="org-ul">
-<li><a href="https://ieeexplore.ieee.org/document/9387168">ULTRARAM</a> quantum RAM paper</li>
-</ul></li>
-
-<li>'auto sear' plastic converts gun to fully automatic</li>
 </ul>
 </div>
+</div>
 
-<div id="outline-container-org25e74b9" class="outline-3">
-<h3 id="org25e74b9">vehicle</h3>
-<div class="outline-text-3" id="text-org25e74b9">
+<div id="outline-container-org641d922" class="outline-3">
+<h3 id="org641d922">agriculture</h3>
+<div class="outline-text-3" id="text-org641d922">
+<ul class="org-ul">
+<li>/r/unclebens rice packets to cultivate mushrooms</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org48fc839" class="outline-3">
+<h3 id="org48fc839">radio</h3>
+<div class="outline-text-3" id="text-org48fc839">
+<ul class="org-ul">
+<li>BaoFeng programmable in unregistered frequency with CHIRP</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org53cf16e" class="outline-3">
+<h3 id="org53cf16e">firearms</h3>
+<div class="outline-text-3" id="text-org53cf16e">
+<ul class="org-ul">
+<li>'auto sear' plastic converts gun to fully automatic</li>
+<li>tannerite is used for exploding targets</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcce1fc8" class="outline-3">
+<h3 id="orgcce1fc8">vehicle</h3>
+<div class="outline-text-3" id="text-orgcce1fc8">
 <ul class="org-ul">
 <li>forscan
 <ul class="org-ul">
@@ -181,13 +263,22 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org7f745cb" class="outline-3">
-<h3 id="org7f745cb">board games</h3>
-<div class="outline-text-3" id="text-org7f745cb">
+<div id="outline-container-org89a91e7" class="outline-3">
+<h3 id="org89a91e7">board games</h3>
+<div class="outline-text-3" id="text-org89a91e7">
 <ul class="org-ul">
 <li>pathfinder system like dnd 3.3</li>
 <li>dnd 5e cap 20</li>
 <li>whitewolf d10 had games in 90's</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org64d0695" class="outline-3">
+<h3 id="org64d0695">health</h3>
+<div class="outline-text-3" id="text-org64d0695">
+<ul class="org-ul">
+<li>supra-supramaximal inspiration for curing hiccups (breathing technique that increases co2 in blood)</li>
 </ul>
 </div>
 </div>

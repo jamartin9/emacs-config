@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org18aae6c">
-<div class="navbar-brand" id="org7259004">
-<div class="navbar-item" id="orgd4a4a99">
+<nav class="navbar is-black" id="orgacc608f">
+<div class="navbar-brand" id="orga514a84">
+<div class="navbar-item" id="org941d792">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org2e58af6">
-<div class="navbar-start" id="orgc288ef4">
-<div class="navbar-item" id="org2c5279e">
+<div class="navbar-menu" id="org90c1d34">
+<div class="navbar-start" id="org23c6087">
+<div class="navbar-item" id="org050ce59">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,33 +29,33 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgf2ee948">
+<div class="navbar-end" id="orgca3e9c9">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgb3b074d" class="outline-2">
-<h2 id="orgb3b074d">bpftrace</h2>
-<div class="outline-text-2" id="text-orgb3b074d">
+<div id="outline-container-orgeea6664" class="outline-2">
+<h2 id="orgeea6664">bpftrace</h2>
+<div class="outline-text-2" id="text-orgeea6664">
 </div>
-<div id="outline-container-org34e2c4c" class="outline-3">
-<h3 id="org34e2c4c">notes</h3>
-<div class="outline-text-3" id="text-org34e2c4c">
+<div id="outline-container-org611f875" class="outline-3">
+<h3 id="org611f875">notes</h3>
+<div class="outline-text-3" id="text-org611f875">
 <ul class="org-ul">
 <li>needs cap or sudo</li>
 <li>&lt;EVENT&gt;/&lt;FILTER&gt;/&lt;BLOCK&gt; structure</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd8117a1" class="outline-3">
-<h3 id="orgd8117a1">oneliners</h3>
-<div class="outline-text-3" id="text-orgd8117a1">
+<div id="outline-container-orga12673b" class="outline-3">
+<h3 id="orga12673b">oneliners</h3>
+<div class="outline-text-3" id="text-orga12673b">
 <ul class="org-ul">
 <li>tools for oneline usually installed in /usr/share/bpftrace/tools/*.bt</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org58bc0a0"># print results on internval. Add to end to poll probe
+<pre class="src src-sh" id="org1eef91d"># print results on internval. Add to end to poll probe
 BPF_POLL='interval:s:1 { print(@); clear(@); }'
 # profile pid 6969
 BPF_PROFILE='profile:hz:99 /pid == 6969/ { @[ustack] = count(); }'
@@ -71,6 +71,42 @@ sudo bpftrace -e 'tracepoint:syscalls:sys_enter_* /comm != "bpftrace"/ {printf("
 sudo bpftrace /usr/share/bpftrace/tools/tcpconnect.bt
 # print tcp passive connections
 sudo bpftrace /usr/share/bpftrace/tools/tcpaccept.bt
+</pre>
+</div>
+<ul class="org-ul">
+<li>script to monitor tcp/udp/zfs</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bpf">BEGIN
+{
+        printf("Tracing operations... Hit Ctrl-C to end.\n");
+    printf("%-8s %-16s ", "PID", "COMM \n");
+}
+kprobe:tcp_connect
+{
+  printf("%-8d %-16s TCP Connect \n", pid, comm)
+}
+kretprobe:inet_csk_accept
+{
+//	$sk = (struct sock *)retval;
+  printf("%-8d %-16s TCP accepted \n", pid, comm)
+}
+//kprobe:ip4_datagram_connect, kprobe:ip6_datagram_connect
+//kretprobe:udp_sendmsg, kretprobe:udp_recvmsg // /@birth[(struct sock *)arg0]/
+kprobe:udp_sendmsg, kprobe:udp_recvmsg
+{
+//	$sk = (struct sock *)arg0;
+//  @skpid[$sk] = pid;
+//  @skcomm[$sk] = comm;
+  printf("%-8d %-16s UDP send/recv \n", pid, comm)
+}
+// kprobe:zpl_iter_read, kprobe:zpl_iter_write, kprobe:zpl_aio_read, kprobe:zpl_aio_write, kprobe:zpl_read, kprobe:zpl_write, kprobe:zpl_open, kprobe:zpl_fsync
+// kretprobe:zpl_iter_read, kretprobe:zpl_iter_write, kretprobe:zpl_aio_read, kretprobe:zpl_aio_write, kretprobe:zpl_read, kretprobe:zpl_write, kretprobe:zpl_open, kretprobe:zpl_fsync
+END
+{
+//	clear(@skpid);
+//	clear(@skcomm);
+}
 </pre>
 </div>
 </div>

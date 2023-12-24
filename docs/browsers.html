@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgedc728d">
-<div class="navbar-brand" id="org69a3d87">
-<div class="navbar-item" id="org41d1140">
+<nav class="navbar is-black" id="orgdd9dcc2">
+<div class="navbar-brand" id="orga3e2ff5">
+<div class="navbar-item" id="org23bb85d">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orge22d5b7">
-<div class="navbar-start" id="org73fb54f">
-<div class="navbar-item" id="org0ee4c26">
+<div class="navbar-menu" id="orga8768ab">
+<div class="navbar-start" id="org1d9ff5a">
+<div class="navbar-item" id="orgc8777b2">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,22 +29,22 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org02f2bef">
+<div class="navbar-end" id="org10cb808">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org6e2630b" class="outline-2">
-<h2 id="org6e2630b">browsers</h2>
-<div class="outline-text-2" id="text-org6e2630b">
+<div id="outline-container-orgd9098df" class="outline-2">
+<h2 id="orgd9098df">browsers</h2>
+<div class="outline-text-2" id="text-orgd9098df">
 <p>
 This your brain on the internet
 </p>
 </div>
-<div id="outline-container-org32efc40" class="outline-3">
-<h3 id="org32efc40">notes</h3>
-<div class="outline-text-3" id="text-org32efc40">
+<div id="outline-container-org43124c3" class="outline-3">
+<h3 id="org43124c3">notes</h3>
+<div class="outline-text-3" id="text-org43124c3">
 <ul class="org-ul">
 <li>ctrl-shift-R for force cache reload</li>
 <li>ctrl-w for close tab</li>
@@ -60,9 +60,9 @@ This your brain on the internet
 <li>URL hash fragments can store information that the browser should not send to backend (customization)</li>
 </ul>
 </div>
-<div id="outline-container-orgbcc6ac3" class="outline-4">
-<h4 id="orgbcc6ac3">pwa</h4>
-<div class="outline-text-4" id="text-orgbcc6ac3">
+<div id="outline-container-orge73bb0d" class="outline-4">
+<h4 id="orge73bb0d">pwa</h4>
+<div class="outline-text-4" id="text-orge73bb0d">
 <ul class="org-ul">
 <li>managed under <code>brave://apps/</code> or <code>chrome://apps</code></li>
 <li>progressive web apps have a manifest and service worker for offline installable apps
@@ -73,9 +73,10 @@ This your brain on the internet
 <li>service workers require https or <code>chrome://flags/#unsafely-treat-insecure-origin-as-secure</code> to be set locally</li>
 </ul></li>
 <li>add the manifest to the html <code>&lt;head&gt;</code> as <code>&lt;link rel="manifest" href="./manifest.json"&gt;</code></li>
+<li>Isolated Web Apps for signed updates</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org5deea82">{
+<pre class="src src-javascript" id="orge96f78e">{
     "name": "Progressive Web App",
     "short_name": "PWA",
     "icons": [{
@@ -92,7 +93,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-html" id="orge7553ee">&lt;script&gt;
+<pre class="src src-html" id="orgc98810a">&lt;script&gt;
     // register ServiceWorker
     window.onload = () =&gt; {
         'use strict';
@@ -105,7 +106,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="orgbed2aa2">var cacheName = 'pwa';
+<pre class="src src-javascript" id="org7839873">var cacheName = 'pwa';
 var filesToCache = [
   './',
   './index.html',
@@ -133,12 +134,12 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-orgb875b71" class="outline-3">
-<h3 id="orgb875b71"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
+<div id="outline-container-org6696147" class="outline-3">
+<h3 id="org6696147"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
 </div>
-<div id="outline-container-org511447d" class="outline-3">
-<h3 id="org511447d">chrome</h3>
-<div class="outline-text-3" id="text-org511447d">
+<div id="outline-container-org2b963f2" class="outline-3">
+<h3 id="org2b963f2">chrome</h3>
+<div class="outline-text-3" id="text-org2b963f2">
 <ul class="org-ul">
 <li><code>chrome://tracing</code> for browser tracing
 <ul class="org-ul">
@@ -181,25 +182,25 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb046175" class="outline-3">
-<h3 id="orgb046175">safari</h3>
-<div class="outline-text-3" id="text-orgb046175">
+<div id="outline-container-org21f757b" class="outline-3">
+<h3 id="org21f757b">safari</h3>
+<div class="outline-text-3" id="text-org21f757b">
 <ul class="org-ul">
 <li>webkit based</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orge10dc67" class="outline-2">
-<h2 id="orge10dc67">search engines</h2>
-<div class="outline-text-2" id="text-orge10dc67">
+<div id="outline-container-orge5e4ffa" class="outline-2">
+<h2 id="orge5e4ffa">search engines</h2>
+<div class="outline-text-2" id="text-orge5e4ffa">
 </div>
-<div id="outline-container-org1fad67d" class="outline-3">
-<h3 id="org1fad67d"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
+<div id="outline-container-orga1d99fb" class="outline-3">
+<h3 id="orga1d99fb"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
 </div>
-<div id="outline-container-org2580e04" class="outline-3">
-<h3 id="org2580e04">ddg</h3>
-<div class="outline-text-3" id="text-org2580e04">
+<div id="outline-container-org1e273ff" class="outline-3">
+<h3 id="org1e273ff">ddg</h3>
+<div class="outline-text-3" id="text-org1e273ff">
 <ul class="org-ul">
 <li>fingerprinted users multiple times</li>
 <li>no js version at lite.duckduckgo.com</li>
@@ -215,9 +216,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org654d650" class="outline-3">
-<h3 id="org654d650">brave</h3>
-<div class="outline-text-3" id="text-org654d650">
+<div id="outline-container-org8fe0cda" class="outline-3">
+<h3 id="org8fe0cda">brave</h3>
+<div class="outline-text-3" id="text-org8fe0cda">
 <ul class="org-ul">
 <li>search.brave.com</li>
 <li>has 'Goggles' for custom ranking</li>
@@ -227,21 +228,21 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org732e260" class="outline-2">
-<h2 id="org732e260">sites</h2>
-<div class="outline-text-2" id="text-org732e260">
+<div id="outline-container-org204c3c3" class="outline-2">
+<h2 id="org204c3c3">sites</h2>
+<div class="outline-text-2" id="text-org204c3c3">
 </div>
-<div id="outline-container-org76f8979" class="outline-3">
-<h3 id="org76f8979">tools</h3>
-<div class="outline-text-3" id="text-org76f8979">
+<div id="outline-container-orgbe5f566" class="outline-3">
+<h3 id="orgbe5f566">tools</h3>
+<div class="outline-text-3" id="text-orgbe5f566">
 <ul class="org-ul">
 <li><a href="https://wasm-test.libreoffice.org/">libreoffice wasm</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd3f6ce5" class="outline-3">
-<h3 id="orgd3f6ce5">data</h3>
-<div class="outline-text-3" id="text-orgd3f6ce5">
+<div id="outline-container-org8b49f87" class="outline-3">
+<h3 id="org8b49f87">data</h3>
+<div class="outline-text-3" id="text-org8b49f87">
 <ul class="org-ul">
 <li><a href="https://ossinsight.io/#trending-repos">https://ossinsight.io/#trending-repos</a></li>
 <li><a href="https://sourcegraph.com/search">https://sourcegraph.com/search</a></li>
@@ -252,11 +253,10 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org156f622" class="outline-3">
-<h3 id="org156f622">alternative frontends</h3>
-<div class="outline-text-3" id="text-org156f622">
+<div id="outline-container-orgd337fca" class="outline-3">
+<h3 id="orgd337fca">alternative frontends</h3>
+<div class="outline-text-3" id="text-orgd337fca">
 <ul class="org-ul">
-<li><a href="https://github.com/teddit-net/teddit">teddit.net</a></li>
 <li>youtube
 <ul class="org-ul">
 <li><a href="https://piped.video/trending">piped.video</a></li>
@@ -266,9 +266,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org7851f04" class="outline-3">
-<h3 id="org7851f04">media</h3>
-<div class="outline-text-3" id="text-org7851f04">
+<div id="outline-container-orgb864548" class="outline-3">
+<h3 id="orgb864548">media</h3>
+<div class="outline-text-3" id="text-orgb864548">
 <ul class="org-ul">
 <li><a href="https://ustv247.tv/">https://ustv247.tv/</a></li>
 <li><a href="https://scnlog.me/">https://scnlog.me/</a></li>

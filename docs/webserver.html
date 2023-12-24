@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org1d05091">
-<div class="navbar-brand" id="org5cae54f">
-<div class="navbar-item" id="org9203270">
+<nav class="navbar is-black" id="orgabad788">
+<div class="navbar-brand" id="org14a93b2">
+<div class="navbar-item" id="orgfbd710f">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org87488fb">
-<div class="navbar-start" id="org1225102">
-<div class="navbar-item" id="org84eae21">
+<div class="navbar-menu" id="orga6321d6">
+<div class="navbar-start" id="orgb2ac48f">
+<div class="navbar-item" id="org5fe7b7e">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,22 +29,28 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orge56a3e6">
+<div class="navbar-end" id="org896e30f">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgc93da3a" class="outline-2">
-<h2 id="orgc93da3a">webservers</h2>
-<div class="outline-text-2" id="text-orgc93da3a">
+<div id="outline-container-orgd37b0fa" class="outline-2">
+<h2 id="orgd37b0fa">webservers</h2>
+<div class="outline-text-2" id="text-orgd37b0fa">
 </div>
-<div id="outline-container-org4e32710" class="outline-3">
-<h3 id="org4e32710">webserver notes</h3>
-<div class="outline-text-3" id="text-org4e32710">
+<div id="outline-container-org1ac4473" class="outline-3">
+<h3 id="org1ac4473">webserver notes</h3>
+<div class="outline-text-3" id="text-org1ac4473">
 <ul class="org-ul">
 <li>Alt-Svc headers for http3/onion service</li>
-<li>http3 is udp (quic)</li>
+<li>http3 is udp (quic)
+<ul class="org-ul">
+<li>header compression is vulnerable to CRIME attack.
+<ul class="org-ul">
+<li>disable compression or use high entropy to avoid</li>
+</ul></li>
+</ul></li>
 <li>http2 requires tls</li>
 <li><code>./wrk -t1 -c400 -d30s http://127.0.0.1:42000/index.html</code></li>
 <li><a href="https://blog.tjll.net/reverse-proxy-hot-dog-eating-contest-caddy-vs-nginx/">https://blog.tjll.net/reverse-proxy-hot-dog-eating-contest-caddy-vs-nginx/</a>
@@ -60,12 +66,12 @@ This leads to higher latency/less requests per second but more robust connection
 </ul>
 </div>
 </div>
-<div id="outline-container-orge7424e9" class="outline-3">
-<h3 id="orge7424e9">pingora (coming soon?)</h3>
+<div id="outline-container-orga4c9568" class="outline-3">
+<h3 id="orga4c9568">pingora (coming soon?)</h3>
 </div>
-<div id="outline-container-orgee5fae9" class="outline-3">
-<h3 id="orgee5fae9">nginx</h3>
-<div class="outline-text-3" id="text-orgee5fae9">
+<div id="outline-container-orge2ae316" class="outline-3">
+<h3 id="orge2ae316">nginx</h3>
+<div class="outline-text-3" id="text-orge2ae316">
 <ul class="org-ul">
 <li>1.23.1
 <ul class="org-ul">
@@ -75,24 +81,24 @@ This leads to higher latency/less requests per second but more robust connection
 <li>worker process per core with auto</li>
 </ul>
 </div>
-<div id="outline-container-orgcdace44" class="outline-4">
-<h4 id="orgcdace44">nginx unit</h4>
-<div class="outline-text-4" id="text-orgcdace44">
+<div id="outline-container-orgb89a321" class="outline-4">
+<h4 id="orgb89a321">nginx unit</h4>
+<div class="outline-text-4" id="text-orgb89a321">
 <ul class="org-ul">
 <li>can run php without php-fpm</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orgff64ace" class="outline-3">
-<h3 id="orgff64ace">kong</h3>
+<div id="outline-container-org36d36ab" class="outline-3">
+<h3 id="org36d36ab">kong</h3>
 </div>
-<div id="outline-container-org9ef63e6" class="outline-3">
-<h3 id="org9ef63e6">apache</h3>
+<div id="outline-container-orgd2c6938" class="outline-3">
+<h3 id="orgd2c6938">apache</h3>
 </div>
-<div id="outline-container-org35fbb4d" class="outline-3">
-<h3 id="org35fbb4d">lighttpd</h3>
-<div class="outline-text-3" id="text-org35fbb4d">
+<div id="outline-container-orgaed6715" class="outline-3">
+<h3 id="orgaed6715">lighttpd</h3>
+<div class="outline-text-3" id="text-orgaed6715">
 <ul class="org-ul">
 <li>60k r/s with timeouts default settings file serving 7ms response 1.4.66 <code>t12</code>
 <ul class="org-ul">
@@ -101,26 +107,26 @@ This leads to higher latency/less requests per second but more robust connection
 </ul>
 </div>
 </div>
-<div id="outline-container-org9b91614" class="outline-3">
-<h3 id="org9b91614">redbean</h3>
-<div class="outline-text-3" id="text-org9b91614">
+<div id="outline-container-orga7b89d7" class="outline-3">
+<h3 id="orga7b89d7">redbean</h3>
+<div class="outline-text-3" id="text-orga7b89d7">
 <ul class="org-ul">
 <li>lua scripting</li>
 <li>segfaulted on launch</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge61f9bc" class="outline-3">
-<h3 id="orge61f9bc">python -m http.server</h3>
-<div class="outline-text-3" id="text-orge61f9bc">
+<div id="outline-container-org99538ab" class="outline-3">
+<h3 id="org99538ab">python -m http.server</h3>
+<div class="outline-text-3" id="text-org99538ab">
 <ul class="org-ul">
 <li>2k r/s with 10ms response with 3.10.5 <code>t12</code></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org43f92a1" class="outline-3">
-<h3 id="org43f92a1">caddy</h3>
-<div class="outline-text-3" id="text-org43f92a1">
+<div id="outline-container-orgd040697" class="outline-3">
+<h3 id="orgd040697">caddy</h3>
+<div class="outline-text-3" id="text-orgd040697">
 <ul class="org-ul">
 <li>2.6 beta
 <ul class="org-ul">
@@ -142,7 +148,7 @@ This leads to higher latency/less requests per second but more robust connection
 <li><code>caddy run --config Caddyfile</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org26125a5">:42000 {
+<pre class="src src-conf" id="org4ac64ba">:42000 {
         header -Server # remove identifying headers
         root * {$XDG_CONFIG_HOME}/emacs/org/roam
         log {
@@ -199,9 +205,9 @@ This leads to higher latency/less requests per second but more robust connection
 </div>
 </div>
 </div>
-<div id="outline-container-orgf49d17d" class="outline-3">
-<h3 id="orgf49d17d">workerd</h3>
-<div class="outline-text-3" id="text-orgf49d17d">
+<div id="outline-container-org779acd5" class="outline-3">
+<h3 id="org779acd5">workerd</h3>
+<div class="outline-text-3" id="text-org779acd5">
 <ul class="org-ul">
 <li>cloudflares fork of V8</li>
 <li>config is capnproto (binary, rpc, text)</li>
@@ -223,7 +229,7 @@ This leads to higher latency/less requests per second but more robust connection
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org8fc3fd5"># By default this will serve a subdirectory called `content-dir`
+<pre class="src src-conf" id="org676ae95"># By default this will serve a subdirectory called `content-dir`
 #     workerd serve config.capnp --directory-path site-files=/path/to/files
 # Wrangler.toml integration using: npx wrangler dev --experimental-local
 #[site]
@@ -255,7 +261,7 @@ const siteWorker :Workerd.Worker = (
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-rust" id="orgd3b27ea">// cf worker for fileserver in rust with worker-build
+<pre class="src src-rust" id="org625120f">// cf worker for fileserver in rust with worker-build
 use worker::*;
 //#[event(start)]// once per worker
 #[event(fetch)]

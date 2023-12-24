@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org221eaa7">
-<div class="navbar-brand" id="org29cfd63">
-<div class="navbar-item" id="org59ada7b">
+<nav class="navbar is-black" id="org9b98833">
+<div class="navbar-brand" id="org0ac53f3">
+<div class="navbar-item" id="orgc0103c4">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org6f6fae1">
-<div class="navbar-start" id="org0a1d311">
-<div class="navbar-item" id="org8dbb25a">
+<div class="navbar-menu" id="org51a8069">
+<div class="navbar-start" id="org7e5e76b">
+<div class="navbar-item" id="org5050c4e">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,15 +29,15 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org82d13b5">
+<div class="navbar-end" id="orgbb64699">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org65eebcf" class="outline-2">
-<h2 id="org65eebcf">notes</h2>
-<div class="outline-text-2" id="text-org65eebcf">
+<div id="outline-container-org13df935" class="outline-2">
+<h2 id="org13df935">notes</h2>
+<div class="outline-text-2" id="text-org13df935">
 <ul class="org-ul">
 <li>fallacies of crypto haters
 <ul class="org-ul">
@@ -61,12 +61,16 @@
 <li>wasting compute cycles on hashing random numbers instead of folding proteins, simulating fluid dynamics, SETI etc (need internet connection for blockchain sync); price should not be the primary factor for investing in hard research problems.</li>
 </ul></li>
 </ul></li>
+<li>cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
+<ul class="org-ul">
+<li>sigma protocols are alternative (COMINT)</li>
+</ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge464e3f" class="outline-2">
-<h2 id="orge464e3f">chia</h2>
-<div class="outline-text-2" id="text-orge464e3f">
+<div id="outline-container-orge893fb8" class="outline-2">
+<h2 id="orge893fb8">chia</h2>
+<div class="outline-text-2" id="text-orge893fb8">
 <ul class="org-ul">
 <li><code>CHIA_ROOT</code> env variable configuration
 <ul class="org-ul">
@@ -74,7 +78,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-org" id="org84ceea6">- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
+<pre class="src src-org" id="orgab57b5b">- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
 - sends to puzzle hash 0x000000000000000000000000000000000000000000000000000000000000dead
 - testnet burn txch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ksh7qddh
 </pre>
@@ -124,13 +128,14 @@
 <li>each CAT v2 is worth 1000 mojos. smallest unit is thus 0.001 CAT or one mojo.</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org38f45ea">chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
+<pre class="src src-sh" id="org7c6c0f0">chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
 </pre>
 </div>
 <ul class="org-ul">
 <li><a href="https://pawket.app/">https://pawket.app/</a> for some online chia tools. debugger coming soon&#x2026;
 <ul class="org-ul">
 <li>implemented ecdh for chia addresses</li>
+<li>ecdh for encrypted messages</li>
 </ul></li>
 <li>1.43 TB of writes per k32</li>
 <li>data layer added in 1.6
@@ -146,14 +151,54 @@
 </ul></li>
 <li>ex of video sharing with datalayer <a href="https://github.com/jjldv/ChiaTubi">https://github.com/jjldv/ChiaTubi</a></li>
 </ul></li>
-<li>Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling</li>
 <li><a href="https://mojonode.com/explorer?q=select%20date_trunc(%27week%27,%20gs.ts)%20as%20datetime,%20coalesce(max(reorgs),%200)%20as%20%22max%20seq%20block%20reorgs%20per%20week%22%20from%0A%20%20generate_series(%272022-03-10%2000:00:00%27::timestamp,%20%0A%20%20%272023-03-21%2023:55:00%27::timestamp,%20interval%20%271%20day%27)%20gs(ts)%20%0A%20%20left%20join%20%0A%20%20(%0Aselect%20min(dt)%20as%20dt,%20count(seq)%20as%20reorgs%20from%20(%0A%20%20select%20height,%20max(created_at)%20as%20dt,%0A%20%20%20%20case%20when%20height%20-%20row_number()%20over%20(order%20by%20height)%20=%20-1%20then%20height%20%20%0A%20%20%20%20else%20height%20-%20row_number()%20over%20(order%20by%20height)%20end%20as%20seq%20from%20block_records%20%0Awhere%20reverted=true%0Agroup%20by%20height%0A)%20as%20t%0Agroup%20by%20seq%0A%20%20%20having%20count(seq)%20%3E%200%0A%20%20%20)%20as%20b%20%0A%20%20%20%20%20%0A%20%20%20%20%20on%20date_trunc(%27week%27,%20b.dt)%20=%20date_trunc(%27week%27,%20gs.ts)%0A%20%20%0A%20group%20by%20date_trunc(%27week%27,%20gs.ts)%0Aorder%20by%20date_trunc(%27week%27,%20gs.ts)%20">mojo node sql for block reorg</a></li>
+<li>space farmers pool runs community node
+<ul class="org-ul">
+<li>light farming alternative since flexpool shutdown</li>
+</ul></li>
+<li>xch.events for mempool explorer</li>
+</ul>
+</div>
+<div id="outline-container-org79f5cd2" class="outline-3">
+<h3 id="org79f5cd2">blunders</h3>
+<div class="outline-text-3" id="text-org79f5cd2">
+<ul class="org-ul">
+<li>Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling
+<ul class="org-ul">
+<li>0.59 btc in reserved. Required 1btc deposit to withdrawl.</li>
+</ul></li>
+<li>CEO/CSO/Employees flame users on reddit (ex. Windows SSL issue)</li>
+<li>Trademark trolling chiaplot (new site)/xchscan(block explorer) with fresh law grad
+<ul class="org-ul">
+<li>the chia plot needed a lawyer for them to buzz off</li>
+</ul></li>
+<li>large premine (promised to not use) is not being used</li>
+<li>layoff of devs after being told "we have years of runway"</li>
+<li>hiring WEF managers</li>
+<li>Gatekeeping timelord asics</li>
+<li>exploited own vulnerability with catv1/v2 upgrade</li>
+<li>stably scam
+<ul class="org-ul">
+<li>chia has better custody tools than custodian. Total lack of DD</li>
+</ul></li>
+<li>misrepresent the plot filter increase and effects it will have on farming k32's
+<ul class="org-ul">
+<li>higher quality proofs will be more likely to win. k33 will provide higher proof quality than k32 given same storage space.</li>
+</ul></li>
+<li>Slow development
+<ul class="org-ul">
+<li>pooling release</li>
+<li>compressed plots</li>
+<li>node perf (dust storm)</li>
+<li>blockchain download (offer torrent now)</li>
+</ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf5e8ba3" class="outline-2">
-<h2 id="orgf5e8ba3">monero</h2>
-<div class="outline-text-2" id="text-orgf5e8ba3">
+</div>
+<div id="outline-container-org4aa7c47" class="outline-2">
+<h2 id="org4aa7c47">monero</h2>
+<div class="outline-text-2" id="text-org4aa7c47">
 <ul class="org-ul">
 <li>use block &gt; 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)</li>
 <li>supports tor with sending tx's and wallets
@@ -163,7 +208,13 @@
 </ul></li>
 <li>randomx for POW algorithm
 <ul class="org-ul">
-<li>ASIC resistance may not be stable long term</li>
+<li>ASIC resistance may not be stable long term
+<ul class="org-ul">
+<li>advertised asic miners contest specific nonces (horizontal lines on graph of block nonces)
+<ul class="org-ul">
+<li>potential for social cascading for miners to skip those nonces (making the asics better?)</li>
+</ul></li>
+</ul></li>
 </ul></li>
 <li>tail emissions of 0.6 XMR per block</li>
 <li>variable block sizes
@@ -201,13 +252,13 @@
 <li>view tags since v0.18</li>
 </ul></li>
 <li>lockable spends with <code>locked_transfer</code></li>
+<li><a href="https://github.com/spackle-xmr/MoneroTools">churn, fracture and consolidate tools</a></li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orgda9f52d" class="outline-2">
-<h2 id="orgda9f52d">bitcoin</h2>
-<div class="outline-text-2" id="text-orgda9f52d">
+<div id="outline-container-orgfeb063b" class="outline-2">
+<h2 id="orgfeb063b">bitcoin</h2>
+<div class="outline-text-2" id="text-orgfeb063b">
 <ul class="org-ul">
 <li>reuse of ECDSA signatures can lead to key compromise (polynonce attack). use deterministic dsa instead (eddsa or RFC 6979)</li>
 <li>double sha256</li>
@@ -232,16 +283,16 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgac04957" class="outline-2">
-<h2 id="orgac04957">btcpayserver</h2>
-<div class="outline-text-2" id="text-orgac04957">
+<div id="outline-container-orgc6b6bda" class="outline-2">
+<h2 id="orgc6b6bda">btcpayserver</h2>
+<div class="outline-text-2" id="text-orgc6b6bda">
 <ul class="org-ul">
 <li>crypto payment server that supports invoices (multiple payments, refunds, tolerances etc)</li>
 <li>xmr config requires the view only wallet.keys, wallet and password file be available before sync can complete</li>
 <li>sync MUST be completed before the FIRST store can be created</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="org8216554">apiVersion: apps/v1
+<pre class="src src-yaml" id="org32204f0">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: btcpay-deployment

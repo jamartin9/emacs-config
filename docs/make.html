@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org480f2ef">
-<div class="navbar-brand" id="org4efee8c">
-<div class="navbar-item" id="org79dd92a">
+<nav class="navbar is-black" id="org7d83578">
+<div class="navbar-brand" id="org8dae3dd">
+<div class="navbar-item" id="org4fd517b">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgce8e778">
-<div class="navbar-start" id="org7242ee0">
-<div class="navbar-item" id="org90975ae">
+<div class="navbar-menu" id="org0340539">
+<div class="navbar-start" id="org081794f">
+<div class="navbar-item" id="org41c29a0">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,25 +29,25 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgc885a49">
+<div class="navbar-end" id="orge200a24">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orge75e413" class="outline-2">
-<h2 id="orge75e413">make</h2>
-<div class="outline-text-2" id="text-orge75e413">
+<div id="outline-container-org47392c8" class="outline-2">
+<h2 id="org47392c8">make</h2>
+<div class="outline-text-2" id="text-org47392c8">
 </div>
-<div id="outline-container-org13b2217" class="outline-3">
-<h3 id="org13b2217">snippets</h3>
-<div class="outline-text-3" id="text-org13b2217">
+<div id="outline-container-org813211b" class="outline-3">
+<h3 id="org813211b">snippets</h3>
+<div class="outline-text-3" id="text-org813211b">
 </div>
-<div id="outline-container-orgff836cd" class="outline-4">
-<h4 id="orgff836cd">makefile for docker copy</h4>
-<div class="outline-text-4" id="text-orgff836cd">
+<div id="outline-container-orgd35e72b" class="outline-4">
+<h4 id="orgd35e72b">makefile for docker copy</h4>
+<div class="outline-text-4" id="text-orgd35e72b">
 <div class="org-src-container">
-<pre class="src src-makefile" id="org1d88c09">DOCKER ?= docker
+<pre class="src src-makefile" id="orgfa32eaa">DOCKER ?= docker
 DOCKER_PREFIX ?= jam
 
 DOCKER_BUILD_IMG_NAME ?= jyvert
@@ -103,11 +103,11 @@ $(OUTPUT): build-base
 </div>
 </div>
 </div>
-<div id="outline-container-org1d40177" class="outline-4">
-<h4 id="org1d40177">makefile for emacs</h4>
-<div class="outline-text-4" id="text-org1d40177">
+<div id="outline-container-org0760a07" class="outline-4">
+<h4 id="org0760a07">makefile for emacs</h4>
+<div class="outline-text-4" id="text-org0760a07">
 <div class="org-src-container">
-<pre class="src src-makefile" id="org8285039">EMACS_PROG ?= emacs
+<pre class="src src-makefile" id="org2a54f11">EMACS_PROG ?= emacs
 EMACS_FLAGS ?= -Q --batch
 EMACS_CMD ::= $(EMACS_PROG) $(EMACS_FLAGS)
 
@@ -173,12 +173,12 @@ clean : prune
 </div>
 </div>
 </div>
-<div id="outline-container-org532b1e6" class="outline-4">
-<h4 id="org532b1e6">makefile for executable guile wrapper</h4>
-<div class="outline-text-4" id="text-org532b1e6">
+<div id="outline-container-orga29df40" class="outline-4">
+<h4 id="orga29df40">makefile for executable guile wrapper</h4>
+<div class="outline-text-4" id="text-orga29df40">
 <div class="org-src-container">
-<pre class="src src-makefile" id="org9190ec4"># simple makefile using guile for libs/linking
-# MAYBE static-pie
+<pre class="src src-makefile" id="org28b6ad4"># simple makefile using guile for libs/linking
+# make static-pie ?
 
 # sources
 C_FILES ::= $(wildcard *.c)
@@ -251,13 +251,13 @@ test: Makefile.bak
 </div>
 </div>
 </div>
-<div id="outline-container-org0069992" class="outline-3">
-<h3 id="org0069992">autotools</h3>
-<div class="outline-text-3" id="text-org0069992">
+<div id="outline-container-org9eee5dc" class="outline-3">
+<h3 id="org9eee5dc">autotools</h3>
+<div class="outline-text-3" id="text-org9eee5dc">
 </div>
-<div id="outline-container-org50c143f" class="outline-4">
-<h4 id="org50c143f">auto conf</h4>
-<div class="outline-text-4" id="text-org50c143f">
+<div id="outline-container-org7126f86" class="outline-4">
+<h4 id="org7126f86">auto conf</h4>
+<div class="outline-text-4" id="text-org7126f86">
 <ul class="org-ul">
 <li>Uses m4 text macros</li>
 <li>relies on env variables such as <code>PKG_CONFIG_PATH</code> or <code>LDFLAGS</code></li>
@@ -265,7 +265,7 @@ test: Makefile.bak
 <li>example of guile autoconf file</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-autoconf" id="org551debc"># at least
+<pre class="src src-autoconf" id="org4238283"># at least
 AC_PREREQ([2.69])
 AC_INIT([eg], [1.0])
 
@@ -306,14 +306,14 @@ AC_OUTPUT
 </div>
 </div>
 </div>
-<div id="outline-container-orgc1f0900" class="outline-4">
-<h4 id="orgc1f0900">automake</h4>
-<div class="outline-text-4" id="text-orgc1f0900">
+<div id="outline-container-org8191773" class="outline-4">
+<h4 id="org8191773">automake</h4>
+<div class="outline-text-4" id="text-org8191773">
 <ul class="org-ul">
 <li>example of guile automake file</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-automake" id="org7dffe7f"># This is an automake file; process in automake
+<pre class="src src-automake" id="org112c4af"># This is an automake file; process in automake
 ACLOCAL_AMFLAGS = -I m4 --install
 EXTRA_DIST = example.sh guix-channel/ src/hello.scm README.org Makefile.bak
 

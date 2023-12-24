@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org2f41ec6">
-<div class="navbar-brand" id="org59b6522">
-<div class="navbar-item" id="org6d21ddc">
+<nav class="navbar is-black" id="org13ffed0">
+<div class="navbar-brand" id="org8e5190d">
+<div class="navbar-item" id="org024ee14">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgf341d55">
-<div class="navbar-start" id="org3b33118">
-<div class="navbar-item" id="org67b58da">
+<div class="navbar-menu" id="orgd993768">
+<div class="navbar-start" id="orga5b0f21">
+<div class="navbar-item" id="org9303585">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,22 +29,22 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org1c88a9c">
+<div class="navbar-end" id="org19bb726">
 
 </div>
 
 </div>
 </nav>
 
-<div id="outline-container-org7a2b985" class="outline-2">
-<h2 id="org7a2b985">Guix</h2>
-<div class="outline-text-2" id="text-org7a2b985">
+<div id="outline-container-org6af3745" class="outline-2">
+<h2 id="org6af3745">Guix</h2>
+<div class="outline-text-2" id="text-org6af3745">
 </div>
-<div id="outline-container-org567e544" class="outline-3">
-<h3 id="org567e544">Link manifest and channels</h3>
-<div class="outline-text-3" id="text-org567e544">
+<div id="outline-container-org20db289" class="outline-3">
+<h3 id="org20db289">Link manifest and channels</h3>
+<div class="outline-text-3" id="text-org20db289">
 <div class="org-src-container">
-<pre class="src src-elisp" id="org960ce98">(ignore-errors
+<pre class="src src-elisp" id="org5030604">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -55,11 +55,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgddf6d08" class="outline-3">
-<h3 id="orgddf6d08">guix home</h3>
-<div class="outline-text-3" id="text-orgddf6d08">
+<div id="outline-container-org9510be3" class="outline-3">
+<h3 id="org9510be3">guix home</h3>
+<div class="outline-text-3" id="text-org9510be3">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org6181e8c">(use-modules (gnu home)
+<pre class="src src-scheme" id="orgc4b669f">(use-modules (gnu home)
              (gnu home services)
              (gnu home services guix)
              (gnu home services shells)
@@ -121,7 +121,7 @@
    (auto-start? #f)))
 
 (define ssh-service ; writes to /etc/dropbear for keys
-  (set-fields       ; make-forkexec-constructor/container to contain
+  (set-fields       ; least-authority-wrapper to contain
    (car ((@@ (gnu services ssh) dropbear-shepherd-service) (dropbear-configuration (port-number 2222)
                                                                                    (syslog-output? #f)
                                                                                    (password-authentication? #f)
@@ -132,24 +132,21 @@
 (home-environment
  (packages (append
           ;(map transform-emacs-build-git (list emacs-fd))
-          ;(map transform-emacs-build (list emacs-rmsbolt emacs-pyvenv emacs-eat emacs-debbugs emacs-org-roam emacs-flycheck-guile emacs-guix emacs-fd emacs-emms emacs-osm emacs-minions emacs-transmission emacs-undo-tree emacs-pass emacs-use-package emacs-code-review emacs-orgit-forge emacs-flycheck-popup-tip emacs-macrostep-geiser emacs-company emacs-cfrs emacs-lsp-treemacs emacs-lsp-ui emacs-rustic emacs-geiser-guile emacs-dap-mode emacs-link-hint emacs-which-key emacs-explain-pause-mode emacs-pcre2el emacs-gcmh)) ; BUG no eln
           (map specification-&gt;package (list "guile"
                                            ;"emacs-pgtk-xwidgets" ; managed by default profile
-                                           "fd"
+                                           ;"ripgrep" ;"fd"
                                            "git"
-                                           "ripgrep"
                                            "nss-certs"
                                            "aspell-dict-en"
-                                           ;"mpv"; "vlc"; MAYBE add guix package for mpv/vlc with libvdpau-nvidia from nvidia-libs nonguix
+                                           ;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
                                            "gnupg"
                                            "password-store" "pass-otp"
-                                           "virt-viewer" ; "qemu"; for spice remote-viewer
-                                           ; "alacritty"; "xterm" ; MAYBE add guix package for alacritty with nvidia-libs
+                                           ;"virt-viewer" ; "qemu"; for spice remote-viewer
+                                           ;"alacritty"; "xterm"
                                            "curl"; emacs-osm needs for CA's
                                            "screen"
-                                           ;"python" "python-lsp-server" "python-debugpy" "python-pylint" "python-tomli" "emacs-pyvenv" ; "tree-sitter-python"
-                                           "tree-sitter-yaml" ; "tree-sitter-rust" ; "tree-sitter" ; "emacs-yaml-mode"; ; "emacs-flymake-guile" ; "emacs-explain-pause-mode"
-                                           "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-flycheck-guile" "emacs-flycheck-popup-tip" "emacs-rmsbolt" "emacs-guix" "emacs-emms" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-code-review" "emacs-orgit-forge" "emacs-macrostep-geiser" "emacs-company" "emacs-lsp-treemacs" "emacs-lsp-ui" "emacs-rustic" "emacs-geiser-guile" "emacs-dap-mode" "emacs-link-hint" "emacs-which-key" "emacs-pcre2el" "emacs-gcmh" "emacs-cfrs" "emacs-fd"
+                                           "tree-sitter-rust" "tree-sitter-yaml" "tree-sitter-python"
+                                           "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-company" "emacs-which-key" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-pyvenv" "emacs-code-review" "emacs-dape"
                                            ))))
  (services
   (list
@@ -190,7 +187,7 @@
              ;(environment-variables (list '("EDITOR" . "emacs")))
              (bashrc (list (plain-file "guix.alias" "\
 #!/usr/bin/env bash
-# shellcheck disable=SC2068,SC1090,SC1091
+# shellcheck disable=SC2155,SC2076,SC2068,SC1090,SC1091
 
 export TMPDIR=\"/tmp\"
 
@@ -352,8 +349,15 @@ _guix_deactivate_profile(){
             fi
         done
         unset \"GUIX_PREV_ENV_${arg}\"
+        local prev_entry
         for entry in ${GUIX_PREV_ENV[@]}; do # restore init env
-            export \"${entry%%=*}=${entry#*=}\"
+            if [[ ! \"${entry}\"  =~ \"=\" ]]; then # append onto the prev_entry for the space seperated args without equality assignment
+                prev_entry=\"${prev_entry} ${entry}\"
+                export \"${prev_entry?}\"
+            else
+                prev_entry=\"${entry}\"
+                export \"${entry%%=*}=${entry#*=}\"
+            fi
         done
         # active manifests again
         local active_stash=(\"${GUIX_ACTIVE_PROFILES[@]}\") # export GUIX_ACTIVE_PROFILES=(\"${GUIX_ACTIVE_PROFILES[@]/$arg}\")
@@ -393,7 +397,7 @@ _guix_opts(){
         local arg=\"${1}\"
         case \"${arg}\" in
             -a|--activate)
-                if [[ \"${GUIX_ACTIVE_PROFILES[*]}\" =~ ${2} ]]; then
+                if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
                     printf '%s is already active \n' \"${2}\"
                 else
                     _guix_activate_profile \"${2}\"
@@ -401,9 +405,11 @@ _guix_opts(){
                 shift 2
                 ;;
             -d|--deactivate)
-                if [[ \"${GUIX_ACTIVE_PROFILES[*]}\" =~ ${2} ]]; then
+                if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
                     _guix_deactivate_profile \"${2}\"
                     cd . # restore ps1 prompt dir/info
+                else
+                    printf '%s is not active \n' \"${2}\"
                 fi
                 shift 2
                 ;;
@@ -420,7 +426,7 @@ _guix_opts(){
                 shift 2
                 ;;
             *)
-                if [[ \"${GUIX_ACTIVE_PROFILES[*]}\" =~ ${1} ]]; then
+                if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${1} \" ]]; then
                     printf '%s is already active \n' \"${1}\"
                 else
                     _guix_activate_profile \"${1}\"
@@ -437,11 +443,11 @@ _guix_opts default"))))))))
 </div>
 </div>
 
-<div id="outline-container-org293f6b4" class="outline-3">
-<h3 id="org293f6b4">guixsd config</h3>
-<div class="outline-text-3" id="text-org293f6b4">
+<div id="outline-container-orgc3932b9" class="outline-3">
+<h3 id="orgc3932b9">guixsd config</h3>
+<div class="outline-text-3" id="text-orgc3932b9">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgcb8def3">(use-modules
+<pre class="src src-scheme" id="orgc760912">(use-modules
  (gnu)
  (gnu services)
  (gnu services linux)
@@ -902,8 +908,8 @@ _guix_opts default"))))))))
 root ALL=(ALL) ALL
 %wheel ALL=NOPASSWD: ALL\n"))
 
-  (packages (append (list font-bitstream-vera nss-certs nvi wget cloud-utils); cloud-utils for growpart with resize2fs after img resize
-                    %base-packages)) ; podman flatpak blueman
+  (packages (append (list font-bitstream-vera nss-certs nvi cloud-utils); cloud-utils for growpart with resize2fs after img resize
+                    %base-packages)) ; wget blueman podman flatpak
 
   (services
    (append (list (service xfce-desktop-service-type)
@@ -966,7 +972,7 @@ root ALL=(ALL) ALL
                           (zfs-configuration
                            (kernel my-kernel)))
 
-                 (service nftables-service-type; MAYBE add guix package for opensnitch: import needs step added for protoc header generation
+                 (service nftables-service-type
                           (nftables-configuration
                            (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -&gt; input/output/forward -&gt; postrouting
 # flush all the rules.
@@ -1124,11 +1130,11 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-orge6bcca7" class="outline-3">
-<h3 id="orge6bcca7">User manifest</h3>
-<div class="outline-text-3" id="text-orge6bcca7">
+<div id="outline-container-orge9b913f" class="outline-3">
+<h3 id="orge9b913f">User manifest</h3>
+<div class="outline-text-3" id="text-orge9b913f">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org3ae5fcf">;; Manifest for development env
+<pre class="src src-scheme" id="orga30f5a4">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
@@ -1261,11 +1267,11 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-org423f3f8" class="outline-3">
-<h3 id="org423f3f8">Channel configuration</h3>
-<div class="outline-text-3" id="text-org423f3f8">
+<div id="outline-container-org55e9125" class="outline-3">
+<h3 id="org55e9125">Channel configuration</h3>
+<div class="outline-text-3" id="text-org55e9125">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org8c2e872">(list (channel
+<pre class="src src-scheme" id="orga064415">(list (channel
        ;; custom guix override
        (name 'guix)
        (url "https://git.savannah.gnu.org/git/guix.git")
@@ -1287,11 +1293,11 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-org028eb66" class="outline-3">
-<h3 id="org028eb66">non guix key</h3>
-<div class="outline-text-3" id="text-org028eb66">
+<div id="outline-container-org4749391" class="outline-3">
+<h3 id="org4749391">non guix key</h3>
+<div class="outline-text-3" id="text-org4749391">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org925d517">(public-key
+<pre class="src src-scheme" id="org17d8681">(public-key
  (ecc
   (curve Ed25519)
   (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)
@@ -1301,9 +1307,9 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-org005c030" class="outline-3">
-<h3 id="org005c030">guix notes</h3>
-<div class="outline-text-3" id="text-org005c030">
+<div id="outline-container-org34f668c" class="outline-3">
+<h3 id="org34f668c">guix notes</h3>
+<div class="outline-text-3" id="text-org34f668c">
 <ul class="org-ul">
 <li>transform options for source, c-toolchain, debug, grafts/inputs
 <ul class="org-ul">
@@ -1363,7 +1369,7 @@ table inet filter {
 <li>manual setup</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org0e9f481">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
+<pre class="src src-shell" id="org6d96a93">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
 # get tarball for system=x86_64-linux,aarch64,armhf,i686
 wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
 # check sig
@@ -1407,7 +1413,7 @@ guix package -i glibc-utf8-locales
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org84d6268">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="org9f1a093">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -1432,7 +1438,7 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgc8e6cb2">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org935ae75">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
@@ -1444,13 +1450,13 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </div>
 </div>
 
-<div id="outline-container-org8471e76" class="outline-3">
-<h3 id="org8471e76">guix issues</h3>
-<div class="outline-text-3" id="text-org8471e76">
+<div id="outline-container-org10ea5e7" class="outline-3">
+<h3 id="org10ea5e7">guix issues</h3>
+<div class="outline-text-3" id="text-org10ea5e7">
 </div>
-<div id="outline-container-org044c043" class="outline-4">
-<h4 id="org044c043"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-org044c043">
+<div id="outline-container-org72e87e7" class="outline-4">
+<h4 id="org72e87e7"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
+<div class="outline-text-4" id="text-org72e87e7">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-02 Mon] </span></span> Submitted
 </p>
@@ -1464,9 +1470,9 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </p>
 </div>
 </div>
-<div id="outline-container-org77da4c3" class="outline-4">
-<h4 id="org77da4c3"><span class="todo TODO">TODO</span> Support binaries that need "setcap" similar to "setuid-programs"</h4>
-<div class="outline-text-4" id="text-org77da4c3">
+<div id="outline-container-org7b631ae" class="outline-4">
+<h4 id="org7b631ae"><span class="todo TODO">TODO</span> Support binaries that need "setcap" similar to "setuid-programs"</h4>
+<div class="outline-text-4" id="text-org7b631ae">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-27 Fri] </span></span> Submitted
 </p>
@@ -1479,7 +1485,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-27 Fri] </span></span> Last modified
 </p>
 <div class="org-src-container">
-<pre class="src src-scheme" id="org9707825">; WIP This does not work as it can't find patches? (ghostscript)
+<pre class="src src-scheme" id="org32391b8">; WIP This does not work as it can't find patches? (ghostscript)
 (define-module (etc httm-manifest)
  #:use-module (guix scripts pack)
  #:use-module (guix gexp)
@@ -1551,7 +1557,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgd765b86">; WIP This does not work as no build is done when using 'custom'
+<pre class="src src-scheme" id="org9862172">; WIP This does not work as no build is done when using 'custom'
 (define-module (jam packages jobs)
   #:use-module (jam packages httm)
   #:use-module (jam packages bottom)
