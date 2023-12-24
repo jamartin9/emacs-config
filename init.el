@@ -23,7 +23,7 @@
            ("D" . jam/draw)
            ("d" . desktop-read)
            ("z" . jam/mpv-play)
-           ("u" . xwidget-webkit-browse-url)
+           ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
            ("U" . eww-browse))
 (bind-keys :prefix-map jam/insert :prefix "C-c c i"
            ("y" . cua-paste)
@@ -206,6 +206,16 @@
               native-comp-async-report-warnings-errors nil
               native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
               native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
+
+  (if (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
+      (progn
+        (setq menu-bar-mode nil) ; disable menu-bar on non android
+        (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
+    ;; set android termux paths for call-process
+    (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin" (getenv "PATH")))
+    (setenv "LD_LIBRARY_PATH" (format "%s:%s" "/data/data/com.termux/files/usr/lib" (getenv "LD_LIBRARY_PATH")))
+    (push "/data/data/com.termux/files/usr/bin" exec-path))
+
   (setq-default indent-tabs-mode nil
                 tab-width 4
                 tab-always-indent 'complete
@@ -227,17 +237,6 @@
   (electric-pair-mode 1) ; less typing
   (context-menu-mode 1); mouse right click menu
   (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
-  (if (not (memq window-system '(android))) ; disable menu-bar on non android
-      (progn
-        (setq menu-bar-mode nil)
-        (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
-    ;; set android termux paths for call-process
-    (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
-                           (getenv "PATH")))
-    (setenv "LD_LIBRARY_PATH" (format "%s:%s"
-                                      "/data/data/com.termux/files/usr/lib"
-                                      (getenv "LD_LIBRARY_PATH")))
-    (push "/data/data/com.termux/files/usr/bin" exec-path))
   (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
   (add-to-list 'default-frame-alist '(vertical-scroll-bars))
   (set-frame-parameter nil 'alpha-background 80)
@@ -286,14 +285,12 @@
                 dired-create-destination-dirs 'ask)
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
 
-;(when (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
 (use-package guix ; guix
   :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
   ;(guix-emacs-autoload-packages); set EMACSLOADPATH
   :commands (guix-popup guix-set-emacs-environment))
-;)
 
 (use-package geiser ; guile
   :init (add-hook 'scheme-mode-hook #'geiser-mode)

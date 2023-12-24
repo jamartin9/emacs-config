@@ -28,7 +28,7 @@ which-key: show keymap keybinds. alternative is describe-* functions for bind di
 
 osm: Map tile viewer. alternative is web browser viewing
 
-geiser-guile/pyvenv/rust-tree-sitter/yaml-tree-sitter: language specific modes
+geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter: language specific modes
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.
@@ -69,7 +69,6 @@ To run with powershell use the same wrapper format with a .ps1 extension.
 #+BEGIN_SRC sh :tangle no
 ":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 #+END_SRC
-(BUG? Scripts that require packages need load-path from early-init; so make-el uses ~--batch -l early-init.el~ instead)
 
 ** Cherry Picking
 Copy files by url with emacs
