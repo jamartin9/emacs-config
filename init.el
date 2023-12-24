@@ -760,6 +760,11 @@
   ;:vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
 ;  :load-path ("/gnu/git/combobulate"))
 
+;(use-package eglot-x
+;  :after eglot
+;  :config (eglot-x-setup)
+;  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
+
 ;;;###autoload
 (defun jam/sudo-edit (file)
   "Edit file with sudo. Defaults to current buffer's file name."
