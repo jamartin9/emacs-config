@@ -46,6 +46,7 @@
     - [[https://github.com/facebookresearch/segment-anything][inpainting selection with Segment Anything Model]]
     - fine tune with [[https://github.com/cloneofsimo/lora][lora]] and [[https://github.com/huggingface/diffusers/tree/main/examples/dreambooth][dreambooth]]
       - quantized aware training and token merging for [[https://github.com/huggingface/optimum-intel/tree/main/examples/openvino/stable-diffusion][better results]]
+      - Direct preference optimization for fine tuning
     - sdxl turbo for single(4) pass gan like generation
 ** Large Language Models
   - Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)

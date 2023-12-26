@@ -8,12 +8,6 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
-** decathorpe/mitmproxy_wireguard
-  - WireGuard frontend for mitmproxy
-** oracle/adaptivemm
-  - adaptivemm - A userspace daemon for proactive free memory management
-** AVENTER-UG/mesos-m3s
-  - Apache Mesos Framework to run multiple Kubernetes
 ** 117HD/RLHD
   - Old School RuneScape GPU renderer with a suite of graphical enhancements.
 ** 1Password/typeshare
@@ -62,12 +56,12 @@
   - A cross-browser library of CSS animations. As easy to use as an easy thing.
 ** anishathalye/neural-hash-collider
   - Preimage attack against NeuralHash
-** ansible/awx
-  - AWX provides a web-based user interface, REST API, and task engine built on top of Ansible. It is one of the upstream projects for Red Hat Ansible Automation Platform.
 ** ansible-community/molecule
   - Molecule aids in the development and testing of Ansible roles
 ** ansible-semaphore/semaphore
   - Modern UI for Ansible
+** ansible/awx
+  - AWX provides a web-based user interface, REST API, and task engine built on top of Ansible. It is one of the upstream projects for Red Hat Ansible Automation Platform.
 ** anthraxx/linux-hardened
   - Minimal supplement to upstream Kernel Self Protection Project changes. Features already provided by SELinux + Yama and archs other than multiarch arm64 / x86_64 aren't in scope. Only tags have stable history. Shared IRC channel with KSPP: irc.libera.chat #linux-hardening
 ** antimatter15/alpaca.cpp
@@ -96,6 +90,8 @@
   - Apple CUPS Sources
 ** apple/darwin-xnu
   - The Darwin Kernel (mirror). This repository is a pure mirror and contributions are currently not accepted via pull-requests, please submit your contributions via https://developer.apple.com/bug-reporting/
+** apple/ml-ferret
+  - An End-to-End MLLM that Accept Any-Form Referring and Ground Anything in Response. (Vicuna + Llava)
 ** aquasecurity/kube-bench
   - Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark
 ** aquasecurity/tracee
@@ -140,6 +136,8 @@
   - A JSON-like data structure (a CRDT) that can be modified concurrently by different users, and merged again automatically.
 ** avast/retdec
   - RetDec is a retargetable machine-code decompiler based on LLVM.
+** AVENTER-UG/mesos-m3s
+  - Apache Mesos Framework to run multiple Kubernetes
 ** aws/eks-anywhere
   - Run Amazon EKS on your own infrastructure
 ** babashka/scittle
@@ -208,6 +206,8 @@
   - A fast and secure runtime for WebAssembly
 ** bytecodealliance/wizer
   - The WebAssembly Pre-Initializer
+** C-Otto/rebalance-lnd
+  - A script that can be used to balance lightning channels of a lnd node
 ** C0nw0nk/Nginx-Lua-Anti-DDoS
   - A Anti-DDoS script to protect Nginx web servers using Lua with a HTML Javascript based authentication puzzle inspired by Cloudflare I am under attack mode an Anti-DDoS authentication page protect yourself from every attack type All Layer 7 Attacks Mitigating Historic Attacks DoS DoS Implications DDoS All Brute Force Attacks Zero day exploits Social Engineering Rainbow Tables Password Cracking Tools Password Lists Dictionary Attacks Time Delay Any Hosting Provider Any CMS or Custom Website Unlimited Attempt Frequency Search Attacks HTTP Basic Authentication HTTP Digest Authentication HTML Form Based Authentication Mask Attacks Rule-Based Search Attacks Combinator Attacks Botnet Attacks Unauthorized IPs IP Whitelisting Bruter THC Hydra John the Ripper Brutus Ophcrack unauthorized logins Injection Broken Authentication and Session Management Sensitive Data Exposure XML External Entities (XXE) Broken Access Control Security Misconfiguration Cross-Site Scripting (XSS) Insecure Deserialization Using Components with Known Vulnerabilities Insufficient Logging & Monitoring Drupal WordPress Joomla Flash Magento PHP Plone WHMCS Atlassian Products malicious traffic Adult video script avs KVS Kernel Video Sharing Clip Bucket Tube sites Content Management Systems Social networks scripts backends proxy proxies PHP Python Porn sites xxx adult gaming networks servers sites forums vbulletin phpbb mybb smf simple machines forum xenforo web hosting video streaming buffering ldap upstream downstream download upload rtmp vod video over dl hls dash hds mss livestream drm mp4 mp3 swf css js html php python sex m3u zip rar archive compressed mitigation code source sourcecode chan 4chan 4chan.org 8chan.net 8ch 8ch.net infinite chan 8kun 8kun.net anonymous anon tor services .onion torproject.org nginx.org nginx.com openresty.org darknet dark net deepweb deep web darkweb dark web mirror vpn reddit reddit.com adobe flash hackthissite.org dreamhack hack hacked hacking hacker hackers hackerz hackz hacks code coding script scripting scripter source leaks leaked leaking cve vulnerability great firewall china america japan russia .gov government http1 http2 http3 quic q3 litespeedtech litespeed apache torrents torrent torrenting webtorrent bittorrent bitorrent bit-torrent cyberlocker cyberlockers cyber locker cyberbunker warez keygen key generator free irc internet relay chat peer-to-peer p2p cryptocurrency crypto bitcoin miner browser xmr monero coinhive coin hive coin-hive litecoin ethereum cpu cycles popads pop-ads advert advertisement networks banner ads protect ovh blazingfast.io amazon steampowered valve store.steampowered.com steamcommunity thepiratebay lulzsec antisec xhamster pornhub porn.com pornhub.com xhamster.com xvideos xvdideos.com xnxx xnxx.com popads popcash cpm ppc
 ** cake-tech/cake_wallet
@@ -222,10 +222,10 @@
   - vanity address generator for tor onion v3 (ed25519) hidden services
 ** CEA-LIST/Cingulata
   - Cingulata (pronounced "tchingulata") is a compiler toolchain and RTE for running C++ programs over encrypted data by means of fully homomorphic encryption techniques.
-** certbot/certbot
-  - Certbot is EFF's tool to obtain certs from Let's Encrypt and (optionally) auto-enable HTTPS on your server.  It can also act as a client for any other CA that uses the ACME protocol.
 ** cert-manager/cert-manager
   - Automatically provision and manage TLS certificates in Kubernetes
+** certbot/certbot
+  - Certbot is EFF's tool to obtain certs from Let's Encrypt and (optionally) auto-enable HTTPS on your server.  It can also act as a client for any other CA that uses the ACME protocol.
 ** CesiumGS/cesium
   - An open-source JavaScript library for world-class 3D globes and maps :earth_americas:
 ** cgrand/xforms
@@ -274,14 +274,14 @@
   - This project contains a set of "hello world" projects to verify which Clojure libraries do actually compile and produce native images under GraalVM.
 ** clj-kondo/clj-kondo
   - Static analyzer and linter for Clojure code that sparks joy
+** clojure-goes-fast/clj-async-profiler
+  - Embedded high-precision Clojure profiler
 ** clojure/clojure
   - The Clojure programming language
 ** clojure/clojurescript
   - Clojure to JS compiler
 ** clojure/core.cache
   - A caching library for Clojure implementing various cache strategies
-** clojure-goes-fast/clj-async-profiler
-  - Embedded high-precision Clojure profiler
 ** clojure/tools.analyzer.jvm
   - Additional jvm-specific passes for tools.analyzer
 ** clojure/tools.deps.alpha
@@ -292,6 +292,8 @@
   - A Clojure network REPL that provides a server and client, along with some common APIs of use to IDEs and other tools that may need to evaluate Clojure code in remote environments.
 ** clojure/tools.reader
   - Clojure reader in Clojure
+** cloud-hypervisor/cloud-hypervisor
+  - A Virtual Machine Monitor for modern Cloud workloads. Features include CPU, memory and device hotplug, support for running Windows and Linux guests, device offload with vhost-user and a minimal compact footprint. Written in Rust with a strong focus on security.
 ** cloudflare/ebpf_exporter
   -  Prometheus exporter for custom eBPF metrics
 ** cloudflare/miniflare
@@ -300,8 +302,6 @@
   - slirp4netns implementation using gvisor/netstack
 ** cloudflare/workers-sdk
   - Home to Wrangler, the CLI for Cloudflare Workers
-** cloud-hypervisor/cloud-hypervisor
-  - A Virtual Machine Monitor for modern Cloud workloads. Features include CPU, memory and device hotplug, support for running Windows and Linux guests, device offload with vhost-user and a minimal compact footprint. Written in Rust with a strong focus on security.
 ** cloudnative-pg/cloudnative-pg
   - CloudNativePG is a Kubernetes operator that covers the full lifecycle of a PostgreSQL database cluster with a primary/standby architecture, using native streaming replication
 ** ClusterLabs/pacemaker
@@ -330,8 +330,6 @@
   - Clone a voice in 5 seconds to generate arbitrary speech in real-time
 ** coreutils/coreutils
   - upstream mirror
-** C-Otto/rebalance-lnd
-  - A script that can be used to balance lightning channels of a lnd node
 ** cowlicks/privacypossum
   - Privacy Possum makes tracking you less profitable
 ** cpeikert/ALCHEMY
@@ -366,10 +364,12 @@
   - A ClojureScript framework for building user interfaces, leveraging React
 ** dcos/dcos
   - DC/OS - The Datacenter Operating System
-** deepfakes/faceswap
-  - Deepfakes Software For All
+** decathorpe/mitmproxy_wireguard
+  - WireGuard frontend for mitmproxy
 ** deep-floyd/IF
   - text-to-image model with a high degree of photorealism and language understanding
+** deepfakes/faceswap
+  - Deepfakes Software For All
 ** deepmind/alphafold
   - Open source code for AlphaFold.
 ** deepmind/alphatensor
@@ -404,18 +404,22 @@
   - Fills the borders of a clip
 ** dubhater/vapoursynth-mvtools
   - Motion compensation and stuff
+** e-m-b-a/emba
+  - EMBA - The firmware security analyzer
 ** ebfull/halo
   - ZK-SNARK setup
+** eclipse-openj9/openj9
+  - Eclipse OpenJ9: A Java Virtual Machine for OpenJDK that's optimized for small footprint, fast start-up, and high throughput.   Builds on Eclipse OMR (https://github.com/eclipse/omr) and combines with the Extensions for OpenJDK for OpenJ9 repo.
 ** eclipse/eclipse.jdt.ls
   - Java language server
 ** eclipse/jetty.project
   - Eclipse Jetty® - Web Container & Clients - supports HTTP/2, HTTP/1.1, HTTP/1.0, websocket, servlets, and more
 ** eclipse/omr
   - Eclipse OMR™ Cross platform components for building reliable, high performance language runtimes
-** eclipse-openj9/openj9
-  - Eclipse OpenJ9: A Java Virtual Machine for OpenJDK that's optimized for small footprint, fast start-up, and high throughput.   Builds on Eclipse OMR (https://github.com/eclipse/omr) and combines with the Extensions for OpenJDK for OpenJ9 repo.
 ** edn-query-language/eql
   - EQL is a declarative way to make hierarchical (and possibly nested) selections of information about data requirements. This repository contains the base specs and definitions for EQL parsing, AST, etc.
+** EduApps-CDG/OpenDX
+  - Bring DirectX to Linux! This is a Open Source DirectX implementation for Linux, providing native support for DirectX-based applications and games, without relying on Wine's Windows compatibility layer.
 ** EFForg/crocodilehunter
   - Taking one back for Steve Irwin \u3000 \u3000 (๑•̀ㅂ•́)و
 ** EFForg/https-everywhere
@@ -428,8 +432,6 @@
   - Elixir is a dynamic, functional language designed for building scalable and maintainable applications
 ** ElunaLuaEngine/Eluna
   - Eluna Lua Engine for WoW Emulators
-** emacscollective/no-littering
-  - Help keeping ~/.emacs.d clean
 ** emacs-dashboard/emacs-dashboard
   - An extensible emacs dashboard
 ** emacs-eaf/emacs-application-framework
@@ -440,10 +442,10 @@
   - Emacs :heart: Debug Adapter Protocol
 ** emacs-lsp/lsp-mode
   - Emacs client/library for the Language Server Protocol
+** emacscollective/no-littering
+  - Help keeping ~/.emacs.d clean
 ** emacsmirror/rmsbolt
   - A compiler output viewer
-** e-m-b-a/emba
-  - EMBA - The firmware security analyzer
 ** emscripten-core/emscripten
   - Emscripten: An LLVM-to-WebAssembly Compiler
 ** enhuiz/vall-e
@@ -460,16 +462,20 @@
   - Build, Distribute and Run CO-RE eBPF programs easier with JSON and Webassembly
 ** evergreen-xch/cult-lite-farmer
   - A lite farmer and harvester for the Chia Blockchain.
+** facebook/prophet
+  - Tool for producing high quality forecasts for time series data that has multiple seasonality with linear or non-linear growth.
+** facebook/relay
+  - Relay is a JavaScript framework for building data-driven React applications.
+** facebook/sapling
+  - A Scalable, User-Friendly Source Control System.
+** facebook/zstd
+  - Zstandard - Fast real-time compression algorithm
 ** facebookexperimental/hermit
   - Hermit launches linux x86_64 programs in a special, hermetically isolated sandbox to control their execution. Hermit translates normal, nondeterministic behavior, into deterministic, repeatable behavior. This can be used for various applications, including replay-debugging, reproducible artifacts, chaos mode concurrency testing and bug analysis.
 ** facebookincubator/below
   - A time traveling resource monitor for modern Linux systems
 ** facebookincubator/BOLT
   - Binary Optimization and Layout Tool - A linux command-line utility used for optimizing performance of binaries
-** facebook/prophet
-  - Tool for producing high quality forecasts for time series data that has multiple seasonality with linear or non-linear growth.
-** facebook/relay
-  - Relay is a JavaScript framework for building data-driven React applications.
 ** facebookresearch/audiocraft
   - Audiocraft is a library for audio processing and generation with deep learning. It features the state-of-the-art EnCodec audio compressor / tokenizer, along with MusicGen, a simple and controllable music generation LM with textual and melodic conditioning.
 ** facebookresearch/Cupcake
@@ -482,10 +488,6 @@
   - A collection of algorithms that can do join between two parties while preserving the privacy of keys on which the join happens
 ** facebookresearch/segment-anything
   - The repository provides code for running inference with the SegmentAnything Model (SAM), links for downloading the trained model checkpoints, and example notebooks that show how to use the model.
-** facebook/sapling
-  - A Scalable, User-Friendly Source Control System.
-** facebook/zstd
-  - Zstandard - Fast real-time compression algorithm
 ** Fallenbagel/jellyseerr
   - fork of overseerr for jellyfin support
 ** farcaster-project/farcaster-node
@@ -498,6 +500,8 @@
   - The new bridge between Burp Suite and Frida!
 ** federicodotta/ghidra2frida
   - The new bridge between Ghidra and Frida!
+** FeralInteractive/gamemode
+  - Optimise Linux system performance on demand
 ** fesh0r/fernflower
   - Unofficial mirror of FernFlower Java decompiler (All pulls should be submitted upstream)
 ** FFMS/ffms2
@@ -540,6 +544,8 @@
   - A collection of packages made for working with the Chia Blockchain using Rust
 ** GaloisInc/reopt
   - A tool for analyzing x86-64 binaries.
+** ge0rg/aprsdroid
+  - APRSdroid - Geo-Location for Radio Amateurs
 ** generic-ebpf/generic-ebpf
   - Generic eBPF runtime
 ** geohot/qira
@@ -552,10 +558,10 @@
   - Chialisp money privacy tool using non-interactive aggregated BLS signatures for security
 ** GiovineItalia/Gadfly.jl
   - Crafty statistical graphics for Julia.
-** gitbucket/gitbucket
-  - A Git platform powered by Scala with easy installation, high extensibility & GitHub API compatibility
 ** git-lfs/git-lfs
   - Git extension for versioning large files
+** gitbucket/gitbucket
+  - A Git platform powered by Scala with easy installation, high extensibility & GitHub API compatibility
 ** glfw/glfw
   - A multi-platform library for OpenGL, OpenGL ES, Vulkan, window and input
 ** gluonhq/gluonfx-maven-plugin
@@ -570,30 +576,24 @@
   - GnuCash Double-Entry Accounting Program.
 ** GNUnet-Mirror/GNUnet
   -  Read-only mirror of GNUnet repository, updated periodically. NOTE: do not make pull requests here, nor comment any commits. Maintainers are not tracking this git mirror. -- Submit patches via https://bugs.gnunet.org or https://gnunet.org/en/contact.html -- Official Repo: https://git.gnunet.org/gnunet.git/ - Issues: https://bugs.gnunet.org -
-** godotengine/godot
-  - Godot Engine – Multi-platform 2D and 3D game engine
+** go-vgo/robotgo
+  - RobotGo, Go Native cross-platform GUI automation  @vcaesar
 ** godot-rust/gdext
   - Rust bindings for Godot 4
 ** godot-rust/gdnative
   - Rust bindings for Godot 3
+** godotengine/godot
+  - Godot Engine – Multi-platform 2D and 3D game engine
+** google-research/frame-interpolation
+  - FILM: Frame Interpolation for Large Motion, In ECCV 2022.
 ** google/autocxx
   - Tool for safe ergonomic Rust/C++ interop driven from existing C++ headers
 ** google/bloaty
   - Bloaty McBloatface: a size profiler for binaries
-** GoogleChrome/lighthouse
-  - Automated auditing, performance metrics, and best practices for the web.
 ** google/closure-compiler
   - A JavaScript checker and optimizer.
-** GoogleCloudPlatform/terraformer
-  - CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code
 ** google/clspv
   - Clspv is a prototype compiler for a subset of OpenCL C to Vulkan compute shaders
-** GoogleContainerTools/container-diff
-  - container-diff: Diff your Docker containers
-** GoogleContainerTools/distroless
-  - Language focused docker images, minus the operating system.
-** GoogleContainerTools/jib
-  - Build container images for your Java applications.
 ** google/flatbuffers
   - FlatBuffers: Memory Efficient Serialization Library
 ** google/fully-homomorphic-encryption
@@ -608,8 +608,6 @@
   - OSS-Fuzz - continuous fuzzing for open source software.
 ** google/pprof
   - pprof is a tool for visualization and analysis of profiling data
-** google-research/frame-interpolation
-  - FILM: Frame Interpolation for Large Motion, In ECCV 2022.
 ** google/sanitizers
   - AddressSanitizer, ThreadSanitizer, MemorySanitizer
 ** google/tamperchrome
@@ -620,10 +618,18 @@
   - Zero copy serialization for rust
 ** google/zetasql
   - ZetaSQL - Analyzer Framework for SQL
+** GoogleChrome/lighthouse
+  - Automated auditing, performance metrics, and best practices for the web.
+** GoogleCloudPlatform/terraformer
+  - CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code
+** GoogleContainerTools/container-diff
+  - container-diff: Diff your Docker containers
+** GoogleContainerTools/distroless
+  - Language focused docker images, minus the operating system.
+** GoogleContainerTools/jib
+  - Build container images for your Java applications.
 ** gorhill/uMatrix
   - uMatrix: Point and click matrix to filter net requests according to source, destination and type
-** go-vgo/robotgo
-  - RobotGo, Go Native cross-platform GUI automation  @vcaesar
 ** gperftools/gperftools
   - Main gperftools repository
 ** graalvm/native-build-tools
@@ -686,6 +692,8 @@
 - Building applications with LLMs through composability
 ** hyprwm/Hyprland
   - Hyprland is a highly customizable dynamic tiling Wayland compositor that doesn't sacrifice on its looks
+** i-net-software/JWebAssembly
+  - Java bytecode to WebAssembly compiler
 ** IBM/differential-privacy-library
   - Diffprivlib: The IBM Differential Privacy Library
 ** IBM/fhe-toolkit-linux
@@ -700,8 +708,6 @@
   - Migrate C code to Rust
 ** inclavare-containers/inclavare-containers
   - A novel container runtime, aka confidential container, for cloud-native confidential computing and enclave runtime ecosystem.
-** i-net-software/JWebAssembly
-  - Java bytecode to WebAssembly compiler
 ** InitWare/InitWare
   - The InitWare Suite of Middleware allows you to manage services and system resources as logical entities called units. Its main component is a service management ("init") system.
 ** Instagram/MonkeyType
@@ -730,6 +736,8 @@
   - Cryptographic utilities in Dart for the Chia blockchain with a functional object model for manipulating Chia primitive types.
 ** iv-org/invidious
   - Invidious is an alternative front-end to YouTube
+** j-fu/VoronoiFVM.jl
+  - Solution of nonlinear multiphysics partial differential equation systems using the Voronoi finite volume method
 ** Jackett/Jackett
   - API Support for your favorite torrent trackers
 ** jagotu/BACIL
@@ -754,8 +762,6 @@
   -  A framework for distributed systems verification, with fault injection
 ** JetBrains/intellij-community
   - IntelliJ IDEA Community Edition & IntelliJ Platform
-** j-fu/VoronoiFVM.jl
-  - Solution of nonlinear multiphysics partial differential equation systems using the Voronoi finite volume method
 ** JiauZhang/DragGAN
   - Implementation of DragGAN: Interactive Point-based Manipulation on the Generative Image Manifold
 ** jitsi/jitsi-videobridge
@@ -830,6 +836,8 @@
   - Deep Learning for humans
 ** keroserene/snowflake
   - WebRTC Pluggable Transport - the original snowflake repo
+** Kevin-thu/DiffMorpher
+  - Official Code for DiffMorpher: Unleashing the Capability of Diffusion Models for Image Morphing
 ** keybase/saltpack
   - a modern crypto messaging format
 ** keystone-engine/keystone
@@ -840,6 +848,8 @@
   - Open-Source Vulkan C++ API
 ** kiliman/operator-mono-lig
   - Add ligatures to Operator Mono similar to Fira Code.
+** kiwix/kiwix-android
+  - Kiwix for Android
 ** konsoletyper/teavm
   - Compiler of Java bytecode to JavaScript
 ** kristerw/pysmtgcc
@@ -850,14 +860,14 @@
   - Cloud-native Runtime Security Enforcement System. [CNCF Sandbox Project]
 ** kubernetes-el/kubernetes-el
   - Manage Kubernetes clusters with Emacs.
+** kubernetes-sigs/bom
+  - A utility to generate SPDX-compliant Bill of Materials manifests
 ** kubernetes/kubeadm
   - Aggregator for issues filed against kubeadm
 ** kubernetes/kubernetes
   - Production-Grade Container Scheduling and Management
 ** kubernetes/minikube
   - Run Kubernetes locally
-** kubernetes-sigs/bom
-  - A utility to generate SPDX-compliant Bill of Materials manifests
 ** kubescape/kubescape
   - Kubescape is an open-source Kubernetes security platform for your IDE, CI/CD pipelines, and clusters. It includes risk analysis, security, compliance, and misconfiguration scanning, saving Kubernetes users and administrators precious time, effort, and resources.
 ** kwrooijen/cargo.el
@@ -980,8 +990,6 @@
   - Checked C is an extension to C that lets programmers write C code that is guaranteed by the compiler to be type-safe.  The goal is to let people easily make their existing C code type-safe and eliminate entire classes of errors. Checked C does not address use-after-free errors. This repo has a wiki for Checked C, sample code, the specification, and test code.
 ** microsoft/DirectXShaderCompiler
   - This repo hosts the source for the DirectX Shader Compiler which is based on LLVM/Clang.
-** MicrosoftDocs/WSL
-  - Source code behind the Windows Subsystem for Linux documentation.
 ** microsoft/ebpf-for-windows
   - eBPF implementation that runs on top of Windows
 ** microsoft/EVA
@@ -1024,6 +1032,8 @@
   - Windows Package Manager CLI (aka winget)
 ** microsoft/wslg
   - Enabling the Windows Subsystem for Linux to include support for Wayland and X server related scenarios
+** MicrosoftDocs/WSL
+  - Source code behind the Windows Subsystem for Linux documentation.
 ** miho/NativeFX
   - Native Rendering integration for JavaFX (13 and beyond)
 ** mikeperry-tor/vanguards
@@ -1052,12 +1062,12 @@
   - A JUnit extension for asserting JDK Flight Recorder events
 ** MonoS/VS-ContinuityFixer
   - Continuity Fixer port for Vapoursynth
+** mozilla-mobile/fenix
+  - Fenix (Firefox for Android) moved to a new repository. It is now developed and maintained as part of: https://github.com/mozilla-mobile/firefox-android
 ** mozilla/geckodriver
   - WebDriver for Firefox
 ** mozilla/geckoview
   - GeckoView is a set of components for embedding Gecko in Android apps
-** mozilla-mobile/fenix
-  - Fenix (Firefox for Android) moved to a new repository. It is now developed and maintained as part of: https://github.com/mozilla-mobile/firefox-android
 ** mozilla/multi-account-containers
   - Firefox Multi-Account Containers lets you keep parts of your online life separated into color-coded tabs that preserve your privacy. Cookies are separated by container, allowing you to use the web with multiple identities or accounts simultaneously.
 ** mozilla/sccache
@@ -1070,12 +1080,12 @@
   - A Super Mario 64 decompilation, brought to you by a bunch of clever folks.
 ** Nalen98/AngryGhidra
   - Use angr in Ghidra
+** NASA-SW-VnV/ikos
+  - Static analyzer for C/C++ based on the theory of Abstract Interpretation.
 ** nasa/fprime
   - F' - A flight software and embedded systems framework
 ** nasa/openmct
   - A web based mission control framework.
-** NASA-SW-VnV/ikos
-  - Static analyzer for C/C++ based on the theory of Abstract Interpretation.
 ** NASAWorldWind/WebWorldWind
   - The NASA WorldWind Javascript SDK (WebWW) includes the library and examples for creating geo-browser web applications and for embedding a 3D globe in HTML5 web pages.
 ** nasser/magic
@@ -1128,8 +1138,8 @@
   - SIMD-accelerated operations
 ** Nuitka/Nuitka
   - Nuitka is a Python compiler written in Python.  It's fully compatible with Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, and 3.10.  You feed it your Python app, it does a lot of clever things, and spits out an executable or extension module. 
-** NVIDIAGameWorks/PhysX
-  - NVIDIA PhysX SDK
+** nv-tlabs/GET3D
+  - Create 3D models
 ** NVIDIA/gpu-monitoring-tools
   - Tools for monitoring NVIDIA GPUs on Linux
 ** NVIDIA/libcudacxx
@@ -1144,8 +1154,10 @@
   - NVIDIA Linux open GPU kernel module source
 ** NVIDIA/VideoProcessingFramework
   - Set of Python bindings to C++ libraries which provides full HW acceleration for video decoding, encoding and GPU-accelerated color space and pixel format conversions
-** nv-tlabs/GET3D
-  - Create 3D models
+** NVIDIAGameWorks/PhysX
+  - NVIDIA PhysX SDK
+** NVIDIAGameWorks/rtx-remix
+  - Combined repo for the RTX-Remix runtime. dxd9 game modding. (require RTX GPU for mod creation)
 ** nysenate/OpenLegislation
   - OpenLegislation is a web service that delivers legislative information from the New York State Senate and Assembly to the public in near-real time.  It is used internally to serve up legislative data for nysenate.gov and the Bluebird-CRM.
 ** o2sh/onefetch
@@ -1158,6 +1170,14 @@
   - EndGame DDoS filter.
 ** onionshare/onionshare
   - Securely and anonymously share files, host websites, and chat with friends using the Tor network
+** open-deepnude/open-deepnude
+  - Open source reverse-engineered clone of DeepNude
+** open-mpi/ompi
+  - Open MPI main development repository
+** open-osrs/runelite
+  - Actually open source Old School RuneScape client
+** open-quantum-safe/liboqs
+  - C library for prototyping and experimenting with quantum-resistant cryptography
 ** open5gs/open5gs
   - Open5GS is a C-language Open Source implementation for 5G Core and EPC, i.e. the core network of LTE/NR network (Release-17)
 ** openai/automated-interpretability
@@ -1176,8 +1196,6 @@
   - OpenAPI Generator allows generation of API client libraries (SDK generation), server stubs, documentation and configuration automatically given an OpenAPI Spec (v2, v3)
 ** openbao/openbao
   - OSS fork of vault
-** open-deepnude/open-deepnude
-  - Open source reverse-engineered clone of DeepNude
 ** opendtrace/opendtrace
   - Code for the cross platform, single source, OpenDTrace implementation
 ** openebs/openebs
@@ -1194,12 +1212,6 @@
   - https://openjdk.org/projects/code-tools/jmh
 ** openjdk/tsan
   - https://openjdk.org/projects/tsan
-** open-mpi/ompi
-  - Open MPI main development repository
-** open-osrs/runelite
-  - Actually open source Old School RuneScape client
-** open-quantum-safe/liboqs
-  - C library for prototyping and experimenting with quantum-resistant cryptography
 ** openstack/openstack
   - Repository tracking all OpenStack repositories as submodules. Mirror of code maintained at opendev.org.
 ** openstyles/stylus
@@ -1210,6 +1222,8 @@
   - A retargetable MLIR-based machine learning compiler and runtime toolkit.
 ** operator-framework/operator-sdk
   - SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding.
+** oracle/adaptivemm
+  - adaptivemm - A userspace daemon for proactive free memory management
 ** oracle/graal
   - GraalVM: Run Programs Faster Anywhere :rocket:
 ** oracle/graalvm-reachability-metadata
@@ -1422,6 +1436,10 @@
   - Run Nintendo Switch homebrew & games on your Android device!
 ** skylot/jadx
   - Dex to Java decompiler
+** smartdevicelink/sdl_core
+  - SmartDeviceLink In-Vehicle Software and Sample HMI
+** smartdevicelink/sdl_java_suite
+  - SmartDeviceLink libraries for Android, Java SE, and Java EE
 ** snaplet/postgres-wasm
   - A PostgresQL server running in your browser
 ** Sonarr/Sonarr
@@ -1438,10 +1456,10 @@
   - A FPGA friendly 32 bit RISC-V CPU implementation
 ** spruceid/rebase
   - Verifiable credentials for sign on with ethereum via twitter/etc
-** sqlcipher/sqlcipher
-  - SQLCipher is a standalone fork of SQLite that adds 256 bit AES encryption of database files and other security features.
 ** sql-js/sql.js
   - A javascript library to run SQLite on the web.
+** sqlcipher/sqlcipher
+  - SQLCipher is a standalone fork of SQLite that adds 256 bit AES encryption of database files and other security features.
 ** sslab-gatech/Rudra
   - Rust Memory Safety & Undefined Behavior Detection
 ** Stability-AI/generative-models
@@ -1514,7 +1532,6 @@
   - BottlEye is a usermode emulator for the popular anti-cheat BattlEye
 ** TheStageAI/TorchIntegral
   - Integral Neural Networks in PyTorch
-
 ** thestr4ng3r/chiaki
   - Moved to https://git.sr.ht/~thestr4ng3r/chiaki - Free and Open Source PS4 Remote Play Client
 ** thundernest/k-9
@@ -1553,12 +1570,12 @@
   - A JVM-based Erlang VM
 ** Tripwire/tripwire-open-source
   - Open Source Tripwire
+** triton-inference-server/server
+  - The Triton Inference Server provides an optimized cloud and edge inferencing solution.
 ** TritonDataCenter/pkgsrc
   - NetBSD/pkgsrc fork for our binary package repositories
 ** TritonDataCenter/smartos-live
   - For more information, please see http://smartos.org/  For any questions that aren't answered there, please join the SmartOS discussion list: https://smartos.topicbox.com/groups/smartos-discuss
-** triton-inference-server/server
-  - The Triton Inference Server provides an optimized cloud and edge inferencing solution.
 ** TritonVM/triton-vm
   - Triton is a virtual machine that comes with Algebraic Execution Tables (AET) and Arithmetic Intermediate Representations (AIR) for use in combination with a STARK proof system.
 ** tui-rs-revival/ratatui
@@ -1581,6 +1598,8 @@
   - Implementation of Quickdraw - an online game developed by Google
 ** v8/v8
   - The official mirror of the V8 Git repository
+** ValveSoftware/Proton
+  - Compatibility tool for Steam Play based on Wine and additional components
 ** ValveSoftware/wine
   - Wine with a bit of extra spice
 ** varmd/wine-wayland
@@ -1589,20 +1608,20 @@
   - A glossy Matrix collaboration client for the web.
 ** Victorwz/LongMem
   - adding long term memory to LLMs
-** virtualagc/virtualagc
-  - Virtual Apollo Guidance Computer (AGC) software
 ** virtual-kubelet/virtual-kubelet
   - Virtual Kubelet is an open source Kubernetes kubelet implementation. 
+** virtualagc/virtualagc
+  - Virtual Apollo Guidance Computer (AGC) software
 ** visualboyadvance-m/visualboyadvance-m
   - The continuing development of the legendary VBA gameboy advance emulator.
 ** vlcn-io/cr-sqlite
   - Convergent, Replicated SQLite. Multi-writer and CRDT support for SQLite
-** vmware/chap
-  - chap analyzes un-instrumented core files for leaks, memory growth, and corruption
 ** vmware-labs/mod_wasm
   - mod_wasm is an extension module for the Apache HTTP Server (httpd) that enables the usage of WebAssembly (Wasm). This module will allow to execute certain tasks in the backend in a very efficient and secure way.
 ** vmware-labs/wasm-workers-server
   - A WebAssembly framework to develop and run serverless applications
+** vmware/chap
+  - chap analyzes un-instrumented core files for leaks, memory growth, and corruption
 ** votingworks/arlo
   - OSS Voting software
 ** votingworks/vxsuite-complete-system
@@ -1669,6 +1688,8 @@
   - A customizable, open-source ecommerce platform built on WordPress. Build any commerce solution you can imagine.
 ** woodrush/lambdalisp
   - A Lisp interpreter written in untyped lambda calculus
+** x-hw/amazing-qr
+  - amazing QRCode generator in Python (supporting animated gif)
 ** xahlee/xah-fly-keys
   - the most efficient keybinding for emacs
 ** XavierXiao/Dreambooth-Stable-Diffusion
@@ -1679,10 +1700,10 @@
   - Original Xbox Emulator for Windows, macOS, and Linux (Active Development)
 ** xenia-project/xenia
   - Xbox 360 Emulator Research Project
-** x-hw/amazing-qr
-  - amazing QRCode generator in Python (supporting animated gif)
 ** xianyi/OpenBLAS
   - OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version.
+** XingangPan/DragGAN
+  - Official Code for DragGAN (SIGGRAPH 2023)
 ** xiph/flac
   - Free Lossless Audio Codec
 ** xiph/rav1e
@@ -1733,11 +1754,15 @@
   - ZetZ a zymbolic verifier and tranzpiler to bare metal C
 ** zjc062/mind-vis
   - Code base for MinD-Vis
+
+
 * machine learning
 ** AUTOMATIC1111/stable-diffusion-webui
   - Stable Diffusion web UI
 ** carson-katri/dream-textures
   - Stable Diffusion built-in to Blender
+** CiaraStrawberry/svd-temporal-controlnet
+  - enhance your video diffusion projects by providing precise temporal control
 ** comfyanonymous/ComfyUI
   - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
 ** commaai/openpilot
@@ -1802,14 +1827,13 @@
   - T2I-Adapter
 ** vitoplantamura/OnnxStream
   - Stable Diffusion XL 1.0 Base on a Raspberry Pi Zero 2 (or in 298MB of RAM)
-** XingangPan/DragGAN
-  - Official Code for DragGAN (SIGGRAPH 2023)
 ** yl4579/StyleTTS2
   - StyleTTS 2: Towards Human-Level Text-to-Speech through Style Diffusion and Adversarial Training with Large Speech Language Models
 ** yule-BUAA/MergeLM
   -  Codebase for Merging Language Models
 ** zkonduit/ezkl
   - Deep learning with ZK-Snarks
+
 
 * android
 ** f-droid/fdroidclient
@@ -1818,46 +1842,33 @@
   - F-Droid server and build tools.
 ** flowdriveai/flowpilot
   - flow-pilot is an openpilot based driver assistance system that runs on linux, windows and android powered machines.
-** ge0rg/aprsdroid
-  - APRSdroid - Geo-Location for Radio Amateurs
 ** guardianproject/orbot
   - The Github home of Orbot: Tor on Android (Also available on gitlab!)
-** kiwix/kiwix-android
-  - Kiwix for Android
 ** klausw/hackerskeyboard
   - Hacker's Keyboard (official)
 ** LineageOS/android
   - OSS android
 ** organicmaps/organicmaps
   - Organic Maps is a free Android & iOS offline maps app for travelers, tourists, hikers, and cyclists. It uses crowd-sourced OpenStreetMap data and is developed with love by MapsWithMe (MapsMe) founders and our community. No ads, no tracking, no data collection, no crapware. Please donate to support the development!
-** smartdevicelink/sdl_core
-  - SmartDeviceLink In-Vehicle Software and Sample HMI
-** smartdevicelink/sdl_java_suite
-  - SmartDeviceLink libraries for Android, Java SE, and Java EE
 ** termux/termux-app
   - Termux - a terminal emulator application for Android OS extendible by variety of packages.
-** termux/termux-packages
-  - A package build system for Termux.
 ** whyorean/AuroraStore
   - Google play store without google account
 ** WireGuard/wireguard-android
   - Mirror only. Official repository is at https://git.zx2c4.com/wireguard-android
+
 
 * games
 ** Arc-Compute/LibVF.IO
   - A vendor neutral GPU multiplexing tool driven by VFIO & YAML.
 ** DFHack/stonesense
   - A retro isometric visualizer for Dwarf Fortress
-** FeralInteractive/gamemode
-  - Optimise Linux system performance on demand
 ** libretro/RetroArch
   - Cross-platform, sophisticated frontend for the libretro API. Licensed GPLv3.
 ** lichess-org/lila
   - lichess.org: the forever free, adless and open source chess server
 ** lutris/lutris
   - Lutris desktop client in Python / PyGObject
-** NVIDIAGameWorks/rtx-remix
-  - Combined repo for the RTX-Remix runtime. dxd9 game modding. (require RTX GPU for mod creation)
 ** open-goal/jak-project
   - Reviving the language that brought us the Jak & Daxter Series
 ** Plagman/gamescope
@@ -1866,8 +1877,7 @@
   - rhythm is just a *click* away!
 ** simons-public/protonfixes
   -  A module for applying fixes at runtime to unsupported games with Steam Proton without changing game installation files
-** ValveSoftware/Proton
-  - Compatibility tool for Steam Play based on Wine and additional components
+
 
 * rust
 ** 10XGenomics/rust-boomphf
@@ -2042,6 +2052,7 @@
   - Cargo wrapper for working with Webassembly wasi(x).
 ** yewstack/yew
   - Rust / Wasm framework for building client web apps
+
 
 * utils
 ** alacritty/alacritty
@@ -2255,8 +2266,6 @@
 ** ziglang/zig
   - General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software.
 
-** https://gitlab.com/veilid/veilidchat
-  - veilid node chat (coming?)
 
 * Stack
 ** emacs-mirror/emacs

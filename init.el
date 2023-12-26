@@ -721,9 +721,10 @@
   :init
   (if (treesit-available-p)
       (progn
-          (setq treesit-extra-load-path '("~/.guix-home/profile/lib/tree-sitter"))
-          (push '(python-mode . python-ts-mode) major-mode-remap-alist)
-          (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
+        (add-to-list 'treesit-extra-load-path "/usr/lib")
+        (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
+        (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+        (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 (use-package dape
   :bind (:map jam/code ("d" . dape))

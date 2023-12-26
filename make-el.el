@@ -7,7 +7,7 @@ NO-RUN: do not run the tangled argument"
         (pcase arg
           (" " (message "\n"))
           ("--" (message "### make-el.el ###\n"))
-          ("$@" (message "\n"))
+          ("$@" (message "\n"));; temp bench startup: hyperfine -w 10 -r 20 -N -u second "emacs -Q --eval '(kill-emacs)'" "emacs --eval '(kill-emacs)'" "emacs -Q --batch" "emacs --batch -l /gnu/git/emacs-config/early-init.el -l /gnu/git/emacs-config/init.el"
           ("all" (jam/parse-args (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                               "\.org$" nil
                                                               #'(lambda (local-dir)

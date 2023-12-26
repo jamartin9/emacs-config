@@ -20,3 +20,4 @@
 - ~git rev-parse --show-object-format~ sha1 or sha256 check
   - mostly unsupported by forges
 - git bundle for offline repo backup
+  -  ~git -c 'pack.threads=1' bundle create -q My-BUNDLE --all~ for deterministic bundles

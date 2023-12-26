@@ -4,31 +4,31 @@ This configuration is for emacs >= 29
 
 Third party packages:
 
-guix: package/environment management. alternative is ensure/pinning with use-packages and setting exec-path-from-shell
+guix: package/environment management. alternative is cli and setting exec-path-from-shell/environment
 
-pass/pass-otp: frontend to password-store. alternative is git repo of authinfo.gpg store and totp app.
+pass/pass-otp: frontend to password-store. alternative is cli
 
-eat: graphical terminal emulation. alternative built-in multi-term w/o visual commands
+eat: graphical terminal emulation. alternative is built-in multi-term w/o visual commands
 
-magit/forge/code-review: git/forge manipulation. alternative built-in vc lacks complex workflows like interactive rebase, forge pull requests or code-review
+magit/forge/code-review: git/forge manipulation. alternative is built-in vc that lacks complex workflows like interactive rebase, forge pull requests or code review comments
 
 debbugs: track emacs/guix bugs. alternative is bookmarking websites/mailing lists
 
-transmission: manage torrent client. alternative is scripting transmission-cli
+transmission: manage torrent client. alternative is cli
 
 org-roam: tag system for note database. alternative is self devised naming/search scheme with org-captured datetree journal
 
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
 
-company: automatic typing suggestions. alternatives corfu lacks backends w/o cape and auto-complete is obe
+company: automatic typing suggestions. alternative is corfu with cape
 
-minions-mode: keeps the modeline visually brief with retained information. alternative: diminish/delight packages and config for each mode
+minions-mode: keeps the modeline visually brief with retained information. alternative is diminish/delight packages and config for each mode
 
 which-key: show keymap keybinds. alternative is describe-* functions for bind discovery
 
 osm: Map tile viewer. alternative is web browser viewing
 
-geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter: language specific modes
+dape/geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter/combobulate?/eglot-x?: language specific modes with more than regex
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.
