@@ -30,7 +30,8 @@
            ("u" . insert-char)
            ("s" . yas-insert-snippet)
            ("e" . emojify-insert-emoji)
-           ("b" . string-insert-rectangle))
+           ("b" . bookmark-set)
+           ("r" . string-insert-rectangle))
 (bind-keys :prefix-map jam/search :prefix "C-c c s"
            ("l" . shr-copy-url)
            ("L" . ffap-menu)
@@ -329,6 +330,7 @@
 
 (use-package eglot
   :ensure nil ; built-in
+  :bind (:map jam/code ("a" . eglot-code-actions))
   :hook (((rust-ts-mode rust-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging

@@ -21,7 +21,10 @@
     - can reconstruct sample from original rar data
       - bluray samples not supported (.m2ts)
   - rarfs
+    - create rarfs mount directory ~fd -e r00 -x mkdir -p rarfs-mount/{//}~
+    - unmount rarfs directory ~fd --threads=1 -e r00 -x fusermount -u rarfs-mount/{//}~
+    - mount rar2fs ~fd -e r00 -x rar2fs {//} rarfs-mount/{//}~
     - can mount rars as fuse filesystem
       - ~rar2fs source dest -o allow_other~
-      - fusermount -u dest
+      - ~fusermount -u dest~ to unmount
       - https://github.com/hasse69/rar2fs
