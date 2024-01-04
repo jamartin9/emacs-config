@@ -1990,6 +1990,8 @@
   - Mirror rustup and crates.io repositories, for offline Rust and cargo usage.
 ** pelikan-io/pelikan
   - Pelikan is a framework for building local or distributed caches. It comes with a highly extensible architecture, best-in-class performance, and superb operational ergonomics. You can use it to replace most of Memcached or a subset of Redis features.
+** pelikan-io/pelikan/tree/main/src/storage/segcache
+  - Segcache is a cache storage engine that delivers high memory efficiency, high throughput, and excellent scalability for web cache workloads.
 ** pendulum-project/ntpd-rs
   - An NTP implementation in Rust, supported by Internet Security Research Group's Prossimo project.
 ** pendulum-project/statime

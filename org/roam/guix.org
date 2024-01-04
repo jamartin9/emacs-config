@@ -401,18 +401,22 @@
    (gnu services vpn)
    (gnu packages networking)
    (gnu packages containers)
+   (gnu packages ssh)
    (guix)
    (guix gexp)
    (guix packages)
+   (guix transformations)
    (srfi srfi-1)
    (jam packages zfs)
    (nongnu packages linux)
+   (nongnu packages nvidia)
    (nongnu system linux-initrd)
    )
 
   (use-service-modules desktop mcron networking spice ssh xorg sddm cuirass)
   (use-package-modules bootloaders certs fonts nvi
                        package-management wget xorg
+                       xdisorg ;; SPICE dynamic resizing for xfce
                        ;; ZFS
                        linux file-systems admin)
   ;; broadcom service
@@ -429,9 +433,32 @@
                                  (const '("wl")))))
      (default-value '())
      (description "Install broadcom kernel module and service")))
-  ;; * MAYBE guix nvidia-driver(xorg/ko), tor/i2p service
 
-  (define my-kernel (corrupt-linux linux-libre-with-bpf #:configs '("CONFIG_DEBUG_INFO_BTF=y")))
+  ;; nvidia service
+  (define nvidia-service-type
+    (service-type
+     (name 'nvidia)
+     (extensions
+      (list
+       (service-extension linux-loadable-module-service-type ;; add kernel module
+                                 (const (list nvidia-driver)))
+       (service-extension kernel-module-loader-service-type ;; load kernel module
+                                 (const '("ipmi_devintf" "nvidia" "nvidia_modeset" "nvidia_uvm")))
+       (service-extension udev-service-type (const (list nvidia-driver))))) ;; add udev rule
+     (default-value '())
+     (description "Install nvidia kernel module, service and udev rule")))
+
+  (define nvidia-transform (options->transformation '((with-graft . "mesa=nvda"))))
+
+  (define %nvidia-xorg-config ;; nvidia xorg configuration
+    "Section \"Device\"
+	Identifier     \"Device0\"
+	Driver         \"nvidia\"
+	VendorName     \"NVIDIA Corporation\"
+	BoardName      \"GeForce GTX 1050 Ti\"
+    EndSection")
+
+  (define my-kernel (corrupt-linux linux-libre-with-bpf ));#:configs '("CONFIG_DEBUG_INFO_BTF=y"))); BUG with menuconfig
 
   ;; Source: <https://github.com/Kicksecure/security-misc> via https://github.com/rakino/Testament/blob/trunk/testament/kicksecure.scm
   ;; Extracted with the following command:
@@ -851,8 +878,10 @@
   root ALL=(ALL) ALL
   %wheel ALL=NOPASSWD: ALL\n"))
 
-    (packages (append (list font-bitstream-vera nss-certs nvi cloud-utils); cloud-utils for growpart with resize2fs after img resize
-                      %base-packages)) ; wget blueman podman flatpak
+    (packages (append (list nss-certs ; https
+                            x-resize ; xfce spice resizing https://gitlab.xfce.org/xfce/xfce4-settings/-/issues/142
+                            cloud-utils); cloud-utils for growpart with resize2fs after img resize
+                      %base-packages)) ; blueman podman flatpak gvfs
 
     (services
      (append (list (service xfce-desktop-service-type)
@@ -864,10 +893,19 @@
                              (default-user "guest")
                              (xorg-configuration
                               (xorg-configuration
-                               ;; The QXL virtual GPU driver is added to provide a better SPICE experience.
-                               (modules (cons xf86-video-qxl
+                               (modules (cons* xf86-video-qxl; nvidia-driver ;; QXL virtual GPU driver for SPICE and nvidia-xorg
                                               %default-xorg-modules))
+                               ;(server (nvidia-transform xorg-server)) ; mesa to nvda graft
+				               ;(drivers '("nvidia"))
+                               ;(extra-config (list %nvidia-xorg-config))
                                (keyboard-layout keyboard-layout)))))
+
+                   (service spice-vdagent-service-type);; Enables dynamic resizing of the guest screen resolution, clipboard and integration with the host SPICE protocol
+
+                   ;(service plasma-desktop-service-type) ; plasma and sddm login for KDE
+                   ;(service sddm-service-type
+                   ;          (sddm-configuration
+                   ;           (theme "breeze")))
 
                    ;(service bluetooth-service-type
                    ;         (bluetooth-configuration
@@ -875,31 +913,62 @@
 
                    ;(service broadcom-service-type)
 
+                   ;(service nvidia-service-type)
+
+                   ;(service zfs-service-type
+                   ;         (zfs-configuration
+                   ;          (kernel my-kernel)))
+
+                   ;(service transmission-daemon-service-type
+                   ;          (transmission-daemon-configuration
+                   ;          ;(peer-port 51413)
+                   ;          (port-forwarding-enabled? #f)
+                   ;          (dht-enabled? #f)
+                   ;          (pex-enabled? #f)
+                   ;          (rpc-whitelist '("127.0.0.1" "::1" "10.0.0.*"))))
+
+                   ;(service wireguard-service-type
+                   ;         (wireguard-configuration
+                   ;          (addresses '("10.0.0.5/32"))
+                             ;(port 51820)
+                             ;(private-key "/etc/wireguard/private.key"); autogened if doesn't exist
+                   ;          (peers (list
+                   ;                  (wireguard-peer
+                   ;                   (name "my-peer")
+                                      ;(endpoint "somesuchendpoint")
+                   ;                   (public-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=")
+                                      ;(preshared-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=")
+                   ;                   (allowed-ips '("10.0.0.1/24")))))))
+
+                   ;; Use the DHCP client service rather than NetworkManager.
+                   (service dhcp-client-service-type)
+
                    (service openssh-service-type
                             (openssh-configuration ;(%auto-start? #f)
+                                                   (openssh openssh-sans-x)
                                                    (port-number 8080)
                                                    (password-authentication? #f)
                                                    (authorized-keys `(("guest" ,(plain-file "jam.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjfouQY9m8opK3Sq5G81FuqlMEa5no1Jy1UywweZY3u jam@jam-pc"))
                                                                       ("guest" ,(plain-file "jaming.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK+JSxpOM9X8rM6bS0VEfmBeOaQi98o0+aDzYaWIhTBp jam@jam-workstation"))))))
 
-                   ;(service cuirass-service-type
-                   ;         (cuirass-configuration (specifications #~(list (specification
-                   ;                                                         (name "my-channel-packages")
-                   ;                                                         (build '(channels my-channel))
-                   ;                                                         (channels (cons (channel
-                   ;                                                                          (name 'my-channel)
-                   ;                                                                          (url "https://github.com/jamartin9/guix-channel.git"))
-                   ;                                                                         %default-channels))
-                                                                            ;(notifications (list (rss-feed))); add import for (cuirass rss)
-                                                                            ;(build-outputs (list
-                                                                            ;                (build-output
-                                                                            ;                 (job "binary-tarball")
-                                                                            ;                 (type "archive")
-                                                                            ;                 (output "out")
-                                                                            ;                 (path ""))))
-                   ;                                                         (period 600))))
-                   ;                                (use-substitutes? #t)
-                   ;                                (host "0.0.0.0")))
+                   (service cuirass-service-type
+                            (cuirass-configuration (specifications #~(list (specification
+                                                                            (name "my-channel")
+                                                                            (build (build '(channels my-channel));'(custom (jam ci)));
+                                                                            (channels (cons (channel
+                                                                                             (name 'my-channel)
+                                                                                             (url "https://github.com/jamartin9/guix-channel.git"))
+                                                                                            %default-channels))
+                                                                            ;(notifications (list (rss-feed))); add import for (cuirass rss) for https://127.0.0.1/events/rss/?specification=my-channel-packages
+                                                                            (build-outputs (list
+                                                                                            (build-output
+                                                                                             (job "*")
+                                                                                             (type "archive")
+                                                                                             ;(output "out")
+                                                                                             (path ""))))
+                                                                            (period 600))))
+                                                   (use-substitutes? #t)
+                                                   (host "0.0.0.0")))
 
                    (simple-service 'os-file etc-service-type
                                    (list `("guix-os.scm" ,(local-file "guix-os.scm"))))
@@ -910,10 +979,6 @@
                                    (list `("channels.scm" ,(local-file "channels.scm"))))
                    (simple-service 'channel-file etc-service-type
                                    (list `("nonguix-pub.scm" ,(local-file "nonguix-pub.scm"))))
-
-                   (service zfs-service-type
-                            (zfs-configuration
-                             (kernel my-kernel)))
 
                    (service nftables-service-type
                             (nftables-configuration
@@ -1007,35 +1072,7 @@
     chain output {
       type filter hook output priority 0; policy accept;
     }
-  }"))))
-
-                  ; (service transmission-daemon-service-type
-                  ;          (transmission-daemon-configuration
-                  ;           ;(peer-port 51413)
-                  ;           (port-forwarding-enabled? #f)
-                  ;           (dht-enabled? #f)
-                  ;           (pex-enabled? #f)
-                  ;           (rpc-whitelist '("127.0.0.1" "::1" "10.0.0.*"))))
-
-                  ; (service wireguard-service-type
-                  ;          (wireguard-configuration
-                  ;           (addresses '("10.0.0.5/32"))
-                             ;(port 51820)
-                             ;(private-key "/etc/wireguard/private.key"); autogened if doesn't exist
-                  ;           (peers (list
-                  ;                   (wireguard-peer
-                  ;                    (name "my-peer")
-                                      ;(endpoint "somesuchendpoint")
-                  ;                    (public-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=")
-                                      ;(preshared-key "k+ZFm8brFtuVOLUpjQVYdHrCEC5SakGistFjucQa7l4=")
-                  ;                    (allowed-ips '("10.0.0.1/24")))))))
-
-                   ;; Add support for the SPICE protocol. Enables dynamic resizing of the guest screen resolution, clipboard and integration with the host.
-                   (service spice-vdagent-service-type)
-
-                   ;; Use the DHCP client service rather than NetworkManager.
-                   (service dhcp-client-service-type))
-
+  }")))))
              ;; Remove some services that don't make sense in a VM.
              (remove (lambda (service)
                        (let ((type (service-kind service)))
@@ -1081,12 +1118,13 @@
 
      ;;"ungoogled-chromium-nvda"
      ;;"firefox-nvda"
+     "torbrowser"
 
      ;;"transmission"
      ;;"nzbget"
      ;;"steam-nvidia" ;; steam
      ;;"zfs"
-     "qemu"
+     ;;"qemu"
      "perf"
      "bpftrace"
      "bcc"
@@ -1200,7 +1238,7 @@
      ;; Desktop
      ;;"notification-daemon"
      ;;"xfce"; --with-graft=mesa=nvda
-     ;;"nvidia-driver"; add udev rules, mesa graft and xorg modules rules
+     ;;"nvidia-driver"
      ))
 #+END_SRC
 ** Channel configuration
@@ -1363,14 +1401,16 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
   :END:
   [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
   [2022-06-21 Tue] Last modified
-*** TODO [#C] Support binaries that need "setcap" similar to "setuid-programs"
-  [2022-05-27 Fri] Submitted
+
+*** TODO [#C] Add support for file capabilities(7) :patch:
+  [2023-02-12 Sun] Submitted
   :PROPERTIES:
-  :DEBBUGS_ID: 55683
-  :CREATOR: Vagrant Cascadian <vagrant@debian.org>
+  :DEBBUGS_ID: 61462
+  :CREATOR: Tobias Geerinckx-Rice <me@tobias.gr>
   :END:
-  [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
-  [2022-05-27 Fri] Last modified
+  [[elisp:(debbugs-gnu-select-report)][Messages]]
+  [2023-12-23 Sat] Last modified
+
 #+NAME: guix-manifest-cuirass
 #+BEGIN_SRC scheme :tangle no
 ; WIP This does not work as it can't find patches? (ghostscript)
@@ -1445,11 +1485,10 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 #+END_SRC
 #+NAME: cuirass-jobs
 #+BEGIN_SRC scheme :tangle no
-; WIP This does not work as no build is done when using 'custom'
-(define-module (jam packages jobs)
-  #:use-module (jam packages httm)
-  #:use-module (jam packages bottom)
+; WIP This does not work as guix git cannot find module during profile build
+(define-module (jam ci)
   #:use-module (gnu ci)
+  #:use-module (gnu system image)
   #:use-module (gnu compression)
   #:use-module ((guix scripts pack) #:select (self-contained-tarball))
   #:use-module (guix gexp)
@@ -1457,11 +1496,10 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
   #:use-module (guix monads)
   #:use-module (guix packages)
   #:use-module (guix profiles)
-  #:use-module (guix utils))
-
-(define-public (cuirass-jobs store arguments)
-  "Register Cuirass jobs."
-  (tarball-jobs store (arguments->system arguments)))
+  #:use-module (guix utils)
+  #:use-module (srfi srfi-1)
+  #:use-module (nongnu system install)
+  #:export (cuirass-jobs))
 
 
 (define (tarball-jobs store system)
@@ -1471,15 +1509,34 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
       (parameterize ((%graft? #f))
         (derivation->job name drv))))
   (list
-   (->job "binary-tarball-httm"
+   (->job "binary-tarball-guile"
           (run-with-store store
             (mbegin %store-monad
               (set-guile-for-build (default-guile))
-              (>>= (profile-derivation (packages->manifest (list rust-httm-0.30)))
+              (>>= (profile-derivation (packages->manifest (list default-guile)))
                    (lambda (profile)
-                     (self-contained-tarball "rust-httm-binary" profile
-                                             #:profile-name "rust-httm"
+                     (self-contained-tarball "default-guile-binary" profile
+                                             #:profile-name "default-guile"
                                              ;#:localstatedir? #t
                                              #:compressor (lookup-compressor "xz")))))
             #:system system))))
+
+(define (cuirass-jobs-tar store arguments)
+  "Register Cuirass jobs."
+  (tarball-jobs store (arguments->systems arguments)))
+
+
+(define (cuirass-jobs store arguments)
+  (define systems
+    (arguments->systems arguments))
+
+  (append-map
+   (lambda (system)
+     (list
+      (image->job store
+                  (image-with-os iso9660-image
+                                 installation-os-nonfree)
+                  #:name "nonfree-iso9660-image"
+                  #:system system)))
+   systems))
 #+END_SRC

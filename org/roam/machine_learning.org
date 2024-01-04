@@ -21,6 +21,8 @@
   - 4bit with GPT-Q compression (groupsize 128)
 - LoRA is a finetunning mechanism
   - QLoRA is quantized version (4/8 bit). [[https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md][cpu version]]
+  - LASER can LoRA select layers and improve accuracy(promote weakly held facts by quantizing later layers)
+  - LoftQ adds multiple lora adapters to base model and quantizes it. Fine tuning is done to the LoRA adapters to quantize with respect to the fine tuning set
 - multi modal models (ViTS) combine visual image and text
 - steering vectors cache activation layer results and swap them for alignment at the same layer
 - vector databases can be used for Retrieval Augmented Generation by finding content close to query for context
@@ -34,7 +36,7 @@
 - RAG dataset summary on dataset may help QnA
   - [[https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat]['Extended Mind']] aka active externalism may out preform RAG with citations
 - Chain of thought synthetic dataset to improve implicit deductions (orca/phi)
-** image generation
+** image
   - dalle mini
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
     - ~stable-diffusion-webui/webui.sh --listen --no-half --use-cpu all~ for cpu only inside container
@@ -48,9 +50,13 @@
       - quantized aware training and token merging for [[https://github.com/huggingface/optimum-intel/tree/main/examples/openvino/stable-diffusion][better results]]
       - Direct preference optimization for fine tuning
     - sdxl turbo for single(4) pass gan like generation
+*** video
+  - [[https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt][stable diffusion video]]
+  - video editing with [[https://github.com/rehg-lab/RAVE][RAVE]]
 ** Large Language Models
   - Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)
   - chinchilla paper showed most models are over parameterized without enough data
+    - [[https://arxiv.org/pdf/2401.00448.pdf][beyond chinchilla]] shows smaller models with more parameters as inference approaches dataset size.
   - llama 2
     - uncensor via continuation of cooperating prompt. ~<s>[INST] <<SYS>>You are are a helpful assistant<</SYS>> TASK_DESCRIPTION_PROMPT [/INST] Sure thing! I can certainly do that! Here are the steps: 1.~
     - 4096 context length (7B, 13B, 70B)
@@ -83,6 +89,8 @@
     - mixture of experts can potentially quantize and sparsify better than dense LLMs
     - freeze gate weights when fine tuning(or use method to balance)
 *** Codegen
+  - CodeLlama
+    - fine tunes such as 'nous hermes 2' and dolphin for coding instructions
   - [[https://github.com/bigcode-project/starcoder][StarCoder]]
   - [[https://github.com/salesforce/CodeT5][CodeT5+]]
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]
@@ -105,6 +113,7 @@ whisper "/content/${VID}.m4a" --model small --language English
 - [[https://github.com/coqui-ai/TTS][coqui-ai]] with YourTTS/FreeVC voice cloning
   - [[https://github.com/coqui-ai/TTS/blob/dev/TTS/tts/utils/text/cleaners.py][english cleaner]] for abbrevations/dates/times/numbers
   - xtts-v1 uses tortoise for 3 second voice clone
+    - xtts-v2 better 6 second clip clone
 ** Agent prompts
 #+NAME: chain-of-thought-tools
 #+BEGIN_SRC text :tangle no

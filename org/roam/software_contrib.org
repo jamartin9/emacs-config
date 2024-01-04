@@ -11,21 +11,20 @@
 - huggingface/transformers
   - [[https://github.com/huggingface/transformers/pull/24736][typo bugfix to allow models to be ran with LocalAgent]]
 - ClementTsang/bottom
-  - use the ~debug!~ macro to get a log file
   - [[https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f][added zfs arc support]]
-    - enables more arc and disk io stats in future
-    - enables more freebsd/mac/old linux metrics with sysctl
-      - freebsd used sysctl support for hw temp sensors and zfs
+    - enabled metrics with sysctl
+      - freebsd used sysctl support for hw temp sensors
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
-    - hide swap when not used in basic mode and bugfixed freebsd build / percentage toggle
-    - enables gpu power and processes information
+    - hide swap when not used in basic mode
+    - bugfixed freebsd build / percentage toggle
   - [[https://github.com/ClementTsang/bottom/pull/836][update docs, enable cli arg and update default config]]
   - [[https://github.com/ClementTsang/bottom/pull/1276][added gpu process, power and utilization support]]
-    - bugfixed battery out of bounds in same pr
+    - bugfixed battery out of bounds
     - maintainer chose to remove util/power until separate widget
       - outlined plan for linux intel support with memfd drm proc info
+  - [[https://github.com/ClementTsang/bottom/pull/1362][updated tui library]]
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine
@@ -74,6 +73,7 @@
   - Update textarea for is-loading control
   - Add navbar menu css configuration
   - patched for newer yew-agent
+    - not upstream as test and example code are broken for modal
 - itmettkeDE/cargo-patch :notupstream:
   - not upstream as 'proper' fix is to change input parsing
     - only used to patch old version of ssh-key for exposing private key in key2words until updated version was pushed

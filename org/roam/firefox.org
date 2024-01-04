@@ -25,21 +25,13 @@ network.dns.use_https_rr_as_altsvc
   - network.trr.uri https://tor.cloudflare-dns.com/dns-query
   - check: https://www.cloudflare.com/ssl/encrypted-sni/
   - ~dom.security.https_only_mode~
-- added loads of tracking/crapware by default; pocket etc
-  - usage at an all time low especially on mobile (under a percent)
-- pozzed by mozilla being taken over by SJWs
-  - laid off 25% of engineering staff while giving the CEO a raise of 80%
-  - [[https://www.pcmag.com/news/mozilla-signs-lucrative-3-year-google-search-deal-for-firefox][90%]] of money came from search engines
-    - google for default engine bribes ~$400M to avoid antitrust
-  - ceo is a trashcan
-    - 'In 2018 she received a total of $2,458,350 in compensation from Mozilla, which represents a 400% payrise since 2008.On the same period, Firefox marketshare was down 85%. When asked about her salary she stated "I learned that my pay was about an 80% discount to market"'
-- removed PWA support for SSB (adding to homescreen)
+  - ~security.webauth.webauthn_enable_softtoken~ for webauthn softtokens
+  - no PWA support on desktop
+    - removed PWA support for SSB (adding to homescreen)
 - lacks file system api
-- SHIELD Studies spyware
 - color picker under 'More Tools' -> 'EyeDropper'
 - responsive design mode for various device resolutions
 - pdf editing tools
-- no PWA support on desktop
 - ~MOZ_ENABLE_WAYLAND=1 firefox~ for wayland support
 *** addons
 - ublock origin
@@ -48,3 +40,5 @@ network.dns.use_https_rr_as_altsvc
   - user --ProfileManager to select profile
 - read-aloud for pdf/epub reader
 - https://profiler.firefox.com/ for power/perf flamegraph viewing
+- [[https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/][pwa support addon]]
+

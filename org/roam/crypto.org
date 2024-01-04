@@ -35,7 +35,8 @@ Secrets from the future!
   - SIKE broken in 4th round of NIST
   - Lattice based
     - [[https://www.courtlistener.com/docket/64872195/bernstein-v-national-institute-of-standards-and-technology/][Bernstein in court against NIST]] for potential NSA tampering again (weak keysize?)
-    - openssh added hybrid NTRU-Prime (Bernstein on team) for key exchange encryption despite NIST being against 'hybrid' schemes
+    - openssh added hybrid NTRU-Prime (Bernstein on team) for key exchange encryption despite NIST/NSA being against 'hybrid' schemes
+      - [[https://blog.cr.yp.to/20240102-hybrid.html][Bernstein rebutall]] that hybrid is fine
     - NIST choose CRYSTALS-Kyber([[https://www.schneier.com/blog/archives/2023/02/side-channel-attack-against-crystals-kyber.html][side channel power attack]]) for KEM encryption with CRYSTALS-DILITHIUM for signatures. Falcon is alternative signature scheme
       - NTRU may be considered if the *patent* issues with kyber are not resolved
       - Falcon has smallest signature but needs masking for side channel attack (perf affected as it needs constant-time floating point arithmetic)
