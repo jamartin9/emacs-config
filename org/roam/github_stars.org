@@ -1789,6 +1789,8 @@
   - Simple, safe way to store and distribute tensors
 ** huggingface/transformers
   - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
+** huggingface/trl
+  - Train transformer language models with reinforcement learning.
 ** IBM/AI-Descartes
   - Open source package for accelerated symbolic discovery of fundamental laws.
 ** IDEA-Research/Grounded-Segment-Anything

@@ -22,9 +22,14 @@
 - LoRA is a finetunning mechanism
   - QLoRA is quantized version (4/8 bit). [[https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md][cpu version]]
   - LASER can LoRA select layers and improve accuracy(promote weakly held facts by quantizing later layers)
+    - [[https://github.com/cognitivecomputations/laserRMT][LASER-RMT]] variant
   - LoftQ adds multiple lora adapters to base model and quantizes it. Fine tuning is done to the LoRA adapters to quantize with respect to the fine tuning set
 - multi modal models (ViTS) combine visual image and text
+  - Llava added clip endcoder and 2 layer mlp for gpt4v like interface to Vicuna
+    - FERRET added grounding information to Llava via the embeddings
 - steering vectors cache activation layer results and swap them for alignment at the same layer
+  - activation addition vectors have been found for [[https://arxiv.org/abs/2310.01405][memorization]], [[https://www.alignmentforum.org/posts/v7f8ayBxLhmMFRzpa/steering-llama-2-with-contrastive-activation-additions][sycophancy]], [[https://arxiv.org/abs/2306.03341][truth]], [[https://arxiv.org/abs/2311.06668][toxicity]], etc.
+    - [[https://arxiv.org/pdf/2311.09433.pdf][layer selection (jensen shanon divergence of teacher llm and target llm)]]
 - vector databases can be used for Retrieval Augmented Generation by finding content close to query for context
 - transformers context length prediction can be expanded from the size used in training by using [[https://arxiv.org/pdf/2108.12409.pdf][ALiBi in MPT]], ROPE, sliding context window
   - [[https://github.com/salesforce/xGen][xGen 8k context]]
@@ -48,7 +53,7 @@
     - [[https://github.com/facebookresearch/segment-anything][inpainting selection with Segment Anything Model]]
     - fine tune with [[https://github.com/cloneofsimo/lora][lora]] and [[https://github.com/huggingface/diffusers/tree/main/examples/dreambooth][dreambooth]]
       - quantized aware training and token merging for [[https://github.com/huggingface/optimum-intel/tree/main/examples/openvino/stable-diffusion][better results]]
-      - Direct preference optimization for fine tuning
+      - Direct preference optimization after fine tuning
     - sdxl turbo for single(4) pass gan like generation
 *** video
   - [[https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt][stable diffusion video]]
@@ -90,7 +95,7 @@
     - freeze gate weights when fine tuning(or use method to balance)
 *** Codegen
   - CodeLlama
-    - fine tunes such as 'nous hermes 2' and dolphin for coding instructions
+    - fine tunes such as 'nous hermes 2', dolphin and WizardCoder for coding instructions
   - [[https://github.com/bigcode-project/starcoder][StarCoder]]
   - [[https://github.com/salesforce/CodeT5][CodeT5+]]
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]

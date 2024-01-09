@@ -394,10 +394,10 @@
                               ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
                               ;("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
+                              ("MATI" "https://madattheinternet.libsyn.com/rss")
                               ("Reddit-news" "https://www.reddit.com/r/news/.rss")
                               ("Lobste" "https://lobste.rs/rss")
                               ("Phoronix" "https://www.phoronix.com/rss.php")
-                              ("CVE" "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss-analyzed.xml")
                               ("BramCohen" "https://bramcohen.substack.com/feed"); https://nitter.net/bramcohen/rss
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 

@@ -11,7 +11,7 @@
 ** usenet notes
 - usenet archives
   - nzb files
-  - [[https://my.xsusenet.com/index.php?/cart/free-usenet/][free usenet provider]] to test
+  - [[https://usenet.farm/][free usenet provider]] to test
   - par (parity archive)
     - par2 (v3 is draft)
     - paired with posts to help repairability of missing files

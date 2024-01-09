@@ -20,7 +20,6 @@
        (default-directory (if (file-directory-p guix-home-dir) guix-home-dir user-package-dir)))
   (if (not (file-directory-p guix-home-dir))
       (progn ; use-package-ensure w/o guix-home-dir
-        (if (not (file-directory-p user-package-dir)) (make-directory user-package-dir))
         (require 'package)
         (setq package-check-signature nil
               package-user-dir user-package-dir)
@@ -37,7 +36,8 @@
                                         (osm . "gnu")
                                         (debbugs . "gnu")
                                         (undo-tree . "gnu")))))
-  (normal-top-level-add-subdirs-to-load-path))
+  (if (file-directory-p default-directory)
+      (normal-top-level-add-subdirs-to-load-path)))
 
 (setq use-package-always-defer t
       use-package-verbose t)

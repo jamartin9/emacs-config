@@ -25,6 +25,7 @@
 - podman container runtime config for crun can be built with wasm-edge runtime support and used via ~module.wasm.image/variant=compat-smart~ annotation
 - ~podman load --log-level=debug~ for verbosity
   - podman load can fail with a gzip'd exported docker image... so ~gzip -d~ first
+- [[https://github.com/wagoodman/dive][dive]] to examine layers with ~dive --source podman docker.io/image~
 ** p2pool and monerod kube configs
 podman play kube p2pool.yaml
 podman play kube xmrig.yaml --down
