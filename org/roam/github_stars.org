@@ -114,6 +114,8 @@
   - Shader snippets for Artomatix Infinity Tiles (Wang Tiles)
 ** AscEmu/AscEmu
   - Official AscEmu repo... a never ending place to work. With cutting edge technologies XD
+** Asd-g/AviSynthPlus-MapNLQ
+  - Dolby Vision mapping for AviSynth.
 ** ashawkey/stable-dreamfusion
   - A pytorch implementation of text-to-3D dreamfusion, powered by stable diffusion.
 ** asn-d6/onionbalance
@@ -216,6 +218,8 @@
   - Cap'n Proto serialization/RPC system - core tools and C++ library
 ** carp-lang/Carp
   - A statically typed lisp, without a GC, for real-time applications.
+** casey/intermodal
+  - Rust command-line utility for BitTorrent torrent file creation, verification, and more
 ** cathugger/mkp224o
   - vanity address generator for tor onion v3 (ed25519) hidden services
 ** CEA-LIST/Cingulata
@@ -388,6 +392,8 @@
   - Captcha solver extension for humans
 ** DioxusLabs/dioxus
   - Friendly React-like GUI library for desktop, web, mobile, and more.
+** DJATOM/x265-aMod
+  - Vapoursynth scripts reader mod for x265
 ** DNSCrypt/dnscrypt-proxy
   - dnscrypt-proxy 2 - A flexible DNS proxy, with support for encrypted DNS protocols.
 ** doitsujin/dxvk
@@ -454,6 +460,8 @@
   - Emscripten: An LLVM-to-WebAssembly Compiler
 ** enhuiz/vall-e
   - An unofficial PyTorch implementation of the audio LM VALL-E
+** EpicGames/raddebugger
+  - A native, user-mode, multi-process, graphical debugger.
 ** EpistasisLab/tpot
   - A Python Automated Machine Learning tool that optimizes machine learning pipelines using genetic programming.
 ** etcd-io/etcd
@@ -524,6 +532,8 @@
   - Running large language models on a single GPU for throughput-oriented scenarios.
 ** FortAwesome/Font-Awesome
   - The iconic SVG, font, and CSS toolkit
+** FractalFir/rustc_codegen_clr
+  - This rust compiler backend emmits valid CIL (.NET IR), enabling you to use Rust in .NET projects
 ** FrameworkComputer/EmbeddedController
   - Embedded Controller firmware for the Framework Laptop
 ** freebsd/freebsd-src
@@ -936,6 +946,8 @@
   - Otter, a multi-modal model based on OpenFlamingo (open-sourced version of DeepMind's Flamingo), trained on MIMIC-IT and showcasing improved instruction-following and in-context learning ability.
 ** lurk-lang/lurk-rs
   - lisp snark
+** Lypheo/vs-placebo
+  - libplacebo-based debanding, scaling and color mapping plugin for VapourSynth
 ** maciejhirsz/tiny-bip39
   - A Rust implementation of BIP-0039
 ** madler/pigz
@@ -1226,6 +1238,8 @@
   - A retargetable MLIR-based machine learning compiler and runtime toolkit.
 ** operator-framework/operator-sdk
   - SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding.
+** OpusGang/awsmfunc
+  - awesome VapourSynth functions
 ** oracle/adaptivemm
   - adaptivemm - A userspace daemon for proactive free memory management
 ** oracle/graal
@@ -1244,6 +1258,8 @@
   - Model API for GALACTICA
 ** parcel-bundler/lightningcss
   - An extremely fast CSS parser, transformer, bundler, and minifier written in Rust.
+** pcroland/deew
+  - Dolby Encoding Engine Wrapper
 ** PCSX2/pcsx2
   - PCSX2 - The Playstation 2 Emulator
 ** pgmodeler/pgmodeler
@@ -1314,6 +1330,16 @@
   - Build and install your Emacs Lisp packages on-the-fly directly from source
 ** Quexington/tree-sitter-chialisp
   - A tree-sitter language parser for the language used to build smart contracts on top of the Chia Blockchain: Chialisp
+** quietvoid/dovi_tool
+  - dovi_tool is a CLI tool combining multiple utilities for working with Dolby Vision.
+** quietvoid/hdr10plus_tool
+  - CLI utility to work with HDR10+ in HEVC files.
+** quietvoid/vs-nlq
+  - Profile 7 FEL Encoding
+** quietvoid/vspreview-rs
+  - minimal VapourSynth script previewer
+** R3S3t9999/DoVi_Scripts
+  - User-friendly / drag & drop scripts to process any HDR / Dolby Vision files and more...
 ** Radarr/Radarr
   - A fork of Sonarr to work with movies à la Couchpotato.
 ** RalfJung/minirust
@@ -1594,6 +1620,8 @@
   - Google Chromium, sans integration with Google
 ** unicode-org/icu4x
   - Solving i18n for client-side and resource-constrained environments.
+** UniqProject/BDInfo
+  - The BDInfo tool was designed to collect video and audio technical specifications from Blu-ray movie discs
 ** ustaxes/UsTaxes
   - Tax filing web application
 ** uswds/uswds
@@ -1765,6 +1793,8 @@
   - Stable Diffusion web UI
 ** carson-katri/dream-textures
   - Stable Diffusion built-in to Blender
+** cg123/mergekit
+  - Tools for merging pretrained large language models.
 ** CiaraStrawberry/svd-temporal-controlnet
   - enhance your video diffusion projects by providing precise temporal control
 ** comfyanonymous/ComfyUI

@@ -141,7 +141,6 @@ self.addEventListener('fetch', function(e) {
 ** alternative frontends
 - youtube
   - [[https://piped.video/trending][piped.video]]
-  - [[https://github.com/iv-org/invidious][yewtu.be]]
 - [[https://github.com/zedeus/nitter][nitter.net]]
 ** media
 - https://ustv247.tv/
@@ -151,4 +150,4 @@ self.addEventListener('fetch', function(e) {
 - https://libgen.is/
 - https://aniwatch.to
 - https://cs.rin.ru
-- https://rutracker.org
+- https://cdm-project.com/Download-Tools/StreamFab

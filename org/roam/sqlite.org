@@ -46,6 +46,8 @@
   dictated as ~USING AUTOMATIC COVERING INDEX~ in the ~explain~ query output
 - import csv as virtual table or database
 - ~pragma journal_mode = WAL;~ for write ahead log (replaced shared cache)
+  - ~WAL2~ for 2 files for concurrent checkpointing while writing.
+    - ~pragma journal_mode = delete~ before changing wal mode from 1 to 2
 - ~pragma synchronous = normal;~
 - ~pragma temp_store = memory;~ to disable temp writes
 - ~pragma mmap_size = 30000000000;~ for memory mapping

@@ -23,6 +23,7 @@
 * chia
 - ~CHIA_ROOT~ env variable configuration
   - burn if not able to melt
+- check plots with ~chia plots check -n 30 -l~
 #+NAME: chia-burn-addrs
 #+BEGIN_SRC org :tangle no
 - mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy

@@ -31,12 +31,12 @@ uzfomcxbx24d3esy7akpdbiovcfoorupz4aez6fpabmyh45nnqdp7mqd.onion is /fdroid/repo
 https://4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion is guix sub mirror
 archiveiya74codqgiixo33q62qlrqtkgmcitqx5u2oeqnmn5bpcbiyd.onion is archive.is
 dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/ is dread
-https://twitter3e4tixl4xyajtrzo62zg5vztmjuricljdp2c5kshju4avyoid.onion/ is twitter
 https://5gdvpfoh6kb2iqbizb37lzk2ddzrwa47m6rpdueg2m656fovmbhoptqd.onion/ is riseup
 http://zlibrary24tuxziyiyfr7zd46ytefdqbqd2axkmxm4o5374ptpc52fad.onion/ is zlib
 https://bookszlibb74ugqojhzhg2a63w5i2atv5bqarulgczawnbmsb6s6qead.onion/ - zlib books
 https://www.reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad.onion/ is reddit
 btdigggink2pdqzqrik3blmqemsbntpzwxottujilcdjfz56jumzfsyd.onion/ is btdigg
+m2ylflyeak6i6o4hsfwcrfwcq2bbjxk6nf2rnmm7fu6qiuu3hybenzid.onion is jabber.ccc.de
 #+END_SRC
 - digicert offers ev wildcard certs for .onion and harica.gr offers .onion
 - ensure multi point check or pinned HTTPS verified to avoid bgp att

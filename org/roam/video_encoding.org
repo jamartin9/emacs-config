@@ -7,6 +7,85 @@
 #+HTML_CONTENT_CLASS: container content
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
+* vapoursynth
+#+NAME: tonemap-vpy
+#+BEGIN_SRC python :tangle no
+#!/usr/bin/env python3
+#awsmfun dynamic tonemap has similar function when using options for dovi
+import vapoursynth as vs
+from vapoursynth import core
+import vsutil as vsutil
+src = core.ffms2.Source("./source-ng.mkv")
+clip = core.std.Trim(src, first=1000, last=1015) # test frames
+clip = core.resize.Spline36(clip, format=vs.YUV444P16) # 16 bit depth
+#clip = vsutil.depth(clip, 16)
+tonemapped_clip = core.placebo.Tonemap(clip=clip, src_csp=1, dst_csp=0, use_dovi=True) # map dst(bt709)
+tonemapped_clip = core.resize.Spline36(tonemapped_clip,
+                                       format=vs.YUV444P16,
+                                       matrix_s="709",
+                                       width=1280,
+                                       height=720)
+final_clip = vsutil.depth(tonemapped_clip, 8, dither_type="error_diffusion")
+final_clip.set_output()
+#+END_SRC
+* scripts
+#+NAME: remux-rename
+#+BEGIN_SRC bash :tangle no
+#!/usr/bin/env bash
+dir_input=$@;
+for file in $dir_input/*.mp4; do
+    mkvmerge -o "${file%.*}.mkv" "$file"
+    echo "file is $file and made ${file%.*}.mkv"
+done
+
+#!/usr/bin/env bash
+
+# uses info to name files
+#
+# dir name gives:
+# 1. series
+# 2. source
+# 3. season
+#
+# Mediainfo will give
+# 1. video
+# 2. audio
+# 3. resolution
+# 
+# file name gives
+# 1. episode name
+# 2. episode number?
+dir_input=$@;
+dir_name=$(dirname $dir_input/.)
+
+# get captial S and numbers
+season=$(echo $dir_input |grep -Eo "S[0-9][0-9]+")
+# use resolution p for source location
+source=$(echo $dir_input |grep -Po "[0-9]p\..*?\..*?\." | grep -Po "\..*?\..*?\.")
+# get first letter to the start of season number
+series=$(echo $dir_name |grep -Po "^.*?\.S[0-9][0-9]+"|grep -Eio "[a-z].*\." )
+
+echo "Season is $season source is $source series is $series"
+for file in $dir_input/*.mkv; do
+    #echo "thing is $file"
+    epnum=$(basename "$file" | grep -Po "\-.*?\-" | tr -d '-' | tr -d ' '); #="E00"; get episode name from download name?
+    # string before last hypen
+    epname=$(basename "$file" | grep -Eo ".*-" | grep -Eio ".*[a-z]")
+    echo "epname is $epname"
+    # media info parse
+    reso=$(mediainfo "$file" | grep -i "height" |tr -d ' ' | grep -Eo "[0-9]+")
+    echo "res $reso"
+    audio=$(mediainfo "$file" | grep -i "format  "| grep -Evi "avc|matroska|UTF-8"| awk '{print $3}')
+    echo "audio $audio"
+    chans=$(mediainfo "$file" | grep -i  "channels" | grep -Eo "[0-9]") # switch on 6+ for 5.1
+    echo "chan $chans"
+    video=$(mediainfo "$file" | grep -Ei "writing.*x264" | grep -o "x264")
+    echo "vid $video"
+    name="${series}${season}${epnum}.${epname}.${reso}p${source}${audio}${chans}.0.x264-GROUP.mkv"
+    #mv "$file" "$dir_input/$name"
+    echo "file $file name is: $name"
+done
+#+END_SRC
 * AACS KEY
 ~09 F9 11 02 9D 74 E3 5B D8 41 56 C5 63 56 88 C0~
 * [[https://cryptome.org/dvd-hoy-reply.htm#ExhibitB][DeCSS]]
@@ -391,6 +470,10 @@ ec14f2df152cb7 199a8c0bd5f05d ecad5aab44ac2b ca87ab2ba6e905 69c0bf2acdb36c
 d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 #+END_SRC
 * notes
+- Handbrake can tonemap HDR to SDR when the color filter is set to BT709
+  - mobile compat: use mp4, profile high 3.1, 720p, AAC 2.0 stereo, under 4GB for FAT32 (~3Kbps - 6Kbps)
+- score with VMAF, CAMBI(banding), SSIM, PSNR
+  -  VMAF>SSIM>PSNR
 ** ffmpeg
 - vmaf score for comparing video streams
 ** HEVC
@@ -401,6 +484,9 @@ Bluray - Chapter names (get from dvd), compare bitrates of sources, cinavia prot
 UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
 Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
 For HDR to SDR tonemap screens for colors, gamut compression BT.2407, bit depth reduction to 8bits, change container from H.265 to H.264
+Dolby Vision is 12 bit with high dynamic range
+HDR10+ is 10 bit with high dynamic range
+HDR is 10 bit and static
 
 DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs
 
@@ -420,8 +506,16 @@ Remove Captions:
 ffmpeg -i input.mkv -codec copy -bsf:v "filter_units=remove_types=6" output.mkv
 
 x265
---colorprim 9 --colormatrix 9 --transfer 16 --max-cll
+x265 --crf 18 --preset slower --profile main10 --output-depth 10 --rc-lookahead 60 --ctu 32 --frame-threads 1 --no-sao --deblock -2:-2 --qcomp 0.65 --aq-mode 3 --ref 6 --bframes 8
 
+mapping with
+--colorprim bt2020 --colormatrix bt2020nc --transfer smpte-st-2084 --max-cll
+
+HDR10+ metadata can be added as json argument
+Dolby Vision profile 8.1 should be as it has hdr fallback
+encode hdr10+ then mux in DV (as it should have frame offset information?)
+
+main10 for nvidia gpu decoding
 
 x264
 

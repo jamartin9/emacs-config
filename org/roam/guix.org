@@ -850,7 +850,7 @@
 
     (label (string-append "GNU Guix " (package-version guix)))
 
-    ;(firmware (list linux-firmware))
+    (firmware (list linux-firmware))
 
     (bootloader (bootloader-configuration
                  (bootloader grub-bootloader)
@@ -951,24 +951,24 @@
                                                    (authorized-keys `(("guest" ,(plain-file "jam.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjfouQY9m8opK3Sq5G81FuqlMEa5no1Jy1UywweZY3u jam@jam-pc"))
                                                                       ("guest" ,(plain-file "jaming.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK+JSxpOM9X8rM6bS0VEfmBeOaQi98o0+aDzYaWIhTBp jam@jam-workstation"))))))
 
-                   (service cuirass-service-type
-                            (cuirass-configuration (specifications #~(list (specification
-                                                                            (name "my-channel")
-                                                                            (build (build '(channels my-channel));'(custom (jam ci)));
-                                                                            (channels (cons (channel
-                                                                                             (name 'my-channel)
-                                                                                             (url "https://github.com/jamartin9/guix-channel.git"))
-                                                                                            %default-channels))
+                   ;(service cuirass-service-type
+                   ;         (cuirass-configuration (specifications #~(list (specification
+                   ;                                                         (name "my-channel")
+                   ;                                                         (build (build '(channels my-channel));'(custom (jam ci)));
+                   ;                                                         (channels (cons (channel
+                   ;                                                                          (name 'my-channel)
+                   ;                                                                          (url "https://github.com/jamartin9/guix-channel.git"))
+                   ;                                                                         %default-channels))
                                                                             ;(notifications (list (rss-feed))); add import for (cuirass rss) for https://127.0.0.1/events/rss/?specification=my-channel-packages
-                                                                            (build-outputs (list
-                                                                                            (build-output
-                                                                                             (job "*")
-                                                                                             (type "archive")
+                   ;                                                         (build-outputs (list
+                   ;                                                                         (build-output
+                   ;                                                                          (job "*")
+                   ;                                                                          (type "archive")
                                                                                              ;(output "out")
-                                                                                             (path ""))))
-                                                                            (period 600))))
-                                                   (use-substitutes? #t)
-                                                   (host "0.0.0.0")))
+                   ;                                                                          (path ""))))
+                   ;                                                         (period 600))))
+                   ;                                (use-substitutes? #t)
+                   ;                                (host "0.0.0.0")))
 
                    (simple-service 'os-file etc-service-type
                                    (list `("guix-os.scm" ,(local-file "guix-os.scm"))))
@@ -1118,7 +1118,7 @@
 
      ;;"ungoogled-chromium-nvda"
      ;;"firefox-nvda"
-     "torbrowser"
+     ;;"torbrowser"
 
      ;;"transmission"
      ;;"nzbget"
@@ -1152,7 +1152,7 @@
      ;;"python"
 
      ;; shell
-     "shellcheck" ;;"bash"
+     ;;"shellcheck" ;;"bash"
      "htop"
      ;;"xclip"
      ;;"wl-clipboard"
@@ -1187,11 +1187,12 @@
      ;;"postgresql"
      ;;"sqlite"
      ;;"tigervnc-client"
-     ;;"tigervnc-server"
+     ;;"tigervnc-server" ; newer gdm supports rdp login
      ;;"searx"
      ;;"gnuradio"
      ;;"obs"
      ;;"virt-viewer"
+     ;;"dino" ; xmpp client
 
      ;; docs
      ;;"libreoffice"

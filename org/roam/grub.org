@@ -17,3 +17,4 @@
    initrd (hd0,6)/boot/initramfs-linux.img
    boot
 - single user mode on boot by adding 'single' to the linux kernel line
+  - change ro to ~rw init=/sysroot/bin/sh~ on the kernel line
