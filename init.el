@@ -37,6 +37,7 @@
            ("L" . ffap-menu)
            ("i" . imenu)
            ("a" . apropos)
+           ("c" . keep-lines)
            ("m" . bookmark-jump))
 (bind-keys :prefix-map jam/file :prefix "C-c c f"
            ("d" . dired)

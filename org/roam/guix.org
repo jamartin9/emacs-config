@@ -1274,6 +1274,191 @@
   )
  )
 #+END_SRC
+** guix installer
+- ~guix system image -t iso9660 ./installer.scm~
+#+NAME: guix-installer
+#+BEGIN_SRC scheme :tangle installer.scm
+(define-module (nongnu system install)
+  #:use-module (gnu services)
+  #:use-module (gnu system)
+  #:use-module (gnu system install)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages emacs)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages mtools)
+  #:use-module (gnu packages package-management)
+  #:use-module (gnu system)
+  #:use-module (gnu services base)
+  #:use-module (nongnu packages linux)
+  #:use-module (guix)
+  #:export (installation-os-nonfree))
+
+(define installation-os-nonfree
+  (operating-system
+    (inherit installation-os)
+    (kernel linux)
+    (firmware (list linux-firmware))
+
+    ;; Add the 'net.ifnames' argument to prevent network interfaces
+    ;; from having really long names.  This can cause an issue with
+    ;; wpa_supplicant when you try to connect to a wifi network.
+    (kernel-arguments '("quiet" "modprobe.blacklist=radeon" "net.ifnames=0"))
+
+    (services
+     (append
+      (list
+       ;; Include the channel file so that it can be used during installation
+       (simple-service 'channel-file etc-service-type
+                       (list `("channels.scm" ,(local-file "channels.scm"))))
+       )
+
+      (modify-services (operating-system-user-services installation-os)
+                        (guix-service-type config =>
+                                           (guix-configuration
+                                            (inherit config)
+                                            (guix (current-guix))
+                                            (substitute-urls
+                                             (append (list "https://substitutes.nonguix.org/")
+                                                     %default-substitute-urls))
+                                            (authorized-keys
+                                             (append (list (local-file "./nonguix-pub.scm"))
+                                                     %default-authorized-guix-keys)))))
+       ))
+
+    ;; Add some extra packages useful for the installation process
+    (packages
+     (append (list git curl emacs-no-x-toolkit)
+             (operating-system-packages installation-os)))))
+
+installation-os-nonfree
+#+END_SRC
+** guix netbook
+#+NAME guix-netbook
+#+BEGIN_SRC scheme :tangle netbook.scm
+(use-modules
+ (gnu)
+ (gnu services)
+ (gnu services linux)
+ (gnu services shepherd)
+ (gnu services file-sharing)
+ (gnu services networking)
+ (gnu services sysctl)
+ (gnu services vpn)
+ (gnu packages networking)
+ (gnu packages containers)
+ (gnu packages ssh)
+ (guix)
+ (guix gexp)
+ (guix packages)
+ (guix transformations)
+ (srfi srfi-1)
+ (nongnu packages linux)
+ )
+
+(use-service-modules desktop mcron networking spice ssh xorg sddm cuirass)
+(use-package-modules bootloaders certs fonts nvi
+                     package-management wget xorg)
+
+(operating-system
+  (host-name "jam-netbook")
+  (timezone "Etc/UTC")
+  (locale "en_US.utf8")
+  (keyboard-layout (keyboard-layout "us" "altgr-intl"))
+
+  (kernel linux)
+
+  (label (string-append "GNU Guix " (package-version guix)))
+
+  (firmware (list linux-firmware))
+
+  (bootloader (bootloader-configuration
+               (bootloader grub-efi-bootloader)
+               ;(terminal-outputs '(console))
+               (targets '("/boot/efi"))))
+  (initrd-modules (append '("mmc_block" "sdhci_acpi") %base-initrd-modules))
+  (swap-devices (list (swap-space (target (uuid "a82191d1-c19b-43b3-a4b0-c7d50ca98f58")))))
+
+  (file-systems (cons*
+                 (file-system
+                        (mount-point "/boot/efi")
+                        (device (uuid "F904-5CD0" 'fat32)) ; blkid output
+                        (type "vfat"))
+                 (file-system
+                        (mount-point "/")
+                        (device (uuid "c25ef7d9-95bf-4c80-94a2-8e569b71985a" 'ext4))
+                        (type "ext4"))
+                      %base-file-systems))
+
+  (users (cons (user-account
+                (name "jam")
+                (comment "Jam")
+                (password "") ; no password
+                (group "users")
+                (supplementary-groups '("wheel" "netdev"
+                                        "audio" "video")))
+               %base-user-accounts))
+
+  (packages (append (list nss-certs ; https
+                          blueman); cloud-utils for growpart with resize2fs after img resize
+                    %base-packages)) ; blueman podman flatpak gvfs
+
+  (services
+   (append (list (service plasma-desktop-service-type) ; plasma and sddm login for KDE
+                 (service sddm-service-type
+                           (sddm-configuration
+                            (theme "breeze")))
+                 (service bluetooth-service-type
+                          (bluetooth-configuration
+                           (auto-enable? #f)))
+
+                 (simple-service 'os-file etc-service-type
+                                 (list `("netbook.scm" ,(local-file "netbook.scm"))))
+                 (simple-service 'os-file etc-service-type
+                                 (list `("home.scm" ,(local-file "home.scm"))))
+
+                 (simple-service 'channel-file etc-service-type ; link to ~/.config/guix/channels.scm
+                                 (list `("channels.scm" ,(local-file "channels.scm"))))
+                 (simple-service 'channel-file etc-service-type
+                                 (list `("nonguix-pub.scm" ,(local-file "nonguix-pub.scm"))))
+                 )
+
+           ;; Remove some services that don't make sense in a VM.
+           (remove (lambda (service)
+                     (let ((type (service-kind service)))
+                       ;(or
+                        (memq type
+                                 (list gdm-service-type
+                                       ;sddm-service-type
+                                       ;wpa-supplicant-service-type
+                                       cups-pk-helper-service-type
+                                       ;network-manager-service-type
+                                       modem-manager-service-type))
+                       ;    (eq? 'network-manager-applet
+                       ;         (service-type-name type)))
+                       ))
+                   (modify-services %desktop-services
+                     (sysctl-service-type config =>
+                                          (sysctl-configuration
+                                           (settings (append `( ;,@%kicksecure-sysctl-rules
+                                                               ("net.ipv6.conf.all.forwarding" . "1")
+                                                               ("net.ipv4.ip_forward" . "1"))
+                                                             %default-sysctl-settings))))
+                     (guix-service-type config =>
+                                         (guix-configuration
+                                          (inherit config)
+                                          ;(log-compression 'none); use btrfs compression
+                                          (guix (current-guix))
+                                          (substitute-urls
+                                 (append (list "https://substitutes.nonguix.org/"); 4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion
+                                         %default-substitute-urls)) ;(http-proxy) with tor config HTTPTunnelPort
+                                          (authorized-keys
+                                 (append (list (local-file "./nonguix-pub.scm"))
+                                         %default-authorized-guix-keys))))))))
+
+  ;(name-service-switch %mdns-host-lookup-nss) ;; Allow resolution of '.local' host names with mDNS.
+  )
+#+END_SRC
 ** guix notes
 - transform options for source, c-toolchain, debug, grafts/inputs
   - ~--with-commit=SomeSuchPackage=XXX~
@@ -1356,7 +1541,23 @@ guix archive --authorize < ~root/.config/guix/current/share/guix/bordeaux.guix.g
 # install locale
 guix package -i glibc-utf8-locales
 #+END_SRC
-
+- manual install
+  - create wifi.conf with
+#+NAME: guix-install-wifi
+#+BEGIN_SRC conf :tangle no
+network={
+  ssid="ssid-name"
+  key_mgmt=WPA-PSK
+  psk="unencrypted passphrase"
+}
+#+END_SRC
+  - ~rfkill unblock all && ifconfig -a && wpa_supplicant -c wifi.conf -i INTERFACE -B && dhclient -v INTERFACE~
+  - partition with ~lsblk && cfdisk~
+  - format with mkfs
+  - mount root as mnt and ~/boot/efi~ under ~/mnt/boot/efi~
+  - swapon the device
+  - ~herd start cow-store /mnt~
+  - clone config, symlink channels, pull then ~guix system -L CONFIG_DIR init config.scm /mnt~
 #+NAME: guix-fhs-examples
 #+BEGIN_SRC sh :tangle no
 guix shell --container --network --emulate-fhs \

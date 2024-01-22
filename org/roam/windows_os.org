@@ -12,6 +12,5 @@
 ** notes
 - NSAKEY
 - forced updates
-- microsoft pozzed
-  - exploited as learning exercise
-  - was trying to enforce tpm for win 11
+- disable lock screen with Group Policy Editor (gpedit), Computer Configuration > Administrative Templates > Control Panel > Personalization.
+  - power settings to disable sleep
