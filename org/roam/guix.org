@@ -1377,7 +1377,7 @@ installation-os-nonfree
                ;(terminal-outputs '(console))
                (targets '("/boot/efi"))))
   (initrd-modules (append '("mmc_block" "sdhci_acpi") %base-initrd-modules))
-  (swap-devices (list (swap-space (target (uuid "a82191d1-c19b-43b3-a4b0-c7d50ca98f58")))))
+  (swap-devices (list (swap-space (target (uuid "a82191d1-c19b-43b3-a4b0-c7d50ca08f58")))))
 
   (file-systems (cons*
                  (file-system
