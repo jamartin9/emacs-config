@@ -1404,10 +1404,8 @@ installation-os-nonfree
                     %base-packages)) ; blueman podman flatpak gvfs
 
   (services
-   (append (list (service plasma-desktop-service-type) ; plasma and sddm login for KDE
-                 (service sddm-service-type
-                           (sddm-configuration
-                            (theme "breeze")))
+   (append (list (service xfce-desktop-service-type)
+                 (service slim-service-type)
                  (service bluetooth-service-type
                           (bluetooth-configuration
                            (auto-enable? #f)))
@@ -1423,13 +1421,13 @@ installation-os-nonfree
                                  (list `("nonguix-pub.scm" ,(local-file "nonguix-pub.scm"))))
                  )
 
-           ;; Remove some services that don't make sense in a VM.
+           ;; Remove some services that don't make sense
            (remove (lambda (service)
                      (let ((type (service-kind service)))
                        ;(or
                         (memq type
                                  (list gdm-service-type
-                                       ;sddm-service-type
+                                       sddm-service-type
                                        ;wpa-supplicant-service-type
                                        cups-pk-helper-service-type
                                        ;network-manager-service-type
