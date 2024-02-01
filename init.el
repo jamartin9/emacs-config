@@ -18,7 +18,6 @@
            ("s" . jam/sudo-edit)
            ("S" . speedbar-frame-mode)
            ("b" . browse-url-of-file)
-           ("-" . dired-jump)
            ("f" . make-frame)
            ("D" . jam/draw)
            ("d" . desktop-read)
@@ -169,6 +168,7 @@
               inhibit-compacting-font-caches t
               redisplay-skip-fontification-on-input t
               shift-select-mode t
+              jit-lock-defer-time 0.05 ; fontification delay
               read-process-output-max (* 64 1024)
               ;gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
               desktop-path `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session"))) ; create dir before saving
@@ -246,6 +246,12 @@
   (add-to-list 'initial-frame-alist '(alpha-background  . 80))
   (set-language-environment "UTF-8"))
 
+(use-package calc
+  :ensure nil ; built-in
+  :commands (calc calc-algebraic-entry)
+  :config (with-temp-buffer (calc))
+  :bind (:map jam/open ("a" . calc-algebraic-entry)))
+
 (use-package proced
   :ensure nil ; built-in
   :commands proced
@@ -264,13 +270,18 @@
   :bind (:map jam/notes ("g" . org-clock-goto))
   :commands (org-clock-goto org-clock-in org-clock-cancel))
 
+(use-package org-timer
+  :ensure nil; built-in
+  :bind (:map jam/open ("c" . org-timer-set-timer))
+  :config (with-temp-buffer (org-mode)) ; hack to load org
+  :commands (org-timer-set-timer))
+
 (use-package org
   :ensure nil ; built-in
   :commands (org-mode org-agenda org-capture org-todo-list org-id-update-id-locations)
   :init (setq org-timer-default-timer 60
               org-src-tab-acts-natively nil
-              org-edit-src-content-indentation 0
-              org-clock-sound t); org-timer-set-timer
+              org-edit-src-content-indentation 0)
   :bind (:map jam/notes
               ("D" . org-id-update-id-locations)
               ("t" . org-todo-list)
@@ -285,7 +296,8 @@
                 dired-recursive-copies 'always
                 dired-recursive-deletes 'top
                 dired-create-destination-dirs 'ask)
-  :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window))
+  :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window)
+  :bind (:map jam/open ("-" . dired-jump)))
 
 (use-package guix ; guix
   :config (require 'guix-autoloads)
@@ -393,13 +405,12 @@
                               ("p2pool-release" "https://github.com/SChernykh/p2pool/releases.atom")
                               ("monero-release" "https://github.com/monero-project/monero/releases.atom")
                               ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
-                              ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
+                              ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
                               ;("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
-                              ("MATI" "https://madattheinternet.libsyn.com/rss")
                               ("Reddit-news" "https://www.reddit.com/r/news/.rss")
                               ("Lobste" "https://lobste.rs/rss")
                               ("Phoronix" "https://www.phoronix.com/rss.php")
-                              ("BramCohen" "https://bramcohen.substack.com/feed"); https://nitter.net/bramcohen/rss
+                              ("BramCohen" "https://bramcohen.substack.com/feed")
                               ("AndyWingo" "https://wingolog.org/feed/atom"))))
 
 (use-package magit ; git
@@ -455,6 +466,7 @@
   :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
               org-directory org-roam-directory
               org-id-locations-file (expand-file-name ".orgids" org-directory) ; org-id-update-id-locations org-roam-db-sync
+              org-clock-sound (expand-file-name "alert.wav" org-directory) ; play-sound-file (from flac --decode)
               org-return-follows-link t
               org-persist-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "org-persist"))
               org-roam-dailies-directory ""
@@ -561,7 +573,7 @@
   (add-to-list 'erc-server-alist '("Corrupt-Net" Corrupt "irc.corrupt-net.org" ((6666 6669)) 8067 6697 7000))
   ;(add-to-list 'erc-nickserv-alist '(Corrupt "NickServ!services@shd.u" "This\\s-nickname\\s-is\\s-registered\\s-and\\s-protected.\\s-\\s-If\\s-it\\s-is\\s-your" "NickServ" "IDENTIFY" nil nil "Password\\s-accepted\\s--\\s-you\\s-are\\s-now\\s-recognized."))
   (add-to-list 'erc-modules 'dcc);/dcc list and /dcc get -s nick file
-  ;(add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
+  (add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
   (add-to-list 'erc-modules 'log)
   ;(add-to-list 'erc-modules 'sasl)
   ;(add-to-list 'erc-modules 'services); nickserv
@@ -597,7 +609,7 @@
 
 (use-package company
   ;:pin gnu ; pin gnu for android
-  :bind (:map jam/toggle ("a" . global-company-mode))
+  :bind (:map jam/toggle ("i" . global-company-mode))
   :init (add-hook 'after-init-hook #'global-company-mode)
   (setq company-minimum-prefix-length 2
         company-tooltip-limit 14

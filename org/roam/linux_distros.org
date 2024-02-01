@@ -27,7 +27,9 @@ Having many flavors makes some lovely hot garbage...
 *** arch/manjaro
 - arch based
 - pamac and pacman for packages
-- mkinitcpio for initraramfs
+- mkinitcpio for initramfs
+  - ~MODULES="nvidia nvidia_modeset nvidia_uvm nvidia_drm"~
+  - add zfs to hooks
 - ~blacklist nouveau~ and ~options nvidia_drm modeset=1~ in ~/etc/modprobe.d/mwhd-gpu.conf~ for nvidia gpu direct render management
 - ~pacman -U *.zst~ to install local
 - ~makepkg~ to build

@@ -1946,6 +1946,8 @@
   - A full featured, fast Command Line Argument Parser for Rust
 ** cloudflare/boringtun
   - Userspace WireGuard Implementation in Rust
+** cloudflare/foundations
+  - Cloudflare's Rust service foundations library.
 ** cloudflare/mmap-sync
   - Rust library for concurrent data access, using memory-mapped files, zero-copy deserialization, and wait-free synchronization.
 ** cloudflare/workers-rs

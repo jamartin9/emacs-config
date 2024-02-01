@@ -26,7 +26,7 @@ More ricing less productivity!
   - manjaro desktop package is plasma-meta
     - added konsole, unarchiver, kio-admin, gnustep-base, dolphin, ark, sweeper, sddm-breath-theme
   - qt based
-    - ~QT_QPA_PLATFORM=wayland~
+    - ~QT_QPA_PLATFORM=wayland~ or webgl
     - qt project withholds patches for up to a year
 - aero (windows)
 - quartz (mac)

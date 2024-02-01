@@ -29,6 +29,9 @@
 - multi modal models (ViTS) combine visual image and text
   - Llava added clip endcoder and 2 layer mlp for gpt4v like interface to Vicuna
     - FERRET added grounding information to Llava via the embeddings
+  - Yi-VL
+  - imp-v1-3b (phi)
+  - Qwen-VL
 - steering vectors cache activation layer results and swap them for alignment at the same layer
   - activation addition vectors have been found for [[https://arxiv.org/abs/2310.01405][memorization]], [[https://www.alignmentforum.org/posts/v7f8ayBxLhmMFRzpa/steering-llama-2-with-contrastive-activation-additions][sycophancy]], [[https://arxiv.org/abs/2306.03341][truth]], [[https://arxiv.org/abs/2311.06668][toxicity]], etc.
     - [[https://arxiv.org/pdf/2311.09433.pdf][layer selection (jensen shanon divergence of teacher llm and target llm)]]
@@ -98,6 +101,7 @@
 *** Codegen
   - CodeLlama
     - fine tunes such as 'nous hermes 2', dolphin and WizardCoder for coding instructions
+    - 70B updated with infilling
   - [[https://github.com/bigcode-project/starcoder][StarCoder]]
   - [[https://github.com/salesforce/CodeT5][CodeT5+]]
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]

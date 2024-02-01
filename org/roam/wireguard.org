@@ -61,3 +61,4 @@
 - Ipv6 starting with ~fe80::~ is link-local (instead of nat66 with pcp)
 - store wg keys in pass using processes substitution
   - PostUp = wg set %i private-key <(su user -c "export PASSWORD_STORE_DIR=/path/to/your/store/; pass WireGuard/private-keys/%i")
+- https://github.com/nitred/nr-wg-mtu-finder for best MTU setting

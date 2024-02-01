@@ -138,10 +138,13 @@ self.addEventListener('fetch', function(e) {
 - Shodan
 - Zoomeye
 - censys
+- http://ghostarchive.org/
 ** alternative frontends
 - youtube
   - [[https://piped.video/trending][piped.video]]
-- [[https://github.com/zedeus/nitter][nitter.net]]
+  - https://yewtu.be/
+  - https://incogtube.com
+- https://incogsnoo.com/ (reddit)
 ** media
 - https://ustv247.tv/
 - https://scnlog.me/

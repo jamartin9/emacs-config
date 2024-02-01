@@ -815,7 +815,6 @@ installation-os-nonfree
 
   (bootloader (bootloader-configuration
                (bootloader grub-efi-bootloader)
-               ;(terminal-outputs '(console))
                (targets '("/boot/efi"))))
   (initrd-modules (append '("mmc_block" "sdhci_acpi") %base-initrd-modules))
   (swap-devices (list (swap-space (target (uuid "a82191d1-c19b-43b3-a4b0-c7d50ca08f58")))))
@@ -841,8 +840,8 @@ installation-os-nonfree
                %base-user-accounts))
 
   (packages (append (list nss-certs ; https
-                          blueman); cloud-utils for growpart with resize2fs after img resize
-                    %base-packages)) ; blueman podman flatpak gvfs
+                          blueman); podman flatpak gvfs
+                    %base-packages))
 
   (services
    (append (list (service xfce-desktop-service-type)
@@ -879,14 +878,12 @@ installation-os-nonfree
                    (modify-services %desktop-services
                      (sysctl-service-type config =>
                                           (sysctl-configuration
-                                           (settings (append `( ;,@%kicksecure-sysctl-rules
-                                                               ("net.ipv6.conf.all.forwarding" . "1")
+                                           (settings (append `(("net.ipv6.conf.all.forwarding" . "1")
                                                                ("net.ipv4.ip_forward" . "1"))
                                                              %default-sysctl-settings))))
                      (guix-service-type config =>
                                          (guix-configuration
                                           (inherit config)
-                                          ;(log-compression 'none); use btrfs compression
                                           (guix (current-guix))
                                           (substitute-urls
                                  (append (list "https://substitutes.nonguix.org/"); 4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion

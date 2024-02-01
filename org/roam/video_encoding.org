@@ -11,7 +11,7 @@
 #+NAME: tonemap-vpy
 #+BEGIN_SRC python :tangle no
 #!/usr/bin/env python3
-#awsmfun dynamic tonemap has similar function when using options for dovi
+#awsmfun dynamic tonemap has similar function when using options for dovi (includes chroma?)
 import vapoursynth as vs
 from vapoursynth import core
 import vsutil as vsutil
@@ -474,6 +474,8 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
   - mobile compat: use mp4, profile high 3.1, 720p, AAC 2.0 stereo, under 4GB for FAT32 (~3Kbps - 6Kbps)
 - score with VMAF, CAMBI(banding), SSIM, PSNR
   -  VMAF>SSIM>PSNR
+  - [[https://github.com/cloudinary/ssimulacra][DSSIM]]
+    - patch makefile pkg-config with opencv4
 ** ffmpeg
 - vmaf score for comparing video streams
 ** HEVC
@@ -494,10 +496,10 @@ WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter)
 
 Audio options:
 AAC for directors (usually 2.0 channel)
-Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p
+Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p, uses dialnorm tho that lowers db range compared to DTS
 Lossless DTS for 1080p (DTS passthrough)
-TrueHD - can convert to flac for compat
-DTS-HD.MA transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
+TrueHD - can convert to flac for compat (AC3 stream inside for compat), encode with 'Dolby Encoding Engine'
+DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
 PCM - Bluray
 
 Video options:
@@ -558,7 +560,7 @@ Reasonable bitrates for 2-pass/crf will vary depending on your source and a few 
 
 QComp
 
-While crf and 2-pass affect the overall quality of the encode, qcomp affects how crf and 2-pass are applied. Next to crf/2-pass it is the most important x264 parameter for afecting the quality of your final encode. qcomp will always be a number between 0.0 and 1.0. At 0.0, your crf number or 2-pass bitrate will yield a constant bitrate throughout the entire encode. At 1.0, the encode's bitrate variance is completely uncapped and so will flail around like a crack-addicted preschooler.
+While crf and 2-pass affect the overall quality of the encode, qcomp affects how crf and 2-pass are applied. Next to crf/2-pass it is the most important x264 parameter for affecting the quality of your final encode. qcomp will always be a number between 0.0 and 1.0. At 0.0, your crf number or 2-pass bitrate will yield a constant bitrate throughout the entire encode. At 1.0, the encode's bitrate variance is completely uncapped and so will flail around like a crack-addicted preschooler.
 
 The default is 0.6 but for live-action should be bumped to 0.7, or 0.75 for sources with a lot of grain/noise. For lower quality sources with little or no grain, low-quality animation or dark movies without much grain you can try around 0.55 or 0.5. Essentially the viable qcomp range for any source will be (roughly) 0.45 - 0.75.
 
@@ -670,6 +672,8 @@ The following settings, for now, probably don't merit an in-depth explanation as
   - anystream
 - dvdfab
   - streamfab
+- handbrake
+  ~bframes=16:aq-mode=3:aq-strength=0.65:me=tesa:merange=16:no-mbtree=1:subme=11:qcomp=0.6:psy-rd=1.05:deblock=-3:-3~
 #+NAME: youtube-dl
 #+BEGIN_SRC sh :tangle no
 youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt

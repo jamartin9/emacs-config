@@ -21,6 +21,8 @@
     - custom build of termux for supporting utils
 - signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
 - German air control ATC ran on emacs in the 90's
+- calc can plot with gnuplot
+  - ~set yrange [0:50]~, ~set xrange [0:2200]~, ~plot 4 * sqrt(x + 10) / log10(x + 10) - 4 * sqrt(10)~
 *** org-mode notes
 - noweb can link code verbatium with <<CodeBlockName>> or evaluate it with <<CodeBlockName>>()
 - ~#+INCLUDE "file.org::selector" :only-contents t~ to select heading contents to include from other files
