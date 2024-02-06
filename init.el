@@ -1,7 +1,7 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
-(bind-keys :prefix-map jam/code :prefix "C-c c" ; contains all bind maps
+(bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
            ("j" . xref-find-definitions)
            ("c" . compile))
 (bind-keys :prefix-map jam/toggle :prefix "C-c c t"
@@ -13,6 +13,9 @@
            ("f" . toggle-frame-fullscreen)
            ("F" . flymake-mode)
            ("r" . recentf-mode)
+           ("m" . follow-mode)
+           ("M" . scroll-lock-mode)
+           ("e" . strokes-mode)
            ("g" . auto-revert-mode))
 (bind-keys :prefix-map jam/open :prefix "C-c c o"
            ("s" . jam/sudo-edit)
@@ -30,6 +33,7 @@
            ("s" . yas-insert-snippet)
            ("e" . emojify-insert-emoji)
            ("b" . bookmark-set)
+           ("R" . re-builder)
            ("r" . string-insert-rectangle))
 (bind-keys :prefix-map jam/search :prefix "C-c c s"
            ("l" . shr-copy-url)
@@ -41,6 +45,7 @@
 (bind-keys :prefix-map jam/file :prefix "C-c c f"
            ("d" . dired)
            ("f" . recentf-open)
+           ("i" . image-crop)
            ("D" . desktop-save-in-desktop-dir))
 (bind-keys :prefix-map jam/quit :prefix "C-c c q"
            ("f" . delete-frame)
@@ -168,7 +173,7 @@
               inhibit-compacting-font-caches t
               redisplay-skip-fontification-on-input t
               shift-select-mode t
-              jit-lock-defer-time 0.05 ; fontification delay
+              ;jit-lock-defer-time 0.05 ; fontification delay
               read-process-output-max (* 64 1024)
               ;gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
               desktop-path `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session"))) ; create dir before saving

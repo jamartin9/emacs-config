@@ -22,3 +22,5 @@ ooh ahh the colors... with a generic plot to boot!
 - supports custom scripts
 *** vlc
 - ffmpeg based
+*** viewing distance
+- https://www.rtings.com/tv/reviews/by-size/size-to-distance-relationship

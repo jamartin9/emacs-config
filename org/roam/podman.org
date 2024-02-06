@@ -21,6 +21,8 @@
 - nvidia support with https://github.com/NVIDIA/nvidia-container-toolkit
   - edit ~/etc/nvidia-container-runtime/config.toml~ with ~no-cgroups = true~ and ~ldconfig = "/sbin/ldconfig"~ (when using --userns keep-id) for rootless
   - add ~--hooks-dir=/usr/share/containers/oci/hooks.d/ --security-opt=label=disable --security-opt=label=type:nvidia_container_t -e NVIDIA_VISIBLE_DEVICES=all  -e NVIDIA_DRIVER_CAPABILITIES=all~ to podman run
+    - podman play kube [[https://github.com/containers/podman/issues/17833][BUG]] that does not map device IDs for nvidia gpus. use cli ~--device nvidia.com/gpu=all~
+      - may need ~sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml~
 - podman-compose does not cleanup networks (docker_default) which uses dnsmasq with the old configuration; run podman network rm on subsequent runs
 - podman container runtime config for crun can be built with wasm-edge runtime support and used via ~module.wasm.image/variant=compat-smart~ annotation
 - ~podman load --log-level=debug~ for verbosity

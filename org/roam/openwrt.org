@@ -34,6 +34,7 @@ a os for my routers
   - used 23.03.1 (roll forward?)
 
 ** Wireless Repeater
+- https://openwrt.org/docs/guide-user/network/wifi/relay_configuration
 - disable dhcp interface on lan and ipv6 ra-service/dhcp-v6 service
 - One radio connected as client
   - lan firewall rules and wwan default
@@ -41,6 +42,10 @@ a os for my routers
 - One radio access point
 - install luci-proto-relay after updating package list then reboot
 - add bridge interface between the two networks
+
+*** asu
+- builds update image from server with packages and saves config when updating
+- ~luci-app-attendedsysupgrade~ offers a simple tool under System (Attended Sysupgrade)
 
 *** travelmate
 - install package and configure for AP and client
