@@ -657,75 +657,78 @@
    ;gnus-always-read-dribble-file t
    gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
-   gnus-select-method
-          '(nnimap "gmail"
-                   (nnimap-address "imap.gmail.com")
-                   (nnimap-server-port 993)
-                   (nnimap-stream ssl)
-                   (nnir-search-engine imap)
-                   (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") ;; press 'E' to expire email
-                   (nnmail-expiry-wait 90)) ;; @see http://www.gnu.org/software/emacs/manual/html_node/gnus/Expiring-Mail.html
-          gnus-secondary-select-methods '((nnimap "riseup"
-                                                  (nnimap-address "mail.riseup.net")
-                                                  (nnimap-server-port 993)
-                                                  (nnimap-stream ssl)
-                                                  (nnir-search-engine imap)
-                                                  (nnmail-expiry-wait 90)))
-          gnus-use-cache t
-          gnus-asynchronous t
-          gnus-use-header-prefetch t
-          message-send-mail-function 'smtpmail-send-it ;; Send email through SMTP
-          smtpmail-default-smtp-server "smtp.gmail.com";"mail.riseup.net"
-          smtpmail-smtp-service 587
-          smtpmail-local-domain "localhost"
-          gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date (not gnus-thread-sort-by-number))
-          gnus-read-active-file 'some ;; read only some
-          gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject
-          gnus-thread-hide-subtree t
-          gnus-thread-ignore-subject t
-          gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"  ;; Make Gnus NOT ignore [Gmail] mailboxes
-          gnus-use-correct-string-widths nil)
-    (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
-    (eval-after-load 'gnus-topic
-      '(progn
-         (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
-               gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
-                                   (nnfolder-active-file ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "archive") "active"))
-                                   (nnfolder-get-new-mail nil)
-                                   (nnfolder-inhibit-expiry t)))
-               ;; "Gnus" is the root folder, and there are three mail accounts, "misc", "gmail", "riseup"
-               gnus-topic-topology '(("Gnus" visible)
-                                    (("misc" visible))
-                                    (("gmail" visible nil nil))
-                                    (("riseup" visible nil nil)))
-               ;; each topic corresponds to a public imap folder
-               gnus-topic-alist '(("gmail" ; the key of topic
-                                   "nnimap+gmail:INBOX"
-                                   "nnimap+gmail:[Gmail]/Sent Mail"
-                                   "nnimap+gmail:[Gmail]/Trash"
-                                   "nnimap+gmail:Drafts")
-                                  ("riseup" ; the key of topic
-                                   "nnimap+riseup:INBOX"
-                                   "nnimap+riseup:Sent"
-                                   "nnimap+riseup:Trash"
-                                   "nnimap+riseup:Drafts")
-                                  ("misc" ; the key of topic
-                                   "nnfolder+archive:sent.2022"
-                                   "nnfolder+archive:sent.2023"
-                                   "nndraft:drafts")
-                                  ("Gnus")))
-
+   gnus-select-method '(nnnil "")
+   gnus-secondary-select-methods '((nnimap "riseup"
+                                           (nnimap-address "mail.riseup.net")
+                                           (nnimap-server-port 993)
+                                           (nnimap-stream ssl)
+                                           (nnir-search-engine imap)
+                                           (nnmail-expiry-wait 90))
+                                   (nnimap "gmail"
+                                           (nnimap-address "imap.gmail.com")
+                                           (nnimap-server-port 993)
+                                           (nnimap-stream ssl)
+                                           (nnir-search-engine imap)
+                                           (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") ;; 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations
+                                           (nnmail-expiry-wait immediate)))
+   gnus-use-cache t
+   gnus-asynchronous t
+   gnus-use-header-prefetch t
+   message-send-mail-function 'smtpmail-send-it ;; Send email through SMTP
+   smtpmail-default-smtp-server "smtp.gmail.com";"mail.riseup.net"
+   smtpmail-smtp-service 587
+   smtpmail-local-domain "localhost"
+   gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date (not gnus-thread-sort-by-number))
+   gnus-read-active-file 'some ;; read only some
+   gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject
+   gnus-thread-hide-subtree t
+   gnus-thread-ignore-subject t
+   gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"  ;; Make Gnus NOT ignore [Gmail] mailboxes
+   gnus-use-correct-string-widths nil)
+  (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+  (eval-after-load 'gnus-topic
+    '(progn
+       (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
+             gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
+                                  (nnfolder-active-file ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "archive") "active"))
+                                  (nnfolder-get-new-mail nil)
+                                  (nnfolder-inhibit-expiry t)))
+             ;; "Gnus" is the root folder, and there are three mail accounts, "misc", "gmail", "riseup"
+             gnus-topic-topology '(("Gnus" visible)
+                                   (("misc" visible))
+                                   (("gmail" visible nil nil))
+                                   (("riseup" visible nil nil)))
+             ;; each topic corresponds to a public imap folder
+             gnus-topic-alist '(("gmail" ; the key of topic
+                                 "nnimap+gmail:INBOX"
+                                 "nnimap+gmail:[Gmail]/All Mail"
+                                 "nnimap+gmail:[Gmail]/Sent Mail"
+                                 "nnimap+gmail:[Gmail]/Spam"
+                                 "nnimap+gmail:[Gmail]/Trash"
+                                 "nnimap+gmail:Drafts")
+                                ("riseup" ; the key of topic
+                                 "nnimap+riseup:INBOX"
+                                 "nnimap+riseup:Sent"
+                                 "nnimap+riseup:Trash"
+                                 "nnimap+riseup:Drafts")
+                                ("misc" ; the key of topic
+                                 "nnfolder+archive:sent.2023"
+                                 "nnfolder+archive:sent.2024"
+                                 "nndraft:drafts")
+                                ("Gnus")))
          ;; see latest 200 mails in topic then press Enter on any group
-         (gnus-topic-set-parameters "gmail" '((display . 200)))
-         (gnus-topic-set-parameters "riseup" '((display . 200)))
-         (gnus-subscribe-hierarchically "nnimap+riseup:INBOX")
-         (gnus-subscribe-hierarchically "nnimap+riseup:Sent")
-         (gnus-subscribe-hierarchically "nnimap+riseup:Trash")
-         (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
-         (gnus-subscribe-hierarchically "nnimap+gmail:INBOX")
-         (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail")
-         (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
-         (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
+       (gnus-topic-set-parameters "gmail" '((display . 200)))
+       (gnus-topic-set-parameters "riseup" '((display . 200)))
+       (gnus-subscribe-hierarchically "nnimap+riseup:INBOX")
+       (gnus-subscribe-hierarchically "nnimap+riseup:Sent")
+       (gnus-subscribe-hierarchically "nnimap+riseup:Trash")
+       (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
+       (gnus-subscribe-hierarchically "nnimap+gmail:INBOX")
+       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail")
+       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail")
+       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
+       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam")
+       (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
 
 (use-package which-key
   ;:pin gnu
