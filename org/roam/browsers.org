@@ -135,6 +135,8 @@ self.addEventListener('fetch', function(e) {
 - https://ossinsight.io/#trending-repos
 - https://sourcegraph.com/search
 - https://search.marginalia.nu/
+- https://stract.com/
+- https://mwmbl.org
 - Shodan
 - Zoomeye
 - censys

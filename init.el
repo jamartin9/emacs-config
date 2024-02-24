@@ -55,6 +55,21 @@
            ("K" . save-buffers-kill-emacs))
 (bind-keys :prefix-map jam/notes :prefix "C-c c n")
 
+;;;###autoload
+(defun jam/fido-click (event)
+  "Call the completion candidate at the row location of EVENT in the minibuffer."
+  (interactive "e")
+  (with-selected-window (active-minibuffer-window)
+    (when-let ((object (posn-object (event-end event)))
+               (colrow (posn-col-row (event-end event)))
+               ((and (consp object) (>= (cdr colrow) 1))) ; first string of the canidate row is the command
+               (cand (car (split-string (nth (- (cdr colrow) 1) (split-string (car object) "[\n\r]+" t "[ ]+"))))))
+      ;(message "The canidate is %S" cand) ; TODO exit minibuffer cleanly
+      (call-interactively (intern (format "%s" cand)))
+      ;(call-interactively (icomplete-fido-ret))
+      ;(with-selected-window (active-minibuffer-window) (minibuffer-keyboard-quit))
+    )))
+
 ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
 (use-package emacs ; built-in
   :bind (("<M-up>" . jam/move-line-up)
@@ -74,7 +89,7 @@
            ("f" . select-frame-by-name)
            ("o" . other-frame)
          :map minibuffer-local-completion-map
-           ;("<mouse-1>" . minibuffer-choose-completion)
+           ("<mouse-1>" . jam/fido-click); BUG (choose-completion event)
            ("C-TAB" . icomplete-fido-ret)
            ("C-<tab>" . icomplete-fido-ret)
            ("S-TAB" . icomplete-backward-completions) ; wraparound?
@@ -126,6 +141,7 @@
               completion-styles '(basic initials substring partial-completion)
               completions-detailed t
               ;completion-auto-select 'second-tab
+              ;icomplete-scroll t
               column-number-mode t
               sentence-end-double-space nil
               require-final-newline t
@@ -240,7 +256,7 @@
                                        default-file-name-handler-alist nil)))
   (run-with-idle-timer 15 t (lambda () (garbage-collect))) ; collect gc every 15s while idle
   (blink-cursor-mode -1)
-  (pixel-scroll-precision-mode 1) ; smooth scrolling
+  ;(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
   (electric-pair-mode 1) ; less typing
   (context-menu-mode 1); mouse right click menu
   (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp

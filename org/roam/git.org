@@ -21,3 +21,4 @@
   - mostly unsupported by forges
 - git bundle for offline repo backup
   -  ~git -c 'pack.threads=1' bundle create -q My-BUNDLE --all~ for deterministic bundles
+- https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols#_dumb_http for cloneable static file serving repo
