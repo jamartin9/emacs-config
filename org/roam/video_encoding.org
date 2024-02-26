@@ -497,7 +497,7 @@ Dolby Vision is 12 bit with high dynamic range and metadata
 HDR10+ is 10 bit with high dynamic range
 HDR is 10 bit and static
 
-DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs
+DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs. --colormatrix smpte170m --colorprim smpte170m --transfer smpte170m (for NTSC). --colormatrix bt470bg --colorprim bt470bg --transfer bt470bg (for PAL). _Matrix frame property in vs.
 
 WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter), .ts
 
