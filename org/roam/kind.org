@@ -63,3 +63,4 @@ PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_
 - knative does not support non http (gateway extension?)
 - cilium cluster mesh routes across kubernetes cluster services
   - uses ebpf and envoy
+- ~kind export logs~ after running create with ~--retain~

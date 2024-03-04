@@ -156,3 +156,4 @@ self.addEventListener('fetch', function(e) {
 - https://aniwatch.to
 - https://cs.rin.ru
 - https://cdm-project.com/Download-Tools/StreamFab
+- sanet.st

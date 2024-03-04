@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Jellyfin
 ** notes
+- [[https://emby.media/support/articles/Strm-Files.html][STRM]] files for remote streaming
 - roku client
 - web client
 - create ~.ignore~ file under directory to be ignored (sample directory)

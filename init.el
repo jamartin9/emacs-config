@@ -404,7 +404,7 @@
         newsticker-automatically-mark-visited-items-as-old t
         newsticker-url-list-defaults nil
         newsticker-url-list '(("Guix" "https://guix.gnu.org/feeds/blog.atom") ; supports atom feeds unlike gnus
-                              ("Lwn" "https://lwn.net/headlines/newrss")
+                              ("Lwn" "https://lwn.net/headlines/newrss") ; https://cacm.acm.org/feed/
                               ("Tor" "https://blog.torproject.org/rss.xml")
                               ("emacs-tags" "https://github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
                               ("openwrt-release" "https://github.com/openwrt/openwrt/releases.atom")
