@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org4ab5e8b">
-<div class="navbar-brand" id="org7de00d5">
-<div class="navbar-item" id="org4999569">
+<nav class="navbar is-black" id="org73a5dd7">
+<div class="navbar-brand" id="org1ee8066">
+<div class="navbar-item" id="org1cf5071">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org337d599">
-<div class="navbar-start" id="orgd4b3b52">
-<div class="navbar-item" id="org4725d30">
+<div class="navbar-menu" id="org4a01e25">
+<div class="navbar-start" id="orga784407">
+<div class="navbar-item" id="orgc03917f">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orged825c8">
+<div class="navbar-end" id="orgb67bcd7">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org0c7f5b3" class="outline-2">
-<h2 id="org0c7f5b3">Git</h2>
-<div class="outline-text-2" id="text-org0c7f5b3">
+<div id="outline-container-org6165551" class="outline-2">
+<h2 id="org6165551">Git</h2>
+<div class="outline-text-2" id="text-org6165551">
 </div>
-<div id="outline-container-orgc8f6fc3" class="outline-3">
-<h3 id="orgc8f6fc3">git notes</h3>
-<div class="outline-text-3" id="text-orgc8f6fc3">
+<div id="outline-container-orgf61948f" class="outline-3">
+<h3 id="orgf61948f">git notes</h3>
+<div class="outline-text-3" id="text-orgf61948f">
 <ul class="org-ul">
 <li><code>--depth</code> implies <code>single-branch</code> thus the refspec will be on single branch
 <ul class="org-ul">
@@ -59,7 +59,11 @@
 <ul class="org-ul">
 <li>mostly unsupported by forges</li>
 </ul></li>
-<li>git bundle for offline repo backup</li>
+<li>git bundle for offline repo backup
+<ul class="org-ul">
+<li><code>git -c 'pack.threads=1' bundle create -q My-BUNDLE --all</code> for deterministic bundles</li>
+</ul></li>
+<li><a href="https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols#_dumb_http">https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols#_dumb_http</a> for cloneable static file serving repo</li>
 </ul>
 </div>
 </div>

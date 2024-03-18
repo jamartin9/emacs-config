@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org9d704e6">
-<div class="navbar-brand" id="org885c9df">
-<div class="navbar-item" id="orgf35ffb5">
+<nav class="navbar is-black" id="org3c4113c">
+<div class="navbar-brand" id="org88f7c64">
+<div class="navbar-item" id="org0e1ac03">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org2a135db">
-<div class="navbar-start" id="org3437869">
-<div class="navbar-item" id="org9eb15a6">
+<div class="navbar-menu" id="org05937d5">
+<div class="navbar-start" id="org7a71191">
+<div class="navbar-item" id="org64a80d6">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgc9ec155">
+<div class="navbar-end" id="orgebb6b94">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orga49192a" class="outline-2">
-<h2 id="orga49192a">Firefox</h2>
-<div class="outline-text-2" id="text-orga49192a">
+<div id="outline-container-org410cd7f" class="outline-2">
+<h2 id="org410cd7f">Firefox</h2>
+<div class="outline-text-2" id="text-org410cd7f">
 </div>
-<div id="outline-container-org4ffb1e3" class="outline-3">
-<h3 id="org4ffb1e3">firefox</h3>
-<div class="outline-text-3" id="text-org4ffb1e3">
+<div id="outline-container-org74d3896" class="outline-3">
+<h3 id="org74d3896">firefox</h3>
+<div class="outline-text-3" id="text-org74d3896">
 <ul class="org-ul">
 <li>about:config
 <ul class="org-ul">
@@ -49,7 +49,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgc32ca65">network.dns.echconfig.enabled
+<pre class="src src-conf" id="orgcea9e54">network.dns.echconfig.enabled
 network.dns.use_https_rr_as_altsvc
 </pre>
 </div>
@@ -58,44 +58,30 @@ network.dns.use_https_rr_as_altsvc
 <li>network.trr.mode 2</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org39a712a">https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/ (should be valid cert with alt-svc)
+<pre class="src src-conf" id="org923e040">https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/ (should be valid cert with alt-svc)
 </pre>
 </div>
 <ul class="org-ul">
 <li>network.trr.uri <a href="https://tor.cloudflare-dns.com/dns-query">https://tor.cloudflare-dns.com/dns-query</a></li>
 <li>check: <a href="https://www.cloudflare.com/ssl/encrypted-sni/">https://www.cloudflare.com/ssl/encrypted-sni/</a></li>
 <li><code>dom.security.https_only_mode</code></li>
+<li><code>security.webauth.webauthn_enable_softtoken</code> for webauthn softtokens</li>
+<li>no PWA support on desktop
+<ul class="org-ul">
+<li>removed PWA support for SSB (adding to homescreen)</li>
+</ul></li>
 </ul>
 <ul class="org-ul">
-<li>added loads of tracking/crapware by default; pocket etc
-<ul class="org-ul">
-<li>usage at an all time low especially on mobile (under a percent)</li>
-</ul></li>
-<li>pozzed by mozilla being taken over by SJWs
-<ul class="org-ul">
-<li>laid off 25% of engineering staff while giving the CEO a raise of 80%</li>
-<li><a href="https://www.pcmag.com/news/mozilla-signs-lucrative-3-year-google-search-deal-for-firefox">90%</a> of money came from search engines
-<ul class="org-ul">
-<li>google for default engine bribes ~$400M to avoid antitrust</li>
-</ul></li>
-<li>ceo is a trashcan
-<ul class="org-ul">
-<li>'In 2018 she received a total of $2,458,350 in compensation from Mozilla, which represents a 400% payrise since 2008.On the same period, Firefox marketshare was down 85%. When asked about her salary she stated "I learned that my pay was about an 80% discount to market"'</li>
-</ul></li>
-</ul></li>
-<li>removed PWA support for SSB (adding to homescreen)</li>
 <li>lacks file system api</li>
-<li>SHIELD Studies spyware</li>
 <li>color picker under 'More Tools' -&gt; 'EyeDropper'</li>
 <li>responsive design mode for various device resolutions</li>
 <li>pdf editing tools</li>
-<li>no PWA support on desktop</li>
 <li><code>MOZ_ENABLE_WAYLAND=1 firefox</code> for wayland support</li>
 </ul>
 </div>
-<div id="outline-container-orga7c9410" class="outline-4">
-<h4 id="orga7c9410">addons</h4>
-<div class="outline-text-4" id="text-orga7c9410">
+<div id="outline-container-orge139abc" class="outline-4">
+<h4 id="orge139abc">addons</h4>
+<div class="outline-text-4" id="text-orge139abc">
 <ul class="org-ul">
 <li>ublock origin</li>
 <li>multi account containers</li>
@@ -105,6 +91,7 @@ network.dns.use_https_rr_as_altsvc
 </ul></li>
 <li>read-aloud for pdf/epub reader</li>
 <li><a href="https://profiler.firefox.com/">https://profiler.firefox.com/</a> for power/perf flamegraph viewing</li>
+<li><a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/">pwa support addon</a></li>
 </ul>
 </div>
 </div>

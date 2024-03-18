@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgb3e2dc7">
-<div class="navbar-brand" id="orge8d90b8">
-<div class="navbar-item" id="orgd32c042">
+<nav class="navbar is-black" id="orgfc00a4d">
+<div class="navbar-brand" id="orga0458a5">
+<div class="navbar-item" id="org259df8f">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org70cb47a">
-<div class="navbar-start" id="org9ee0295">
-<div class="navbar-item" id="orgd099538">
+<div class="navbar-menu" id="org68a49df">
+<div class="navbar-start" id="orgfaa224e">
+<div class="navbar-item" id="orgeb3af79">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,21 +29,26 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org47e04d6">
+<div class="navbar-end" id="org0581678">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org5bed97b" class="outline-2">
-<h2 id="org5bed97b">java</h2>
-<div class="outline-text-2" id="text-org5bed97b">
+<div id="outline-container-orgefc103a" class="outline-2">
+<h2 id="orgefc103a">java</h2>
+<div class="outline-text-2" id="text-orgefc103a">
 <ul class="org-ul">
 <li><code>alias javaListProps="java -server -XX:+PrintFlagsFinal -XX:+UnlockDiagnosticVMOptions --version"</code></li>
 <li><code>alias javaToolOptions="export JAVA_TOOL_OPTIONS='-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=heapdump.hprof -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true -Xlog:gc:gc.log:utctime,uptime,tid,level:filecount=10,filesize=128m -XX:NativeMemoryTracking=detail -XX:+PreserveFramePointer'"</code></li>
+<li><code>-XX:+UseTransparentHugePages -XX:+AlwaysPreTouch</code></li>
+<li>ZGC takes ~3% of heap</li>
 <li>6 months release</li>
 <li>3 year lts release</li>
-<li>espresso for java on java (graalvm)</li>
+<li>espresso for java on java (graalvm)
+<ul class="org-ul">
+<li>supports hot reload</li>
+</ul></li>
 <li>microprofile for javaee</li>
 <li>sealed classes</li>
 <li>records</li>
@@ -51,11 +56,11 @@
 <li>AutoCloseable interface for try with resources</li>
 </ul>
 </div>
-<div id="outline-container-orge88efb1" class="outline-3">
-<h3 id="orge88efb1">spark jetty websocket wrapper</h3>
-<div class="outline-text-3" id="text-orge88efb1">
+<div id="outline-container-orgbae2299" class="outline-3">
+<h3 id="orgbae2299">spark jetty websocket wrapper</h3>
+<div class="outline-text-3" id="text-orgbae2299">
 <div class="org-src-container">
-<pre class="src src-java" id="org418c6b6">import io.reactivex.*;
+<pre class="src src-java" id="org2f7199a">import io.reactivex.*;
 import org.eclipse.jetty.websocket.api.Session;
 import wrapper.SocketWrapper;
 import static spark.Spark.*;
@@ -90,7 +95,7 @@ public class Main{
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-java" id="org37e7f2f">package wrapper;
+<pre class="src src-java" id="org5ea1325">package wrapper;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;

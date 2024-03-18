@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgef739bb">
-<div class="navbar-brand" id="org0b313f6">
-<div class="navbar-item" id="orgcc5f9fa">
+<nav class="navbar is-black" id="org53f3035">
+<div class="navbar-brand" id="org538547c">
+<div class="navbar-item" id="orga8c614e">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org4d8d1b2">
-<div class="navbar-start" id="org0222926">
-<div class="navbar-item" id="org17e8f48">
+<div class="navbar-menu" id="orgc39e950">
+<div class="navbar-start" id="org26a01b9">
+<div class="navbar-item" id="orge0f236a">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,28 +29,249 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org0f0dc10">
+<div class="navbar-end" id="orga4fed15">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgfe28a14" class="outline-2">
-<h2 id="orgfe28a14">AACS KEY</h2>
-<div class="outline-text-2" id="text-orgfe28a14">
+<div id="outline-container-orgc0d8557" class="outline-2">
+<h2 id="orgc0d8557">vapoursynth</h2>
+<div class="outline-text-2" id="text-orgc0d8557">
+<ul class="org-ul">
+<li>ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python" id="org044de53">#!/usr/bin/env python3
+#awsmfun dynamic tonemap similar function when using options for dovi (includes chroma)
+import awsmfunc
+#pb_opts = awsmfunc.types.placebo.PlaceboTonemapOpts(dst_max=130, dst_min=0) # 130 nits
+clip = awsmfunc.DynamicTonemap(clip) #, placebo_opts=pb_opts)
+
+# simple tonemap
+import vapoursynth as vs
+from vapoursynth import core
+import vsutil as vsutil
+src = core.ffms2.Source("./source-ng.mkv")
+clip = core.std.Trim(src, first=1000, last=1015) # test frames
+clip = core.resize.Spline36(clip, format=vs.YUV444P16) # 16 bit depth
+#clip = vsutil.depth(clip, 16)
+tonemapped_clip = core.placebo.Tonemap(clip=clip, src_csp=1, dst_csp=0, use_dovi=True) # map dst(bt709)
+tonemapped_clip = core.resize.Spline36(tonemapped_clip,
+                                       format=vs.YUV444P16,
+                                       matrix_s="709",
+                                       width=1280,
+                                       height=720)
+final_clip = vsutil.depth(tonemapped_clip, 8, dither_type="error_diffusion")
+final_clip.set_output()
+
+awsmfunc.banddtct(clip, thr=200) # check for banding scores for live action 150-200, 10-75 for anime
+awsmfunc.cambidtct(clip) # detect banding scores above 5 - 10 are visual
+# remove banding
+planes = 1 | 2 | 4 # remove on all planes
+threshold = 12.0
+radius = 1.0 #16.0
+clip = core.placebo.Deband(clip=clip, planes=planes, threshold=threshold, radius=radius)
+
+awsmfunc.dirtdtct(clip, left=0, right=0, top=0, bottom=0, thr=0.01) # check for dirty lines 0.05(strong) - 0.01(weak) threshhold, tolerance=24
+
+# generate DV/hdr10+ (dovi_tool can DV from hdr10+)
+measurements = []
+clip = awsmfunc.add_hdr_measurement_props(clip, measurements=measurements, compute_hdr10plus=True)
+scene_changes = awsmfunc.run_scenechange_detect(clip)
+dovi_generate_config = awsmfunc.generate_dovi_config(clip, measurements, scene_changes)
+hdr10plus_json = awsmfunc.generate_hdr10plus_json(clip, measurements, scene_changes)
+with open("dovi_generate_config.json", "w") as f:
+    json.dump(dovi_generate_config, f, indent=4)
+with open("hdr10plus_metadata.json", "w") as f:
+    json.dump(hdr10plus_json, f, indent=4)
+
+
+clip = core.std.Splice(clips=[clip1, clip2, clip3, clip4, clip5]) # combine clips
+clip = core.std.Interleave(clips=[clip, clip_og]) # compare clips
+
+clip = awsmfunc.FillBorders(clip, top=1, bottom=1) # fix uneven crop
+clip = awsmfunc.bbmod(clip, top=6, thresh=90, blur=20) # fix dirty lines
+
+clip.set_output() # output to vs-preview-rs
+## Vendored function
+# XXX bright should be a percentage or something
+def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
+    if clip.format is None:
+        raise vs.Error("Tweak: only clips with constant format are accepted.")
+
+    if clip.format.color_family == vs.RGB:
+        raise vs.Error("Tweak: RGB clips are not accepted.")
+
+    c = vs.core
+
+    if (hue is not None or sat is not None) and clip.format.color_family != vs.GRAY:
+        hue = 0.0 if hue is None else hue
+        sat = 1.0 if sat is None else sat
+
+        hue = hue * math.pi / 180.0
+        hue_sin = math.sin(hue)
+        hue_cos = math.cos(hue)
+
+        gray = 128 &lt;&lt; (clip.format.bits_per_sample - 8)
+
+        chroma_min = 0
+        chroma_max = (2 ** clip.format.bits_per_sample) - 1
+        if coring:
+            chroma_min = 16 &lt;&lt; (clip.format.bits_per_sample - 8)
+            chroma_max = 240 &lt;&lt; (clip.format.bits_per_sample - 8)
+
+        expr_u = "x {} - {} * y {} - {} * + {} + {} max {} min".format(gray, hue_cos * sat, gray, hue_sin * sat, gray, chroma_min, chroma_max)
+        expr_v = "y {} - {} * x {} - {} * - {} + {} max {} min".format(gray, hue_cos * sat, gray, hue_sin * sat, gray, chroma_min, chroma_max)
+
+        if clip.format.sample_type == vs.FLOAT:
+            expr_u = "x {} * y {} * + -0.5 max 0.5 min".format(hue_cos * sat, hue_sin * sat)
+            expr_v = "y {} * x {} * - -0.5 max 0.5 min".format(hue_cos * sat, hue_sin * sat)
+
+        src_u = clip.std.ShufflePlanes(planes=1, colorfamily=vs.GRAY)
+        src_v = clip.std.ShufflePlanes(planes=2, colorfamily=vs.GRAY)
+
+        dst_u = c.std.Expr(clips=[src_u, src_v], expr=expr_u)
+        dst_v = c.std.Expr(clips=[src_u, src_v], expr=expr_v)
+
+        clip = c.std.ShufflePlanes(clips=[clip, dst_u, dst_v], planes=[0, 0, 0], colorfamily=clip.format.color_family)
+
+    if bright is not None or cont is not None:
+        bright = 0.0 if bright is None else bright
+        cont = 1.0 if cont is None else cont
+
+        if clip.format.sample_type == vs.INTEGER:
+            luma_lut = []
+
+            luma_min = 0
+            luma_max = (2 ** clip.format.bits_per_sample) - 1
+            if coring:
+                luma_min = 16 &lt;&lt; (clip.format.bits_per_sample - 8)
+                luma_max = 235 &lt;&lt; (clip.format.bits_per_sample - 8)
+
+            for i in range(2 ** clip.format.bits_per_sample):
+                val = int((i - luma_min) * cont + bright + luma_min + 0.5)
+                luma_lut.append(min(max(val, luma_min), luma_max))
+
+            clip = clip.std.Lut(planes=0, lut=luma_lut)
+        else:
+            expression = "x {} * {} + 0.0 max 1.0 min".format(cont, bright)
+
+            clip = clip.std.Expr(expr=[expression, "", ""])
+
+    return clip
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6450398" class="outline-2">
+<h2 id="org6450398">scripts</h2>
+<div class="outline-text-2" id="text-org6450398">
+<div class="org-src-container">
+<pre class="src src-bash" id="org9e69dbc">#!/usr/bin/env bash
+COUNTER=1
+while [  $COUNTER -lt 31 ]; do
+    mkvextract $1 tracks ${COUNTER}:"subtitle${COUNTER}.sup" # extract sup from mkv
+    let COUNTER=COUNTER+1
+done
+
+
+#!/usr/bin/env bash
+dir_input=$@;
+for file in $dir_input/*.mp4; do
+    mkvmerge -o "${file%.*}.mkv" "$file" # remux mp4 into mkv
+    echo "file is $file and made ${file%.*}.mkv"
+done
+
+#!/usr/bin/env bash
+
+# uses info to name files
+#
+# dir name gives:
+# 1. series
+# 2. source
+# 3. season
+#
+# Mediainfo will give
+# 1. video
+# 2. audio
+# 3. resolution
+# 
+# file name gives
+# 1. episode name
+# 2. episode number?
+dir_input=$@;
+dir_name=$(dirname $dir_input/.)
+
+# get captial S and numbers
+season=$(echo $dir_input |grep -Eo "S[0-9][0-9]+")
+# use resolution p for source location
+source=$(echo $dir_input |grep -Po "[0-9]p\..*?\..*?\." | grep -Po "\..*?\..*?\.")
+# get first letter to the start of season number
+series=$(echo $dir_name |grep -Po "^.*?\.S[0-9][0-9]+"|grep -Eio "[a-z].*\." )
+
+echo "Season is $season source is $source series is $series"
+for file in $dir_input/*.mkv; do
+    #echo "thing is $file"
+    epnum=$(basename "$file" | grep -Po "\-.*?\-" | tr -d '-' | tr -d ' '); #="E00"; get episode name from download name?
+    # string before last hypen
+    epname=$(basename "$file" | grep -Eo ".*-" | grep -Eio ".*[a-z]")
+    echo "epname is $epname"
+    # media info parse
+    reso=$(mediainfo "$file" | grep -i "height" |tr -d ' ' | grep -Eo "[0-9]+")
+    echo "res $reso"
+    audio=$(mediainfo "$file" | grep -i "format  "| grep -Evi "avc|matroska|UTF-8"| awk '{print $3}')
+    echo "audio $audio"
+    chans=$(mediainfo "$file" | grep -i  "channels" | grep -Eo "[0-9]") # switch on 6+ for 5.1
+    echo "chan $chans"
+    video=$(mediainfo "$file" | grep -Ei "writing.*x264" | grep -o "x264")
+    echo "vid $video"
+    name="${series}${season}${epnum}.${epname}.${reso}p${source}${audio}${chans}.0.x264-GROUP.mkv"
+    #mv "$file" "$dir_input/$name"
+    echo "file $file name is: $name"
+done
+
+#!/usr/bin/env bash
+# encode 8 bit SDR with x265
+CRF="${1}"
+vspipe -c y4m ./vs/encode.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 8 --output-depth 8 --rd 4 --ref 6 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 16 --qcomp 0.6 --colorprim bt709 --colormatrix bt709 --transfer bt709 --range limited --vbv-bufsize 160000 --vbv-maxrate 160000 --no-hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf $CRF --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 5 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --no-frame-dup --y4m --output Testing.hevc
+mkvmerge -o "${CRF}.mkv" Testing.hevc
+
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2bfc2d6" class="outline-2">
+<h2 id="org2bfc2d6">AACS v2</h2>
+<div class="outline-text-2" id="text-org2bfc2d6">
+<ul class="org-ul">
+<li>intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
+<ul class="org-ul">
+<li><a href="https://media.ccc.de/v/37c3-12296-full_aacsess_exposing_and_exploiting_aacsv2_uhd_drm_for_your_viewing_pleasure">https://media.ccc.de/v/37c3-12296-full_aacsess_exposing_and_exploiting_aacsv2_uhd_drm_for_your_viewing_pleasure</a></li>
+<li>sgx discontinued in 11 gen +</li>
+<li>sgx.fail site has examples</li>
+</ul></li>
+<li>UHD discs</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd48f609" class="outline-2">
+<h2 id="orgd48f609">AACS v1 KEY</h2>
+<div class="outline-text-2" id="text-orgd48f609">
 <p>
 <code>09 F9 11 02 9D 74 E3 5B D8 41 56 C5 63 56 88 C0</code>
 </p>
 </div>
 </div>
-<div id="outline-container-org80aeec8" class="outline-2">
-<h2 id="org80aeec8"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h2>
+<div id="outline-container-orgc6616d2" class="outline-2">
+<h2 id="orgc6616d2"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h2>
 </div>
-<div id="outline-container-org7e77fb4" class="outline-2">
-<h2 id="org7e77fb4">HDCP key</h2>
-<div class="outline-text-2" id="text-org7e77fb4">
+<div id="outline-container-orgdfa40de" class="outline-2">
+<h2 id="orgdfa40de">HDCP key</h2>
+<div class="outline-text-2" id="text-orgdfa40de">
 <div class="org-src-container">
-<pre class="src src-sh" id="orga391f6c">HDCP MASTER KEY (MIRROR THIS TEXT!)
+<pre class="src src-sh" id="orgf055947">HDCP MASTER KEY (MIRROR THIS TEXT!)
 
 This is a forty times forty element matrix of fifty-six bit
 hexadecimal numbers.
@@ -430,37 +651,54 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 </div>
 </div>
 </div>
-<div id="outline-container-org771017d" class="outline-2">
-<h2 id="org771017d">notes</h2>
-<div class="outline-text-2" id="text-org771017d">
+<div id="outline-container-orgb8c3a97" class="outline-2">
+<h2 id="orgb8c3a97">notes</h2>
+<div class="outline-text-2" id="text-orgb8c3a97">
+<ul class="org-ul">
+<li>Handbrake can tonemap HDR to SDR when the color filter is set to BT709
+<ul class="org-ul">
+<li>mobile compat: use mp4, profile high 3.1, 720p, AAC 2.0 stereo, under 4GB for FAT32 (~3Kbps - 6Kbps)</li>
+</ul></li>
+<li>score with VMAF, CAMBI(banding), SSIM, PSNR
+<ul class="org-ul">
+<li>VMAF&gt;SSIM&gt;PSNR</li>
+<li><a href="https://github.com/cloudinary/ssimulacra">DSSIM</a>
+<ul class="org-ul">
+<li>patch makefile pkg-config with opencv4</li>
+</ul></li>
+</ul></li>
+</ul>
 </div>
-<div id="outline-container-orgc3abdfb" class="outline-3">
-<h3 id="orgc3abdfb">ffmpeg</h3>
-<div class="outline-text-3" id="text-orgc3abdfb">
+<div id="outline-container-org626b217" class="outline-3">
+<h3 id="org626b217">ffmpeg</h3>
+<div class="outline-text-3" id="text-org626b217">
 <ul class="org-ul">
 <li>vmaf score for comparing video streams</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org544d29f" class="outline-3">
-<h3 id="org544d29f">HEVC</h3>
-<div class="outline-text-3" id="text-org544d29f">
+<div id="outline-container-org8883ee2" class="outline-3">
+<h3 id="org8883ee2">HEVC</h3>
+<div class="outline-text-3" id="text-org8883ee2">
 <p>
 Sources:
 </p>
 
 <p>
-Bluray - Chapter names (get from dvd), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
+Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infotool to change keyframe timings), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
 </p>
 
 <p>
 UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
 Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
 For HDR to SDR tonemap screens for colors, gamut compression BT.2407, bit depth reduction to 8bits, change container from H.265 to H.264
+Dolby Vision is 12 bit with high dynamic range and metadata
+HDR10+ is 10 bit with high dynamic range
+HDR is 10 bit and static
 </p>
 
 <p>
-DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs
+DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs. &#x2013;colormatrix smpte170m &#x2013;colorprim smpte170m &#x2013;transfer smpte170m (for NTSC). &#x2013;colormatrix bt470bg &#x2013;colorprim bt470bg &#x2013;transfer bt470bg (for PAL). _Matrix frame property in vs.
 </p>
 
 <p>
@@ -470,10 +708,11 @@ WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter)
 <p>
 Audio options:
 AAC for directors (usually 2.0 channel)
-Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for &lt;= 720p
+Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for &lt;= 720p, uses dialnorm tho that lowers db range compared to DTS
 Lossless DTS for 1080p (DTS passthrough)
-TrueHD - can convert to flac for compat
-DTS-HD.MA transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
+TrueHD - can convert to flac for compat (AC3 stream inside for compat), encode with 'Dolby Encoding Engine'
+DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
+extract core with eac3to or <code>ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts</code>
 PCM - Bluray
 </p>
 
@@ -488,11 +727,44 @@ ffmpeg -i input.mkv -codec copy -bsf:v "filter<sub>units</sub>=remove<sub>types<
 
 <p>
 x265
-&#x2013;colorprim 9 &#x2013;colormatrix 9 &#x2013;transfer 16 &#x2013;max-cll
+x265 &#x2013;crf 18 &#x2013;preset slower &#x2013;profile main10 &#x2013;output-depth 10 &#x2013;rc-lookahead 60 &#x2013;ctu 32 &#x2013;frame-threads 1 &#x2013;no-sao &#x2013;deblock -2:-2 &#x2013;qcomp 0.65 &#x2013;aq-mode 3 &#x2013;ref 6 &#x2013;bframes 8
+x265 &#x2013;y4m - &#x2013;preset slow &#x2013;level-idc 5.1 &#x2013;high-tier &#x2013;input-depth 10 &#x2013;output-depth 10 &#x2013;rd 4 &#x2013;ref 5 &#x2013;psy-rd 2 &#x2013;psy-rdoq 1 &#x2013;no-rect &#x2013;no-amp &#x2013;aq-mode 4 &#x2013;no-hevc-aq &#x2013;aq-strength 0.9 &#x2013;ctu 64 &#x2013;ipratio 1.3 &#x2013;pbratio 1.2 &#x2013;no-cutree &#x2013;rc-lookahead 40 &#x2013;subme 5 &#x2013;me 3 &#x2013;merange 57 &#x2013;bframes 12 &#x2013;qcomp 0.6 &#x2013;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" &#x2013;colorprim bt2020 &#x2013;colormatrix bt2020nc &#x2013;transfer smpte2084 &#x2013;range limited &#x2013;max-cll "729,159" &#x2013;vbv-bufsize 160000 &#x2013;vbv-maxrate 160000 &#x2013;hdr10 &#x2013;hdr10-opt &#x2013;repeat-headers &#x2013;hrd &#x2013;aud &#x2013;deblock -3:-3 &#x2013;no-sao &#x2013;selective-sao 0 &#x2013;strong-intra-smoothing &#x2013;rskip 0 &#x2013;crf 15 &#x2013;limit-modes &#x2013;limit-refs 1 &#x2013;limit-tu 4 &#x2013;max-merge 4 &#x2013;tu-intra-depth 4 &#x2013;tu-inter-depth 4 &#x2013;b-intra &#x2013;weightb &#x2013;no-pmode &#x2013;chromaloc 2 &#x2013;no-frame-dup &#x2013;dolby-vision-profile 8.1 &#x2013;dolby-vision-rpu "RPU<sub>modified.bin</sub>" &#x2013;y4m &#x2013;output Testing.hevc &#x2013; 2&gt; Testing.log
+changes to above args: &#x2013;ref 6 &#x2013;max-merge 5 &#x2013;psy-rdoq 2 &#x2013;ipratio 1.4 &#x2013;pbratio 1.3 &#x2013;aq-mode 3 &#x2013;aq-strength 0.85 &#x2013;qcomp 0.65
+aq-mode 2 aq-strength 1
+crf 16 - 18 for quality, crf 20-22 for speed
 </p>
 
+<p>
+mapping with
+&#x2013;colorprim bt2020 &#x2013;colormatrix bt2020nc &#x2013;transfer smpte-st-2084 &#x2013;max-cll
+</p>
 
 <p>
+HDR10+ metadata can be added as json argument &#x2013;dhdr10-info "metadata.json"
+Dolby Vision profile 8.1 should be as it has hdr fallback
+encode hdr10+ then mux in DV (as it should have frame offset information?)
+</p>
+
+<p>
+main10 for nvidia gpu decoding
+</p>
+
+<p>
+Chroma subsampling:
+&#x2013;hdr10-opt is for 4:2:0 HDR
+&#x2013;no-hdr10-opt are for 4:4:4 HDR and SDR
+</p>
+
+<p>
+&#x2013;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" is for BT.2020
+&#x2013;master-display "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(10000000,1)" is for Display P3
+The L values above use Mastering display luminance ex:
+min: 0.0001 cd/m2, max: 1000 cd/m2 =&gt; L(10000000,1)
+min:0.0050 cd/m2, max: 4000 cd/m2 =&gt; L(40000000,50)
+</p>
+
+<p>
+&#x2013;max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level
 x264
 </p>
 
@@ -562,7 +834,7 @@ QComp
 </p>
 
 <p>
-While crf and 2-pass affect the overall quality of the encode, qcomp affects how crf and 2-pass are applied. Next to crf/2-pass it is the most important x264 parameter for afecting the quality of your final encode. qcomp will always be a number between 0.0 and 1.0. At 0.0, your crf number or 2-pass bitrate will yield a constant bitrate throughout the entire encode. At 1.0, the encode's bitrate variance is completely uncapped and so will flail around like a crack-addicted preschooler.
+While crf and 2-pass affect the overall quality of the encode, qcomp affects how crf and 2-pass are applied. Next to crf/2-pass it is the most important x264 parameter for affecting the quality of your final encode. qcomp will always be a number between 0.0 and 1.0. At 0.0, your crf number or 2-pass bitrate will yield a constant bitrate throughout the entire encode. At 1.0, the encode's bitrate variance is completely uncapped and so will flail around like a crack-addicted preschooler.
 </p>
 
 <p>
@@ -750,13 +1022,13 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-orgba677f4" class="outline-2">
-<h2 id="orgba677f4">ripping</h2>
-<div class="outline-text-2" id="text-orgba677f4">
+<div id="outline-container-orgf617835" class="outline-2">
+<h2 id="orgf617835">ripping</h2>
+<div class="outline-text-2" id="text-orgf617835">
 </div>
-<div id="outline-container-org04f0f89" class="outline-3">
-<h3 id="org04f0f89">tools</h3>
-<div class="outline-text-3" id="text-org04f0f89">
+<div id="outline-container-org1c19847" class="outline-3">
+<h3 id="org1c19847">tools</h3>
+<div class="outline-text-3" id="text-org1c19847">
 <ul class="org-ul">
 <li>AnyDVDHD (redfox) free trail
 <ul class="org-ul">
@@ -766,35 +1038,38 @@ The following settings, for now, probably don't merit an in-depth explanation as
 <ul class="org-ul">
 <li>streamfab</li>
 </ul></li>
+<li>handbrake
+<code>bframes=16:aq-mode=3:aq-strength=0.65:me=tesa:merange=16:no-mbtree=1:subme=11:qcomp=0.6:psy-rd=1.05:deblock=-3:-3</code></li>
+<li>brasero(w/libcss) iso copy</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orga5bc437">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
+<pre class="src src-sh" id="org9a99f62">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org8366df2" class="outline-2">
-<h2 id="org8366df2">remux</h2>
-<div class="outline-text-2" id="text-org8366df2">
+<div id="outline-container-orgb75eb7a" class="outline-2">
+<h2 id="orgb75eb7a">remux</h2>
+<div class="outline-text-2" id="text-orgb75eb7a">
 <ul class="org-ul">
 <li>mkvmerge -o "${file%.*}.mkv" "$file"</li>
 <li>Some bluray players limit the number of subs to 64</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org20483da" class="outline-2">
-<h2 id="org20483da">rescene</h2>
-<div class="outline-text-2" id="text-org20483da">
+<div id="outline-container-org7e4f8cb" class="outline-2">
+<h2 id="org7e4f8cb">rescene</h2>
+<div class="outline-text-2" id="text-org7e4f8cb">
 <ul class="org-ul">
 <li>use srrdb for reference files</li>
 <li><code>srr.py FILE.srr</code></li>
 <li><code>srs.py FILE.srs FILE.mkv</code></li>
 </ul>
 </div>
-<div id="outline-container-orgf0ead66" class="outline-3">
-<h3 id="orgf0ead66">m2ts samples</h3>
-<div class="outline-text-3" id="text-orgf0ead66">
+<div id="outline-container-org5cd1af0" class="outline-3">
+<h3 id="org5cd1af0">m2ts samples</h3>
+<div class="outline-text-3" id="text-org5cd1af0">
 <ul class="org-ul">
 <li>tsmuxer ~2.6.12 <a href="https://www.videohelp.com/software/tsMuxeR/old-versions">https://www.videohelp.com/software/tsMuxeR/old-versions</a></li>
 <li>First start by looking for the date this movie was released by the scene, don’t use any tsmuxer version newer than this date.</li>

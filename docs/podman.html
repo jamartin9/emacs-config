@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org5bba61b">
-<div class="navbar-brand" id="org1da9b83">
-<div class="navbar-item" id="org5bb2d20">
+<nav class="navbar is-black" id="orgcbb4cbd">
+<div class="navbar-brand" id="org1f87a02">
+<div class="navbar-item" id="org103795b">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgf9851d7">
-<div class="navbar-start" id="org831a09a">
-<div class="navbar-item" id="org5f701be">
+<div class="navbar-menu" id="org786126a">
+<div class="navbar-start" id="org2544e27">
+<div class="navbar-item" id="org5065c69">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org10446d2">
+<div class="navbar-end" id="orgc811964">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgdc4867e" class="outline-2">
-<h2 id="orgdc4867e">podman</h2>
-<div class="outline-text-2" id="text-orgdc4867e">
+<div id="outline-container-org3556849" class="outline-2">
+<h2 id="org3556849">podman</h2>
+<div class="outline-text-2" id="text-org3556849">
 </div>
-<div id="outline-container-orgb7878aa" class="outline-3">
-<h3 id="orgb7878aa">podman notes</h3>
-<div class="outline-text-3" id="text-orgb7878aa">
+<div id="outline-container-orgcdf68f0" class="outline-3">
+<h3 id="orgcdf68f0">podman notes</h3>
+<div class="outline-text-3" id="text-orgcdf68f0">
 <ul class="org-ul">
 <li>rootless containers with kernel &gt;= 5.11 overlayfs
 <ul class="org-ul">
@@ -59,7 +59,13 @@
 <li>nvidia support with <a href="https://github.com/NVIDIA/nvidia-container-toolkit">https://github.com/NVIDIA/nvidia-container-toolkit</a>
 <ul class="org-ul">
 <li>edit <code>/etc/nvidia-container-runtime/config.toml</code> with <code>no-cgroups = true</code> and <code>ldconfig = "/sbin/ldconfig"</code> (when using &#x2013;userns keep-id) for rootless</li>
-<li>add <code>--hooks-dir=/usr/share/containers/oci/hooks.d/ --security-opt=label=disable --security-opt=label=type:nvidia_container_t -e NVIDIA_VISIBLE_DEVICES=all  -e NVIDIA_DRIVER_CAPABILITIES=all</code> to podman run</li>
+<li>add <code>--hooks-dir=/usr/share/containers/oci/hooks.d/ --security-opt=label=disable --security-opt=label=type:nvidia_container_t -e NVIDIA_VISIBLE_DEVICES=all  -e NVIDIA_DRIVER_CAPABILITIES=all</code> to podman run
+<ul class="org-ul">
+<li>podman play kube <a href="https://github.com/containers/podman/issues/17833">BUG</a> that does not map device IDs for nvidia gpus. use cli <code>--device nvidia.com/gpu=all</code>
+<ul class="org-ul">
+<li>may need <code>sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml</code></li>
+</ul></li>
+</ul></li>
 </ul></li>
 <li>podman-compose does not cleanup networks (docker<sub>default</sub>) which uses dnsmasq with the old configuration; run podman network rm on subsequent runs</li>
 <li>podman container runtime config for crun can be built with wasm-edge runtime support and used via <code>module.wasm.image/variant=compat-smart</code> annotation</li>
@@ -67,18 +73,19 @@
 <ul class="org-ul">
 <li>podman load can fail with a gzip'd exported docker image&#x2026; so <code>gzip -d</code> first</li>
 </ul></li>
+<li><a href="https://github.com/wagoodman/dive">dive</a> to examine layers with <code>dive --source podman docker.io/image</code></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org8a80130" class="outline-3">
-<h3 id="org8a80130">p2pool and monerod kube configs</h3>
-<div class="outline-text-3" id="text-org8a80130">
+<div id="outline-container-org944ad8d" class="outline-3">
+<h3 id="org944ad8d">p2pool and monerod kube configs</h3>
+<div class="outline-text-3" id="text-org944ad8d">
 <p>
 podman play kube p2pool.yaml
 podman play kube xmrig.yaml &#x2013;down
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml" id="org9c93cea">apiVersion: apps/v1
+<pre class="src src-yaml" id="org839d4a8">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xmr-deployment
@@ -138,11 +145,11 @@ spec:
 </div>
 </div>
 </div>
-<div id="outline-container-orgd6c9bc6" class="outline-3">
-<h3 id="orgd6c9bc6">xmrig</h3>
-<div class="outline-text-3" id="text-orgd6c9bc6">
+<div id="outline-container-org2ef1b75" class="outline-3">
+<h3 id="org2ef1b75">xmrig</h3>
+<div class="outline-text-3" id="text-org2ef1b75">
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgcfad09f">apiVersion: apps/v1
+<pre class="src src-yaml" id="org0bd483f">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xmrig-deployment

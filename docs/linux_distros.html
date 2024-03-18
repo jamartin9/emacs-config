@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orge735bf0">
-<div class="navbar-brand" id="orgbef3f84">
-<div class="navbar-item" id="orgb0da0ac">
+<nav class="navbar is-black" id="org4af25fe">
+<div class="navbar-brand" id="org6a9880d">
+<div class="navbar-item" id="org8cf9656">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orge40544c">
-<div class="navbar-start" id="org25784fd">
-<div class="navbar-item" id="orge4c9f14">
+<div class="navbar-menu" id="org512a35b">
+<div class="navbar-start" id="org8af84a5">
+<div class="navbar-item" id="orgfe0ed47">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,25 +29,25 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org626cdef">
+<div class="navbar-end" id="org30be106">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org4c3bc51" class="outline-2">
-<h2 id="org4c3bc51">Linux distributions</h2>
-<div class="outline-text-2" id="text-org4c3bc51">
+<div id="outline-container-orgcd84c7f" class="outline-2">
+<h2 id="orgcd84c7f">Linux distributions</h2>
+<div class="outline-text-2" id="text-orgcd84c7f">
 <p>
 Having many flavors makes some lovely hot garbage&#x2026;
 </p>
 </div>
-<div id="outline-container-orgf2fde5b" class="outline-4">
-<h4 id="orgf2fde5b"><a href="android.html#ID-8005808d-1b21-48df-9706-6b999ee9aff6">android</a></h4>
+<div id="outline-container-org23ca47f" class="outline-4">
+<h4 id="org23ca47f"><a href="android.html#ID-8005808d-1b21-48df-9706-6b999ee9aff6">android</a></h4>
 </div>
-<div id="outline-container-orgfd298f8" class="outline-4">
-<h4 id="orgfd298f8">ubuntu</h4>
-<div class="outline-text-4" id="text-orgfd298f8">
+<div id="outline-container-org8384bfe" class="outline-4">
+<h4 id="org8384bfe">ubuntu</h4>
+<div class="outline-text-4" id="text-org8384bfe">
 <ul class="org-ul">
 <li>debian based</li>
 <li>snaps and apt for packages</li>
@@ -71,20 +71,24 @@ Having many flavors makes some lovely hot garbage&#x2026;
 </ul>
 </div>
 </div>
-<div id="outline-container-org0351fce" class="outline-4">
-<h4 id="org0351fce">arch/manjaro</h4>
-<div class="outline-text-4" id="text-org0351fce">
+<div id="outline-container-org7f835b5" class="outline-4">
+<h4 id="org7f835b5">arch/manjaro</h4>
+<div class="outline-text-4" id="text-org7f835b5">
 <ul class="org-ul">
 <li>arch based</li>
 <li>pamac and pacman for packages</li>
-<li>mkinitcpio for initraramfs</li>
+<li>mkinitcpio for initramfs
+<ul class="org-ul">
+<li><code>MODULES="nvidia nvidia_modeset nvidia_uvm nvidia_drm"</code></li>
+<li>add zfs to hooks</li>
+</ul></li>
 <li><code>blacklist nouveau</code> and <code>options nvidia_drm modeset=1</code> in <code>/etc/modprobe.d/mwhd-gpu.conf</code> for nvidia gpu direct render management</li>
 <li><code>pacman -U *.zst</code> to install local</li>
 <li><code>makepkg</code> to build</li>
 <li><code>pacman -Syu</code> to update</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgd3be33c">pkgname=cross-mingw-w64-gdb
+<pre class="src src-sh" id="orgda80659">pkgname=cross-mingw-w64-gdb
 pkgver=13.1
 pkgrel=1
 pkgdesc="The GNU Debugger (compiled to debug target mingw-w64)"
@@ -128,12 +132,12 @@ package() {
 </div>
 </div>
 
-<div id="outline-container-org5e9cd1f" class="outline-4">
-<h4 id="org5e9cd1f"><a href="openwrt.html#ID-18ebc285-c771-4420-a040-011fd3b96b51">openwrt</a></h4>
+<div id="outline-container-orgfeeeccf" class="outline-4">
+<h4 id="orgfeeeccf"><a href="openwrt.html#ID-18ebc285-c771-4420-a040-011fd3b96b51">openwrt</a></h4>
 </div>
-<div id="outline-container-org2a9bb0c" class="outline-4">
-<h4 id="org2a9bb0c">RHEL</h4>
-<div class="outline-text-4" id="text-org2a9bb0c">
+<div id="outline-container-org4335667" class="outline-4">
+<h4 id="org4335667">RHEL</h4>
+<div class="outline-text-4" id="text-org4335667">
 <ul class="org-ul">
 <li>dracut for initraramfs</li>
 <li>yum/dnf for package managers</li>
@@ -145,9 +149,9 @@ package() {
 </ul>
 </div>
 </div>
-<div id="outline-container-org15014d0" class="outline-4">
-<h4 id="org15014d0">gentoo</h4>
-<div class="outline-text-4" id="text-org15014d0">
+<div id="outline-container-orge95b895" class="outline-4">
+<h4 id="orge95b895">gentoo</h4>
+<div class="outline-text-4" id="text-orge95b895">
 <ul class="org-ul">
 <li>portage for packages
 <ul class="org-ul">
