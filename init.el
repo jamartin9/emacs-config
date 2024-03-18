@@ -412,6 +412,7 @@
                               ("monero-release" "https://github.com/monero-project/monero/releases.atom")
                               ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
                               ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
+                              ("DailyBlob" "https://yewtu.be/feed/channel/UCJRhK2b92UpOr4LBCWVaFDw")
                               ;("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
                               ("Reddit-news" "https://www.reddit.com/r/news/.rss")
                               ("Lobste" "https://lobste.rs/rss")
@@ -445,14 +446,6 @@
   :init
   (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
   (setq forge-add-default-bindings t))
-
-(use-package code-review ; git
-  :after magit
-  :init
-  (setq code-review-db-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review") "code-review-db-file.sqlite")
-        code-review-log-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review") "code-review-error.log")
-        code-review-download-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "code-review"))
-        code-review-auth-login-marker 'forge))
 
 (use-package transmission ; C-u universal arg for directory prompt ; transmission
   :commands (transmission transmission-add))
@@ -610,7 +603,7 @@
   :ensure nil ; built-in
   :commands (tramp)
   :config (add-to-list 'tramp-remote-path 'tramp-own-remote-path); use login shell for tramp
-  (setq tramp-auto-save-directory (getenv "TMPDIR")
+  (setq tramp-auto-save-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp-autosave")
         tramp-persistency-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp")))
 
 (use-package company

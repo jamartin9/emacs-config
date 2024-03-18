@@ -29,3 +29,4 @@
       - banned kiwifarms (banned by ddos guard the next day)
     - namecheap ceo challenges 'security researchers' to hack their *customers* accounts on twitter for 'clout'
       - less than a day after their support portal leaks [[https://nitter.net/ReneReh1/status/1564349884106477573#m][db info]]
+- Certificate Transparency logs https://www.gstatic.com/ct/log_list/v3/all_logs_list.json with schema https://www.gstatic.com/ct/log_list/v3/log_list_schema.json.

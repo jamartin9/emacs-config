@@ -17,3 +17,4 @@
 - functools provides decorator annotations for things like ~@cache~
 - decorators in stdlib such as ~@staticmethod~
 - ~@dataclass(frozen=True)~ for immutable objects
+- graalpy supports C extensions through llvm with pip venv building

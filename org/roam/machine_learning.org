@@ -43,6 +43,7 @@
   - [[https://github.com/salesforce/xGen][xGen 8k context]]
   - [[https://huggingface.co/lmsys/longchat-13b-16k][longchat 16k context]]
   - [[https://huggingface.co/syzymon/long_llama_3b][long llama 256k]]
+    - [[https://huggingface.co/01-ai/Yi-34B-200K][yi-34B-200k]] Needle-in-a-Haystack score is 99.8%
 - https://github.com/EleutherAI/lm-evaluation-harness
 - [[https://www.evanmiller.org/attention-is-off-by-one.html][adding one to softmax denominator inside the attention head may memory by smoothing distribution for quantized punctuation?]]
   - [[https://github.com/google/flaxformer/blob/ee62754ebe5a5eeb111493622de5537133822e3e/flaxformer/components/attention/dense_attention.py#L50][already used by other models in the past]]
@@ -104,11 +105,14 @@
   - [[https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1][Mixtral]] uses mixture of experts for better 7B results
     - mixture of experts can potentially quantize and sparsify better than dense LLMs
     - freeze gate weights when fine tuning(or use method to balance)
+  - grok is 8x86B moe with 2 experts 8 bit quant
 *** Codegen
   - CodeLlama
     - fine tunes such as 'nous hermes 2', dolphin and WizardCoder for coding instructions
     - 70B updated with infilling
   - [[https://github.com/bigcode-project/starcoder][StarCoder]]
+    - starcoder2
+  - deepseek coder
   - [[https://github.com/salesforce/CodeT5][CodeT5+]]
   - [[https://github.com/moyix/fauxpilot][Fauxpilot]]
     - uses salesforce/Codegen which supports natural language input and generation of C, C++, Go, Java, JavaScript, Python (BIG QUERY).
@@ -270,6 +274,55 @@ model_config = GPTBigCodeConfig()
 with init_empty_weights(): # get device_map without loading model weights
     model = GPTBigCodeForCausalLM(model_config)
     device_map = infer_auto_device_map(model, max_memory={0: "0GiB", "cpu": "24GiB"})
+## starcoder 2
+
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import Starcoder2Config, Starcoder2ForCausalLM # 8/4bit lacks cpu inference w/o intel-extension-for-transformers
+from accelerate import infer_auto_device_map
+from accelerate import init_empty_weights
+from accelerate import load_checkpoint_and_dispatch
+from accelerate.utils import BnbQuantizationConfig
+from accelerate.utils import load_and_quantize_model
+from accelerate import Accelerator
+import os
+
+os.environ['HF_HUB_CACHE'] = '/gnu/xdg/.cache/huggingface/hub' # set cache
+
+checkpoint = "bigcode/starcoder2-15b"
+new_weights_location = "/gnu/git/llms/hf-agent/starcoder2-8bit-weights"
+accelerate = Accelerator()
+bnb_quantization_config = BnbQuantizationConfig(load_in_8bit=True, llm_int8_threshold = 6) # 4bit lacks serialization w/o intel stuff
+device_map = {}
+model_config = Starcoder2Config(name_or_path=checkpoint, load_in_8bit=True, offload_state_dict=True, hidden_size=6144, intermediate_size=24576, num_hidden_layers=40, num_attention_heads=48, num_key_value_heads=4, max_position_embeddings=16384, initializer_range=0.01275, rope_theta=100000, sliding_window=4096 ) # set params for larger model
+
+with init_empty_weights(): # get device_map without loading model weights
+    model = Starcoder2ForCausalLM(model_config)
+
+model.tie_weights() # idk
+device_map = infer_auto_device_map(model, max_memory={0: "1GiB", "cpu": "24GiB"})
+
+checkpoint = "/gnu/xdg/.cache/huggingface/hub/models--bigcode--starcoder2-15b/snapshots/995200dd02e1e5080004d1967664933b28d5e577/"
+offload_folder = "/gnu/git/llms/hf-agent/starcoder2-offload"
+#model = load_checkpoint_and_dispatch(model, checkpoint=checkpoint, device_map=device_map, offload_folder=offload_folder)
+model = load_and_quantize_model(model, weights_location=checkpoint, bnb_quantization_config=bnb_quantization_config, device_map=device_map, offload_folder=offload_folder)
+accelerate.save_model(model, new_weights_location) # save model then change weights_location=new_weights_location after save
+
+# not instruction tuned so use github issue template
+#<issue_start>username_0: instruction\n\n‘‘‘buggy function‘‘‘\nUpvotes: 100<issue_comment>
+#username_1: Sure, here is the fixed code.\n\n‘‘‘function start
+tokenizer = AutoTokenizer.from_pretrained(checkpoint) # get tokenizer
+inputs = tokenizer.encode("def print_hello_world():", return_tensors="pt").to("cpu")
+outputs = model.generate(inputs)
+print(tokenizer.decode(outputs[0]))
+
+#tokenizer = AutoTokenizer.from_pretrained(checkpoint) # get tokenizer
+## not instruction tuned so use github issue template
+##<issue_start>username_0: instruction\n\n‘‘‘buggy function‘‘‘\nUpvotes: 100<issue_comment>
+##username_1: Sure, here is the fixed code.\n\n‘‘‘function start
+#inputs = tokenizer.encode("def print_hello_world():", return_tensors="pt").to("cpu")
+#outputs = model.generate(inputs)
+#print(tokenizer.decode(outputs[0]))
+
 
 # Tools for load_tool:
 #"document-question-answering"

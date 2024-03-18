@@ -34,7 +34,101 @@ tonemapped_clip = core.resize.Spline36(tonemapped_clip,
 final_clip = vsutil.depth(tonemapped_clip, 8, dither_type="error_diffusion")
 final_clip.set_output()
 
+awsmfunc.banddtct(clip, thr=200) # check for banding scores for live action 150-200, 10-75 for anime
+awsmfunc.cambidtct(clip) # detect banding scores above 5 - 10 are visual
+# remove banding
+planes = 1 | 2 | 4 # remove on all planes
+threshold = 12.0
+radius = 1.0 #16.0
+clip = core.placebo.Deband(clip=clip, planes=planes, threshold=threshold, radius=radius)
 
+awsmfunc.dirtdtct(clip, left=0, right=0, top=0, bottom=0, thr=0.01) # check for dirty lines 0.05(strong) - 0.01(weak) threshhold, tolerance=24
+
+# generate DV/hdr10+ (dovi_tool can DV from hdr10+)
+measurements = []
+clip = awsmfunc.add_hdr_measurement_props(clip, measurements=measurements, compute_hdr10plus=True)
+scene_changes = awsmfunc.run_scenechange_detect(clip)
+dovi_generate_config = awsmfunc.generate_dovi_config(clip, measurements, scene_changes)
+hdr10plus_json = awsmfunc.generate_hdr10plus_json(clip, measurements, scene_changes)
+with open("dovi_generate_config.json", "w") as f:
+    json.dump(dovi_generate_config, f, indent=4)
+with open("hdr10plus_metadata.json", "w") as f:
+    json.dump(hdr10plus_json, f, indent=4)
+
+
+clip = core.std.Splice(clips=[clip1, clip2, clip3, clip4, clip5]) # combine clips
+clip = core.std.Interleave(clips=[clip, clip_og]) # compare clips
+
+clip = awsmfunc.FillBorders(clip, top=1, bottom=1) # fix uneven crop
+clip = awsmfunc.bbmod(clip, top=6, thresh=90, blur=20) # fix dirty lines
+
+clip.set_output() # output to vs-preview-rs
+## Vendored function
+# XXX bright should be a percentage or something
+def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
+    if clip.format is None:
+        raise vs.Error("Tweak: only clips with constant format are accepted.")
+
+    if clip.format.color_family == vs.RGB:
+        raise vs.Error("Tweak: RGB clips are not accepted.")
+
+    c = vs.core
+
+    if (hue is not None or sat is not None) and clip.format.color_family != vs.GRAY:
+        hue = 0.0 if hue is None else hue
+        sat = 1.0 if sat is None else sat
+
+        hue = hue * math.pi / 180.0
+        hue_sin = math.sin(hue)
+        hue_cos = math.cos(hue)
+
+        gray = 128 << (clip.format.bits_per_sample - 8)
+
+        chroma_min = 0
+        chroma_max = (2 ** clip.format.bits_per_sample) - 1
+        if coring:
+            chroma_min = 16 << (clip.format.bits_per_sample - 8)
+            chroma_max = 240 << (clip.format.bits_per_sample - 8)
+
+        expr_u = "x {} - {} * y {} - {} * + {} + {} max {} min".format(gray, hue_cos * sat, gray, hue_sin * sat, gray, chroma_min, chroma_max)
+        expr_v = "y {} - {} * x {} - {} * - {} + {} max {} min".format(gray, hue_cos * sat, gray, hue_sin * sat, gray, chroma_min, chroma_max)
+
+        if clip.format.sample_type == vs.FLOAT:
+            expr_u = "x {} * y {} * + -0.5 max 0.5 min".format(hue_cos * sat, hue_sin * sat)
+            expr_v = "y {} * x {} * - -0.5 max 0.5 min".format(hue_cos * sat, hue_sin * sat)
+
+        src_u = clip.std.ShufflePlanes(planes=1, colorfamily=vs.GRAY)
+        src_v = clip.std.ShufflePlanes(planes=2, colorfamily=vs.GRAY)
+
+        dst_u = c.std.Expr(clips=[src_u, src_v], expr=expr_u)
+        dst_v = c.std.Expr(clips=[src_u, src_v], expr=expr_v)
+
+        clip = c.std.ShufflePlanes(clips=[clip, dst_u, dst_v], planes=[0, 0, 0], colorfamily=clip.format.color_family)
+
+    if bright is not None or cont is not None:
+        bright = 0.0 if bright is None else bright
+        cont = 1.0 if cont is None else cont
+
+        if clip.format.sample_type == vs.INTEGER:
+            luma_lut = []
+
+            luma_min = 0
+            luma_max = (2 ** clip.format.bits_per_sample) - 1
+            if coring:
+                luma_min = 16 << (clip.format.bits_per_sample - 8)
+                luma_max = 235 << (clip.format.bits_per_sample - 8)
+
+            for i in range(2 ** clip.format.bits_per_sample):
+                val = int((i - luma_min) * cont + bright + luma_min + 0.5)
+                luma_lut.append(min(max(val, luma_min), luma_max))
+
+            clip = clip.std.Lut(planes=0, lut=luma_lut)
+        else:
+            expression = "x {} * {} + 0.0 max 1.0 min".format(cont, bright)
+
+            clip = clip.std.Expr(expr=[expression, "", ""])
+
+    return clip
 #+END_SRC
 * scripts
 #+NAME: remux-rename
@@ -101,6 +195,14 @@ for file in $dir_input/*.mkv; do
     #mv "$file" "$dir_input/$name"
     echo "file $file name is: $name"
 done
+
+#!/usr/bin/env bash
+# encode 8 bit SDR with x265
+CRF="${1}"
+vspipe -c y4m ./vs/encode.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 8 --output-depth 8 --rd 4 --ref 6 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 16 --qcomp 0.6 --colorprim bt709 --colormatrix bt709 --transfer bt709 --range limited --vbv-bufsize 160000 --vbv-maxrate 160000 --no-hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf $CRF --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 5 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --no-frame-dup --y4m --output Testing.hevc
+mkvmerge -o "${CRF}.mkv" Testing.hevc
+
+
 #+END_SRC
 * AACS v2
 - intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
@@ -503,7 +605,7 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 ** HEVC
 Sources:
 
-Bluray - Chapter names (get from dvd edit with mkvtoolsnix), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
+Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infotool to change keyframe timings), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
 
 UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
 Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
@@ -522,6 +624,7 @@ Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p, us
 Lossless DTS for 1080p (DTS passthrough)
 TrueHD - can convert to flac for compat (AC3 stream inside for compat), encode with 'Dolby Encoding Engine'
 DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
+extract core with eac3to or ~ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts~
 PCM - Bluray
 
 Video options:
@@ -534,7 +637,7 @@ x265 --crf 18 --preset slower --profile main10 --output-depth 10 --rc-lookahead 
 x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 10 --output-depth 10 --rd 4 --ref 5 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 12 --qcomp 0.6 --master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" --colorprim bt2020 --colormatrix bt2020nc --transfer smpte2084 --range limited --max-cll "729,159" --vbv-bufsize 160000 --vbv-maxrate 160000 --hdr10 --hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf 15 --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 4 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --chromaloc 2 --no-frame-dup --dolby-vision-profile 8.1 --dolby-vision-rpu "RPU_modified.bin" --y4m --output Testing.hevc -- 2> Testing.log
 changes to above args: --ref 6 --max-merge 5 --psy-rdoq 2 --ipratio 1.4 --pbratio 1.3 --aq-mode 3 --aq-strength 0.85 --qcomp 0.65
 aq-mode 2 aq-strength 1
-crf 14 - 18
+crf 16 - 18 for quality, crf 20-22 for speed
 
 mapping with
 --colorprim bt2020 --colormatrix bt2020nc --transfer smpte-st-2084 --max-cll

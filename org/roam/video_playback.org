@@ -20,6 +20,7 @@ ooh ahh the colors... with a generic plot to boot!
 *** mpv
 - ffmpeg based
 - supports custom scripts
+- 'E' to switch editions of MKV
 *** vlc
 - ffmpeg based
 *** viewing distance
