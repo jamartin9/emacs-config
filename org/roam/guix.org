@@ -535,7 +535,7 @@
                                                                %default-sysctl-settings))))
                        (guix-service-type config =>
                                            (guix-configuration
-                                            (inherit config)
+                                            (inherit config); ADD guix-configuration-channels instead of etc file above
                                             ;(log-compression 'none); use btrfs compression
                                             (guix (current-guix))
                                             (substitute-urls
@@ -1496,6 +1496,7 @@ installation-os-nonfree
   }"))))
 #+END_SRC
 ** guix notes
+- ~GUIX_SANDBOX_EXTRA_MOUNTS=/path/to/extra/thing~ for guix steam
 - transform options for source, c-toolchain, debug, grafts/inputs
   - ~--with-commit=SomeSuchPackage=XXX~
 - ~-L ./guix-channel~ to use local channel changes

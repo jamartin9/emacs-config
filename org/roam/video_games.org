@@ -19,6 +19,7 @@ The only winning move is not to play
     - bevy engine plugin
 - [[https://github.com/deepnight/ldtk][2d game map tool]]
 - [[https://github.com/DFHack/stonesense][3D isometric viewer for dwarf fortress]]
+- https://github.com/00-Evan/shattered-pixel-dungeon roguelike for android
 - binding of isaac
   - drop trink/item in first few floors boss/item room for red key peice
   - bomb skull with 'x' to get tele card for after polaroid boss fight

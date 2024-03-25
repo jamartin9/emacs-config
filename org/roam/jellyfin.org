@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Jellyfin
 ** notes
+- ffmpeg needs patched with -force_dts_monotonicity for streams with adds/interrupts
 - [[https://emby.media/support/articles/Strm-Files.html][STRM]] files for remote streaming
 - roku client
 - web client

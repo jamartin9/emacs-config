@@ -9,6 +9,8 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * sqlite
 ** notes
+- https://github.com/mmomtchev/sqlite-wasm-http for httpvfs via range headers
+  - https://github.com/mlin/sqlite_web_vfs as extension
 - https://www.sqlite.org/limits.html
 - stores each index and table as separate b-tree over the database pages
   - ~BEGIN CONCURRENT~ allows multiple writers with separate tables or index's separated by page size.

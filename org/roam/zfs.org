@@ -58,9 +58,16 @@
 - When expanding rebalancing is not done leaving potentially higher resilver times in the future increasing the chance of cascading failure.
   - snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset
     - manual de-dupe can be done with ~cp --reflink~ as of 2.2.0
+    - ~sudo zfs send zroot/data/tmp@snap-1 | sudo zfs receive -Fduv POOL~ will create ~POOL/data/tmp@snap-1~
 - Sparse files can be useful for testing/migrating setups if the enough storage is actually present(piecemeal the datasets)
   - ~dd if=/dev/zero of=/zpool-file bs=1M count=1024~
     - ~zpool create test /zpool-file~
+- ~zpool attach POOL EXISTING_DEVICE_ID NEW_DEVICE_ID~ to create a mirror
+- ~zfs set xattr=sa~
+- ~zfs set acltype=posixacl~
+- ~zpool set feature@large_blocks=enable ztank~ to enable larger blocks
+- ~zpool set feature@encryption=enable ztank~ to enable encryption
+- ~zfs set canmount=noauto ztank/dataset~ to disable auto mounting
 - relatime for normal timestamps
 - SLOG requires devices that will write data on power loss
 - SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down
@@ -74,7 +81,8 @@
   - uses arc ram (more for smaller blocks) to index
 - [[https://www.brendangregg.com/blog/2021-09-06/zfs-is-mysteriously-eating-my-cpu.html][zfs using cpu despite not being in use]]
 - https://github.com/kimono-koans/httm for snapshot traversal
-- record size for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)
+- ~zfs create -o recordsize=X ztank/dataset~ for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)
+  - must be set at creation time
 - ztest is userspace w/o zvols
   - openebs cstor uses userspace openzfs with custom zrepl (based on 0.7.9)
   - https://github.com/iomesh/zfs/tree/uzfs-dev is userspace fork using fuse vfs

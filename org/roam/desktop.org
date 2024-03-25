@@ -28,6 +28,7 @@ More ricing less productivity!
   - qt based
     - ~QT_QPA_PLATFORM=wayland~ or webgl
     - qt project withholds patches for up to a year
+  - alt+space then ~kquitapp5 plasmashell;plasmashell~ to restart desktop
 - aero (windows)
 - quartz (mac)
 - gamescope compositor for wayland desktops supports experimental HDR
