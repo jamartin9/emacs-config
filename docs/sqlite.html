@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgfa5d848">
-<div class="navbar-brand" id="org938e21e">
-<div class="navbar-item" id="org51f7a6d">
+<nav class="navbar is-black" id="org15b824d">
+<div class="navbar-brand" id="org299655f">
+<div class="navbar-item" id="orgd05b062">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org5afc0b2">
-<div class="navbar-start" id="org61164b5">
-<div class="navbar-item" id="org3b01ad4">
+<div class="navbar-menu" id="org7eddbf8">
+<div class="navbar-start" id="org30c65d8">
+<div class="navbar-item" id="orgadc7361">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,20 +29,24 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgd48efcc">
+<div class="navbar-end" id="org3f736ed">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org8c8e1dd" class="outline-2">
-<h2 id="org8c8e1dd">sqlite</h2>
-<div class="outline-text-2" id="text-org8c8e1dd">
+<div id="outline-container-org931cdae" class="outline-2">
+<h2 id="org931cdae">sqlite</h2>
+<div class="outline-text-2" id="text-org931cdae">
 </div>
-<div id="outline-container-org9e500c8" class="outline-3">
-<h3 id="org9e500c8">notes</h3>
-<div class="outline-text-3" id="text-org9e500c8">
+<div id="outline-container-orgc16712d" class="outline-3">
+<h3 id="orgc16712d">notes</h3>
+<div class="outline-text-3" id="text-orgc16712d">
 <ul class="org-ul">
+<li><a href="https://github.com/mmomtchev/sqlite-wasm-http">https://github.com/mmomtchev/sqlite-wasm-http</a> for httpvfs via range headers
+<ul class="org-ul">
+<li><a href="https://github.com/mlin/sqlite_web_vfs">https://github.com/mlin/sqlite_web_vfs</a> as extension</li>
+</ul></li>
 <li><a href="https://www.sqlite.org/limits.html">https://www.sqlite.org/limits.html</a></li>
 <li>stores each index and table as separate b-tree over the database pages
 <ul class="org-ul">
@@ -114,7 +118,7 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 <li>site database</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org58cc28e">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="org357e4b7">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
 PRAGMA page_size=512;
 SAVEPOINT ar;
@@ -158,14 +162,14 @@ VACUUM;
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org22cd863">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="org5343f77">-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgf36ab9b">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="org859c7c1">(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -185,11 +189,11 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
 </div>
 </div>
 
-<div id="outline-container-org47ca8f2" class="outline-3">
-<h3 id="org47ca8f2">site search js/sql</h3>
-<div class="outline-text-3" id="text-org47ca8f2">
+<div id="outline-container-org653ba0d" class="outline-3">
+<h3 id="org653ba0d">site search js/sql</h3>
+<div class="outline-text-3" id="text-org653ba0d">
 <div class="org-src-container">
-<pre class="src src-javascript" id="orgef9382c">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+<pre class="src src-javascript" id="org7a046e8">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:
@@ -245,7 +249,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org9115245">onmessage = (e) =&gt; {
+<pre class="src src-javascript" id="org0aa3052">onmessage = (e) =&gt; {
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3

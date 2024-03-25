@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org4e3f253">
-<div class="navbar-brand" id="org8d6cb9c">
-<div class="navbar-item" id="orge8ec57c">
+<nav class="navbar is-black" id="orgf86ebc8">
+<div class="navbar-brand" id="org2d19257">
+<div class="navbar-item" id="orge938973">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org19c3fda">
-<div class="navbar-start" id="org7470f32">
-<div class="navbar-item" id="orged53daa">
+<div class="navbar-menu" id="orga36d371">
+<div class="navbar-start" id="org8aece45">
+<div class="navbar-item" id="orgd00b922">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,22 +29,22 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgd6e98cb">
+<div class="navbar-end" id="org620b214">
 
 </div>
 
 </div>
 </nav>
 
-<div id="outline-container-orga887d47" class="outline-2">
-<h2 id="orga887d47">Guix</h2>
-<div class="outline-text-2" id="text-orga887d47">
+<div id="outline-container-orgc464994" class="outline-2">
+<h2 id="orgc464994">Guix</h2>
+<div class="outline-text-2" id="text-orgc464994">
 </div>
-<div id="outline-container-org3742e3b" class="outline-3">
-<h3 id="org3742e3b">Link manifest and channels</h3>
-<div class="outline-text-3" id="text-org3742e3b">
+<div id="outline-container-orgc5166d0" class="outline-3">
+<h3 id="orgc5166d0">Link manifest and channels</h3>
+<div class="outline-text-3" id="text-orgc5166d0">
 <div class="org-src-container">
-<pre class="src src-elisp" id="org5eaf887">(ignore-errors
+<pre class="src src-elisp" id="org97464f1">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -55,11 +55,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org1c3a634" class="outline-3">
-<h3 id="org1c3a634">guix home</h3>
-<div class="outline-text-3" id="text-org1c3a634">
+<div id="outline-container-org4d93a35" class="outline-3">
+<h3 id="org4d93a35">guix home</h3>
+<div class="outline-text-3" id="text-org4d93a35">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org6e02e7e">(use-modules (gnu home)
+<pre class="src src-scheme" id="orgc0eeae6">(use-modules (gnu home)
              (gnu home services)
              (gnu home services guix)
              (gnu home services shells)
@@ -443,11 +443,11 @@ _guix_opts default"))))))))
 </div>
 </div>
 
-<div id="outline-container-org4d798f7" class="outline-3">
-<h3 id="org4d798f7">guixsd config</h3>
-<div class="outline-text-3" id="text-org4d798f7">
+<div id="outline-container-org1a3dc56" class="outline-3">
+<h3 id="org1a3dc56">guixsd config</h3>
+<div class="outline-text-3" id="text-org1a3dc56">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgf2d6330">  (use-modules
+<pre class="src src-scheme" id="org0fc79b2">  (use-modules
    (gnu)
    (gnu services)
    (gnu services linux)
@@ -1060,7 +1060,7 @@ _guix_opts default"))))))))
                                                                %default-sysctl-settings))))
                        (guix-service-type config =&gt;
                                            (guix-configuration
-                                            (inherit config)
+                                            (inherit config); ADD guix-configuration-channels instead of etc file above
                                             ;(log-compression 'none); use btrfs compression
                                             (guix (current-guix))
                                             (substitute-urls
@@ -1076,11 +1076,11 @@ _guix_opts default"))))))))
 </div>
 </div>
 </div>
-<div id="outline-container-orgc2a4229" class="outline-3">
-<h3 id="orgc2a4229">User manifest</h3>
-<div class="outline-text-3" id="text-orgc2a4229">
+<div id="outline-container-orgf3da8d2" class="outline-3">
+<h3 id="orgf3da8d2">User manifest</h3>
+<div class="outline-text-3" id="text-orgf3da8d2">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org464ac8d">;; Manifest for development env
+<pre class="src src-scheme" id="orge36ba8c">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
@@ -1215,11 +1215,11 @@ _guix_opts default"))))))))
 </div>
 </div>
 </div>
-<div id="outline-container-org9d66d17" class="outline-3">
-<h3 id="org9d66d17">Channel configuration</h3>
-<div class="outline-text-3" id="text-org9d66d17">
+<div id="outline-container-org67c6ae8" class="outline-3">
+<h3 id="org67c6ae8">Channel configuration</h3>
+<div class="outline-text-3" id="text-org67c6ae8">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orge9ad658">(list (channel
+<pre class="src src-scheme" id="orgff7a2e1">(list (channel
        ;; custom guix override
        (name 'guix)
        (url "https://git.savannah.gnu.org/git/guix.git")
@@ -1241,11 +1241,11 @@ _guix_opts default"))))))))
 </div>
 </div>
 </div>
-<div id="outline-container-org1d0cab9" class="outline-3">
-<h3 id="org1d0cab9">non guix key</h3>
-<div class="outline-text-3" id="text-org1d0cab9">
+<div id="outline-container-org51ce55c" class="outline-3">
+<h3 id="org51ce55c">non guix key</h3>
+<div class="outline-text-3" id="text-org51ce55c">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgcddac66">(public-key
+<pre class="src src-scheme" id="org90f9ca9">(public-key
  (ecc
   (curve Ed25519)
   (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)
@@ -1255,14 +1255,14 @@ _guix_opts default"))))))))
 </div>
 </div>
 </div>
-<div id="outline-container-org7c2a8ac" class="outline-3">
-<h3 id="org7c2a8ac">guix installer</h3>
-<div class="outline-text-3" id="text-org7c2a8ac">
+<div id="outline-container-org58f42c6" class="outline-3">
+<h3 id="org58f42c6">guix installer</h3>
+<div class="outline-text-3" id="text-org58f42c6">
 <ul class="org-ul">
 <li><code>guix system image -t iso9660 ./installer.scm</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgbc5968c">(define-module (nongnu system install)
+<pre class="src src-scheme" id="orgb2fd559">(define-module (nongnu system install)
   #:use-module (gnu services)
   #:use-module (gnu system)
   #:use-module (gnu system install)
@@ -1320,9 +1320,9 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-orgbf847d5" class="outline-3">
-<h3 id="orgbf847d5">guix netbook</h3>
-<div class="outline-text-3" id="text-orgbf847d5">
+<div id="outline-container-org7ef85e3" class="outline-3">
+<h3 id="org7ef85e3">guix netbook</h3>
+<div class="outline-text-3" id="text-org7ef85e3">
 <p>
 #+NAME guix-netbook
 </p>
@@ -1448,19 +1448,19 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-orgc19dad2" class="outline-3">
-<h3 id="orgc19dad2">guix os snippets</h3>
-<div class="outline-text-3" id="text-orgc19dad2">
+<div id="outline-container-org0802970" class="outline-3">
+<h3 id="org0802970">guix os snippets</h3>
+<div class="outline-text-3" id="text-org0802970">
 </div>
-<div id="outline-container-org0e7232c" class="outline-4">
-<h4 id="org0e7232c">services</h4>
-<div class="outline-text-4" id="text-org0e7232c">
+<div id="outline-container-orgc8eced5" class="outline-4">
+<h4 id="orgc8eced5">services</h4>
+<div class="outline-text-4" id="text-orgc8eced5">
 </div>
 <ul class="org-ul">
-<li><a id="org5b1f644"></a>ci<br>
-<div class="outline-text-5" id="text-org5b1f644">
+<li><a id="org82d6298"></a>ci<br>
+<div class="outline-text-5" id="text-org82d6298">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org0b80a76">(service cuirass-service-type
+<pre class="src src-scheme" id="org7d0f23b">(service cuirass-service-type
          (cuirass-configuration (specifications #~(list (specification
                                                          (name "my-channel")
                                                          (build (build '(channels my-channel));'(custom (jam ci)));
@@ -1483,10 +1483,10 @@ installation-os-nonfree
 </div>
 </div>
 </li>
-<li><a id="org9bc8784"></a>torrents<br>
-<div class="outline-text-5" id="text-org9bc8784">
+<li><a id="org3da4461"></a>torrents<br>
+<div class="outline-text-5" id="text-org3da4461">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgeba96fe">
+<pre class="src src-scheme" id="org5d6bd45">
 (service transmission-daemon-service-type
           (transmission-daemon-configuration
           ;(peer-port 51413)
@@ -1499,10 +1499,10 @@ installation-os-nonfree
 </div>
 </div>
 </li>
-<li><a id="org81b60aa"></a>wireguard<br>
-<div class="outline-text-5" id="text-org81b60aa">
+<li><a id="orgef66495"></a>wireguard<br>
+<div class="outline-text-5" id="text-orgef66495">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgf0a31b3">(service wireguard-service-type
+<pre class="src src-scheme" id="org16e864e">(service wireguard-service-type
          (wireguard-configuration
           (addresses '("10.0.0.5/32"))
           ;(port 51820)
@@ -1520,11 +1520,11 @@ installation-os-nonfree
 </li>
 </ul>
 </div>
-<div id="outline-container-orgc0d4b15" class="outline-4">
-<h4 id="orgc0d4b15">hardware gpu</h4>
-<div class="outline-text-4" id="text-orgc0d4b15">
+<div id="outline-container-org55156c4" class="outline-4">
+<h4 id="org55156c4">hardware gpu</h4>
+<div class="outline-text-4" id="text-org55156c4">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgbfd6a6a">;; nvidia service
+<pre class="src src-scheme" id="org9923325">;; nvidia service
 (define nvidia-service-type
   (service-type
    (name 'nvidia)
@@ -1561,11 +1561,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-orgd0a85e6" class="outline-4">
-<h4 id="orgd0a85e6">hardware wifi</h4>
-<div class="outline-text-4" id="text-orgd0a85e6">
+<div id="outline-container-org32e4310" class="outline-4">
+<h4 id="org32e4310">hardware wifi</h4>
+<div class="outline-text-4" id="text-org32e4310">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org52027e2">;; broadcom service
+<pre class="src src-scheme" id="org157f6e5">;; broadcom service
 (define broadcom-service-type
   (service-type
    (name 'broadcom)
@@ -1585,11 +1585,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-org75c7efc" class="outline-4">
-<h4 id="org75c7efc">filesystem</h4>
-<div class="outline-text-4" id="text-org75c7efc">
+<div id="outline-container-org8c4efda" class="outline-4">
+<h4 id="org8c4efda">filesystem</h4>
+<div class="outline-text-4" id="text-org8c4efda">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org70c639a">(use-modules (jam packages zfs))
+<pre class="src src-scheme" id="orgc0a3f70">(use-modules (jam packages zfs))
 (use-package-modules linux file-systems admin)
 
 ;(service zfs-service-type
@@ -1600,11 +1600,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-orgc3ef42d" class="outline-4">
-<h4 id="orgc3ef42d">kernel and sysctl harden</h4>
-<div class="outline-text-4" id="text-orgc3ef42d">
+<div id="outline-container-org1d3621f" class="outline-4">
+<h4 id="org1d3621f">kernel and sysctl harden</h4>
+<div class="outline-text-4" id="text-org1d3621f">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org906e910">;; Source: &lt;https://github.com/Kicksecure/security-misc&gt; via https://github.com/rakino/Testament/blob/trunk/testament/kicksecure.scm
+<pre class="src src-scheme" id="org36a76ac">;; Source: &lt;https://github.com/Kicksecure/security-misc&gt; via https://github.com/rakino/Testament/blob/trunk/testament/kicksecure.scm
 ;; Extracted with the following command:
 ;; cat etc/default/grub.d/* | sed -e 's/#\+/;;/g' -e 's/GRUB.*DEFAULT /\"/g' -e 's/GRUB.*LINUX /\"/g' -e '/GRUB/d' -e 's/\(\".*[a-z0-9]\)\ \([a-z].*\"\)/\1\"\n\"\2/g' -e '/dpkg/d'
 (define %kicksecure-kernel-arguments
@@ -1985,11 +1985,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-orgccc3f1b" class="outline-4">
-<h4 id="orgccc3f1b">firewall</h4>
-<div class="outline-text-4" id="text-orgccc3f1b">
+<div id="outline-container-org4814382" class="outline-4">
+<h4 id="org4814382">firewall</h4>
+<div class="outline-text-4" id="text-org4814382">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org829d4b6">                 (service nftables-service-type
+<pre class="src src-scheme" id="org2df7c7d">                 (service nftables-service-type
                           (nftables-configuration
                            (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -&gt; input/output/forward -&gt; postrouting
 # flush all the rules.
@@ -2087,10 +2087,11 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-orgc383778" class="outline-3">
-<h3 id="orgc383778">guix notes</h3>
-<div class="outline-text-3" id="text-orgc383778">
+<div id="outline-container-org572c4c5" class="outline-3">
+<h3 id="org572c4c5">guix notes</h3>
+<div class="outline-text-3" id="text-org572c4c5">
 <ul class="org-ul">
+<li><code>GUIX_SANDBOX_EXTRA_MOUNTS=/path/to/extra/thing</code> for guix steam</li>
 <li>transform options for source, c-toolchain, debug, grafts/inputs
 <ul class="org-ul">
 <li><code>--with-commit=SomeSuchPackage=XXX</code></li>
@@ -2149,7 +2150,7 @@ table inet filter {
 <li>manual setup</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org179f66a">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
+<pre class="src src-shell" id="org6262e19">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
 # get tarball for system=x86_64-linux,aarch64,armhf,i686
 wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
 # check sig
@@ -2198,7 +2199,7 @@ guix package -i glibc-utf8-locales
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgb978993">network={
+<pre class="src src-conf" id="org7a55f68">network={
   ssid="ssid-name"
   key_mgmt=WPA-PSK
   psk="unencrypted passphrase"
@@ -2215,7 +2216,7 @@ guix package -i glibc-utf8-locales
 <li>clone config, symlink channels, pull then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org84dbfda">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="org3b81a84">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -2240,7 +2241,7 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgaf00c14">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org7f0f25f">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
@@ -2252,13 +2253,13 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </div>
 </div>
 
-<div id="outline-container-org06abda5" class="outline-3">
-<h3 id="org06abda5">guix issues</h3>
-<div class="outline-text-3" id="text-org06abda5">
+<div id="outline-container-orgf9e1474" class="outline-3">
+<h3 id="orgf9e1474">guix issues</h3>
+<div class="outline-text-3" id="text-orgf9e1474">
 </div>
-<div id="outline-container-orgd98108e" class="outline-4">
-<h4 id="orgd98108e"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-orgd98108e">
+<div id="outline-container-org89854f7" class="outline-4">
+<h4 id="org89854f7"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
+<div class="outline-text-4" id="text-org89854f7">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-02 Mon] </span></span> Submitted
 </p>
@@ -2273,9 +2274,9 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </div>
 </div>
 
-<div id="outline-container-orga85181f" class="outline-4">
-<h4 id="orga85181f"><span class="todo TODO">TODO</span> Add support for file capabilities(7)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-orga85181f">
+<div id="outline-container-org717be30" class="outline-4">
+<h4 id="org717be30"><span class="todo TODO">TODO</span> Add support for file capabilities(7)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
+<div class="outline-text-4" id="text-org717be30">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2023-02-12 Sun] </span></span> Submitted
 </p>
@@ -2289,7 +2290,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </p>
 
 <div class="org-src-container">
-<pre class="src src-scheme" id="org985bf51">; WIP This does not work as it can't find patches? (ghostscript)
+<pre class="src src-scheme" id="org3c5d2b1">; WIP This does not work as it can't find patches? (ghostscript)
 (define-module (etc httm-manifest)
  #:use-module (guix scripts pack)
  #:use-module (guix gexp)
@@ -2361,7 +2362,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-scheme" id="org4a4b426">; WIP This does not work as guix git cannot find module during profile build
+<pre class="src src-scheme" id="org74c5877">; WIP This does not work as guix git cannot find module during profile build
 (define-module (jam ci)
   #:use-module (gnu ci)
   #:use-module (gnu system image)

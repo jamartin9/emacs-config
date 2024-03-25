@@ -1,4 +1,4 @@
-@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css";
 html { /* https://github.com/jgthms/bulma/issues/527 vertical scroll bar always shown despite closed bug -_- */
     overflow-y: auto;
     overflow-x: hidden;

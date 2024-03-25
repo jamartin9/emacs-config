@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org8911687">
-<div class="navbar-brand" id="org43ae8a0">
-<div class="navbar-item" id="org54db07a">
+<nav class="navbar is-black" id="org557e991">
+<div class="navbar-brand" id="orga821048">
+<div class="navbar-item" id="org6170f4a">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgf111f69">
-<div class="navbar-start" id="org65c18c5">
-<div class="navbar-item" id="org32378cc">
+<div class="navbar-menu" id="org0cc5464">
+<div class="navbar-start" id="orga24b732">
+<div class="navbar-item" id="org07592e4">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,23 +29,23 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org9b89767">
+<div class="navbar-end" id="org95bb7a4">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org23100d1" class="outline-2">
-<h2 id="org23100d1">ZFS</h2>
-<div class="outline-text-2" id="text-org23100d1">
+<div id="outline-container-orga1db4e2" class="outline-2">
+<h2 id="orga1db4e2">ZFS</h2>
+<div class="outline-text-2" id="text-orga1db4e2">
 </div>
-<div id="outline-container-org24730e9" class="outline-3">
-<h3 id="org24730e9">openzfs</h3>
-<div class="outline-text-3" id="text-org24730e9">
+<div id="outline-container-org839e0ac" class="outline-3">
+<h3 id="org839e0ac">openzfs</h3>
+<div class="outline-text-3" id="text-org839e0ac">
 </div>
-<div id="outline-container-org60ec6c8" class="outline-4">
-<h4 id="org60ec6c8">install</h4>
-<div class="outline-text-4" id="text-org60ec6c8">
+<div id="outline-container-org58e8ca7" class="outline-4">
+<h4 id="org58e8ca7">install</h4>
+<div class="outline-text-4" id="text-org58e8ca7">
 <ul class="org-ul">
 <li>If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
 That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
@@ -64,7 +64,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org4228b7c">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="org8341568">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -105,18 +105,18 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgce0bcac" class="outline-4">
-<h4 id="orgce0bcac">usage</h4>
-<div class="outline-text-4" id="text-orgce0bcac">
+<div id="outline-container-org9bbd87f" class="outline-4">
+<h4 id="org9bbd87f">usage</h4>
+<div class="outline-text-4" id="text-org9bbd87f">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf8d4549" class="outline-4">
-<h4 id="orgf8d4549">notes</h4>
-<div class="outline-text-4" id="text-orgf8d4549">
+<div id="outline-container-orgb7640a1" class="outline-4">
+<h4 id="orgb7640a1">notes</h4>
+<div class="outline-text-4" id="text-orgb7640a1">
 <ul class="org-ul">
 <li>If you lose a vdev in a pool you LOSE THE POOL</li>
 <li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
@@ -131,6 +131,7 @@ password   include      zfs-key</li>
 <li>snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset
 <ul class="org-ul">
 <li>manual de-dupe can be done with <code>cp --reflink</code> as of 2.2.0</li>
+<li><code>sudo zfs send zroot/data/tmp@snap-1 | sudo zfs receive -Fduv POOL</code> will create <code>POOL/data/tmp@snap-1</code></li>
 </ul></li>
 </ul></li>
 <li>Sparse files can be useful for testing/migrating setups if the enough storage is actually present(piecemeal the datasets)
@@ -140,6 +141,12 @@ password   include      zfs-key</li>
 <li><code>zpool create test /zpool-file</code></li>
 </ul></li>
 </ul></li>
+<li><code>zpool attach POOL EXISTING_DEVICE_ID NEW_DEVICE_ID</code> to create a mirror</li>
+<li><code>zfs set xattr=sa</code></li>
+<li><code>zfs set acltype=posixacl</code></li>
+<li><code>zpool set feature@large_blocks=enable ztank</code> to enable larger blocks</li>
+<li><code>zpool set feature@encryption=enable ztank</code> to enable encryption</li>
+<li><code>zfs set canmount=noauto ztank/dataset</code> to disable auto mounting</li>
 <li>relatime for normal timestamps</li>
 <li>SLOG requires devices that will write data on power loss</li>
 <li>SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down</li>
@@ -155,7 +162,10 @@ password   include      zfs-key</li>
 </ul></li>
 <li><a href="https://www.brendangregg.com/blog/2021-09-06/zfs-is-mysteriously-eating-my-cpu.html">zfs using cpu despite not being in use</a></li>
 <li><a href="https://github.com/kimono-koans/httm">https://github.com/kimono-koans/httm</a> for snapshot traversal</li>
-<li>record size for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)</li>
+<li><code>zfs create -o recordsize=X ztank/dataset</code> for bittorrent 16k, 1M for sequential, 64k for sqlite(w/pagesize), 4K for vms/monero(system page size)
+<ul class="org-ul">
+<li>must be set at creation time</li>
+</ul></li>
 <li>ztest is userspace w/o zvols
 <ul class="org-ul">
 <li>openebs cstor uses userspace openzfs with custom zrepl (based on 0.7.9)</li>

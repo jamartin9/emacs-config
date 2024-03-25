@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org8ee435d">
-<div class="navbar-brand" id="org5007638">
-<div class="navbar-item" id="orgf826a4c">
+<nav class="navbar is-black" id="org3b5c46e">
+<div class="navbar-brand" id="org56c73ad">
+<div class="navbar-item" id="org16f2198">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orge107767">
-<div class="navbar-start" id="org0a827bb">
-<div class="navbar-item" id="org5555a03">
+<div class="navbar-menu" id="orgc4befc1">
+<div class="navbar-start" id="orgcf095e4">
+<div class="navbar-item" id="org9aed414">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,20 +29,21 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orga4dab50">
+<div class="navbar-end" id="org27b8c9b">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org9e15ef8" class="outline-2">
-<h2 id="org9e15ef8">Jellyfin</h2>
-<div class="outline-text-2" id="text-org9e15ef8">
+<div id="outline-container-org0bedc93" class="outline-2">
+<h2 id="org0bedc93">Jellyfin</h2>
+<div class="outline-text-2" id="text-org0bedc93">
 </div>
-<div id="outline-container-orga9f8180" class="outline-3">
-<h3 id="orga9f8180">notes</h3>
-<div class="outline-text-3" id="text-orga9f8180">
+<div id="outline-container-orgce1d5bd" class="outline-3">
+<h3 id="orgce1d5bd">notes</h3>
+<div class="outline-text-3" id="text-orgce1d5bd">
 <ul class="org-ul">
+<li>ffmpeg needs patched with -force<sub>dts</sub><sub>monotonicity</sub> for streams with adds/interrupts</li>
 <li><a href="https://emby.media/support/articles/Strm-Files.html">STRM</a> files for remote streaming</li>
 <li>roku client</li>
 <li>web client</li>
@@ -73,7 +74,7 @@
 <li><a href="podman.html#ID-90cf48a5-3b01-4667-b100-72acea67034f">podman</a> run configuration with nvidia support</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org5485bd5">podman run \
+<pre class="src src-shell" id="org86c5be0">podman run \
 --detach \
 --label "io.containers.autoupdate=registry" \
 --hooks-dir=/usr/share/containers/oci/hooks.d/ \
@@ -97,7 +98,7 @@ docker.io/jellyfin/jellyfin:latest
 </div>
 
 <div class="org-src-container">
-<pre class="src src-yaml" id="org07960ca">apiVersion: v1
+<pre class="src src-yaml" id="org1833f74">apiVersion: v1
 kind: ConfigMap
 metadata:
   name: arr-config

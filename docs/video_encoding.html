@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org53f3035">
-<div class="navbar-brand" id="org538547c">
-<div class="navbar-item" id="orga8c614e">
+<nav class="navbar is-black" id="orgfa9fda4">
+<div class="navbar-brand" id="orgd79709d">
+<div class="navbar-item" id="orgc3fac33">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgc39e950">
-<div class="navbar-start" id="org26a01b9">
-<div class="navbar-item" id="orge0f236a">
+<div class="navbar-menu" id="org158453d">
+<div class="navbar-start" id="orga2ee4ac">
+<div class="navbar-item" id="orgee2be34">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,20 +29,20 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orga4fed15">
+<div class="navbar-end" id="org91552da">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgc0d8557" class="outline-2">
-<h2 id="orgc0d8557">vapoursynth</h2>
-<div class="outline-text-2" id="text-orgc0d8557">
+<div id="outline-container-org6b9e1d8" class="outline-2">
+<h2 id="org6b9e1d8">vapoursynth</h2>
+<div class="outline-text-2" id="text-org6b9e1d8">
 <ul class="org-ul">
 <li>ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org044de53">#!/usr/bin/env python3
+<pre class="src src-python" id="orgf8de051">#!/usr/bin/env python3
 #awsmfun dynamic tonemap similar function when using options for dovi (includes chroma)
 import awsmfunc
 #pb_opts = awsmfunc.types.placebo.PlaceboTonemapOpts(dst_max=130, dst_min=0) # 130 nits
@@ -164,11 +164,11 @@ def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
 </div>
 </div>
 </div>
-<div id="outline-container-org6450398" class="outline-2">
-<h2 id="org6450398">scripts</h2>
-<div class="outline-text-2" id="text-org6450398">
+<div id="outline-container-org226f1f6" class="outline-2">
+<h2 id="org226f1f6">scripts</h2>
+<div class="outline-text-2" id="text-org226f1f6">
 <div class="org-src-container">
-<pre class="src src-bash" id="org9e69dbc">#!/usr/bin/env bash
+<pre class="src src-bash" id="orgfb9ec53">#!/usr/bin/env bash
 COUNTER=1
 while [  $COUNTER -lt 31 ]; do
     mkvextract $1 tracks ${COUNTER}:"subtitle${COUNTER}.sup" # extract sup from mkv
@@ -236,15 +236,35 @@ done
 CRF="${1}"
 vspipe -c y4m ./vs/encode.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 8 --output-depth 8 --rd 4 --ref 6 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 16 --qcomp 0.6 --colorprim bt709 --colormatrix bt709 --transfer bt709 --range limited --vbv-bufsize 160000 --vbv-maxrate 160000 --no-hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf $CRF --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 5 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --no-frame-dup --y4m --output Testing.hevc
 mkvmerge -o "${CRF}.mkv" Testing.hevc
-
-
+# example encode 10 bit HDR with x265
+vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 10 --output-depth 10 --rd 4 --ref 6 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 16 --qcomp 0.6 --master-display "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(40000000,50)" --colorprim bt2020 --colormatrix bt2020nc --transfer smpte2084 --range limited --max-cll "3797,385" --vbv-bufsize 160000 --vbv-maxrate 160000 --hdr10 --hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf $CRF --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 5 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --chromaloc 2 --no-frame-dup --y4m --output Testing.hevc
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org2bfc2d6" class="outline-2">
-<h2 id="org2bfc2d6">AACS v2</h2>
-<div class="outline-text-2" id="text-org2bfc2d6">
+<div id="outline-container-orgb083997" class="outline-2">
+<h2 id="orgb083997">notes</h2>
+<div class="outline-text-2" id="text-orgb083997">
+<ul class="org-ul">
+<li>Dovi spreasheet info for grade/master check <a href="https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview">https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview</a>#</li>
+<li>Some bluray players limit the number of subs to 64</li>
+<li>Handbrake can tonemap HDR to SDR when the color filter is set to BT709
+<ul class="org-ul">
+<li>mobile compat: use mp4, profile high 3.1, 720p, AAC 2.0 stereo, under 4GB for FAT32 (~3Kbps - 6Kbps)</li>
+</ul></li>
+<li>score with VMAF, CAMBI(banding), SSIM, PSNR
+<ul class="org-ul">
+<li>VMAF&gt;SSIM&gt;PSNR</li>
+<li><a href="https://github.com/cloudinary/ssimulacra">DSSIM</a>
+<ul class="org-ul">
+<li>patch makefile pkg-config with opencv4</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-orgc5d7e17" class="outline-3">
+<h3 id="orgc5d7e17">AACS v2</h3>
+<div class="outline-text-3" id="text-orgc5d7e17">
 <ul class="org-ul">
 <li>intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
 <ul class="org-ul">
@@ -256,22 +276,22 @@ mkvmerge -o "${CRF}.mkv" Testing.hevc
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd48f609" class="outline-2">
-<h2 id="orgd48f609">AACS v1 KEY</h2>
-<div class="outline-text-2" id="text-orgd48f609">
+<div id="outline-container-orgc47a552" class="outline-3">
+<h3 id="orgc47a552">AACS v1 KEY</h3>
+<div class="outline-text-3" id="text-orgc47a552">
 <p>
 <code>09 F9 11 02 9D 74 E3 5B D8 41 56 C5 63 56 88 C0</code>
 </p>
 </div>
 </div>
-<div id="outline-container-orgc6616d2" class="outline-2">
-<h2 id="orgc6616d2"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h2>
+<div id="outline-container-org865b315" class="outline-3">
+<h3 id="org865b315"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h3>
 </div>
-<div id="outline-container-orgdfa40de" class="outline-2">
-<h2 id="orgdfa40de">HDCP key</h2>
-<div class="outline-text-2" id="text-orgdfa40de">
+<div id="outline-container-org8343d9d" class="outline-3">
+<h3 id="org8343d9d">HDCP key</h3>
+<div class="outline-text-3" id="text-org8343d9d">
 <div class="org-src-container">
-<pre class="src src-sh" id="orgf055947">HDCP MASTER KEY (MIRROR THIS TEXT!)
+<pre class="src src-sh" id="org0fea8aa">HDCP MASTER KEY (MIRROR THIS TEXT!)
 
 This is a forty times forty element matrix of fifty-six bit
 hexadecimal numbers.
@@ -651,39 +671,9 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 </div>
 </div>
 </div>
-<div id="outline-container-orgb8c3a97" class="outline-2">
-<h2 id="orgb8c3a97">notes</h2>
-<div class="outline-text-2" id="text-orgb8c3a97">
-<ul class="org-ul">
-<li>Handbrake can tonemap HDR to SDR when the color filter is set to BT709
-<ul class="org-ul">
-<li>mobile compat: use mp4, profile high 3.1, 720p, AAC 2.0 stereo, under 4GB for FAT32 (~3Kbps - 6Kbps)</li>
-</ul></li>
-<li>score with VMAF, CAMBI(banding), SSIM, PSNR
-<ul class="org-ul">
-<li>VMAF&gt;SSIM&gt;PSNR</li>
-<li><a href="https://github.com/cloudinary/ssimulacra">DSSIM</a>
-<ul class="org-ul">
-<li>patch makefile pkg-config with opencv4</li>
-</ul></li>
-</ul></li>
-</ul>
-</div>
-<div id="outline-container-org626b217" class="outline-3">
-<h3 id="org626b217">ffmpeg</h3>
-<div class="outline-text-3" id="text-org626b217">
-<ul class="org-ul">
-<li>vmaf score for comparing video streams</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org8883ee2" class="outline-3">
-<h3 id="org8883ee2">HEVC</h3>
-<div class="outline-text-3" id="text-org8883ee2">
-<p>
-Sources:
-</p>
-
+<div id="outline-container-org119d8a2" class="outline-3">
+<h3 id="org119d8a2">Sources</h3>
+<div class="outline-text-3" id="text-org119d8a2">
 <p>
 Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infotool to change keyframe timings), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
 </p>
@@ -715,18 +705,26 @@ DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' 
 extract core with eac3to or <code>ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts</code>
 PCM - Bluray
 </p>
+</div>
+</div>
 
+<div id="outline-container-org893744f" class="outline-3">
+<h3 id="org893744f">ffmpeg</h3>
+<div class="outline-text-3" id="text-org893744f">
+<ul class="org-ul">
+<li>vmaf score for comparing video streams</li>
+<li>Remove Captions <code>ffmpeg -i input.mkv -codec copy -bsf:v "filter_units=remove_types=6" output.mkv</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb65e18b" class="outline-3">
+<h3 id="orgb65e18b">HEVC/AVC</h3>
+<div class="outline-text-3" id="text-orgb65e18b">
+</div>
+<div id="outline-container-org0a7ffc2" class="outline-4">
+<h4 id="org0a7ffc2">x265</h4>
+<div class="outline-text-4" id="text-org0a7ffc2">
 <p>
-Video options:
-</p>
-
-<p>
-Remove Captions:
-ffmpeg -i input.mkv -codec copy -bsf:v "filter<sub>units</sub>=remove<sub>types</sub>=6" output.mkv
-</p>
-
-<p>
-x265
 x265 &#x2013;crf 18 &#x2013;preset slower &#x2013;profile main10 &#x2013;output-depth 10 &#x2013;rc-lookahead 60 &#x2013;ctu 32 &#x2013;frame-threads 1 &#x2013;no-sao &#x2013;deblock -2:-2 &#x2013;qcomp 0.65 &#x2013;aq-mode 3 &#x2013;ref 6 &#x2013;bframes 8
 x265 &#x2013;y4m - &#x2013;preset slow &#x2013;level-idc 5.1 &#x2013;high-tier &#x2013;input-depth 10 &#x2013;output-depth 10 &#x2013;rd 4 &#x2013;ref 5 &#x2013;psy-rd 2 &#x2013;psy-rdoq 1 &#x2013;no-rect &#x2013;no-amp &#x2013;aq-mode 4 &#x2013;no-hevc-aq &#x2013;aq-strength 0.9 &#x2013;ctu 64 &#x2013;ipratio 1.3 &#x2013;pbratio 1.2 &#x2013;no-cutree &#x2013;rc-lookahead 40 &#x2013;subme 5 &#x2013;me 3 &#x2013;merange 57 &#x2013;bframes 12 &#x2013;qcomp 0.6 &#x2013;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" &#x2013;colorprim bt2020 &#x2013;colormatrix bt2020nc &#x2013;transfer smpte2084 &#x2013;range limited &#x2013;max-cll "729,159" &#x2013;vbv-bufsize 160000 &#x2013;vbv-maxrate 160000 &#x2013;hdr10 &#x2013;hdr10-opt &#x2013;repeat-headers &#x2013;hrd &#x2013;aud &#x2013;deblock -3:-3 &#x2013;no-sao &#x2013;selective-sao 0 &#x2013;strong-intra-smoothing &#x2013;rskip 0 &#x2013;crf 15 &#x2013;limit-modes &#x2013;limit-refs 1 &#x2013;limit-tu 4 &#x2013;max-merge 4 &#x2013;tu-intra-depth 4 &#x2013;tu-inter-depth 4 &#x2013;b-intra &#x2013;weightb &#x2013;no-pmode &#x2013;chromaloc 2 &#x2013;no-frame-dup &#x2013;dolby-vision-profile 8.1 &#x2013;dolby-vision-rpu "RPU<sub>modified.bin</sub>" &#x2013;y4m &#x2013;output Testing.hevc &#x2013; 2&gt; Testing.log
 changes to above args: &#x2013;ref 6 &#x2013;max-merge 5 &#x2013;psy-rdoq 2 &#x2013;ipratio 1.4 &#x2013;pbratio 1.3 &#x2013;aq-mode 3 &#x2013;aq-strength 0.85 &#x2013;qcomp 0.65
@@ -765,9 +763,17 @@ min:0.0050 cd/m2, max: 4000 cd/m2 =&gt; L(40000000,50)
 
 <p>
 &#x2013;max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level
-x264
 </p>
-
+</div>
+</div>
+</div>
+<div id="outline-container-org0768d73" class="outline-3">
+<h3 id="org0768d73">AVC</h3>
+<div class="outline-text-3" id="text-org0768d73">
+</div>
+<div id="outline-container-org2a5a0ca" class="outline-4">
+<h4 id="org2a5a0ca">x264</h4>
+<div class="outline-text-4" id="text-org2a5a0ca">
 <p>
 Ref
 </p>
@@ -1022,13 +1028,46 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-orgf617835" class="outline-2">
-<h2 id="orgf617835">ripping</h2>
-<div class="outline-text-2" id="text-orgf617835">
+<div id="outline-container-org7dddbdf" class="outline-3">
+<h3 id="org7dddbdf">AV1</h3>
+<div class="outline-text-3" id="text-org7dddbdf">
 </div>
-<div id="outline-container-org1c19847" class="outline-3">
-<h3 id="org1c19847">tools</h3>
-<div class="outline-text-3" id="text-org1c19847">
+<div id="outline-container-org26ba601" class="outline-4">
+<h4 id="org26ba601">SVT-AV1</h4>
+<div class="outline-text-4" id="text-org26ba601">
+<ul class="org-ul">
+<li>fork <a href="https://github.com/gianni-rosato/svt-av1-psy/">https://github.com/gianni-rosato/svt-av1-psy/</a>
+<ul class="org-ul">
+<li>adds <code>tune=3</code>, <code>sharpness</code> and <code>dolby-vision-rpu</code></li>
+<li>defaults Quant matrix, tune=2, film-grain-denoise=0</li>
+<li><code>./Bin/Release/SvtAv1EncApp --preset 4 --aq-mode=2 --film-grain=0 --passes 2 --rc 0 --crf 18 --fgs-table=./table -b dest_filename -i src_filename</code></li>
+</ul></li>
+<li>benchmarks <a href="https://wiki.x266.mov/blog/svt-av1-deep-dive">https://wiki.x266.mov/blog/svt-av1-deep-dive</a></li>
+<li>set <code>film-grain=0</code> to disable grain synthesis</li>
+<li>set <code>film-grain-denoise=0</code> to pass the raw non denoised video stream to the encoder</li>
+<li>Degrain/Denoise with vapoursynth(<a href="https://github.com/Jaded-Encoding-Thaumaturgy/vs-denoise">https://github.com/Jaded-Encoding-Thaumaturgy/vs-denoise</a>) and diff with <a href="https://github.com/rust-av/grav1synth">https://github.com/rust-av/grav1synth</a>
+<ul class="org-ul">
+<li>encode the denoised output with <code>fgs-table</code> set to the path of the grain diff</li>
+</ul></li>
+<li><code>tune=2</code> seems better on benchmarks; <code>tune=0</code> seems to keep more fine detail.</li>
+<li><code>preset=4</code> benchmarks close to max while being much faster</li>
+<li><code>aq-mode=2</code></li>
+<li><code>irefresh-type=1</code> for grainy input</li>
+<li>Quant matrix <code>enable-qm=1 qm-min=0</code></li>
+<li><code>scm=1</code> hurts performance but improves efficency</li>
+<li>crf <code>SvtAv1EncApp --passes 2 --rc 0 --crf 18 -b dest_filename -i src_filename</code></li>
+<li>supports hdr <code>enable-hdr</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org03a6326" class="outline-3">
+<h3 id="org03a6326">ripping</h3>
+<div class="outline-text-3" id="text-org03a6326">
+</div>
+<div id="outline-container-orga60e93b" class="outline-4">
+<h4 id="orga60e93b">tools</h4>
+<div class="outline-text-4" id="text-orga60e93b">
 <ul class="org-ul">
 <li>AnyDVDHD (redfox) free trail
 <ul class="org-ul">
@@ -1043,33 +1082,25 @@ The following settings, for now, probably don't merit an in-depth explanation as
 <li>brasero(w/libcss) iso copy</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org9a99f62">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
+<pre class="src src-sh" id="org69883fb">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb75eb7a" class="outline-2">
-<h2 id="orgb75eb7a">remux</h2>
-<div class="outline-text-2" id="text-orgb75eb7a">
-<ul class="org-ul">
-<li>mkvmerge -o "${file%.*}.mkv" "$file"</li>
-<li>Some bluray players limit the number of subs to 64</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org7e4f8cb" class="outline-2">
-<h2 id="org7e4f8cb">rescene</h2>
-<div class="outline-text-2" id="text-org7e4f8cb">
+
+<div id="outline-container-org8b8c156" class="outline-3">
+<h3 id="org8b8c156">rescene</h3>
+<div class="outline-text-3" id="text-org8b8c156">
 <ul class="org-ul">
 <li>use srrdb for reference files</li>
 <li><code>srr.py FILE.srr</code></li>
 <li><code>srs.py FILE.srs FILE.mkv</code></li>
 </ul>
 </div>
-<div id="outline-container-org5cd1af0" class="outline-3">
-<h3 id="org5cd1af0">m2ts samples</h3>
-<div class="outline-text-3" id="text-org5cd1af0">
+<div id="outline-container-org97080c6" class="outline-4">
+<h4 id="org97080c6">m2ts samples</h4>
+<div class="outline-text-4" id="text-org97080c6">
 <ul class="org-ul">
 <li>tsmuxer ~2.6.12 <a href="https://www.videohelp.com/software/tsMuxeR/old-versions">https://www.videohelp.com/software/tsMuxeR/old-versions</a></li>
 <li>First start by looking for the date this movie was released by the scene, don’t use any tsmuxer version newer than this date.</li>
@@ -1079,6 +1110,7 @@ The following settings, for now, probably don't merit an in-depth explanation as
 <li>Try different versions of tsmuxer, you should eventually get the correct sample file with same crc32.</li>
 <li>Samples are usually taken from within the first 10 min of the movie.</li>
 </ul>
+</div>
 </div>
 </div>
 </div>
