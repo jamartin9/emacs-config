@@ -11,6 +11,7 @@
 ** notes
 - State Space Models (SSM) like MAMBA preform close to transformers
   - Vision mamba is comparable to ViTs
+  - Jamba is a MoE SSM with a transformer block with 256K context, 12B active parameters (total of 52B parameters across all experts)
 - huggingface is a hub for models with api libs using pytorch/tensorflow/jax
   - spaces to run in notebook like without colab using gradio
 - collab gives free 12hrs of compute

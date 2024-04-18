@@ -41,7 +41,7 @@ The tower of babel is your type system as a macro
   - generators, import std;, std::expected
 ** [[id:e518d6e6-18f5-4bb5-8b92-135b125b5797][rust]]
 - win 7 support removed in 1.75
-- ~rr record -c 10000 <program> <args>~ context switches therad after 10000 cpu ticks
+- ~rr record -c 10000 <program> <args>~ context switches thread after 10000 cpu ticks
 - musl added dns tcp in 1.2.4
 - [[https://github.com/xtuc/wasm-coredump/tree/main][wasm core dump debugging with wasmgdb]]
 - [[id:3d101bb5-0125-41bc-9678-e43487122c7d][gdb]]

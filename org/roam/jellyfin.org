@@ -9,9 +9,11 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Jellyfin
 ** notes
+- change .net GC to Server in ~/etc/default/jellyfin~ ie ~COMPlus_gcServer=1~ for lower cpu but more ram usage
 - ffmpeg needs patched with -force_dts_monotonicity for streams with adds/interrupts
 - [[https://emby.media/support/articles/Strm-Files.html][STRM]] files for remote streaming
 - roku client
+  - disable direct playback and set bitrate limit (default 10 mbps h264 roku) to force transcode on errors
 - web client
 - create ~.ignore~ file under directory to be ignored (sample directory)
 - config
@@ -50,6 +52,20 @@
   --volume /run/media/jam/Elements/Me/Shows/:/media4:ro \
   --volume /run/media/jam/Elements/Me/Video:/media3:rshared,rbind \
   docker.io/jellyfin/jellyfin:latest
+#+END_SRC
+#+NAME: jellyfin-sh
+#+BEGIN_SRC shell :tangle no
+#!/usr/bin/env bash
+# needs 'sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml' after driver update
+# unstable jellyfin ID is d55573d17f58
+podman run --rm -it --device nvidia.com/gpu=all --security-opt=label=disable --env NVIDIA_DRIVER_CAPABILITIES=all --env NVIDIA_VISIBLE_DEVICES=all -p 8096:8096 \
+       -v /gnu/git/jellyfin-config:/config  \
+       -v /run/media/jam/Elements/Me/Shows:/media4 \
+       -v /zroot/storage/:/media3 \
+       -v /gnu/git/rarfs-mount/:/media2 \
+       -v /gnu/git/jellyfin-cache:/cache \
+       -v /storage/Videos/:/media \
+       docker.io/jellyfin/jellyfin:unstable
 #+END_SRC
 
 #+NAME: media-stack

@@ -88,3 +88,20 @@ Steps taken:
 **** DONE oil change for 2017 f150-raptor 24350 miles [2023-07-15 Sat 14:16]
 - Fram filter again
 - add anti freeze/coolant (red/pink asian even tho ford calls for orange...)
+* 2024
+** 2024-04 April
+*** 2024-04-04 Thursday
+:PROPERTIES:
+:ID:       1abbac00-cfa7-40e3-8ca4-07f33506694c
+:END:
+**** DONE replace 2TB seagate [2024-04-04 Thu 23:17]
+- 2TB 7200 rpm 256 MB cache
+- top left is old and still clicking along...
+- 2 from amazon on 2nd shelf.
+- top right from newegg
+- lost data from being unable to import pool after 'application data loss' from wear/scrub
+  - formating the small partition caused error for zpool import
+  - had to remove and regenerate zpool cache after reformatting partitions
+    - ~zdb -l /dev/disk-by-id/~ showed the labels intact and cachefile had wholedisk property still
+- forgot to add drive screws to trays self fasteners
+  - labeled 'drive screws' for future use

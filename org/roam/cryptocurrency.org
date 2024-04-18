@@ -63,6 +63,7 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - https://pawket.app/ for some online chia tools. debugger coming soon...
   - implemented ecdh for chia addresses
   - ecdh for encrypted messages
+- https://github.com/trepca/chirp for chia messages
 - 1.43 TB of writes per k32
 - data layer added in 1.6
   - store hash in smart coin. updates are tracked on chain along with mirrors
@@ -81,9 +82,9 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - CEO/CSO/Employees flame users on reddit (ex. Windows SSL issue)
 - Trademark trolling chiaplot (new site)/xchscan(block explorer) with fresh law grad
   - the chia plot needed a lawyer for them to buzz off
-- large premine (promised to not use) is not being used
+- large premine (promised to not use) is being used(sold) to 'marketing' and 'market makers'
 - layoff of devs after being told "we have years of runway"
-- hiring WEF managers
+- hiring WEF managers and fossils(L. Goldman) for DevRel.
 - Gatekeeping timelord asics
 - exploited own vulnerability with catv1/v2 upgrade
 - stably scam
@@ -93,6 +94,7 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - Slow development
   - pooling release
   - compressed plots
+    - announced needing new plot format but still waiting...
   - node perf (dust storm)
   - blockchain download (offer torrent now)
 * monero

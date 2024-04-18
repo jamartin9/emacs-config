@@ -22,6 +22,7 @@
   - clients
     - transmission
       - [[https://github.com/transmission/transmission/issues/2462][single threaded io]]
+      - set env var ~TR_CURL_SSL_NO_VERIFY=1~ to disable invalid SSL cert checking
   - magent link can have ws for webseed
     - needs ~xs~ linked torrent or non ~ws~ peer for metadata
   - min request size 16 KiB

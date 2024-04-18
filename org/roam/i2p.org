@@ -18,6 +18,7 @@
   - sign server temp key ~offlinekeys TempKeyName OfflineKey 11 365~
   - output b33 for clients ~keyinfo -b KeyName~
   - ~x25519~ util for base64 DH key for lease set auth
+- by default keys with i2pd-tool keygen are 679 bytes: 256 bytes of public elgammal key, 96 bytes of 'random' padding, 32 bytes of ed pubkey, 3 bytes of cert information, 4 bytes of keytype information, 256 bytes of private elgammal key, 32 bytes of private ed signature key
 #+NAME: i2pd-conf
 *** router
 #+BEGIN_SRC conf :tangle no

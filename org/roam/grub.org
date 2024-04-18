@@ -18,7 +18,3 @@
    boot
 - single user mode on boot by adding 'single' to the linux kernel line
   - change ro to ~rw init=/sysroot/bin/sh~ on the kernel line
-** libreboot
-- Dell latitude 6530 requires me-cleaner injected into release
-  - injection script in lbmk disables me automatically
-- seabios with grub rom requires escape key for grub boot menu

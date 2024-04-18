@@ -9,30 +9,21 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * vapoursynth
 - ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata
+- add ~UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/~ to ~XDG_CONFIG/vapoursynth/vapoursynth.conf~ to auto load plugin from directory
 #+NAME: tonemap-vpy
 #+BEGIN_SRC python :tangle no
 #!/usr/bin/env python3
-#awsmfun dynamic tonemap similar function when using options for dovi (includes chroma)
-import awsmfunc
-#pb_opts = awsmfunc.types.placebo.PlaceboTonemapOpts(dst_max=130, dst_min=0) # 130 nits
-clip = awsmfunc.DynamicTonemap(clip) #, placebo_opts=pb_opts)
-
-# simple tonemap
+#awsmfun dynamic tonemap function includes chroma shift
 import vapoursynth as vs
 from vapoursynth import core
 import vsutil as vsutil
-src = core.ffms2.Source("./source-ng.mkv")
-clip = core.std.Trim(src, first=1000, last=1015) # test frames
-clip = core.resize.Spline36(clip, format=vs.YUV444P16) # 16 bit depth
-#clip = vsutil.depth(clip, 16)
-tonemapped_clip = core.placebo.Tonemap(clip=clip, src_csp=1, dst_csp=0, use_dovi=True) # map dst(bt709)
-tonemapped_clip = core.resize.Spline36(tonemapped_clip,
-                                       format=vs.YUV444P16,
-                                       matrix_s="709",
-                                       width=1280,
-                                       height=720)
-final_clip = vsutil.depth(tonemapped_clip, 8, dither_type="error_diffusion")
-final_clip.set_output()
+import awsmfunc
+import math
+
+clip = core.ffms2.Source("REMUX.mkv")
+
+pb_opts = awsmfunc.types.placebo.PlaceboTonemapOpts(use_dovi=True, peak_detect=True)
+clip = awsmfunc.DynamicTonemap(clip, placebo_opts=pb_opts)
 
 awsmfunc.banddtct(clip, thr=200) # check for banding scores for live action 150-200, 10-75 for anime
 awsmfunc.cambidtct(clip) # detect banding scores above 5 - 10 are visual
@@ -43,6 +34,12 @@ radius = 1.0 #16.0
 clip = core.placebo.Deband(clip=clip, planes=planes, threshold=threshold, radius=radius)
 
 awsmfunc.dirtdtct(clip, left=0, right=0, top=0, bottom=0, thr=0.01) # check for dirty lines 0.05(strong) - 0.01(weak) threshhold, tolerance=24
+
+clip = core.std.Splice(clips=[clip1, clip2, clip3, clip4, clip5]) # combine clips
+clip = core.std.Interleave(clips=[clip, clip_og]) # compare clips
+
+clip = awsmfunc.FillBorders(clip, top=1, bottom=1) # fix uneven crop
+clip = awsmfunc.bbmod(clip, top=6, thresh=90, blur=20) # fix dirty lines
 
 # generate DV/hdr10+ (dovi_tool can DV from hdr10+)
 measurements = []
@@ -55,14 +52,44 @@ with open("dovi_generate_config.json", "w") as f:
 with open("hdr10plus_metadata.json", "w") as f:
     json.dump(hdr10plus_json, f, indent=4)
 
+# Add FEL Dovi
+bl = clip
+bl = vsutil.depth(bl, 16)# load src as 16 bit
+bl_w = bl.width
+bl_h = bl.height
 
-clip = core.std.Splice(clips=[clip1, clip2, clip3, clip4, clip5]) # combine clips
-clip = core.std.Interleave(clips=[clip, clip_og]) # compare clips
+el = core.ffms2.Source("/gnu/git/encoding/EL.mkv")
+el = core.resize.Point(el, width=bl_w, height=bl_h, format=vs.YUV420P10) # load EL layer as 10bit
 
-clip = awsmfunc.FillBorders(clip, top=1, bottom=1) # fix uneven crop
-clip = awsmfunc.bbmod(clip, top=6, thresh=90, blur=20) # fix dirty lines
+hdr = core.vsnlq.MapNLQ(bl, el, "/gnu/git/encoding/RPU.bin") # combine and set props
+hdr = hdr.std.SetFrameProps(_Matrix=9, _Primaries=9, _Transfer=16)# crop/resize/filtering after this
 
 clip.set_output() # output to vs-preview-rs
+
+# grain cropped scenes before borders are re-added, since they'll have an effect on frame brightness
+agm = lambda c: adptvgrnMod(c, strength=.1, seed=134756, luma_scaling=100, show_mask=False)
+crp = src.std.Crop(top=280, bottom=278)
+crp = awf.fb(crp, bottom=1)
+crp = awf.bbmod(crp, top=1, bottom=2, planes=0, blur=999, thresh=42)
+y = crp.resize.Point(format=vs.YUV444P16).std.Crop(bottom=1)
+y = y.placebo.Shader("SSimDownscaler.glsl", 1920, 800, filter="mitchell", linearize=0)
+u = plane(crp, 1).resize.Spline36(960, 400, src_height=crp.height / 2 - .5, src_left=-.25)
+v = plane(crp, 2).resize.Spline36(960, 400, src_height=crp.height / 2 - .5, src_left=-.25)
+crp = core.std.ShufflePlanes([y, u, v], [0, 0, 0], vs.YUV)
+crp = agm(crp)
+crp = crp.std.AddBorders(top=140, bottom=140, color=[4096, 32768, 32768])
+# placebo resizing for uncropped scenes
+y = src.placebo.Shader("SSimDownscaler.glsl", 1920, 1080, filter="mitchell", linearize=0)
+u = plane(src, 1).resize.Spline36(960, 540, src_left=-.25)
+v = plane(src, 2).resize.Spline36(960, 540, src_left=-.25)
+src = core.std.ShufflePlanes([y, u, v], [0, 0, 0], vs.YUV)
+src = agm(src)
+# brdrdtct results
+src = awf.rfs(src, crp, "[0 1273] [9333 25753] [25896 41837] [42000 45612] [46394 48895] [50057 50742] [51100 51413] [51732 53182] [54182 62673] [62851 79573] [80018 85505] [85665 107049] [119204 131393] [131557 135342] [135440 139123] [140904 151362] [151588 152021] [152059 152530] [152582 153271] [153508 153719] [153763 157362] [157713 159916] [159965 160020] [160286 161070] [161166 161327] [162425 162649] [162800 168406] [168602 180094] [180368 180438] [180520 181608] [183458 183979] [186813 188118] [188723 189518] [189775 190543] [190890 191027] [191791 204921] [207774 218954]")
+
+# FrameInfo requires Subtext vapoursynth plugin
+src = awf.FrameInfo(src, "Source")
+
 ## Vendored function
 # XXX bright should be a percentage or something
 def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
@@ -199,10 +226,12 @@ done
 #!/usr/bin/env bash
 # encode 8 bit SDR with x265
 CRF="${1}"
+# 10 bit encode 1080p SDR BluRay (no HDR and chromaloc 0)
 vspipe -c y4m ./vs/encode.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 8 --output-depth 8 --rd 4 --ref 6 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 16 --qcomp 0.6 --colorprim bt709 --colormatrix bt709 --transfer bt709 --range limited --vbv-bufsize 160000 --vbv-maxrate 160000 --no-hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf $CRF --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 5 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --no-frame-dup --y4m --output Testing.hevc
 mkvmerge -o "${CRF}.mkv" Testing.hevc
-# example encode 10 bit HDR with x265
+# 10 bit encode UHD BluRay with x265 (HDR and chromaloc 2)
 vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 10 --output-depth 10 --rd 4 --ref 6 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 16 --qcomp 0.6 --master-display "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(40000000,50)" --colorprim bt2020 --colormatrix bt2020nc --transfer smpte2084 --range limited --max-cll "3797,385" --vbv-bufsize 160000 --vbv-maxrate 160000 --hdr10 --hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf $CRF --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 5 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --chromaloc 2 --no-frame-dup --y4m --output Testing.hevc
+# add --dolby-vision-profile 8.1 --dolby-vision-rpu /gnu/git/encoding/RPU_modified.bin for dolby vision (after NLQ/DoviBaker mapping for FEL when applicable)
 #+END_SRC
 * notes
 - Dovi spreasheet info for grade/master check https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview#
@@ -213,6 +242,15 @@ vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --h
   -  VMAF>SSIM>PSNR
   - [[https://github.com/cloudinary/ssimulacra][DSSIM]]
     - patch makefile pkg-config with opencv4
+- YUV
+  - Chroma (Y)
+    - changes the color difference range between
+  - red-blue difference (U/V)
+    - shift color without changing brightness
+- Y'CbCr
+  - Y' is the luma/brightness
+    - Y is chroma
+  - Cb/Cr are red-blue difference
 ** AACS v2
 - intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
   - https://media.ccc.de/v/37c3-12296-full_aacsess_exposing_and_exploiting_aacsv2_uhd_drm_for_your_viewing_pleasure
@@ -609,7 +647,7 @@ Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infoto
 UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
 Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
 For HDR to SDR tonemap screens for colors, gamut compression BT.2407, bit depth reduction to 8bits, change container from H.265 to H.264
-Dolby Vision is 12 bit with high dynamic range and metadata
+Dolby Vision is 12 bit with high dynamic range and metadata. FEL can enhance grain/details. MEL otherwise.
 HDR10+ is 10 bit with high dynamic range
 HDR is 10 bit and static
 
@@ -624,6 +662,7 @@ Lossless DTS for 1080p (DTS passthrough)
 TrueHD - can convert to flac for compat (AC3 stream inside for compat), encode with 'Dolby Encoding Engine'
 DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
 extract core with eac3to or ~ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts~
+Downmix and transcode to opus at 80Kbs ~ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus~
 PCM - Bluray
 
 ** ffmpeg
@@ -631,11 +670,14 @@ PCM - Bluray
 - Remove Captions ~ffmpeg -i input.mkv -codec copy -bsf:v "filter_units=remove_types=6" output.mkv~
 ** HEVC/AVC
 *** x265
-x265 --crf 18 --preset slower --profile main10 --output-depth 10 --rc-lookahead 60 --ctu 32 --frame-threads 1 --no-sao --deblock -2:-2 --qcomp 0.65 --aq-mode 3 --ref 6 --bframes 8
-x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 10 --output-depth 10 --rd 4 --ref 5 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 12 --qcomp 0.6 --master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" --colorprim bt2020 --colormatrix bt2020nc --transfer smpte2084 --range limited --max-cll "729,159" --vbv-bufsize 160000 --vbv-maxrate 160000 --hdr10 --hdr10-opt --repeat-headers --hrd --aud --deblock -3:-3 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf 15 --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 4 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --chromaloc 2 --no-frame-dup --dolby-vision-profile 8.1 --dolby-vision-rpu "RPU_modified.bin" --y4m --output Testing.hevc -- 2> Testing.log
-changes to above args: --ref 6 --max-merge 5 --psy-rdoq 2 --ipratio 1.4 --pbratio 1.3 --aq-mode 3 --aq-strength 0.85 --qcomp 0.65
+x265 --crf 18 --preset slower --profile main10 --output-depth 10 --rc-lookahead 60 --ctu 32 --frame-threads 1 --no-sao --deblock -2:-2 --qcomp 0.65 --aq-mode 3 --ref 6 --bframes 16 --merange 38
+x265 --y4m - --preset slow --level-idc 5.1 --high-tier --input-depth 10 --output-depth 10 --rd 4 --ref 5 --psy-rd 2 --psy-rdoq 1 --no-rect --no-amp --aq-mode 4 --no-hevc-aq --aq-strength 0.9 --ctu 64 --ipratio 1.3 --pbratio 1.2 --no-cutree --rc-lookahead 40 --subme 5 --me 3 --merange 57 --bframes 12 --qcomp 0.6 --master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" --colorprim bt2020 --colormatrix bt2020nc --transfer smpte2084 --range limited --max-cll "729,159" --vbv-bufsize 160000 --vbv-maxrate 160000 --hdr10 --hdr10-opt --repeat-headers --hrd --aud --deblock -2:-2 --no-sao --selective-sao 0 --strong-intra-smoothing --rskip 0 --crf 15 --limit-modes --limit-refs 1 --limit-tu 4 --max-merge 4 --tu-intra-depth 4 --tu-inter-depth 4 --b-intra --weightb --no-pmode --chromaloc 2 --no-frame-dup --dolby-vision-profile 8.1 --dolby-vision-rpu "RPU_modified.bin" --y4m --output Testing.hevc -- 2> Testing.log
+changes to above args: --ref 6 --max-merge 5 --psy-rdoq 2 --ipratio 1.4 --pbratio 1.3 --aq-mode 3 --aq-strength 0.85 --qcomp 0.65 --deblock -3:-3
 aq-mode 2 aq-strength 1
-crf 16 - 18 for quality, crf 20-22 for speed
+
+aq-mode 4 or 3 for SDR (blocking in dark scenes), aq-mode 2 for HDR
+
+crf 14 - 18 for quality, crf 19-22 for speed
 
 mapping with
 --colorprim bt2020 --colormatrix bt2020nc --transfer smpte-st-2084 --max-cll
@@ -657,6 +699,33 @@ min: 0.0001 cd/m2, max: 1000 cd/m2 => L(10000000,1)
 min:0.0050 cd/m2, max: 4000 cd/m2 => L(40000000,50)
 
 --max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level
+
+Extract EL layer ~ffmpeg -i "Remux.mkv" -c:v copy -vbsf hevc_mp4toannexb -f hevc - | dovi_tool demux --el-only -~
+extract the RPU ~dovi_tool -m 0 extract-rpu EL.hevc~
+crop dolby ~dovi_tool editor RPU.bin -j edits.json~
+#+NAME: edits.json
+#+BEGIN_SRC json :tangle no
+{
+"mode": 2,
+  "active_area": {
+      "crop": true,
+      "presets": [
+          {
+              "id": 0,
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0
+          }
+      ],
+      "edits": {
+          "all": 0
+      }
+  }
+}
+#+END_SRC
+L5 metadata offset black bars are 132 top and bottom for 1080p. 2x for 4k. 0 when cropped/non Imax.
+~dovi_tool plot RPU.bin -t "Dolby_Vision_L1_el" -o L1_el.png~
 ** AVC
 *** x264
 
@@ -824,6 +893,7 @@ The following settings, for now, probably don't merit an in-depth explanation as
 - ~scm=1~ hurts performance but improves efficency
 - crf ~SvtAv1EncApp --passes 2 --rc 0 --crf 18 -b dest_filename -i src_filename~
 - supports hdr ~enable-hdr~
+- ex. Video : 1080p AV1 10bit @ 3153kbps | Constant Quality: 17 | Grain Synthesis: 16 / Audio : English Opus 5.1 @ 374kbps / Enc Args : -e aom -v "--cpu-used=4 --end-usage=q --cq-level=21 --bit-depth=10 --threads=2 --tune=ssim --tune-content=psy --lag-in-frames=48 --denoise-noise-level=22 --deltaq-mode=6 --disable-kf --kf-max-dist=9999 --enable-cdef=0 --enable-qm=1 --qm-min=2 --qm-max=8"
 ** ripping
 *** tools
 - AnyDVDHD (redfox) free trail
@@ -850,3 +920,67 @@ youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cook
 - If the above doesn’t work, start again with default settings, load the main movie m2ts and select M2TS muxing, then on the Split & Cut tab select Enable cutting, try initially with Start = 0:05:00.000 and End = 0:06:00.000, check the byte size against whats in srrdb.com 1, if no match then try again with Start = 0:06:00.000 and End = 0:07:00.000, or any other 60 second block in the first 10 min of the movie. Extend the End time by a few seconds if the byte size is a little short.
 - Try different versions of tsmuxer, you should eventually get the correct sample file with same crc32.
 - Samples are usually taken from within the first 10 min of the movie.
+** tv
+- Secret life of zoo
+S01E01-S01E06 is same
+Secret life of zoo animal planet vs amazon
+
+S02E01-S02E06 is same
+
+S02E07 is S03E07
+S02E08 is S03E01
+S02E09 is S03E02
+S02E10 is S03E03
+S02E11 is S03E04
+S02E12 is S03E05
+S03E01 is S03E06
+
+
+S03E02 is S04E01
+S03E03 is S04E02
+S03E04 is S03E03
+S03E05 is S04E04
+S03E06 is S04E05
+S04E17 is S04E06
+S03E07 is S04E07
+S03E08 is S04E08
+S03E09 is S04E09
+S03E10 is S04E10
+
+S03E11 is S05E01
+S03E12 is S05E02
+S03E13 is S05E03
+S03E14 is S05E04
+S03E15 is S05E05
+S03E16 is S05E06
+
+
+S04E01 is S06E01
+S04E02 is S06E02
+S04E14 is S06E03
+MISSING S06E04 https://www.channel4.com/programmes/the-secret-life-of-the-zoo/on-demand/68011-004
+S04E03 is S06E05
+S04E04 is S06E06
+S04E05 is S06E07
+S04E16 is S06E08
+
+S04E06 is S07E01
+S04E07 is S07E02
+S04E08 is S07E03
+S04E09 is S07E04
+S04E10 is S07E05
+S04E11 is S07E06
+S04E12 is S07E07
+
+S04E15 is S08E01
+S05E01 is S08E02
+S05E02 is S08E03
+S05E03 is S08E04
+S05E04 is S08E05
+S05E05 is S08E06
+
+MISSING S08E07 SPECIAL?
+
+S05E06 is S09E01
+
+S04E13 is SPECIAL

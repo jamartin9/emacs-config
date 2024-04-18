@@ -18,3 +18,4 @@
   - nzbget for downloading binaries
     - default user/pass nzbget/tegbzn6789 for web login on port 6789
   - gnus for reading posts
+- Add all servers (EU and US) for all providers

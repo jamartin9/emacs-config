@@ -17,14 +17,28 @@
   - firmware level malware (disk controller, usb controller, flashable uefi/bios etc)
   - side channel data transmission such as AM https://github.com/fulldecent/system-bus-radio or differential power analysis
   - printers watermark pages and refuse to print without yellow ink
-- Commonly defective (cheap companies and lack of quality control even with standards)
-  - HDMI cables (no hdcp, artifacts and non spec bandwidth limits)
-  - USBC charging (will not charge certain devices and can even damage ex. Nintendo Switch)
-    - lacking resistors usually to inform device of power
-  - refurbished drives (smart data wiped)
-    - fake drives sold on amazon/walmart/ebay with custom firmware to trick os
-  - Used GPUs (cryptocurreny mining wear and cheap factory solder)
-
+** defective
+  - Commonly defective (cheap companies and lack of quality control even with standards)
+    - HDMI cables (no hdcp, artifacts and non spec bandwidth limits)
+    - USBC charging (will not charge certain devices and can even damage ex. Nintendo Switch)
+      - lacking resistors usually to inform device of power
+    - refurbished drives (smart data wiped)
+      - fake drives sold on amazon/walmart/ebay with custom firmware to trick os
+    - Used GPUs (cryptocurreny mining wear and cheap factory solder)
+** keyboards/switches
+  - german cherry mx factory testing for switches https://youtu.be/Pu1gP4PfqCQ?t=240
+    - brown switches are 45g for actuation, 55 for bottom out
+  - Taiwanese Ducky Shine 4
+    - firmware and processor on board
+    - hold the Fn key and press the f10 key for lighting cycle
+    - https://www.duckychannel.net/download/user_manual/Ducky_Shine_4_UserManual.pdf
+** firmware
+*** libreboot
+    - Dell latitude 6530 requires me-cleaner injected into release
+      - injection script in lbmk disables me automatically
+      - thermal/power issues when workload is started quickly after boot (compiling code)
+        - reverted back to stock firmware
+    - seabios with grub rom requires escape key for grub boot menu
 ** GPS
   - CoCom Limits is the limit placed on GPS devices that disables tracking when it is faster than 1,000 knots and/or an higher than 18,000m.
     - Intended to prevent GPS in intercontinental ballistic missile applications.
@@ -62,7 +76,7 @@
   - 32/64/128(wip) address spaces
   - 32 (16 embeded) int registers
   - 32 floating point registers
-
+- Instructions are decoded into micro ops from bit patterns and executed via ports
 ** sim
 - Breadboard
   - simulation https://www.withdiode.com/

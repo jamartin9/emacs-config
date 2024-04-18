@@ -10,7 +10,7 @@
 * ZFS
 ** openzfs
 *** install
-- If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
+- (This may break pool import) If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
   That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
   ~mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX~ and
   ~grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1~.
@@ -65,8 +65,8 @@
 - ~zpool attach POOL EXISTING_DEVICE_ID NEW_DEVICE_ID~ to create a mirror
 - ~zfs set xattr=sa~
 - ~zfs set acltype=posixacl~
-- ~zpool set feature@large_blocks=enable ztank~ to enable larger blocks
-- ~zpool set feature@encryption=enable ztank~ to enable encryption
+- ~zpool set feature@large_blocks=enabled ztank~ to enable larger blocks
+- ~zpool set feature@encryption=enabled ztank~ to enable encryption
 - ~zfs set canmount=noauto ztank/dataset~ to disable auto mounting
 - relatime for normal timestamps
 - SLOG requires devices that will write data on power loss

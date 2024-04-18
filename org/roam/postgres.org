@@ -32,3 +32,11 @@
 - foreign data wrappers
   - [[https://github.com/supabase/wrappers][rust examples]]
 - [[https://github.com/supabase/realtime][WAL streaming]]
+*** replication
+- Network attached storage (EBS) for Database
+- Read replicas (writes lag)
+- DBMS optimized (Neon/Aurora/alloydb) streaming WAL and reading from replicated pages.
+- Active-active (any node accepts writes causing disjoint reads)
+- Sharding (citius) requires application change to query shard/tenant for low latency
+- Spanner/Distributed KV (Yugabyte/CockroachDB) not actually postgres (just protocol), no local joins
+

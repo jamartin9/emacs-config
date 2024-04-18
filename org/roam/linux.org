@@ -17,6 +17,12 @@ Finally some hardware support!
   - io-uring-spawn for process launching
 - ~/proc/cpuinfo~  for model
 - abi tracker https://abi-laboratory.pro/?view=timeline&l=linux
+- ~/etc/sysctl.d/90-override.conf~ changes
+  - ~net.core.rmem_max = 4194304~ for UDP transmission receive buffer
+  - ~net.core.wmem_max = 1048576~ for UDP transmission send buffer
+  - ~vm.max_map_count = 2147483642~ increase memory maps for certain games/apps
+    - ~fs.inotify.max_user_watches=524288~ podman log line?
+    - ~fs.inotify.max_user_instances=512~ podman log line?
 ** pam
 ** misc
 - ~faillock --user $USER --reset~ for attempt reset
