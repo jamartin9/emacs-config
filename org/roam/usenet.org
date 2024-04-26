@@ -9,6 +9,8 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * usenet
 ** usenet notes
+- not for mail header
+- alt.bin has attachments of binaries
 - usenet archives
   - nzb files
   - [[https://usenet.farm/][free usenet provider]] to test
@@ -17,5 +19,20 @@
     - paired with posts to help repairability of missing files
   - nzbget for downloading binaries
     - default user/pass nzbget/tegbzn6789 for web login on port 6789
+    - set ParCheck to Force to enable all pars to download (so provider can retain)
   - gnus for reading posts
+  - diablo for running newservers
 - Add all servers (EU and US) for all providers
+- Newsgroupdirect/Newsdemon have extra storage not shared with usenetexpress backbone of recent articles
+  - IHAVE with usenetexpress to submit old articles https://www.usenetexpress.com/blog/post/20211015_ihave/
+    - nyuu has IHAVE support (dont randomize name or use raw-article flag)
+  - open peering with usenet express https://usenetexpress.com/peering/
+- usenet data stats https://top1000.anthologeek.net/#stats
+- independent backbones
+  - usenet express
+  - usenet farm
+  - netnews (frugal/blocknews/usenetnow)
+- omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)
+- provider tree
+  -  https://www.reddit.com/r/usenet/comments/lwupx3/updated_usenet_provider_map/
+    - 03/31/2024 https://svgshare.com/s/14tF.svg

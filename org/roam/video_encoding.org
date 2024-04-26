@@ -90,6 +90,26 @@ src = awf.rfs(src, crp, "[0 1273] [9333 25753] [25896 41837] [42000 45612] [4639
 # FrameInfo requires Subtext vapoursynth plugin
 src = awf.FrameInfo(src, "Source")
 
+# Random matching frame types for comparisons
+print(awsmfunc.RandomFrameNumbers(clip=src, clips=[compare], ftypes_first="B", max_attempts=500, num=3, ftypes="B")) # change ftype to P if failing
+
+# requires EEDI3M plugin and vivtc plugin to decimate dupe frame
+import functools
+
+def postprocess(n, f, clip, deinterlaced):
+   if f.props['_Combed'] > 0:
+      return deinterlaced
+   else:
+      return clip
+
+input_clip = src
+matched_clip = vs.core.vivtc.VFM(input_clip, 1)
+deinterlaced_clip = vs.core.eedi3m.EEDI3(matched_clip, field=1)
+postprocessed_clip = vs.core.std.FrameEval(matched_clip, functools.partial(postprocess, clip=matched_clip, deinterlaced=deinterlaced_clip), prop_src=matched_clip)
+decimated_clip = vs.core.vivtc.VDecimate(postprocessed_clip)
+decimated_clip.set_output()
+
+
 ## Vendored function
 # XXX bright should be a percentage or something
 def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
@@ -657,7 +677,7 @@ WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter)
 
 Audio options:
 AAC for directors (usually 2.0 channel)
-Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p, uses dialnorm tho that lowers db range compared to DTS
+Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p, uses dialnorm tho that lowers db range compared to DTS. DD+ with dolby encoding engine and https://github.com/pcroland/deew (windows version for truehd encoding)
 Lossless DTS for 1080p (DTS passthrough)
 TrueHD - can convert to flac for compat (AC3 stream inside for compat), encode with 'Dolby Encoding Engine'
 DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
@@ -701,7 +721,7 @@ min:0.0050 cd/m2, max: 4000 cd/m2 => L(40000000,50)
 --max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level
 
 Extract EL layer ~ffmpeg -i "Remux.mkv" -c:v copy -vbsf hevc_mp4toannexb -f hevc - | dovi_tool demux --el-only -~
-extract the RPU ~dovi_tool -m 0 extract-rpu EL.hevc~
+extract the RPU ~dovi_tool -m 0 extract-rpu EL.hevc~ for EL or ~ffmpeg -i input.mkv -c:v copy -bsf:v hevc_mp4toannexb -f hevc - | dovi_tool extract-rpu - -o RPU.bin~ for profile 8
 crop dolby ~dovi_tool editor RPU.bin -j edits.json~
 #+NAME: edits.json
 #+BEGIN_SRC json :tangle no

@@ -26,6 +26,21 @@ Simulate the simulation
 #+BEGIN_SRC shell :tangle no
 #!/usr/bin/env bash
 qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::8081-:8081,hostfwd=tcp::8080-:8080 -enable-kvm -m 2570 -device virtio-blk,drive=myhd -drive if=none,file=/My-image.qcow2,id=myhd -spice port=5930,disable-ticketing
+
+qemu-system-x86_64 -enable-kvm \
+        -cpu host \
+        -drive file=WindowsVM.img,if=virtio \
+        -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:9022 \
+        -m 4G -vga qxl -spice port=5930,disable-ticketing=on \
+        -audiodev alsa,id=snd0,out.try-poll=off -device ich9-intel-hda -device hda-output,audiodev=snd0 \
+        -name "Windows" \
+        "$@"
+#        -monitor stdio \
+        #-audio driver=sdl,model=virtio \
+# use cdrom drive and add virtio drivers
+#./run-windows.sh -boot d -drive file=w10prox64.iso,media=cdrom -drive file=virtio-win-0.1.240.iso,media=cdrom # https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md for kvm virtio drivers
+# -device virtio-sound-pci,audiodev=my_audiodev -audiodev alsa,id=my_audiodev
+
 #+END_SRC
 - firecracker
   - 5.10 lts kernel

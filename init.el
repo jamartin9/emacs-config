@@ -254,8 +254,8 @@
 
 (use-package calc
   :ensure nil ; built-in
-  :commands (calc calc-algebraic-entry)
-  :config (with-temp-buffer (calc))
+  :commands (calc calc-algebraic-entry) ; a S to solve for var ex. x=y+1
+  :config (with-temp-buffer (calc)); calc-graph-fast ex. [0..10] then x+1 on stack
   :bind (:map jam/open ("a" . calc-algebraic-entry)))
 
 (use-package proced
@@ -340,6 +340,7 @@
 
 (use-package flymake ; add flycheck backends?
   :ensure nil ; built-in
+  :config (setq flymake-indicator-type 'margins)
   :commands (flymake-mode))
 
 (use-package flymake-guile ; guile/guild
@@ -651,13 +652,14 @@
    ;gnus-always-read-dribble-file t
    gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
-   gnus-select-method '(nnnil "")
+   gnus-select-method '(nnnil ""); nnatom added in 30
    gnus-secondary-select-methods '((nnimap "riseup"
                                            (nnimap-address "mail.riseup.net")
                                            (nnimap-server-port 993)
                                            (nnimap-stream ssl)
                                            (nnir-search-engine imap)
                                            (nnmail-expiry-wait 90))
+                                   ;(nntp "news.newsgroupdirect.com"); Shift 6 to list all groups after username/password prompt
                                    (nnimap "gmail"
                                            (nnimap-address "imap.gmail.com")
                                            (nnimap-server-port 993)

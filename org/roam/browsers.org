@@ -144,6 +144,7 @@ self.addEventListener('fetch', function(e) {
 - http://ghostarchive.org/
 - xrel.to
 - srrdb
+- https://btdig.com/
 ** alternative frontends
 - youtube
   - [[https://piped.video/trending][piped.video]]
@@ -164,3 +165,7 @@ self.addEventListener('fetch', function(e) {
 - sanet.st
 - https://annas-archive.org/
 - https://search.rlsbb.cc/
+- https://nibl.co.uk/bots (Rizon)
+- https://animk.info/xdcc (Xertion)
+- https://subsplease.org/ (Rizon)
+- audioz.download

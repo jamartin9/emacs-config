@@ -11,9 +11,9 @@
 ** notes
 - entirely too many hours wasted arguing about imaginary property
 - mostly moot as enforcement is sparse/scarce and trolling is high
-- US software patents are not really applicable to the eu
+- US software patents are not really applicable to the eu (ex. france and x264)
 - arbitrary stifling as licenses/patents mean little to china/russia/iran/etc
-- DMCA
+- DMCA/NTD
   - circumvention of arbitrary controls/locks on things you *OWN* is illegal and punishable by fines and incarceration
     - applied to cars, phones, video games, TVs, streaming services, etc
   - 'Fair Use' is willfully ignored
