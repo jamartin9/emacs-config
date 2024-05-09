@@ -101,7 +101,7 @@
                                              ;"ripgrep" ;"fd"
                                              "git"
                                              "nss-certs"
-                                             "aspell-dict-en"
+                                             ;"aspell" "aspell-dict-en"
                                              ;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
                                              "gnupg"
                                              "password-store" "pass-otp"
@@ -953,21 +953,8 @@ installation-os-nonfree
 #+NAME: guix-os-snips-nvidia
 #+BEGIN_SRC scheme :tangle no
   ;; nvidia service
-  (define nvidia-service-type
-    (service-type
-     (name 'nvidia)
-     (extensions
-      (list
-       (service-extension linux-loadable-module-service-type ;; add kernel module
-                                 (const (list nvidia-driver)))
-       (service-extension kernel-module-loader-service-type ;; load kernel module
-                                 (const '("ipmi_devintf" "nvidia" "nvidia_modeset" "nvidia_uvm")))
-       (service-extension udev-service-type (const (list nvidia-driver))))) ;; add udev rule
-     (default-value '())
-     (description "Install nvidia kernel module, service and udev rule")))
-
-  (define nvidia-transform (options->transformation '((with-graft . "mesa=nvda"))))
-
+  (use-modules (nongnu services nvidia) (nongnu packages nvidia))
+  ;(service nvidia-service-type)
   (define %nvidia-xorg-config ;; nvidia xorg configuration
     "Section \"Device\"
 	Identifier     \"Device0\"
@@ -975,16 +962,15 @@ installation-os-nonfree
 	VendorName     \"NVIDIA Corporation\"
 	BoardName      \"GeForce GTX 1050 Ti\"
     EndSection")
-    ;(append %default-kernel-arguments ("modprobe.blacklist=nouveau"))
+    ;(append %default-kernel-arguments ("modprobe.blacklist=nouveau" "nvidia_drm.modeset=1"))
     ;(xorg-configuration
     ;  (xorg-configuration
     ;    (modules (cons* nvidia-driver ;; nvidia-xorg
     ;        %default-xorg-modules))
-    ;    (server (nvidia-transform xorg-server)) ; mesa to nvda graft
+    ;    (server (nvidia-transform xorg-server)) ; mesa to nvda graft, graft-mesa to gnome/xfce/kde
 	;    (drivers '("nvidia"))
     ;    (extra-config (list %nvidia-xorg-config))
-    ;    (keyboard-layout keyboard-layout)))
-    ;(service nvidia-service-type)
+    ;    (keyboard-layout keyboard-layout))
 #+END_SRC
 *** hardware wifi
 #+NAME: guix-os-snips-broadcom

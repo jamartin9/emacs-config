@@ -107,6 +107,7 @@ self.addEventListener('fetch', function(e) {
       - WebGPU flag ~--enable-features=Vulkan~
     - builtin tor, ad block
     - disable wallet, sidebar
+    - F12 Dev Tools -> Ctrl+Shift+P -> type 'shot' for screen capture options
   - ungoogled-chromium
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]
@@ -169,3 +170,4 @@ self.addEventListener('fetch', function(e) {
 - https://animk.info/xdcc (Xertion)
 - https://subsplease.org/ (Rizon)
 - audioz.download
+- https://www.binsearch.info/

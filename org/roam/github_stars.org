@@ -1268,6 +1268,8 @@
   - Dolby Encoding Engine Wrapper
 ** PCSX2/pcsx2
   - PCSX2 - The Playstation 2 Emulator
+** pcwalton/offset-allocator
+  - A port of Sebastian Aaltonen's `OffsetAllocator` to Rust
 ** pgmodeler/pgmodeler
   - Open-source data modeling tool designed for PostgreSQL. No more typing DDL commands. Let pgModeler do the work for you!
 ** phoenixframework/phoenix_live_view
@@ -1491,6 +1493,8 @@
 ** spaceflint7/bluebonnet
   - Implementation of the .NET platform on top of the Java Virtual Machine
 ** spdk/spdk
+  - Storage Performance Development Kit. (Userspace nvme driver)
+** spdk/spdk
   - Storage Performance Development Kit
 ** Speedi13/ROP-COMPILER
   - ROP based CSGO, BF3, BF4 cheat
@@ -1648,6 +1652,8 @@
   - Wine-wayland allows playing DX9/DX11 and Vulkan games using pure wayland and Wine/DXVK.
 ** vector-im/element-web
   - A glossy Matrix collaboration client for the web.
+** verus-lang/verus
+  - Verified Rust for low-level systems code (contracts)
 ** Victorwz/LongMem
   - adding long term memory to LLMs
 ** virtual-kubelet/virtual-kubelet
@@ -1662,6 +1668,8 @@
   - mod_wasm is an extension module for the Apache HTTP Server (httpd) that enables the usage of WebAssembly (Wasm). This module will allow to execute certain tasks in the backend in a very efficient and secure way.
 ** vmware-labs/wasm-workers-server
   - A WebAssembly framework to develop and run serverless applications
+** vmware-research/verifiable-controllers/
+  - This is a VMware Research Group project. It is an experimental framework to build practical, formally verified, cluster management controllers.
 ** vmware/chap
   - chap analyzes un-instrumented core files for leaks, memory growth, and corruption
 ** vosen/ZLUDA

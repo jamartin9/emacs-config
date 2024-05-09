@@ -1,5 +1,4 @@
 ;;; init.el -*- lexical-binding: t; -*-
-
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
 (bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
            ("j" . xref-find-definitions)
@@ -55,18 +54,22 @@
            ("K" . save-buffers-kill-emacs))
 (bind-keys :prefix-map jam/notes :prefix "C-c c n")
 
-;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
-(use-package emacs ; built-in
-  :bind (("<M-up>" . jam/move-line-up)
-         ("<M-down>" . jam/move-line-down)
-         ("<M-left>" . jam/move-word-left)
-         ("<M-right>" . jam/move-word-right)
+(use-package emacs ; built-in ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
+  :hook (((prog-mode text-mode) . (lambda () (setq show-trailing-whitespace t)))
+         (tty-setup . xterm-mouse-mode)
+         (after-init . (lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
+                         (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
+                               default-file-name-handler-alist nil))))
+  :bind (("<M-up>" . (lambda () (interactive) (transpose-lines 1) (forward-line -2))); move line up
+         ("<M-down>" . (lambda () (interactive) (forward-line 1) (transpose-lines 1) (forward-line -1))); move line down
+         ("<M-left>" . (lambda () (interactive) (transpose-words -1))); move word left
+         ("<M-right>" . (lambda () (interactive) (transpose-words 1)));move word right
          ("C-+" . text-scale-increase)
          ("C--" . text-scale-decrease)
          :map ctl-x-map ("C-S-s" . jam/save-all)
          :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer)
          :map help-map ("D" . shortdoc)
-         :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control)
+         :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control) ; winner-mode?
            ("w" . windmove-up)
            ("a" . windmove-left)
            ("s" . windmove-down)
@@ -74,17 +77,33 @@
            ("f" . select-frame-by-name)
            ("o" . other-frame)
          :map minibuffer-local-completion-map
-           ("<mouse-1>" . jam/fido-click); (choose-completion event) ?
-           ("C-TAB" . icomplete-fido-ret)
-           ("C-<tab>" . icomplete-fido-ret)
-           ("S-TAB" . icomplete-backward-completions) ; wraparound?
-           ("<backtab>" . icomplete-backward-completions)
-           ("TAB" . icomplete-forward-completions)
-           ("<tab>" . icomplete-forward-completions)
-           ("<mouse-4>" . icomplete-backward-completions)
-           ("<wheel-up>" . icomplete-backward-completions)
-           ("<mouse-5>" . icomplete-forward-completions)
-           ("<wheel-down>" . icomplete-forward-completions))
+         ("<mouse-1>" . (lambda () (interactive "e"); call the completion candidate at the row location of EVENT in the minibuffer (choose-completion event ?)
+                          (with-selected-window (active-minibuffer-window)
+                            (when-let ((object (posn-object (event-end event)))
+                                       (colrow (posn-col-row (event-end event)))
+                                       ((and (consp object) (>= (cdr colrow) 1)))
+                                       ((>= (cdr colrow) 1))
+                                       (cand (car (split-string (nth (- (cdr colrow) 1) (split-string (car object) "[\n\r]+" t "[ ]+"))))))
+                              (if (string-search "Find file:" (minibuffer-prompt))
+                                  (progn ; replace end of directory with candidate
+                                    (let* ((revd-str (reverse (buffer-substring (minibuffer-prompt-end) (point))))
+                                           (end-index (or (seq-position revd-str ?/) (seq-position revd-str ?\\)))
+                                           (cand (if end-index (concat (buffer-substring (minibuffer-prompt-end) (- (point) end-index)) cand) cand)))
+                                      (delete-minibuffer-contents); clear and insert candidate
+                                      (insert (format "%s" cand))))
+                                (delete-minibuffer-contents)
+                                (insert (format "%s" cand)))
+                              (minibuffer-complete-and-exit)))))
+         ("C-TAB" . icomplete-fido-ret)
+         ("C-<tab>" . icomplete-fido-ret)
+         ("S-TAB" . icomplete-backward-completions) ; wraparound?
+         ("<backtab>" . icomplete-backward-completions)
+         ("TAB" . icomplete-forward-completions)
+         ("<tab>" . icomplete-forward-completions)
+         ("<mouse-4>" . icomplete-backward-completions)
+         ("<wheel-up>" . icomplete-backward-completions)
+         ("<mouse-5>" . icomplete-forward-completions)
+         ("<wheel-down>" . icomplete-forward-completions))
   :init (setq backup-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
               auto-save-list-file-prefix (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "auto-save-list") ".saves-")
               recentf-save-file (expand-file-name "recentf" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
@@ -202,10 +221,10 @@
               initial-scratch-message nil
               default-input-method nil
               xref-search-program 'ripgrep ; replace grep with ripgrep
+              enable-local-variables :all ; RISKY
               inhibit-startup-screen t
               inhibit-startup-echo-area-message user-login-name
               inhibit-default-init t)
-
   (if (native-comp-available-p)
       (progn
         (startup-redirect-eln-cache (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
@@ -214,34 +233,24 @@
               native-comp-async-report-warnings-errors nil
               native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
               native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
-
-  (if (not (memq window-system '(android))) ; old android builds do not enable gnutls (sourceforge build w/termux for utils)
+  (if (not (memq window-system '(android))) ; old fdroid android builds do not enable gnutls. Use sourceforge build w/termux for utils https://sourceforge.net/projects/android-ports-for-gnu-emacs/files/termux/ ex. emacs-30.0.50-29-arm64-v8a.apk
       (progn
         (setq menu-bar-mode nil) ; disable menu-bar on non android
         (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
-    ;; set android termux paths for call-process
-    (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin" (getenv "PATH")))
+    (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin" (getenv "PATH"))) ;; set android termux paths for call-process
     (setenv "LD_LIBRARY_PATH" (format "%s:%s" "/data/data/com.termux/files/usr/lib" (getenv "LD_LIBRARY_PATH")))
     (push "/data/data/com.termux/files/usr/bin" exec-path))
-
   (setq-default indent-tabs-mode nil
                 tab-width 4
                 tab-always-indent 'complete
                 word-wrap t)
-  (add-hook 'prog-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
-  (add-hook 'text-mode-hook #'(lambda () (setq show-trailing-whitespace t)))
   (fido-vertical-mode 1) ; M-j to ignore completion
   (cua-mode 1)
   (window-divider-mode 1)
   (display-time-mode 1)
   (delete-selection-mode 1)
-  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-  (add-hook 'after-init-hook #'(lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
-                                 (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
-                                       default-file-name-handler-alist nil)))
   (run-with-idle-timer 15 t (lambda () (garbage-collect))) ; collect gc every 15s while idle
-  (blink-cursor-mode -1)
-  ;(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
+  (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
   (electric-pair-mode 1) ; less typing
   (context-menu-mode 1); mouse right click menu
   (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
@@ -285,16 +294,15 @@
 (use-package org
   :ensure nil ; built-in
   :commands (org-mode org-agenda org-capture org-todo-list org-id-update-id-locations)
-  :init (setq org-timer-default-timer 60
-              org-src-tab-acts-natively nil
-              org-edit-src-content-indentation 0)
+  :config (setq org-timer-default-timer 60
+                org-src-tab-acts-natively nil
+                org-edit-src-content-indentation 0)
   :bind (:map jam/notes
               ("D" . org-id-update-id-locations)
               ("t" . org-todo-list)
               ("a" . org-agenda)))
 
-;; M-j newline in regex
-(use-package dired
+(use-package dired ;; M-j newline in regex
   :ensure nil ; built-in
   :config (setq dired-dwim-target t
                 dired-hide-details-hide-symlink-targets nil
@@ -308,12 +316,11 @@
 (use-package guix ; guix
   :config (require 'guix-autoloads)
   (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
-  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"))
-  ;(guix-emacs-autoload-packages); set EMACSLOADPATH
+  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"));(guix-emacs-autoload-packages); set EMACSLOADPATH
   :commands (guix-popup guix-set-emacs-environment))
 
 (use-package geiser ; guile
-  :init (add-hook 'scheme-mode-hook #'geiser-mode)
+  :hook ((scheme-mode . geiser-mode))
   :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
   :config
   (setq geiser-repl-per-project-p t
@@ -322,9 +329,7 @@
   (require 'geiser-guile)); geiser call per buffer?
 
 (use-package macrostep-geiser ; guile
-  :init
-  (add-hook 'geiser-mode-hook #'macrostep-geiser-setup)
-  (add-hook 'geiser-repl-mode-hook #'macrostep-geiser-setup)
+  :hook (((geiser-mode geiser-repl-mode) . macrostep-geiser-setup))
   :commands (macrostep-geiser-setup))
 
 (use-package geiser-guile ; guile
@@ -366,7 +371,7 @@
 
 (use-package undo-tree
   ;:pin gnu
-  :init (add-hook 'after-init-hook #'global-undo-tree-mode)
+  :hook ((after-init . global-undo-tree-mode))
   :commands (global-undo-tree-mode)
   :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
   :config (setq undo-tree-visualizer-diff t
@@ -390,36 +395,32 @@
   :ensure nil ; built-in ; info:auth#The Unix password store
   :after pass
   :config (setq password-store-password-length 12)
-          (auth-source-pass-enable))
+  (auth-source-pass-enable))
 
 (use-package newsticker
   :ensure nil ; built-in
   :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
-  :bind (:map newsticker-treeview-item-mode-map ("d" . jam/newsticker-download)
-         :map jam/open ("n" . newsticker-treeview)
-         :map jam/toggle ("n" . newsticker-stop))
+  :bind (:map jam/open ("n" . newsticker-treeview)
+         :map jam/toggle ("n" . newsticker-stop)
+         :map newsticker-treeview-item-mode-map ("d" . (lambda () (interactive); Download the current newsticker enclosure to tmpdir/newsticker/feed/title
+                                                         (let* ((item (newsticker--treeview-get-selected-item))
+                                                                (feedname "newsticker")
+                                                                (title (newsticker--title item))
+                                                                (enclosure (newsticker--enclosure item))
+                                                                (download-dir (file-name-as-directory
+                                                                               (expand-file-name (newsticker--title (newsticker--treeview-get-selected-item))
+                                                                                                 (expand-file-name feedname (expand-file-name "newsticker" temporary-file-directory))))))
+                                                           (newsticker-download-enclosures feedname item)
+                                                           (message download-dir)))))
   :init
   (setq newsticker-frontend 'newsticker-treeview
         newsticker-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "newsticker")
         newsticker-automatically-mark-items-as-old nil
         newsticker-automatically-mark-visited-items-as-old t
         newsticker-url-list-defaults nil
-        newsticker-url-list '(("Guix" "https://guix.gnu.org/feeds/blog.atom") ; supports atom feeds unlike gnus
-                              ("Lwn" "https://lwn.net/headlines/newrss") ; https://cacm.acm.org/feed/
-                              ("Tor" "https://blog.torproject.org/rss.xml")
-                              ("emacs-tags" "https://github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
-                              ("openwrt-release" "https://github.com/openwrt/openwrt/releases.atom")
-                              ("p2pool-release" "https://github.com/SChernykh/p2pool/releases.atom")
+        newsticker-url-list '(("p2pool-release" "https://github.com/SChernykh/p2pool/releases.atom")
                               ("monero-release" "https://github.com/monero-project/monero/releases.atom")
-                              ("chia-release" "https://github.com/Chia-Network/chia-blockchain/releases.atom") ; gitea commit rss ex: https://codeberg.org/gnuastro/gnuastro.rss
-                              ("Level1Techs" "https://yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
-                              ("DailyBlob" "https://yewtu.be/feed/channel/UCJRhK2b92UpOr4LBCWVaFDw")
-                              ;("StyxHexenHammer" "https://odysee.com/$/rss/@Styxhexenhammer666:2"); bitchute rss ex: https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666
-                              ("Reddit-news" "https://www.reddit.com/r/news/.rss")
-                              ("Lobste" "https://lobste.rs/rss")
-                              ("Phoronix" "https://www.phoronix.com/rss.php")
-                              ("BramCohen" "https://bramcohen.substack.com/feed")
-                              ("AndyWingo" "https://wingolog.org/feed/atom"))))
+                              ("BramCohen" "https://bramcohen.substack.com/feed"))))
 
 (use-package magit ; git
   :commands (magit-file-delete magit-status)
@@ -440,19 +441,16 @@
         magit-bury-buffer-function #'magit-mode-quit-window)
   (add-hook 'magit-process-mode-hook #'goto-address-mode)); magit-generate-changelog after magit-create-commit for commit msg
 
-;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
-(use-package forge ; git
+(use-package forge ; git ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
   :after magit
   :commands (forge-pull forge-add-repository forge-list-issues forge-list-pullreqs forge-list-notifications forge-list-repositories forge-create-issue forge-create-pullreq)
-  :init
-  (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
+  :init (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
   (setq forge-add-default-bindings t))
 
 (use-package transmission ; C-u universal arg for directory prompt ; transmission
   :commands (transmission transmission-add))
 
-;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
-(use-package org-roam ; sqlite-available-p
+(use-package org-roam ; sqlite-available-p ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
   :bind (:map jam/file ("r" . org-roam-node-find)
          :map jam/notes
@@ -500,13 +498,12 @@
   :commands (python-mode python-mode-hook python-mode-local-vars-hook python-ts-mode python-ts-mode-hook))
 
 (use-package pyvenv ; python ; projects can install pydebug and pylsp inside venv
-  :init (add-hook 'python-mode-hook #'pyvenv-tracking-mode)
-  (add-hook 'python-ts-mode-hook #'pyvenv-tracking-mode)
-  (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
+  :init (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
+  :hook (((python-mode python-ts-mode) . pyvenv-tracking-mode))
   :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
 
 (use-package minions ; hide minor modes on modeline
-  :init (add-hook 'after-init-hook #'minions-mode)
+  :hook ((after-init . minions-mode))
   :commands (minions-mode))
 
 (use-package debbugs
@@ -581,7 +578,7 @@
 
 (use-package eshell
   :ensure nil ; built-in
-  :init (add-hook 'eshell-mode-hook #'(lambda () (add-to-list 'eshell-visual-commands "btm")))
+  :hook ((eshell-mode . (lambda () (add-to-list 'eshell-visual-commands "btm"))))
   :bind (:map jam/open ("e" . jam/eshell))
   :commands (eshell)
   :config (require 'em-smart)
@@ -595,9 +592,8 @@
   ;:pin nongnu
   :bind (:map jam/open ("t" . eat)
          :map eat-mode-map ("C-S-v" . eat-yank))
-  :init
-  (add-hook 'eshell-load-hook #'eat-eshell-mode)
-  (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
+  :hook ((eshell-load . eat-eshell-mode)
+         (eshell-load . eat-eshell-visual-command-mode))
   :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
 
 (use-package tramp
@@ -610,7 +606,8 @@
 (use-package company
   ;:pin gnu ; pin gnu for android
   :bind (:map jam/toggle ("i" . global-company-mode))
-  :init (add-hook 'after-init-hook #'global-company-mode)
+  :hook ((after-init . global-company-mode))
+  :init
   (setq company-minimum-prefix-length 2
         company-tooltip-limit 14
         company-tooltip-align-annotations t
@@ -638,35 +635,43 @@
   (require 'company-tng) ; TabNGo
   (company-tng-configure-default))
 
-;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
-;; C-u RET for unread and read, ! to save for offline/cache, U to manually subscribe, L list all groups, M-g to rescan group
-(use-package gnus
+(use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all
   :ensure nil ; built-in
   :bind (:map jam/open ("g" . gnus))
-  :commands (gnus)
+  :commands (gnus gnus-setup-news-hook)
   :config
   (setq
    gnus-save-newsrc-file nil
    gnus-read-newsrc-file nil
-   ;gnus-use-dribble-file t
-   ;gnus-always-read-dribble-file t
+   gnus-use-dribble-file nil;t
+   gnus-always-read-dribble-file nil;t
+   gnus-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
+   gnus-cache-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") (file-name-as-directory "cache"))
    gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
-   gnus-select-method '(nnnil ""); nnatom added in 30
-   gnus-secondary-select-methods '((nnimap "riseup"
-                                           (nnimap-address "mail.riseup.net")
-                                           (nnimap-server-port 993)
-                                           (nnimap-stream ssl)
-                                           (nnir-search-engine imap)
-                                           (nnmail-expiry-wait 90))
-                                   ;(nntp "news.newsgroupdirect.com"); Shift 6 to list all groups after username/password prompt
-                                   (nnimap "gmail"
-                                           (nnimap-address "imap.gmail.com")
-                                           (nnimap-server-port 993)
-                                           (nnimap-stream ssl)
-                                           (nnir-search-engine imap)
-                                           (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") ;; 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations
-                                           (nnmail-expiry-wait immediate)))
+   gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
+   gnus-secondary-select-methods '(;(nnatom "wingolog.org/feed/atom") ; nnatom added in 30. Do not include http/https
+                                   ;(nnatom "yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
+                                   ;(nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
+                                   ;(nnatom "guix.gnu.org/feeds/blog.atom")
+                                   ;(nnatom "www.reddit.com/r/news/.rss")
+                                   ;(nnatom "blog.torproject.org/rss.xml")
+                                   ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
+                                   ;;(nnatom "bramcohen.substack.com/feed") ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
+                                   ;(nnimap "riseup"
+                                   ;        (nnimap-address "mail.riseup.net")
+                                   ;        (nnimap-server-port 993)
+                                   ;        (nnimap-stream ssl)
+                                   ;        (nnir-search-engine imap)
+                                   ;        (nnmail-expiry-wait 90))
+                                   ;(nnimap "gmail" ;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
+                                   ;        (nnimap-address "imap.gmail.com")
+                                   ;        (nnimap-server-port 993)
+                                   ;        (nnimap-stream ssl)
+                                   ;        (nnir-search-engine imap)
+                                   ;        (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") ;; 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
+                                   ;        (nnmail-expiry-wait immediate))
+                                   )
    gnus-use-cache t
    gnus-asynchronous t
    gnus-use-header-prefetch t
@@ -681,54 +686,79 @@
    gnus-thread-ignore-subject t
    gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"  ;; Make Gnus NOT ignore [Gmail] mailboxes
    gnus-use-correct-string-widths nil)
+  (add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications)
   (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
   (eval-after-load 'gnus-topic
     '(progn
+       (require 'nnrss) ; setup rss feeds.
+       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff")
+                                 ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff");("bram" "https:/bramcohen.substack.com/feed" "Bram blog"); https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666 "https://cacm.acm.org/feed/ https://codeberg.org/gnuastro/gnuastro.rss
+                                 ("lobste" "https://lobste.rs/rss" "Tech lobsters")))
+       (nnrss-save-server-data nil)
        (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
              gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
                                   (nnfolder-active-file ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "archive") "active"))
                                   (nnfolder-get-new-mail nil)
                                   (nnfolder-inhibit-expiry t)))
-             ;; "Gnus" is the root folder, and there are three mail accounts, "misc", "gmail", "riseup"
-             gnus-topic-topology '(("Gnus" visible)
+             gnus-topic-topology '(("Gnus" visible);"Gnus" is the root folder. three mail accounts, "misc", "gmail", "riseup" then the nnatom feeds
                                    (("misc" visible))
                                    (("gmail" visible nil nil))
-                                   (("riseup" visible nil nil)))
-             ;; each topic corresponds to a public imap folder
-             gnus-topic-alist '(("gmail" ; the key of topic
+                                   (("riseup" visible nil nil))
+                                   (("Level1Techs" visible))
+                                   (("wingolog" visible))
+                                   (("Emacs" visible))
+                                   (("Guix" visible));(("Bram" visible))
+                                   (("Reddit" visible))
+                                   (("Tor" visible)))
+             gnus-topic-alist '(("gmail"; the key of topic corresponds to a public imap folder or feed
                                  "nnimap+gmail:INBOX"
                                  "nnimap+gmail:[Gmail]/All Mail"
                                  "nnimap+gmail:[Gmail]/Sent Mail"
                                  "nnimap+gmail:[Gmail]/Spam"
                                  "nnimap+gmail:[Gmail]/Trash"
                                  "nnimap+gmail:Drafts")
-                                ("riseup" ; the key of topic
+                                ("riseup"
                                  "nnimap+riseup:INBOX"
                                  "nnimap+riseup:Sent"
                                  "nnimap+riseup:Trash"
                                  "nnimap+riseup:Drafts")
-                                ("misc" ; the key of topic
+                                ("misc"
                                  "nnfolder+archive:sent.2023"
                                  "nnfolder+archive:sent.2024"
                                  "nndraft:drafts")
+                                ("Level1Techs" "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs")
+                                ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog")
+                                ("Emacs" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs")
+                                ("Guix" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog");("Bram" "nnatom+bramcohen.substack.com/feed:Bram’s Thoughts")
+                                ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News")
+                                ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
                                 ("Gnus")))
-         ;; see latest 200 mails in topic then press Enter on any group
+       (gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
        (gnus-topic-set-parameters "gmail" '((display . 200)))
-       (gnus-topic-set-parameters "riseup" '((display . 200)))
-       (gnus-subscribe-hierarchically "nnimap+riseup:INBOX")
-       (gnus-subscribe-hierarchically "nnimap+riseup:Sent")
-       (gnus-subscribe-hierarchically "nnimap+riseup:Trash")
-       (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
-       (gnus-subscribe-hierarchically "nnimap+gmail:INBOX")
-       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail")
-       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail")
-       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
-       (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam")
-       (gnus-subscribe-hierarchically "nnimap+gmail:Drafts"))))
+       ;(gnus-subscribe-hierarchically "nnimap+riseup:INBOX")
+       ;(gnus-subscribe-hierarchically "nnimap+riseup:Sent")
+       ;(gnus-subscribe-hierarchically "nnimap+riseup:Trash")
+       ;(gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
+       ;(gnus-subscribe-hierarchically "nnimap+gmail:INBOX")
+       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail")
+       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail")
+       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
+       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam")
+       ;(gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
+       ;(gnus-subscribe-hierarchically "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs")
+       ;(gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog")
+       ;(gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs")
+       ;(gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog")
+       ;(gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News")
+       ;(gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
+       ;;(gnus-subscribe-hierarchically "nnatom+bramcohen.substack.com/feed:Bram’s Thoughts");;(gnus-subscribe-hierarchically "nnrss:bram") ; not found...
+       (gnus-subscribe-hierarchically "nnrss:lwn")
+       (gnus-subscribe-hierarchically "nnrss:lobste")
+       (gnus-subscribe-hierarchically "nnrss:phoronix"))))
 
 (use-package which-key
   ;:pin gnu
-  :init (add-hook 'after-init-hook #'which-key-mode)
+  :hook (after-init . which-key-mode)
   :commands (which-key-mode))
 
 (use-package yaml-ts-mode
@@ -753,16 +783,8 @@
 (use-package flyspell ; aspell
   :bind (:map jam/toggle ("s" . flyspell-mode))
   :ensure nil ; built-in
-  :init
-  (add-hook 'org-mode-hook #'flyspell-mode)
-  (add-hook 'markdown-mode-hook #'flyspell-mode)
-  (add-hook 'TeX-mode-hook #'flyspell-mode)
-  (add-hook 'rst-mode-hook #'flyspell-mode)
-  (add-hook 'message-mode-hook #'flyspell-mode)
-  (add-hook 'git-commit-mode-hook #'flyspell-mode)
-  (add-hook 'yaml-mode-hook #'flyspell-prog-mode)
-  (add-hook 'conf-mode-hook #'flyspell-prog-mode)
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+  :hook (((org-mode markdown-mode TeX-mode rst-mode message-mode git-commit-mode) . flyspell-mode)
+         ((yaml-mode conf-mode prog-mode) . flyspell-prog-mode))
   :commands (flyspell-mode)
   :config (setq flyspell-issue-welcome-flag nil
                 flyspell-issue-message-flag nil
@@ -775,29 +797,14 @@
 
 ;(use-package combobulate
 ;  :init (setq combobulate-key-prefix "C-c e")
-;  :hook ((python-ts-mode . combobulate-mode)
-;         (yaml-ts-mode . combobulate-mode))
-  ;:vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
+;  :hook (((python-ts-mode yaml-ts-mode) . combobulate-mode))
+;  :vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
 ;  :load-path ("/gnu/git/combobulate"))
 
 ;(use-package eglot-x
 ;  :after eglot
 ;  :config (eglot-x-setup)
 ;  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
-
-;;;###autoload
-(defun jam/fido-click (event)
-  "Call the completion candidate at the row location of EVENT in the minibuffer."
-  (interactive "e")
-  (with-selected-window (active-minibuffer-window)
-    (when-let ((object (posn-object (event-end event)))
-               (colrow (posn-col-row (event-end event)))
-               ((and (consp object) (>= (cdr colrow) 1)))
-               ((>= (cdr colrow) 1))
-               (cand (car (split-string (nth (- (cdr colrow) 1) (split-string (car object) "[\n\r]+" t "[ ]+"))))))
-      (delete-minibuffer-contents)
-      (insert (format "%s" cand))
-      (minibuffer-complete-and-exit))))
 
 ;;;###autoload
 (defun jam/sudo-edit (file)
@@ -816,20 +823,6 @@
   "Save all buffers"
   (interactive)
   (save-some-buffers t))
-
-;;;###autoload
-(defun jam/newsticker-download ()
-  "Download the current newsticker enclosure to tmpdir/newsticker/feed/title"
-  (interactive)
-  (let* ((item (newsticker--treeview-get-selected-item))
-         (feedname "jam")
-         (title (newsticker--title item))
-         (enclosure (newsticker--enclosure item))
-         (download-dir (file-name-as-directory
-                        (expand-file-name (newsticker--title (newsticker--treeview-get-selected-item))
-                                          (expand-file-name feedname (expand-file-name "newsticker" temporary-file-directory))))))
-  (newsticker-download-enclosures feedname item)
-  (message download-dir)));(delete-directory download-dir t)
 
 ;;;###autoload
 (defun jam/draw ()
@@ -867,33 +860,6 @@
   "Open new eshell"
   (interactive)
   (eshell t))
-
-;;;###autoload
-(defun jam/move-line-up ()
-  "Move line up"
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-;;;###autoload
-(defun jam/move-line-down ()
-  "Move line down"
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
-
-;;;###autoload
-(defun jam/move-word-right ()
-  "Move word right"
-  (interactive)
-  (transpose-words 1))
-
-;;;###autoload
-(defun jam/move-word-left ()
-  "Move word left"
-  (interactive)
-  (transpose-words -1))
 
 ;;;###autoload
 (defun jam/mpv-play (url)
