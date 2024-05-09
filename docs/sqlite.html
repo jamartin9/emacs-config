@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org15b824d">
-<div class="navbar-brand" id="org299655f">
-<div class="navbar-item" id="orgd05b062">
+<nav class="navbar is-black" id="org7d20ea7">
+<div class="navbar-brand" id="orgb23d19c">
+<div class="navbar-item" id="org1c03491">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org7eddbf8">
-<div class="navbar-start" id="org30c65d8">
-<div class="navbar-item" id="orgadc7361">
+<div class="navbar-menu" id="org803a2cf">
+<div class="navbar-start" id="orgc874888">
+<div class="navbar-item" id="org9f904ee">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,20 +29,21 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org3f736ed">
+<div class="navbar-end" id="orgd82637f">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org931cdae" class="outline-2">
-<h2 id="org931cdae">sqlite</h2>
-<div class="outline-text-2" id="text-org931cdae">
+<div id="outline-container-org012ab89" class="outline-2">
+<h2 id="org012ab89">sqlite</h2>
+<div class="outline-text-2" id="text-org012ab89">
 </div>
-<div id="outline-container-orgc16712d" class="outline-3">
-<h3 id="orgc16712d">notes</h3>
-<div class="outline-text-3" id="text-orgc16712d">
+<div id="outline-container-org979df9b" class="outline-3">
+<h3 id="org979df9b">notes</h3>
+<div class="outline-text-3" id="text-org979df9b">
 <ul class="org-ul">
+<li>Uses bytecode instead of AST like postgres <a href="https://sqlite.org/draft/whybytecode.html">https://sqlite.org/draft/whybytecode.html</a></li>
 <li><a href="https://github.com/mmomtchev/sqlite-wasm-http">https://github.com/mmomtchev/sqlite-wasm-http</a> for httpvfs via range headers
 <ul class="org-ul">
 <li><a href="https://github.com/mlin/sqlite_web_vfs">https://github.com/mlin/sqlite_web_vfs</a> as extension</li>
@@ -118,7 +119,7 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 <li>site database</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org357e4b7">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="orga79e1bf">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
 PRAGMA page_size=512;
 SAVEPOINT ar;
@@ -162,14 +163,14 @@ VACUUM;
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org5343f77">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="orgb6994f9">-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org859c7c1">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="org0369dfa">(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -189,11 +190,11 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
 </div>
 </div>
 
-<div id="outline-container-org653ba0d" class="outline-3">
-<h3 id="org653ba0d">site search js/sql</h3>
-<div class="outline-text-3" id="text-org653ba0d">
+<div id="outline-container-org58c345b" class="outline-3">
+<h3 id="org58c345b">site search js/sql</h3>
+<div class="outline-text-3" id="text-org58c345b">
 <div class="org-src-container">
-<pre class="src src-javascript" id="org7a046e8">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+<pre class="src src-javascript" id="orgad56679">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:
@@ -249,7 +250,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org0aa3052">onmessage = (e) =&gt; {
+<pre class="src src-javascript" id="org21acd51">onmessage = (e) =&gt; {
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3

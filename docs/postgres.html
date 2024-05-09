@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgf95b7c6">
-<div class="navbar-brand" id="org87d40c8">
-<div class="navbar-item" id="org6c9e770">
+<nav class="navbar is-black" id="org53f8e4e">
+<div class="navbar-brand" id="org710632a">
+<div class="navbar-item" id="org67940d0">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgdabc613">
-<div class="navbar-start" id="org7477a09">
-<div class="navbar-item" id="org8f175dc">
+<div class="navbar-menu" id="org260253a">
+<div class="navbar-start" id="org2ce8406">
+<div class="navbar-item" id="org7012894">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,23 +29,23 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org1a8ca97">
+<div class="navbar-end" id="org6992f7d">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgf6c2354" class="outline-2">
-<h2 id="orgf6c2354">Postgresql</h2>
-<div class="outline-text-2" id="text-orgf6c2354">
+<div id="outline-container-orgae84f68" class="outline-2">
+<h2 id="orgae84f68">Postgresql</h2>
+<div class="outline-text-2" id="text-orgae84f68">
 </div>
-<div id="outline-container-orgbc451fe" class="outline-3">
-<h3 id="orgbc451fe">notes</h3>
-<div class="outline-text-3" id="text-orgbc451fe">
+<div id="outline-container-orgc7866fe" class="outline-3">
+<h3 id="orgc7866fe">notes</h3>
+<div class="outline-text-3" id="text-orgc7866fe">
 </div>
-<div id="outline-container-org29c6134" class="outline-4">
-<h4 id="org29c6134">addons</h4>
-<div class="outline-text-4" id="text-org29c6134">
+<div id="outline-container-org722a7f3" class="outline-4">
+<h4 id="org722a7f3">addons</h4>
+<div class="outline-text-4" id="text-org722a7f3">
 <ul class="org-ul">
 <li><p>
 <a href="https://github.com/neondatabase/neon">neon</a>
@@ -83,6 +83,19 @@ safekeeper stores the writes into storage backend which the pageserver reads fro
 <li><a href="https://github.com/supabase/wrappers">rust examples</a></li>
 </ul></li>
 <li><a href="https://github.com/supabase/realtime">WAL streaming</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgab564d2" class="outline-4">
+<h4 id="orgab564d2">replication</h4>
+<div class="outline-text-4" id="text-orgab564d2">
+<ul class="org-ul">
+<li>Network attached storage (EBS) for Database</li>
+<li>Read replicas (writes lag)</li>
+<li>DBMS optimized (Neon/Aurora/alloydb) streaming WAL and reading from replicated pages.</li>
+<li>Active-active (any node accepts writes causing disjoint reads)</li>
+<li>Sharding (citius) requires application change to query shard/tenant for low latency</li>
+<li>Spanner/Distributed KV (Yugabyte/CockroachDB) not actually postgres (just protocol), no local joins</li>
 </ul>
 </div>
 </div>

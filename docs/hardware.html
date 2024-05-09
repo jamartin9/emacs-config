@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org2614c5d">
-<div class="navbar-brand" id="org88a2923">
-<div class="navbar-item" id="org1592d59">
+<nav class="navbar is-black" id="orga585c6d">
+<div class="navbar-brand" id="orgf23c432">
+<div class="navbar-item" id="org4ba4deb">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org010286f">
-<div class="navbar-start" id="org56ea7a0">
-<div class="navbar-item" id="org17a9f07">
+<div class="navbar-menu" id="org0317b3b">
+<div class="navbar-start" id="orgb636617">
+<div class="navbar-item" id="org1025d9d">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgcb5ea90">
+<div class="navbar-end" id="orgca2937b">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org3d059c8" class="outline-2">
-<h2 id="org3d059c8">hardware</h2>
-<div class="outline-text-2" id="text-org3d059c8">
+<div id="outline-container-org82eba7e" class="outline-2">
+<h2 id="org82eba7e">hardware</h2>
+<div class="outline-text-2" id="text-org82eba7e">
 </div>
-<div id="outline-container-org14b4582" class="outline-3">
-<h3 id="org14b4582">Backdoors</h3>
-<div class="outline-text-3" id="text-org14b4582">
+<div id="outline-container-orgab385b4" class="outline-3">
+<h3 id="orgab385b4">Backdoors</h3>
+<div class="outline-text-3" id="text-orgab385b4">
 <ul class="org-ul">
 <li><a href="https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf">ubiquity devices</a>(unifi)
 <ul class="org-ul">
@@ -54,6 +54,11 @@
 <li>side channel data transmission such as AM <a href="https://github.com/fulldecent/system-bus-radio">https://github.com/fulldecent/system-bus-radio</a> or differential power analysis</li>
 <li>printers watermark pages and refuse to print without yellow ink</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-org4508b40" class="outline-3">
+<h3 id="org4508b40">defective</h3>
+<div class="outline-text-3" id="text-org4508b40">
 <ul class="org-ul">
 <li>Commonly defective (cheap companies and lack of quality control even with standards)
 <ul class="org-ul">
@@ -71,10 +76,47 @@
 </ul>
 </div>
 </div>
-
-<div id="outline-container-org999eb47" class="outline-3">
-<h3 id="org999eb47">GPS</h3>
-<div class="outline-text-3" id="text-org999eb47">
+<div id="outline-container-orgda968ed" class="outline-3">
+<h3 id="orgda968ed">keyboards/switches</h3>
+<div class="outline-text-3" id="text-orgda968ed">
+<ul class="org-ul">
+<li>german cherry mx factory testing for switches <a href="https://youtu.be/Pu1gP4PfqCQ?t=240">https://youtu.be/Pu1gP4PfqCQ?t=240</a>
+<ul class="org-ul">
+<li>brown switches are 45g for actuation, 55 for bottom out</li>
+</ul></li>
+<li>Taiwanese Ducky Shine 4
+<ul class="org-ul">
+<li>firmware and processor on board</li>
+<li>hold the Fn key and press the f10 key for lighting cycle</li>
+<li><a href="https://www.duckychannel.net/download/user_manual/Ducky_Shine_4_UserManual.pdf">https://www.duckychannel.net/download/user_manual/Ducky_Shine_4_UserManual.pdf</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfd47f0f" class="outline-3">
+<h3 id="orgfd47f0f">firmware</h3>
+<div class="outline-text-3" id="text-orgfd47f0f">
+</div>
+<div id="outline-container-org92bcbc9" class="outline-4">
+<h4 id="org92bcbc9">libreboot</h4>
+<div class="outline-text-4" id="text-org92bcbc9">
+<ul class="org-ul">
+<li>Dell latitude 6530 requires me-cleaner injected into release
+<ul class="org-ul">
+<li>injection script in lbmk disables me automatically</li>
+<li>thermal/power issues when workload is started quickly after boot (compiling code)
+<ul class="org-ul">
+<li>reverted back to stock firmware</li>
+</ul></li>
+</ul></li>
+<li>seabios with grub rom requires escape key for grub boot menu</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org543d196" class="outline-3">
+<h3 id="org543d196">GPS</h3>
+<div class="outline-text-3" id="text-org543d196">
 <ul class="org-ul">
 <li>CoCom Limits is the limit placed on GPS devices that disables tracking when it is faster than 1,000 knots and/or an higher than 18,000m.
 <ul class="org-ul">
@@ -84,17 +126,17 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org7c6c0c5" class="outline-3">
-<h3 id="org7c6c0c5">SDR</h3>
-<div class="outline-text-3" id="text-org7c6c0c5">
+<div id="outline-container-org6ef6af3" class="outline-3">
+<h3 id="org6ef6af3">SDR</h3>
+<div class="outline-text-3" id="text-org6ef6af3">
 <ul class="org-ul">
 <li>krakensdr passive receiver ITAR restricted and censored after IEEE spectrum paper</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org660ab91" class="outline-3">
-<h3 id="org660ab91">storage</h3>
-<div class="outline-text-3" id="text-org660ab91">
+<div id="outline-container-org9457926" class="outline-3">
+<h3 id="org9457926">storage</h3>
+<div class="outline-text-3" id="text-org9457926">
 <ul class="org-ul">
 <li>Project silica (quartz/glass hard drives)
 <ul class="org-ul">
@@ -109,18 +151,18 @@
 </div>
 </div>
 
-<div id="outline-container-org1cdf631" class="outline-3">
-<h3 id="org1cdf631">sim</h3>
-<div class="outline-text-3" id="text-org1cdf631">
+<div id="outline-container-org00218ca" class="outline-3">
+<h3 id="org00218ca">sim</h3>
+<div class="outline-text-3" id="text-org00218ca">
 <ul class="org-ul">
 <li>iphone14 removed sim card for esim.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org51ae960" class="outline-3">
-<h3 id="org51ae960">clock</h3>
-<div class="outline-text-3" id="text-org51ae960">
+<div id="outline-container-orgb7efd51" class="outline-3">
+<h3 id="orgb7efd51">clock</h3>
+<div class="outline-text-3" id="text-orgb7efd51">
 <ul class="org-ul">
 <li>atomic clocks
 <ul class="org-ul">
@@ -141,9 +183,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgba6f10d" class="outline-3">
-<h3 id="orgba6f10d">gpu</h3>
-<div class="outline-text-3" id="text-orgba6f10d">
+<div id="outline-container-org19a1ce4" class="outline-3">
+<h3 id="org19a1ce4">gpu</h3>
+<div class="outline-text-3" id="text-org19a1ce4">
 <ul class="org-ul">
 <li>egpus for external gpu
 <ul class="org-ul">
@@ -153,9 +195,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgc49d7cd" class="outline-3">
-<h3 id="orgc49d7cd">ISA</h3>
-<div class="outline-text-3" id="text-orgc49d7cd">
+<div id="outline-container-org181df55" class="outline-3">
+<h3 id="org181df55">ISA</h3>
+<div class="outline-text-3" id="text-org181df55">
 <ul class="org-ul">
 <li>RISC-V
 <ul class="org-ul">
@@ -164,13 +206,13 @@
 <li>32 (16 embeded) int registers</li>
 <li>32 floating point registers</li>
 </ul></li>
+<li>Instructions are decoded into micro ops from bit patterns and executed via ports</li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-org69be0dd" class="outline-3">
-<h3 id="org69be0dd">sim</h3>
-<div class="outline-text-3" id="text-org69be0dd">
+<div id="outline-container-org1b414e0" class="outline-3">
+<h3 id="org1b414e0">sim</h3>
+<div class="outline-text-3" id="text-org1b414e0">
 <ul class="org-ul">
 <li>Breadboard
 <ul class="org-ul">
@@ -180,27 +222,27 @@
 </div>
 </div>
 
-<div id="outline-container-org641d922" class="outline-3">
-<h3 id="org641d922">agriculture</h3>
-<div class="outline-text-3" id="text-org641d922">
+<div id="outline-container-org616ce76" class="outline-3">
+<h3 id="org616ce76">agriculture</h3>
+<div class="outline-text-3" id="text-org616ce76">
 <ul class="org-ul">
 <li>/r/unclebens rice packets to cultivate mushrooms</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org48fc839" class="outline-3">
-<h3 id="org48fc839">radio</h3>
-<div class="outline-text-3" id="text-org48fc839">
+<div id="outline-container-org2ddb47a" class="outline-3">
+<h3 id="org2ddb47a">radio</h3>
+<div class="outline-text-3" id="text-org2ddb47a">
 <ul class="org-ul">
 <li>BaoFeng programmable in unregistered frequency with CHIRP</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org53cf16e" class="outline-3">
-<h3 id="org53cf16e">firearms</h3>
-<div class="outline-text-3" id="text-org53cf16e">
+<div id="outline-container-orgbf90d38" class="outline-3">
+<h3 id="orgbf90d38">firearms</h3>
+<div class="outline-text-3" id="text-orgbf90d38">
 <ul class="org-ul">
 <li>'auto sear' plastic converts gun to fully automatic</li>
 <li>tannerite is used for exploding targets</li>
@@ -208,9 +250,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgcce1fc8" class="outline-3">
-<h3 id="orgcce1fc8">vehicle</h3>
-<div class="outline-text-3" id="text-orgcce1fc8">
+<div id="outline-container-org82e152d" class="outline-3">
+<h3 id="org82e152d">vehicle</h3>
+<div class="outline-text-3" id="text-org82e152d">
 <ul class="org-ul">
 <li>forscan
 <ul class="org-ul">
@@ -263,9 +305,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org89a91e7" class="outline-3">
-<h3 id="org89a91e7">board games</h3>
-<div class="outline-text-3" id="text-org89a91e7">
+<div id="outline-container-orgf9873ef" class="outline-3">
+<h3 id="orgf9873ef">board games</h3>
+<div class="outline-text-3" id="text-orgf9873ef">
 <ul class="org-ul">
 <li>pathfinder system like dnd 3.3</li>
 <li>dnd 5e cap 20</li>
@@ -274,9 +316,9 @@
 </div>
 </div>
 
-<div id="outline-container-org64d0695" class="outline-3">
-<h3 id="org64d0695">health</h3>
-<div class="outline-text-3" id="text-org64d0695">
+<div id="outline-container-orgc9abc20" class="outline-3">
+<h3 id="orgc9abc20">health</h3>
+<div class="outline-text-3" id="text-orgc9abc20">
 <ul class="org-ul">
 <li>supra-supramaximal inspiration for curing hiccups (breathing technique that increases co2 in blood)</li>
 </ul>

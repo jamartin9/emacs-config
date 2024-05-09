@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org557e991">
-<div class="navbar-brand" id="orga821048">
-<div class="navbar-item" id="org6170f4a">
+<nav class="navbar is-black" id="orgd67e3fd">
+<div class="navbar-brand" id="org193c629">
+<div class="navbar-item" id="orge102924">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org0cc5464">
-<div class="navbar-start" id="orga24b732">
-<div class="navbar-item" id="org07592e4">
+<div class="navbar-menu" id="orgfa7c0e7">
+<div class="navbar-start" id="org3d2f272">
+<div class="navbar-item" id="org8b3e4b7">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,25 +29,25 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org95bb7a4">
+<div class="navbar-end" id="orgc458749">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orga1db4e2" class="outline-2">
-<h2 id="orga1db4e2">ZFS</h2>
-<div class="outline-text-2" id="text-orga1db4e2">
+<div id="outline-container-org6370118" class="outline-2">
+<h2 id="org6370118">ZFS</h2>
+<div class="outline-text-2" id="text-org6370118">
 </div>
-<div id="outline-container-org839e0ac" class="outline-3">
-<h3 id="org839e0ac">openzfs</h3>
-<div class="outline-text-3" id="text-org839e0ac">
+<div id="outline-container-org6f80a4c" class="outline-3">
+<h3 id="org6f80a4c">openzfs</h3>
+<div class="outline-text-3" id="text-org6f80a4c">
 </div>
-<div id="outline-container-org58e8ca7" class="outline-4">
-<h4 id="org58e8ca7">install</h4>
-<div class="outline-text-4" id="text-org58e8ca7">
+<div id="outline-container-orgd0980ef" class="outline-4">
+<h4 id="orgd0980ef">install</h4>
+<div class="outline-text-4" id="text-orgd0980ef">
 <ul class="org-ul">
-<li>If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
+<li>(This may break pool import) If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
 That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
 <code>mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX</code> and
 <code>grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1</code>.
@@ -64,7 +64,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org8341568">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="orgd1d86a1">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -105,18 +105,18 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9bbd87f" class="outline-4">
-<h4 id="org9bbd87f">usage</h4>
-<div class="outline-text-4" id="text-org9bbd87f">
+<div id="outline-container-org90eebd0" class="outline-4">
+<h4 id="org90eebd0">usage</h4>
+<div class="outline-text-4" id="text-org90eebd0">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb7640a1" class="outline-4">
-<h4 id="orgb7640a1">notes</h4>
-<div class="outline-text-4" id="text-orgb7640a1">
+<div id="outline-container-org9147459" class="outline-4">
+<h4 id="org9147459">notes</h4>
+<div class="outline-text-4" id="text-org9147459">
 <ul class="org-ul">
 <li>If you lose a vdev in a pool you LOSE THE POOL</li>
 <li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
@@ -144,8 +144,8 @@ password   include      zfs-key</li>
 <li><code>zpool attach POOL EXISTING_DEVICE_ID NEW_DEVICE_ID</code> to create a mirror</li>
 <li><code>zfs set xattr=sa</code></li>
 <li><code>zfs set acltype=posixacl</code></li>
-<li><code>zpool set feature@large_blocks=enable ztank</code> to enable larger blocks</li>
-<li><code>zpool set feature@encryption=enable ztank</code> to enable encryption</li>
+<li><code>zpool set feature@large_blocks=enabled ztank</code> to enable larger blocks</li>
+<li><code>zpool set feature@encryption=enabled ztank</code> to enable encryption</li>
 <li><code>zfs set canmount=noauto ztank/dataset</code> to disable auto mounting</li>
 <li>relatime for normal timestamps</li>
 <li>SLOG requires devices that will write data on power loss</li>

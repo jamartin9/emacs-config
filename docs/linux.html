@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org56473e9">
-<div class="navbar-brand" id="orga03605b">
-<div class="navbar-item" id="orgdd0ad65">
+<nav class="navbar is-black" id="orgc463848">
+<div class="navbar-brand" id="orgf0edc2a">
+<div class="navbar-item" id="orgb081b47">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org3b8a09b">
-<div class="navbar-start" id="orgbbde32f">
-<div class="navbar-item" id="org0c8ef2e">
+<div class="navbar-menu" id="org0336200">
+<div class="navbar-start" id="org0e333ae">
+<div class="navbar-item" id="orgfc8fc87">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,26 +29,26 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orga19c506">
+<div class="navbar-end" id="org945da5c">
 
 </div>
 
 </div>
 </nav>
 
-<div id="outline-container-org3eb895c" class="outline-2">
-<h2 id="org3eb895c">Linux</h2>
-<div class="outline-text-2" id="text-org3eb895c">
+<div id="outline-container-orgcf24cab" class="outline-2">
+<h2 id="orgcf24cab">Linux</h2>
+<div class="outline-text-2" id="text-orgcf24cab">
 <p>
 Finally some hardware support!
 </p>
 </div>
-<div id="outline-container-orgf564f01" class="outline-3">
-<h3 id="orgf564f01"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
+<div id="outline-container-org179afff" class="outline-3">
+<h3 id="org179afff"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
 </div>
-<div id="outline-container-org41604e5" class="outline-3">
-<h3 id="org41604e5">Kernel</h3>
-<div class="outline-text-3" id="text-org41604e5">
+<div id="outline-container-orgf6c697a" class="outline-3">
+<h3 id="orgf6c697a">Kernel</h3>
+<div class="outline-text-3" id="text-orgf6c697a">
 <ul class="org-ul">
 <li>removed sysctl system call in 5.5</li>
 <li>io-uring
@@ -57,15 +57,25 @@ Finally some hardware support!
 </ul></li>
 <li><code>/proc/cpuinfo</code>  for model</li>
 <li>abi tracker <a href="https://abi-laboratory.pro/?view=timeline&amp;l=linux">https://abi-laboratory.pro/?view=timeline&amp;l=linux</a></li>
+<li><code>/etc/sysctl.d/90-override.conf</code> changes
+<ul class="org-ul">
+<li><code>net.core.rmem_max = 4194304</code> for UDP transmission receive buffer</li>
+<li><code>net.core.wmem_max = 1048576</code> for UDP transmission send buffer</li>
+<li><code>vm.max_map_count = 2147483642</code> increase memory maps for certain games/apps
+<ul class="org-ul">
+<li><code>fs.inotify.max_user_watches=524288</code> podman log line?</li>
+<li><code>fs.inotify.max_user_instances=512</code> podman log line?</li>
+</ul></li>
+</ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org543d7c3" class="outline-3">
-<h3 id="org543d7c3">pam</h3>
+<div id="outline-container-org2d2c7da" class="outline-3">
+<h3 id="org2d2c7da">pam</h3>
 </div>
-<div id="outline-container-org674401c" class="outline-3">
-<h3 id="org674401c">misc</h3>
-<div class="outline-text-3" id="text-org674401c">
+<div id="outline-container-org72cb8b7" class="outline-3">
+<h3 id="org72cb8b7">misc</h3>
+<div class="outline-text-3" id="text-org72cb8b7">
 <ul class="org-ul">
 <li><code>faillock --user $USER --reset</code> for attempt reset</li>
 <li><code>LD_LIBRARY_PATH</code> and <code>LD_PRELOAD</code> environment variables override library location and load order respectively.

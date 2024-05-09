@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orgea30e3c">
-<div class="navbar-brand" id="org1d49fa1">
-<div class="navbar-item" id="orgfba2d57">
+<nav class="navbar is-black" id="org2eadf4b">
+<div class="navbar-brand" id="orga0d8c45">
+<div class="navbar-item" id="orgd2beef3">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org33ec0aa">
-<div class="navbar-start" id="orgd47069e">
-<div class="navbar-item" id="orgfb08838">
+<div class="navbar-menu" id="org6af3b90">
+<div class="navbar-start" id="org285ac22">
+<div class="navbar-item" id="org5dab5af">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orge6b963e">
+<div class="navbar-end" id="orgd4c186c">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org4827739" class="outline-2">
-<h2 id="org4827739">i2p</h2>
-<div class="outline-text-2" id="text-org4827739">
+<div id="outline-container-org0d60b2a" class="outline-2">
+<h2 id="org0d60b2a">i2p</h2>
+<div class="outline-text-2" id="text-org0d60b2a">
 </div>
-<div id="outline-container-orgd35fd2d" class="outline-3">
-<h3 id="orgd35fd2d">notes</h3>
-<div class="outline-text-3" id="text-orgd35fd2d">
+<div id="outline-container-org1aebfa7" class="outline-3">
+<h3 id="org1aebfa7">notes</h3>
+<div class="outline-text-3" id="text-org1aebfa7">
 <ul class="org-ul">
 <li>server blinded keys are 56 chars instead of 52 and not viewable without the b33 address in flood fill routers</li>
 <li>java and c++ implementations
@@ -56,11 +56,12 @@
 <li>output b33 for clients <code>keyinfo -b KeyName</code></li>
 <li><code>x25519</code> util for base64 DH key for lease set auth</li>
 </ul></li>
+<li>by default keys with i2pd-tool keygen are 679 bytes: 256 bytes of public elgammal key, 96 bytes of 'random' padding, 32 bytes of ed pubkey, 3 bytes of cert information, 4 bytes of keytype information, 256 bytes of private elgammal key, 32 bytes of private ed signature key</li>
 </ul>
 </div>
-<div id="outline-container-orga98fda3" class="outline-4">
-<h4 id="orga98fda3">router</h4>
-<div class="outline-text-4" id="text-orga98fda3">
+<div id="outline-container-orgea0a884" class="outline-4">
+<h4 id="orgea0a884">router</h4>
+<div class="outline-text-4" id="text-orgea0a884">
 <div class="org-src-container">
 <pre class="src src-conf">
 ## Default: ~/.i2pd/
@@ -110,14 +111,14 @@ enabled = true
 </div>
 </div>
 </div>
-<div id="outline-container-org4e9a941" class="outline-4">
-<h4 id="org4e9a941">tunnel configs</h4>
-<div class="outline-text-4" id="text-org4e9a941">
+<div id="outline-container-orgb8655d7" class="outline-4">
+<h4 id="orgb8655d7">tunnel configs</h4>
+<div class="outline-text-4" id="text-orgb8655d7">
 <ul class="org-ul">
 <li>wireguard server</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgd557ff4">[wg-simple-server]
+<pre class="src src-conf" id="org337f221">[wg-simple-server]
 type = udpserver # server
 keys = wg.dat
 host = 127.0.0.1
@@ -137,7 +138,7 @@ inbound.length = 1
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-conf" id="org45e94ef">[wg-simple-client]
+<pre class="src src-conf" id="org48fc6d2">[wg-simple-client]
 type = udpclient
 destination = ServerB33Address.b32.i2p
 port = 1337
@@ -150,7 +151,7 @@ inbound.length = 1
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-text" id="org4b28556">dread.i2p=http://dreadtoobigdsrxg4yfspcyjr3k6675vftyco5pyb7wg4pr4dwjq.b32.i2p
+<pre class="src src-text" id="org63f3452">dread.i2p=http://dreadtoobigdsrxg4yfspcyjr3k6675vftyco5pyb7wg4pr4dwjq.b32.i2p
 z-lib.i2p=http://kkd7tiqf5lv3olqfdnkw4znmmmmnjo2xqlxrp5ntthp6juowaiha.b32.i2p
 </pre>
 </div>
