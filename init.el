@@ -22,7 +22,6 @@
            ("b" . browse-url-of-file)
            ("f" . make-frame)
            ("D" . jam/draw)
-           ("d" . desktop-read)
            ("z" . jam/mpv-play)
            ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
            ("U" . eww-browse))
@@ -44,8 +43,7 @@
 (bind-keys :prefix-map jam/file :prefix "C-c c f"
            ("d" . dired)
            ("f" . recentf-open)
-           ("i" . image-crop)
-           ("D" . desktop-save-in-desktop-dir))
+           ("i" . image-crop))
 (bind-keys :prefix-map jam/quit :prefix "C-c c q"
            ("f" . delete-frame)
            ("q" . kill-emacs)
@@ -59,7 +57,36 @@
          (tty-setup . xterm-mouse-mode)
          (after-init . (lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
                          (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
-                               default-file-name-handler-alist nil))))
+                               default-file-name-handler-alist nil
+                               modus-themes-mode-line '(accented borderless); moody has warnings ; theme
+                               modus-themes-box-buttons '(underline faint accented)
+                               modus-themes-paren-match '(bold underline)
+                               modus-themes-org-blocks '(tinted-background)
+                               modus-themes-headings '((t . (rainbow)))
+                               modus-themes-subtle-line-numbers t
+                               modus-themes-markup '(bold intense)
+                               modus-themes-org-agenda '((header-block . (1.5 variable-pitch))
+                                                         (header-date . (bold-today))
+                                                         (event . (accented varied))
+                                                         (scheduled . rainbow)
+                                                         (habit . nil))
+                               modus-themes-prompts '(background)
+                               modus-themes-region '(accented bg-only no-extend)
+                               modus-themes-completions '((matches . (extrabold background intense))
+                                                          (selection . (semibold accented intense))
+                                                          (popup . (accented))))
+                           (fido-vertical-mode 1) ; M-j to ignore completion
+                           (cua-mode 1)
+                           (window-divider-mode 1)
+                           (display-time-mode 1)
+                           (delete-selection-mode 1)
+                           (run-with-idle-timer 15 t (lambda () (garbage-collect))) ; collect gc every 15s while idle
+                           (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
+                           (electric-pair-mode 1) ; less typing
+                           (context-menu-mode 1); mouse right click menu
+                           (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
+                           (require 'xdg)
+                           (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg")))))
   :bind (("<M-up>" . (lambda () (interactive) (transpose-lines 1) (forward-line -2))); move line up
          ("<M-down>" . (lambda () (interactive) (forward-line 1) (transpose-lines 1) (forward-line -1))); move line down
          ("<M-left>" . (lambda () (interactive) (transpose-words -1))); move word left
@@ -114,23 +141,6 @@
               nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo.gpg")) ; auth
               epa-file-cache-passphrase-for-symmetric-encryption t
-              modus-themes-mode-line '(accented borderless); moody has warnings ; theme
-              modus-themes-box-buttons '(underline faint accented)
-              modus-themes-paren-match '(bold underline)
-              modus-themes-org-blocks '(tinted-background)
-              modus-themes-headings '((t . (rainbow)))
-              modus-themes-subtle-line-numbers t
-              modus-themes-markup '(bold intense)
-              modus-themes-org-agenda '((header-block . (1.5 variable-pitch))
-                                        (header-date . (bold-today))
-                                        (event . (accented varied))
-                                        (scheduled . rainbow)
-                                        (habit . nil))
-              modus-themes-prompts '(background)
-              modus-themes-region '(accented bg-only no-extend)
-              modus-themes-completions '((matches . (extrabold background intense))
-                                         (selection . (semibold accented intense))
-                                         (popup . (accented)))
               display-line-numbers-type t ; defaults
               apropos-do-all t
               xterm-set-window-title t
@@ -196,7 +206,6 @@
               ;jit-lock-defer-time 0.05 ; fontification delay
               read-process-output-max (* 64 1024)
               ;gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
-              desktop-path `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session"))) ; create dir before saving
               load-prefer-newer t; noninteractive
               auto-mode-case-fold nil
               kill-do-not-save-duplicates t
@@ -244,22 +253,19 @@
                 tab-width 4
                 tab-always-indent 'complete
                 word-wrap t)
-  (fido-vertical-mode 1) ; M-j to ignore completion
-  (cua-mode 1)
-  (window-divider-mode 1)
-  (display-time-mode 1)
-  (delete-selection-mode 1)
-  (run-with-idle-timer 15 t (lambda () (garbage-collect))) ; collect gc every 15s while idle
-  (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
-  (electric-pair-mode 1) ; less typing
-  (context-menu-mode 1); mouse right click menu
-  (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
   (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
   (add-to-list 'default-frame-alist '(vertical-scroll-bars))
   (set-frame-parameter nil 'alpha-background 80)
   (add-to-list 'default-frame-alist '(alpha-background  . 80))
   (add-to-list 'initial-frame-alist '(alpha-background  . 80))
   (set-language-environment "UTF-8"))
+
+(use-package desktop
+  :ensure nil ; built-in
+  :config (setq desktop-path `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "desktop-session"))))
+  :bind (:map jam/open ("d" . desktop-read)
+         :map jam/file ("D" . desktop-save-in-desktop-dir))
+  :commands (desktop-read desktop-save-in-desktop-dir))
 
 (use-package calc
   :ensure nil ; built-in
@@ -383,9 +389,6 @@
 
 (use-package pass ; gpg/pass/sh
   :bind (:map jam/open ("p" . pass))
-  :init (require 'xdg)
-  (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
-  (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg"))
   :commands (pass))
 
 (use-package password-store-otp; pass
@@ -395,6 +398,8 @@
   :ensure nil ; built-in ; info:auth#The Unix password store
   :after pass
   :config (setq password-store-password-length 12)
+  (require 'xdg)
+  (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
   (auth-source-pass-enable))
 
 (use-package newsticker
@@ -522,7 +527,10 @@
   :bind (:map jam/toggle ("z" . hs-minor-mode)
          :map jam/code ("z" . hs-toggle-hiding)
                        ("v" . hs-hide-block))
-  :commands (hs-minor-mode hs-toggle-hiding hs-hide-block hs-hide-level hs-show-all hs-hide-all))
+  :commands (hs-minor-mode hs-toggle-hiding hs-hide-block hs-hide-level hs-show-all hs-hide-all)
+  :config (setq hs-special-modes-alist (append '((yaml-ts-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#")
+                                                 (nxml-mode "<!--\\|<[^/>]*[^/]>" "-->\\|</[^/>]*[^/]>" "<!--" sgml-skip-tag-forward nil))
+                                               hs-special-modes-alist)))
 
 (use-package erc
   :ensure nil ; built-in
