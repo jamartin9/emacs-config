@@ -92,7 +92,7 @@
                                                                                      (pid-file "/tmp/dropbear.pid"))))
      ((shepherd-service-requirement) '())
      ((shepherd-service-auto-start?) #f)))
-
+(define jam-home
   (home-environment
    (packages (append
             ;(map transform-emacs-build-git (list emacs-fd))
@@ -385,6 +385,8 @@
   }
   alias guixProf=_guix_opts
   _guix_opts default"))))))))
+)
+;jam-home
 #+END_SRC
 
 ** guixsd config
@@ -776,7 +778,7 @@ installation-os-nonfree
 #+END_SRC
 ** guix netbook
 #+NAME guix-netbook
-#+BEGIN_SRC scheme :tangle netbook.scm
+#+BEGIN_SRC scheme :tangle netbook.scm :noweb yes
 (use-modules
  (gnu)
  (gnu services)
@@ -800,6 +802,8 @@ installation-os-nonfree
 (use-service-modules desktop mcron networking spice ssh xorg sddm cuirass)
 (use-package-modules bootloaders certs fonts nvi
                      package-management wget xorg)
+
+<<home-scm>>
 
 (operating-system
   (host-name "jam-netbook")
@@ -839,8 +843,7 @@ installation-os-nonfree
                                         "audio" "video")))
                %base-user-accounts))
 
-  (packages (append (list nss-certs ; https
-                          blueman); podman flatpak gvfs
+  (packages (append (list blueman); podman flatpak gvfs
                     %base-packages))
 
   (services
@@ -859,6 +862,8 @@ installation-os-nonfree
                                  (list `("channels.scm" ,(local-file "channels.scm"))))
                  (simple-service 'channel-file etc-service-type
                                  (list `("nonguix-pub.scm" ,(local-file "nonguix-pub.scm"))))
+                 (simple-service 'jam-home-service home-service-type
+                                  `(("jam" ,jam-home)))
                  )
 
            ;; Remove some services that don't make sense
