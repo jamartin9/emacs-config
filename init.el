@@ -104,12 +104,11 @@
            ("f" . select-frame-by-name)
            ("o" . other-frame)
          :map minibuffer-local-completion-map
-         ("<mouse-1>" . (lambda () (interactive "e"); call the completion candidate at the row location of EVENT in the minibuffer (choose-completion event ?)
+         ("<mouse-1>" . (lambda (event) (interactive "e"); call the completion candidate at the row location of EVENT in the minibuffer (choose-completion event ?)
                           (with-selected-window (active-minibuffer-window)
                             (when-let ((object (posn-object (event-end event)))
                                        (colrow (posn-col-row (event-end event)))
                                        ((and (consp object) (>= (cdr colrow) 1)))
-                                       ((>= (cdr colrow) 1))
                                        (cand (car (split-string (nth (- (cdr colrow) 1) (split-string (car object) "[\n\r]+" t "[ ]+"))))))
                               (if (string-search "Find file:" (minibuffer-prompt))
                                   (progn ; replace end of directory with candidate
@@ -429,7 +428,7 @@
                               ("monero-release" "https://github.com/monero-project/monero/releases.atom")
                               ("BramCohen" "https://bramcohen.substack.com/feed"))))
 
-(use-package magit ; git
+(use-package magit ; git ; magit-diff then magit-patch to save
   :commands (magit-file-delete magit-status)
   :bind (:map jam/open ("m" . magit-status)
          :map magit-mode-map ("q" . kill-buffer)
@@ -721,21 +720,9 @@
                                    (("Reddit" visible))
                                    (("Tor" visible)))
              gnus-topic-alist '(("gmail"; the key of topic corresponds to a public imap folder or feed
-                                 "nnimap+gmail:INBOX"
-                                 "nnimap+gmail:[Gmail]/All Mail"
-                                 "nnimap+gmail:[Gmail]/Sent Mail"
-                                 "nnimap+gmail:[Gmail]/Spam"
-                                 "nnimap+gmail:[Gmail]/Trash"
-                                 "nnimap+gmail:Drafts")
-                                ("riseup"
-                                 "nnimap+riseup:INBOX"
-                                 "nnimap+riseup:Sent"
-                                 "nnimap+riseup:Trash"
-                                 "nnimap+riseup:Drafts")
-                                ("misc"
-                                 "nnfolder+archive:sent.2023"
-                                 "nnfolder+archive:sent.2024"
-                                 "nndraft:drafts")
+                                 "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
+                                ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts")
+                                ("misc" "nnfolder+archive:sent.2023" "nnfolder+archive:sent.2024" "nndraft:drafts")
                                 ("Level1Techs" "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs")
                                 ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog")
                                 ("Emacs" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs")
