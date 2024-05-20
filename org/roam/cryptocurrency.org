@@ -127,6 +127,8 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
   - view tags since v0.18
 - lockable spends with ~locked_transfer~
 - [[https://github.com/spackle-xmr/MoneroTools][churn, fracture and consolidate tools]]
+- haveno for p2p order book https://blog.nihilism.network/servers/haveno-client-f2f/index.html
+  - ~make haveno-apps && make haveno-desktop-mainnet~
 * bitcoin
 - reuse of ECDSA signatures can lead to key compromise (polynonce attack). use deterministic dsa instead (eddsa or RFC 6979)
 - double sha256

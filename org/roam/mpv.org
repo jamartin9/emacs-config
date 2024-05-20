@@ -1,0 +1,44 @@
+:PROPERTIES:
+:ID:       74af9c91-c68b-4a6a-b81b-a5a77f466599
+:END:
+#+title: mpv
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container content 
+#+HTML_DOCTYPE: html5 
+#+INCLUDE: "css.org::navbar" :only-contents t  
+
+* mpv
+- ffmpeg based
+- supports custom scripts
+- 'E' to switch editions of MKV
+- ~mpv.conf~ for HDR/DV
+#+NAME: mpv-config.conf
+#+BEGIN_SRC conf :tangle no
+vo=gpu-next
+gpu-api=vulkan
+border=no
+screenshot-format=png
+screenshot-tag-colorspace=no # SDR screenshots
+screenshot-high-bit-depth=no # 8bit screenshots
+screenshot-png-compression=1 # 0-9
+target-colorspace-hint=yes
+target-contrast=auto
+#tone-mapping=bt.2446a # or bt.2390 HDR to SDR # st2094-40 for HDR+ to SDR
+#hwdec=no # nvdec for nvidia
+#fs=yes # fullscreen
+#osd-playing-msg=my-video-params: ${video-params/colormatrix} ${video-params/colorlevels} # print properties of video with osd on start
+#osd-playing-msg-duration=1000000
+[HDR]# profile for HDR playback/screens
+#profile-cond=get("video-params/colormatrix") == "dolbyvision" and get("video-params/colorlevels") ~= "full"
+target-trc=pq # when using HDR playback device
+profile-restore=copy
+screenshot-tag-colorspace=yes # HDR screenshots
+screenshot-high-bit-depth=yes # 16 bit screenshots
+#gpu-context=waylandvk # set the environment variable ENABLE_HDR_WSI=1
+#+END_SRC
+- bind keys to lua script with ~input.conf~
+#+NAME: mpv-input.conf
+#+BEGIN_SRC conf :tangle no
+F1 apply-profile "HDR" ; show-text "using HDR profile"
+#+END_SRC

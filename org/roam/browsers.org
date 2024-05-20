@@ -108,6 +108,8 @@ self.addEventListener('fetch', function(e) {
     - builtin tor, ad block
     - disable wallet, sidebar
     - F12 Dev Tools -> Ctrl+Shift+P -> type 'shot' for screen capture options
+    - ~brave://flags/#ozone-platform-hint~ set to auto for wayland default instead of x11
+    - Alt w to close tab, ctrl tab to cycle, 
   - ungoogled-chromium
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]
@@ -125,6 +127,7 @@ self.addEventListener('fetch', function(e) {
     - russians 'propaganda' sites (RT/sputnik) blocked/deranked
     - torrent sites not blocked on bing blocked on ddg
 ** brave
+- tonemapping support for hdr pngs
 - search.brave.com
 - has 'Goggles' for custom ranking
 - support bangs like !g

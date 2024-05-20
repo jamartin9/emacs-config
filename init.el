@@ -366,8 +366,10 @@
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
   (add-to-list 'eglot-server-programs
-               '((rust-ts-mode rust-mode) .
-                 ("rust-analyzer" :initializationOptions (:checkOnSave (:command "clippy"))))))
+               '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
+                 ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
+                                                          :cargo (:cfgs (;:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
+                                                                         :tokio_unstable "")))))))
 
 (use-package rust-ts-mode
   :ensure nil ; built-in

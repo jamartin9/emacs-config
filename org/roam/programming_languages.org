@@ -9,10 +9,6 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Programming Languages
 The tower of babel is your type system as a macro
-** [[id:d6237a00-1daa-4752-b311-1749950f4f6e][guile]]
-** [[id:fd6e2c21-220f-4d63-ab7e-5004dc053e5b][clojure]]
-** elisp
-- eieio for objects
 ** shell
 - use ~shellcheck~ for common issues and errors in scripts
 - sh
@@ -85,3 +81,17 @@ The tower of babel is your type system as a macro
 - calling convention of setting registers and jumping
 - SIMD (xmmx) SSE/AVX(512)
 ** [[id:bf21269e-5bf5-4c51-be58-4c040d905e25][zig]]
+** lisp
+*** scheme
+  - [[id:d6237a00-1daa-4752-b311-1749950f4f6e][guile]]
+  - prescheme
+    - manual memory management
+    - static type system
+    - verified prescheme to C compiler
+  - gnu mes
+    - scheme interpreter in C and C compiler in scheme used for bootstrapping guile/guix with gash
+  - chicken scheme
+    - scheme to C compiler
+*** [[id:fd6e2c21-220f-4d63-ab7e-5004dc053e5b][clojure]]
+*** elisp
+- eieio for objects

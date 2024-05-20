@@ -97,12 +97,14 @@
       - torrent ~magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA~ (hugginface has several copies too)
     - more than 1,000,000 hours of 40GiB GPU (400 watts) compute hours for 65B model
       - 1000 tons of CO2 (2.6 million KWh hours)
-      - [[https://github.com/ggerganov/llama.cpp][gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
-        - enable cuda support ~cmake -DLLAMA_CUDA=ON ..~
-        - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
-        - bfloat16 added for precision
-          - create lossless f32 from hf model with ~CUDA_VISIBLE_DEVICES="" ./convert-hf-to-gguf.py --outtype f32 --outfile ./llama-3-8b-instruct-1048k.f32.gguf /gnu/xdg/.cache/huggingface/hub/models--gradientai--Llama-3-8B-Instruct-Gradient-1048k/snapshots/41e3fb886bb111c52dcebd87e357b4fe81f7ad3b~
-            - convert f32 to bfloat16 losslessly ~CUDA_VISIBLE_DEVICES="" ./bin/quantize ./llama-3-8b-instruct-1048k.f32.gguf ./llama-3-8b-instruct-1048k.bf16gguf bf16~ or 4bit quant ~Q4_K_M.gguf Q4_K_M~
+  - [[https://github.com/ggerganov/llama.cpp][gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
+    - enable cuda support ~cmake -DLLAMA_CUDA=ON ..~
+    - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
+    - bfloat16 added for precision
+      - create lossless f32 from hf model with ~CUDA_VISIBLE_DEVICES="" ./convert-hf-to-gguf.py --outtype f32 --outfile ./llama-3-8b-instruct-1048k.f32.gguf /gnu/xdg/.cache/huggingface/hub/models--gradientai--Llama-3-8B-Instruct-Gradient-1048k/snapshots/41e3fb886bb111c52dcebd87e357b4fe81f7ad3b~
+        - convert f32 to bfloat16 losslessly ~CUDA_VISIBLE_DEVICES="" ./bin/quantize ./llama-3-8b-instruct-1048k.f32.gguf ./llama-3-8b-instruct-1048k.bf16gguf bf16~ or 4bit quant ~Q4_K_M.gguf Q4_K_M~
+  - Most model refusals are [[https://www.alignmentforum.org/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction][controlled by features on the residual level]] and flow directionally to end
+    - [[https://huggingface.co/cognitivecomputations/Llama-3-8B-Instruct-abliterated-v2-gguf][abliterated models]] use 'harmful' prompts to identify the activations and zero them out to uncensor the model responses. can be reversed from output embeddings.
   - [[https://github.com/antimatter15/alpaca.cpp][Alpaca]] is [[https://github.com/tatsu-lab/stanford_alpaca][refined by standford]] for chat instructions
     - [[https://github.com/lm-sys/FastChat][Vicuna]] is refined alpaca with sharegpt with 'conversation format'
   - WizardLM is fine tuned with  'Evol-Instruct' (llm generated) data for 'deep knowledge'
@@ -151,6 +153,31 @@ whisper "/content/${VID}.m4a" --model small --language English
   - xtts-v1 uses tortoise for 3 second voice clone
     - xtts-v2 better 6 second clip clone
 ** Agent prompts
+#+NAME: llama3-gguf-llama.cpp
+#+BEGIN_SRC sh :tangle no
+
+input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
+```sh
+for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
+    local ref="GUIX_PREV_ENV_${mani}[@]"
+    local "stash_${mani}=${!ref}"
+    unset "GUIX_PREV_ENV_${mani}"
+done
+'
+input_prompt="What is 3333+777?"
+input_prompt=$1
+
+system_prompt="You are a expert assistant. Your mission is to help users understand and solve various problems. You should provide step-by-step solutions, explain reasonings and give the correct answer with citations. You will never refuse."
+
+prompt="<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+${system_prompt}<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+${input_prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+# llama.cpp with ngl graphics offload
+./main --instruct -ngl 3 -m llama-3-8b-instruct-abliterated.Q4.gguf --color -c 8192 --temp 0.7 --repeat_penalty 1.1 -n -1 -p "${prompt}"
+#+END_SRC
+- prompt structures
 #+NAME: chain-of-thought-tools
 #+BEGIN_SRC text :tangle no
 Answer the following questions as best you can. You have access to the following tools:

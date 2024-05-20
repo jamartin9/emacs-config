@@ -290,7 +290,7 @@
       local ref=\"GUIX_PREV_ENV_${arg}\"
       if [ -n \"${!ref}\" ]; then # the prev env exists # MAYBE indirect variable expansion portable
           for entry in ${!ref}; do # unset vars of profile # MAYBE indirect variable expansion portable
-              if [[ ! \"${entry%%=*}\" =~ GUIX_PREV_ENV.* ]] &&
+              if [[ ! \"${entry%%=*}\" =~ GUIX_PREV_ENV.* ]] && [[ \"${entry}\"  =~ \"=\" ]] &&
                  [ \"${entry%%=*}\" != \"GUIX_ACTIVE_PROFILES\" ] ;then
                   unset \"${entry%%=*}\"
               fi
@@ -557,17 +557,16 @@
   (specifications->manifest
    '(
      ;; basic
-     ;;"emacs-pgtk-native-comp" ;;"git" ;;"ripgrep" ;;"fd" ;;"nss-certs" ;;"guix" ;;"guile" ;;"shepherd" ;;"glibc-utf8-locales"
+     ;;"shepherd" ;;"glibc-utf8-locales"
 
      ;;"ungoogled-chromium-nvda"
-     ;;"firefox-nvda"
+     ;;"firefox-nvda"; --with-graft=mesa=nvda
      ;;"torbrowser"
 
      ;;"transmission"
      ;;"nzbget"
      ;;"steam-nvidia" ;; steam
      ;;"zfs"
-     ;;"qemu"
      "perf"
      "bpftrace"
      "bcc"
@@ -616,8 +615,6 @@
      ;;"patch"
      ;;"gash"
      ;;"gash-utils"
-     ;;"gnupg"
-     ;;"password-store"
 
      ;; apps
      ;;"wine64"; "wine"
@@ -636,6 +633,7 @@
      ;;"obs"
      ;;"virt-viewer"
      ;;"dino" ; xmpp client
+     ;;"flatpak"
 
      ;; docs
      ;;"libreoffice"
@@ -656,6 +654,7 @@
      ;;"makemkv"
      "flamegraph"
      ;;"yt-dlp"
+     ;;"vapoursynth";; "ffms2"
 
      ;; net
      ;;"curl"
@@ -681,7 +680,6 @@
 
      ;; Desktop
      ;;"notification-daemon"
-     ;;"xfce"; --with-graft=mesa=nvda
      ;;"nvidia-driver"
      ))
 #+END_SRC

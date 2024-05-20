@@ -17,10 +17,7 @@ ooh ahh the colors... with a generic plot to boot!
 - irc monitoring of trackers
 *** [[id:4e3945f6-e0c1-4205-b1c8-341c8e6126a5][ombi]]
 *** [[id:0de4ef6d-7a8a-4c06-953a-ad226fb4cc40][roku]]
-*** mpv
-- ffmpeg based
-- supports custom scripts
-- 'E' to switch editions of MKV
+*** [[id:74af9c91-c68b-4a6a-b81b-a5a77f466599][mpv]]
 *** vlc
 - ffmpeg based
 *** viewing distance
