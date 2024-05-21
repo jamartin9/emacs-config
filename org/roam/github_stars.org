@@ -1470,6 +1470,10 @@
   - Server supporting the Signal Private Messenger applications on Android, Desktop, and iOS
 ** simias/rustation
   - Playstation emulator in the Rust programing language
+** simplex-chat/simplex-chat
+  - SimpleX - the first messaging network operating without user identifiers of any kind - 100% private by design! iOS, Android and desktop apps
+** simplex-chat/simplexmq
+  - SimpleXMQ - A reference implementation of the SimpleX Messaging Protocol for simplex queues over public networks. Includes xftp, smp and ntf servers
 ** skeeto/elfeed
   - An Emacs web feeds client
 ** skeeto/endlessh
@@ -1978,6 +1982,8 @@
   - A library for building fast, reliable and evolvable network services.
 ** cloudflare/workers-rs
   - Write Cloudflare Workers in 100% Rust via WebAssembly
+** creusot-rs/creusot
+  - Creusot helps you prove your code is correct in an automated fashion.
 ** cross-rs/cross
   - “Zero setup” cross compilation and “cross testing” of Rust crates
 ** dalek-cryptography/bulletproofs
@@ -2068,8 +2074,6 @@
   - Zero-copy deserialization framework for Rust
 ** rosefromthedead/effing-mad
   -  Algebraic effects for Rust
-** RustCrypto/formats
-  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
 ** Rust-GCC/gccrs
   - GCC Front-End for Rust
 ** rust-lang/book
@@ -2086,6 +2090,8 @@
   - libgccjit AOT codegen for rustc
 ** rust-lang/rustup
   - The Rust toolchain installer
+** RustCrypto/formats
+  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
 ** rustwasm/wasm-bindgen
   - Facilitating high-level interactions between Wasm modules and JavaScript
 ** sbstp/rust-igd

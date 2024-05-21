@@ -424,9 +424,7 @@
         newsticker-automatically-mark-items-as-old nil
         newsticker-automatically-mark-visited-items-as-old t
         newsticker-url-list-defaults nil
-        newsticker-url-list '(("p2pool-release" "https://github.com/SChernykh/p2pool/releases.atom")
-                              ("monero-release" "https://github.com/monero-project/monero/releases.atom")
-                              ("BramCohen" "https://bramcohen.substack.com/feed"))))
+        newsticker-url-list '(("styx" "https://odysee.com/$/rss/@Styxhexenhammer666:2"))))
 
 (use-package magit ; git ; magit-diff then magit-patch to save
   :commands (magit-file-delete magit-status)
@@ -518,10 +516,7 @@
   :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
   :config ;(setq org-link-elisp-confirm-function nil)
   (setq debbugs-gnu-default-packages '("guix-patches"))
-  (require 'debbugs-guix)
-  (require 'debbugs-org)
-  (require 'debbugs-gnu)
-  (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
+  (require 'debbugs-guix) (require 'debbugs-org) (require 'debbugs-gnu) (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
 
 (use-package hideshow
   :ensure nil ; built-in
@@ -567,8 +562,7 @@
                 erc-kill-queries-on-quit t
                 erc-kill-server-buffer-on-quit t
                 erc-autojoin-channels-alist '(("Libera.Chat" "#emacs" "#guix")
-                                              ("Rizon" "#subsplease")
-                                              ("EFnet" "#srrdb")
+                                              ("Rizon" "#subsplease") ("EFnet" "#srrdb")
                                               ("Corrupt" "#Pre" "#Pre.Nuke"))
                 erc-hide-list '("JOIN" "PART" "QUIT")
                 erc-network-hide-list '(("Libera.Chat" "JOIN" "PART" "QUIT")
@@ -621,12 +615,7 @@
         company-tooltip-limit 14
         company-tooltip-align-annotations t
         company-require-match 'never
-        company-global-modes
-        '(not erc-mode
-              message-mode
-              help-mode
-              ;eshell-mode
-              gud-mode)
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode);eshell-mode
         company-frontends
         '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
           company-echo-metadata-frontend)  ; show selected candidate docs in echo area
@@ -635,13 +624,8 @@
         company-dabbrev-other-buffers nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
-  :commands (global-company-mode
-             company-complete-common
-             company-complete-common-or-cycle
-             company-manual-begin
-             company-grab-line)
-  :config
-  (require 'company-tng) ; TabNGo
+  :commands (global-company-mode company-complete-common company-complete-common-or-cycle company-manual-begin company-grab-line)
+  :config (require 'company-tng) ; TabNGo
   (company-tng-configure-default))
 
 (use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all
@@ -659,27 +643,12 @@
    gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
-   gnus-secondary-select-methods '(;(nnatom "wingolog.org/feed/atom") ; nnatom added in 30. Do not include http/https
-                                   ;(nnatom "yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
-                                   ;(nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
-                                   ;(nnatom "guix.gnu.org/feeds/blog.atom")
-                                   ;(nnatom "www.reddit.com/r/news/.rss")
-                                   ;(nnatom "blog.torproject.org/rss.xml")
+   gnus-secondary-select-methods '(;(nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
+                                   ;(nnatom "github.com/SChernykh/p2pool/releases.atom") (nnatom "github.com/monero-project/monero/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
                                    ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
-                                   ;;(nnatom "bramcohen.substack.com/feed") ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
-                                   ;(nnimap "riseup"
-                                   ;        (nnimap-address "mail.riseup.net")
-                                   ;        (nnimap-server-port 993)
-                                   ;        (nnimap-stream ssl)
-                                   ;        (nnir-search-engine imap)
-                                   ;        (nnmail-expiry-wait 90))
-                                   ;(nnimap "gmail" ;; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
-                                   ;        (nnimap-address "imap.gmail.com")
-                                   ;        (nnimap-server-port 993)
-                                   ;        (nnimap-stream ssl)
-                                   ;        (nnir-search-engine imap)
-                                   ;        (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") ;; 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
-                                   ;        (nnmail-expiry-wait immediate))
+                                   ;(nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
+                                   ;(nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
+                                   ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
                                    )
    gnus-use-cache t
    gnus-asynchronous t
@@ -700,58 +669,28 @@
   (eval-after-load 'gnus-topic
     '(progn
        (require 'nnrss) ; setup rss feeds.
-       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff")
-                                 ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff");("bram" "https:/bramcohen.substack.com/feed" "Bram blog"); https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666 "https://cacm.acm.org/feed/ https://codeberg.org/gnuastro/gnuastro.rss
-                                 ("lobste" "https://lobste.rs/rss" "Tech lobsters")))
+       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lunduke" "https://api.substack.com/feed/podcast/462466.rss" "Lunduke articles") ("bram" "https://bramcohen.com/feed" "Bram blog") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters"))); https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666 https://cacm.acm.org/feed/ https://codeberg.org/gnuastro/gnuastro.rss
        (nnrss-save-server-data nil)
        (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
              gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
                                   (nnfolder-active-file ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "archive") "active"))
                                   (nnfolder-get-new-mail nil)
                                   (nnfolder-inhibit-expiry t)))
-             gnus-topic-topology '(("Gnus" visible);"Gnus" is the root folder. three mail accounts, "misc", "gmail", "riseup" then the nnatom feeds
-                                   (("misc" visible))
-                                   (("gmail" visible nil nil))
-                                   (("riseup" visible nil nil))
-                                   (("Level1Techs" visible))
-                                   (("wingolog" visible))
-                                   (("Emacs" visible))
-                                   (("Guix" visible));(("Bram" visible))
-                                   (("Reddit" visible))
-                                   (("Tor" visible)))
-             gnus-topic-alist '(("gmail"; the key of topic corresponds to a public imap folder or feed
-                                 "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
+             gnus-topic-topology '(("Gnus" visible);"Gnus" is the root folder. three mail accounts, "gmail", "riseup", "misc" then the nnatom feeds
+                                   (("gmail" visible nil nil)) (("riseup" visible nil nil)) (("misc" visible))
+                                   (("Releases" visible)) (("Level1Techs" visible)) (("wingolog" visible)) (("Guix" visible)) (("Reddit" visible)) (("Tor" visible)))
+             gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
                                 ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts")
-                                ("misc" "nnfolder+archive:sent.2023" "nnfolder+archive:sent.2024" "nndraft:drafts")
-                                ("Level1Techs" "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs")
-                                ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog")
-                                ("Emacs" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs")
-                                ("Guix" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog");("Bram" "nnatom+bramcohen.substack.com/feed:Bram’s Thoughts")
-                                ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News")
-                                ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+                                ("misc" "nnfolder+archive:sent.2023" "nnfolder+archive:sent.2024" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
+                                ("Level1Techs" "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Guix" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+                                ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero" "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool")
                                 ("Gnus")))
-       (gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
-       (gnus-topic-set-parameters "gmail" '((display . 200)))
-       ;(gnus-subscribe-hierarchically "nnimap+riseup:INBOX")
-       ;(gnus-subscribe-hierarchically "nnimap+riseup:Sent")
-       ;(gnus-subscribe-hierarchically "nnimap+riseup:Trash")
-       ;(gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
-       ;(gnus-subscribe-hierarchically "nnimap+gmail:INBOX")
-       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail")
-       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail")
-       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash")
-       ;(gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam")
-       ;(gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
-       ;(gnus-subscribe-hierarchically "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs")
-       ;(gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog")
-       ;(gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs")
-       ;(gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog")
-       ;(gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News")
-       ;(gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
-       ;;(gnus-subscribe-hierarchically "nnatom+bramcohen.substack.com/feed:Bram’s Thoughts");;(gnus-subscribe-hierarchically "nnrss:bram") ; not found...
-       (gnus-subscribe-hierarchically "nnrss:lwn")
-       (gnus-subscribe-hierarchically "nnrss:lobste")
-       (gnus-subscribe-hierarchically "nnrss:phoronix"))))
+       (gnus-topic-set-parameters "gmail" '((display . 200))) (gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
+       ;(gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
+       ;(gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
+       ;(gnus-subscribe-hierarchically "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
+       ;(gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool") (gnus-subscribe-hierarchically "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero")
+       (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix"))))
 
 (use-package which-key
   ;:pin gnu
@@ -804,39 +743,24 @@
 ;  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
 
 ;;;###autoload
-(defun jam/sudo-edit (file)
-  "Edit file with sudo. Defaults to current buffer's file name."
-  (interactive
-   (list
-    (read-string
-     (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer)))
-     nil nil
-     (buffer-file-name (current-buffer)))))
-  (message "sudo-edited file: %s" file)
-  (find-file (format "/sudo::%s" file)))
-
+(defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-string (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil nil (buffer-file-name (current-buffer))))) (find-file (format "/sudo::%s" file)))
 ;;;###autoload
-(defun jam/save-all ()
-  "Save all buffers"
-  (interactive)
-  (save-some-buffers t))
-
+(defun jam/save-all () "Save all buffers" (interactive) (save-some-buffers t))
 ;;;###autoload
-(defun jam/draw ()
-  "Activate artist-mode polygon in *scratch* buffer."
-  (interactive)
-  (switch-to-buffer "*scratch*")
-  (artist-mode 1); (picture-mode)
-  (artist-select-op-poly-line))
+(defun jam/draw () "Activate artist-mode polygon in *scratch* buffer." (interactive) (switch-to-buffer "*scratch*") (artist-mode 1) (artist-select-op-poly-line)); (picture-mode)
+;;;###autoload
+(defun jam/eshell () "Open new eshell" (interactive) (eshell t))
+;;;###autoload
+(defun jam/mpv-play (url) "Run mpv in eat terminal" (interactive (list (read-string (format "Arguments (https://zeno.fm/radio/gangsta49/): ") nil nil "https://zeno.fm/radio/gangsta49/"))) (eat (concat "mpv " url) 69))
+;;;###autoload
+(defun jam/replace-unicode() "Replaces the following unicode characters: ZERO WIDTH NO-BREAK SPACE (65279, #xfeff) aka BOM, ZERO WIDTH SPACE (codepoint 8203, #x200b), RIGHT-TO-LEFT MARK (8207, #x200f), RIGHT-TO-LEFT OVERRIDE (8238, #x202e), LEFT-TO-RIGHT MARK ‎(8206, #x200e), OBJECT REPLACEMENT CHARACTER (65532, #xfffc)" (interactive) (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" ""))
 
 ;;;###autoload
 (defun jam/set-rust-path ()
   "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
   (interactive)
   (require 'xdg)
-  (setenv "PATH" (concat (getenv "PATH")
-                         path-separator (concat (file-name-as-directory (xdg-data-home))
-                                                (file-name-as-directory "cargo") "bin")))
+  (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "cargo") "bin")))
   (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup"))
   (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo"))
   (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
@@ -853,69 +777,15 @@
   (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
 
 ;;;###autoload
-(defun jam/eshell ()
-  "Open new eshell"
-  (interactive)
-  (eshell t))
-
-;;;###autoload
-(defun jam/mpv-play (url)
-  "Run mpv in eat terminal"
-  (interactive
-   (list
-    (read-string
-     (format "Arguments (https://zeno.fm/radio/gangsta49/): ")
-     nil nil
-     "https://zeno.fm/radio/gangsta49/")))
-  (eat (concat "mpv " url) 69))
-
-;;;###autoload
 (defun jam/guix-env()
   "Guix variables for local guix daemon/client"
   (interactive)
   (require 'xdg)
-  (setenv "GUIX_DAEMON_SOCKET" (concat (file-name-as-directory (xdg-data-home))
-                                       (file-name-as-directory "guix")
-                                       (file-name-as-directory "var")
-                                       (file-name-as-directory "guix")
-                                       (file-name-as-directory "daemon-socket") "socket"))
-  (setenv "GUIX_DATABASE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home))
-                                            (file-name-as-directory "guix")
-                                            (file-name-as-directory "var")
-                                            (file-name-as-directory "guix") "db"))
-  (setenv "GUIX_LOG_DIRECTORY" (concat (file-name-as-directory (xdg-data-home))
-                                       (file-name-as-directory "guix")
-                                       (file-name-as-directory "var")
-                                       (file-name-as-directory "log") "guix"))
-  (setenv "GUIX_STATE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home))
-                                         (file-name-as-directory "guix")
-                                         (file-name-as-directory "var") "guix"))
-  (setenv "GUIX_CONFIGURATION_DIRECTORY" (concat (file-name-as-directory (xdg-config-home))
-                                                 (file-name-as-directory "guix") "etc"))
-  (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (xdg-data-home))
-                                 (file-name-as-directory "guix")
-                                 (file-name-as-directory "var")
-                                 (file-name-as-directory "guix")
-                                 (file-name-as-directory "profiles")
-                                 (file-name-as-directory "per-user")
-                                 (file-name-as-directory "root")
-                                 (file-name-as-directory "guix-profile")
-                                 (file-name-as-directory "lib") "locale"))
-  (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home))
-                              (file-name-as-directory "guix")
-                              (file-name-as-directory "gnu") "store"))
-  (setenv "PATH" (concat (getenv "PATH")
-                         path-separator (concat (file-name-as-directory (xdg-data-home))
-                                                (file-name-as-directory "guix") "bin"))))
-
-;;;###autoload
-(defun jam/replace-unicode ()
-  "Replaces the following unicode characters:
-ZERO WIDTH NO-BREAK SPACE (65279, #xfeff) aka BOM
-ZERO WIDTH SPACE (codepoint 8203, #x200b)
-RIGHT-TO-LEFT MARK (8207, #x200f)
-RIGHT-TO-LEFT OVERRIDE (8238, #x202e)
-LEFT-TO-RIGHT MARK ‎(8206, #x200e)
-OBJECT REPLACEMENT CHARACTER (65532, #xfffc)"
-  (interactive)
-  (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" ""))
+  (setenv "GUIX_DAEMON_SOCKET" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "daemon-socket") "socket"))
+  (setenv "GUIX_DATABASE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") "db"))
+  (setenv "GUIX_LOG_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "log") "guix"))
+  (setenv "GUIX_STATE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") "guix"))
+  (setenv "GUIX_CONFIGURATION_DIRECTORY" (concat (file-name-as-directory (xdg-config-home))(file-name-as-directory "guix") "etc"))
+  (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "profiles") (file-name-as-directory "per-user") (file-name-as-directory "root") (file-name-as-directory "guix-profile") (file-name-as-directory "lib") "locale"))
+  (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "gnu") "store"))
+  (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") "bin"))))

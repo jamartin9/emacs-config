@@ -54,8 +54,9 @@
 - xch domains
   - namesdao nft
     - webpages at ~SevenCharName.xch.cm~ and ~SevenCharName.xch.am~
-- [[https://info.v2.tibetswap.io/pair/1a6d4f404766f984d014a3a7cab15021e258025ff50481c73ea7c48927bd28af][tibet]] swap amm based on uniswap v1
 - each CAT v2 is worth 1000 mojos. smallest unit is thus 0.001 CAT or one mojo.
+- [[https://info.v2.tibetswap.io/pair/1a6d4f404766f984d014a3a7cab15021e258025ff50481c73ea7c48927bd28af][tibet]] swap amm based on uniswap v1
+- https://github.com/dexie-space/splash for decentralized offer broadcasting
 #+NAME: chia-namesdao-create
 #+BEGIN_SRC sh :tangle no
 chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
@@ -80,7 +81,7 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling
  - 0.59 btc in reserved. Required 1btc deposit to withdrawl.
 - CEO/CSO/Employees flame users on reddit (ex. Windows SSL issue)
-- Trademark trolling chiaplot (new site)/xchscan(block explorer) with fresh law grad
+- Trademark trolling chiaplot (news site)/xchscan(block explorer) with fresh law grad
   - the chia plot needed a lawyer for them to buzz off
 - large premine (promised to not use) is being used(sold) to 'marketing' and 'market makers'
 - layoff of devs after being told "we have years of runway"
@@ -94,9 +95,10 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - Slow development
   - pooling release
   - compressed plots
-    - announced needing new plot format but still waiting...
+    - announced needing new plot format but still bought drplotter compressed farmer
   - node perf (dust storm)
-  - blockchain download (offer torrent now)
+  - no blockchain download for years (offer torrent now)
+- atomic swaps and zkrollups not integrated into client for years
 * monero
 - use block > 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)
 - supports tor with sending tx's and wallets

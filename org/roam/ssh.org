@@ -27,6 +27,7 @@
 - sftp subsystem ~Subsystem sftp /sftp-server -f AUTHPRIV -l INFO~
 - Disable X11, TCP, and agent forwarding
 - key only to ~cat key.pub >> $USER/authorized_hosts~
+- Reverse ssh to allow 10.0.0.2 to connect to localhost's port 2222 over 10.0.0.2's port 7777  ~ssh -R localhost:7777:localhost:2222 10.0.0.2~
 *** ssh client config
 - ~ssh-keygen -p~ for passphrase change
 - ~HashKnownHosts yes~
