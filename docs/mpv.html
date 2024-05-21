@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>mpv</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container content">
+<nav class="navbar is-black" id="org54272f5">
+<div class="navbar-brand" id="orgdc7563c">
+<div class="navbar-item" id="orgf89ea72">
+<p>
+<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-menu" id="orgdae7c5e">
+<div class="navbar-start" id="org2210bfb">
+<div class="navbar-item" id="org7090abc">
+<p>
+<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
+</p>
+
+</div>
+
+</div>
+<div class="navbar-end" id="org08ae50a">
+
+</div>
+
+</div>
+</nav>
+
+<div id="outline-container-org370101f" class="outline-2">
+<h2 id="org370101f">mpv</h2>
+<div class="outline-text-2" id="text-org370101f">
+<ul class="org-ul">
+<li>ffmpeg based</li>
+<li>supports custom scripts</li>
+<li>'E' to switch editions of MKV</li>
+<li><code>mpv.conf</code> for HDR/DV</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-conf" id="org1291da5">vo=gpu-next
+gpu-api=vulkan
+border=no
+screenshot-format=png
+screenshot-tag-colorspace=no # SDR screenshots
+screenshot-high-bit-depth=no # 8bit screenshots
+screenshot-png-compression=1 # 0-9
+target-colorspace-hint=yes
+target-contrast=auto
+#tone-mapping=bt.2446a # or bt.2390 HDR to SDR # st2094-40 for HDR+ to SDR
+#hwdec=no # nvdec for nvidia
+#fs=yes # fullscreen
+#osd-playing-msg=my-video-params: ${video-params/colormatrix} ${video-params/colorlevels} # print properties of video with osd on start
+#osd-playing-msg-duration=1000000
+[HDR]# profile for HDR playback/screens
+#profile-cond=get("video-params/colormatrix") == "dolbyvision" and get("video-params/colorlevels") ~= "full"
+target-trc=pq # when using HDR playback device
+profile-restore=copy
+screenshot-tag-colorspace=yes # HDR screenshots
+screenshot-high-bit-depth=yes # 16 bit screenshots
+#gpu-context=waylandvk # set the environment variable ENABLE_HDR_WSI=1
+</pre>
+</div>
+<ul class="org-ul">
+<li>bind keys to lua script with <code>input.conf</code></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-conf" id="orgc99047d">F1 apply-profile "HDR" ; show-text "using HDR profile"
+</pre>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

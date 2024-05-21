@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org9769161">
-<div class="navbar-brand" id="org291cb2f">
-<div class="navbar-item" id="org323e4fb">
+<nav class="navbar is-black" id="orgd4f3769">
+<div class="navbar-brand" id="org6d12fb6">
+<div class="navbar-item" id="org16f02cc">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="orgbd1badc">
-<div class="navbar-start" id="orgbc2e891">
-<div class="navbar-item" id="org90f77e6">
+<div class="navbar-menu" id="org4c44376">
+<div class="navbar-start" id="orgff81522">
+<div class="navbar-item" id="org4d89bee">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,26 +29,26 @@
 </div>
 
 </div>
-<div class="navbar-end" id="org9ca0e46">
+<div class="navbar-end" id="org85e4d1f">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-org9a3c956" class="outline-2">
-<h2 id="org9a3c956">SSH</h2>
-<div class="outline-text-2" id="text-org9a3c956">
+<div id="outline-container-orgcb50810" class="outline-2">
+<h2 id="orgcb50810">SSH</h2>
+<div class="outline-text-2" id="text-orgcb50810">
 </div>
-<div id="outline-container-org52ff2c6" class="outline-3">
-<h3 id="org52ff2c6">ssh/webssh</h3>
-<div class="outline-text-3" id="text-org52ff2c6">
+<div id="outline-container-org2e8526d" class="outline-3">
+<h3 id="org2e8526d">ssh/webssh</h3>
+<div class="outline-text-3" id="text-org2e8526d">
 <ul class="org-ul">
 <li>added quantum safe key exchange in 7.0</li>
 </ul>
 </div>
-<div id="outline-container-orgdbbe716" class="outline-4">
-<h4 id="orgdbbe716">sshd</h4>
-<div class="outline-text-4" id="text-orgdbbe716">
+<div id="outline-container-orge2f469a" class="outline-4">
+<h4 id="orge2f469a">sshd</h4>
+<div class="outline-text-4" id="text-orge2f469a">
 <ul class="org-ul">
 <li><code>LogLevel VERBOSE</code></li>
 <li><code>PermitRootLogin no</code></li>
@@ -74,12 +74,13 @@
 <li>sftp subsystem <code>Subsystem sftp /sftp-server -f AUTHPRIV -l INFO</code></li>
 <li>Disable X11, TCP, and agent forwarding</li>
 <li>key only to <code>cat key.pub &gt;&gt; $USER/authorized_hosts</code></li>
+<li>Reverse ssh to allow 10.0.0.2 to connect to localhost's port 2222 over 10.0.0.2's port 7777  <code>ssh -R localhost:7777:localhost:2222 10.0.0.2</code></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org62346b9" class="outline-4">
-<h4 id="org62346b9">ssh client config</h4>
-<div class="outline-text-4" id="text-org62346b9">
+<div id="outline-container-org0da65be" class="outline-4">
+<h4 id="org0da65be">ssh client config</h4>
+<div class="outline-text-4" id="text-org0da65be">
 <ul class="org-ul">
 <li><code>ssh-keygen -p</code> for passphrase change</li>
 <li><code>HashKnownHosts yes</code></li>

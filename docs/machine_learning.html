@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="org323e6b5">
-<div class="navbar-brand" id="org0daae7c">
-<div class="navbar-item" id="org64b9656">
+<nav class="navbar is-black" id="org4cab696">
+<div class="navbar-brand" id="org82f4093">
+<div class="navbar-item" id="org2b73dca">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org8405ec7">
-<div class="navbar-start" id="orged905c2">
-<div class="navbar-item" id="org3178c0c">
+<div class="navbar-menu" id="orgefa3ce7">
+<div class="navbar-start" id="org97f56b0">
+<div class="navbar-item" id="org1fdb3b3">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,19 +29,19 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgb327ff9">
+<div class="navbar-end" id="org74e2a5b">
 
 </div>
 
 </div>
 </nav>
-<div id="outline-container-orgd4533af" class="outline-2">
-<h2 id="orgd4533af">Machine learning</h2>
-<div class="outline-text-2" id="text-orgd4533af">
+<div id="outline-container-org0c446e6" class="outline-2">
+<h2 id="org0c446e6">Machine learning</h2>
+<div class="outline-text-2" id="text-org0c446e6">
 </div>
-<div id="outline-container-orgee5507b" class="outline-3">
-<h3 id="orgee5507b">notes</h3>
-<div class="outline-text-3" id="text-orgee5507b">
+<div id="outline-container-org16dc775" class="outline-3">
+<h3 id="org16dc775">notes</h3>
+<div class="outline-text-3" id="text-org16dc775">
 <ul class="org-ul">
 <li>Given enough parameters and data different architectures converge on the same results. Data is all you need.</li>
 <li>Recall transformers are Turing complete</li>
@@ -122,9 +122,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org3565b92" class="outline-3">
-<h3 id="org3565b92">image</h3>
-<div class="outline-text-3" id="text-org3565b92">
+<div id="outline-container-org4d83a43" class="outline-3">
+<h3 id="org4d83a43">image</h3>
+<div class="outline-text-3" id="text-org4d83a43">
 <ul class="org-ul">
 <li>dalle mini</li>
 <li><a href="https://github.com/hlky/stable-diffusion">stable diffusion</a>
@@ -150,9 +150,9 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-org2a0fa5c" class="outline-4">
-<h4 id="org2a0fa5c">video</h4>
-<div class="outline-text-4" id="text-org2a0fa5c">
+<div id="outline-container-org154b687" class="outline-4">
+<h4 id="org154b687">video</h4>
+<div class="outline-text-4" id="text-org154b687">
 <ul class="org-ul">
 <li><a href="https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt">stable diffusion video</a></li>
 <li>video editing with <a href="https://github.com/rehg-lab/RAVE">RAVE</a></li>
@@ -160,9 +160,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org24bc85c" class="outline-3">
-<h3 id="org24bc85c">Large Language Models</h3>
-<div class="outline-text-3" id="text-org24bc85c">
+<div id="outline-container-orge342396" class="outline-3">
+<h3 id="orge342396">Large Language Models</h3>
+<div class="outline-text-3" id="text-orge342396">
 <ul class="org-ul">
 <li>Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)</li>
 <li>chinchilla paper showed most models are over parameterized without enough data
@@ -199,6 +199,8 @@
 <li>more than 1,000,000 hours of 40GiB GPU (400 watts) compute hours for 65B model
 <ul class="org-ul">
 <li>1000 tons of CO2 (2.6 million KWh hours)</li>
+</ul></li>
+</ul></li>
 <li><a href="https://github.com/ggerganov/llama.cpp">gguf is 4 bit and cpu</a> (adding more gpu and 3/5/6 bit quant)
 <ul class="org-ul">
 <li>enable cuda support <code>cmake -DLLAMA_CUDA=ON ..</code></li>
@@ -211,7 +213,9 @@
 </ul></li>
 </ul></li>
 </ul></li>
-</ul></li>
+<li>Most model refusals are <a href="https://www.alignmentforum.org/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction">controlled by features on the residual level</a> and flow directionally to end
+<ul class="org-ul">
+<li><a href="https://huggingface.co/cognitivecomputations/Llama-3-8B-Instruct-abliterated-v2-gguf">abliterated models</a> use 'harmful' prompts to identify the activations and zero them out to uncensor the model responses. can be reversed from output embeddings.</li>
 </ul></li>
 <li><a href="https://github.com/antimatter15/alpaca.cpp">Alpaca</a> is <a href="https://github.com/tatsu-lab/stanford_alpaca">refined by standford</a> for chat instructions
 <ul class="org-ul">
@@ -240,9 +244,9 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orga0bfe17" class="outline-4">
-<h4 id="orga0bfe17">Codegen</h4>
-<div class="outline-text-4" id="text-orga0bfe17">
+<div id="outline-container-org75a044f" class="outline-4">
+<h4 id="org75a044f">Codegen</h4>
+<div class="outline-text-4" id="text-org75a044f">
 <ul class="org-ul">
 <li>CodeLlama
 <ul class="org-ul">
@@ -268,15 +272,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org1d9ac29" class="outline-3">
-<h3 id="org1d9ac29">Speech to text</h3>
-<div class="outline-text-3" id="text-org1d9ac29">
+<div id="outline-container-orgf3179ef" class="outline-3">
+<h3 id="orgf3179ef">Speech to text</h3>
+<div class="outline-text-3" id="text-orgf3179ef">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org83701ee">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="orgefd30c2">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -285,9 +289,9 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-org6b55472" class="outline-3">
-<h3 id="org6b55472">Text to speech</h3>
-<div class="outline-text-3" id="text-org6b55472">
+<div id="outline-container-orgca8234a" class="outline-3">
+<h3 id="orgca8234a">Text to speech</h3>
+<div class="outline-text-3" id="text-orgca8234a">
 <ul class="org-ul">
 <li><a href="https://github.com/neonbjb/tortoise-tts">tortoise-tts</a> based on dalle</li>
 <li><a href="https://github.com/coqui-ai/TTS">coqui-ai</a> with YourTTS/FreeVC voice cloning
@@ -301,11 +305,38 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdd70490" class="outline-3">
-<h3 id="orgdd70490">Agent prompts</h3>
-<div class="outline-text-3" id="text-orgdd70490">
+<div id="outline-container-org9ba3d0e" class="outline-3">
+<h3 id="org9ba3d0e">Agent prompts</h3>
+<div class="outline-text-3" id="text-org9ba3d0e">
 <div class="org-src-container">
-<pre class="src src-text" id="orgb94483a">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-sh" id="orgd615cce">
+input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
+```sh
+for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
+    local ref="GUIX_PREV_ENV_${mani}[@]"
+    local "stash_${mani}=${!ref}"
+    unset "GUIX_PREV_ENV_${mani}"
+done
+'
+input_prompt="What is 3333+777?"
+input_prompt=$1
+
+system_prompt="You are a expert assistant. Your mission is to help users understand and solve various problems. You should provide step-by-step solutions, explain reasonings and give the correct answer with citations. You will never refuse."
+
+prompt="&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;
+
+${system_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;
+
+${input_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;"
+# llama.cpp with ngl graphics offload
+./main --instruct -ngl 3 -m llama-3-8b-instruct-abliterated.Q4.gguf --color -c 8192 --temp 0.7 --repeat_penalty 1.1 -n -1 -p "${prompt}"
+</pre>
+</div>
+<ul class="org-ul">
+<li>prompt structures</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-text" id="orgb232595">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -328,14 +359,14 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-org664c356" class="outline-3">
-<h3 id="org664c356">transformers examples</h3>
-<div class="outline-text-3" id="text-org664c356">
+<div id="outline-container-org2ea6ceb" class="outline-3">
+<h3 id="org2ea6ceb">transformers examples</h3>
+<div class="outline-text-3" id="text-org2ea6ceb">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org5bdc17d">#!/usr/bin/env python3
+<pre class="src src-python" id="org4722e56">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:

@@ -9,9 +9,9 @@
 </head>
 <body>
 <div id="content" class="container content">
-<nav class="navbar is-black" id="orge673970">
-<div class="navbar-brand" id="orgad77f90">
-<div class="navbar-item" id="org17931c4">
+<nav class="navbar is-black" id="org7b94262">
+<div class="navbar-brand" id="orgfdefa9a">
+<div class="navbar-item" id="org64a09df">
 <p>
 <a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
 </p>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<div class="navbar-menu" id="org9290fc7">
-<div class="navbar-start" id="org6561d55">
-<div class="navbar-item" id="org1e65375">
+<div class="navbar-menu" id="org3346e79">
+<div class="navbar-start" id="org25882e6">
+<div class="navbar-item" id="orgdaa6077">
 <p>
 <a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
 </p>
@@ -29,22 +29,22 @@
 </div>
 
 </div>
-<div class="navbar-end" id="orgc980591">
+<div class="navbar-end" id="org76805e4">
 
 </div>
 
 </div>
 </nav>
 
-<div id="outline-container-org532d5b8" class="outline-2">
-<h2 id="org532d5b8">Guix</h2>
-<div class="outline-text-2" id="text-org532d5b8">
+<div id="outline-container-orge17d06f" class="outline-2">
+<h2 id="orge17d06f">Guix</h2>
+<div class="outline-text-2" id="text-orge17d06f">
 </div>
-<div id="outline-container-orgd900185" class="outline-3">
-<h3 id="orgd900185">Link manifest and channels</h3>
-<div class="outline-text-3" id="text-orgd900185">
+<div id="outline-container-org1e38385" class="outline-3">
+<h3 id="org1e38385">Link manifest and channels</h3>
+<div class="outline-text-3" id="text-org1e38385">
 <div class="org-src-container">
-<pre class="src src-elisp" id="orgddee2d1">(ignore-errors
+<pre class="src src-elisp" id="org41d4d60">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -55,399 +55,401 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgf2e8e86" class="outline-3">
-<h3 id="orgf2e8e86">guix home</h3>
-<div class="outline-text-3" id="text-orgf2e8e86">
+<div id="outline-container-org525acaf" class="outline-3">
+<h3 id="org525acaf">guix home</h3>
+<div class="outline-text-3" id="text-org525acaf">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org1901ef3">(use-modules (gnu home)
-             (gnu home services)
-             (gnu home services guix)
-             (gnu home services shells)
-             (gnu home services shepherd)
-             (gnu services)
-             (gnu services ssh)
-             (gnu services shepherd)
-             (gnu packages)
-             (gnu packages admin)
-             (srfi srfi-9 gnu)
-             (guix channels)
-             (gnu packages emacs-xyz)
-             (jam packages emacs-xyz)
-             (jam packages emacs)
-             (guix gexp))
+<pre class="src src-scheme" id="org1d5593c">  (use-modules (gnu home)
+               (gnu home services)
+               (gnu home services guix)
+               (gnu home services shells)
+               (gnu home services shepherd)
+               (gnu services)
+               (gnu services ssh)
+               (gnu services shepherd)
+               (gnu packages)
+               (gnu packages admin)
+               (srfi srfi-9 gnu)
+               (guix channels)
+               (gnu packages emacs-xyz)
+               (jam packages emacs-xyz)
+               (jam packages emacs)
+               (guix gexp))
 
-(define emacs-service
-  (shepherd-service
-   (provision '(emacs))
-   (start #~(make-system-constructor "emacs --daemon"))
-   (stop #~(make-system-destructor "emacsclient --eval '(kill-emacs)'"))
-   (auto-start? #f)))
+  (define emacs-service
+    (shepherd-service
+     (provision '(emacs))
+     (start #~(make-system-constructor "emacs --daemon"))
+     (stop #~(make-system-destructor "emacsclient --eval '(kill-emacs)'"))
+     (auto-start? #f)))
 
-(define guix-service ; add type for portable guix package
-  (shepherd-service
-   (provision '(guix))
-   (start #~(make-forkexec-constructor `("guix-daemon" ,(string-append "--listen=" (if (getenv "XDG_DATA_HOME") (getenv "XDG_DATA_HOME")
-                                                                                       (string-append (getenv "HOME")
-                                                                                                      file-name-separator-string
-                                                                                                      ".local"
-                                                                                                      file-name-separator-string
-                                                                                                      "share"))
-                                                                       file-name-separator-string
-                                                                       "guix"
-                                                                       file-name-separator-string
-                                                                       "var"
-                                                                       file-name-separator-string
-                                                                       "guix"
-                                                                       file-name-separator-string
-                                                                       "daemon-socket"
-                                                                       file-name-separator-string
-                                                                       "socket") ;;"--build-users-group=guixbuild"
-                                         "--disable-chroot")
-                                       #:environment-variables `(,(string-append "NIX_STORE=" (if (getenv "XDG_DATA_HOME")
-                                                                                                  (getenv "XDG_DATA_HOME")
-                                                                                                  (string-append (getenv "HOME")
-                                                                                                                 file-name-separator-string
-                                                                                                                 ".local"
-                                                                                                                 file-name-separator-string
-                                                                                                                 "share"))
-                                                                                 file-name-separator-string
-                                                                                 "guix"
-                                                                                 file-name-separator-string
-                                                                                 "gnu"
-                                                                                 file-name-separator-string
-                                                                                 "store")
-                                                                 ,@(environ))))
-   (stop #~(make-kill-destructor))
-   (auto-start? #f)))
+  (define guix-service ; add type for portable guix package
+    (shepherd-service
+     (provision '(guix))
+     (start #~(make-forkexec-constructor `("guix-daemon" ,(string-append "--listen=" (if (getenv "XDG_DATA_HOME") (getenv "XDG_DATA_HOME")
+                                                                                         (string-append (getenv "HOME")
+                                                                                                        file-name-separator-string
+                                                                                                        ".local"
+                                                                                                        file-name-separator-string
+                                                                                                        "share"))
+                                                                         file-name-separator-string
+                                                                         "guix"
+                                                                         file-name-separator-string
+                                                                         "var"
+                                                                         file-name-separator-string
+                                                                         "guix"
+                                                                         file-name-separator-string
+                                                                         "daemon-socket"
+                                                                         file-name-separator-string
+                                                                         "socket") ;;"--build-users-group=guixbuild"
+                                           "--disable-chroot")
+                                         #:environment-variables `(,(string-append "NIX_STORE=" (if (getenv "XDG_DATA_HOME")
+                                                                                                    (getenv "XDG_DATA_HOME")
+                                                                                                    (string-append (getenv "HOME")
+                                                                                                                   file-name-separator-string
+                                                                                                                   ".local"
+                                                                                                                   file-name-separator-string
+                                                                                                                   "share"))
+                                                                                   file-name-separator-string
+                                                                                   "guix"
+                                                                                   file-name-separator-string
+                                                                                   "gnu"
+                                                                                   file-name-separator-string
+                                                                                   "store")
+                                                                   ,@(environ))))
+     (stop #~(make-kill-destructor))
+     (auto-start? #f)))
 
-(define ssh-service ; writes to /etc/dropbear for keys
-  (set-fields       ; least-authority-wrapper to contain
-   (car ((@@ (gnu services ssh) dropbear-shepherd-service) (dropbear-configuration (port-number 2222)
-                                                                                   (syslog-output? #f)
-                                                                                   (password-authentication? #f)
-                                                                                   (pid-file "/tmp/dropbear.pid"))))
-   ((shepherd-service-requirement) '())
-   ((shepherd-service-auto-start?) #f)))
+  (define ssh-service ; writes to /etc/dropbear for keys
+    (set-fields       ; least-authority-wrapper to contain
+     (car ((@@ (gnu services ssh) dropbear-shepherd-service) (dropbear-configuration (port-number 2222)
+                                                                                     (syslog-output? #f)
+                                                                                     (password-authentication? #f)
+                                                                                     (pid-file "/tmp/dropbear.pid"))))
+     ((shepherd-service-requirement) '())
+     ((shepherd-service-auto-start?) #f)))
+(define jam-home
+  (home-environment
+   (packages (append
+            ;(map transform-emacs-build-git (list emacs-fd))
+            (map specification-&gt;package (list "guile"
+                                             ;"emacs-pgtk-xwidgets" ; managed by default profile
+                                             ;"ripgrep" ;"fd"
+                                             "git"
+                                             "nss-certs"
+                                             ;"aspell" "aspell-dict-en"
+                                             ;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
+                                             "gnupg"
+                                             "password-store" "pass-otp"
+                                             ;"virt-viewer" ; "qemu"; for spice remote-viewer
+                                             ;"alacritty"; "xterm"
+                                             "curl"; emacs-osm needs for CA's
+                                             "screen"
+                                             "tree-sitter-rust" "tree-sitter-yaml" "tree-sitter-python"
+                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-company" "emacs-which-key" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-pyvenv" "emacs-dape"
+                                             ))))
+   (services
+    (list
+     (simple-service 'my-channel-services
+                     home-channels-service-type
+                     (list (channel
+                            ;; custom guix override
+                            (name 'guix)
+                            (url "https://git.savannah.gnu.org/git/guix.git")
+                            (introduction
+                             (make-channel-introduction
+                              "9edb3f66fd807b096b48283debdcddccfea34bad"
+                              (openpgp-fingerprint
+                               "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
+                           (channel
+                            ;; GUIX_PACKAGE_PATH and (url "file:///home/.../guix-channel")
+                            (name 'mychannel)
+                            (url "https://github.com/jamartin9/guix-channel")
+                            (introduction
+                             (make-channel-introduction
+                              "a8de09ac62260319e6376f21c995f713c1b09279"
+                              (openpgp-fingerprint
+                               "34AF BE87 8193 580F F441  AB3F 95AF 699C 293E 302B")))))
+                     )
+     (service home-shepherd-service-type (home-shepherd-configuration
+                                          (shepherd (specification-&gt;package "shepherd"))
+                                          ;(auto-start? #f)
+                                          (services (list emacs-service
+                                                          ;transmission-service
+                                                          ;ssh-service
+                                                          ;guix-service
+                                                          ))))
 
-(home-environment
- (packages (append
-          ;(map transform-emacs-build-git (list emacs-fd))
-          (map specification-&gt;package (list "guile"
-                                           ;"emacs-pgtk-xwidgets" ; managed by default profile
-                                           ;"ripgrep" ;"fd"
-                                           "git"
-                                           "nss-certs"
-                                           ;"aspell" "aspell-dict-en"
-                                           ;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
-                                           "gnupg"
-                                           "password-store" "pass-otp"
-                                           ;"virt-viewer" ; "qemu"; for spice remote-viewer
-                                           ;"alacritty"; "xterm"
-                                           "curl"; emacs-osm needs for CA's
-                                           "screen"
-                                           "tree-sitter-rust" "tree-sitter-yaml" "tree-sitter-python"
-                                           "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-company" "emacs-which-key" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-pyvenv" "emacs-dape"
-                                           ))))
- (services
-  (list
-   (simple-service 'my-channel-services
-                   home-channels-service-type
-                   (list (channel
-                          ;; custom guix override
-                          (name 'guix)
-                          (url "https://git.savannah.gnu.org/git/guix.git")
-                          (introduction
-                           (make-channel-introduction
-                            "9edb3f66fd807b096b48283debdcddccfea34bad"
-                            (openpgp-fingerprint
-                             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
-                         (channel
-                          ;; GUIX_PACKAGE_PATH and (url "file:///home/.../guix-channel")
-                          (name 'mychannel)
-                          (url "https://github.com/jamartin9/guix-channel")
-                          (introduction
-                           (make-channel-introduction
-                            "a8de09ac62260319e6376f21c995f713c1b09279"
-                            (openpgp-fingerprint
-                             "34AF BE87 8193 580F F441  AB3F 95AF 699C 293E 302B")))))
-                   )
-   (service home-shepherd-service-type (home-shepherd-configuration
-                                        (shepherd (specification-&gt;package "shepherd"))
-                                        ;(auto-start? #f)
-                                        (services (list emacs-service
-                                                        ;transmission-service
-                                                        ;ssh-service
-                                                        ;guix-service
-                                                        ))))
+     (service home-bash-service-type
+              (home-bash-configuration
+               (package (specification-&gt;package "bash"))
+               (guix-defaults? #f)
+               ;(environment-variables (list '("EDITOR" . "emacs")))
+               (bashrc (list (plain-file "guix.alias" "\
+  #!/usr/bin/env bash
+  # shellcheck disable=SC2155,SC2076,SC2068,SC1090,SC1091
 
-   (service home-bash-service-type
-            (home-bash-configuration
-             (package (specification-&gt;package "bash"))
-             (guix-defaults? #f)
-             ;(environment-variables (list '("EDITOR" . "emacs")))
-             (bashrc (list (plain-file "guix.alias" "\
-#!/usr/bin/env bash
-# shellcheck disable=SC2155,SC2076,SC2068,SC1090,SC1091
+  export TMPDIR=\"/tmp\"
 
-export TMPDIR=\"/tmp\"
+  export HISTFILE=\"${XDG_STATE_HOME}\"/bash/history
 
-export HISTFILE=\"${XDG_STATE_HOME}\"/bash/history
+  export CARGO_HOME=\"${XDG_DATA_HOME}\"/cargo
+  export RUSTUP_HOME=\"${XDG_DATA_HOME}\"/rustup
+  export GNUPGHOME=\"${XDG_DATA_HOME}\"/gnupg
+  export PASSWORD_STORE_DIR=\"${XDG_DATA_HOME}\"/pass
 
-export CARGO_HOME=\"${XDG_DATA_HOME}\"/cargo
-export RUSTUP_HOME=\"${XDG_DATA_HOME}\"/rustup
-export GNUPGHOME=\"${XDG_DATA_HOME}\"/gnupg
-export PASSWORD_STORE_DIR=\"${XDG_DATA_HOME}\"/pass
+  export CUDA_CACHE_PATH=\"${XDG_CACHE_HOME}\"/nv
+  export ICEAUTHORITY=\"${XDG_CACHE_HOME}\"/ICEauthority
+  export TEXMFVAR=\"${XDG_CACHE_HOME}\"/texlive/texmf-var
 
-export CUDA_CACHE_PATH=\"${XDG_CACHE_HOME}\"/nv
-export ICEAUTHORITY=\"${XDG_CACHE_HOME}\"/ICEauthority
-export TEXMFVAR=\"${XDG_CACHE_HOME}\"/texlive/texmf-var
+  export GPG_TTY=$(tty)
 
-export GPG_TTY=$(tty)
+  export EDITOR=\"emacs\"
+  alias emacsc=\"emacsclient -c -a ''\"
+  alias emacskill=\"emacsc -e '(kill-emacs)'\"
+  _emacs_run_dump(){
+      if [ ! -f ~/emp.dmp ]; then
+          emacs --batch --eval='(dump-emacs-portable \"~/emp.dmp\")'
+      fi
+      emacs --dump-file=~/emp.dmp $@
+  }
+  alias emrd=\"_emacs_run_dump\"
 
-export EDITOR=\"emacs\"
-alias emacsc=\"emacsclient -c -a ''\"
-alias emacskill=\"emacsc -e '(kill-emacs)'\"
-_emacs_run_dump(){
-    if [ ! -f ~/emp.dmp ]; then
-        emacs --batch --eval='(dump-emacs-portable \"~/emp.dmp\")'
-    fi
-    emacs --dump-file=~/emp.dmp $@
-}
-alias emrd=\"_emacs_run_dump\"
+  # Guix parts
+  alias guixPack=\"guix pack -S /bin=bin -RR\"
+  alias guixPackDock=\"guix pack -S /bin=bin -f docker\"
+  alias guixPackVm=\"guix system image -t qcow2\" # qemu-img resize x.qcow +10G boot then growpart and resize2fs
 
-# Guix parts
-alias guixPack=\"guix pack -S /bin=bin -RR\"
-alias guixPackDock=\"guix pack -S /bin=bin -f docker\"
-alias guixPackVm=\"guix system image -t qcow2\" # qemu-img resize x.qcow +10G boot then growpart and resize2fs
+  _guix_run_vm(){
+      local vmOpts=()
+      local qOpts=()
+      local target=\"\"
+      while [ $# -gt 0 ]; do
+          local arg=\"${1}\"
+          case \"${arg}\" in
+              -d|--default)
+                  qOpts=(\"-spice\" \"port=5930,disable-ticketing\" \"-m\" \"2048\" \"-nic\" \"user,model=virtio-net-pci,hostfwd=tcp::8080-:8081\" \"${qOpts[@]}\")
+                  vmOpts=(\"--share=$HOME/tmp=/storage\" \"${vmOpts[@]}\") # --persistent
+                  shift
+                  ;;
+              -qo|--qopt)
+                  qOpts=(\"${qOpts[@]}\" \"${2}\")
+                  shift 2
+                  ;;
+              -t|--target)
+                  target=\"${2}\"
+                  shift 2
+                  ;;
+              -vo|--vmopt)
+                  vmOpts=(\"${vmOpts[@]}\" \"${2}\" )
+                  shift 2
+                  ;;
+              *)
+                  printf 'Invalid option %s \n' \"${1}\"
+                  printf 'Valid options are: -t OS.scm -qo QEMU-OPTS -vo GUIXVM-OPTS --default \n'
+                  shift
+                  ;;
+          esac
+      done
+      $(guix system vm \"${vmOpts[@]}\" \"${target}\") \"${qOpts[@]}\"
+  }
+  alias guixRunVm=\"_guix_run_vm\" # guixRunVm -d -t os.scm
 
-_guix_run_vm(){
-    local vmOpts=()
-    local qOpts=()
-    local target=\"\"
-    while [ $# -gt 0 ]; do
-        local arg=\"${1}\"
-        case \"${arg}\" in
-            -d|--default)
-                qOpts=(\"-spice\" \"port=5930,disable-ticketing\" \"-m\" \"2048\" \"-nic\" \"user,model=virtio-net-pci,hostfwd=tcp::8080-:8081\" \"${qOpts[@]}\")
-                vmOpts=(\"--share=$HOME/tmp=/storage\" \"${vmOpts[@]}\") # --persistent
-                shift
-                ;;
-            -qo|--qopt)
-                qOpts=(\"${qOpts[@]}\" \"${2}\")
-                shift 2
-                ;;
-            -t|--target)
-                target=\"${2}\"
-                shift 2
-                ;;
-            -vo|--vmopt)
-                vmOpts=(\"${vmOpts[@]}\" \"${2}\" )
-                shift 2
-                ;;
-            *)
-                printf 'Invalid option %s \n' \"${1}\"
-                printf 'Valid options are: -t OS.scm -qo QEMU-OPTS -vo GUIXVM-OPTS --default \n'
-                shift
-                ;;
-        esac
-    done
-    $(guix system vm \"${vmOpts[@]}\" \"${target}\") \"${qOpts[@]}\"
-}
-alias guixRunVm=\"_guix_run_vm\" # guixRunVm -d -t os.scm
+  _guix_vars(){
+      if [ -z \"${GUIX_PREV_ENV}\" ]; then # unset vars in guix-home and keep login vars
+          export GUIX_PREV_ENV=(\"$(env -u PATH -u GUIX_PROFILE -u GUILE_LOAD_COMPILED_PATH -u GUILE_LOAD_PATH -u SSL_CERT_DIR -u SSL_CERT_FILE -u GIT_EXEC_PATH -u GIT_SSL_CAINFO -u INFOPATH -u EMACSLOADPATH -u EMACSNATIVELOADPATH -u BASH_LOADABLES_PATH -u PASSWORD_STORE_SYSTEM_EXTENSION_DIR -u CURL_CA_BUNDLE PATH=/sbin:/bin:/usr/sbin:/usr/bin /bin/sh -c '. /etc/profile &amp;&amp; env')\")
+          export GUIX_ACTIVE_PROFILES=()
+          # guix-home activated with login shell
+          [ -f ~/.guix-home/setup-environment ] &amp;&amp; export GUIX_PREV_ENV_home=(\"$(env)\") &amp;&amp; export GUIX_ACTIVE_PROFILES=(\"home\")
+      fi
+      if [ -z \"${GUIX_MANIFEST_DIR}\" ]; then
+          export GUIX_MANIFEST_DIR=${XDG_CONFIG_DIR:-~/.config}/guix-manifests
+      fi
+      if [ -z \"${GUIX_EXTRA_PROFILES}\" ]; then
+          export GUIX_EXTRA_PROFILES=${XDG_DATA_HOME:-~/.local/share}/guix-extra-profiles
+      fi
+  }
+  _guix_list_profiles(){
+      printf \"The following profiles are available: \n\"
+      if [ -f ~/.guix-profile/etc/profile ]; then
+          printf \"default \n\"
+      fi
+      if [ -f ~/.guix-home/profile/etc/profile ]; then
+          printf \"home \n\"
+      fi
+      for manifest in \"${GUIX_MANIFEST_DIR}\"/*.scm; do
+          if [ \"${manifest}\" != \"${GUIX_MANIFEST_DIR}/*.scm\" ]; then # no glob
+              printf '%s \n' \"$(basename \"${manifest%.*}\")\"
+          fi
+      done
+      printf \"The following profiles are active: \n\"
+      for prof in ${GUIX_ACTIVE_PROFILES[@]}; do
+          printf '%s \n' \"${prof}\"
+      done
 
-_guix_vars(){
-    if [ -z \"${GUIX_PREV_ENV}\" ]; then # unset vars in guix-home and keep login vars
-        export GUIX_PREV_ENV=(\"$(env -u PATH -u GUIX_PROFILE -u GUILE_LOAD_COMPILED_PATH -u GUILE_LOAD_PATH -u SSL_CERT_DIR -u SSL_CERT_FILE -u GIT_EXEC_PATH -u GIT_SSL_CAINFO -u INFOPATH -u EMACSLOADPATH -u EMACSNATIVELOADPATH -u BASH_LOADABLES_PATH -u PASSWORD_STORE_SYSTEM_EXTENSION_DIR -u CURL_CA_BUNDLE PATH=/sbin:/bin:/usr/sbin:/usr/bin /bin/sh -c '. /etc/profile &amp;&amp; env')\")
-        export GUIX_ACTIVE_PROFILES=()
-        # guix-home activated with login shell
-        [ -f ~/.guix-home/setup-environment ] &amp;&amp; export GUIX_PREV_ENV_home=(\"$(env)\") &amp;&amp; export GUIX_ACTIVE_PROFILES=(\"home\")
-    fi
-    if [ -z \"${GUIX_MANIFEST_DIR}\" ]; then
-        export GUIX_MANIFEST_DIR=${XDG_CONFIG_DIR:-~/.config}/guix-manifests
-    fi
-    if [ -z \"${GUIX_EXTRA_PROFILES}\" ]; then
-        export GUIX_EXTRA_PROFILES=${XDG_DATA_HOME:-~/.local/share}/guix-extra-profiles
-    fi
-}
-_guix_list_profiles(){
-    printf \"The following profiles are available: \n\"
-    if [ -f ~/.guix-profile/etc/profile ]; then
-        printf \"default \n\"
-    fi
-    if [ -f ~/.guix-home/profile/etc/profile ]; then
-        printf \"home \n\"
-    fi
-    for manifest in \"${GUIX_MANIFEST_DIR}\"/*.scm; do
-        if [ \"${manifest}\" != \"${GUIX_MANIFEST_DIR}/*.scm\" ]; then # no glob
-            printf '%s \n' \"$(basename \"${manifest%.*}\")\"
-        fi
-    done
-    printf \"The following profiles are active: \n\"
-    for prof in ${GUIX_ACTIVE_PROFILES[@]}; do
-        printf '%s \n' \"${prof}\"
-    done
-
-}
-_guix_update_profile(){
-    local arg=\"${1}\"
-    local profile=\"${GUIX_EXTRA_PROFILES}/${arg}/${arg}\"
-    if [ \"${arg}\" = \"default\" ]; then
-        guix package -u
-    elif [ \"${arg}\" = \"home\" ]; then
-         guix home reconfigure ~/.guix-home/configuration.scm
-    elif [ -f \"${GUIX_MANIFEST_DIR}/${arg}.scm\" ]; then
-         if [ ! -d \"${profile}\" ]; then
-            mkdir -p \"${GUIX_EXTRA_PROFILES}/${arg}\"
-         fi
-         guix package -m \"${GUIX_MANIFEST_DIR}/${arg}.scm\" -p \"${profile}\"
-    fi
-}
-_guix_activate_profile(){
-    local arg=\"${1}\"
-    local profile=\"${GUIX_EXTRA_PROFILES}/${arg}/${arg}\"
-    if [ \"${arg}\" != \"default\" ] &amp;&amp;
-       [ \"${arg}\" != \"home\" ] &amp;&amp;
-       [ ! -f \"${profile}\"/etc/profile ]; then # home and default are always installed
-        _guix_update_profile \"${arg}\"
-    fi
-    if [ \"${arg}\" = \"default\" ]; then # unset GUIX_PROFILE so path proliferates
-        [ -f ~/.guix-profile/etc/profile ] &amp;&amp; unset GUIX_PROFILE &amp;&amp; . ~/.guix-profile/etc/profile
-        [ -f ~/.config/guix/current/etc/profile ] &amp;&amp; unset GUIX_PROFILE &amp;&amp; . ~/.config/guix/current/etc/profile
-    elif [ \"${arg}\" = \"home\" ]; then # tilde avoids variables
-        [ -f ~/.guix-home/setup-environment ] &amp;&amp; . ~/.guix-home/setup-environment &amp;&amp; export GUIX_PROFILE
-    elif [ -f \"${profile}\"/etc/profile ]; then
-        unset GUIX_PROFILE &amp;&amp; . \"${profile}\"/etc/profile
-    else
-        printf 'The manifest for %s does not exist \n' \"${arg}\"
-        return
-    fi
-    local stash=(\"${GUIX_PREV_ENV[@]}\") # hide prev envs from being saved in new GUIX_PREV_ENV_$manifest
-    unset GUIX_PREV_ENV
-    for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
-        local ref=\"GUIX_PREV_ENV_${mani}[@]\"
-        local \"stash_${mani}=${!ref}\" # MAYBE indirect variable expansion portable
-        unset \"GUIX_PREV_ENV_${mani}\"
-    done
-    local prev=(\"$(env)\") # save current env
-    export \"GUIX_PREV_ENV_${arg}=${prev[*]}\"
-    export GUIX_PREV_ENV=(\"${stash[@]}\") # restore prev envs
-    for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
-        local ref_stash=\"stash_${mani}\"
-        export \"GUIX_PREV_ENV_${mani}=${!ref_stash}\" # MAYBE indirect variable expansion portable
-    done
-    GUIX_ACTIVE_PROFILES+=(\"${arg}\")
-    export GUIX_ACTIVE_PROFILES
-}
-_guix_deactivate_profile(){
-    local arg=\"${1}\"
-    local ref=\"GUIX_PREV_ENV_${arg}\"
-    if [ -n \"${!ref}\" ]; then # the prev env exists # MAYBE indirect variable expansion portable
-        for entry in ${!ref}; do # unset vars of profile # MAYBE indirect variable expansion portable
-            if [[ ! \"${entry%%=*}\" =~ GUIX_PREV_ENV.* ]] &amp;&amp;
-               [ \"${entry%%=*}\" != \"GUIX_ACTIVE_PROFILES\" ] ;then
-                unset \"${entry%%=*}\"
-            fi
-        done
-        unset \"GUIX_PREV_ENV_${arg}\"
-        local prev_entry
-        for entry in ${GUIX_PREV_ENV[@]}; do # restore init env
-            if [[ ! \"${entry}\"  =~ \"=\" ]]; then # append onto the prev_entry for the space seperated args without equality assignment
-                prev_entry=\"${prev_entry} ${entry}\"
-                export \"${prev_entry?}\"
-            else
-                prev_entry=\"${entry}\"
-                export \"${entry%%=*}=${entry#*=}\"
-            fi
-        done
-        # active manifests again
-        local active_stash=(\"${GUIX_ACTIVE_PROFILES[@]}\") # export GUIX_ACTIVE_PROFILES=(\"${GUIX_ACTIVE_PROFILES[@]/$arg}\")
-        export GUIX_ACTIVE_PROFILES=() # unset profiles so GUIX_PREV_ENV_${manifest} will not be saved
-        for mani in ${active_stash[@]}; do
-            if [ \"${mani}\" != \"${arg}\" ]; then
-                unset \"GUIX_PREV_ENV_${mani}\" # prevent all GUIX_PREV_ENV_${manifest}'s from being saved
-            fi
-        done
-        for mani in ${active_stash[@]}; do
-            if [ \"${mani}\" != \"${arg}\" ]; then
-                _guix_activate_profile \"${mani}\"
-            fi
-        done
-    fi
-}
-_guix_opts(){
-    local help=\"
-     Takes a list of profile manifest shortnames/commands
-     GUIX_MANIFEST_DIR will be set to ${XDG_CONFIG_DIR:-~/.config}/guix-manifests when not set
-     GUIX_EXTRA_PROFILES will be set to ${XDG_DATA_HOME:-~/.local/share}/guix-extra-profiles when not set
-     GUIX_ACTIVE_PROFILES will be set to the profiles that are activated (in order)
-     GUIX_PREV_ENV will be set to contents of env without guix profiles
-     GUIX_PREV_ENV_shortname will be set to the contents of env with the profile
-     The shortname is the basename
-     GUIX_MANIFEST_DIR/shortname.scm is the format of manifest search path
-     Profiles besides home/default will be stored under: GUIX_EXTRA_PROFILES/shortname/shortname
-     The commands are activate, update, deactivate and list; activate is the default
-     -a|--activate shortname -&gt; sources/installs profile; appends to GUIX_ACTIVE_PROFILES
-     -d|--deactivate shortname -&gt; restore env before the profile was activated
-     -u|--update shortname -&gt; guix package upgrades profile
-     -l|--list -&gt; print the contents of GUIX_ACTIVE_PROFILES and GUIX_MANIFEST_DIR (as shortnames)
-     -h|--help -&gt; print this message
-\"
-    _guix_vars
-    while [ $# -gt 0 ]; do
-        local arg=\"${1}\"
-        case \"${arg}\" in
-            -a|--activate)
-                if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
-                    printf '%s is already active \n' \"${2}\"
-                else
-                    _guix_activate_profile \"${2}\"
-                fi
-                shift 2
-                ;;
-            -d|--deactivate)
-                if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
-                    _guix_deactivate_profile \"${2}\"
-                    cd . # restore ps1 prompt dir/info
-                else
-                    printf '%s is not active \n' \"${2}\"
-                fi
-                shift 2
-                ;;
-            -h|--help)
-                printf '%s' \"${help}\"
-                shift
-                ;;
-            -l|--list)
-                _guix_list_profiles
-                shift
-                ;;
-            -u|--update)
-                _guix_update_profile \"${2}\"
-                shift 2
-                ;;
-            *)
-                if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${1} \" ]]; then
-                    printf '%s is already active \n' \"${1}\"
-                else
-                    _guix_activate_profile \"${1}\"
-                fi
-                shift
-                ;;
-        esac
-    done
-}
-alias guixProf=_guix_opts
-_guix_opts default"))))))))
+  }
+  _guix_update_profile(){
+      local arg=\"${1}\"
+      local profile=\"${GUIX_EXTRA_PROFILES}/${arg}/${arg}\"
+      if [ \"${arg}\" = \"default\" ]; then
+          guix package -u
+      elif [ \"${arg}\" = \"home\" ]; then
+           guix home reconfigure ~/.guix-home/configuration.scm
+      elif [ -f \"${GUIX_MANIFEST_DIR}/${arg}.scm\" ]; then
+           if [ ! -d \"${profile}\" ]; then
+              mkdir -p \"${GUIX_EXTRA_PROFILES}/${arg}\"
+           fi
+           guix package -m \"${GUIX_MANIFEST_DIR}/${arg}.scm\" -p \"${profile}\"
+      fi
+  }
+  _guix_activate_profile(){
+      local arg=\"${1}\"
+      local profile=\"${GUIX_EXTRA_PROFILES}/${arg}/${arg}\"
+      if [ \"${arg}\" != \"default\" ] &amp;&amp;
+         [ \"${arg}\" != \"home\" ] &amp;&amp;
+         [ ! -f \"${profile}\"/etc/profile ]; then # home and default are always installed
+          _guix_update_profile \"${arg}\"
+      fi
+      if [ \"${arg}\" = \"default\" ]; then # unset GUIX_PROFILE so path proliferates
+          [ -f ~/.guix-profile/etc/profile ] &amp;&amp; unset GUIX_PROFILE &amp;&amp; . ~/.guix-profile/etc/profile
+          [ -f ~/.config/guix/current/etc/profile ] &amp;&amp; unset GUIX_PROFILE &amp;&amp; . ~/.config/guix/current/etc/profile
+      elif [ \"${arg}\" = \"home\" ]; then # tilde avoids variables
+          [ -f ~/.guix-home/setup-environment ] &amp;&amp; . ~/.guix-home/setup-environment &amp;&amp; export GUIX_PROFILE
+      elif [ -f \"${profile}\"/etc/profile ]; then
+          unset GUIX_PROFILE &amp;&amp; . \"${profile}\"/etc/profile
+      else
+          printf 'The manifest for %s does not exist \n' \"${arg}\"
+          return
+      fi
+      local stash=(\"${GUIX_PREV_ENV[@]}\") # hide prev envs from being saved in new GUIX_PREV_ENV_$manifest
+      unset GUIX_PREV_ENV
+      for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
+          local ref=\"GUIX_PREV_ENV_${mani}[@]\"
+          local \"stash_${mani}=${!ref}\" # MAYBE indirect variable expansion portable
+          unset \"GUIX_PREV_ENV_${mani}\"
+      done
+      local prev=(\"$(env)\") # save current env
+      export \"GUIX_PREV_ENV_${arg}=${prev[*]}\"
+      export GUIX_PREV_ENV=(\"${stash[@]}\") # restore prev envs
+      for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
+          local ref_stash=\"stash_${mani}\"
+          export \"GUIX_PREV_ENV_${mani}=${!ref_stash}\" # MAYBE indirect variable expansion portable
+      done
+      GUIX_ACTIVE_PROFILES+=(\"${arg}\")
+      export GUIX_ACTIVE_PROFILES
+  }
+  _guix_deactivate_profile(){
+      local arg=\"${1}\"
+      local ref=\"GUIX_PREV_ENV_${arg}\"
+      if [ -n \"${!ref}\" ]; then # the prev env exists # MAYBE indirect variable expansion portable
+          for entry in ${!ref}; do # unset vars of profile # MAYBE indirect variable expansion portable
+              if [[ ! \"${entry%%=*}\" =~ GUIX_PREV_ENV.* ]] &amp;&amp; [[ \"${entry}\"  =~ \"=\" ]] &amp;&amp;
+                 [ \"${entry%%=*}\" != \"GUIX_ACTIVE_PROFILES\" ] ;then
+                  unset \"${entry%%=*}\"
+              fi
+          done
+          unset \"GUIX_PREV_ENV_${arg}\"
+          local prev_entry
+          for entry in ${GUIX_PREV_ENV[@]}; do # restore init env
+              if [[ ! \"${entry}\"  =~ \"=\" ]]; then # append onto the prev_entry for the space seperated args without equality assignment
+                  prev_entry=\"${prev_entry} ${entry}\"
+                  export \"${prev_entry?}\"
+              else
+                  prev_entry=\"${entry}\"
+                  export \"${entry%%=*}=${entry#*=}\"
+              fi
+          done
+          # active manifests again
+          local active_stash=(\"${GUIX_ACTIVE_PROFILES[@]}\") # export GUIX_ACTIVE_PROFILES=(\"${GUIX_ACTIVE_PROFILES[@]/$arg}\")
+          export GUIX_ACTIVE_PROFILES=() # unset profiles so GUIX_PREV_ENV_${manifest} will not be saved
+          for mani in ${active_stash[@]}; do
+              if [ \"${mani}\" != \"${arg}\" ]; then
+                  unset \"GUIX_PREV_ENV_${mani}\" # prevent all GUIX_PREV_ENV_${manifest}'s from being saved
+              fi
+          done
+          for mani in ${active_stash[@]}; do
+              if [ \"${mani}\" != \"${arg}\" ]; then
+                  _guix_activate_profile \"${mani}\"
+              fi
+          done
+      fi
+  }
+  _guix_opts(){
+      local help=\"
+       Takes a list of profile manifest shortnames/commands
+       GUIX_MANIFEST_DIR will be set to ${XDG_CONFIG_DIR:-~/.config}/guix-manifests when not set
+       GUIX_EXTRA_PROFILES will be set to ${XDG_DATA_HOME:-~/.local/share}/guix-extra-profiles when not set
+       GUIX_ACTIVE_PROFILES will be set to the profiles that are activated (in order)
+       GUIX_PREV_ENV will be set to contents of env without guix profiles
+       GUIX_PREV_ENV_shortname will be set to the contents of env with the profile
+       The shortname is the basename
+       GUIX_MANIFEST_DIR/shortname.scm is the format of manifest search path
+       Profiles besides home/default will be stored under: GUIX_EXTRA_PROFILES/shortname/shortname
+       The commands are activate, update, deactivate and list; activate is the default
+       -a|--activate shortname -&gt; sources/installs profile; appends to GUIX_ACTIVE_PROFILES
+       -d|--deactivate shortname -&gt; restore env before the profile was activated
+       -u|--update shortname -&gt; guix package upgrades profile
+       -l|--list -&gt; print the contents of GUIX_ACTIVE_PROFILES and GUIX_MANIFEST_DIR (as shortnames)
+       -h|--help -&gt; print this message
+  \"
+      _guix_vars
+      while [ $# -gt 0 ]; do
+          local arg=\"${1}\"
+          case \"${arg}\" in
+              -a|--activate)
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
+                      printf '%s is already active \n' \"${2}\"
+                  else
+                      _guix_activate_profile \"${2}\"
+                  fi
+                  shift 2
+                  ;;
+              -d|--deactivate)
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
+                      _guix_deactivate_profile \"${2}\"
+                      cd . # restore ps1 prompt dir/info
+                  else
+                      printf '%s is not active \n' \"${2}\"
+                  fi
+                  shift 2
+                  ;;
+              -h|--help)
+                  printf '%s' \"${help}\"
+                  shift
+                  ;;
+              -l|--list)
+                  _guix_list_profiles
+                  shift
+                  ;;
+              -u|--update)
+                  _guix_update_profile \"${2}\"
+                  shift 2
+                  ;;
+              *)
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${1} \" ]]; then
+                      printf '%s is already active \n' \"${1}\"
+                  else
+                      _guix_activate_profile \"${1}\"
+                  fi
+                  shift
+                  ;;
+          esac
+      done
+  }
+  alias guixProf=_guix_opts
+  _guix_opts default"))))))))
+)
+;jam-home
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge81acec" class="outline-3">
-<h3 id="orge81acec">guixsd config</h3>
-<div class="outline-text-3" id="text-orge81acec">
+<div id="outline-container-org358ead3" class="outline-3">
+<h3 id="org358ead3">guixsd config</h3>
+<div class="outline-text-3" id="text-org358ead3">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgb2c46d7">  (use-modules
+<pre class="src src-scheme" id="org0febe04">  (use-modules
    (gnu)
    (gnu services)
    (gnu services linux)
@@ -1076,25 +1078,24 @@ _guix_opts default"))))))))
 </div>
 </div>
 </div>
-<div id="outline-container-org71546d5" class="outline-3">
-<h3 id="org71546d5">User manifest</h3>
-<div class="outline-text-3" id="text-org71546d5">
+<div id="outline-container-org3311d93" class="outline-3">
+<h3 id="org3311d93">User manifest</h3>
+<div class="outline-text-3" id="text-org3311d93">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgab37a84">;; Manifest for development env
+<pre class="src src-scheme" id="orgad6660d">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
-   ;;"emacs-pgtk-native-comp" ;;"git" ;;"ripgrep" ;;"fd" ;;"nss-certs" ;;"guix" ;;"guile" ;;"shepherd" ;;"glibc-utf8-locales"
+   ;;"shepherd" ;;"glibc-utf8-locales"
 
    ;;"ungoogled-chromium-nvda"
-   ;;"firefox-nvda"
+   ;;"firefox-nvda"; --with-graft=mesa=nvda
    ;;"torbrowser"
 
    ;;"transmission"
    ;;"nzbget"
    ;;"steam-nvidia" ;; steam
    ;;"zfs"
-   ;;"qemu"
    "perf"
    "bpftrace"
    "bcc"
@@ -1143,8 +1144,6 @@ _guix_opts default"))))))))
    ;;"patch"
    ;;"gash"
    ;;"gash-utils"
-   ;;"gnupg"
-   ;;"password-store"
 
    ;; apps
    ;;"wine64"; "wine"
@@ -1163,6 +1162,7 @@ _guix_opts default"))))))))
    ;;"obs"
    ;;"virt-viewer"
    ;;"dino" ; xmpp client
+   ;;"flatpak"
 
    ;; docs
    ;;"libreoffice"
@@ -1183,6 +1183,7 @@ _guix_opts default"))))))))
    ;;"makemkv"
    "flamegraph"
    ;;"yt-dlp"
+   ;;"vapoursynth";; "ffms2"
 
    ;; net
    ;;"curl"
@@ -1208,18 +1209,17 @@ _guix_opts default"))))))))
 
    ;; Desktop
    ;;"notification-daemon"
-   ;;"xfce"; --with-graft=mesa=nvda
    ;;"nvidia-driver"
    ))
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org6b3f1cf" class="outline-3">
-<h3 id="org6b3f1cf">Channel configuration</h3>
-<div class="outline-text-3" id="text-org6b3f1cf">
+<div id="outline-container-org369b64b" class="outline-3">
+<h3 id="org369b64b">Channel configuration</h3>
+<div class="outline-text-3" id="text-org369b64b">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org9449356">(list (channel
+<pre class="src src-scheme" id="orgf9e782c">(list (channel
        ;; custom guix override
        (name 'guix)
        (url "https://git.savannah.gnu.org/git/guix.git")
@@ -1241,11 +1241,11 @@ _guix_opts default"))))))))
 </div>
 </div>
 </div>
-<div id="outline-container-org9a6472c" class="outline-3">
-<h3 id="org9a6472c">non guix key</h3>
-<div class="outline-text-3" id="text-org9a6472c">
+<div id="outline-container-org66b49e2" class="outline-3">
+<h3 id="org66b49e2">non guix key</h3>
+<div class="outline-text-3" id="text-org66b49e2">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org29e3ac6">(public-key
+<pre class="src src-scheme" id="org01829c3">(public-key
  (ecc
   (curve Ed25519)
   (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)
@@ -1255,14 +1255,14 @@ _guix_opts default"))))))))
 </div>
 </div>
 </div>
-<div id="outline-container-org0a47777" class="outline-3">
-<h3 id="org0a47777">guix installer</h3>
-<div class="outline-text-3" id="text-org0a47777">
+<div id="outline-container-org98f839e" class="outline-3">
+<h3 id="org98f839e">guix installer</h3>
+<div class="outline-text-3" id="text-org98f839e">
 <ul class="org-ul">
 <li><code>guix system image -t iso9660 ./installer.scm</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-scheme" id="org41de253">(define-module (nongnu system install)
+<pre class="src src-scheme" id="org565fd4a">(define-module (nongnu system install)
   #:use-module (gnu services)
   #:use-module (gnu system)
   #:use-module (gnu system install)
@@ -1320,9 +1320,9 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-orgf8ebd94" class="outline-3">
-<h3 id="orgf8ebd94">guix netbook</h3>
-<div class="outline-text-3" id="text-orgf8ebd94">
+<div id="outline-container-org34606f8" class="outline-3">
+<h3 id="org34606f8">guix netbook</h3>
+<div class="outline-text-3" id="text-org34606f8">
 <p>
 #+NAME guix-netbook
 </p>
@@ -1350,6 +1350,388 @@ installation-os-nonfree
 (use-service-modules desktop mcron networking spice ssh xorg sddm cuirass)
 (use-package-modules bootloaders certs fonts nvi
                      package-management wget xorg)
+
+  (use-modules (gnu home)
+               (gnu home services)
+               (gnu home services guix)
+               (gnu home services shells)
+               (gnu home services shepherd)
+               (gnu services)
+               (gnu services ssh)
+               (gnu services shepherd)
+               (gnu packages)
+               (gnu packages admin)
+               (srfi srfi-9 gnu)
+               (guix channels)
+               (gnu packages emacs-xyz)
+               (jam packages emacs-xyz)
+               (jam packages emacs)
+               (guix gexp))
+
+  (define emacs-service
+    (shepherd-service
+     (provision '(emacs))
+     (start #~(make-system-constructor "emacs --daemon"))
+     (stop #~(make-system-destructor "emacsclient --eval '(kill-emacs)'"))
+     (auto-start? #f)))
+
+  (define guix-service ; add type for portable guix package
+    (shepherd-service
+     (provision '(guix))
+     (start #~(make-forkexec-constructor `("guix-daemon" ,(string-append "--listen=" (if (getenv "XDG_DATA_HOME") (getenv "XDG_DATA_HOME")
+                                                                                         (string-append (getenv "HOME")
+                                                                                                        file-name-separator-string
+                                                                                                        ".local"
+                                                                                                        file-name-separator-string
+                                                                                                        "share"))
+                                                                         file-name-separator-string
+                                                                         "guix"
+                                                                         file-name-separator-string
+                                                                         "var"
+                                                                         file-name-separator-string
+                                                                         "guix"
+                                                                         file-name-separator-string
+                                                                         "daemon-socket"
+                                                                         file-name-separator-string
+                                                                         "socket") ;;"--build-users-group=guixbuild"
+                                           "--disable-chroot")
+                                         #:environment-variables `(,(string-append "NIX_STORE=" (if (getenv "XDG_DATA_HOME")
+                                                                                                    (getenv "XDG_DATA_HOME")
+                                                                                                    (string-append (getenv "HOME")
+                                                                                                                   file-name-separator-string
+                                                                                                                   ".local"
+                                                                                                                   file-name-separator-string
+                                                                                                                   "share"))
+                                                                                   file-name-separator-string
+                                                                                   "guix"
+                                                                                   file-name-separator-string
+                                                                                   "gnu"
+                                                                                   file-name-separator-string
+                                                                                   "store")
+                                                                   ,@(environ))))
+     (stop #~(make-kill-destructor))
+     (auto-start? #f)))
+
+  (define ssh-service ; writes to /etc/dropbear for keys
+    (set-fields       ; least-authority-wrapper to contain
+     (car ((@@ (gnu services ssh) dropbear-shepherd-service) (dropbear-configuration (port-number 2222)
+                                                                                     (syslog-output? #f)
+                                                                                     (password-authentication? #f)
+                                                                                     (pid-file "/tmp/dropbear.pid"))))
+     ((shepherd-service-requirement) '())
+     ((shepherd-service-auto-start?) #f)))
+(define jam-home
+  (home-environment
+   (packages (append
+            ;(map transform-emacs-build-git (list emacs-fd))
+            (map specification-&gt;package (list "guile"
+                                             ;"emacs-pgtk-xwidgets" ; managed by default profile
+                                             ;"ripgrep" ;"fd"
+                                             "git"
+                                             "nss-certs"
+                                             ;"aspell" "aspell-dict-en"
+                                             ;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
+                                             "gnupg"
+                                             "password-store" "pass-otp"
+                                             ;"virt-viewer" ; "qemu"; for spice remote-viewer
+                                             ;"alacritty"; "xterm"
+                                             "curl"; emacs-osm needs for CA's
+                                             "screen"
+                                             "tree-sitter-rust" "tree-sitter-yaml" "tree-sitter-python"
+                                             "emacs-eat" "emacs-debbugs" "emacs-org-roam" "emacs-guix" "emacs-osm" "emacs-minions" "emacs-transmission" "emacs-undo-tree" "emacs-pass" "emacs-password-store-otp" "emacs-company" "emacs-which-key" "emacs-macrostep-geiser" "emacs-geiser-guile" "emacs-flymake-guile" "emacs-pyvenv" "emacs-dape"
+                                             ))))
+   (services
+    (list
+     (simple-service 'my-channel-services
+                     home-channels-service-type
+                     (list (channel
+                            ;; custom guix override
+                            (name 'guix)
+                            (url "https://git.savannah.gnu.org/git/guix.git")
+                            (introduction
+                             (make-channel-introduction
+                              "9edb3f66fd807b096b48283debdcddccfea34bad"
+                              (openpgp-fingerprint
+                               "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
+                           (channel
+                            ;; GUIX_PACKAGE_PATH and (url "file:///home/.../guix-channel")
+                            (name 'mychannel)
+                            (url "https://github.com/jamartin9/guix-channel")
+                            (introduction
+                             (make-channel-introduction
+                              "a8de09ac62260319e6376f21c995f713c1b09279"
+                              (openpgp-fingerprint
+                               "34AF BE87 8193 580F F441  AB3F 95AF 699C 293E 302B")))))
+                     )
+     (service home-shepherd-service-type (home-shepherd-configuration
+                                          (shepherd (specification-&gt;package "shepherd"))
+                                          ;(auto-start? #f)
+                                          (services (list emacs-service
+                                                          ;transmission-service
+                                                          ;ssh-service
+                                                          ;guix-service
+                                                          ))))
+
+     (service home-bash-service-type
+              (home-bash-configuration
+               (package (specification-&gt;package "bash"))
+               (guix-defaults? #f)
+               ;(environment-variables (list '("EDITOR" . "emacs")))
+               (bashrc (list (plain-file "guix.alias" "\
+  #!/usr/bin/env bash
+  # shellcheck disable=SC2155,SC2076,SC2068,SC1090,SC1091
+
+  export TMPDIR=\"/tmp\"
+
+  export HISTFILE=\"${XDG_STATE_HOME}\"/bash/history
+
+  export CARGO_HOME=\"${XDG_DATA_HOME}\"/cargo
+  export RUSTUP_HOME=\"${XDG_DATA_HOME}\"/rustup
+  export GNUPGHOME=\"${XDG_DATA_HOME}\"/gnupg
+  export PASSWORD_STORE_DIR=\"${XDG_DATA_HOME}\"/pass
+
+  export CUDA_CACHE_PATH=\"${XDG_CACHE_HOME}\"/nv
+  export ICEAUTHORITY=\"${XDG_CACHE_HOME}\"/ICEauthority
+  export TEXMFVAR=\"${XDG_CACHE_HOME}\"/texlive/texmf-var
+
+  export GPG_TTY=$(tty)
+
+  export EDITOR=\"emacs\"
+  alias emacsc=\"emacsclient -c -a ''\"
+  alias emacskill=\"emacsc -e '(kill-emacs)'\"
+  _emacs_run_dump(){
+      if [ ! -f ~/emp.dmp ]; then
+          emacs --batch --eval='(dump-emacs-portable \"~/emp.dmp\")'
+      fi
+      emacs --dump-file=~/emp.dmp $@
+  }
+  alias emrd=\"_emacs_run_dump\"
+
+  # Guix parts
+  alias guixPack=\"guix pack -S /bin=bin -RR\"
+  alias guixPackDock=\"guix pack -S /bin=bin -f docker\"
+  alias guixPackVm=\"guix system image -t qcow2\" # qemu-img resize x.qcow +10G boot then growpart and resize2fs
+
+  _guix_run_vm(){
+      local vmOpts=()
+      local qOpts=()
+      local target=\"\"
+      while [ $# -gt 0 ]; do
+          local arg=\"${1}\"
+          case \"${arg}\" in
+              -d|--default)
+                  qOpts=(\"-spice\" \"port=5930,disable-ticketing\" \"-m\" \"2048\" \"-nic\" \"user,model=virtio-net-pci,hostfwd=tcp::8080-:8081\" \"${qOpts[@]}\")
+                  vmOpts=(\"--share=$HOME/tmp=/storage\" \"${vmOpts[@]}\") # --persistent
+                  shift
+                  ;;
+              -qo|--qopt)
+                  qOpts=(\"${qOpts[@]}\" \"${2}\")
+                  shift 2
+                  ;;
+              -t|--target)
+                  target=\"${2}\"
+                  shift 2
+                  ;;
+              -vo|--vmopt)
+                  vmOpts=(\"${vmOpts[@]}\" \"${2}\" )
+                  shift 2
+                  ;;
+              *)
+                  printf 'Invalid option %s \n' \"${1}\"
+                  printf 'Valid options are: -t OS.scm -qo QEMU-OPTS -vo GUIXVM-OPTS --default \n'
+                  shift
+                  ;;
+          esac
+      done
+      $(guix system vm \"${vmOpts[@]}\" \"${target}\") \"${qOpts[@]}\"
+  }
+  alias guixRunVm=\"_guix_run_vm\" # guixRunVm -d -t os.scm
+
+  _guix_vars(){
+      if [ -z \"${GUIX_PREV_ENV}\" ]; then # unset vars in guix-home and keep login vars
+          export GUIX_PREV_ENV=(\"$(env -u PATH -u GUIX_PROFILE -u GUILE_LOAD_COMPILED_PATH -u GUILE_LOAD_PATH -u SSL_CERT_DIR -u SSL_CERT_FILE -u GIT_EXEC_PATH -u GIT_SSL_CAINFO -u INFOPATH -u EMACSLOADPATH -u EMACSNATIVELOADPATH -u BASH_LOADABLES_PATH -u PASSWORD_STORE_SYSTEM_EXTENSION_DIR -u CURL_CA_BUNDLE PATH=/sbin:/bin:/usr/sbin:/usr/bin /bin/sh -c '. /etc/profile &amp;&amp; env')\")
+          export GUIX_ACTIVE_PROFILES=()
+          # guix-home activated with login shell
+          [ -f ~/.guix-home/setup-environment ] &amp;&amp; export GUIX_PREV_ENV_home=(\"$(env)\") &amp;&amp; export GUIX_ACTIVE_PROFILES=(\"home\")
+      fi
+      if [ -z \"${GUIX_MANIFEST_DIR}\" ]; then
+          export GUIX_MANIFEST_DIR=${XDG_CONFIG_DIR:-~/.config}/guix-manifests
+      fi
+      if [ -z \"${GUIX_EXTRA_PROFILES}\" ]; then
+          export GUIX_EXTRA_PROFILES=${XDG_DATA_HOME:-~/.local/share}/guix-extra-profiles
+      fi
+  }
+  _guix_list_profiles(){
+      printf \"The following profiles are available: \n\"
+      if [ -f ~/.guix-profile/etc/profile ]; then
+          printf \"default \n\"
+      fi
+      if [ -f ~/.guix-home/profile/etc/profile ]; then
+          printf \"home \n\"
+      fi
+      for manifest in \"${GUIX_MANIFEST_DIR}\"/*.scm; do
+          if [ \"${manifest}\" != \"${GUIX_MANIFEST_DIR}/*.scm\" ]; then # no glob
+              printf '%s \n' \"$(basename \"${manifest%.*}\")\"
+          fi
+      done
+      printf \"The following profiles are active: \n\"
+      for prof in ${GUIX_ACTIVE_PROFILES[@]}; do
+          printf '%s \n' \"${prof}\"
+      done
+
+  }
+  _guix_update_profile(){
+      local arg=\"${1}\"
+      local profile=\"${GUIX_EXTRA_PROFILES}/${arg}/${arg}\"
+      if [ \"${arg}\" = \"default\" ]; then
+          guix package -u
+      elif [ \"${arg}\" = \"home\" ]; then
+           guix home reconfigure ~/.guix-home/configuration.scm
+      elif [ -f \"${GUIX_MANIFEST_DIR}/${arg}.scm\" ]; then
+           if [ ! -d \"${profile}\" ]; then
+              mkdir -p \"${GUIX_EXTRA_PROFILES}/${arg}\"
+           fi
+           guix package -m \"${GUIX_MANIFEST_DIR}/${arg}.scm\" -p \"${profile}\"
+      fi
+  }
+  _guix_activate_profile(){
+      local arg=\"${1}\"
+      local profile=\"${GUIX_EXTRA_PROFILES}/${arg}/${arg}\"
+      if [ \"${arg}\" != \"default\" ] &amp;&amp;
+         [ \"${arg}\" != \"home\" ] &amp;&amp;
+         [ ! -f \"${profile}\"/etc/profile ]; then # home and default are always installed
+          _guix_update_profile \"${arg}\"
+      fi
+      if [ \"${arg}\" = \"default\" ]; then # unset GUIX_PROFILE so path proliferates
+          [ -f ~/.guix-profile/etc/profile ] &amp;&amp; unset GUIX_PROFILE &amp;&amp; . ~/.guix-profile/etc/profile
+          [ -f ~/.config/guix/current/etc/profile ] &amp;&amp; unset GUIX_PROFILE &amp;&amp; . ~/.config/guix/current/etc/profile
+      elif [ \"${arg}\" = \"home\" ]; then # tilde avoids variables
+          [ -f ~/.guix-home/setup-environment ] &amp;&amp; . ~/.guix-home/setup-environment &amp;&amp; export GUIX_PROFILE
+      elif [ -f \"${profile}\"/etc/profile ]; then
+          unset GUIX_PROFILE &amp;&amp; . \"${profile}\"/etc/profile
+      else
+          printf 'The manifest for %s does not exist \n' \"${arg}\"
+          return
+      fi
+      local stash=(\"${GUIX_PREV_ENV[@]}\") # hide prev envs from being saved in new GUIX_PREV_ENV_$manifest
+      unset GUIX_PREV_ENV
+      for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
+          local ref=\"GUIX_PREV_ENV_${mani}[@]\"
+          local \"stash_${mani}=${!ref}\" # MAYBE indirect variable expansion portable
+          unset \"GUIX_PREV_ENV_${mani}\"
+      done
+      local prev=(\"$(env)\") # save current env
+      export \"GUIX_PREV_ENV_${arg}=${prev[*]}\"
+      export GUIX_PREV_ENV=(\"${stash[@]}\") # restore prev envs
+      for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
+          local ref_stash=\"stash_${mani}\"
+          export \"GUIX_PREV_ENV_${mani}=${!ref_stash}\" # MAYBE indirect variable expansion portable
+      done
+      GUIX_ACTIVE_PROFILES+=(\"${arg}\")
+      export GUIX_ACTIVE_PROFILES
+  }
+  _guix_deactivate_profile(){
+      local arg=\"${1}\"
+      local ref=\"GUIX_PREV_ENV_${arg}\"
+      if [ -n \"${!ref}\" ]; then # the prev env exists # MAYBE indirect variable expansion portable
+          for entry in ${!ref}; do # unset vars of profile # MAYBE indirect variable expansion portable
+              if [[ ! \"${entry%%=*}\" =~ GUIX_PREV_ENV.* ]] &amp;&amp; [[ \"${entry}\"  =~ \"=\" ]] &amp;&amp;
+                 [ \"${entry%%=*}\" != \"GUIX_ACTIVE_PROFILES\" ] ;then
+                  unset \"${entry%%=*}\"
+              fi
+          done
+          unset \"GUIX_PREV_ENV_${arg}\"
+          local prev_entry
+          for entry in ${GUIX_PREV_ENV[@]}; do # restore init env
+              if [[ ! \"${entry}\"  =~ \"=\" ]]; then # append onto the prev_entry for the space seperated args without equality assignment
+                  prev_entry=\"${prev_entry} ${entry}\"
+                  export \"${prev_entry?}\"
+              else
+                  prev_entry=\"${entry}\"
+                  export \"${entry%%=*}=${entry#*=}\"
+              fi
+          done
+          # active manifests again
+          local active_stash=(\"${GUIX_ACTIVE_PROFILES[@]}\") # export GUIX_ACTIVE_PROFILES=(\"${GUIX_ACTIVE_PROFILES[@]/$arg}\")
+          export GUIX_ACTIVE_PROFILES=() # unset profiles so GUIX_PREV_ENV_${manifest} will not be saved
+          for mani in ${active_stash[@]}; do
+              if [ \"${mani}\" != \"${arg}\" ]; then
+                  unset \"GUIX_PREV_ENV_${mani}\" # prevent all GUIX_PREV_ENV_${manifest}'s from being saved
+              fi
+          done
+          for mani in ${active_stash[@]}; do
+              if [ \"${mani}\" != \"${arg}\" ]; then
+                  _guix_activate_profile \"${mani}\"
+              fi
+          done
+      fi
+  }
+  _guix_opts(){
+      local help=\"
+       Takes a list of profile manifest shortnames/commands
+       GUIX_MANIFEST_DIR will be set to ${XDG_CONFIG_DIR:-~/.config}/guix-manifests when not set
+       GUIX_EXTRA_PROFILES will be set to ${XDG_DATA_HOME:-~/.local/share}/guix-extra-profiles when not set
+       GUIX_ACTIVE_PROFILES will be set to the profiles that are activated (in order)
+       GUIX_PREV_ENV will be set to contents of env without guix profiles
+       GUIX_PREV_ENV_shortname will be set to the contents of env with the profile
+       The shortname is the basename
+       GUIX_MANIFEST_DIR/shortname.scm is the format of manifest search path
+       Profiles besides home/default will be stored under: GUIX_EXTRA_PROFILES/shortname/shortname
+       The commands are activate, update, deactivate and list; activate is the default
+       -a|--activate shortname -&gt; sources/installs profile; appends to GUIX_ACTIVE_PROFILES
+       -d|--deactivate shortname -&gt; restore env before the profile was activated
+       -u|--update shortname -&gt; guix package upgrades profile
+       -l|--list -&gt; print the contents of GUIX_ACTIVE_PROFILES and GUIX_MANIFEST_DIR (as shortnames)
+       -h|--help -&gt; print this message
+  \"
+      _guix_vars
+      while [ $# -gt 0 ]; do
+          local arg=\"${1}\"
+          case \"${arg}\" in
+              -a|--activate)
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
+                      printf '%s is already active \n' \"${2}\"
+                  else
+                      _guix_activate_profile \"${2}\"
+                  fi
+                  shift 2
+                  ;;
+              -d|--deactivate)
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${2} \" ]]; then
+                      _guix_deactivate_profile \"${2}\"
+                      cd . # restore ps1 prompt dir/info
+                  else
+                      printf '%s is not active \n' \"${2}\"
+                  fi
+                  shift 2
+                  ;;
+              -h|--help)
+                  printf '%s' \"${help}\"
+                  shift
+                  ;;
+              -l|--list)
+                  _guix_list_profiles
+                  shift
+                  ;;
+              -u|--update)
+                  _guix_update_profile \"${2}\"
+                  shift 2
+                  ;;
+              *)
+                  if [[ \" ${GUIX_ACTIVE_PROFILES[*]} \" =~ \" ${1} \" ]]; then
+                      printf '%s is already active \n' \"${1}\"
+                  else
+                      _guix_activate_profile \"${1}\"
+                  fi
+                  shift
+                  ;;
+          esac
+      done
+  }
+  alias guixProf=_guix_opts
+  _guix_opts default"))))))))
+)
+;jam-home
 
 (operating-system
   (host-name "jam-netbook")
@@ -1389,8 +1771,7 @@ installation-os-nonfree
                                         "audio" "video")))
                %base-user-accounts))
 
-  (packages (append (list nss-certs ; https
-                          blueman); podman flatpak gvfs
+  (packages (append (list blueman); podman flatpak gvfs
                     %base-packages))
 
   (services
@@ -1409,6 +1790,8 @@ installation-os-nonfree
                                  (list `("channels.scm" ,(local-file "channels.scm"))))
                  (simple-service 'channel-file etc-service-type
                                  (list `("nonguix-pub.scm" ,(local-file "nonguix-pub.scm"))))
+                 (simple-service 'jam-home-service home-service-type
+                                  `(("jam" ,jam-home)))
                  )
 
            ;; Remove some services that don't make sense
@@ -1448,19 +1831,19 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-org18e9976" class="outline-3">
-<h3 id="org18e9976">guix os snippets</h3>
-<div class="outline-text-3" id="text-org18e9976">
+<div id="outline-container-orgabd9769" class="outline-3">
+<h3 id="orgabd9769">guix os snippets</h3>
+<div class="outline-text-3" id="text-orgabd9769">
 </div>
-<div id="outline-container-orgc007639" class="outline-4">
-<h4 id="orgc007639">services</h4>
-<div class="outline-text-4" id="text-orgc007639">
+<div id="outline-container-org4b8815e" class="outline-4">
+<h4 id="org4b8815e">services</h4>
+<div class="outline-text-4" id="text-org4b8815e">
 </div>
 <ul class="org-ul">
-<li><a id="org9b242eb"></a>ci<br>
-<div class="outline-text-5" id="text-org9b242eb">
+<li><a id="orgd69e13a"></a>ci<br>
+<div class="outline-text-5" id="text-orgd69e13a">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgd46e2f8">(service cuirass-service-type
+<pre class="src src-scheme" id="org9bac22f">(service cuirass-service-type
          (cuirass-configuration (specifications #~(list (specification
                                                          (name "my-channel")
                                                          (build (build '(channels my-channel));'(custom (jam ci)));
@@ -1483,10 +1866,10 @@ installation-os-nonfree
 </div>
 </div>
 </li>
-<li><a id="org6a7b39d"></a>torrents<br>
-<div class="outline-text-5" id="text-org6a7b39d">
+<li><a id="org4617d8e"></a>torrents<br>
+<div class="outline-text-5" id="text-org4617d8e">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org21ceec6">
+<pre class="src src-scheme" id="orge9b17bb">
 (service transmission-daemon-service-type
           (transmission-daemon-configuration
           ;(peer-port 51413)
@@ -1499,10 +1882,10 @@ installation-os-nonfree
 </div>
 </div>
 </li>
-<li><a id="orgeacfb45"></a>wireguard<br>
-<div class="outline-text-5" id="text-orgeacfb45">
+<li><a id="orgb8d5d7e"></a>wireguard<br>
+<div class="outline-text-5" id="text-orgb8d5d7e">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgc70b10f">(service wireguard-service-type
+<pre class="src src-scheme" id="orga1465ee">(service wireguard-service-type
          (wireguard-configuration
           (addresses '("10.0.0.5/32"))
           ;(port 51820)
@@ -1520,11 +1903,11 @@ installation-os-nonfree
 </li>
 </ul>
 </div>
-<div id="outline-container-orgbb56d3d" class="outline-4">
-<h4 id="orgbb56d3d">hardware gpu</h4>
-<div class="outline-text-4" id="text-orgbb56d3d">
+<div id="outline-container-org099b726" class="outline-4">
+<h4 id="org099b726">hardware gpu</h4>
+<div class="outline-text-4" id="text-org099b726">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org145c8fd">;; nvidia service
+<pre class="src src-scheme" id="org2ff3181">;; nvidia service
 (use-modules (nongnu services nvidia) (nongnu packages nvidia))
 ;(service nvidia-service-type)
 (define %nvidia-xorg-config ;; nvidia xorg configuration
@@ -1547,11 +1930,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-orga7332a1" class="outline-4">
-<h4 id="orga7332a1">hardware wifi</h4>
-<div class="outline-text-4" id="text-orga7332a1">
+<div id="outline-container-orgda12f31" class="outline-4">
+<h4 id="orgda12f31">hardware wifi</h4>
+<div class="outline-text-4" id="text-orgda12f31">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org73038d3">;; broadcom service
+<pre class="src src-scheme" id="org460e2d9">;; broadcom service
 (define broadcom-service-type
   (service-type
    (name 'broadcom)
@@ -1571,11 +1954,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-org6167006" class="outline-4">
-<h4 id="org6167006">filesystem</h4>
-<div class="outline-text-4" id="text-org6167006">
+<div id="outline-container-org678b36c" class="outline-4">
+<h4 id="org678b36c">filesystem</h4>
+<div class="outline-text-4" id="text-org678b36c">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgc988256">(use-modules (jam packages zfs))
+<pre class="src src-scheme" id="orga608a01">(use-modules (jam packages zfs))
 (use-package-modules linux file-systems admin)
 
 ;(service zfs-service-type
@@ -1586,11 +1969,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-org588f8ea" class="outline-4">
-<h4 id="org588f8ea">kernel and sysctl harden</h4>
-<div class="outline-text-4" id="text-org588f8ea">
+<div id="outline-container-orgedcb23a" class="outline-4">
+<h4 id="orgedcb23a">kernel and sysctl harden</h4>
+<div class="outline-text-4" id="text-orgedcb23a">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org0abdc5c">;; Source: &lt;https://github.com/Kicksecure/security-misc&gt; via https://github.com/rakino/Testament/blob/trunk/testament/kicksecure.scm
+<pre class="src src-scheme" id="orgab5e8fa">;; Source: &lt;https://github.com/Kicksecure/security-misc&gt; via https://github.com/rakino/Testament/blob/trunk/testament/kicksecure.scm
 ;; Extracted with the following command:
 ;; cat etc/default/grub.d/* | sed -e 's/#\+/;;/g' -e 's/GRUB.*DEFAULT /\"/g' -e 's/GRUB.*LINUX /\"/g' -e '/GRUB/d' -e 's/\(\".*[a-z0-9]\)\ \([a-z].*\"\)/\1\"\n\"\2/g' -e '/dpkg/d'
 (define %kicksecure-kernel-arguments
@@ -1971,11 +2354,11 @@ installation-os-nonfree
 </div>
 </div>
 </div>
-<div id="outline-container-org9684a63" class="outline-4">
-<h4 id="org9684a63">firewall</h4>
-<div class="outline-text-4" id="text-org9684a63">
+<div id="outline-container-org024a84a" class="outline-4">
+<h4 id="org024a84a">firewall</h4>
+<div class="outline-text-4" id="text-org024a84a">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org10cc194">                 (service nftables-service-type
+<pre class="src src-scheme" id="org39a7e41">                 (service nftables-service-type
                           (nftables-configuration
                            (ruleset (plain-file "nftables.conf" "# Firewall hook order is: prerouting -&gt; input/output/forward -&gt; postrouting
 # flush all the rules.
@@ -2073,9 +2456,9 @@ table inet filter {
 </div>
 </div>
 </div>
-<div id="outline-container-org46e536a" class="outline-3">
-<h3 id="org46e536a">guix notes</h3>
-<div class="outline-text-3" id="text-org46e536a">
+<div id="outline-container-orgac29506" class="outline-3">
+<h3 id="orgac29506">guix notes</h3>
+<div class="outline-text-3" id="text-orgac29506">
 <ul class="org-ul">
 <li><code>GUIX_SANDBOX_EXTRA_MOUNTS=/path/to/extra/thing</code> for guix steam</li>
 <li>transform options for source, c-toolchain, debug, grafts/inputs
@@ -2136,7 +2519,7 @@ table inet filter {
 <li>manual setup</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org26050b5">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
+<pre class="src src-shell" id="org8f22c79">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
 # get tarball for system=x86_64-linux,aarch64,armhf,i686
 wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
 # check sig
@@ -2185,7 +2568,7 @@ guix package -i glibc-utf8-locales
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org6c4b9d0">network={
+<pre class="src src-conf" id="org8292754">network={
   ssid="ssid-name"
   key_mgmt=WPA-PSK
   psk="unencrypted passphrase"
@@ -2202,7 +2585,7 @@ guix package -i glibc-utf8-locales
 <li>clone config, symlink channels, pull then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgf6abe50">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="org1005848">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -2227,7 +2610,7 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org3404311">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org9bf4d6e">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
@@ -2239,13 +2622,13 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </div>
 </div>
 
-<div id="outline-container-org88200f9" class="outline-3">
-<h3 id="org88200f9">guix issues</h3>
-<div class="outline-text-3" id="text-org88200f9">
+<div id="outline-container-orgcf6798a" class="outline-3">
+<h3 id="orgcf6798a">guix issues</h3>
+<div class="outline-text-3" id="text-orgcf6798a">
 </div>
-<div id="outline-container-orge56873b" class="outline-4">
-<h4 id="orge56873b"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-orge56873b">
+<div id="outline-container-org9006e5e" class="outline-4">
+<h4 id="org9006e5e"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
+<div class="outline-text-4" id="text-org9006e5e">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2022-05-02 Mon] </span></span> Submitted
 </p>
@@ -2260,9 +2643,9 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </div>
 </div>
 
-<div id="outline-container-org3e94228" class="outline-4">
-<h4 id="org3e94228"><span class="todo TODO">TODO</span> Add support for file capabilities(7)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-org3e94228">
+<div id="outline-container-org1cf5851" class="outline-4">
+<h4 id="org1cf5851"><span class="todo TODO">TODO</span> Add support for file capabilities(7)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
+<div class="outline-text-4" id="text-org1cf5851">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">[2023-02-12 Sun] </span></span> Submitted
 </p>
@@ -2276,7 +2659,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </p>
 
 <div class="org-src-container">
-<pre class="src src-scheme" id="orga02e131">; WIP This does not work as it can't find patches? (ghostscript)
+<pre class="src src-scheme" id="orgbdf640b">; WIP This does not work as it can't find patches? (ghostscript)
 (define-module (etc httm-manifest)
  #:use-module (guix scripts pack)
  #:use-module (guix gexp)
@@ -2348,7 +2731,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-scheme" id="org81cb93f">; WIP This does not work as guix git cannot find module during profile build
+<pre class="src src-scheme" id="orga3f41f0">; WIP This does not work as guix git cannot find module during profile build
 (define-module (jam ci)
   #:use-module (gnu ci)
   #:use-module (gnu system image)
