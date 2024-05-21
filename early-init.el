@@ -26,7 +26,7 @@
         (if (gnutls-available-p) ; melpa requires gnutls
             (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)) ; add package repo
         (package-initialize)
-	    (require 'use-package-ensure)
+        (require 'use-package-ensure)
         ;(if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
         (setq use-package-always-ensure t
               package-pinned-packages '((eat . "nongnu")
