@@ -36,6 +36,8 @@ profile-restore=copy
 screenshot-tag-colorspace=yes # HDR screenshots
 screenshot-high-bit-depth=yes # 16 bit screenshots
 #gpu-context=waylandvk # set the environment variable ENABLE_HDR_WSI=1
+#vf-append=@histolevels:vapoursynth="~~/vs/histogram/levels.py":buffered-frames=3:concurrent-frames=4 # use vapoursynth to add extra frameinfo
+#vf-append=@frameinfo:vapoursynth="~~/vs/info/frameinfo.py":buffered-frames=3:concurrent-frames=4
 #+END_SRC
 - bind keys to lua script with ~input.conf~
 #+NAME: mpv-input.conf

@@ -30,6 +30,8 @@
 - usenet data stats https://top1000.anthologeek.net/#stats
 - independent backbones
   - usenet express
+    - reseller Thundernews deal 2TB $10: https://members.thundernews.com/block_billinginfo.php?currency=USD&pricepointid=8202888
+    - newsgroupdirect has terabyte Tuesday deals
   - usenet farm
   - netnews (frugal/blocknews/usenetnow)
 - omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)

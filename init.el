@@ -46,6 +46,8 @@
            ("i" . image-crop))
 (bind-keys :prefix-map jam/quit :prefix "C-c c q"
            ("f" . delete-frame)
+           ("d" . server-start) ;daemon
+           ("D" . server-stop)
            ("q" . kill-emacs)
            ("r" . restart-emacs)
            ("Q" . save-buffers-kill-terminal)
@@ -787,5 +789,5 @@
   (setenv "GUIX_STATE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") "guix"))
   (setenv "GUIX_CONFIGURATION_DIRECTORY" (concat (file-name-as-directory (xdg-config-home))(file-name-as-directory "guix") "etc"))
   (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "profiles") (file-name-as-directory "per-user") (file-name-as-directory "root") (file-name-as-directory "guix-profile") (file-name-as-directory "lib") "locale"))
-  (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "gnu") "store"))
+  (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "gnu") "store")) ; NIX_STORE_DIR
   (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") "bin"))))

@@ -9,6 +9,8 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * software patents and licenses
 ** notes
+- West Virginia is state you can use PO box as registered agent (secretary of state)
+- Bank of North Dakota is federal bank (less debanking)
 - entirely too many hours wasted arguing about imaginary property
 - mostly moot as enforcement is sparse/scarce and trolling is high
 - US software patents are not really applicable to the eu (ex. france and x264)

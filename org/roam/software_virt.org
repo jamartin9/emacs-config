@@ -10,6 +10,8 @@
 * Virtualization
 Simulate the simulation
 - containers
+  - crun
+    - krun to run OCI containers as KVM's
   - [[id:90cf48a5-3b01-4667-b100-72acea67034f][podman]]
   - [[id:ab1f8872-ab90-4855-98a0-5d9bf5806d78][kind]]
 - [[id:b066a88d-c1c4-43d4-b8b8-cc345ad8467f][firejail]]
@@ -52,3 +54,5 @@ qemu-system-x86_64 -enable-kvm \
   - tools
     - [[id:a07e64d0-5cee-451a-af80-3f6c006dd0a1][bpftrace]]
     - [[id:bee863b2-bd4f-4332-a227-976b3cef1e45][bcc]]
+- Hyper-V supports gpu virtualization via GPU-P with ~VMGPUPartitionAdapter~ for ~Msvm_PartitionableGpu~
+  - only certain models supported through the driver nvidia grid. Some cards only support passthrough. 

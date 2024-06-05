@@ -35,3 +35,4 @@ Finally some hardware support!
 - ~iftop~ for network interface rates
 - netconsole can be configured for last gasp udp packet sending(spanner, titus)
 - ~/usr/lib/ld-linux-x86-64.so.2 --help~ to check for ~x86_64-v3~
+- ~ethtool -N eth2 rx-flow-hash udp4 sdfn~ nic to send packets to same thread as ip:port sender

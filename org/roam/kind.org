@@ -9,8 +9,9 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * kind
 ** kind
-- kubernetes in docker with podman ~KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster~
+- kubernetes in docker with podman ~KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster --config cluster.yaml~
   - BUG with worker node failing. Needs runc 1.2 (unreleased) for resolv.conf
+  - Add delegate to systemd run with podman ~KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native KIND_EXPERIMENTAL_PROVIDER=podman systemd-run --scope --user --property=Delegate=yes ./kind-linux-amd64 create cluster --retain~
 - ~KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native~ for zfs in kind >= 0.12
 - ~kind load docker-image IMAGE IMAGE~ to load images or mount path through config
 - postgresql (crunchydata)

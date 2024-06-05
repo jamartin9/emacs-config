@@ -109,7 +109,7 @@ self.addEventListener('fetch', function(e) {
     - disable wallet, sidebar
     - F12 Dev Tools -> Ctrl+Shift+P -> type 'shot' for screen capture options
     - ~brave://flags/#ozone-platform-hint~ set to auto for wayland default instead of x11
-    - Alt w to close tab, ctrl tab to cycle, 
+    - Alt w to close tab, ctrl tab to cycle, ctrl shift T to reopened closed tab
   - ungoogled-chromium
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]

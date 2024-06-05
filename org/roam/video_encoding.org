@@ -684,6 +684,7 @@ DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' 
 extract core with eac3to or ~ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts~
 Downmix and transcode to opus at 80Kbs ~ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus~
 PCM - Bluray
+Opus - RFC extension to add ambisonic("sweetspot" for speakers) spatial sounds instead of objects like atmos. Both use fixed position listener.
 
 ** ffmpeg
 - vmaf score for comparing video streams

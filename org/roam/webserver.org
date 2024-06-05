@@ -114,6 +114,7 @@
   - regular restarts and load moving to protect tenants
   - high cpu workers process/vm isolated
 - changed V8 timing internals for spectre/meltdown mitigation.
+  - still vulnerable to things like 'net spectre'
   - Single threaded to avoid racing workers
   - compile v8 with ~v8_untrusted_code_mitigations~
 - compile config to binary with ~workerd compile myconfig.capnp constantName -o combinedBinary~
