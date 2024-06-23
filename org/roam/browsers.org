@@ -20,6 +20,7 @@ This your brain on the internet
 - ARIA elements for accessibility
 - third-party iframe service workers can only register themselves if third party cookies are enabled ~chrome://settings/cookies~
 - URL hash fragments can store information that the browser should not send to backend (customization)
+- webgpu has issues on wayland with gl backend
 *** pwa
 - managed under ~brave://apps/~ or ~chrome://apps~
 - progressive web apps have a manifest and service worker for offline installable apps
@@ -87,6 +88,7 @@ self.addEventListener('fetch', function(e) {
 #+END_SRC
 ** [[id:aae21430-637a-4b92-8f8a-d35e9991e396][firefox]]
 ** chrome
+- Type ~thisisunsafe~ anywhere on the SSL ERROR window and the browser will let you visit the page.
 - ~chrome://tracing~ for browser tracing
   - https://chrome.google.com/webstore/detail/perfetto-ui/lfmkphfpdbjijhpomgecfikhfohaoine is the ui.perfetto.dev extension for tracing
 - dev tools wasm dwarf debug extension https://chrome.google.com/webstore/detail/cc%20%20-devtools-support-dwa/pdcpmagijalfljmkmjngeonclgbbannb
@@ -114,6 +116,8 @@ self.addEventListener('fetch', function(e) {
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]
   - [[https://cobalt.googlesource.com/cobalt][cobalt embeded app]]
+  - Vanadium
+    - grapheneOS fork of hardened chromium for android
 ** safari
 - webkit based
 * search engines

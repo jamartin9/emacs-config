@@ -4,9 +4,9 @@
 #+title: mpv
 #+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
-#+HTML_CONTENT_CLASS: container content 
-#+HTML_DOCTYPE: html5 
-#+INCLUDE: "css.org::navbar" :only-contents t  
+#+HTML_CONTENT_CLASS: container content
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
 
 * mpv
 - ffmpeg based
@@ -15,6 +15,7 @@
 - ~mpv.conf~ for HDR/DV
 #+NAME: mpv-config.conf
 #+BEGIN_SRC conf :tangle no
+#include=~/.config/mpv/shaders/mpv-retro-shaders/all.conf # git clone https://github.com/hhirtz/mpv-retro-shaders then mpv --profile=crt-lottes my_video.mp4
 vo=gpu-next
 gpu-api=vulkan
 border=no

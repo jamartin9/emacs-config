@@ -105,3 +105,20 @@ Steps taken:
     - ~zdb -l /dev/disk-by-id/~ showed the labels intact and cachefile had wholedisk property still
 - forgot to add drive screws to trays self fasteners
   - labeled 'drive screws' for future use
+** 2024-06 June
+*** 2024-06-06 Thursday
+:PROPERTIES:
+:ID:       44c677dc-f905-40ec-a7f4-303f0d208c89
+:END:
+**** DONE update routers [2024-06-06 Thu 16:11]
+- added daily midnight reboot to asus router.
+  - despite disabling firmware updates in the setting it seems to check daily for them even after toggling the setting
+    - it may be filling up its 'disk' leading to problems as the security files are not cleaned up?
+- added openwrt luci attended sysupgrades and updated linksys to to latest while keeping configuration
+*** 2024-06-13 Thursday
+:PROPERTIES:
+:ID:       38c4c55f-ac63-45dd-a79a-9b32a8b3252e
+:END:
+**** DONE change firmware [2024-06-13 Thu 14:35]
+- change asus firmware to https://www.asuswrt-merlin.net/ for better stability
+  - no openwrt because no broadcom foss

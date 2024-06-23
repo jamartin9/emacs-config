@@ -8,6 +8,8 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * software contributions
+- guix-cuirass
+  - [[https://git.savannah.gnu.org/cgit/guix/guix-cuirass.git/commit/?id=c8022d51f4c6c34c4ea0ce2d3502d4a683946888][Added a null check to js to allow adding channels on specification page]]
 - huggingface/transformers
   - [[https://github.com/huggingface/transformers/pull/24736][typo bugfix to allow models to be ran with LocalAgent]]
 - ClementTsang/bottom

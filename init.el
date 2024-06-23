@@ -47,7 +47,7 @@
 (bind-keys :prefix-map jam/quit :prefix "C-c c q"
            ("f" . delete-frame)
            ("d" . server-start) ;daemon
-           ("D" . server-stop)
+           ("D" . server-force-delete)
            ("q" . kill-emacs)
            ("r" . restart-emacs)
            ("Q" . save-buffers-kill-terminal)
@@ -539,16 +539,16 @@
                 erc-save-buffer-on-part t
                 erc-log-insert-log-on-open t
                 erc-log-channels-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "erc")
-                ;erc-nick '("jaming" "jamin" "jam")
-                ;erc-user-full-name "jaming"
-                ;erc-keywords '("jaming")
+                erc-nick '("jaming")
+                erc-user-full-name "jaming"
+                erc-keywords '("jaming")
                 erc-server-history-list '("irc.rizon.net" "irc.libera.chat" "irc.choopa.net" "irc.corrupt-net.org")
                 erc-autojoin-timing 'ident
                 erc-autojoin-delay 30
-                ;erc-max-buffer-size 20000
-                ;erc-prompt-for-nickserv-password nil
+                erc-max-buffer-size 20000
+                erc-prompt-for-nickserv-password nil
                 ;erc-nickserv-passwords '((Corrupt (("nickname" . "password"))))
-                ;erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password
+                erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password
                 ;erc-sasl-mechanism 'ecdsa-nist256p-challenge ; expects key file for erc-sasl-password
                 erc-prompt-for-password nil
                 erc-nickserv-identify-mode 'both
@@ -577,8 +577,8 @@
   (add-to-list 'erc-modules 'dcc);/dcc list and /dcc get -s nick file
   (add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
   (add-to-list 'erc-modules 'log)
+  (add-to-list 'erc-modules 'services); nickserv
   ;(add-to-list 'erc-modules 'sasl)
-  ;(add-to-list 'erc-modules 'services); nickserv
   (erc-update-modules))
 
 (use-package eshell
@@ -713,7 +713,7 @@
         (push '(python-mode . python-ts-mode) major-mode-remap-alist)
         (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
-(use-package dape
+(use-package dape ; Extract adapter https://github.com/vadimcn/codelldb/releases unzip codelldb-<platform>-<os>.vsix -d ~/.emacs.d/.local/debug-adapters/codelldb
   :bind (:map jam/code ("d" . dape))
   :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
   :commands (dape))

@@ -90,6 +90,8 @@ The tower of babel is your type system as a macro
     - manual memory management
     - static type system
     - verified prescheme to C compiler
+    - operating system 3L compiler/vm written in prescheme
+    - guile-prescheme interop
   - gnu mes
     - scheme interpreter in C and C compiler in scheme used for bootstrapping guile/guix with gash
   - chicken scheme
