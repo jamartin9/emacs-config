@@ -8,47 +8,27 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org73f2d99">
-<div class="navbar-brand" id="orgafdeefa">
-<div class="navbar-item" id="orgf64211b">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org5d23b8e">
-<div class="navbar-start" id="org8b36c7c">
-<div class="navbar-item" id="org5dbb92d">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="orgefef4cc">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org29521a5">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-orgd1632d1" class="outline-2">
-<h2 id="orgd1632d1">tor</h2>
-<div class="outline-text-2" id="text-orgd1632d1">
+<div id="outline-container-org2fe9ab7" class="outline-2">
+<h2 id="org2fe9ab7">tor</h2>
+<div class="outline-text-2" id="text-org2fe9ab7">
 </div>
-<div id="outline-container-orgc176409" class="outline-3">
-<h3 id="orgc176409">tor notes</h3>
-<div class="outline-text-3" id="text-orgc176409">
+<div id="outline-container-org469d8bd" class="outline-3">
+<h3 id="org469d8bd">tor notes</h3>
+<div class="outline-text-3" id="text-org469d8bd">
 <ul class="org-ul">
 <li>Known 0days not disclosed in court as defense. Cope with parallel construction.</li>
 <li>socks5 on 9050 by default</li>
 <li>browser bundle runs 9051 by default</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgee73a21">brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion is brave
+<pre class="src src-conf" id="org03931f2">brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion is brave
 https://protonmailrmez3lotccipshtkleegetolb73fuirgj7r4o4vfu7ozyd/ is protonmail
 https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/ is cloudflare 1.1.1.1
 MapAddress palladium.libera.chat libera75jm6of4wxpxt4aynol3xjmbtxgfyjpu34ss4d7r7q2v5zrpyd.onion is liberia.chat
@@ -121,11 +101,11 @@ m2ylflyeak6i6o4hsfwcrfwcq2bbjxk6nf2rnmm7fu6qiuu3hybenzid.onion is jabber.ccc.de
 </ul>
 </div>
 </div>
-<div id="outline-container-orgea602c5" class="outline-3">
-<h3 id="orgea602c5">Link .torrc</h3>
-<div class="outline-text-3" id="text-orgea602c5">
+<div id="outline-container-org67d757f" class="outline-3">
+<h3 id="org67d757f">Link .torrc</h3>
+<div class="outline-text-3" id="text-org67d757f">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgef6df6c">(ignore-errors
+<pre class="src src-emacs-lisp" id="org15e118c">(ignore-errors
   (let* ((tor-confdir (concat (file-name-as-directory (xdg-config-home) "tor"))
         (tor-conf (concat (file-name-as-directory tor-confdir) ".torrc")))
     (if (not (file-exists-p tor-confdir))
@@ -137,29 +117,29 @@ m2ylflyeak6i6o4hsfwcrfwcq2bbjxk6nf2rnmm7fu6qiuu3hybenzid.onion is jabber.ccc.de
 </div>
 </div>
 </div>
-<div id="outline-container-org6ad776e" class="outline-3">
-<h3 id="org6ad776e">Data Directory</h3>
-<div class="outline-text-3" id="text-org6ad776e">
+<div id="outline-container-org42e5f87" class="outline-3">
+<h3 id="org42e5f87">Data Directory</h3>
+<div class="outline-text-3" id="text-org42e5f87">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org422724d">(concat (file-name-as-directory (xdg-config-home)) "tor")
+<pre class="src src-emacs-lisp" id="org0203305">(concat (file-name-as-directory (xdg-config-home)) "tor")
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org9bc268d" class="outline-3">
-<h3 id="org9bc268d">Control Socket</h3>
-<div class="outline-text-3" id="text-org9bc268d">
+<div id="outline-container-org030fe42" class="outline-3">
+<h3 id="org030fe42">Control Socket</h3>
+<div class="outline-text-3" id="text-org030fe42">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgef699d1">(concat (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "tor")) "torSocket")
+<pre class="src src-emacs-lisp" id="org54bf664">(concat (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "tor")) "torSocket")
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org91262c1" class="outline-3">
-<h3 id="org91262c1">.torrc</h3>
-<div class="outline-text-3" id="text-org91262c1">
+<div id="outline-container-orgf58f615" class="outline-3">
+<h3 id="orgf58f615">.torrc</h3>
+<div class="outline-text-3" id="text-orgf58f615">
 <div class="org-src-container">
-<pre class="src src-conf" id="org7d54027">StrictNodes 1
+<pre class="src src-conf" id="orgfeda009">StrictNodes 1
 AvoidDiskWrites 1
 Sandbox 1
 #UseBridges 1

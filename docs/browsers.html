@@ -8,43 +8,23 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org2018dab">
-<div class="navbar-brand" id="org7e2b388">
-<div class="navbar-item" id="org3b70a29">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org411a705">
-<div class="navbar-start" id="org1b5c92c">
-<div class="navbar-item" id="org5a01b14">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="orgd7dde48">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0371103">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-org74682fe" class="outline-2">
-<h2 id="org74682fe">browsers</h2>
-<div class="outline-text-2" id="text-org74682fe">
+<div id="outline-container-org15c123e" class="outline-2">
+<h2 id="org15c123e">browsers</h2>
+<div class="outline-text-2" id="text-org15c123e">
 <p>
 This your brain on the internet
 </p>
 </div>
-<div id="outline-container-org171c3e8" class="outline-3">
-<h3 id="org171c3e8">notes</h3>
-<div class="outline-text-3" id="text-org171c3e8">
+<div id="outline-container-orgc1dbd36" class="outline-3">
+<h3 id="orgc1dbd36">notes</h3>
+<div class="outline-text-3" id="text-orgc1dbd36">
 <ul class="org-ul">
 <li>ctrl-shift-R for force cache reload</li>
 <li>ctrl-w for close tab</li>
@@ -58,11 +38,12 @@ This your brain on the internet
 <li>ARIA elements for accessibility</li>
 <li>third-party iframe service workers can only register themselves if third party cookies are enabled <code>chrome://settings/cookies</code></li>
 <li>URL hash fragments can store information that the browser should not send to backend (customization)</li>
+<li>webgpu has issues on wayland with gl backend</li>
 </ul>
 </div>
-<div id="outline-container-org3cc84ce" class="outline-4">
-<h4 id="org3cc84ce">pwa</h4>
-<div class="outline-text-4" id="text-org3cc84ce">
+<div id="outline-container-org0f8a683" class="outline-4">
+<h4 id="org0f8a683">pwa</h4>
+<div class="outline-text-4" id="text-org0f8a683">
 <ul class="org-ul">
 <li>managed under <code>brave://apps/</code> or <code>chrome://apps</code></li>
 <li>progressive web apps have a manifest and service worker for offline installable apps
@@ -76,7 +57,7 @@ This your brain on the internet
 <li>Isolated Web Apps for signed updates</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org42659a1">{
+<pre class="src src-javascript" id="org83c8e58">{
     "name": "Progressive Web App",
     "short_name": "PWA",
     "icons": [{
@@ -93,7 +74,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-html" id="org273e990">&lt;script&gt;
+<pre class="src src-html" id="org3e49f0b">&lt;script&gt;
     // register ServiceWorker
     window.onload = () =&gt; {
         'use strict';
@@ -106,7 +87,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="orgb8759f3">var cacheName = 'pwa';
+<pre class="src src-javascript" id="org1928a8f">var cacheName = 'pwa';
 var filesToCache = [
   './',
   './index.html',
@@ -134,13 +115,14 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org93a0e46" class="outline-3">
-<h3 id="org93a0e46"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
+<div id="outline-container-org4cc6a45" class="outline-3">
+<h3 id="org4cc6a45"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
 </div>
-<div id="outline-container-org0a9cab7" class="outline-3">
-<h3 id="org0a9cab7">chrome</h3>
-<div class="outline-text-3" id="text-org0a9cab7">
+<div id="outline-container-org7cdd76a" class="outline-3">
+<h3 id="org7cdd76a">chrome</h3>
+<div class="outline-text-3" id="text-org7cdd76a">
 <ul class="org-ul">
+<li>Type <code>thisisunsafe</code> anywhere on the SSL ERROR window and the browser will let you visit the page.</li>
 <li><code>chrome://tracing</code> for browser tracing
 <ul class="org-ul">
 <li><a href="https://chrome.google.com/webstore/detail/perfetto-ui/lfmkphfpdbjijhpomgecfikhfohaoine">https://chrome.google.com/webstore/detail/perfetto-ui/lfmkphfpdbjijhpomgecfikhfohaoine</a> is the ui.perfetto.dev extension for tracing</li>
@@ -175,35 +157,39 @@ self.addEventListener('fetch', function(e) {
 <li>disable wallet, sidebar</li>
 <li>F12 Dev Tools -&gt; Ctrl+Shift+P -&gt; type 'shot' for screen capture options</li>
 <li><code>brave://flags/#ozone-platform-hint</code> set to auto for wayland default instead of x11</li>
-<li>Alt w to close tab, ctrl tab to cycle,</li>
+<li>Alt w to close tab, ctrl tab to cycle, ctrl shift T to reopened closed tab</li>
 </ul></li>
 <li>ungoogled-chromium</li>
 <li>microsoft edge</li>
 <li><a href="https://github.com/fathyb/carbonyl">terminal browser</a></li>
 <li><a href="https://cobalt.googlesource.com/cobalt">cobalt embeded app</a></li>
+<li>Vanadium
+<ul class="org-ul">
+<li>grapheneOS fork of hardened chromium for android</li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orga9f6058" class="outline-3">
-<h3 id="orga9f6058">safari</h3>
-<div class="outline-text-3" id="text-orga9f6058">
+<div id="outline-container-org1d37c8e" class="outline-3">
+<h3 id="org1d37c8e">safari</h3>
+<div class="outline-text-3" id="text-org1d37c8e">
 <ul class="org-ul">
 <li>webkit based</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org6f507e7" class="outline-2">
-<h2 id="org6f507e7">search engines</h2>
-<div class="outline-text-2" id="text-org6f507e7">
+<div id="outline-container-orgd358989" class="outline-2">
+<h2 id="orgd358989">search engines</h2>
+<div class="outline-text-2" id="text-orgd358989">
 </div>
-<div id="outline-container-org990e958" class="outline-3">
-<h3 id="org990e958"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
+<div id="outline-container-org63d4860" class="outline-3">
+<h3 id="org63d4860"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
 </div>
-<div id="outline-container-orgcde962c" class="outline-3">
-<h3 id="orgcde962c">ddg</h3>
-<div class="outline-text-3" id="text-orgcde962c">
+<div id="outline-container-org1aa7d1d" class="outline-3">
+<h3 id="org1aa7d1d">ddg</h3>
+<div class="outline-text-3" id="text-org1aa7d1d">
 <ul class="org-ul">
 <li>fingerprinted users multiple times</li>
 <li>no js version at lite.duckduckgo.com</li>
@@ -219,9 +205,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd5d7cf0" class="outline-3">
-<h3 id="orgd5d7cf0">brave</h3>
-<div class="outline-text-3" id="text-orgd5d7cf0">
+<div id="outline-container-org6ee9fd2" class="outline-3">
+<h3 id="org6ee9fd2">brave</h3>
+<div class="outline-text-3" id="text-org6ee9fd2">
 <ul class="org-ul">
 <li>tonemapping support for hdr pngs</li>
 <li>search.brave.com</li>
@@ -232,22 +218,22 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org1a2a99a" class="outline-2">
-<h2 id="org1a2a99a">sites</h2>
-<div class="outline-text-2" id="text-org1a2a99a">
+<div id="outline-container-org48aa96b" class="outline-2">
+<h2 id="org48aa96b">sites</h2>
+<div class="outline-text-2" id="text-org48aa96b">
 </div>
-<div id="outline-container-org35ffbf1" class="outline-3">
-<h3 id="org35ffbf1">tools</h3>
-<div class="outline-text-3" id="text-org35ffbf1">
+<div id="outline-container-org9db00df" class="outline-3">
+<h3 id="org9db00df">tools</h3>
+<div class="outline-text-3" id="text-org9db00df">
 <ul class="org-ul">
 <li><a href="https://wasm-test.libreoffice.org/">libreoffice wasm</a></li>
 <li><a href="https://directfile.irs.gov/">https://directfile.irs.gov/</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0df5afb" class="outline-3">
-<h3 id="org0df5afb">data</h3>
-<div class="outline-text-3" id="text-org0df5afb">
+<div id="outline-container-org5a9383d" class="outline-3">
+<h3 id="org5a9383d">data</h3>
+<div class="outline-text-3" id="text-org5a9383d">
 <ul class="org-ul">
 <li><a href="https://ossinsight.io/#trending-repos">https://ossinsight.io/#trending-repos</a></li>
 <li><a href="https://sourcegraph.com/search">https://sourcegraph.com/search</a></li>
@@ -264,9 +250,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org6e22de7" class="outline-3">
-<h3 id="org6e22de7">alternative frontends</h3>
-<div class="outline-text-3" id="text-org6e22de7">
+<div id="outline-container-orge6eac1f" class="outline-3">
+<h3 id="orge6eac1f">alternative frontends</h3>
+<div class="outline-text-3" id="text-orge6eac1f">
 <ul class="org-ul">
 <li>youtube
 <ul class="org-ul">
@@ -278,9 +264,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-orgba93f7f" class="outline-3">
-<h3 id="orgba93f7f">media</h3>
-<div class="outline-text-3" id="text-orgba93f7f">
+<div id="outline-container-orgcf6e6b1" class="outline-3">
+<h3 id="orgcf6e6b1">media</h3>
+<div class="outline-text-3" id="text-orgcf6e6b1">
 <ul class="org-ul">
 <li><a href="https://ustv247.tv/">https://ustv247.tv/</a></li>
 <li><a href="https://scnlog.me/">https://scnlog.me/</a></li>

@@ -8,43 +8,23 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org0494254">
-<div class="navbar-brand" id="org61d7312">
-<div class="navbar-item" id="org9905eaf">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orgbf8bfcf">
-<div class="navbar-start" id="org6866a86">
-<div class="navbar-item" id="org90825e2">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org3f1b227">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf71c577">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-orge8fb340" class="outline-2">
-<h2 id="orge8fb340">firewalls</h2>
-<div class="outline-text-2" id="text-orge8fb340">
+<div id="outline-container-org1c5885a" class="outline-2">
+<h2 id="org1c5885a">firewalls</h2>
+<div class="outline-text-2" id="text-org1c5885a">
 <p>
 much wall, such fire, very wow
 </p>
 </div>
-<div id="outline-container-org9f244fa" class="outline-3">
-<h3 id="org9f244fa">firewalls linux</h3>
-<div class="outline-text-3" id="text-org9f244fa">
+<div id="outline-container-orgc22199c" class="outline-3">
+<h3 id="orgc22199c">firewalls linux</h3>
+<div class="outline-text-3" id="text-orgc22199c">
 <ul class="org-ul">
 <li>ufw accepts all localhost in ufw-before-input (so it can't be blocked in the INPUT chain)</li>
 <li>iptables replaced by nftables replaced by bpfilter</li>
@@ -73,7 +53,7 @@ much wall, such fire, very wow
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgc8b2b45">curl 'http://10.0.0.1:5000/Public_UPNP_C3' \
+<pre class="src src-sh" id="org81cb70d">curl 'http://10.0.0.1:5000/Public_UPNP_C3' \
   -X 'POST' \
   -H 'Content-Type: text/xml; charset="utf-8"' \
   -H 'Connection: close' \

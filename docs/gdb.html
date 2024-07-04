@@ -8,41 +8,21 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org0a7fbf0">
-<div class="navbar-brand" id="org9ff046a">
-<div class="navbar-item" id="org427efd5">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org294faff">
-<div class="navbar-start" id="org54bab2a">
-<div class="navbar-item" id="orgdc549a3">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org570121c">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org2c73fb0">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
 
-<div id="outline-container-orgf984d27" class="outline-2">
-<h2 id="orgf984d27">GDB</h2>
-<div class="outline-text-2" id="text-orgf984d27">
+<div id="outline-container-org9c2150f" class="outline-2">
+<h2 id="org9c2150f">GDB</h2>
+<div class="outline-text-2" id="text-org9c2150f">
 </div>
-<div id="outline-container-org22540aa" class="outline-3">
-<h3 id="org22540aa">gdb</h3>
-<div class="outline-text-3" id="text-org22540aa">
+<div id="outline-container-org892437e" class="outline-3">
+<h3 id="org892437e">gdb</h3>
+<div class="outline-text-3" id="text-org892437e">
 <ul class="org-ul">
 <li>python and guile interpreters</li>
 <li>tui mode with <code>C-x 2</code> (emacs like bindings)</li>
@@ -52,7 +32,7 @@
 <li>loop program using breakpoints on main and exit with commands</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-gdb" id="org4a7b04e">break main
+<pre class="src src-gdb" id="orgcb2b01d">break main
 break _exit
 command 1
 record
@@ -64,9 +44,9 @@ end
 </pre>
 </div>
 </div>
-<div id="outline-container-orgf41a026" class="outline-4">
-<h4 id="orgf41a026">debug win32 app</h4>
-<div class="outline-text-4" id="text-orgf41a026">
+<div id="outline-container-org6c59c43" class="outline-4">
+<h4 id="org6c59c43">debug win32 app</h4>
+<div class="outline-text-4" id="text-org6c59c43">
 <ul class="org-ul">
 <li><code>wine /usr/i686-w64-mingw32/bin/gdbserver.exe localhost:10000 ./some-win32.exe</code> for tcp server
 <ul class="org-ul">

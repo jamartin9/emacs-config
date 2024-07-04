@@ -8,36 +8,16 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org56cd5a0">
-<div class="navbar-brand" id="org41f8318">
-<div class="navbar-item" id="orgad83ed8">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orgc70388f">
-<div class="navbar-start" id="org56a3df8">
-<div class="navbar-item" id="orgcef46a5">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org17daa55">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org61238e5">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-orga35079b" class="outline-2">
-<h2 id="orga35079b">ansible</h2>
-<div class="outline-text-2" id="text-orga35079b">
+<div id="outline-container-org8bac706" class="outline-2">
+<h2 id="org8bac706">ansible</h2>
+<div class="outline-text-2" id="text-org8bac706">
 <ul class="org-ul">
 <li>mitogen
 <ul class="org-ul">
@@ -50,15 +30,15 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orgc4ffd12" class="outline-3">
-<h3 id="orgc4ffd12">gcp playbooks</h3>
-<div class="outline-text-3" id="text-orgc4ffd12">
+<div id="outline-container-orgf3aeb26" class="outline-3">
+<h3 id="orgf3aeb26">gcp playbooks</h3>
+<div class="outline-text-3" id="text-orgf3aeb26">
 <ul class="org-ul">
 <li>uses tags for instance selection (webserver for instance and http-server/https-server/ssh-server for firewall)</li>
 <li>export GCP<sub>SERVICE</sub><sub>ACCOUNT</sub><sub>FILE</sub>, GCP<sub>PROJECT</sub>, SSH<sub>PUB</sub><sub>KEY</sub>, and USER environment variables</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgfa2f18f">---
+<pre class="src src-yaml" id="orgbe3660a">---
 # Provision free gce instance:
 - name: Create instance(s)
   hosts: localhost
@@ -162,7 +142,7 @@
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-yaml" id="org923b8fd">---
+<pre class="src src-yaml" id="orgc9d51a5">---
 # Destroys free gce instance.
 - name: Remove instance(s)
   hosts: localhost
@@ -231,7 +211,7 @@
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgdb53215">- hosts: tag_webserver
+<pre class="src src-yaml" id="orga0acf5d">- hosts: tag_webserver
   serial: 1
   become: true
   # These are the tasks to run before applying updates:
@@ -254,7 +234,7 @@
 <li><code>group_vars/gce</code>, <code>group_vars/all</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="org46c3f57">machine_type: f1-micro
+<pre class="src src-yaml" id="org1313456">machine_type: f1-micro
 image: projects/debian-cloud/global/images/family/debian-9
 zone: us-east1-b
 instance_name_1: free-1
@@ -271,7 +251,7 @@ disk_name: free-disk-instance
 <li><code>inventory/gce-inventory.gcp.yml</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgd5d8605">plugin: gcp_compute
+<pre class="src src-yaml" id="orgbb6b73e">plugin: gcp_compute
 projects:
   - jamin-42069
 auth_kind: serviceaccount
@@ -288,7 +268,7 @@ filters:
 <li><code>ansible.cfg</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgb8c9824">[inventory]
+<pre class="src src-yaml" id="org45f507e">[inventory]
 enable_plugins = auto
 #host_list, script, yaml, ini, auto
 </pre>
@@ -297,7 +277,7 @@ enable_plugins = auto
 <li><code>roles/common/tasks/main.yml</code>, <code>roles/web/tasks/main.yml</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="org2fc6ebc">---
+<pre class="src src-yaml" id="org23b608d">---
 # This role contains common plays that will run on all nodes.
 
 - name: System update
@@ -314,11 +294,11 @@ enable_plugins = auto
 </div>
 </div>
 </div>
-<div id="outline-container-org411acaa" class="outline-3">
-<h3 id="org411acaa">misc playbooks</h3>
-<div class="outline-text-3" id="text-org411acaa">
+<div id="outline-container-orge2bb962" class="outline-3">
+<h3 id="orge2bb962">misc playbooks</h3>
+<div class="outline-text-3" id="text-orge2bb962">
 <div class="org-src-container">
-<pre class="src src-yaml" id="org34f95bb">---
+<pre class="src src-yaml" id="org5cc1143">---
 - name: packages-config
   hosts: localhost
   connection: local

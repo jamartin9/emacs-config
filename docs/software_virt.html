@@ -8,42 +8,26 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="orgfbbe235">
-<div class="navbar-brand" id="org95ba5b4">
-<div class="navbar-item" id="orge0a40ef">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org3fee53b">
-<div class="navbar-start" id="org437c622">
-<div class="navbar-item" id="org9c66e1a">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org5a8eb8c">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org013c316">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-org51c429e" class="outline-2">
-<h2 id="org51c429e">Virtualization</h2>
-<div class="outline-text-2" id="text-org51c429e">
+<div id="outline-container-org3af95f6" class="outline-2">
+<h2 id="org3af95f6">Virtualization</h2>
+<div class="outline-text-2" id="text-org3af95f6">
 <p>
 Simulate the simulation
 </p>
 <ul class="org-ul">
 <li>containers
 <ul class="org-ul">
+<li>crun
+<ul class="org-ul">
+<li>krun to run OCI containers as KVM's</li>
+</ul></li>
 <li><a href="podman.html#ID-90cf48a5-3b01-4667-b100-72acea67034f">podman</a></li>
 <li><a href="kind.html#ID-ab1f8872-ab90-4855-98a0-5d9bf5806d78">kind</a></li>
 </ul></li>
@@ -65,7 +49,7 @@ Simulate the simulation
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org0f5c677">#!/usr/bin/env bash
+<pre class="src src-shell" id="orga8f7294">#!/usr/bin/env bash
 qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::8081-:8081,hostfwd=tcp::8080-:8080 -enable-kvm -m 2570 -device virtio-blk,drive=myhd -drive if=none,file=/My-image.qcow2,id=myhd -spice port=5930,disable-ticketing
 
 qemu-system-x86_64 -enable-kvm \
@@ -100,6 +84,10 @@ qemu-system-x86_64 -enable-kvm \
 <li><a href="bpftrace.html#ID-a07e64d0-5cee-451a-af80-3f6c006dd0a1">bpftrace</a></li>
 <li><a href="bcc.html#ID-bee863b2-bd4f-4332-a227-976b3cef1e45">bcc</a></li>
 </ul></li>
+</ul></li>
+<li>Hyper-V supports gpu virtualization via GPU-P with <code>VMGPUPartitionAdapter</code> for <code>Msvm_PartitionableGpu</code>
+<ul class="org-ul">
+<li>only certain models supported through the driver nvidia grid. Some cards only support passthrough.</li>
 </ul></li>
 </ul>
 </div>

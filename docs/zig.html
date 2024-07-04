@@ -8,42 +8,22 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="orgd81fde1">
-<div class="navbar-brand" id="org6c4a53d">
-<div class="navbar-item" id="orgd9b0f0a">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org8f3e406">
-<div class="navbar-start" id="org3552faf">
-<div class="navbar-item" id="org7b11d7a">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org11a5406">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf1abe23">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-orgcb583af" class="outline-2">
-<h2 id="orgcb583af">zig</h2>
-<div class="outline-text-2" id="text-orgcb583af">
+<div id="outline-container-orga185906" class="outline-2">
+<h2 id="orga185906">zig</h2>
+<div class="outline-text-2" id="text-orga185906">
 </div>
-<div id="outline-container-org4060804" class="outline-3">
-<h3 id="org4060804">Using linked C libraries</h3>
-<div class="outline-text-3" id="text-org4060804">
+<div id="outline-container-org7ae5e1a" class="outline-3">
+<h3 id="org7ae5e1a">Using linked C libraries</h3>
+<div class="outline-text-3" id="text-org7ae5e1a">
 <div class="org-src-container">
-<pre class="src src-zig" id="org5afc54b">const std = @import("std");
+<pre class="src src-zig" id="org0e8120f">const std = @import("std");
 
 pub fn build(b: *std.build.Builder) !void {
     const target = b.standardTargetOptions(.{});
@@ -69,7 +49,7 @@ pub fn build(b: *std.build.Builder) !void {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-zig" id="org9372eaf">const std = @import("std");
+<pre class="src src-zig" id="org00270a6">const std = @import("std");
 
 const c = @cImport({
     @cInclude("libguile.h");
@@ -92,7 +72,7 @@ pub fn main() anyerror!void {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-zig" id="orgbacab1c">const std = @import("std");
+<pre class="src src-zig" id="org87b64c3">const std = @import("std");
 
 const c = @cImport({
     @cDefine("JULIA_DEFINE_FAST_TLS()", {});
@@ -109,7 +89,7 @@ pub fn main() anyerror!void {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-zig" id="org8ef15b4">const std = @import("std");
+<pre class="src src-zig" id="orgf417724">const std = @import("std");
 
 pub fn build(b: *std.build.Builder) void {
     const target = b.standardTargetOptions(.{});

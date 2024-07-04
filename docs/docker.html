@@ -8,42 +8,22 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org0daa07a">
-<div class="navbar-brand" id="orgdecf2b9">
-<div class="navbar-item" id="orgbbc5012">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orga54c9fd">
-<div class="navbar-start" id="org4827226">
-<div class="navbar-item" id="org3b4bb50">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="orgc8f2dc0">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org58bcace">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-org809ead2" class="outline-2">
-<h2 id="org809ead2">docker</h2>
-<div class="outline-text-2" id="text-org809ead2">
+<div id="outline-container-org001f5da" class="outline-2">
+<h2 id="org001f5da">docker</h2>
+<div class="outline-text-2" id="text-org001f5da">
 </div>
-<div id="outline-container-orgbf62ba4" class="outline-3">
-<h3 id="orgbf62ba4">dockerfile of multi image builder</h3>
-<div class="outline-text-3" id="text-orgbf62ba4">
+<div id="outline-container-orgdc72b79" class="outline-3">
+<h3 id="orgdc72b79">dockerfile of multi image builder</h3>
+<div class="outline-text-3" id="text-orgdc72b79">
 <div class="org-src-container">
-<pre class="src src-dockerfile" id="org4a6022e">FROM clojure as builder
+<pre class="src src-dockerfile" id="orgb694cc3">FROM clojure as builder
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY project.clj /usr/src/app/

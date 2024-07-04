@@ -8,47 +8,27 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="orgc463848">
-<div class="navbar-brand" id="orgf0edc2a">
-<div class="navbar-item" id="orgb081b47">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org0336200">
-<div class="navbar-start" id="org0e333ae">
-<div class="navbar-item" id="orgfc8fc87">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org945da5c">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org9ce64b3">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
 
-<div id="outline-container-orgcf24cab" class="outline-2">
-<h2 id="orgcf24cab">Linux</h2>
-<div class="outline-text-2" id="text-orgcf24cab">
+<div id="outline-container-org961f0cd" class="outline-2">
+<h2 id="org961f0cd">Linux</h2>
+<div class="outline-text-2" id="text-org961f0cd">
 <p>
 Finally some hardware support!
 </p>
 </div>
-<div id="outline-container-org179afff" class="outline-3">
-<h3 id="org179afff"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
+<div id="outline-container-org5bcefdb" class="outline-3">
+<h3 id="org5bcefdb"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
 </div>
-<div id="outline-container-orgf6c697a" class="outline-3">
-<h3 id="orgf6c697a">Kernel</h3>
-<div class="outline-text-3" id="text-orgf6c697a">
+<div id="outline-container-org9595e82" class="outline-3">
+<h3 id="org9595e82">Kernel</h3>
+<div class="outline-text-3" id="text-org9595e82">
 <ul class="org-ul">
 <li>removed sysctl system call in 5.5</li>
 <li>io-uring
@@ -70,12 +50,12 @@ Finally some hardware support!
 </ul>
 </div>
 </div>
-<div id="outline-container-org2d2c7da" class="outline-3">
-<h3 id="org2d2c7da">pam</h3>
+<div id="outline-container-orgc5ff6fd" class="outline-3">
+<h3 id="orgc5ff6fd">pam</h3>
 </div>
-<div id="outline-container-org72cb8b7" class="outline-3">
-<h3 id="org72cb8b7">misc</h3>
-<div class="outline-text-3" id="text-org72cb8b7">
+<div id="outline-container-org18f1348" class="outline-3">
+<h3 id="org18f1348">misc</h3>
+<div class="outline-text-3" id="text-org18f1348">
 <ul class="org-ul">
 <li><code>faillock --user $USER --reset</code> for attempt reset</li>
 <li><code>LD_LIBRARY_PATH</code> and <code>LD_PRELOAD</code> environment variables override library location and load order respectively.
@@ -91,6 +71,7 @@ Finally some hardware support!
 <li><code>iftop</code> for network interface rates</li>
 <li>netconsole can be configured for last gasp udp packet sending(spanner, titus)</li>
 <li><code>/usr/lib/ld-linux-x86-64.so.2 --help</code> to check for <code>x86_64-v3</code></li>
+<li><code>ethtool -N eth2 rx-flow-hash udp4 sdfn</code> nic to send packets to same thread as ip:port sender</li>
 </ul>
 </div>
 </div>

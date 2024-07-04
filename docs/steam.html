@@ -8,43 +8,23 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org10ba689">
-<div class="navbar-brand" id="org165f378">
-<div class="navbar-item" id="org190cd96">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orgfb3f5ea">
-<div class="navbar-start" id="org1659172">
-<div class="navbar-item" id="org2764046">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="orge454db9">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga9d7d96">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-orge2ab8df" class="outline-2">
-<h2 id="orge2ab8df">Steam</h2>
-<div class="outline-text-2" id="text-orge2ab8df">
+<div id="outline-container-org0300c5d" class="outline-2">
+<h2 id="org0300c5d">Steam</h2>
+<div class="outline-text-2" id="text-org0300c5d">
 <ul class="org-ul">
 <li><a href="https://gitlab.com/Mr_Goldberg/goldberg_emulator">steam emulator</a></li>
 </ul>
 </div>
-<div id="outline-container-org8c83971" class="outline-3">
-<h3 id="org8c83971">steam proton notes</h3>
-<div class="outline-text-3" id="text-org8c83971">
+<div id="outline-container-orgcfa17a5" class="outline-3">
+<h3 id="orgcfa17a5">steam proton notes</h3>
+<div class="outline-text-3" id="text-orgcfa17a5">
 <ul class="org-ul">
 <li>pressure vessel added in &gt; 5.10
 <ul class="org-ul">
@@ -55,23 +35,23 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgae9b6ae" class="outline-2">
-<h2 id="orgae9b6ae">Lutris</h2>
-<div class="outline-text-2" id="text-orgae9b6ae">
+<div id="outline-container-org3858859" class="outline-2">
+<h2 id="org3858859">Lutris</h2>
+<div class="outline-text-2" id="text-org3858859">
 <ul class="org-ul">
 <li>installers battle.net</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org804162c" class="outline-2">
-<h2 id="org804162c">Protonfixes for some games</h2>
-<div class="outline-text-2" id="text-org804162c">
+<div id="outline-container-org42454bc" class="outline-2">
+<h2 id="org42454bc">Protonfixes for some games</h2>
+<div class="outline-text-2" id="text-org42454bc">
 </div>
-<div id="outline-container-orgaa5fcd3" class="outline-3">
-<h3 id="orgaa5fcd3">Link localfixes</h3>
-<div class="outline-text-3" id="text-orgaa5fcd3">
+<div id="outline-container-org115ef10" class="outline-3">
+<h3 id="org115ef10">Link localfixes</h3>
+<div class="outline-text-3" id="text-org115ef10">
 <div class="org-src-container">
-<pre class="src src-elisp" id="orgcae5ad2">(ignore-errors (let* ((proton-dir (concat (file-name-as-directory (xdg-config-home)) "protonfixes"))
+<pre class="src src-elisp" id="org1041d1f">(ignore-errors (let* ((proton-dir (concat (file-name-as-directory (xdg-config-home)) "protonfixes"))
                       (localfixes-dir (concat (file-name-as-directory proton-dir) "localfixes")))
   (if (not (or (file-exists-p localfixes-dir) (file-symlink-p localfixes-dir)))
       (progn (make-directory localfixes-dir 1)
@@ -89,11 +69,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org3c23991" class="outline-3">
-<h3 id="org3c23991">Jade Empire (process affinity)</h3>
-<div class="outline-text-3" id="text-org3c23991">
+<div id="outline-container-org3432f08" class="outline-3">
+<h3 id="org3432f08">Jade Empire (process affinity)</h3>
+<div class="outline-text-3" id="text-org3432f08">
 <div class="org-src-container">
-<pre class="src src-python" id="org6a144d3">""" Game fix Jade Empire: Special Edition
+<pre class="src src-python" id="org93e0e66">""" Game fix Jade Empire: Special Edition
 """
 #pylint: disable=C0103
 
@@ -134,11 +114,11 @@ def main():
 </div>
 </div>
 
-<div id="outline-container-org6bb60f2" class="outline-3">
-<h3 id="org6bb60f2">Fallout New Vegas (audio/vk issues)</h3>
-<div class="outline-text-3" id="text-org6bb60f2">
+<div id="outline-container-org5cb4e83" class="outline-3">
+<h3 id="org5cb4e83">Fallout New Vegas (audio/vk issues)</h3>
+<div class="outline-text-3" id="text-org5cb4e83">
 <div class="org-src-container">
-<pre class="src src-python" id="org1bb17f6">""" Game fix for Fallout: New Vegas
+<pre class="src src-python" id="org90ec5b5">""" Game fix for Fallout: New Vegas
 """
 # pylint: disable=C0103
 from protonfixes import util

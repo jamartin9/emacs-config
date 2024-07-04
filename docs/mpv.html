@@ -8,37 +8,17 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org54272f5">
-<div class="navbar-brand" id="orgdc7563c">
-<div class="navbar-item" id="orgf89ea72">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orgdae7c5e">
-<div class="navbar-start" id="org2210bfb">
-<div class="navbar-item" id="org7090abc">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org08ae50a">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgab4ad34">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
 
-<div id="outline-container-org370101f" class="outline-2">
-<h2 id="org370101f">mpv</h2>
-<div class="outline-text-2" id="text-org370101f">
+<div id="outline-container-orgf40a518" class="outline-2">
+<h2 id="orgf40a518">mpv</h2>
+<div class="outline-text-2" id="text-orgf40a518">
 <ul class="org-ul">
 <li>ffmpeg based</li>
 <li>supports custom scripts</li>
@@ -46,7 +26,8 @@
 <li><code>mpv.conf</code> for HDR/DV</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org1291da5">vo=gpu-next
+<pre class="src src-conf" id="org341aba3">#include=~/.config/mpv/shaders/mpv-retro-shaders/all.conf # git clone https://github.com/hhirtz/mpv-retro-shaders then mpv --profile=crt-lottes my_video.mp4
+vo=gpu-next
 gpu-api=vulkan
 border=no
 screenshot-format=png
@@ -67,13 +48,15 @@ profile-restore=copy
 screenshot-tag-colorspace=yes # HDR screenshots
 screenshot-high-bit-depth=yes # 16 bit screenshots
 #gpu-context=waylandvk # set the environment variable ENABLE_HDR_WSI=1
+#vf-append=@histolevels:vapoursynth="~~/vs/histogram/levels.py":buffered-frames=3:concurrent-frames=4 # use vapoursynth to add extra frameinfo
+#vf-append=@frameinfo:vapoursynth="~~/vs/info/frameinfo.py":buffered-frames=3:concurrent-frames=4
 </pre>
 </div>
 <ul class="org-ul">
 <li>bind keys to lua script with <code>input.conf</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgc99047d">F1 apply-profile "HDR" ; show-text "using HDR profile"
+<pre class="src src-conf" id="orge8c098f">F1 apply-profile "HDR" ; show-text "using HDR profile"
 </pre>
 </div>
 </div>

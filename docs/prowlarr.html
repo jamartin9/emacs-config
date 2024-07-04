@@ -8,40 +8,20 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org90a059c">
-<div class="navbar-brand" id="org53ace2a">
-<div class="navbar-item" id="orgd4a647c">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org81e286b">
-<div class="navbar-start" id="org501c5b5">
-<div class="navbar-item" id="org655d23d">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org10760a7">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org61efb6b">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-orgca735bd" class="outline-2">
-<h2 id="orgca735bd">Prowlarr</h2>
-<div class="outline-text-2" id="text-orgca735bd">
+<div id="outline-container-org6c1b0fc" class="outline-2">
+<h2 id="org6c1b0fc">Prowlarr</h2>
+<div class="outline-text-2" id="text-org6c1b0fc">
 </div>
-<div id="outline-container-orgc237d8b" class="outline-3">
-<h3 id="orgc237d8b">notes</h3>
-<div class="outline-text-3" id="text-orgc237d8b">
+<div id="outline-container-orgdf9753e" class="outline-3">
+<h3 id="orgdf9753e">notes</h3>
+<div class="outline-text-3" id="text-orgdf9753e">
 <ul class="org-ul">
 <li>searches indexers like usenet/torrent sites</li>
 <li>acts as a 'proxy' rss indexer for sonarr/radarr/lidarr to create search/subscribe queries to indexers</li>
@@ -55,7 +35,7 @@
 <li><a href="podman.html#ID-90cf48a5-3b01-4667-b100-72acea67034f">podman</a> run configuration</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org75be940">podman run \
+<pre class="src src-shell" id="org815c944">podman run \
   --detach \
   --name myprowlarr \
   --publish 9696:9696/tcp \

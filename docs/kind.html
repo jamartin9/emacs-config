@@ -8,44 +8,25 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="orgc658694">
-<div class="navbar-brand" id="orgeb2ff44">
-<div class="navbar-item" id="org90f4487">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orgac77e9e">
-<div class="navbar-start" id="org465fb7e">
-<div class="navbar-item" id="orgcd331f8">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org1720077">
-
-</div>
-
-</div>
-</nav>
-<div id="outline-container-orga55a5ab" class="outline-2">
-<h2 id="orga55a5ab">kind</h2>
-<div class="outline-text-2" id="text-orga55a5ab">
-</div>
-<div id="outline-container-orgd68934a" class="outline-3">
-<h3 id="orgd68934a">kind</h3>
-<div class="outline-text-3" id="text-orgd68934a">
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc004ade">
 <ul class="org-ul">
-<li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster</code>
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
+</nav>
+<div id="outline-container-org493bd64" class="outline-2">
+<h2 id="org493bd64">kind</h2>
+<div class="outline-text-2" id="text-org493bd64">
+</div>
+<div id="outline-container-org2996e1e" class="outline-3">
+<h3 id="org2996e1e">kind</h3>
+<div class="outline-text-3" id="text-org2996e1e">
+<ul class="org-ul">
+<li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster --config cluster.yaml</code>
 <ul class="org-ul">
 <li>BUG with worker node failing. Needs runc 1.2 (unreleased) for resolv.conf</li>
+<li>Add delegate to systemd run with podman <code>KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native KIND_EXPERIMENTAL_PROVIDER=podman systemd-run --scope --user --property=Delegate=yes ./kind-linux-amd64 create cluster --retain</code></li>
 </ul></li>
 <li><code>KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native</code> for zfs in kind &gt;= 0.12</li>
 <li><code>kind load docker-image IMAGE IMAGE</code> to load images or mount path through config</li>
@@ -61,7 +42,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org8a8a441">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
+<pre class="src src-sh" id="org23aefad">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
 kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </pre>
 </div>
@@ -69,7 +50,7 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 <li>default connection</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org818f7d4">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
+<pre class="src src-sh" id="org786b3e6">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
 </pre>
 </div>
 <ul class="org-ul">

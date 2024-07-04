@@ -8,40 +8,20 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org4cab696">
-<div class="navbar-brand" id="org82f4093">
-<div class="navbar-item" id="org2b73dca">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orgefa3ce7">
-<div class="navbar-start" id="org97f56b0">
-<div class="navbar-item" id="org1fdb3b3">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="org74e2a5b">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgaaf3951">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-org0c446e6" class="outline-2">
-<h2 id="org0c446e6">Machine learning</h2>
-<div class="outline-text-2" id="text-org0c446e6">
+<div id="outline-container-orgbd31788" class="outline-2">
+<h2 id="orgbd31788">Machine learning</h2>
+<div class="outline-text-2" id="text-orgbd31788">
 </div>
-<div id="outline-container-org16dc775" class="outline-3">
-<h3 id="org16dc775">notes</h3>
-<div class="outline-text-3" id="text-org16dc775">
+<div id="outline-container-orgeea994f" class="outline-3">
+<h3 id="orgeea994f">notes</h3>
+<div class="outline-text-3" id="text-orgeea994f">
 <ul class="org-ul">
 <li>Given enough parameters and data different architectures converge on the same results. Data is all you need.</li>
 <li>Recall transformers are Turing complete</li>
@@ -89,6 +69,10 @@
 <li>Yi-VL</li>
 <li>imp-v1-3b (phi)</li>
 <li>Qwen-VL</li>
+<li>tokenized image multimodal data softmax diverges <a href="https://arxiv.org/html/2405.09818v1">https://arxiv.org/html/2405.09818v1</a> ('logit drift problem')
+<ul class="org-ul">
+<li>stablizes by adding layer normalization re-ordering (Swin transformer normalization strategy) and changing query-key softmax to QK-Norm</li>
+</ul></li>
 </ul></li>
 <li>steering vectors cache activation layer results and swap them for alignment at the same layer
 <ul class="org-ul">
@@ -122,9 +106,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org4d83a43" class="outline-3">
-<h3 id="org4d83a43">image</h3>
-<div class="outline-text-3" id="text-org4d83a43">
+<div id="outline-container-orgaecd742" class="outline-3">
+<h3 id="orgaecd742">image</h3>
+<div class="outline-text-3" id="text-orgaecd742">
 <ul class="org-ul">
 <li>dalle mini</li>
 <li><a href="https://github.com/hlky/stable-diffusion">stable diffusion</a>
@@ -150,9 +134,9 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-org154b687" class="outline-4">
-<h4 id="org154b687">video</h4>
-<div class="outline-text-4" id="text-org154b687">
+<div id="outline-container-org3ae8698" class="outline-4">
+<h4 id="org3ae8698">video</h4>
+<div class="outline-text-4" id="text-org3ae8698">
 <ul class="org-ul">
 <li><a href="https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt">stable diffusion video</a></li>
 <li>video editing with <a href="https://github.com/rehg-lab/RAVE">RAVE</a></li>
@@ -160,9 +144,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orge342396" class="outline-3">
-<h3 id="orge342396">Large Language Models</h3>
-<div class="outline-text-3" id="text-orge342396">
+<div id="outline-container-org8e2e3ee" class="outline-3">
+<h3 id="org8e2e3ee">Large Language Models</h3>
+<div class="outline-text-3" id="text-org8e2e3ee">
 <ul class="org-ul">
 <li>Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)</li>
 <li>chinchilla paper showed most models are over parameterized without enough data
@@ -172,6 +156,7 @@
 <li>llama 3
 <ul class="org-ul">
 <li>15T tokens</li>
+<li><a href="https://github.com/unslothai/unsloth">https://github.com/unslothai/unsloth</a> for fine tuning (problems with other frameworks)</li>
 </ul></li>
 <li>llama 2
 <ul class="org-ul">
@@ -244,9 +229,9 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-org75a044f" class="outline-4">
-<h4 id="org75a044f">Codegen</h4>
-<div class="outline-text-4" id="text-org75a044f">
+<div id="outline-container-orgf5709a7" class="outline-4">
+<h4 id="orgf5709a7">Codegen</h4>
+<div class="outline-text-4" id="text-orgf5709a7">
 <ul class="org-ul">
 <li>CodeLlama
 <ul class="org-ul">
@@ -272,15 +257,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgf3179ef" class="outline-3">
-<h3 id="orgf3179ef">Speech to text</h3>
-<div class="outline-text-3" id="text-orgf3179ef">
+<div id="outline-container-org131751e" class="outline-3">
+<h3 id="org131751e">Speech to text</h3>
+<div class="outline-text-3" id="text-org131751e">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgefd30c2">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="org3c70023">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -289,9 +274,9 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-orgca8234a" class="outline-3">
-<h3 id="orgca8234a">Text to speech</h3>
-<div class="outline-text-3" id="text-orgca8234a">
+<div id="outline-container-org8df606d" class="outline-3">
+<h3 id="org8df606d">Text to speech</h3>
+<div class="outline-text-3" id="text-org8df606d">
 <ul class="org-ul">
 <li><a href="https://github.com/neonbjb/tortoise-tts">tortoise-tts</a> based on dalle</li>
 <li><a href="https://github.com/coqui-ai/TTS">coqui-ai</a> with YourTTS/FreeVC voice cloning
@@ -305,11 +290,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-org9ba3d0e" class="outline-3">
-<h3 id="org9ba3d0e">Agent prompts</h3>
-<div class="outline-text-3" id="text-org9ba3d0e">
+<div id="outline-container-org4221d35" class="outline-3">
+<h3 id="org4221d35">Agent prompts</h3>
+<div class="outline-text-3" id="text-org4221d35">
 <div class="org-src-container">
-<pre class="src src-sh" id="orgd615cce">
+<pre class="src src-sh" id="orga7dbab2">
 input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
 ```sh
 for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
@@ -336,7 +321,7 @@ ${input_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header
 <li>prompt structures</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-text" id="orgb232595">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-text" id="org3637b48">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -359,14 +344,14 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-org2ea6ceb" class="outline-3">
-<h3 id="org2ea6ceb">transformers examples</h3>
-<div class="outline-text-3" id="text-org2ea6ceb">
+<div id="outline-container-orgc4f0f6a" class="outline-3">
+<h3 id="orgc4f0f6a">transformers examples</h3>
+<div class="outline-text-3" id="text-orgc4f0f6a">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org4722e56">#!/usr/bin/env python3
+<pre class="src src-python" id="org119d074">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:

@@ -8,40 +8,20 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="org2eadf4b">
-<div class="navbar-brand" id="orga0d8c45">
-<div class="navbar-item" id="orgd2beef3">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org6af3b90">
-<div class="navbar-start" id="org285ac22">
-<div class="navbar-item" id="org5dab5af">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="orgd4c186c">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org7bd960d">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-org0d60b2a" class="outline-2">
-<h2 id="org0d60b2a">i2p</h2>
-<div class="outline-text-2" id="text-org0d60b2a">
+<div id="outline-container-org1043cea" class="outline-2">
+<h2 id="org1043cea">i2p</h2>
+<div class="outline-text-2" id="text-org1043cea">
 </div>
-<div id="outline-container-org1aebfa7" class="outline-3">
-<h3 id="org1aebfa7">notes</h3>
-<div class="outline-text-3" id="text-org1aebfa7">
+<div id="outline-container-orge33ecfa" class="outline-3">
+<h3 id="orge33ecfa">notes</h3>
+<div class="outline-text-3" id="text-orge33ecfa">
 <ul class="org-ul">
 <li>server blinded keys are 56 chars instead of 52 and not viewable without the b33 address in flood fill routers</li>
 <li>java and c++ implementations
@@ -59,9 +39,9 @@
 <li>by default keys with i2pd-tool keygen are 679 bytes: 256 bytes of public elgammal key, 96 bytes of 'random' padding, 32 bytes of ed pubkey, 3 bytes of cert information, 4 bytes of keytype information, 256 bytes of private elgammal key, 32 bytes of private ed signature key</li>
 </ul>
 </div>
-<div id="outline-container-orgea0a884" class="outline-4">
-<h4 id="orgea0a884">router</h4>
-<div class="outline-text-4" id="text-orgea0a884">
+<div id="outline-container-org899f24b" class="outline-4">
+<h4 id="org899f24b">router</h4>
+<div class="outline-text-4" id="text-org899f24b">
 <div class="org-src-container">
 <pre class="src src-conf">
 ## Default: ~/.i2pd/
@@ -111,14 +91,14 @@ enabled = true
 </div>
 </div>
 </div>
-<div id="outline-container-orgb8655d7" class="outline-4">
-<h4 id="orgb8655d7">tunnel configs</h4>
-<div class="outline-text-4" id="text-orgb8655d7">
+<div id="outline-container-org95fdf2c" class="outline-4">
+<h4 id="org95fdf2c">tunnel configs</h4>
+<div class="outline-text-4" id="text-org95fdf2c">
 <ul class="org-ul">
 <li>wireguard server</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org337f221">[wg-simple-server]
+<pre class="src src-conf" id="org026840a">[wg-simple-server]
 type = udpserver # server
 keys = wg.dat
 host = 127.0.0.1
@@ -138,7 +118,7 @@ inbound.length = 1
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-conf" id="org48fc6d2">[wg-simple-client]
+<pre class="src src-conf" id="org0a7f260">[wg-simple-client]
 type = udpclient
 destination = ServerB33Address.b32.i2p
 port = 1337
@@ -151,7 +131,7 @@ inbound.length = 1
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-text" id="org63f3452">dread.i2p=http://dreadtoobigdsrxg4yfspcyjr3k6675vftyco5pyb7wg4pr4dwjq.b32.i2p
+<pre class="src src-text" id="org030080e">dread.i2p=http://dreadtoobigdsrxg4yfspcyjr3k6675vftyco5pyb7wg4pr4dwjq.b32.i2p
 z-lib.i2p=http://kkd7tiqf5lv3olqfdnkw4znmmmmnjo2xqlxrp5ntthp6juowaiha.b32.i2p
 </pre>
 </div>

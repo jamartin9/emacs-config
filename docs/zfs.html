@@ -8,44 +8,24 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="orgd67e3fd">
-<div class="navbar-brand" id="org193c629">
-<div class="navbar-item" id="orge102924">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="orgfa7c0e7">
-<div class="navbar-start" id="org3d2f272">
-<div class="navbar-item" id="org8b3e4b7">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="orgc458749">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgfed02a0">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-org6370118" class="outline-2">
-<h2 id="org6370118">ZFS</h2>
-<div class="outline-text-2" id="text-org6370118">
+<div id="outline-container-org7e09792" class="outline-2">
+<h2 id="org7e09792">ZFS</h2>
+<div class="outline-text-2" id="text-org7e09792">
 </div>
-<div id="outline-container-org6f80a4c" class="outline-3">
-<h3 id="org6f80a4c">openzfs</h3>
-<div class="outline-text-3" id="text-org6f80a4c">
+<div id="outline-container-org27e200a" class="outline-3">
+<h3 id="org27e200a">openzfs</h3>
+<div class="outline-text-3" id="text-org27e200a">
 </div>
-<div id="outline-container-orgd0980ef" class="outline-4">
-<h4 id="orgd0980ef">install</h4>
-<div class="outline-text-4" id="text-orgd0980ef">
+<div id="outline-container-org2afb295" class="outline-4">
+<h4 id="org2afb295">install</h4>
+<div class="outline-text-4" id="text-org2afb295">
 <ul class="org-ul">
 <li>(This may break pool import) If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
 That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
@@ -64,7 +44,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgd1d86a1">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="org0a6536f">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -105,18 +85,18 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org90eebd0" class="outline-4">
-<h4 id="org90eebd0">usage</h4>
-<div class="outline-text-4" id="text-org90eebd0">
+<div id="outline-container-org7a25ad1" class="outline-4">
+<h4 id="org7a25ad1">usage</h4>
+<div class="outline-text-4" id="text-org7a25ad1">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9147459" class="outline-4">
-<h4 id="org9147459">notes</h4>
-<div class="outline-text-4" id="text-org9147459">
+<div id="outline-container-orgfb78777" class="outline-4">
+<h4 id="orgfb78777">notes</h4>
+<div class="outline-text-4" id="text-orgfb78777">
 <ul class="org-ul">
 <li>If you lose a vdev in a pool you LOSE THE POOL</li>
 <li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.

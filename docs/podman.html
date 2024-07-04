@@ -8,40 +8,20 @@
 <link rel="stylesheet" type="text/css" href="org-default.css" />
 </head>
 <body>
-<div id="content" class="container content">
-<nav class="navbar is-black" id="orgcbb4cbd">
-<div class="navbar-brand" id="org1f87a02">
-<div class="navbar-item" id="org103795b">
-<p>
-<a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-menu" id="org786126a">
-<div class="navbar-start" id="org2544e27">
-<div class="navbar-item" id="org5065c69">
-<p>
-<a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a>
-</p>
-
-</div>
-
-</div>
-<div class="navbar-end" id="orgc811964">
-
-</div>
-
-</div>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4ba3613">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
 </nav>
-<div id="outline-container-org3556849" class="outline-2">
-<h2 id="org3556849">podman</h2>
-<div class="outline-text-2" id="text-org3556849">
+<div id="outline-container-org48c9442" class="outline-2">
+<h2 id="org48c9442">podman</h2>
+<div class="outline-text-2" id="text-org48c9442">
 </div>
-<div id="outline-container-orgcdf68f0" class="outline-3">
-<h3 id="orgcdf68f0">podman notes</h3>
-<div class="outline-text-3" id="text-orgcdf68f0">
+<div id="outline-container-orge2dc781" class="outline-3">
+<h3 id="orge2dc781">podman notes</h3>
+<div class="outline-text-3" id="text-orge2dc781">
 <ul class="org-ul">
 <li>rootless containers with kernel &gt;= 5.11 overlayfs
 <ul class="org-ul">
@@ -77,15 +57,15 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org944ad8d" class="outline-3">
-<h3 id="org944ad8d">p2pool and monerod kube configs</h3>
-<div class="outline-text-3" id="text-org944ad8d">
+<div id="outline-container-org525c95c" class="outline-3">
+<h3 id="org525c95c">p2pool and monerod kube configs</h3>
+<div class="outline-text-3" id="text-org525c95c">
 <p>
 podman play kube p2pool.yaml
 podman play kube xmrig.yaml &#x2013;down
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml" id="org839d4a8">apiVersion: apps/v1
+<pre class="src src-yaml" id="orgb916b20">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xmr-deployment
@@ -145,11 +125,11 @@ spec:
 </div>
 </div>
 </div>
-<div id="outline-container-org2ef1b75" class="outline-3">
-<h3 id="org2ef1b75">xmrig</h3>
-<div class="outline-text-3" id="text-org2ef1b75">
+<div id="outline-container-orga7f79fc" class="outline-3">
+<h3 id="orga7f79fc">xmrig</h3>
+<div class="outline-text-3" id="text-orga7f79fc">
 <div class="org-src-container">
-<pre class="src src-yaml" id="org0bd483f">apiVersion: apps/v1
+<pre class="src src-yaml" id="orgc22b93b">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xmrig-deployment
