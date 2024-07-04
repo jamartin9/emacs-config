@@ -1,5 +1,5 @@
 [submodule "channels/guix-channel"]
-	path = org/roam/guix-channel
+	path = guix-channel
 	url = https://github.com/jamartin9/guix-channel
 	update = merge
 	shallow = true

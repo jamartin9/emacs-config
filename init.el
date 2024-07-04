@@ -487,7 +487,7 @@
                                             :if-new (file+head "${slug}.org" ,(concat "#+title: ${title}\n"
                                                                                       "#+OPTIONS: toc:nil num:nil date:nil \\n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t\n"
                                                                                       "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"org-default.css\" />\n"
-                                                                                      "#+HTML_CONTENT_CLASS: container content \n"
+                                                                                      "#+HTML_CONTENT_CLASS: container \n"
                                                                                       "#+HTML_DOCTYPE: html5 \n"
                                                                                       "#+INCLUDE: \"css.org::navbar\" :only-contents t \n"))
                                             :unnarrowed t))))

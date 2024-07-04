@@ -4,212 +4,32 @@
 #+title: css
 #+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
-#+HTML_CONTENT_CLASS: container content
+#+HTML_CONTENT_CLASS: container
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * CSS
-bulma with mathjax is a wip.
-mobile viewport sizing with long titles (sha hashes/onion addresses) is a wip.
+mathjax is a wip.
 testing/preview of changes is a wip
 ** navbar
-#+ATTR_HTML: :class navbar is-black
+#+ATTR_HTML: :aria-label breadcrumb :style --pico-nav-breadcrumb-divider: '|';
 #+BEGIN_nav
-#+BEGIN_navbar-brand
-#+BEGIN_navbar-item
-[[id:3a34d6d7-6f37-4573-b20e-3c93894e54ac][🏠]]
-#+END_navbar-item
-#+END_navbar-brand
-#+ATTR_HTML: :class
-#+BEGIN_navbar-menu
-#+BEGIN_navbar-start
-#+BEGIN_navbar-item
-[[id:30ea5e38-9b41-4bcd-8631-76821e93e294][🗺]]
-#+END_navbar-item
-#+END_navbar-start
-#+BEGIN_navbar-end
-#+END_navbar-end
-#+END_navbar-menu
+- [[id:3a34d6d7-6f37-4573-b20e-3c93894e54ac][🏠]]
+- [[id:30ea5e38-9b41-4bcd-8631-76821e93e294][🗺]]
 #+END_nav
 ** org-site-default-css
 #+NAME: clone
 #+BEGIN_SRC css :tangle org-default.css :exports none
-  @import "https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css";
-  html { /* https://github.com/jgthms/bulma/issues/527 vertical scroll bar always shown despite closed bug -_- */
-      overflow-y: auto;
-      overflow-x: hidden;
-  }
+  @import "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css";
+
   @keyframes move-stars {
       from {background-position:0 0;}
       to {background-position:-10000px 5000px;}
   }
-  body {
-    color: #ddd;
-    margin: 0;
-    padding: 0;
+
+  html {
+    min-height: 100vh;
     background:#000 url('stars.png') repeat top center;
     animation:move-stars 200s linear infinite;
-  }
-
-  .content {
-    min-height: 100vh; /*stretch vertical to bottom of screen*/
-  }
-
-  a:link,
-  a:visited {
-    border-bottom: solid #fff 1px;
-    color: #bbb;
-    padding: 0 .2em;
-    text-decoration: none;
-    /* max-width: 696px; */
-  }
-
-  a:hover {
-    background-color: #bbb;
-    color: #111;
-  }
-
-  a:active {
-    border-bottom: solid #f00 1px;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    color: #fff;
-    font-weight: normal;
-    line-height: 1.2em;
-  }
-
-  h1.title {
-    border-bottom: solid #000 1px;
-    padding: .2em 1em;
-    margin: 0 auto;
-    text-align: left;
-  }
-
-  #preamble {
-    background-color: #000;
-    height: 24px;
-  }
-
-  #preamble a:link, #preamble a:visited {
-    border: none;
-    display: block;
-    margin: 0 auto;
-    text-decoration: none;
-    /*max-width: 696px;*/
-  }
-
-  #preamble a:active, #preamble a:hover {
-    border: none;
-    background-color: transparent;
-    color: #f00;
-  }
-
-  #postamble {
-    border-top: solid #000 1px;
-    color: #999;
-    font-style: italic;
-    text-align: right;
-    margin: 1em auto;
-    padding: 0 1em;
-  }
-
-  #postamble a.source-link:link,
-  #postamble a.source-link:visited {
-    border-bottom: none;
-    color: #ccc;
-    font-family: monospace;
-    font-style: normal;
-    text-transform: lowercase;
-    text-decoration: none;
-  }
-
-  #postamble a.source-link:hover,
-  #postamble a.source-link:active {
-    background-color: transparent;
-    color: #0f0;
-  }
-
-  code {
-    border-top: solid #000 1px;
-    border-bottom: solid #000 1px;
-    padding: 0 .2em;
-  }
-
-  pre.src, pre.example {
-    background-color: #111;
-    border-top: none;
-    border-bottom: solid #000 1px;
-    border-left: none;
-    border-right: solid #000 1px;
-    box-shadow: none;
-    padding: 1em 2em;
-    /*overflow: auto;*/
-  }
-
-  pre.src:before {
-    background-color: transparent;
-    border: none;
-    top: 0;
-    right: 0;
-  }
-
-  sup {
-    line-height: 0;
-  }
-
-  hr {
-    border-top: solid 1px #000;
-    border-bottom: solid 1px #333;
-  }
-
-  li p {
-    margin: 0;
-  }
-
-  .footpara {
-    margin: 0;
-  }
-
-  .footnotes {
-    margin-top: 1em;
-
-  }
-
-  h2, h3, h4, h5, h6,
-  .footnotes {
-    margin: 0px auto;
-    /* max-width: 696px; */
-  }
-
-  /* p, ul { max-width: 672px; } */
-  li ul {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  li, ol, ul {
-    margin-left: 10px;
-
-  }
-
-  pre {
-    margin: 0 auto;
-    color: #fff;
-    /*max-width: 672px;*/
-  }
-
-  div.figure p {
-    margin: 0 auto;
-    /*max-width: none;*/
-  }
-
-  span.tag {
-    background-color: #363636;
-  }
-  /* bulma and org-mode use content as a default css class */
-  .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
-    color: #fff;
-    margin-bottom: 0;
   }
 
 #+END_SRC
