@@ -122,3 +122,10 @@ Steps taken:
 **** DONE change firmware [2024-06-13 Thu 14:35]
 - change asus firmware to https://www.asuswrt-merlin.net/ for better stability
   - no openwrt because no broadcom foss
+** 2024-07 July
+*** 2024-07-22 Monday
+:PROPERTIES:
+:ID:       5a063af3-2a64-4292-ad6f-3051c5beb1a7
+:END:
+**** DONE oil change for 2017 f150-raptor [2024-07-22 Sat 14:16]
+- STP filter

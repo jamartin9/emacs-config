@@ -118,6 +118,7 @@ self.addEventListener('fetch', function(e) {
   - [[https://cobalt.googlesource.com/cobalt][cobalt embeded app]]
   - Vanadium
     - grapheneOS fork of hardened chromium for android
+      - enables memory tagging and site isolation by default
 ** safari
 - webkit based
 * search engines

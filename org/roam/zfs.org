@@ -92,3 +92,8 @@
 - https://jro.io/truenas/openzfs/
   - 6 vdev raidz2 eliminates allocation overhead, 3/5/9/17 raidz1, 7/11/19 raidz3
 - slop space for reserved space under high usage to ensure operations can complete
+- bclone or BRT allows commands like cp to copy almost instantly by only incrementing the block counter
+  - v2.2.0 dedupe
+  - only different blocks will be overwritten (common file parts shared)
+  - can not be maintained across send/recv (depends on-disk references)
+  - zpool sync if creating in a loop to ensure the TX finishes

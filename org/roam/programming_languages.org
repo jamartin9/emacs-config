@@ -20,7 +20,10 @@ The tower of babel is your type system as a macro
 - ksh
   - setenv for environment variables
 ** [[id:12a3e66b-5ada-4bfc-ab64-819a0d46d204][c]]
+- https://floooh.github.io/2018/06/17/handles-vs-pointers.html
+  - indices are faster than pointers
 ** c++
+- Proposal to standardize 8 bits to a byte https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3477r0.html
 - https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
 - gcc < 11 can be built with c++98; c++11 required for 11+
 - ~static_assert~ compile time checks UB and leaks

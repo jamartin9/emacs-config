@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * kind
 ** kind
+- HPAScaleToZero and HPAContainerMetrics feature gates for scale to zero without Keda
 - kubernetes in docker with podman ~KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster --config cluster.yaml~
   - BUG with worker node failing. Needs runc 1.2 (unreleased) for resolv.conf
   - Add delegate to systemd run with podman ~KIND_EXPERIMENTAL_CONTAINERD_SNAPSHOTTER=native KIND_EXPERIMENTAL_PROVIDER=podman systemd-run --scope --user --property=Delegate=yes ./kind-linux-amd64 create cluster --retain~
@@ -65,3 +66,45 @@ PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_
 - cilium cluster mesh routes across kubernetes cluster services
   - uses ebpf and envoy
 - ~kind export logs~ after running create with ~--retain~
+- add metrics server
+  - ~kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml~
+    - ~kubectl patch -n kube-system deployment metrics-server --type=json -p '[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'~
+#+NAME: cluster.yaml
+#+BEGIN_SRC yaml :tangle no
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+featureGates:
+  HPAScaleToZero: true
+  HPAContainerMetrics: true
+  LogarithmicScaleDown: true
+nodes:
+- role: control-plane
+- role: worker
+#+END_SRC
+
+#+NAME: scale-to-zero-hpa-feature
+#+BEGIN_SRC yaml :tangle no
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: resource-consumer-v2
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: resource-consumer
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Object
+    object:
+      metric:
+        name: requests-per-second
+      describedObject:
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        name: main-route
+      target:
+        type: Value
+        value: 10k
+#+END_SRC

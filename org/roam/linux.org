@@ -27,7 +27,7 @@ Finally some hardware support!
 ** misc
 - ~faillock --user $USER --reset~ for attempt reset
 - ~LD_LIBRARY_PATH~ and ~LD_PRELOAD~ environment variables override library location and load order respectively.
-  - ~LD_DEBUG=libs~ to monitor ~dlopen~ (redirect stderr for cli ~2>err.txt~)
+  - ~LD_DEBUG=libs~ to monitor ~dlopen~ (redirect stderr for cli ~2>err.txt~) ~LD_DEBUG=files:~
   - ~readelf -d~ to check the dynamic section of the elf for ~rpath~ (searched before library path) or ~runpath~ (searched after library path) or ~FLAGS~ such as ~NODEFLIB~
     - each shared lib is searched for in the following order:  rpath, libary path, runpath, ld cache, system lib (skipped if compiled with ~ld -z nodefaultlib~)
 - strace for system call debugging

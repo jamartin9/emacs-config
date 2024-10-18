@@ -14,15 +14,11 @@
    - android auto
 - developer mode by tapping build number in settings multiple times
 - custom rom cyanogenmod discontinued into LineageOS
-- pozzed by google and cell carriers
-  - aosp is incomplete
-  - more locked down kiosk devices
-  - generally not unlocked bootloader or root on own device because of carrier
-  - old version of java bytecode on dalvikvm/art (7 and can polyfill 8 features)
-  - app store bullying
-  - old linux kernel
-  - custom recoveries require unlocked bootloader (TWRP/CWM)
-  - many apps needlessly crippled with gplay services or microg
+- pkvm hypervisor
+  - VM for widevine?
+  - boots GKI linux kernel which loads the vendors modules
+  - Runs a pVM or stripped down microdroid (no java api)
+    - communicates over binder vsock
 ** apps
 *** termux
 - vol up/down and a/d to move left/right (other shortcuts too)

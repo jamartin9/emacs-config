@@ -1696,6 +1696,8 @@
   - A WebAssembly framework to develop and run serverless applications
 ** vmware-research/verifiable-controllers/
   - This is a VMware Research Group project. It is an experimental framework to build practical, formally verified, cluster management controllers.
+** Vorticode/eternium
+  - Eternium CSS Framework
 ** vosen/ZLUDA
  - CUDA on AMD GPUs (previously intel gpus)
 ** votingworks/arlo
@@ -1843,6 +1845,8 @@
   - Tools for merging pretrained large language models.
 ** CiaraStrawberry/svd-temporal-controlnet
   - enhance your video diffusion projects by providing precise temporal control
+** city96/ComfyUI-GGUF
+  - GGUF Quantization support for native ComfyUI models (flux)
 ** comfyanonymous/ComfyUI
   - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
 ** commaai/openpilot
