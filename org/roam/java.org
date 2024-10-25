@@ -20,6 +20,13 @@
 - microprofile for javaee
 - sealed classes
 - records
+- babylon
+  - trition kernels
+  - bytecode transformations and auto diff
+    - https://openjdk.org/projects/babylon/articles/auto-diff
+- virtual threads with loom
+- vector API and FFI with panama
+- valhalla for value types (objects without identity)
 - ~jcmd <pid> JFR.view~ in 21+
 - AutoCloseable interface for try with resources
 ** spark jetty websocket wrapper

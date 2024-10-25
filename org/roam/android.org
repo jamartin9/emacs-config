@@ -15,10 +15,15 @@
 - developer mode by tapping build number in settings multiple times
 - custom rom cyanogenmod discontinued into LineageOS
 - pkvm hypervisor
-  - VM for widevine?
   - boots GKI linux kernel which loads the vendors modules
   - Runs a pVM or stripped down microdroid (no java api)
-    - communicates over binder vsock
+    - communicates over binder vsock (no virtio-gpu yet)
+- GrapheneOS
+  - patches add memory protections
+  - app store for camera, pdf, other app store, etc.
+- ART JIT
+  - AOT compile and JIT
+  - CC gc has constant time regardless of heap
 ** apps
 *** termux
 - vol up/down and a/d to move left/right (other shortcuts too)
@@ -28,3 +33,4 @@
 *** fdroid
 - apk repo that can self host and share device to device
 - emacs, hackers keyboard, organic maps, i2p, wireguard, vlc
+*** accrescent app store

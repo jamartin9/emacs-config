@@ -6,8 +6,6 @@ Third party packages:
 
 guix: package/environment management. alternative is cli and setting exec-path-from-shell/environment
 
-pass/pass-otp: frontend to password-store. alternative is cli
-
 eat: graphical terminal emulation. alternative is built-in multi-term w/o visual commands
 
 magit/forge/code-review: git/forge manipulation. alternative is built-in vc that lacks complex workflows like interactive rebase, forge pull requests or code review comments
@@ -16,15 +14,13 @@ debbugs: track emacs/guix bugs. alternative is bookmarking websites/mailing list
 
 transmission: manage torrent client. alternative is cli
 
-org-roam: tag system for note database. alternative is self devised naming/search scheme with org-captured datetree journal
+org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
 
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
 
 company: automatic typing suggestions. alternative is corfu with cape
 
 minions-mode: keeps the modeline visually brief with retained information. alternative is diminish/delight packages and config for each mode
-
-which-key: show keymap keybinds. alternative is describe-* functions for bind discovery
 
 osm: Map tile viewer. alternative is web browser viewing
 

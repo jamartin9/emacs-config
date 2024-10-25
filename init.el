@@ -60,7 +60,7 @@
          (after-init . (lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
                          (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
                                default-file-name-handler-alist nil
-                               modus-themes-mode-line '(accented borderless); moody has warnings ; theme
+                               modus-themes-mode-line '(accented borderless); theme
                                modus-themes-box-buttons '(underline faint accented)
                                modus-themes-paren-match '(bold underline)
                                modus-themes-org-blocks '(tinted-background)
@@ -390,20 +390,10 @@
                 undo-outer-limit 128000000 ; 128mb (default 24mb)
                 undo-tree-enable-undo-in-region t))
 
-(use-package pass ; gpg/pass/sh
-  :bind (:map jam/open ("p" . pass))
-  :commands (pass))
-
-(use-package password-store-otp; pass
-  :after pass)
-
 (use-package password-store ; pass
-  :ensure nil ; built-in ; info:auth#The Unix password store
-  :after pass
-  :config (setq password-store-password-length 12)
-  (require 'xdg)
-  (setenv "PASSWORD_STORE_DIR" (concat (file-name-as-directory (xdg-data-home)) "pass"))
-  (auth-source-pass-enable))
+  :ensure nil ; built-in
+  :bind (:map jam/open ("p" . jam/auth-display))
+  :commands (auth-source-search auth-info-password auth-source-pick-first-password auth-source-forget+ auth-source-forget auth-source-delete))
 
 (use-package newsticker
   :ensure nil ; built-in
@@ -695,7 +685,7 @@
        (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix"))))
 
 (use-package which-key
-  ;:pin gnu
+  ;:ensure nil ;:pin gnu ; built-in emacs >= 30
   :hook (after-init . which-key-mode)
   :commands (which-key-mode))
 
@@ -791,3 +781,77 @@
   (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "profiles") (file-name-as-directory "per-user") (file-name-as-directory "root") (file-name-as-directory "guix-profile") (file-name-as-directory "lib") "locale"))
   (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "gnu") "store")) ; NIX_STORE_DIR
   (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") "bin"))))
+
+;;; TOTP
+;;;###autoload
+(defun jam/totp (string &optional time digits)
+  "Return a TOTP token using the secret hex STRING and current time.
+TIME is used as counter value instead of current time, if non-nil.
+DIGITS is the number of pin digits and defaults to 6."
+  (defun jam/totp--hex-decode-string (string)
+    "Hex-decode STRING and return the result as a unibyte string."
+    (require 'hexl)
+    (apply #'unibyte-string
+           (seq-map (lambda (s) (hexl-htoi (aref s 0) (aref s 1)))
+                    (seq-partition string 2))))
+  (require 'bindat)
+  (require 'gnutls)
+  (let* ((key-bytes (jam/totp--hex-decode-string (upcase string)))
+         (counter (truncate (/ (or time (time-to-seconds)) 30)))
+         (digits (or digits 6))
+         (format-string (format "%%0%dd" digits))
+         ;; split the 64 bit number (u64 not supported in Emacs 27.2)
+         (counter-bytes (bindat-pack  '((:high u32) (:low u32))
+                                      `((:high . ,(ash counter -32)) (:low . ,(logand counter #xffffffff)))))
+         (mac (gnutls-hash-mac 'SHA1 key-bytes counter-bytes))
+         (offset (logand (bindat-get-field (bindat-unpack '((:offset u8)) mac 19) :offset) #xf)))
+    (format format-string
+            (mod
+             (logand (bindat-get-field (bindat-unpack '((:totp-pin u32)) mac  offset) :totp-pin)
+                     #x7fffffff)
+             (expt 10 digits)))))
+
+;;;###autoload
+(defun jam/base32-hex-decode (string)
+  "Not a full implementation of RFC 4648. Lacks encoding partial quanta and padding to the output (not required for HMAC-TOTP)."
+  ;;; Base32 for TOTP
+  (defconst jam/base32-alphabet
+    (let ((tbl (make-char-table nil)))
+      (dolist (mapping '(("A" . 0)  ("B" . 1)  ("C" . 2)  ("D" . 3)
+                         ("E" . 4)  ("F" . 5)  ("G" . 6)
+                         ("H" . 7)  ("I" . 8)  ("J" . 9)  ("K" . 10)
+                         ("L" . 11) ("M" . 12) ("N" . 13)
+                         ("O" . 14) ("P" . 15) ("Q" . 16) ("R" . 17)
+                         ("S" . 18) ("T" . 19) ("U" . 20)
+                         ("V" . 21) ("W" . 22) ("X" . 23) ("Y" . 24)
+                         ("Z" . 25) ("2" . 26) ("3" . 27)
+                         ("4" . 28) ("5" . 29) ("6" . 30) ("7" . 31)))
+        (aset tbl (string-to-char (car mapping)) (cdr mapping)))
+      tbl)
+    "Base-32 mapping table, as defined in RFC 4648.")
+  (unless (mod (length string) 8)
+    (error "Padding is incorrect"))
+  (setq string (upcase string))
+  (let ((trimmed-array (append (string-trim-right string "=+") nil)))
+    (format "%X" (seq-reduce
+                  (lambda (acc char) (+ (ash acc 5) (aref jam/base32-alphabet char)))
+                  trimmed-array 0))))
+;;;###autoload
+(defun jam/auth-display (auth)
+  "Select a TOTP or AUTH from `auth-sources'"
+  (interactive
+   (list
+    (let ((candidates (mapcar
+           (lambda (auth)
+             (cons (format "User '%s' on %s"
+                           (propertize (plist-get auth :user) 'face 'font-lock-keyword-face)
+                           (propertize (plist-get auth :host) 'face 'font-lock-string-face))
+                   auth))
+           (auth-source-search :max 10000))))
+      (cdr (assoc (completing-read "Pick an AUTH> " candidates) candidates)))))
+  (let ((code (if (string-prefix-p "TOTP:" (plist-get auth :host))
+                  (jam/totp (jam/base32-hex-decode (funcall (plist-get auth :secret))))
+                (funcall (plist-get auth :secret)))))
+    (message "Your AUTH for '%s' is: %s (sent to kill ring)" (propertize (plist-get auth :host) 'face font-lock-keyword-face) (propertize code 'face 'font-lock-string-face))
+    (kill-new code)
+    code))

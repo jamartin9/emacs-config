@@ -1006,3 +1006,31 @@ MISSING S08E07 SPECIAL?
 S05E06 is S09E01
 
 S04E13 is SPECIAL
+** Prompt
+-
+Answer the following questions as best you can. You have access to the following tools:
+
+mediainfo makemkv mkvmerge ffmpeg awsmfunc vs-preview-rs x265 x264 dovi_tool dolby-encoder
+
+The inputs are media file sources and the output is a combined source.
+
+Lets think step by step about how to convert the inputs into the desired output:
+1. Identify the sources containers with mediainfo
+2. Convert each source container to Matroska format with makemkv, mkvmege or ffmpeg
+3. Determine the encoder to use via the input sources. When a source contains HDR metadata use x265; use x264 for detail preservation.
+4. Extract the sources with HDR10+ metadata using dovi_tool
+5. Extract the sources with Dolby Vision enhancement layers using dovi tool
+6. Identify the sources with Dolby Vision Full enhancement layers dovi_tool for use with vs-nlq
+7. Identify the presence of dirty lines and the crop needed for the source with awsmfunc. IMAX sources vary the crop needed at scenecuts
+8. Edit the Dolby Vision metadata with dovi_tool for the cropped source
+9. When Dolby Vision or HDR10+ metadata are from different source containers then ensure the same HDR grade with awsmfunc
+10. Identify the CLL levels from the source. use 0,0 if not listed using HDR.
+11. Identify the colorspace from the source. use BT709 for non HDR.
+12. Determine the chromaloc from the source. HDR uses a chromaloc of 2 and non HDR a chromaloc of 0.
+13. Prepare several test encodes with different CRF settings of a few thousand frames. Use the previously gathered information for setting the metadata.
+14. Compare the test and source frames using awsmfunc with libplacebo tone mapped screens in vs-preview-rs
+15. Identify scenes with banding using awsmfunc
+16. Encode the audio to DD+ with dolby-encoding
+17. Combine source subtitles into the container with mkvmerge
+18. Align chapters to scenecuts with MKVmerge
+19. The file name should be of the form NAME.YEAR.RESOLUTION.SOURCE.AUDIO.VIDEO.mkv

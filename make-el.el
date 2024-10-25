@@ -23,8 +23,8 @@ NO-RUN: do not run the tangled argument"
 
           ("update-guix" (let ((dir (file-name-directory (or load-file-name buffer-file-name))))
                       (message "%s" (process-lines "guix" "pull")); --disable-authentication --allow-downgrades
-                      (jam/parse-args (list (concat dir (file-name-as-directory "org") (file-name-as-directory "roam") "guix.org")))
-                      (message "%s" (process-lines "guix" "home" "reconfigure" (concat dir (file-name-as-directory "org") (file-name-as-directory "roam") "home.scm")))
+                      (jam/parse-args "update")
+                      (message "%s" (process-lines "guix" "home" "reconfigure" (concat dir (file-name-as-directory "guix-channel") (file-name-as-directory "jam") (file-name-as-directory "system") "home.scm")))
                       (message "%s" (process-lines "guix" "package" "-u"))))
           ("clean" (mapc #'(lambda (del-file)
                              (message "Deleting file %s \n" del-file)
