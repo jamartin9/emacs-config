@@ -369,7 +369,7 @@
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
-                                                          :cargo (:cfgs (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
+                                                          :cargo (:cfgs (;:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
                                                                          :tokio_unstable "")))))))
 
 (use-package rust-ts-mode
@@ -791,6 +791,9 @@ DIGITS is the number of pin digits and defaults to 6."
   (defun jam/totp--hex-decode-string (string)
     "Hex-decode STRING and return the result as a unibyte string."
     (require 'hexl)
+    ;; Pad the string with a leading zero if its length is odd.
+    (unless (zerop (logand (length string) 1))
+      (setq string (concat "0" string)))
     (apply #'unibyte-string
            (seq-map (lambda (s) (hexl-htoi (aref s 0) (aref s 1)))
                     (seq-partition string 2))))
@@ -807,7 +810,7 @@ DIGITS is the number of pin digits and defaults to 6."
          (offset (logand (bindat-get-field (bindat-unpack '((:offset u8)) mac 19) :offset) #xf)))
     (format format-string
             (mod
-             (logand (bindat-get-field (bindat-unpack '((:totp-pin u32)) mac  offset) :totp-pin)
+             (logand (bindat-get-field (bindat-unpack '((:totp-pin u32)) mac offset) :totp-pin)
                      #x7fffffff)
              (expt 10 digits)))))
 
@@ -852,6 +855,6 @@ DIGITS is the number of pin digits and defaults to 6."
   (let ((code (if (string-prefix-p "TOTP:" (plist-get auth :host))
                   (jam/totp (jam/base32-hex-decode (funcall (plist-get auth :secret))))
                 (funcall (plist-get auth :secret)))))
-    (message "Your AUTH for '%s' is: %s (sent to kill ring)" (propertize (plist-get auth :host) 'face font-lock-keyword-face) (propertize code 'face 'font-lock-string-face))
+    (message "%s sent to kill ring" (if auth-source-debug (propertize code 'face 'font-lock-string-face) "AUTH"))
     (kill-new code)
     code))

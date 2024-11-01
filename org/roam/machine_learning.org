@@ -14,11 +14,14 @@
     - 1 sign bit 4 exponent bit 3 fraction exponent bits
   - Clip number representation by a scale factor
     - vs-quant scale factor for each vector to turn sparse to dense
-- Given enough parameters and data different architectures converge on the same results. Data is all you need.
+- Given enough parameters and data different architectures converge on the same results
+  - training is sampling a data manifold across N dimensional space
 - Recall transformers are Turing complete
 - State Space Models (SSM) like MAMBA preform close to transformers
   - Vision mamba is comparable to ViTs
   - Jamba is a MoE SSM with a transformer block with 256K context, 12B active parameters (total of 52B parameters across all experts)
+  - calculus differention across data
+    - fixed window that has been gradually increased with compute size
 - huggingface is a hub for models with api libs using pytorch/tensorflow/jax
   - spaces to run in notebook like without colab using gradio
 - collab gives free 12hrs of compute
@@ -27,8 +30,8 @@
 - [[https://github.com/microsoft/onnxruntime][ONNX]] for browser evaluation of pytorch models
   - protobuf 2gb single file limitation for model weights (issues with model slicing).
   - lacks offload support for disk, cpu, gpu
-- usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
-  - 4bit with GPT-Q compression (groupsize 128)
+  - huggingface.js
+- Some models are more sensitive to quantization than others. LLMs are more tolerant than diffusion or whisper models
 - LoRA is a finetunning mechanism
   - QLoRA is quantized version (4/8 bit). [[https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md][cpu version]]
   - LASER can LoRA select layers and improve accuracy(promote weakly held facts by quantizing later layers)
@@ -43,8 +46,11 @@
   - Yi-VL
   - imp-v1-3b (phi)
   - Qwen-VL
+  - Deepseek Janus uses same image/lang representation with different input and output decoders
   - tokenized image multimodal data softmax diverges https://arxiv.org/html/2405.09818v1 ('logit drift problem')
     - stablizes by adding layer normalization re-ordering (Swin transformer normalization strategy) and changing query-key softmax to QK-Norm
+- https://transformer-circuits.pub/2024/crosscoders/index.html identifies cross model features by comparing residual blocks
+  - features for refusal, code review, personal question vector
 - steering vectors cache activation layer results and swap them for alignment at the same layer
   - activation addition vectors have been found for [[https://arxiv.org/abs/2310.01405][memorization]], [[https://www.alignmentforum.org/posts/v7f8ayBxLhmMFRzpa/steering-llama-2-with-contrastive-activation-additions][sycophancy]], [[https://arxiv.org/abs/2306.03341][truth]], [[https://arxiv.org/abs/2311.06668][toxicity]], etc.
     - [[https://arxiv.org/pdf/2311.09433.pdf][layer selection (jensen shanon divergence of teacher llm and target llm)]]
@@ -62,8 +68,18 @@
 - RAG dataset summary on dataset may help QnA
   - [[https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat]['Extended Mind']] aka active externalism may out preform RAG with citations
 - Chain of thought synthetic dataset to improve implicit deductions (orca/phi)
+- Models can be merged with various method to combine feature strengths
 ** image
   - dalle mini
+  - flux-dev 12B
+    - schell version is 'turbo'(rectified flow transformer) requiring less steps for inference
+    - comfyUI plugins
+      - x-flux
+      - controlnet auxillary preproccessors
+      - comfyui-gguf
+      - https://huggingface.co/comfyanonymous/flux_text_encoders
+      - minicpm and qwenvl for image input
+        - comfyui-custom-scripts (show text)
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
     - ~stable-diffusion-webui/webui.sh --listen --no-half --use-cpu all~ for cpu only inside container
       - ~podman run --security-opt label=type:nvidia_container_t -p 7860:7860 -v /home/jam/git/stable-diffusion-webui/:/tmp/stable-diffusion-webui:Z -v /home/jam/.local:/.local:Z -v /home/jam/.cache:/.cache:Z -v /home/jam/.config:/.config --userns keep-id --rm -it jam/cuda:1 /bin/bash # COMMANDLINE_ARGS="--listen --no-half --use-cpu all --no-half-vae --opt-sdp-attention" /tmp/stable-diffusion-webui/webui.sh~
@@ -80,6 +96,7 @@
   - https://github.com/showlab/X-Adapter/ allows SD1.5 LoRA use with SDXL
   - GLIGEN for regional prompting
 *** video
+  - added as to LLM input as multidimensional rope to the vision encoder (qwenVL)
   - [[https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt][stable diffusion video]]
   - video editing with [[https://github.com/rehg-lab/RAVE][RAVE]]
 ** Large Language Models
@@ -120,18 +137,21 @@
     - VicunaWizard combines the Vicuna and Wizardlm
   - Orca is Supervised Fine Tuned GPT4 output in alpaca format
   - Can be fine tuned with [[https://github.com/tloen/alpaca-lora][LoRA]]
-  - Flan-T5 for text summary
-  - Donut for document image question answering
-  - Vilt for image question answering
-  - Models can be merged with various method to combine strengths
-  - Models can be pruned for less inference cost with little result degradation
   - [[https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1][Mixtral]] uses mixture of experts for better 7B results
     - mixture of experts can potentially quantize and sparsify better than dense LLMs
     - freeze gate weights when fine tuning(or use method to balance)
   - grok is 8x86B moe with 2 experts 8 bit quant
   - 3.8B Phi-3-mini-128k-instruct / llava-phi-3-mini
     - ONNX mobile variant
+  - models can be quantized (compressed) by changing the float tensor values from fp32 to fp16 to int8 with little loss.
+    - fp32 to bfloat16 is lossless
+    - 4bit with GPT-Q compression (groupsize 128)
+    - bitnet ~2bit compression
+      - VPTQ for better accuracy and size compression
+        - constructs a LUT from quantized values
 *** Codegen
+  - Python has some of the highest entropy for 'tokens vs length' making it the a efficent language to generate
+  - llm-compiler from facebook to generate LLVM IR
   - CodeLlama
     - fine tunes such as 'nous hermes 2', dolphin and WizardCoder for coding instructions
     - 70B updated with infilling
@@ -156,6 +176,7 @@ yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
 whisper "/content/${VID}.m4a" --model small --language English
 #+END_SRC
 ** Text to speech
+- suno bark
 - [[https://github.com/neonbjb/tortoise-tts][tortoise-tts]] based on dalle
 - [[https://github.com/coqui-ai/TTS][coqui-ai]] with YourTTS/FreeVC voice cloning
   - [[https://github.com/coqui-ai/TTS/blob/dev/TTS/tts/utils/text/cleaners.py][english cleaner]] for abbrevations/dates/times/numbers

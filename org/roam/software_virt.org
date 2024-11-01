@@ -49,8 +49,11 @@ qemu-system-x86_64 -enable-kvm \
   - snapshots for faster boot after creation
 - mesa opengl env var ~LIBGL_ALWAYS_SOFTWARE=true~
 - ebpf
-  - non turing complete register vm
+  - complete register vm
+    - added loops
   - CO-RE and BTF for portability
+  - struct ops (ebpf programs as callbacks to stable kernel interfaces)
+  - bpf_arena for sharing memory
   - tools
     - [[id:a07e64d0-5cee-451a-af80-3f6c006dd0a1][bpftrace]]
     - [[id:bee863b2-bd4f-4332-a227-976b3cef1e45][bcc]]

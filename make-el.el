@@ -1,8 +1,8 @@
 ":"; emacs --batch -l early-init.el -l make-el.el -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 ;;;###autoload
-(defun jam/parse-args (argv &optional no-run)
+(defun jam/parse-args (argv &optional dry-run)
 "ARGV: Parse cli arguments from list.
-NO-RUN: do not run the tangled argument"
+DRY-RUN: do not run the tangled argument"
   (mapc (lambda (arg)
         (pcase arg
           (" " (message "\n"))
@@ -95,7 +95,7 @@ NO-RUN: do not run the tangled argument"
                        (ignore-errors (copy-file backup org-file t t))
                        (ignore-errors (delete-file backup))))
                  (message "org-file %s is older than html-file %s" org-file html-file))
-               (if (or no-run (not (file-exists-p sh-file)))
+               (if (or dry-run (not (file-exists-p sh-file)))
                    (message "Tangle Finished for %s \n" org-file)
                  (message "Running script %s \n" sh-file)
                  (cd (file-name-directory org-file))

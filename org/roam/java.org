@@ -12,6 +12,7 @@
 - ~alias javaToolOptions="export JAVA_TOOL_OPTIONS='-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=heapdump.hprof -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true -Xlog:gc:gc.log:utctime,uptime,tid,level:filecount=10,filesize=128m -XX:NativeMemoryTracking=detail -XX:+PreserveFramePointer'"~
 - ~-XX:+UseTransparentHugePages -XX:+AlwaysPreTouch~
 - ~-XX:+PerfDisableSharedMem~
+- ~-XX:+UseStringDeduplication~
 - ZGC takes ~3% of heap
 - 6 months release
 - 3 year lts release
