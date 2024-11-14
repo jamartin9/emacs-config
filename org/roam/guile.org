@@ -18,6 +18,7 @@
 - can embed precise gc [[https://github.com/wingo/whippet-gc][whippet]]
 - goblins adding wasm support for distributed objects
 - guile wasm https://gitlab.com/spritely/guile-hoot-updates/
+- sussmans scheme book on reusable programs uses generics and propagator model (uses MIT scheme)
 #+NAME: guile-script
 #+BEGIN_SRC guile :tangle no
 ":"; guile -e main -s $0 $@; exit $?

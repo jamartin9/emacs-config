@@ -154,7 +154,7 @@
      ))
 #+END_SRC
 ** guix notes
-- BUG cuirass ui adding job js failed with .remove button querySelector being null for adding the event handler
+- https://git.genenetwork.org/guix-north-america/about/ for NA substitute server ?
 - cuirass ci saves gc roots in ~/var/guix/gcroots/profiles/per-user/cuirass/cuirass~ for default of 30 days
   - can unlink and gc for space
 - ~guix system image -t iso9660 ./installer.scm~

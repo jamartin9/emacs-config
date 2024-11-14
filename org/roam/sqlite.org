@@ -10,6 +10,7 @@
 * sqlite
 ** notes
 - Uses bytecode instead of AST like postgres https://sqlite.org/draft/whybytecode.html
+  - maybe use reval for compiler?
 - https://github.com/mmomtchev/sqlite-wasm-http for httpvfs via range headers
   - https://github.com/mlin/sqlite_web_vfs as extension
 - https://www.sqlite.org/limits.html
@@ -22,6 +23,11 @@
 - single flat file database
 - C source can be compiled to WASM/Javascript [[https://sqlite.org/fiddle/][sqlite.org/fiddle]]
 - Replication options
+  - sqlite_rysnc
+    - built in to standard sqlite tools.
+    - Uses virtual db table extension.
+    - opens transaction, hashes differences by page size and copies the database page blobs to attached database.
+    - both databases require same page size
   - dqlite
     - custom c library by canonical
   - rqlite

@@ -255,7 +255,6 @@ vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --h
 # add --dolby-vision-profile 8.1 --dolby-vision-rpu /gnu/git/encoding/RPU_modified.bin for dolby vision (after NLQ/DoviBaker mapping for FEL when applicable)
 #+END_SRC
 * notes
-- Dovi spreasheet info for grade/master check https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview#
 - Some bluray players limit the number of subs to 64
 - Handbrake can tonemap HDR to SDR when the color filter is set to BT709
   - mobile compat: use mp4, profile high 3.1, 720p, AAC 2.0 stereo, under 4GB for FAT32 (~3Kbps - 6Kbps)
@@ -662,7 +661,11 @@ ec14f2df152cb7 199a8c0bd5f05d ecad5aab44ac2b ca87ab2ba6e905 69c0bf2acdb36c
 d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 #+END_SRC
 ** Sources
-
+- Dovi spreasheet info for grade/master check https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview#
+- The Gamma 0.88 bugs occurs when one source is brighter than other. Due to Apple software conversion of NTSC 2.2 gamma to PC 2.5 gammer requiring them to be raised to the power of 0.88 (2.2/2.5)
+  - ~fixlvls~ in awsmfunc defaults to a gamma bug fix in 32-bit
+- Amazon/CrunchyRoll/HBO Max/etc web-dls often have AR/green tint issues from rounding error when converting from masters.
+  - https://silentaperture.gitlab.io/mdbook-guide/filtering/detinting.html detint with expr ex ~high_depth.std.Expr(["", "x 128 +"])~ depending on planes
 Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infotool to change keyframe timings), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
 
 UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
@@ -1030,7 +1033,7 @@ Lets think step by step about how to convert the inputs into the desired output:
 13. Prepare several test encodes with different CRF settings of a few thousand frames. Use the previously gathered information for setting the metadata.
 14. Compare the test and source frames using awsmfunc with libplacebo tone mapped screens in vs-preview-rs
 15. Identify scenes with banding using awsmfunc
-16. Encode the audio to DD+ with dolby-encoding
+16. Encode the audio to DD+ with dolby-encoding (ffmpeg produces sub par ac3)
 17. Combine source subtitles into the container with mkvmerge
 18. Align chapters to scenecuts with MKVmerge
 19. The file name should be of the form NAME.YEAR.RESOLUTION.SOURCE.AUDIO.VIDEO.mkv

@@ -73,6 +73,7 @@
   - dalle mini
   - flux-dev 12B
     - schell version is 'turbo'(rectified flow transformer) requiring less steps for inference
+    - https://github.com/mit-han-lab/nunchaku for SVDQuant 4bit speedup
     - comfyUI plugins
       - x-flux
       - controlnet auxillary preproccessors

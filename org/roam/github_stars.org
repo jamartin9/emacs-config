@@ -1356,6 +1356,8 @@
   - Seamless operability between C++11 and Python
 ** python/cpython
   - The Python programming language
+** pythonlover02/Proton-Sarek
+  - Compatibility tool for Steam Play based on Wine and additional components. For Older Gpus or No vulkan support
 ** python/mypy
   - Optional static typing for Python
 ** python/typeshed
@@ -1856,7 +1858,6 @@
   - ZetZ a zymbolic verifier and tranzpiler to bare metal C
 ** zjc062/mind-vis
   - Code base for MinD-Vis
-    
 ** zx2c4/password-store
   - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
 
@@ -2003,6 +2004,8 @@
   - Capability-oriented version of the Rust standard library
 ** bytecodealliance/rustix
   - Safe Rust bindings to POSIX-ish APIs
+** calebzulawski/multiversion
+  - Easy function multiversioning for Rust
 ** CeleritasCelery/rune
   - Rust VM for Emacs
 ** clap-rs/clap
@@ -2059,7 +2062,7 @@
   - High-precision and consistent benchmarking framework/harness for Rust
 ** iced-rs/iced
   - A cross-platform GUI library for Rust, inspired by Elm
-** iomesh/libuzfs-rs/tree/main
+** iomesh/libuzfs-rs
   - Rust APIs for userworld zfs(uzfs)
 ** itmettkeDE/cargo-patch
   - Cargo Subcommand for patching dependencies using patch files
@@ -2137,6 +2140,8 @@
   - The Rust toolchain installer
 ** rustwasm/wasm-bindgen
   - Facilitating high-level interactions between Wasm modules and JavaScript
+** sarah-quinones/pulp
+  - safe abstraction over SIMD instructions
 ** sbstp/rust-igd
   - Internet Gateway Device (UPNP) client
 ** smoltcp-rs/smoltcp
@@ -2190,6 +2195,8 @@
   - Adversary Emulation Framework
 ** BLAKE3-team/BLAKE3
   - the official Rust and C implementations of the BLAKE3 cryptographic hash function
+** blakeblackshear/frigate
+  - NVR with realtime local object detection for IP cameras
 ** blender/blender
   - Official mirror of Blender
 ** btcpayserver/btcpayserver

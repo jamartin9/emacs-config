@@ -10,6 +10,7 @@
 * ruby
 - open classes
 - Christmas releases
+- method calls are passing messages to objects
 - ruby script to convert json to yaml despite [[https://metacpan.org/pod/JSON::XS#JSON-and-YAML][not being a superset]]
 #+NAME: ruby-yaml-json
 #+BEGIN_SRC ruby :tangle no

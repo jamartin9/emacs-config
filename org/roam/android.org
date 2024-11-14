@@ -24,6 +24,7 @@
 - ART JIT
   - AOT compile and JIT
   - CC gc has constant time regardless of heap
+- Pixel 9+ include gemini-nano by default through the AICore service
 ** apps
 *** termux
 - vol up/down and a/d to move left/right (other shortcuts too)

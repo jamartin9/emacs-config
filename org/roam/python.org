@@ -12,7 +12,7 @@
 - create and activate virtual environment ~python -m venv venv && source venv/bin/activate~
 - run a http server on port 8080 ~python -m http.server 8080~
 - pretty print json ~python -m json.tool~
-- [[https://peps.python.org/pep-0703/][PEP to remove GIL]]
+- GIL removed in 3.13
 - [[https://peps.python.org/pep-0554/][sub interpreters PEP]]
 - typing is optional ex. ~def test(name: str) -> str:~
 - functools provides decorator annotations for things like ~@cache~

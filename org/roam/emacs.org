@@ -62,6 +62,49 @@
                                    ;(message "\nFrom: %s\nMessage: %s\n" message-from message-text)
                                    (with-current-buffer (get-buffer-create "*Signal*") (insert (format "\nFrom: %s\nMessage: %s\n" message-from message-text)))))))))
 #+END_SRC
+#+NAME: local-guix-emacs-env
+#+BEGIN_SRC emacs-lisp :tangle no
+;;;###autoload
+(defun jam/guix-env()
+  "Guix variables for local guix daemon/client"
+  (interactive)
+  (require 'xdg)
+  (setenv "GUIX_DAEMON_SOCKET" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "daemon-socket") "socket"))
+  (setenv "GUIX_DATABASE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") "db"))
+  (setenv "GUIX_LOG_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "log") "guix"))
+  (setenv "GUIX_STATE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") "guix"))
+  (setenv "GUIX_CONFIGURATION_DIRECTORY" (concat (file-name-as-directory (xdg-config-home))(file-name-as-directory "guix") "etc"))
+  (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "profiles") (file-name-as-directory "per-user") (file-name-as-directory "root") (file-name-as-directory "guix-profile") (file-name-as-directory "lib") "locale"))
+  (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "gnu") "store")) ; NIX_STORE_DIR
+  (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") "bin"))))
+#+END_SRC
+#+NAME: newsticker-rss-atom-reader
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package newsticker
+  :ensure nil ; built-in
+  :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
+  :bind (:map jam/open ("n" . newsticker-treeview)
+         :map jam/toggle ("n" . newsticker-stop)
+         :map newsticker-treeview-item-mode-map ("d" . (lambda () (interactive); Download the current newsticker enclosure to tmpdir/newsticker/feed/title
+                                                         (let* ((item (newsticker--treeview-get-selected-item))
+                                                                (feedname "newsticker")
+                                                                (title (newsticker--title item))
+                                                                (enclosure (newsticker--enclosure item))
+                                                                (download-dir (file-name-as-directory
+                                                                               (expand-file-name (newsticker--title (newsticker--treeview-get-selected-item))
+                                                                                                 (expand-file-name feedname (expand-file-name "newsticker" temporary-file-directory))))))
+                                                           (newsticker-download-enclosures feedname item)
+                                                           (message download-dir)))))
+  :init
+  (setq newsticker-frontend 'newsticker-treeview
+        newsticker-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "newsticker")
+        newsticker-automatically-mark-items-as-old nil
+        newsticker-automatically-mark-visited-items-as-old t
+        newsticker-url-list-defaults nil
+        newsticker-url-list '(("styx" "https://odysee.com/$/rss/@Styxhexenhammer666:2"))))
+
+#+END_SRC
+
 - German air control ATC ran on emacs in the 90's
 - calc can plot with gnuplot
   - ~set yrange [0:50]~, ~set xrange [0:2200]~, ~plot 4 * sqrt(x + 10) / log10(x + 10) - 4 * sqrt(10)~

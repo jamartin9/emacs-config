@@ -31,6 +31,7 @@ image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:main"
 #runner = "qemu-user"
 #+END_SRC
 - rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview
+- cargo release profile
 #+NAME: rust-release-profile
 #+BEGIN_SRC toml :tangle no
 [profile.release]

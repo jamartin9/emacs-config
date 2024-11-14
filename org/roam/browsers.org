@@ -89,6 +89,14 @@ self.addEventListener('fetch', function(e) {
 ** [[id:aae21430-637a-4b92-8f8a-d35e9991e396][firefox]]
 ** chrome
 - Type ~thisisunsafe~ anywhere on the SSL ERROR window and the browser will let you visit the page.
+- Gemini nano AI by default in 128+
+  - ~chrome://flags/#prompt-api-for-gemini-nano~, summarization, writer, rewritter etc
+  - ~chrome://flags/#optimization-guide-on-device-model~ to ~BypassRefRequirement~
+  - console ~await window.ai.summarizer.create()~ to make ~chrome://components~ show Optimization Guide On Device Model (didnt work with flatpak)
+    - ~const model = await window.ai.createTextSession(); await model.prompt("Who are you?");~
+  - https://chromeai.co/
+  - ~2GB vram/space for gemma-2b-it-gpu-int4
+  - can load models from disk
 - ~chrome://tracing~ for browser tracing
   - https://chrome.google.com/webstore/detail/perfetto-ui/lfmkphfpdbjijhpomgecfikhfohaoine is the ui.perfetto.dev extension for tracing
 - dev tools wasm dwarf debug extension https://chrome.google.com/webstore/detail/cc%20%20-devtools-support-dwa/pdcpmagijalfljmkmjngeonclgbbannb

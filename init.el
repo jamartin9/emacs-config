@@ -369,7 +369,7 @@
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
-                                                          :cargo (:cfgs (;:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
+                                                          :cargo (:cfgs (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
                                                                          :tokio_unstable "")))))))
 
 (use-package rust-ts-mode
@@ -394,29 +394,6 @@
   :ensure nil ; built-in
   :bind (:map jam/open ("p" . jam/auth-display))
   :commands (auth-source-search auth-info-password auth-source-pick-first-password auth-source-forget+ auth-source-forget auth-source-delete))
-
-(use-package newsticker
-  :ensure nil ; built-in
-  :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
-  :bind (:map jam/open ("n" . newsticker-treeview)
-         :map jam/toggle ("n" . newsticker-stop)
-         :map newsticker-treeview-item-mode-map ("d" . (lambda () (interactive); Download the current newsticker enclosure to tmpdir/newsticker/feed/title
-                                                         (let* ((item (newsticker--treeview-get-selected-item))
-                                                                (feedname "newsticker")
-                                                                (title (newsticker--title item))
-                                                                (enclosure (newsticker--enclosure item))
-                                                                (download-dir (file-name-as-directory
-                                                                               (expand-file-name (newsticker--title (newsticker--treeview-get-selected-item))
-                                                                                                 (expand-file-name feedname (expand-file-name "newsticker" temporary-file-directory))))))
-                                                           (newsticker-download-enclosures feedname item)
-                                                           (message download-dir)))))
-  :init
-  (setq newsticker-frontend 'newsticker-treeview
-        newsticker-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "newsticker")
-        newsticker-automatically-mark-items-as-old nil
-        newsticker-automatically-mark-visited-items-as-old t
-        newsticker-url-list-defaults nil
-        newsticker-url-list '(("styx" "https://odysee.com/$/rss/@Styxhexenhammer666:2"))))
 
 (use-package magit ; git ; magit-diff then magit-patch to save
   :commands (magit-file-delete magit-status)
@@ -767,20 +744,6 @@
   (require 'package) ; recompile autoloads
   (package-quickstart-refresh)
   (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
-
-;;;###autoload
-(defun jam/guix-env()
-  "Guix variables for local guix daemon/client"
-  (interactive)
-  (require 'xdg)
-  (setenv "GUIX_DAEMON_SOCKET" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "daemon-socket") "socket"))
-  (setenv "GUIX_DATABASE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") "db"))
-  (setenv "GUIX_LOG_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "log") "guix"))
-  (setenv "GUIX_STATE_DIRECTORY" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") "guix"))
-  (setenv "GUIX_CONFIGURATION_DIRECTORY" (concat (file-name-as-directory (xdg-config-home))(file-name-as-directory "guix") "etc"))
-  (setenv "GUIX_LOCPATH" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "var") (file-name-as-directory "guix") (file-name-as-directory "profiles") (file-name-as-directory "per-user") (file-name-as-directory "root") (file-name-as-directory "guix-profile") (file-name-as-directory "lib") "locale"))
-  (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "gnu") "store")) ; NIX_STORE_DIR
-  (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") "bin"))))
 
 ;;; TOTP
 ;;;###autoload
