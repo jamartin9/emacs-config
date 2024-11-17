@@ -2068,6 +2068,8 @@
   - Cargo Subcommand for patching dependencies using patch files
 ** jamesmunns/postcard
   - A no_std + serde compatible message library for Rust
+** japaric/cargo-call-stack
+  - Whole program static stack analysis for stack overflow
 ** JelteF/derive_more
   - Some more derive(Trait) options
 ** kanidm/webauthn-rs

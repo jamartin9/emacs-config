@@ -754,9 +754,8 @@ DIGITS is the number of pin digits and defaults to 6."
   (defun jam/totp--hex-decode-string (string)
     "Hex-decode STRING and return the result as a unibyte string."
     (require 'hexl)
-    ;; Pad the string with a leading zero if its length is odd.
     (unless (zerop (logand (length string) 1))
-      (setq string (concat "0" string)))
+      (setq string (concat "0" string))) ;; Pad the string with a leading zero if its length is odd.
     (apply #'unibyte-string
            (seq-map (lambda (s) (hexl-htoi (aref s 0) (aref s 1)))
                     (seq-partition string 2))))
@@ -766,8 +765,7 @@ DIGITS is the number of pin digits and defaults to 6."
          (counter (truncate (/ (or time (time-to-seconds)) 30)))
          (digits (or digits 6))
          (format-string (format "%%0%dd" digits))
-         ;; split the 64 bit number (u64 not supported in Emacs 27.2)
-         (counter-bytes (bindat-pack  '((:high u32) (:low u32))
+         (counter-bytes (bindat-pack  '((:high u32) (:low u32)) ;; split the 64 bit number (u64 not supported in Emacs 27.2)
                                       `((:high . ,(ash counter -32)) (:low . ,(logand counter #xffffffff)))))
          (mac (gnutls-hash-mac 'SHA1 key-bytes counter-bytes))
          (offset (logand (bindat-get-field (bindat-unpack '((:offset u8)) mac 19) :offset) #xf)))
@@ -778,9 +776,7 @@ DIGITS is the number of pin digits and defaults to 6."
              (expt 10 digits)))))
 
 ;;;###autoload
-(defun jam/base32-hex-decode (string)
-  "Not a full implementation of RFC 4648. Lacks encoding partial quanta and padding to the output (not required for HMAC-TOTP)."
-  ;;; Base32 for TOTP
+(defun jam/base32-hex-decode (string) ; Base32 for TOTP
   (defconst jam/base32-alphabet
     (let ((tbl (make-char-table nil)))
       (dolist (mapping '(("A" . 0)  ("B" . 1)  ("C" . 2)  ("D" . 3)
@@ -795,13 +791,12 @@ DIGITS is the number of pin digits and defaults to 6."
         (aset tbl (string-to-char (car mapping)) (cdr mapping)))
       tbl)
     "Base-32 mapping table, as defined in RFC 4648.")
-  (unless (mod (length string) 8)
-    (error "Padding is incorrect"))
   (setq string (upcase string))
-  (let ((trimmed-array (append (string-trim-right string "=+") nil)))
-    (format "%X" (seq-reduce
-                  (lambda (acc char) (+ (ash acc 5) (aref jam/base32-alphabet char)))
-                  trimmed-array 0))))
+  (let* ((trimmed-array (append (string-trim-right string "=+") nil))
+         (ntrail (mod (* 5 (length trimmed-array)) 8))) ; shift for partial bits
+    (format "%X" (ash (seq-reduce (lambda (acc char) (+ (ash acc 5) (aref jam/base32-alphabet char))) trimmed-array 0)
+                      (- ntrail)))))
+
 ;;;###autoload
 (defun jam/auth-display (auth)
   "Select a TOTP or AUTH from `auth-sources'"

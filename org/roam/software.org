@@ -20,6 +20,9 @@
 - SIEVE
   - Generalized Merge-FIFO(segcache) Queue that can outpreform LRU
     - variant ARC-SIEVE replaces ARC with own queue
+- Propgators networks
+  - can implement multiple problem domains with bounded eventual consistency
+  - SAT, Functional Reactive Programming, Datalog, constraint programming
 ** [[id:fd5eb707-7fc5-40ee-a550-f167f8c43635][archive-formats]]
 ** [[id:20556f17-762b-4534-befa-34dbd8d2ca33][bootloaders]]
 ** [[id:536c7bc0-8049-429d-bfe6-641eeb67399c][browsers]]
