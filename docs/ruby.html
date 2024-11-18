@@ -9,22 +9,23 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgb0d1cd0">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org43eec96">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgf91bc62" class="outline-2">
-<h2 id="orgf91bc62">ruby</h2>
-<div class="outline-text-2" id="text-orgf91bc62">
+<div id="outline-container-org6ca2745" class="outline-2">
+<h2 id="org6ca2745">ruby</h2>
+<div class="outline-text-2" id="text-org6ca2745">
 <ul class="org-ul">
 <li>open classes</li>
 <li>Christmas releases</li>
+<li>method calls are passing messages to objects</li>
 <li>ruby script to convert json to yaml despite <a href="https://metacpan.org/pod/JSON::XS#JSON-and-YAML">not being a superset</a></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-ruby" id="org451544d">#!/usr/bin/env ruby
+<pre class="src src-ruby" id="org8a51c5b">#!/usr/bin/env ruby
 # Simple script to convert .json to .yaml and .yaml to .json.
 require 'json'
 require 'yaml'
@@ -61,7 +62,7 @@ commands.each { |command| convert(command) }
 <li>ruby script for docker images</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-ruby" id="org68e6c28">#!/usr/bin/env ruby
+<pre class="src src-ruby" id="org90cd532">#!/usr/bin/env ruby
 # Cobbled together endpoint for gettings tars.
 require 'docker-api'
 require 'sinatra'

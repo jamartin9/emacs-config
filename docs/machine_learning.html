@@ -9,26 +9,44 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgaaf3951">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6588ed5">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgbd31788" class="outline-2">
-<h2 id="orgbd31788">Machine learning</h2>
-<div class="outline-text-2" id="text-orgbd31788">
+<div id="outline-container-org441e98f" class="outline-2">
+<h2 id="org441e98f">Machine learning</h2>
+<div class="outline-text-2" id="text-org441e98f">
 </div>
-<div id="outline-container-orgeea994f" class="outline-3">
-<h3 id="orgeea994f">notes</h3>
-<div class="outline-text-3" id="text-orgeea994f">
+<div id="outline-container-org8ae920a" class="outline-3">
+<h3 id="org8ae920a">notes</h3>
+<div class="outline-text-3" id="text-org8ae920a">
 <ul class="org-ul">
-<li>Given enough parameters and data different architectures converge on the same results. Data is all you need.</li>
+<li>FP8 and LOG representation are efficent on modern GPU
+<ul class="org-ul">
+<li>LOG can factor out the add to a bitshift
+<ul class="org-ul">
+<li>1 sign bit 4 exponent bit 3 fraction exponent bits</li>
+</ul></li>
+<li>Clip number representation by a scale factor
+<ul class="org-ul">
+<li>vs-quant scale factor for each vector to turn sparse to dense</li>
+</ul></li>
+</ul></li>
+<li>Given enough parameters and data different architectures converge on the same results
+<ul class="org-ul">
+<li>training is sampling a data manifold across N dimensional space</li>
+</ul></li>
 <li>Recall transformers are Turing complete</li>
 <li>State Space Models (SSM) like MAMBA preform close to transformers
 <ul class="org-ul">
 <li>Vision mamba is comparable to ViTs</li>
 <li>Jamba is a MoE SSM with a transformer block with 256K context, 12B active parameters (total of 52B parameters across all experts)</li>
+<li>calculus differention across data
+<ul class="org-ul">
+<li>fixed window that has been gradually increased with compute size</li>
+</ul></li>
 </ul></li>
 <li>huggingface is a hub for models with api libs using pytorch/tensorflow/jax
 <ul class="org-ul">
@@ -41,11 +59,9 @@
 <ul class="org-ul">
 <li>protobuf 2gb single file limitation for model weights (issues with model slicing).</li>
 <li>lacks offload support for disk, cpu, gpu</li>
+<li>huggingface.js</li>
 </ul></li>
-<li>usually models can be quantized (compressed) by changing the float tensor values from fp16 to int8 with little loss
-<ul class="org-ul">
-<li>4bit with GPT-Q compression (groupsize 128)</li>
-</ul></li>
+<li>Some models are more sensitive to quantization than others. LLMs are more tolerant than diffusion or whisper models</li>
 <li>LoRA is a finetunning mechanism
 <ul class="org-ul">
 <li>QLoRA is quantized version (4/8 bit). <a href="https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md">cpu version</a></li>
@@ -69,10 +85,15 @@
 <li>Yi-VL</li>
 <li>imp-v1-3b (phi)</li>
 <li>Qwen-VL</li>
+<li>Deepseek Janus uses same image/lang representation with different input and output decoders</li>
 <li>tokenized image multimodal data softmax diverges <a href="https://arxiv.org/html/2405.09818v1">https://arxiv.org/html/2405.09818v1</a> ('logit drift problem')
 <ul class="org-ul">
 <li>stablizes by adding layer normalization re-ordering (Swin transformer normalization strategy) and changing query-key softmax to QK-Norm</li>
 </ul></li>
+</ul></li>
+<li><a href="https://transformer-circuits.pub/2024/crosscoders/index.html">https://transformer-circuits.pub/2024/crosscoders/index.html</a> identifies cross model features by comparing residual blocks
+<ul class="org-ul">
+<li>features for refusal, code review, personal question vector</li>
 </ul></li>
 <li>steering vectors cache activation layer results and swap them for alignment at the same layer
 <ul class="org-ul">
@@ -103,14 +124,31 @@
 <li><a href="https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat">'Extended Mind'</a> aka active externalism may out preform RAG with citations</li>
 </ul></li>
 <li>Chain of thought synthetic dataset to improve implicit deductions (orca/phi)</li>
+<li>Models can be merged with various method to combine feature strengths</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgaecd742" class="outline-3">
-<h3 id="orgaecd742">image</h3>
-<div class="outline-text-3" id="text-orgaecd742">
+<div id="outline-container-orgb14db14" class="outline-3">
+<h3 id="orgb14db14">image</h3>
+<div class="outline-text-3" id="text-orgb14db14">
 <ul class="org-ul">
 <li>dalle mini</li>
+<li>flux-dev 12B
+<ul class="org-ul">
+<li>schell version is 'turbo'(rectified flow transformer) requiring less steps for inference</li>
+<li><a href="https://github.com/mit-han-lab/nunchaku">https://github.com/mit-han-lab/nunchaku</a> for SVDQuant 4bit speedup</li>
+<li>comfyUI plugins
+<ul class="org-ul">
+<li>x-flux</li>
+<li>controlnet auxillary preproccessors</li>
+<li>comfyui-gguf</li>
+<li><a href="https://huggingface.co/comfyanonymous/flux_text_encoders">https://huggingface.co/comfyanonymous/flux_text_encoders</a></li>
+<li>minicpm and qwenvl for image input
+<ul class="org-ul">
+<li>comfyui-custom-scripts (show text)</li>
+</ul></li>
+</ul></li>
+</ul></li>
 <li><a href="https://github.com/hlky/stable-diffusion">stable diffusion</a>
 <ul class="org-ul">
 <li><code>stable-diffusion-webui/webui.sh --listen --no-half --use-cpu all</code> for cpu only inside container
@@ -134,19 +172,20 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-org3ae8698" class="outline-4">
-<h4 id="org3ae8698">video</h4>
-<div class="outline-text-4" id="text-org3ae8698">
+<div id="outline-container-orgc41a48a" class="outline-4">
+<h4 id="orgc41a48a">video</h4>
+<div class="outline-text-4" id="text-orgc41a48a">
 <ul class="org-ul">
+<li>added as to LLM input as multidimensional rope to the vision encoder (qwenVL)</li>
 <li><a href="https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt">stable diffusion video</a></li>
 <li>video editing with <a href="https://github.com/rehg-lab/RAVE">RAVE</a></li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org8e2e3ee" class="outline-3">
-<h3 id="org8e2e3ee">Large Language Models</h3>
-<div class="outline-text-3" id="text-org8e2e3ee">
+<div id="outline-container-orgd0c311e" class="outline-3">
+<h3 id="orgd0c311e">Large Language Models</h3>
+<div class="outline-text-3" id="text-orgd0c311e">
 <ul class="org-ul">
 <li>Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)</li>
 <li>chinchilla paper showed most models are over parameterized without enough data
@@ -188,7 +227,10 @@
 </ul></li>
 <li><a href="https://github.com/ggerganov/llama.cpp">gguf is 4 bit and cpu</a> (adding more gpu and 3/5/6 bit quant)
 <ul class="org-ul">
-<li>enable cuda support <code>cmake -DLLAMA_CUDA=ON ..</code></li>
+<li>enable cuda support <code>cmake -B build -DGGML_CUDA=ON &amp;&amp; cmake --build build --config Release</code>
+<ul class="org-ul">
+<li>env variable to enable unified memory support <code>GGML_CUDA_ENABLE_UNIFIED_MEMORY=1</code></li>
+</ul></li>
 <li>set params to <code>top_k=40</code>, <code>temperature=0.7</code>, <code>top_p=0</code> and a repeat penalty <code>repeat_last_n=64</code> and <code>repeat_penalty=1.3</code></li>
 <li>bfloat16 added for precision
 <ul class="org-ul">
@@ -212,11 +254,6 @@
 </ul></li>
 <li>Orca is Supervised Fine Tuned GPT4 output in alpaca format</li>
 <li>Can be fine tuned with <a href="https://github.com/tloen/alpaca-lora">LoRA</a></li>
-<li>Flan-T5 for text summary</li>
-<li>Donut for document image question answering</li>
-<li>Vilt for image question answering</li>
-<li>Models can be merged with various method to combine strengths</li>
-<li>Models can be pruned for less inference cost with little result degradation</li>
 <li><a href="https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral</a> uses mixture of experts for better 7B results
 <ul class="org-ul">
 <li>mixture of experts can potentially quantize and sparsify better than dense LLMs</li>
@@ -227,12 +264,26 @@
 <ul class="org-ul">
 <li>ONNX mobile variant</li>
 </ul></li>
+<li>models can be quantized (compressed) by changing the float tensor values from fp32 to fp16 to int8 with little loss.
+<ul class="org-ul">
+<li>fp32 to bfloat16 is lossless</li>
+<li>4bit with GPT-Q compression (groupsize 128)</li>
+<li>bitnet ~2bit compression
+<ul class="org-ul">
+<li>VPTQ for better accuracy and size compression
+<ul class="org-ul">
+<li>constructs a LUT from quantized values</li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
 </div>
-<div id="outline-container-orgf5709a7" class="outline-4">
-<h4 id="orgf5709a7">Codegen</h4>
-<div class="outline-text-4" id="text-orgf5709a7">
+<div id="outline-container-orgd73e952" class="outline-4">
+<h4 id="orgd73e952">Codegen</h4>
+<div class="outline-text-4" id="text-orgd73e952">
 <ul class="org-ul">
+<li>Python has some of the highest entropy for 'tokens vs length' making it the a efficent language to generate</li>
+<li>llm-compiler from facebook to generate LLVM IR</li>
 <li>CodeLlama
 <ul class="org-ul">
 <li>fine tunes such as 'nous hermes 2', dolphin and WizardCoder for coding instructions</li>
@@ -257,15 +308,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org131751e" class="outline-3">
-<h3 id="org131751e">Speech to text</h3>
-<div class="outline-text-3" id="text-org131751e">
+<div id="outline-container-org6993a92" class="outline-3">
+<h3 id="org6993a92">Speech to text</h3>
+<div class="outline-text-3" id="text-org6993a92">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org3c70023">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="orgcf621ab">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -274,10 +325,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-org8df606d" class="outline-3">
-<h3 id="org8df606d">Text to speech</h3>
-<div class="outline-text-3" id="text-org8df606d">
+<div id="outline-container-orgbe86ba5" class="outline-3">
+<h3 id="orgbe86ba5">Text to speech</h3>
+<div class="outline-text-3" id="text-orgbe86ba5">
 <ul class="org-ul">
+<li>suno bark</li>
 <li><a href="https://github.com/neonbjb/tortoise-tts">tortoise-tts</a> based on dalle</li>
 <li><a href="https://github.com/coqui-ai/TTS">coqui-ai</a> with YourTTS/FreeVC voice cloning
 <ul class="org-ul">
@@ -290,11 +342,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-org4221d35" class="outline-3">
-<h3 id="org4221d35">Agent prompts</h3>
-<div class="outline-text-3" id="text-org4221d35">
+<div id="outline-container-org8b3f3f1" class="outline-3">
+<h3 id="org8b3f3f1">Agent prompts</h3>
+<div class="outline-text-3" id="text-org8b3f3f1">
 <div class="org-src-container">
-<pre class="src src-sh" id="orga7dbab2">
+<pre class="src src-sh" id="orgf200b24">
 input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
 ```sh
 for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
@@ -321,7 +373,7 @@ ${input_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header
 <li>prompt structures</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-text" id="org3637b48">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-text" id="org6eb5bbb">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -344,14 +396,14 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-orgc4f0f6a" class="outline-3">
-<h3 id="orgc4f0f6a">transformers examples</h3>
-<div class="outline-text-3" id="text-orgc4f0f6a">
+<div id="outline-container-org10b63ab" class="outline-3">
+<h3 id="org10b63ab">transformers examples</h3>
+<div class="outline-text-3" id="text-org10b63ab">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org119d074">#!/usr/bin/env python3
+<pre class="src src-python" id="org4d570d7">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:

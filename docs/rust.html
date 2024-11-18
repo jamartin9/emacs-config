@@ -9,16 +9,17 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgcbe5778">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org92dab39">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgf4b6fc4" class="outline-2">
-<h2 id="orgf4b6fc4">rust</h2>
-<div class="outline-text-2" id="text-orgf4b6fc4">
+<div id="outline-container-org75414a1" class="outline-2">
+<h2 id="org75414a1">rust</h2>
+<div class="outline-text-2" id="text-org75414a1">
 <ul class="org-ul">
+<li><a href="https://github.com/rust-lang/rust/issues/93740#issuecomment-1041391284">https://github.com/rust-lang/rust/issues/93740#issuecomment-1041391284</a> futex/mutex comparisons</li>
 <li>rustc uses stacker crate for segmented stacks to avoid stack overflow</li>
 <li><code>cargo test -- --nocapture</code> for <code>println!()</code></li>
 <li>rls removed in 1.65 for rust-analyzer</li>
@@ -42,16 +43,17 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-toml" id="org54bec3a">[target.x86_64-unknown-freebsd]
+<pre class="src src-toml" id="org5634042">[target.x86_64-unknown-freebsd]
 image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:main"
 #runner = "qemu-user"
 </pre>
 </div>
 <ul class="org-ul">
 <li>rust-toolchain.toml to set nightly/beta and components like llvm-tools-preview</li>
+<li>cargo release profile</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-toml" id="org989a307">[profile.release]
+<pre class="src src-toml" id="org2978fb8">[profile.release]
 lto = true
 codegen-units = 1 # reduce parallel codegen for increased optimization
 strip = true

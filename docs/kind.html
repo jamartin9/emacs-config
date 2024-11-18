@@ -9,20 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc004ade">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0ee4c4a">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org493bd64" class="outline-2">
-<h2 id="org493bd64">kind</h2>
-<div class="outline-text-2" id="text-org493bd64">
+<div id="outline-container-org21bcf53" class="outline-2">
+<h2 id="org21bcf53">kind</h2>
+<div class="outline-text-2" id="text-org21bcf53">
 </div>
-<div id="outline-container-org2996e1e" class="outline-3">
-<h3 id="org2996e1e">kind</h3>
-<div class="outline-text-3" id="text-org2996e1e">
+<div id="outline-container-org78c3e8e" class="outline-3">
+<h3 id="org78c3e8e">kind</h3>
+<div class="outline-text-3" id="text-org78c3e8e">
 <ul class="org-ul">
+<li>HPAScaleToZero and HPAContainerMetrics feature gates for scale to zero without Keda</li>
 <li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster --config cluster.yaml</code>
 <ul class="org-ul">
 <li>BUG with worker node failing. Needs runc 1.2 (unreleased) for resolv.conf</li>
@@ -42,7 +43,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org23aefad">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
+<pre class="src src-sh" id="orgd339f3e">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
 kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </pre>
 </div>
@@ -50,7 +51,7 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 <li>default connection</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org786b3e6">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
+<pre class="src src-sh" id="orgd2bfd27">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
 </pre>
 </div>
 <ul class="org-ul">
@@ -103,7 +104,53 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 <li>uses ebpf and envoy</li>
 </ul></li>
 <li><code>kind export logs</code> after running create with <code>--retain</code></li>
+<li>add metrics server
+<ul class="org-ul">
+<li><code>kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml</code>
+<ul class="org-ul">
+<li><code>kubectl patch -n kube-system deployment metrics-server --type=json -p '[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'</code></li>
+</ul></li>
+</ul></li>
 </ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="orga5732a3">kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+featureGates:
+  HPAScaleToZero: true
+  HPAContainerMetrics: true
+  LogarithmicScaleDown: true
+nodes:
+- role: control-plane
+- role: worker
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-yaml" id="org82a3e0e">apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: resource-consumer-v2
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: resource-consumer
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Object
+    object:
+      metric:
+        name: requests-per-second
+      describedObject:
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        name: main-route
+      target:
+        type: Value
+        value: 10k
+</pre>
+</div>
 </div>
 </div>
 </div>

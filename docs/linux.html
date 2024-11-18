@@ -9,26 +9,26 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org9ce64b3">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5b0b42d">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
 
-<div id="outline-container-org961f0cd" class="outline-2">
-<h2 id="org961f0cd">Linux</h2>
-<div class="outline-text-2" id="text-org961f0cd">
+<div id="outline-container-org51ec0d5" class="outline-2">
+<h2 id="org51ec0d5">Linux</h2>
+<div class="outline-text-2" id="text-org51ec0d5">
 <p>
 Finally some hardware support!
 </p>
 </div>
-<div id="outline-container-org5bcefdb" class="outline-3">
-<h3 id="org5bcefdb"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
+<div id="outline-container-org58550f3" class="outline-3">
+<h3 id="org58550f3"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
 </div>
-<div id="outline-container-org9595e82" class="outline-3">
-<h3 id="org9595e82">Kernel</h3>
-<div class="outline-text-3" id="text-org9595e82">
+<div id="outline-container-orge5575d6" class="outline-3">
+<h3 id="orge5575d6">Kernel</h3>
+<div class="outline-text-3" id="text-orge5575d6">
 <ul class="org-ul">
 <li>removed sysctl system call in 5.5</li>
 <li>io-uring
@@ -50,17 +50,17 @@ Finally some hardware support!
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc5ff6fd" class="outline-3">
-<h3 id="orgc5ff6fd">pam</h3>
+<div id="outline-container-org1c2a9c5" class="outline-3">
+<h3 id="org1c2a9c5">pam</h3>
 </div>
-<div id="outline-container-org18f1348" class="outline-3">
-<h3 id="org18f1348">misc</h3>
-<div class="outline-text-3" id="text-org18f1348">
+<div id="outline-container-org572d62d" class="outline-3">
+<h3 id="org572d62d">misc</h3>
+<div class="outline-text-3" id="text-org572d62d">
 <ul class="org-ul">
 <li><code>faillock --user $USER --reset</code> for attempt reset</li>
 <li><code>LD_LIBRARY_PATH</code> and <code>LD_PRELOAD</code> environment variables override library location and load order respectively.
 <ul class="org-ul">
-<li><code>LD_DEBUG=libs</code> to monitor <code>dlopen</code> (redirect stderr for cli <code>2&gt;err.txt</code>)</li>
+<li><code>LD_DEBUG=libs</code> to monitor <code>dlopen</code> (redirect stderr for cli <code>2&gt;err.txt</code>) <code>LD_DEBUG=files:</code></li>
 <li><code>readelf -d</code> to check the dynamic section of the elf for <code>rpath</code> (searched before library path) or <code>runpath</code> (searched after library path) or <code>FLAGS</code> such as <code>NODEFLIB</code>
 <ul class="org-ul">
 <li>each shared lib is searched for in the following order:  rpath, libary path, runpath, ld cache, system lib (skipped if compiled with <code>ld -z nodefaultlib</code>)</li>
@@ -72,6 +72,7 @@ Finally some hardware support!
 <li>netconsole can be configured for last gasp udp packet sending(spanner, titus)</li>
 <li><code>/usr/lib/ld-linux-x86-64.so.2 --help</code> to check for <code>x86_64-v3</code></li>
 <li><code>ethtool -N eth2 rx-flow-hash udp4 sdfn</code> nic to send packets to same thread as ip:port sender</li>
+<li>set <code>SO_ADDRREUSE</code> and <code>SO_SOCKETREUSE</code> on socket creation to allow multiple binds</li>
 </ul>
 </div>
 </div>

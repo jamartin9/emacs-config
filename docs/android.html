@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6e0b72e">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org521eea1">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orge24d3dd" class="outline-2">
-<h2 id="orge24d3dd">android</h2>
-<div class="outline-text-2" id="text-orge24d3dd">
+<div id="outline-container-org1de5c63" class="outline-2">
+<h2 id="org1de5c63">android</h2>
+<div class="outline-text-2" id="text-org1de5c63">
 </div>
-<div id="outline-container-orgbe42268" class="outline-3">
-<h3 id="orgbe42268">notes</h3>
-<div class="outline-text-3" id="text-orgbe42268">
+<div id="outline-container-org6854789" class="outline-3">
+<h3 id="org6854789">notes</h3>
+<div class="outline-text-3" id="text-org6854789">
 <ul class="org-ul">
 <li>automobile integration
 <ul class="org-ul">
@@ -30,49 +30,60 @@
 </ul></li>
 <li>developer mode by tapping build number in settings multiple times</li>
 <li>custom rom cyanogenmod discontinued into LineageOS</li>
-<li>pozzed by google and cell carriers
+<li>pkvm hypervisor
 <ul class="org-ul">
-<li>aosp is incomplete</li>
-<li>more locked down kiosk devices</li>
-<li>generally not unlocked bootloader or root on own device because of carrier</li>
-<li>old version of java bytecode on dalvikvm/art (7 and can polyfill 8 features)</li>
-<li>app store bullying</li>
-<li>old linux kernel</li>
-<li>custom recoveries require unlocked bootloader (TWRP/CWM)</li>
-<li>many apps needlessly crippled with gplay services or microg</li>
+<li>boots GKI linux kernel which loads the vendors modules</li>
+<li>Runs a pVM or stripped down microdroid (no java api)
+<ul class="org-ul">
+<li>communicates over binder vsock (no virtio-gpu yet)</li>
 </ul></li>
+</ul></li>
+<li>GrapheneOS
+<ul class="org-ul">
+<li>patches add memory protections</li>
+<li>app store for camera, pdf, other app store, etc.</li>
+</ul></li>
+<li>ART JIT
+<ul class="org-ul">
+<li>AOT compile and JIT</li>
+<li>CC gc has constant time regardless of heap</li>
+</ul></li>
+<li>Pixel 9+ include gemini-nano by default through the AICore service</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org7db4e32" class="outline-3">
-<h3 id="org7db4e32">apps</h3>
-<div class="outline-text-3" id="text-org7db4e32">
+<div id="outline-container-orge30bf2c" class="outline-3">
+<h3 id="orge30bf2c">apps</h3>
+<div class="outline-text-3" id="text-orge30bf2c">
 </div>
-<div id="outline-container-org1004ee2" class="outline-4">
-<h4 id="org1004ee2">termux</h4>
-<div class="outline-text-4" id="text-org1004ee2">
+<div id="outline-container-org2523eaf" class="outline-4">
+<h4 id="org2523eaf">termux</h4>
+<div class="outline-text-4" id="text-org2523eaf">
 <ul class="org-ul">
 <li>vol up/down and a/d to move left/right (other shortcuts too)</li>
 <li>vol up long and Q for special keyboard</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4be4a7c" class="outline-4">
-<h4 id="org4be4a7c">aurora store</h4>
-<div class="outline-text-4" id="text-org4be4a7c">
+<div id="outline-container-orgfeecd83" class="outline-4">
+<h4 id="orgfeecd83">aurora store</h4>
+<div class="outline-text-4" id="text-orgfeecd83">
 <ul class="org-ul">
 <li>google play store without google account</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc84a005" class="outline-4">
-<h4 id="orgc84a005">fdroid</h4>
-<div class="outline-text-4" id="text-orgc84a005">
+<div id="outline-container-org0d9b7f8" class="outline-4">
+<h4 id="org0d9b7f8">fdroid</h4>
+<div class="outline-text-4" id="text-org0d9b7f8">
 <ul class="org-ul">
 <li>apk repo that can self host and share device to device</li>
 <li>emacs, hackers keyboard, organic maps, i2p, wireguard, vlc</li>
 </ul>
 </div>
+</div>
+<div id="outline-container-orga42b06d" class="outline-4">
+<h4 id="orga42b06d">accrescent app store</h4>
 </div>
 </div>
 </div>

@@ -9,21 +9,24 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc3c025b">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga49cde5">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org98acb75" class="outline-2">
-<h2 id="org98acb75">vapoursynth</h2>
-<div class="outline-text-2" id="text-org98acb75">
+<div id="outline-container-org431ae55" class="outline-2">
+<h2 id="org431ae55">vapoursynth</h2>
+<div class="outline-text-2" id="text-org431ae55">
 <ul class="org-ul">
 <li>ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata</li>
-<li>add <code>UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/</code> to <code>XDG_CONFIG/vapoursynth/vapoursynth.conf</code> to auto load plugin from directory</li>
+<li>add <code>UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/</code> to <code>XDG_CONFIG/vapoursynth/vapoursynth.conf</code> to auto load plugin from directory
+<ul class="org-ul">
+<li><code>UserPluginDir=/home/jam/.guix-profile/lib/vapoursynth</code></li>
+</ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org10a6063">#!/usr/bin/env python3
+<pre class="src src-python" id="org5ee506d">#!/usr/bin/env python3
 #awsmfun dynamic tonemap function includes chroma shift
 import vapoursynth as vs
 from vapoursynth import core
@@ -191,11 +194,11 @@ def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
 </div>
 </div>
 </div>
-<div id="outline-container-org42f2ace" class="outline-2">
-<h2 id="org42f2ace">scripts</h2>
-<div class="outline-text-2" id="text-org42f2ace">
+<div id="outline-container-org2f9225f" class="outline-2">
+<h2 id="org2f9225f">scripts</h2>
+<div class="outline-text-2" id="text-org2f9225f">
 <div class="org-src-container">
-<pre class="src src-bash" id="org650f4aa">#!/usr/bin/env bash
+<pre class="src src-bash" id="orgcdcae3f">#!/usr/bin/env bash
 COUNTER=1
 while [  $COUNTER -lt 31 ]; do
     mkvextract $1 tracks ${COUNTER}:"subtitle${COUNTER}.sup" # extract sup from mkv
@@ -271,11 +274,10 @@ vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --h
 </div>
 </div>
 </div>
-<div id="outline-container-org20f0458" class="outline-2">
-<h2 id="org20f0458">notes</h2>
-<div class="outline-text-2" id="text-org20f0458">
+<div id="outline-container-org0b3d860" class="outline-2">
+<h2 id="org0b3d860">notes</h2>
+<div class="outline-text-2" id="text-org0b3d860">
 <ul class="org-ul">
-<li>Dovi spreasheet info for grade/master check <a href="https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview">https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview</a>#</li>
 <li>Some bluray players limit the number of subs to 64</li>
 <li>Handbrake can tonemap HDR to SDR when the color filter is set to BT709
 <ul class="org-ul">
@@ -310,9 +312,9 @@ vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --h
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-org0f1742f" class="outline-3">
-<h3 id="org0f1742f">AACS v2</h3>
-<div class="outline-text-3" id="text-org0f1742f">
+<div id="outline-container-orge201bd6" class="outline-3">
+<h3 id="orge201bd6">AACS v2</h3>
+<div class="outline-text-3" id="text-orge201bd6">
 <ul class="org-ul">
 <li>intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
 <ul class="org-ul">
@@ -324,22 +326,22 @@ vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --h
 </ul>
 </div>
 </div>
-<div id="outline-container-org1c84b7c" class="outline-3">
-<h3 id="org1c84b7c">AACS v1 KEY</h3>
-<div class="outline-text-3" id="text-org1c84b7c">
+<div id="outline-container-orgab32583" class="outline-3">
+<h3 id="orgab32583">AACS v1 KEY</h3>
+<div class="outline-text-3" id="text-orgab32583">
 <p>
 <code>09 F9 11 02 9D 74 E3 5B D8 41 56 C5 63 56 88 C0</code>
 </p>
 </div>
 </div>
-<div id="outline-container-org00dc78a" class="outline-3">
-<h3 id="org00dc78a"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h3>
+<div id="outline-container-orgd2082e5" class="outline-3">
+<h3 id="orgd2082e5"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h3>
 </div>
-<div id="outline-container-orga925f60" class="outline-3">
-<h3 id="orga925f60">HDCP key</h3>
-<div class="outline-text-3" id="text-orga925f60">
+<div id="outline-container-org21b482c" class="outline-3">
+<h3 id="org21b482c">HDCP key</h3>
+<div class="outline-text-3" id="text-org21b482c">
 <div class="org-src-container">
-<pre class="src src-sh" id="orgb0ac840">HDCP MASTER KEY (MIRROR THIS TEXT!)
+<pre class="src src-sh" id="org6ee44e1">HDCP MASTER KEY (MIRROR THIS TEXT!)
 
 This is a forty times forty element matrix of fifty-six bit
 hexadecimal numbers.
@@ -719,9 +721,20 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 </div>
 </div>
 </div>
-<div id="outline-container-orgbe89fc2" class="outline-3">
-<h3 id="orgbe89fc2">Sources</h3>
-<div class="outline-text-3" id="text-orgbe89fc2">
+<div id="outline-container-orge6e0ff6" class="outline-3">
+<h3 id="orge6e0ff6">Sources</h3>
+<div class="outline-text-3" id="text-orge6e0ff6">
+<ul class="org-ul">
+<li>Dovi spreasheet info for grade/master check <a href="https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview">https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview</a>#</li>
+<li>The Gamma 0.88 bugs occurs when one source is brighter than other. Due to Apple software conversion of NTSC 2.2 gamma to PC 2.5 gammer requiring them to be raised to the power of 0.88 (2.2/2.5)
+<ul class="org-ul">
+<li><code>fixlvls</code> in awsmfunc defaults to a gamma bug fix in 32-bit</li>
+</ul></li>
+<li>Amazon/CrunchyRoll/HBO Max/etc web-dls often have AR/green tint issues from rounding error when converting from masters.
+<ul class="org-ul">
+<li><a href="https://silentaperture.gitlab.io/mdbook-guide/filtering/detinting.html">https://silentaperture.gitlab.io/mdbook-guide/filtering/detinting.html</a> detint with expr ex <code>high_depth.std.Expr(["", "x 128 +"])</code> depending on planes</li>
+</ul></li>
+</ul>
 <p>
 Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infotool to change keyframe timings), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
 </p>
@@ -758,22 +771,22 @@ Opus - RFC extension to add ambisonic("sweetspot" for speakers) spatial sounds i
 </div>
 </div>
 
-<div id="outline-container-orgb22e41d" class="outline-3">
-<h3 id="orgb22e41d">ffmpeg</h3>
-<div class="outline-text-3" id="text-orgb22e41d">
+<div id="outline-container-orged34014" class="outline-3">
+<h3 id="orged34014">ffmpeg</h3>
+<div class="outline-text-3" id="text-orged34014">
 <ul class="org-ul">
 <li>vmaf score for comparing video streams</li>
 <li>Remove Captions <code>ffmpeg -i input.mkv -codec copy -bsf:v "filter_units=remove_types=6" output.mkv</code></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdeafe9a" class="outline-3">
-<h3 id="orgdeafe9a">HEVC/AVC</h3>
-<div class="outline-text-3" id="text-orgdeafe9a">
+<div id="outline-container-org3f9e702" class="outline-3">
+<h3 id="org3f9e702">HEVC/AVC</h3>
+<div class="outline-text-3" id="text-org3f9e702">
 </div>
-<div id="outline-container-org692d996" class="outline-4">
-<h4 id="org692d996">x265</h4>
-<div class="outline-text-4" id="text-org692d996">
+<div id="outline-container-org39981c8" class="outline-4">
+<h4 id="org39981c8">x265</h4>
+<div class="outline-text-4" id="text-org39981c8">
 <p>
 x265 &#x2013;crf 18 &#x2013;preset slower &#x2013;profile main10 &#x2013;output-depth 10 &#x2013;rc-lookahead 60 &#x2013;ctu 32 &#x2013;frame-threads 1 &#x2013;no-sao &#x2013;deblock -2:-2 &#x2013;qcomp 0.65 &#x2013;aq-mode 3 &#x2013;ref 6 &#x2013;bframes 16 &#x2013;merange 38
 x265 &#x2013;y4m - &#x2013;preset slow &#x2013;level-idc 5.1 &#x2013;high-tier &#x2013;input-depth 10 &#x2013;output-depth 10 &#x2013;rd 4 &#x2013;ref 5 &#x2013;psy-rd 2 &#x2013;psy-rdoq 1 &#x2013;no-rect &#x2013;no-amp &#x2013;aq-mode 4 &#x2013;no-hevc-aq &#x2013;aq-strength 0.9 &#x2013;ctu 64 &#x2013;ipratio 1.3 &#x2013;pbratio 1.2 &#x2013;no-cutree &#x2013;rc-lookahead 40 &#x2013;subme 5 &#x2013;me 3 &#x2013;merange 57 &#x2013;bframes 12 &#x2013;qcomp 0.6 &#x2013;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" &#x2013;colorprim bt2020 &#x2013;colormatrix bt2020nc &#x2013;transfer smpte2084 &#x2013;range limited &#x2013;max-cll "729,159" &#x2013;vbv-bufsize 160000 &#x2013;vbv-maxrate 160000 &#x2013;hdr10 &#x2013;hdr10-opt &#x2013;repeat-headers &#x2013;hrd &#x2013;aud &#x2013;deblock -2:-2 &#x2013;no-sao &#x2013;selective-sao 0 &#x2013;strong-intra-smoothing &#x2013;rskip 0 &#x2013;crf 15 &#x2013;limit-modes &#x2013;limit-refs 1 &#x2013;limit-tu 4 &#x2013;max-merge 4 &#x2013;tu-intra-depth 4 &#x2013;tu-inter-depth 4 &#x2013;b-intra &#x2013;weightb &#x2013;no-pmode &#x2013;chromaloc 2 &#x2013;no-frame-dup &#x2013;dolby-vision-profile 8.1 &#x2013;dolby-vision-rpu "RPU<sub>modified.bin</sub>" &#x2013;y4m &#x2013;output Testing.hevc &#x2013; 2&gt; Testing.log
@@ -819,16 +832,16 @@ min:0.0050 cd/m2, max: 4000 cd/m2 =&gt; L(40000000,50)
 </p>
 
 <p>
-&#x2013;max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level
+&#x2013;max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level if not listed
 </p>
 
 <p>
-Extract EL layer <code>ffmpeg -i "Remux.mkv" -c:v copy -vbsf hevc_mp4toannexb -f hevc - | dovi_tool demux --el-only -</code>
-extract the RPU <code>dovi_tool -m 0 extract-rpu EL.hevc</code> for EL or <code>ffmpeg -i input.mkv -c:v copy -bsf:v hevc_mp4toannexb -f hevc - | dovi_tool extract-rpu - -o RPU.bin</code> for profile 8
+Extract EL layer <code>ffmpeg -i "Remux.mkv" -c:v copy -vbsf hevc_mp4toannexb -f hevc - | dovi_tool demux --el-only 
+extract the RPU ~dovi_tool -m 0 extract-rpu EL.hevc</code> for EL or <code>ffmpeg -i input.mkv -c:v copy -bsf:v hevc_mp4toannexb -f hevc - | dovi_tool extract-rpu - -o RPU.bin</code> for profile 8
 crop dolby <code>dovi_tool editor RPU.bin -j edits.json</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-json" id="orgf75d3d5">{
+<pre class="src src-json" id="org7ca9d51">{
 "mode": 2,
   "active_area": {
       "crop": true,
@@ -855,13 +868,13 @@ L5 metadata offset black bars are 132 top and bottom for 1080p. 2x for 4k. 0 whe
 </div>
 </div>
 </div>
-<div id="outline-container-orgfe0de8d" class="outline-3">
-<h3 id="orgfe0de8d">AVC</h3>
-<div class="outline-text-3" id="text-orgfe0de8d">
+<div id="outline-container-org92f87dc" class="outline-3">
+<h3 id="org92f87dc">AVC</h3>
+<div class="outline-text-3" id="text-org92f87dc">
 </div>
-<div id="outline-container-org9481046" class="outline-4">
-<h4 id="org9481046">x264</h4>
-<div class="outline-text-4" id="text-org9481046">
+<div id="outline-container-orgc091279" class="outline-4">
+<h4 id="orgc091279">x264</h4>
+<div class="outline-text-4" id="text-orgc091279">
 <p>
 Ref
 </p>
@@ -1116,13 +1129,13 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-orgd5ec362" class="outline-3">
-<h3 id="orgd5ec362">AV1</h3>
-<div class="outline-text-3" id="text-orgd5ec362">
+<div id="outline-container-org9deff88" class="outline-3">
+<h3 id="org9deff88">AV1</h3>
+<div class="outline-text-3" id="text-org9deff88">
 </div>
-<div id="outline-container-org03bd52e" class="outline-4">
-<h4 id="org03bd52e">SVT-AV1</h4>
-<div class="outline-text-4" id="text-org03bd52e">
+<div id="outline-container-orgb717a54" class="outline-4">
+<h4 id="orgb717a54">SVT-AV1</h4>
+<div class="outline-text-4" id="text-orgb717a54">
 <ul class="org-ul">
 <li>fork <a href="https://github.com/gianni-rosato/svt-av1-psy/">https://github.com/gianni-rosato/svt-av1-psy/</a>
 <ul class="org-ul">
@@ -1150,13 +1163,13 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-org383e03d" class="outline-3">
-<h3 id="org383e03d">ripping</h3>
-<div class="outline-text-3" id="text-org383e03d">
+<div id="outline-container-org4a1872e" class="outline-3">
+<h3 id="org4a1872e">ripping</h3>
+<div class="outline-text-3" id="text-org4a1872e">
 </div>
-<div id="outline-container-org7629044" class="outline-4">
-<h4 id="org7629044">tools</h4>
-<div class="outline-text-4" id="text-org7629044">
+<div id="outline-container-orgb5797f6" class="outline-4">
+<h4 id="orgb5797f6">tools</h4>
+<div class="outline-text-4" id="text-orgb5797f6">
 <ul class="org-ul">
 <li>AnyDVDHD (redfox) free trail
 <ul class="org-ul">
@@ -1171,25 +1184,25 @@ The following settings, for now, probably don't merit an in-depth explanation as
 <li>brasero(w/libcss) iso copy</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org990be1a">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
+<pre class="src src-sh" id="org702e470">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd34891d" class="outline-3">
-<h3 id="orgd34891d">rescene</h3>
-<div class="outline-text-3" id="text-orgd34891d">
+<div id="outline-container-orgdc4fa1f" class="outline-3">
+<h3 id="orgdc4fa1f">rescene</h3>
+<div class="outline-text-3" id="text-orgdc4fa1f">
 <ul class="org-ul">
 <li>use srrdb for reference files</li>
 <li><code>srr.py FILE.srr</code></li>
 <li><code>srs.py FILE.srs FILE.mkv</code></li>
 </ul>
 </div>
-<div id="outline-container-org0beade6" class="outline-4">
-<h4 id="org0beade6">m2ts samples</h4>
-<div class="outline-text-4" id="text-org0beade6">
+<div id="outline-container-orgb593df9" class="outline-4">
+<h4 id="orgb593df9">m2ts samples</h4>
+<div class="outline-text-4" id="text-orgb593df9">
 <ul class="org-ul">
 <li>tsmuxer ~2.6.12 <a href="https://www.videohelp.com/software/tsMuxeR/old-versions">https://www.videohelp.com/software/tsMuxeR/old-versions</a></li>
 <li>First start by looking for the date this movie was released by the scene, don’t use any tsmuxer version newer than this date.</li>
@@ -1202,9 +1215,9 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-org78ea35a" class="outline-3">
-<h3 id="org78ea35a">tv</h3>
-<div class="outline-text-3" id="text-org78ea35a">
+<div id="outline-container-org5fdc642" class="outline-3">
+<h3 id="org5fdc642">tv</h3>
+<div class="outline-text-3" id="text-org5fdc642">
 <ul class="org-ul">
 <li>Secret life of zoo</li>
 </ul>
@@ -1292,6 +1305,50 @@ S05E06 is S09E01
 <p>
 S04E13 is SPECIAL
 </p>
+</div>
+</div>
+<div id="outline-container-orge17676c" class="outline-3">
+<h3 id="orge17676c">Prompt</h3>
+<div class="outline-text-3" id="text-orge17676c">
+<ul class="org-ul">
+<li></li>
+</ul>
+<p>
+Answer the following questions as best you can. You have access to the following tools:
+</p>
+
+<p>
+mediainfo makemkv mkvmerge ffmpeg awsmfunc vs-preview-rs x265 x264 dovi<sub>tool</sub> dolby-encoder
+</p>
+
+<p>
+The inputs are media file sources and the output is a combined source.
+</p>
+
+<p>
+Lets think step by step about how to convert the inputs into the desired output:
+</p>
+<ol class="org-ol">
+<li>Identify the sources containers with mediainfo</li>
+<li>Convert each source container to Matroska format with makemkv, mkvmege or ffmpeg</li>
+<li>Determine the encoder to use via the input sources. When a source contains HDR metadata use x265; use x264 for detail preservation.</li>
+<li>Extract the sources with HDR10+ metadata using dovi<sub>tool</sub></li>
+<li>Extract the sources with Dolby Vision enhancement layers using dovi tool</li>
+<li>Identify the sources with Dolby Vision Full enhancement layers dovi<sub>tool</sub> for use with vs-nlq</li>
+<li>Identify the presence of dirty lines and the crop needed for the source with awsmfunc. IMAX sources vary the crop needed at scenecuts</li>
+<li>Edit the Dolby Vision metadata with dovi<sub>tool</sub> for the cropped source</li>
+<li>When Dolby Vision or HDR10+ metadata are from different source containers then ensure the same HDR grade with awsmfunc</li>
+<li>Identify the CLL levels from the source. use 0,0 if not listed using HDR.</li>
+<li>Identify the colorspace from the source. use BT709 for non HDR.</li>
+<li>Determine the chromaloc from the source. HDR uses a chromaloc of 2 and non HDR a chromaloc of 0.</li>
+<li>Prepare several test encodes with different CRF settings of a few thousand frames. Use the previously gathered information for setting the metadata.</li>
+<li>Compare the test and source frames using awsmfunc with libplacebo tone mapped screens in vs-preview-rs</li>
+<li>Identify scenes with banding using awsmfunc</li>
+<li>Encode the audio to DD+ with dolby-encoding (ffmpeg produces sub par ac3)</li>
+<li>Combine source subtitles into the container with mkvmerge</li>
+<li>Align chapters to scenecuts with MKVmerge</li>
+<li>The file name should be of the form NAME.YEAR.RESOLUTION.SOURCE.AUDIO.VIDEO.mkv</li>
+</ol>
 </div>
 </div>
 </div>

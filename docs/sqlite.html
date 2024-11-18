@@ -9,21 +9,24 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga5df1d6">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0940c21">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org4f7f0b1" class="outline-2">
-<h2 id="org4f7f0b1">sqlite</h2>
-<div class="outline-text-2" id="text-org4f7f0b1">
+<div id="outline-container-org2eee190" class="outline-2">
+<h2 id="org2eee190">sqlite</h2>
+<div class="outline-text-2" id="text-org2eee190">
 </div>
-<div id="outline-container-orgdbdd46a" class="outline-3">
-<h3 id="orgdbdd46a">notes</h3>
-<div class="outline-text-3" id="text-orgdbdd46a">
+<div id="outline-container-orgcd4b121" class="outline-3">
+<h3 id="orgcd4b121">notes</h3>
+<div class="outline-text-3" id="text-orgcd4b121">
 <ul class="org-ul">
-<li>Uses bytecode instead of AST like postgres <a href="https://sqlite.org/draft/whybytecode.html">https://sqlite.org/draft/whybytecode.html</a></li>
+<li>Uses bytecode instead of AST like postgres <a href="https://sqlite.org/draft/whybytecode.html">https://sqlite.org/draft/whybytecode.html</a>
+<ul class="org-ul">
+<li>maybe use reval for compiler?</li>
+</ul></li>
 <li><a href="https://github.com/mmomtchev/sqlite-wasm-http">https://github.com/mmomtchev/sqlite-wasm-http</a> for httpvfs via range headers
 <ul class="org-ul">
 <li><a href="https://github.com/mlin/sqlite_web_vfs">https://github.com/mlin/sqlite_web_vfs</a> as extension</li>
@@ -45,6 +48,13 @@
 <li>C source can be compiled to WASM/Javascript <a href="https://sqlite.org/fiddle/">sqlite.org/fiddle</a></li>
 <li>Replication options
 <ul class="org-ul">
+<li>sqlite<sub>rysnc</sub>
+<ul class="org-ul">
+<li>built in to standard sqlite tools.</li>
+<li>Uses virtual db table extension.</li>
+<li>opens transaction, hashes differences by page size and copies the database page blobs to attached database.</li>
+<li>both databases require same page size</li>
+</ul></li>
 <li>dqlite
 <ul class="org-ul">
 <li>custom c library by canonical</li>
@@ -102,7 +112,7 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 <li>site database</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org223e622">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="org56b7f5b">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
 PRAGMA page_size=512;
 SAVEPOINT ar;
@@ -146,14 +156,14 @@ VACUUM;
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org13f49ea">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="org4b6d515">-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orge748baf">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="orgad3365c">(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -173,11 +183,11 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
 </div>
 </div>
 
-<div id="outline-container-org05996c2" class="outline-3">
-<h3 id="org05996c2">site search js/sql</h3>
-<div class="outline-text-3" id="text-org05996c2">
+<div id="outline-container-org65d447f" class="outline-3">
+<h3 id="org65d447f">site search js/sql</h3>
+<div class="outline-text-3" id="text-org65d447f">
 <div class="org-src-container">
-<pre class="src src-javascript" id="org79c8719">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+<pre class="src src-javascript" id="org48bb7c7">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:
@@ -230,7 +240,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org03787a5">onmessage = (e) =&gt; {
+<pre class="src src-javascript" id="org8df16f7">onmessage = (e) =&gt; {
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3

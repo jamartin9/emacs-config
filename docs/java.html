@@ -9,19 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgfdbb0f6">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org8c48fdd">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgbf76b87" class="outline-2">
-<h2 id="orgbf76b87">java</h2>
-<div class="outline-text-2" id="text-orgbf76b87">
+<div id="outline-container-org96088e2" class="outline-2">
+<h2 id="org96088e2">java</h2>
+<div class="outline-text-2" id="text-org96088e2">
 <ul class="org-ul">
 <li><code>alias javaListProps="java -server -XX:+PrintFlagsFinal -XX:+UnlockDiagnosticVMOptions --version"</code></li>
 <li><code>alias javaToolOptions="export JAVA_TOOL_OPTIONS='-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=heapdump.hprof -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true -Xlog:gc:gc.log:utctime,uptime,tid,level:filecount=10,filesize=128m -XX:NativeMemoryTracking=detail -XX:+PreserveFramePointer'"</code></li>
 <li><code>-XX:+UseTransparentHugePages -XX:+AlwaysPreTouch</code></li>
+<li><code>-XX:+PerfDisableSharedMem</code></li>
+<li><code>-XX:+UseStringDeduplication</code></li>
 <li>ZGC takes ~3% of heap</li>
 <li>6 months release</li>
 <li>3 year lts release</li>
@@ -32,15 +34,26 @@
 <li>microprofile for javaee</li>
 <li>sealed classes</li>
 <li>records</li>
+<li>babylon
+<ul class="org-ul">
+<li>trition kernels</li>
+<li>bytecode transformations and auto diff
+<ul class="org-ul">
+<li><a href="https://openjdk.org/projects/babylon/articles/auto-diff">https://openjdk.org/projects/babylon/articles/auto-diff</a></li>
+</ul></li>
+</ul></li>
+<li>virtual threads with loom</li>
+<li>vector API and FFI with panama</li>
+<li>valhalla for value types (objects without identity)</li>
 <li><code>jcmd &lt;pid&gt; JFR.view</code> in 21+</li>
 <li>AutoCloseable interface for try with resources</li>
 </ul>
 </div>
-<div id="outline-container-org48dc10d" class="outline-3">
-<h3 id="org48dc10d">spark jetty websocket wrapper</h3>
-<div class="outline-text-3" id="text-org48dc10d">
+<div id="outline-container-org3fcb0ca" class="outline-3">
+<h3 id="org3fcb0ca">spark jetty websocket wrapper</h3>
+<div class="outline-text-3" id="text-org3fcb0ca">
 <div class="org-src-container">
-<pre class="src src-java" id="org99f572d">import io.reactivex.*;
+<pre class="src src-java" id="org6f52893">import io.reactivex.*;
 import org.eclipse.jetty.websocket.api.Session;
 import wrapper.SocketWrapper;
 import static spark.Spark.*;
@@ -75,7 +88,7 @@ public class Main{
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-java" id="org74558ea">package wrapper;
+<pre class="src src-java" id="org044b2bb">package wrapper;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
