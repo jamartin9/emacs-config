@@ -33,22 +33,32 @@ SQLite FTS Regex Search
 
 #+NAME: sitemap
 #+BEGIN_SRC elisp :tangle no :exports results :results raw
-    (require 'org-roam-graph)
-    (setq-local org-roam-db-location (concat (file-name-as-directory user-emacs-directory)
-                                             (file-name-as-directory ".local")
-                                             (file-name-as-directory "cache")
-                                             "org-roam.db"))
-    (let* (;(current-file (or load-file-name buffer-file-name))
-           ;(current-id (caar (org-roam-db-query [:select id :from nodes :where (= file $s1)] current-file)))
-           (current-links (org-roam-graph--connected-component "30ea5e38-9b41-4bcd-8631-76821e93e294" 0))
-           (return-string (list "- Site Map: \n")))
-    (dolist (element current-links)
-      (let* ((id (format "%s" (nth 1 element)))
-             ;(id-from (format "%s" (nth 0 element))); bucket froms for nesting
-             (title (caar (org-roam-db-query [:select title :from nodes :where (= id $s1)] id))))
-      ;(message "ID from %s is for %s" id-from id)
-      (if title ; get title for each linked node id
-        (add-to-list 'return-string (format "  - [[id:%s][%s]] \n" id title))))); TODO sitemap nested tree unlike org-publish
-    ;(message "return string is: \n %s" (mapconcat 'identity (reverse return-string)))
-    (format "%s" (mapconcat 'identity (reverse return-string))))
+(require 'org-roam-graph)
+(setq-local org-roam-db-location (concat (file-name-as-directory user-emacs-directory)
+                                         (file-name-as-directory ".local")
+                                         (file-name-as-directory "cache")
+                                         "org-roam.db"))
+
+(defun jam/org-roam-get-children (node-id indent-string)
+  "Return org list of children for NODE-ID all indented by INDENT-STRING"
+ (let ((links (org-roam-graph--connected-component node-id 1))
+        (return-string (list "")))
+   (dolist (element links)
+     (let* ((id (format "%s" (nth 1 element)))
+            (title (caar (org-roam-db-query [:select title :from nodes :where (= id $s1)] id))))
+       (if (and (not (string-equal node-id id)) title) ; skip self node
+           (add-to-list 'return-string (concat indent-string (format "- [[id:%s][%s]] \n" id title))))))
+   (format "%s" (mapconcat 'identity return-string))))
+
+(let* ((current-links (org-roam-graph--connected-component "30ea5e38-9b41-4bcd-8631-76821e93e294" 0))
+       (return-string (list "- Site Map: \n"))); sitemap/index/navbar as a INCLUDE in each page serves as a universal query point for all nodes
+  (dolist (element current-links)
+    (let* ((id (format "%s" (nth 1 element)))
+           (title (caar (org-roam-db-query [:select title :from nodes :where (= id $s1)] id))))
+      (if title ; titles are linked nodes
+          (progn ; add node and descendants
+            (add-to-list 'return-string (format "  - [[id:%s][%s]] \n" id title))
+            (add-to-list 'return-string (jam/org-roam-get-children id "    "))))))
+  ;(message "return string is: \n %s"  (format "%s" (mapconcat 'identity (reverse return-string))))
+  (format "%s" (mapconcat 'identity (reverse return-string))))
 #+END_SRC
