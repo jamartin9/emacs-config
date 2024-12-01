@@ -1032,6 +1032,8 @@
   - Free implementation of Play Services
 ** microsoft/checkedc
   - Checked C is an extension to C that lets programmers write C code that is guaranteed by the compiler to be type-safe.  The goal is to let people easily make their existing C code type-safe and eliminate entire classes of errors. Checked C does not address use-after-free errors. This repo has a wiki for Checked C, sample code, the specification, and test code.
+** microsoft/demikernel
+  - Kernel-Bypass LibOS Architecture
 ** microsoft/DirectXShaderCompiler
   - This repo hosts the source for the DirectX Shader Compiler which is based on LLVM/Clang.
 ** MicrosoftDocs/WSL
@@ -2008,6 +2010,8 @@
   - Easy function multiversioning for Rust
 ** CeleritasCelery/rune
   - Rust VM for Emacs
+** ChemAI-Lab/molpipx
+  - std::autodiff for a differentiable version of Permutationally Invariant Polynomial (PIP) models in JAX and Rust
 ** clap-rs/clap
   - A full featured, fast Command Line Argument Parser for Rust
 ** cloudflare/boringtun
@@ -2044,6 +2048,8 @@
   - toolchain to enable the use of the Rust programming language in safety-critical environments
 ** flamegraph-rs/flamegraph
   - Easy flamegraphs for Rust projects and everything else, without Perl or pipes <3
+** fortress-build/whirlwind
+  - fully asynchronous, sharded hashmap for Rust.
 ** gfx-rs/naga
   - Universal shader translation in Rust
 ** gfx-rs/wgpu

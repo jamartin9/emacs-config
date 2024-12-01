@@ -30,6 +30,7 @@
         ;(if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
         (setq use-package-always-ensure t
               package-pinned-packages '((eat . "nongnu")
+                                        (gptel . "nongnu")
                                         ;(yaml-mode . "nongnu")
                                         (which-key . "gnu")
                                         (company . "gnu")

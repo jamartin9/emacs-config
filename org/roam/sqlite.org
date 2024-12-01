@@ -23,6 +23,7 @@
 - single flat file database
 - C source can be compiled to WASM/Javascript [[https://sqlite.org/fiddle/][sqlite.org/fiddle]]
 - Replication options
+  - session extension or hctree
   - sqlite_rysnc
     - built in to standard sqlite tools.
     - Uses virtual db table extension.

@@ -10,7 +10,7 @@
 * podman
 ** podman notes
 - rootless containers with kernel >= 5.11 overlayfs
-  -  ~rm -rf ~/.{config,local/share}/containers /run/user/$(id -u)/{libpod,runc,vfs-*}~ or ~podman system migrate~ or ~podman system reset~
+  - ~rm -rf ~/.{config,local/share}/containers /run/user/$(id -u)/{libpod,runc,vfs-*}~ or ~podman system migrate~ or ~podman system reset~
   - ~touch /etc/subuid /etc/subgid && usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $(whoami)~ for pid/gid
   - needs cgroupv2(grub cmdline and Delegate user service), slirp4netns for networking, fuse-overlayfs for storage
   - set ~unqualified-search-registries = ["docker.io"]~ in ~/etc/containers/storage.conf~ for default searching to docker for kind
@@ -23,6 +23,7 @@
   - add ~--hooks-dir=/usr/share/containers/oci/hooks.d/ --security-opt=label=disable --security-opt=label=type:nvidia_container_t -e NVIDIA_VISIBLE_DEVICES=all  -e NVIDIA_DRIVER_CAPABILITIES=all~ to podman run
     - podman play kube [[https://github.com/containers/podman/issues/17833][BUG]] that does not map device IDs for nvidia gpus. use cli ~--device nvidia.com/gpu=all~
       - may need ~sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml~
+      - ollama ex ~podman run --rm -it --device nvidia.com/gpu=all --security-opt=label=disable --env NVIDIA_DRIVER_CAPABILITIES=all --env NVIDIA_VISIBLE_DEVICES=all -p 11434:11434 -v /gnu/git/llms/ollama-models/:/root/.ollama --name ollama docker.io/ollama/ollama:latest~
 - podman-compose does not cleanup networks (docker_default) which uses dnsmasq with the old configuration; run podman network rm on subsequent runs
 - podman container runtime config for crun can be built with wasm-edge runtime support and used via ~module.wasm.image/variant=compat-smart~ annotation
 - ~podman load --log-level=debug~ for verbosity

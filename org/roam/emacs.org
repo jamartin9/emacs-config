@@ -112,7 +112,6 @@
 - noweb can link code verbatium with <<CodeBlockName>> or evaluate it with <<CodeBlockName>>()
 - ~#+INCLUDE "file.org::selector" :only-contents t~ to select heading contents to include from other files
 - disable tangling with ~:tangle no~ on src blocks
-
 #+NAME: timestamp-readme
 #+BEGIN_SRC emacs-lisp :tangle emacs.sh :shebang "\":\"; emacs -Q --script emacs.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
 (ignore-errors
@@ -125,5 +124,54 @@
       (set-file-times (concat base-dir "emacs.html") (time-add readme-time (seconds-to-time 1))))))
 #+END_SRC
 
+*** emacs config notes
+- early-init will use guix-home packages if emacs package directory exists inside it otherwise uses use-package to download
+- Pure elisp instead of makefiles and shell scripts
+  - sesquicolon 'shebang'
+  - build system
+    - runs any untangled elisp scripts
+    - sets timestamps
+    - exports custom elements for html/org-roam and expands INCLUDE directives
+    - build site
+      - git worktree
+      - sitemap self untangles an org document
+        - site search uses sqlite fts index and stores the db in opfs for reuse
+      - copy js, css, png, sqlite db, etc by timestamp
+        - migrated css from custom hand rolled to bulma then to pico for better defaults and less configuration
+      - navbar contains index/sitemap links
+        - INCLUDE in each page for css/navbar
+    - wraps couple common commands
+- org roam dialies are a date tree journal
+- tangled files set own timestamps in scripts
+- defaults copied from doom/spacemacs when dropped
+- all keys bounds under C-c c
+- prefer defaults when possible
+- prefer eshell for tramp traversal
+- gnus over newsticker as more backends and own the frame
+- vendored totp implementation for authinfo
+- prefix named interactive commands over inline functions for M-x and binds
+- added mouse clicking to command buffer
+  - special case handling of Files:
+- android support with termux build
+- compile init and package-quickstart with jam/compile-init-bytecode
+- save files locally under .local/cache and .local/etc
+- do not hardcode paths and use xdg
+- tricks to speed up init
+  - defer package loading with use-package
+  - skip packages at startup
+  - add memory for skipping gc
+  - unbinding file-handler matching
+  - native code
+  - package-quickstart
+  - autoload functions
+  - dump saves a little time
+  - after-init hooks
+- gc with idle timer
+- cua for copy/paste
+- xterm/broadwayd/daemon support
+- transparent background
+- extra mouse support
+- sound alert
+- packages in README for extras
 ** emacs-config README
 #+INCLUDE: "../../README.org::emacs-config" :only-contents t

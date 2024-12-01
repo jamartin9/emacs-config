@@ -43,7 +43,8 @@
 (bind-keys :prefix-map jam/file :prefix "C-c c f"
            ("d" . dired)
            ("f" . recentf-open)
-           ("i" . image-crop))
+           ("i" . image-crop)
+           ("s" . jam/screenshot))
 (bind-keys :prefix-map jam/quit :prefix "C-c c q"
            ("f" . delete-frame)
            ("d" . server-start) ;daemon
@@ -700,6 +701,18 @@
                 ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
 
+(use-package gptel ; optional curl
+  ;:pin nongnu
+  :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file)
+  :config
+  ;(setenv "OLLAMA_MODELS" (concat user-emacs-directory (file-name-as-directory ".local") "ollama-models")); ollama run llama3.2-vision
+  (setq gptel-model 'llama3.2-vision;qwen2.5-coder:7b; qwq
+        gptel-backend (gptel-make-ollama "Ollama" ;gptel-make-openai "llama-cpp" :protocol "http"
+                                         :host "localhost:11434"
+                                         :models '(llama3.2-vision :capabilities (media) ;:mime-types ("image/jpeg" "image/png")
+                                                                   );(qwen2.5-coder:7b);
+                                         :stream t)))
+
 ;(use-package combobulate
 ;  :init (setq combobulate-key-prefix "C-c e")
 ;  :hook (((python-ts-mode yaml-ts-mode) . combobulate-mode))
@@ -744,6 +757,16 @@
   (require 'package) ; recompile autoloads
   (package-quickstart-refresh)
   (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
+
+;;;###autoload
+(defun jam/screenshot ()
+  "Save screenshot to local cache directory"
+  (interactive)
+  (let* ((image (x-export-frames nil 'png))
+         (image-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (format-time-string "Screenshot-%Y-%m-%d-%T.png"))))
+    (with-temp-file image-file
+      (insert image))
+    (message "Saved Screenshot %s" image-file)))
 
 ;;; TOTP
 ;;;###autoload
