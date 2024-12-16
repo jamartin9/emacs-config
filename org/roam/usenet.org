@@ -26,6 +26,7 @@
 - Newsgroupdirect/Newsdemon have extra storage not shared with usenetexpress backbone of recent articles
   - IHAVE with usenetexpress to submit old articles https://www.usenetexpress.com/blog/post/20211015_ihave/
     - nyuu has IHAVE support (dont randomize name or use raw-article flag)
+    - https://github.com/Tensai75/nzbrefresh reposter example
   - open peering with usenet express https://usenetexpress.com/peering/
 - usenet data stats https://top1000.anthologeek.net/#stats
 - independent backbones

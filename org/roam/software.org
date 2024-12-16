@@ -46,6 +46,7 @@
 - Aumann's agreement theorem - There is no agreeing to disagree
 - Law of Large Numbers - large results over time trend toward the average
   - ex. more code, more bugs
+- Mind Projection Fallacy - when someone thinks that the way they see the world reflects the way the world really is.
 ** Common
 - Birthday Problem - 50% chance for 23 random people to share a birthday
 - release cadence schedule sets expectations
@@ -58,7 +59,7 @@
     - jdk releases
     - c++14/17/20/23
     - objective C to swift
-*** Code review
+** Code review
 - Humility should be paramount when submitting code to a location you do not *OWN*
 - Code is meant to be updated by humans but ran by processors
   - machine semantics

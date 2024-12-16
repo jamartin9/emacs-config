@@ -15,12 +15,14 @@ Having many flavors makes some lovely hot garbage...
 - snaps and apt for packages
 - zfs by default
 - aws EKS for baremetal
+  - EKS auto mode
+  - EKS-D is the distro that can be self hosted through snap, baremetal, kubeadm etc
   - preinstalled components
     - metallb for load balancer
     - Cilium CNI for networking
     - Flux for gitops
     - eksctl for control
-  - same pod and node limit at kubernetes (5000 nodes 110 pods per node 150000 total pods)
+  - same pod and node limit at kubernetes (5000 nodes, 110 pods per node, 150000 total pods, 300000 total containers)
   - build own ova https://github.com/aws/eks-distro-build-tooling
   - can run locally with containers (based on amazon linux 2)
     - requires docker with cgroupsv1

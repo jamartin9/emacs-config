@@ -616,8 +616,8 @@
    gnus-secondary-select-methods '(;(nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
                                    ;(nnatom "github.com/SChernykh/p2pool/releases.atom") (nnatom "github.com/monero-project/monero/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
                                    ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
-                                   ;(nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
-                                   ;(nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
+                                   (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
+                                   (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
                                    ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
                                    )
    gnus-use-cache t
@@ -656,8 +656,8 @@
                                 ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero" "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool")
                                 ("Gnus")))
        (gnus-topic-set-parameters "gmail" '((display . 200))) (gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
-       ;(gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
-       ;(gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
+       (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
+       (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
        ;(gnus-subscribe-hierarchically "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
        ;(gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool") (gnus-subscribe-hierarchically "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero")
        (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix"))))
@@ -706,11 +706,12 @@
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file)
   :config
   ;(setenv "OLLAMA_MODELS" (concat user-emacs-directory (file-name-as-directory ".local") "ollama-models")); ollama run llama3.2-vision
-  (setq gptel-model 'llama3.2-vision;qwen2.5-coder:7b; qwq
+  (setq gptel-model 'llama3.2-vision;qwen2.5-coder:14b; qwq; use unsloth variants for vision accuracy
         gptel-backend (gptel-make-ollama "Ollama" ;gptel-make-openai "llama-cpp" :protocol "http"
                                          :host "localhost:11434"
-                                         :models '(llama3.2-vision :capabilities (media) ;:mime-types ("image/jpeg" "image/png")
-                                                                   );(qwen2.5-coder:7b);
+                                         :models '((llama3.2-vision :capabilities (media));:mime-types ("image/jpeg" "image/png")
+                                                   (qwq)
+                                                   (qwen2.5-coder:14b))
                                          :stream t)))
 
 ;(use-package combobulate
@@ -723,6 +724,17 @@
 ;  :after eglot
 ;  :config (eglot-x-setup)
 ;  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
+
+;(use-package atomic-chrome
+;  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev :newest)
+;  :commands (atomic-chrome-start-server)
+;  :config
+;  (setq-default atomic-chrome-buffer-open-style 'frame)
+;  (setq-default atomic-chrome-auto-remove-file t)
+;  (setq-default atomic-chrome-url-major-mode-alist
+;                '(("github.com" . gfm-mode)
+;                  ("gitlab.com" . gfm-mode)))
+;  (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
 
 ;;;###autoload
 (defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-string (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil nil (buffer-file-name (current-buffer))))) (find-file (format "/sudo::%s" file)))

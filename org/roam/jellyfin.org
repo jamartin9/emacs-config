@@ -9,6 +9,23 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Jellyfin
 ** notes
+- BUG "Long Movies Crash Roku Player"
+  - HLS Playlist size is getting too large (too many segments) as roku has a limit of HLS playlist request size of < ~4mb
+    - Not related to actual file size
+  - Transcode may make more segments than direct stream
+    - directStream/transcodes
+      - transcode video and audio fails for lotr fellowship of UHD
+        - fails on request
+        - works when bitrate limit set to 10
+          - copies DD+ audio
+      - transcode video only success (10bit to 8bit nvenc h264 from 265, aac 2.0 80k passthrough)
+        - 10K bitrate limit on client and server
+        - m3u8 playlist file size of 263367 or 258K ~4557 segments
+          - two and half men s5e9 is 12K ~208 segments for comparison
+      - Directplay (whole file)
+        - works
+      - DirectStream (audio only transcode)
+        - works for 1/3 lotr
 - change .net GC to Server in ~/etc/default/jellyfin~ ie ~COMPlus_gcServer=1~ for lower cpu but more ram usage
 - ffmpeg needs patched with -force_dts_monotonicity for streams with adds/interrupts
 - [[https://emby.media/support/articles/Strm-Files.html][STRM]] files for remote streaming

@@ -19,6 +19,7 @@
 - goblins adding wasm support for distributed objects
 - guile wasm https://gitlab.com/spritely/guile-hoot-updates/
 - sussmans scheme book on reusable programs uses generics and propagator model (uses MIT scheme)
+  - Propagator model reuse across problem domains (SAT, Datalog, Functional Reactive Programming, etc) https://www.youtube.com/watch?v=0igYOKcIWUs
 #+NAME: guile-script
 #+BEGIN_SRC guile :tangle no
 ":"; guile -e main -s $0 $@; exit $?

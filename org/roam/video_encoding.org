@@ -666,29 +666,30 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
   - ~fixlvls~ in awsmfunc defaults to a gamma bug fix in 32-bit
 - Amazon/CrunchyRoll/HBO Max/etc web-dls often have AR/green tint issues from rounding error when converting from masters.
   - https://silentaperture.gitlab.io/mdbook-guide/filtering/detinting.html detint with expr ex ~high_depth.std.Expr(["", "x 128 +"])~ depending on planes
-Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infotool to change keyframe timings), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
 
-UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
-Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
-For HDR to SDR tonemap screens for colors, gamut compression BT.2407, bit depth reduction to 8bits, change container from H.265 to H.264
-Dolby Vision is 12 bit with high dynamic range and metadata. FEL can enhance grain/details. MEL otherwise.
-HDR10+ is 10 bit with high dynamic range
-HDR is 10 bit and static
+- Bluray - Chapter names (get from dvd edit with mkvtoolsnix. sync by using infotool to change keyframe timings), compare bitrates of sources, cinavia protection(transcode audio or use dvds). BT.709 colorspace 8 bit, m2ts
+- UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
+- Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
+- For HDR to SDR tonemap screens for colors, gamut compression BT.2407, bit depth reduction to 8bits, change container from H.265 to H.264
+- Dolby Vision is 12 bit with high dynamic range and metadata. FEL can enhance grain/details. MEL otherwise.
+- HDR10+ is 10 bit with high dynamic range
+- HDR is 10 bit and static
 
-DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs. --colormatrix smpte170m --colorprim smpte170m --transfer smpte170m (for NTSC). --colormatrix bt470bg --colorprim bt470bg --transfer bt470bg (for PAL). _Matrix frame property in vs.
+- DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs. --colormatrix smpte170m --colorprim smpte170m --transfer smpte170m (for NTSC). --colormatrix bt470bg --colorprim bt470bg --transfer bt470bg (for PAL). _Matrix frame property in vs.
 
-WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter), .ts
+- WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter), .ts
 
-Audio options:
-AAC for directors (usually 2.0 channel)
-Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p, uses dialnorm tho that lowers db range compared to DTS. DD+ with dolby encoding engine and https://github.com/pcroland/deew (windows version for truehd encoding)
-Lossless DTS for 1080p (DTS passthrough)
-TrueHD - can convert to flac for compat (AC3 stream inside for compat), encode with 'Dolby Encoding Engine'
-DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
-extract core with eac3to or ~ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts~
-Downmix and transcode to opus at 80Kbs ~ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus~
-PCM - Bluray
-Opus - RFC extension to add ambisonic("sweetspot" for speakers) spatial sounds instead of objects like atmos. Both use fixed position listener.
+- Audio options:
+  - AAC for directors (usually 2.0 channel)
+  - Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p, uses dialnorm tho that lowers db range compared to DTS. DD+ with dolby encoding engine and https://github.com/pcroland/deew (windows version for truehd encoding)
+    - 7.1 sources DEE swaps Ls Rs with Lrs Rrs (deew fixes)
+  - Lossless DTS for 1080p (DTS passthrough)
+  - TrueHD - can convert to flac for compat (AC3 stream inside for compat), encode with 'Dolby Encoding Engine'
+  - DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
+    - extract core with eac3to or ~ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts~
+  - Downmix and transcode to opus at 80Kbs ~ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus~
+  - PCM - Bluray
+  - Opus - RFC extension to add ambisonic("sweetspot" for speakers) spatial sounds instead of objects like atmos. Both use fixed position listener. Has ML extension for VoIP.
 
 ** ffmpeg
 - vmaf score for comparing video streams
@@ -945,6 +946,10 @@ youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cook
 - If the above doesn’t work, start again with default settings, load the main movie m2ts and select M2TS muxing, then on the Split & Cut tab select Enable cutting, try initially with Start = 0:05:00.000 and End = 0:06:00.000, check the byte size against whats in srrdb.com 1, if no match then try again with Start = 0:06:00.000 and End = 0:07:00.000, or any other 60 second block in the first 10 min of the movie. Extend the End time by a few seconds if the byte size is a little short.
 - Try different versions of tsmuxer, you should eventually get the correct sample file with same crc32.
 - Samples are usually taken from within the first 10 min of the movie.
+** movies
+- https://caps-a-holic.com/c.php?https://caps-a-holic.com/c.php?a=1&x=603&y=301&d1=15009&d2=5245&s1=156558&s2=49011&l=0&i=2&go=1 UHD issues in LotR
+- Mousehunt has a teal filter on BD but not web
+- open matte can show more of the scene by changing the AR (bad if squashed)
 ** tv
 - Secret life of zoo
 S01E01-S01E06 is same

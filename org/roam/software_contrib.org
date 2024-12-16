@@ -18,6 +18,7 @@
       - freebsd used sysctl support for hw temp sensors
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
+      - sysinfo added freebsd ufs io with geom?
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
     - hide swap when not used in basic mode
     - bugfixed freebsd build / percentage toggle
@@ -25,8 +26,10 @@
   - [[https://github.com/ClementTsang/bottom/pull/1276][added gpu process, power and utilization support]]
     - bugfixed battery out of bounds
     - maintainer chose to remove util/power until separate widget
-      - outlined plan for linux intel support with memfd drm proc info
+      - [[https://github.com/ClementTsang/bottom/issues/298][outlined plan for linux intel/amd support with memfd drm proc info]]
+        - intel gpus need ioctls from mesa/drm ~DRM_I915_QUERY_MEMORY_REGIONS~
   - [[https://github.com/ClementTsang/bottom/pull/1362][updated tui library]]
+  - [[https://github.com/ClementTsang/bottom/issues/1629][helped troubleshoot gpu issues]]
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine

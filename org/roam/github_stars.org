@@ -656,8 +656,6 @@
   - Tamper Dev is an extension that allows you to intercept and edit HTTP/HTTPS requests and responses as they happen without the need of a proxy. Works across all operating systems (including Chrome OS).
 ** google/wycheproof
   - Project Wycheproof tests crypto libraries against known attacks.
-** google/zerocopy
-  - Zero copy serialization for rust
 ** google/zetasql
   - ZetaSQL - Analyzer Framework for SQL
 ** gorhill/uMatrix
@@ -1882,6 +1880,8 @@
   - Segment Anything for Stable Diffusion WebUI
 ** coqui-ai/TTS
   - a deep learning toolkit for Text-to-Speech, battle-tested in research and production
+** dmlc/xgboost
+  - Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library, for Python, R, Java, Scala, C++ and more. Runs on single machine, Hadoop, Spark, Dask, Flink and DataFlow. For tabular regression decision tree data.
 ** gaurav-arya/StochasticAD.jl
   - Research package for automatic differentiation of programs containing discrete randomness.
 ** ggerganov/llama.cpp
@@ -2002,6 +2002,8 @@
   - Build secure-by-design applications that can Trust Data-in-Motion. Orchestrate end-to-end encryption, mutual authentication, key management, credential management & authorization policy enforcement — at scale.
 ** burn-rs/burn
   - BURN: Burn Unstoppable Rusty Neurons
+** BurntSushi/memchr
+  - Optimized string search routines for Rust.
 ** bytecodealliance/cap-std
   - Capability-oriented version of the Rust standard library
 ** bytecodealliance/rustix
@@ -2054,6 +2056,8 @@
   - Universal shader translation in Rust
 ** gfx-rs/wgpu
   - Safe and portable GPU abstraction in Rust, implementing WebGPU API.
+** google/zerocopy
+  - Zero copy serialization for rust
 ** greatest-ape/aquatic
   - High-performance open BitTorrent tracker (UDP, HTTP, WebTorrent)
 ** gschup/ggrs
@@ -2106,6 +2110,8 @@
   - Fast, simple, reliable benchmarking for Rust projects
 ** org-rs/org-rs
   - org-mode parser rewrite in Rust
+** pacak/cargo-show-asm
+  - cargo subcommand showing the assembly, llvm-mca, LLVM-IR and MIR generated for Rust code
 ** panamax-rs/panamax
   - Mirror rustup and crates.io repositories, for offline Rust and cargo usage.
 ** pelikan-io/pelikan
@@ -2152,6 +2158,8 @@
   - safe abstraction over SIMD instructions
 ** sbstp/rust-igd
   - Internet Gateway Device (UPNP) client
+** sched-ext/scx
+  - sched_ext schedulers and tools like scx_rustland
 ** smoltcp-rs/smoltcp
   - a smol tcp/ip stack
 ** spacejam/tla-rust
@@ -2180,6 +2188,8 @@
   - Application level tracing for Rust.
 ** tower-rs/tower
   - Tower is a library of modular and reusable components for building robust networking clients and servers.
+** tursodatabase/limbo
+  - Limbo is a work-in-progress, in-process OLTP database management system, compatible with SQLite.
 ** warp-tech/russh
   - Rust SSH client & server library
 ** wasix-org/cargo-wasix
@@ -2187,10 +2197,11 @@
 ** yewstack/yew
   - Rust / Wasm framework for building client web apps
 
-
 * utils
 ** alacritty/alacritty
   - A cross-platform, OpenGL terminal emulator.
+** andreas-abel/uiCA
+  - uops.info Code Analyzer for intel bottleneck performance analysis
 ** ansible/ansible
   - Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain. Automate everything from code deployment to network configuration to cloud management, in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com.
 ** Arc-Compute/LibVF.IO
@@ -2279,6 +2290,8 @@
   - Jitsi Meet - Secure, Simple and Scalable Video Conferences that you use as a standalone app or embed in your web application.
 ** jonls/redshift
   - Redshift adjusts the color temperature of your screen according to your surroundings. This may help your eyes hurt less if you are working in front of the screen at night.
+** KarimAziev/chrome-emacs
+  - Chrome and Firefox extension designed for bi-directional editing from Emacs, providing cursor and scroll synchronization, auto-major mode detection, and support for most online editors.
 ** keylase/nvidia-patch
   - This patch removes restriction on maximum number of simultaneous NVENC video encoding sessions imposed by Nvidia to consumer-grade GPUs.
 ** kimono-koans/httm

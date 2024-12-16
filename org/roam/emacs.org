@@ -20,6 +20,8 @@
   - android port of fdroid is old and branch is unmerged; newer builds are on [[https://sourceforge.net/projects/android-ports-for-gnu-emacs/][sourceforge]]
     - custom build of termux for supporting utils
 - signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
+- guile scheme port of emacs lisp https://codeberg.org/ramin_hal9001/gypsum/
+- guile-emacs project https://git.hcoop.net/bpt/emacs.git
 #+NAME: signal-cli
 #+BEGIN_SRC emacs-lisp :tangle no
 (use-package! signal-msg ; https://github.com/AsamK/signal-cli
@@ -148,12 +150,10 @@
 - prefer defaults when possible
 - prefer eshell for tramp traversal
 - gnus over newsticker as more backends and own the frame
-- vendored totp implementation for authinfo
 - prefix named interactive commands over inline functions for M-x and binds
 - added mouse clicking to command buffer
   - special case handling of Files:
 - android support with termux build
-- compile init and package-quickstart with jam/compile-init-bytecode
 - save files locally under .local/cache and .local/etc
 - do not hardcode paths and use xdg
 - tricks to speed up init
@@ -166,6 +166,8 @@
   - autoload functions
   - dump saves a little time
   - after-init hooks
+  - setq inhibits-*
+  - disable frame features without loading
 - gc with idle timer
 - cua for copy/paste
 - xterm/broadwayd/daemon support
@@ -173,5 +175,19 @@
 - extra mouse support
 - sound alert
 - packages in README for extras
+  - functions under ~M-x jam/~ prefix
+    - sudo-edit
+    - auth-display
+      - vendored totp implementation for authinfo password storage
+    - draw
+    - eshell
+    - save-all (buffers)
+    - mpv-play
+    - screenshot
+      - image-crop is a bind
+      - ffmpeg for resize ~ffmpeg -i cropped.png -vf "scale=1280:720" scaled.png~
+    - replace unicode
+      - ZERO WIDTH NO-BREAK SPACE(BOM), ZERO WIDTH SPACE, RIGHT-TO-LEFT MARK, RIGHT-TO-LEFT OVERRIDE, LEFT-TO-RIGHT MARK, OBJECT REPLACEMENT CHARACTER
+    - compile-init-bytecode
 ** emacs-config README
 #+INCLUDE: "../../README.org::emacs-config" :only-contents t

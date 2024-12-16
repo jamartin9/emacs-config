@@ -8,6 +8,12 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * rust
+- map/fold can contain specific loop optimizations due to types and ownership for iterator mutation/reuse.
+  - ex. ~let flat = flatten.into_iter().fold(Vec::new(), |mut accumulator, list| { acc.extend(list); acc });~ is likely as fast as a for loop because acc is a moved vec.
+- std::intrinsics contains llvm intrinsics
+  - branch prediction with ~likely~, ~select_unpredictable~ (cmov's for branchless), ~unlikely~ etc
+- llvm-mca with ~-bottleneck-analysis -timeline~ for asm profiling
+  - supported by godbolt
 - https://github.com/rust-lang/rust/issues/93740#issuecomment-1041391284 futex/mutex comparisons
 - rustc uses stacker crate for segmented stacks to avoid stack overflow
 -  ~cargo test -- --nocapture~ for ~println!()~
@@ -40,4 +46,15 @@ codegen-units = 1 # reduce parallel codegen for increased optimization
 strip = true
 opt-level = "z" # smallest binary instead of speed
 panic = "abort"
+#+END_SRC
+
+#+NAME: .cargo/config.toml
+#+BEGIN_SRC toml :tangle no
+[build]
+# build extra targets and features
+rustflags = ["--cfg", "tokio_unstable"]
+target = [
+    "x86_64-unknown-freebsd",
+    "x86_64-unknown-linux-gnu",
+]
 #+END_SRC
