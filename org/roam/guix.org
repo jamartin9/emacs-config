@@ -65,7 +65,7 @@
 
      ;; shell
      ;;"shellcheck" ;;"bash"
-     "htop"
+     "htop"; Requires CAP_NET_ADMIN for PERCENT_*_DELAY
      ;;"xclip"
      ;;"wl-clipboard"
      ;;"bc"

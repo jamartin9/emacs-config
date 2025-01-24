@@ -8,11 +8,13 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * rust
+- sans-io pattern for protocol state machines
+  - ex. tokio-codec or https://www.firezone.dev/blog/sans-io
 - map/fold can contain specific loop optimizations due to types and ownership for iterator mutation/reuse.
   - ex. ~let flat = flatten.into_iter().fold(Vec::new(), |mut accumulator, list| { acc.extend(list); acc });~ is likely as fast as a for loop because acc is a moved vec.
 - std::intrinsics contains llvm intrinsics
   - branch prediction with ~likely~, ~select_unpredictable~ (cmov's for branchless), ~unlikely~ etc
-- llvm-mca with ~-bottleneck-analysis -timeline~ for asm profiling
+- llvm-mca with ~-bottleneck-analysis~ for asm profiling
   - supported by godbolt
 - https://github.com/rust-lang/rust/issues/93740#issuecomment-1041391284 futex/mutex comparisons
 - rustc uses stacker crate for segmented stacks to avoid stack overflow

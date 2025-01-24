@@ -37,3 +37,8 @@ Finally some hardware support!
 - ~/usr/lib/ld-linux-x86-64.so.2 --help~ to check for ~x86_64-v3~
 - ~ethtool -N eth2 rx-flow-hash udp4 sdfn~ nic to send packets to same thread as ip:port sender
 - set ~SO_ADDRREUSE~ and ~SO_SOCKETREUSE~ on socket creation to allow multiple binds
+- set huge page size to reduce pressure on the the translation buffer (TLB)
+  - ~GRUB_CMDLINE_LINUX="default_hugepagesz=1G hugepagesz=1G hugepages=0:8,1:8"~ where hugepages is ~numanode:amount_of_pages~
+  - TLB uses an address spaced identifier id (ASID) for processes to void flushing TLB cache
+    - 12 bit so many procs will force a flush
+- get cache line size with ~getconf LEVEL1_DCACHE_LINESIZE~ or ~lscpu~

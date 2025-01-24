@@ -671,6 +671,7 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 - UHD Bluray - some are mastered in 2K. Chapter names(get from dvd), audio (sometimes bluray has more channels, higher bitrate, better spectrals, or more bit depth 24 vs 16),
 - Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
 - For HDR to SDR tonemap screens for colors, gamut compression BT.2407, bit depth reduction to 8bits, change container from H.265 to H.264
+  - Rec 709 is ~35.9% of colors human eye can see, P3 is ~53.6% and BT 2020 is 75.8% https://commons.wikimedia.org/w/index.php?curid=116654642
 - Dolby Vision is 12 bit with high dynamic range and metadata. FEL can enhance grain/details. MEL otherwise.
 - HDR10+ is 10 bit with high dynamic range
 - HDR is 10 bit and static
@@ -681,6 +682,7 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 
 - Audio options:
   - AAC for directors (usually 2.0 channel)
+    - ~-m 5~ for fdk_aac
   - Lossy AC3 (DolbyDigital and E-AC3 support more channels/bitrate) for <= 720p, uses dialnorm tho that lowers db range compared to DTS. DD+ with dolby encoding engine and https://github.com/pcroland/deew (windows version for truehd encoding)
     - 7.1 sources DEE swaps Ls Rs with Lrs Rrs (deew fixes)
   - Lossless DTS for 1080p (DTS passthrough)
@@ -717,6 +719,8 @@ main10 for nvidia gpu decoding
 Chroma subsampling:
 --hdr10-opt is for 4:2:0 HDR
 --no-hdr10-opt are for 4:4:4 HDR and SDR
+x265 seems to struggle with deep reds without: --cbqpoffs -1 --crqpoffs -2
+
 
 --master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" is for BT.2020
 --master-display "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(10000000,1)" is for Display P3
@@ -947,10 +951,12 @@ youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cook
 - Try different versions of tsmuxer, you should eventually get the correct sample file with same crc32.
 - Samples are usually taken from within the first 10 min of the movie.
 ** movies
-- https://caps-a-holic.com/c.php?https://caps-a-holic.com/c.php?a=1&x=603&y=301&d1=15009&d2=5245&s1=156558&s2=49011&l=0&i=2&go=1 UHD issues in LotR
-- Mousehunt has a teal filter on BD but not web
 - open matte can show more of the scene by changing the AR (bad if squashed)
 ** tv
+- discovery atlas
+  - Italy, Australia, Brazil, China are S1 longer
+  - France, India are longer (hard to find german only)
+  - Russia, Japan, South Africa, Mexico, Egypt are shorter S2
 - Secret life of zoo
 S01E01-S01E06 is same
 Secret life of zoo animal planet vs amazon
@@ -1018,7 +1024,7 @@ S04E13 is SPECIAL
 -
 Answer the following questions as best you can. You have access to the following tools:
 
-mediainfo makemkv mkvmerge ffmpeg awsmfunc vs-preview-rs x265 x264 dovi_tool dolby-encoder
+mediainfo makemkv mkvmerge ffmpeg awsmfunc vs-preview-rs x265 x264 dovi_tool deew subtitle_tonemap
 
 The inputs are media file sources and the output is a combined source.
 
@@ -1027,7 +1033,7 @@ Lets think step by step about how to convert the inputs into the desired output:
 2. Convert each source container to Matroska format with makemkv, mkvmege or ffmpeg
 3. Determine the encoder to use via the input sources. When a source contains HDR metadata use x265; use x264 for detail preservation.
 4. Extract the sources with HDR10+ metadata using dovi_tool
-5. Extract the sources with Dolby Vision enhancement layers using dovi tool
+5. Extract the sources with Dolby Vision enhancement layers using dovi_tool
 6. Identify the sources with Dolby Vision Full enhancement layers dovi_tool for use with vs-nlq
 7. Identify the presence of dirty lines and the crop needed for the source with awsmfunc. IMAX sources vary the crop needed at scenecuts
 8. Edit the Dolby Vision metadata with dovi_tool for the cropped source
@@ -1038,7 +1044,8 @@ Lets think step by step about how to convert the inputs into the desired output:
 13. Prepare several test encodes with different CRF settings of a few thousand frames. Use the previously gathered information for setting the metadata.
 14. Compare the test and source frames using awsmfunc with libplacebo tone mapped screens in vs-preview-rs
 15. Identify scenes with banding using awsmfunc
-16. Encode the audio to DD+ with dolby-encoding (ffmpeg produces sub par ac3)
-17. Combine source subtitles into the container with mkvmerge
-18. Align chapters to scenecuts with MKVmerge
-19. The file name should be of the form NAME.YEAR.RESOLUTION.SOURCE.AUDIO.VIDEO.mkv
+16. Encode the audio to DD+ with deew the dolby encoder (ffmpeg produces sub par ac3)
+17. Identify all subtitles and subtitle_tonemap bluray sourced subtitles to the percentage of white for UHD sources
+18. Combine source subtitles into the container with mkvmerge
+19. Align chapters to scenecuts with MKVmerge
+20. The file name should be of the form NAME.YEAR.RESOLUTION.SOURCE.AUDIO.VIDEO.mkv

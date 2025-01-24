@@ -36,6 +36,8 @@
   - usenet farm
   - netnews (frugal/blocknews/usenetnow)
 - omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)
+  - eweka
+  - newshosting
 - provider tree
   -  https://www.reddit.com/r/usenet/comments/lwupx3/updated_usenet_provider_map/
     - 03/31/2024 https://svgshare.com/s/14tF.svg

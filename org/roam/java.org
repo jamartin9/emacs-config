@@ -14,6 +14,7 @@
 - ~-XX:+PerfDisableSharedMem~
 - ~-XX:+UseStringDeduplication~
 - ZGC takes ~3% of heap
+- project leyden for already verified class loading
 - 6 months release
 - 3 year lts release
 - espresso for java on java (graalvm)
@@ -30,6 +31,8 @@
 - valhalla for value types (objects without identity)
 - ~jcmd <pid> JFR.view~ in 21+
 - AutoCloseable interface for try with resources
+- Java 8 added ~@Contended~ to avoid sharing cache lines with hot fields (adds padding so threads do not invalidate each others cache access)
+- All ~SoftReference~(s) are collected before a OOM exception is thrown
 ** spark jetty websocket wrapper
 #+NAME: java-jetty-main
 #+BEGIN_SRC java :tangle no

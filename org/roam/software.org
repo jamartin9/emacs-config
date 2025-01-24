@@ -8,7 +8,7 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Software
-** algorithms
+** algorithms and datastructures
 - distributed
   - paxos
     - multiple roles
@@ -23,6 +23,8 @@
 - Propgators networks
   - can implement multiple problem domains with bounded eventual consistency
   - SAT, Functional Reactive Programming, Datalog, constraint programming
+- Cache-oblivious lookahead array (COLA)
+- Log structures merge tree
 ** [[id:fd5eb707-7fc5-40ee-a550-f167f8c43635][archive-formats]]
 ** [[id:20556f17-762b-4534-befa-34dbd8d2ca33][bootloaders]]
 ** [[id:536c7bc0-8049-429d-bfe6-641eeb67399c][browsers]]
@@ -64,6 +66,7 @@
 - Code is meant to be updated by humans but ran by processors
   - machine semantics
     - iterator vectorization of loops (can allow simd)
+    - SWAR (simd within a register)
   - stylistic clarity/future updates
     - linters/formatters
 - Version control hygiene

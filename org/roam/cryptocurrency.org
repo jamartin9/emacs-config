@@ -21,6 +21,7 @@
 - cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
   - sigma protocols are alternative (COMINT)
 * chia
+- Permuto will allow "eligible holders"" to deposit Microsoft stock (MSFT) and issue "dividend" and "appreciation" certificates on the chia blockchain; to be traded seperately. Allowed 10% of total stock and voting is done based on prices of the 'certificates'.
 - ~CHIA_ROOT~ env variable configuration
   - burn if not able to melt
 - check plots with ~chia plots check -n 30 -l~
@@ -132,6 +133,36 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - haveno for p2p order book https://blog.nihilism.network/servers/haveno-client-f2f/index.html
   - ~make haveno-apps && make haveno-desktop-mainnet~
   - reto simplex https://simplex.chat/contact#/?v=2-4&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FMplYm7uxopKyUOrKqnWySpXQIGxoJWYB%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAs8PcRwnf_-H30yXfwV0MSbka9I_xBeVNr4vKJNoReBw%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22YT2t__GnjpZ1W2MjJAz6Sw%3D%3D%22%7D
+#+NAME: xmr-script
+#+BEGIN_SRC sh :tangle no
+#!/bin/bash -e
+
+# https://xmrig.com/docs/miner/hugepages#onegb-huge-pages
+
+sysctl -w vm.nr_hugepages=$(nproc)
+
+for i in $(find /sys/devices/system/node/node* -maxdepth 0 -type d);
+do
+    echo 3 > "$i/hugepages/hugepages-1048576kB/nr_hugepages";
+done
+
+echo "1GB pages successfully enabled"
+
+#guix pack -S /bin=bin -f docker --with-commit=p2pool=6cf1b13500795260fd9b98de393ecd19f5aabd5d p2pool
+
+# forward TCP for monerod
+#upnpc -e monero -r 18080 TCP
+
+# p2pool mini chain
+#upnpc -e p2pool -r 37889 TCP
+
+# p2pool chain
+#upnpc -e p2pool -r 37888 TCP
+
+sudo xmrig --randomx-1gb-pages --huge-pages-jit -t 12 -o 127.0.0.1:3333  -B
+
+#+END_SRC
+
 * bitcoin
 - reuse of ECDSA signatures can lead to key compromise (polynonce attack). use deterministic dsa instead (eddsa or RFC 6979)
 - double sha256

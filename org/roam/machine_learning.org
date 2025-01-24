@@ -75,6 +75,9 @@
 - Chain of thought synthetic dataset to improve implicit deductions (orca/phi)
 - Models can be merged with various method to combine feature strengths
 ** image
+  - https://github.com/NVlabs/Sana has 4k generation
+    - https://github.com/Efficient-Large-Model/ComfyUI_ExtraModels
+      - gemma text encoder (unsloth bnb)
   - dalle mini
   - flux-dev 12B
     - schell version is 'turbo'(rectified flow transformer) requiring less steps for inference
@@ -86,6 +89,7 @@
       - https://huggingface.co/comfyanonymous/flux_text_encoders
       - minicpm and qwenvl for image input
         - comfyui-custom-scripts (show text)
+        - MiniCPM-o-2_6 supports audio/video/images/text
   - [[https://github.com/hlky/stable-diffusion][stable diffusion]]
     - ~stable-diffusion-webui/webui.sh --listen --no-half --use-cpu all~ for cpu only inside container
       - ~podman run --security-opt label=type:nvidia_container_t -p 7860:7860 -v /home/jam/git/stable-diffusion-webui/:/tmp/stable-diffusion-webui:Z -v /home/jam/.local:/.local:Z -v /home/jam/.cache:/.cache:Z -v /home/jam/.config:/.config --userns keep-id --rm -it jam/cuda:1 /bin/bash # COMMANDLINE_ARGS="--listen --no-half --use-cpu all --no-half-vae --opt-sdp-attention" /tmp/stable-diffusion-webui/webui.sh~
@@ -102,10 +106,13 @@
   - https://github.com/showlab/X-Adapter/ allows SD1.5 LoRA use with SDXL
   - GLIGEN for regional prompting
 *** video
+  - https://github.com/NVlabs/VILA video analysis better than QwenVL
   - added as to LLM input as multidimensional rope to the vision encoder (qwenVL)
+    - Apollo-LMMs/Apollo finetune (32 tokens per frame) for video analysis
   - [[https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt][stable diffusion video]]
   - video editing with [[https://github.com/rehg-lab/RAVE][RAVE]]
 ** Large Language Models
+  - distill models with https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html student/teacher model beating fine tuning
   - Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)
   - chinchilla paper showed most models are over parameterized without enough data
     - [[https://arxiv.org/pdf/2401.00448.pdf][beyond chinchilla]] shows smaller models with more parameters as inference approaches dataset size.

@@ -42,6 +42,8 @@
   - [[https://github.com/vlcn-io/cr-sqlite][crdt]] using last write wins
 - libsql is a fork of sqlite with extra features
 - strict tables for type enforcement
+- set primary key integer id to avoid adding rowid to a table ~WITHOUT ROWID~
+
 - session extension for changeset management
 - max ~PRAGMA page_size = 65536~
   - powers of 2 ex ~16384~ for 16KiB
@@ -57,6 +59,7 @@
     - currently locking issues between threads/tabs
 - optimizer can create temporary index's automatically.
   dictated as ~USING AUTOMATIC COVERING INDEX~ in the ~explain~ query output
+- multi column index
 - import csv as virtual table or database
 - ~pragma journal_mode = WAL;~ for write ahead log (replaced shared cache)
   - ~WAL2~ for 2 files for concurrent checkpointing while writing.
@@ -66,7 +69,9 @@
 - ~pragma mmap_size = 30000000000;~ for memory mapping
 - open in memory database with ~:memory:~
 - foreign keys disabled in transactions and by default ~PRAGMA foreign keys~
-- site database
+- ~memsys5~ memory allocator for embedded or deterministic memory usage
+- disable posix advisory locks
+** site database
 #+NAME: tangle-sql
 #+BEGIN_SRC sql :tangle db.sql
 -- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
@@ -135,7 +140,7 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '<b>','</b
       (set-file-times (concat base-dir "sql-worker.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))))
 #+END_SRC
 
-** site search js/sql
+*** site search js/sql
 #+NAME: sql-js
 #+BEGIN_SRC javascript :tangle sqlite-query.js
       /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)

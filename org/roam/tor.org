@@ -38,6 +38,7 @@ btdigggink2pdqzqrik3blmqemsbntpzwxottujilcdjfz56jumzfsyd.onion/ is btdigg
 m2ylflyeak6i6o4hsfwcrfwcq2bbjxk6nf2rnmm7fu6qiuu3hybenzid.onion is jabber.ccc.de
 #+END_SRC
 - digicert offers ev wildcard certs for .onion and harica.gr offers .onion
+  - https://acmeforonions.org/ for certbot certs ~certbot certonly --server https://acme.api.acmeforonions.org/directory --standalone --http-01-port 8080 --http-01-address 127.0.0.1 -d mysite.onion~
 - ensure multi point check or pinned HTTPS verified to avoid bgp att
 - tcp 9001 for relay default without bridge
 - set ~DNSPort 127.0.10.1:53~ and set pihole uservice directory of client/service

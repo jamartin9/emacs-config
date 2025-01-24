@@ -174,7 +174,7 @@
               confirm-kill-emacs nil
               blink-matching-paren nil
               enable-recursive-minibuffers t
-              tool-bar-mode nil
+              tool-bar-mode nil ; modifier-bar-mode t; android for gui controls
               scroll-bar-mode nil
               mouse-yank-at-point t
               mouse-drag-and-drop-region t
@@ -279,10 +279,21 @@
   :ensure nil ; built-in
   :commands proced
   :bind (:map jam/open ("P" . proced)) ; T to toggle tree, k/x to kill, f filter
-  :config (setq-default proced-filter 'all
-                        proced-show-remote-processes t
-                        proced-tree-flag t
-                        proced-auto-update-flag t))
+  :config
+  ;(defun my-proced-node-name (attrs)
+  ;  (cons 'node (or (when (string-prefix-p "java" (cdr (assq 'comm attrs)))
+  ;                    (let ((args (cdr (assq 'args attrs))))
+  ;                      args))
+  ;                  "")))
+  ;(add-to-list 'proced-custom-attributes 'my-proced-node-name)
+  ;(add-to-list 'proced-grammar-alist '(node "My Node" "%s" left proced-string-lessp nil (node pid) (nil t nil)))
+  ;(add-to-list 'proced-format-alist '(java user pid tree pcpu pmem start time node (args comm)));F then type java
+  ;(add-to-list 'proced-filter-alist '(beam (comm . "^beam")));f then type beam
+  (setq-default proced-enable-color-flag t
+                proced-filter 'all
+                proced-show-remote-processes t
+                proced-tree-flag t
+                proced-auto-update-flag t))
 
 (use-package org-crypt
   :ensure nil ; built-in
@@ -659,7 +670,7 @@
        (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
        ;(gnus-subscribe-hierarchically "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
-       ;(gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool") (gnus-subscribe-hierarchically "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero")
+       ;(gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool") (gnus-subscribe-hierarchically "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero") ; https://gantnews.com/category/police-logs/feed/
        (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix"))))
 
 (use-package which-key
@@ -705,12 +716,31 @@
   ;:pin nongnu
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file)
   :config
+;  (gptel-make-tool ; feature-tool-use branch
+;   :function (lambda (path filename content)
+;               (let ((full-path (expand-file-name filename path)))
+;                 (with-temp-buffer
+;                   (insert content)
+;                   (write-file full-path))
+;                 (format "Created file %s in %s" filename path)))
+;   :name "create_file"
+;   :description "Create a new file with the specified content"
+;   :args (list '(:name "path"
+;	                   :type "string"
+;	                   :description "The directory where to create the file")
+;               '(:name "filename"
+;	                   :type "string"
+;	                   :description "The name of the file to create")
+;               '(:name "content"
+;	                   :type "string"
+;  	                   :description "The content to write to the file"))
+;   :category "filesystem")
   ;(setenv "OLLAMA_MODELS" (concat user-emacs-directory (file-name-as-directory ".local") "ollama-models")); ollama run llama3.2-vision
-  (setq gptel-model 'llama3.2-vision;qwen2.5-coder:14b; qwq; use unsloth variants for vision accuracy
+  (setq gptel-model 'deepseek-r1:7b ;qwen2.5-coder:14b;llama3.2-vision; use unsloth variants for vision accuracy
         gptel-backend (gptel-make-ollama "Ollama" ;gptel-make-openai "llama-cpp" :protocol "http"
                                          :host "localhost:11434"
-                                         :models '((llama3.2-vision :capabilities (media));:mime-types ("image/jpeg" "image/png")
-                                                   (qwq)
+                                         :models '((deepseek-r1:7b)
+                                                   (llama3.2-vision :capabilities (media));:mime-types ("image/jpeg" "image/png")
                                                    (qwen2.5-coder:14b))
                                          :stream t)))
 
@@ -726,8 +756,9 @@
 ;  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
 
 ;(use-package atomic-chrome
-;  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev :newest)
-;  :commands (atomic-chrome-start-server)
+;;  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev :newest)
+;  :bind (:map jam/toggle ("b" . atomic-chrome-toggle-server))
+;  :commands (atomic-chrome-start-server atomic-chrome-toggle-server)
 ;  :config
 ;  (setq-default atomic-chrome-buffer-open-style 'frame)
 ;  (setq-default atomic-chrome-auto-remove-file t)

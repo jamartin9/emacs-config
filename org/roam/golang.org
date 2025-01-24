@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * golang
 - GOMEMLIMIT to control heap size to avoid GC
+  - GC was running every 2 minutes regardless... https://discord.com/blog/why-discord-is-switching-from-go-to-ruts
 - disable default proxy
   - go env -w GOPROXY=direct
   - go env -w GOSUMDB=off
@@ -20,6 +21,7 @@
 - large std library
   - can have ossification issues such as ed25519 signature malleability update cadence
     - https://hdevalence.ca/images/ed25519-comparison.png
+      - https://hdevalence.ca/blog/2020-10-04-its-25519am
 - TCP ~NODELAY~ set by default (no batching with nagle's algorithm)
 - http2 pusher (chrome removing support)
 #+NAME: golang-http2-push
