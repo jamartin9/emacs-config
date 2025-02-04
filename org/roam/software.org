@@ -25,6 +25,8 @@
   - SAT, Functional Reactive Programming, Datalog, constraint programming
 - Cache-oblivious lookahead array (COLA)
 - Log structures merge tree
+- separate compute from storage in a sans-io style
+  - state machine should be driven by IO input
 ** [[id:fd5eb707-7fc5-40ee-a550-f167f8c43635][archive-formats]]
 ** [[id:20556f17-762b-4534-befa-34dbd8d2ca33][bootloaders]]
 ** [[id:536c7bc0-8049-429d-bfe6-641eeb67399c][browsers]]

@@ -24,6 +24,7 @@ Putting things places for reasons!
   - column page store for large datasets with metadata searching
   - Apache Arrow supports operations like querying/reading/writing
 - web archive (warc with pywb)
+- zstd can create 'dictionaries' with the ~-D~ option that can greatly help when compressing small files.
 #+NAME: manifest-scm
 #+BEGIN_SRC shell :tangle no
 pip install --user pywb

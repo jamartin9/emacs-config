@@ -40,7 +40,7 @@
   - QLoRA is quantized version (4/8 bit). [[https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md][cpu version]]
     - https://github.com/intel/intel-extension-for-pytorch
   - LASER can LoRA select layers and improve accuracy(promote weakly held facts by quantizing later layers)
-    - [[https://github.com/cognitivecomputations/laserRMT][LASER-RMT]] variant
+    - [[https://github.com/cognitivecomputations/laserRMT][LASER-RMT]] variant aka spectrum
   - LoftQ adds multiple lora adapters to base model and quantizes it. Fine tuning is done to the LoRA adapters to quantize with respect to the fine tuning set
   - [[https://github.com/thomasgauthier/LoRD][LoRD]] can extract LoRA from fine tuned model
     - https://github.com/uukuguy/multi_loras
@@ -54,6 +54,7 @@
   - Deepseek Janus uses same image/lang representation with different input and output decoders
   - tokenized image multimodal data softmax diverges https://arxiv.org/html/2405.09818v1 ('logit drift problem')
     - stablizes by adding layer normalization re-ordering (Swin transformer normalization strategy) and changing query-key softmax to QK-Norm
+- https://www.goodfire.ai/papers/mapping-latent-spaces-llama/ mapping of llama3 70B features
 - https://transformer-circuits.pub/2024/crosscoders/index.html identifies cross model features by comparing residual blocks
   - features for refusal, code review, personal question vector
 - steering vectors cache activation layer results and swap them for alignment at the same layer
@@ -75,6 +76,10 @@
 - Chain of thought synthetic dataset to improve implicit deductions (orca/phi)
 - Models can be merged with various method to combine feature strengths
 ** image
+  - reasoning to vision models https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main
+  - Lumina-Image 2B close to flux
+  - SmolVLM open source training and data
+  - Janus-Pro 7B or 1B
   - https://github.com/NVlabs/Sana has 4k generation
     - https://github.com/Efficient-Large-Model/ComfyUI_ExtraModels
       - gemma text encoder (unsloth bnb)
@@ -106,12 +111,36 @@
   - https://github.com/showlab/X-Adapter/ allows SD1.5 LoRA use with SDXL
   - GLIGEN for regional prompting
 *** video
+  - https://github.com/Tencent/HunyuanVideo
+    - https://github.com/zsxkib/cog-comfyui-hunyuan-video
+      -  toolkit for fine-tuning Hunyuan Video LoRA using LoRA, plus advanced video inference and automatic captioning via QWEN-VL
   - https://github.com/NVlabs/VILA video analysis better than QwenVL
   - added as to LLM input as multidimensional rope to the vision encoder (qwenVL)
     - Apollo-LMMs/Apollo finetune (32 tokens per frame) for video analysis
   - [[https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt][stable diffusion video]]
   - video editing with [[https://github.com/rehg-lab/RAVE][RAVE]]
+*** 3D
+  - https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon for 3D generation 3B
 ** Large Language Models
+  - vllm can serve openai api locally
+    - cpu only avx2 openvino
+    - CPU_OFFLOAD with GPU
+    - tool calling
+    - quants
+    - multimodal
+    - VLLM_USE_V1=1 for new arch
+    - jinja chat templates
+  - constrain output to json schema or grammar or choice
+    - faster inference with constrained output https://blog.dottxt.co/coalescence.html
+    - guided decoding https://github.com/dottxt-ai/outlines
+  - deepseekv3 MoE uses 3 dense layers then MoE with a shared expert, dual pipe and reasoning
+    - quantized during training for speed
+    - dynamic 1.58 bit quant https://unsloth.ai/blog/deepseekr1-dynamic
+    - open-r1 reproduction
+    - distilled reasoning into other models
+    - Min_p = 0.05 to avoid incorrect tokens
+  - Qwen qwq 32B
+    - reasoning(worse than deepseek) with cot and monte carlo search tree
   - distill models with https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html student/teacher model beating fine tuning
   - Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)
   - chinchilla paper showed most models are over parameterized without enough data
@@ -130,7 +159,7 @@
     - 70B uses ghost attention for control of dialogue flow in CHAT variant
       - creates a sft dataset to finetune llama2-chat to stick to system message by changes in training data instead of injecting on every prompt
       - works for ~20 rounds until end of context
-  -  [[https://github.com/facebookresearch/llama][Llama 1]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]] (gpt-neox tokenizer) and [[https://huggingface.co/openlm-research/open_llama_7b][OpenLLaMa]] on 1T tokens
+  - [[https://github.com/facebookresearch/llama][Llama 1]] (chinchilla optimal) recreated 3B and 7B as [[https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1][RedPajama]] (gpt-neox tokenizer) and [[https://huggingface.co/openlm-research/open_llama_7b][OpenLLaMa]] on 1T tokens
     - llama tokenizer does not make multiple whitespace significant (thus cant code in python) unlike GPT-NEOX
     - context length of 2048
     - weights unpublished
@@ -167,8 +196,6 @@
     - bitnet ~2bit compression
       - VPTQ for better accuracy and size compression
         - constructs a LUT from quantized values
-  - Qwen qwq 32B
-    - reasoning with cot and monte carlo search tree
 *** Codegen
   - GraalVM added Static Profiles powered by ML branch prediction for inlining (based on decapo data)
     - heuristics for outlier cases
@@ -177,6 +204,7 @@
     - ~250KB model for 7.5% speedup
   - Python has some of the highest entropy for 'tokens vs length' making it the a efficent language to generate
   - llm-compiler from facebook to generate LLVM IR
+  - Qwen-coder with fill in the middle tokens
   - CodeLlama
     - fine tunes such as 'nous hermes 2', dolphin and WizardCoder for coding instructions
     - 70B updated with infilling
@@ -201,6 +229,8 @@ yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
 whisper "/content/${VID}.m4a" --model small --language English
 #+END_SRC
 ** Text to speech
+- https://github.com/multimodal-art-projection/YuE
+  - YuE: Open Full-song Music Generation Foundation Model, something similar to Suno.ai but open
 - suno bark
 - [[https://github.com/neonbjb/tortoise-tts][tortoise-tts]] based on dalle
 - [[https://github.com/coqui-ai/TTS][coqui-ai]] with YourTTS/FreeVC voice cloning

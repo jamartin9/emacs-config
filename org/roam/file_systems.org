@@ -22,3 +22,8 @@ Systems need filing!
 - mount ntfs
   - ~sudo mkdir -p /run/media/$USER/Elements/~
   - ~sudo mount.ntfs /dev/sdd1 /run/media/jam/Elements -o rw,nodev,nosuid,uid=1000,gid=1000,windows_names,uhelper=udisks2~
+** lustre
+- HPC filesystem
+- can use zfs as object store
+- pure no io metadata server
+- zero copy rdma with nvidia gpu direct storage

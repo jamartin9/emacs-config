@@ -10,7 +10,7 @@
 * Emacs
 ** emacs notes
 - ~toggle-debug-on-quit~ for stacktraces of hung commands
-- pgtk enabled ~broadwayd~ port 8080 with apps env var ~GDK_BACKEND=broadway~
+- pgtk enabled ~broadwayd~ port 8080 with apps env var ~GDK_BACKEND=broadway~ (deprecated in GTK 5)
 - magit-generate-changelog for commit msg
 - gnus needs app password from google for 2fa or oauth token from gcloud
 - webkit environment variable(s) for built-in browser

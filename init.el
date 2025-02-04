@@ -174,7 +174,8 @@
               confirm-kill-emacs nil
               blink-matching-paren nil
               enable-recursive-minibuffers t
-              tool-bar-mode nil ; modifier-bar-mode t; android for gui controls
+              tool-bar-mode nil ; modifier-bar-mode t; gui controls for android
+              touch-screen-display-keyboard t
               scroll-bar-mode nil
               mouse-yank-at-point t
               mouse-drag-and-drop-region t

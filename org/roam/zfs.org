@@ -51,6 +51,8 @@
 - ~zpool~  scrub(error check), resilver(parity), trim(ssd), adding/removing disks
 - ~zfs~ Mounting, keys, snapshots, rollbacks
 *** notes
+- https://github.com/OpenIndiana/time-slider python time slider tool for backups
+- GPTZFSBOOT for bios zfs boot
 - If you lose a vdev in a pool you LOSE THE POOL
 - Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
   - Manual pool config can get more out of smaller disks with the same redundancy
@@ -97,3 +99,4 @@
   - only different blocks will be overwritten (common file parts shared)
   - can not be maintained across send/recv (depends on-disk references)
   - zpool sync if creating in a loop to ensure the TX finishes
+- https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=2720&context=honorstheses chapter 3 for description of zfs architecture

@@ -23,6 +23,7 @@
 - sealed classes
 - records
 - babylon
+  - spirv is based on tornadovm's implementation
   - trition kernels
   - bytecode transformations and auto diff
     - https://openjdk.org/projects/babylon/articles/auto-diff
@@ -32,7 +33,13 @@
 - ~jcmd <pid> JFR.view~ in 21+
 - AutoCloseable interface for try with resources
 - Java 8 added ~@Contended~ to avoid sharing cache lines with hot fields (adds padding so threads do not invalidate each others cache access)
-- All ~SoftReference~(s) are collected before a OOM exception is thrown
+- All ~SoftReference~ (s) are collected before a OOM exception is thrown
+- jitwatch is a visualiser for Java HotSpot JIT
+- hsdis (hotspot disassembler) to show asm from hotspot jvm(openjdk)
+  - ~-XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly~ or ~-XX:CompileCommand=print,java/lang/String.length~ to show just one method
+  - requires gnu binutils
+- https://openjdk.org/jeps/8279184 Instruction Issue Cache Hardware Accommodation
+  - can mitigate the negative effect of instruction issue hardware limitations (IIHL) on generated code performance. Such hardware includes, but is not limited to, on-chip memory caches, ITLBs (Instruction Translation Lookaside Buffers), and BTPs (Branch Target Predictors)
 ** spark jetty websocket wrapper
 #+NAME: java-jetty-main
 #+BEGIN_SRC java :tangle no

@@ -12,6 +12,7 @@
 Finally some hardware support!
 ** [[id:1545c3b7-0dff-4196-b73b-7fce0518b6af][linux-distros]]
 ** Kernel
+- added ebpf netkit in 6.8 (faster than virtual eth)
 - removed sysctl system call in 5.5
 - io-uring
   - io-uring-spawn for process launching

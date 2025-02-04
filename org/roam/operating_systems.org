@@ -23,7 +23,9 @@
 - zfs by default
 - support for linux emulation
   - [[https://github.com/ravynsoft/ravynos][macos compat fork]]
-*** smartos
+*** illumos
+- https://news.illumos.am/feed/
+**** smartos
 - modern Illumos(OpenSolaris)
 - uses zones for control like vms and containers
   - native zones
@@ -32,3 +34,13 @@
   - bhyve from freebsd
 - uses netbsds pkg
 - in memory operating system
+**** OpenIndiana
+**** OmniOs
+**** Tribblix
+**** illumos-gate
+- forks for ARM
+  - https://github.com/richlowe/illumos-gate
+  - supported hardware https://github.com/n-hys/illumos-gate/wiki
+- fork for sparc
+  - https://github.com/klausz65/illumos-gate
+- used by oxide/joyent/etc for kernel, networking and userspace

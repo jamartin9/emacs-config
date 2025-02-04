@@ -19,6 +19,7 @@ Lets make the same thing but differently!
   - bloats with old versions without updates
     - multiple nvidia driver versions etc
   - ~flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo~
+  - ~gio mime x-scheme-handler/http firefox.desktop~ and ~gio mime x-scheme-handler/https firefox.desktop~
 - rpms
   - redhat based distros
   - can use alien to convert deb and rpm

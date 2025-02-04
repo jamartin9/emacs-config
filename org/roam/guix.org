@@ -104,6 +104,7 @@
      ;;"virt-viewer"
      ;;"dino" ; xmpp client
      ;;"flatpak"
+     ;;"waypipe"
 
      ;; docs
      ;;"libreoffice"
@@ -168,7 +169,7 @@
 - platform specific binaries can be produces with the ~--tune~ flag
 - hpc channel for extra pytorch packages
   - https://gitlab.inria.fr/guix-hpc/guix-hpc/
-  - misc channels https://git.sr.ht/~whereiseveryone/toys/log
+  - misc channels https://git.sr.ht/~whereiseveryone/toys/log for services/packages (sops(secrets), cuda, android, rustup, lutris, ollama, tailscaled, jellyfin, tailwindcss-lsp, guile-lsp, goblins, etc)
 - non root guix can be done through a series of env variables and flags
   - arg ~--listen=/socket~ and/or env vars
 - app img run ~mount thing.AppImage tmpmnt -o offset=$(guix shell -C -F zlib -- "./thing.AppImage --appimage-offset")~

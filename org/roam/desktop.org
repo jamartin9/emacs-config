@@ -35,3 +35,5 @@ More ricing less productivity!
 - gamescope compositor for wayland desktops supports experimental HDR
   - ~ENABLE_HDR_WSI=1 gamescope --hdr-enabled --hdr-debug-force-output --steam -- env ENABLE_GAMESCOPE_WSI=1 DXVK_HDR=1 DISABLE_HDR_WSI=1 steam~
   - use ~ENABLE_HDR_WSI=1 SDL_VIDEODRIVER=wayland~ for native games
+- Nested Wayland compositor for VMs
+  - https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/vm_tools/sommelier/README.md

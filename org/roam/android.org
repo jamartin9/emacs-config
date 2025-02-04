@@ -29,6 +29,16 @@
 *** termux
 - vol up/down and a/d to move left/right (other shortcuts too)
 - vol up long and Q for special keyboard
+**** x11
+install nightly x11-termux apk open in background:
+pkg install x11-repo
+pkg install termux-x11-nightly
+pkg install virglrenderer-android
+pkg install xfce
+
+virgl_test_server_android &
+termux-x11 :0 -xstartup "dbus-launch --exit-with-session xfce4-session"
+
 *** aurora store
 - google play store without google account
 *** fdroid

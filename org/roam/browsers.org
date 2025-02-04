@@ -114,12 +114,15 @@ self.addEventListener('fetch', function(e) {
   - brave
     - ~brave://gpu~
     - ~brave://flags~
+      - file system api flag
       - WebGPU flag ~--enable-features=Vulkan~
+        - ~--enable-features=Vulkan~ (not compat with wayland/ozone)
     - builtin tor, ad block
     - disable wallet, sidebar
     - F12 Dev Tools -> Ctrl+Shift+P -> type 'shot' for screen capture options
     - ~brave://flags/#ozone-platform-hint~ set to auto for wayland default instead of x11
     - Alt w to close tab, ctrl tab to cycle, ctrl shift T to reopened closed tab
+    - ~--window-size=1920,1080~
   - ungoogled-chromium
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]
@@ -156,6 +159,7 @@ self.addEventListener('fetch', function(e) {
 - https://directfile.irs.gov/
 - https://uica.uops.info/
 - https://qrcode.antfu.me/
+- https://cowasm.sh/ (python wasm)
 ** data
 - https://ossinsight.io/#trending-repos
 - https://sourcegraph.com/search
@@ -169,6 +173,7 @@ self.addEventListener('fetch', function(e) {
 - xrel.to
 - srrdb
 - https://btdig.com/
+- https://www.tldraw.com/
 ** alternative frontends
 - youtube
   - [[https://piped.video/trending][piped.video]]
