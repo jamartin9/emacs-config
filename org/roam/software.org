@@ -65,7 +65,7 @@
     - objective C to swift
 ** Code review
 - Humility should be paramount when submitting code to a location you do not *OWN*
-- Code is meant to be updated by humans but ran by processors
+- Code is meant to be ran by processors
   - machine semantics
     - iterator vectorization of loops (can allow simd)
     - SWAR (simd within a register)

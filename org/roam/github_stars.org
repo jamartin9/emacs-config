@@ -358,6 +358,8 @@
   - Pacemaker is an advanced, scalable High-Availability cluster resource manager
 ** cmangos/mangos-classic
   - C(ontinued)-MaNGOS (Classic fork) is about: -- Doing WoW-Emulation Right!
+** codeberg.org/libreboot/lbmk
+  - boot firmware. SeaBIOS and Grub
 ** codecrafters-io/build-your-own-x
   - Master programming by recreating your favorite technologies from scratch.
 ** colesbury/nogil
@@ -524,8 +526,12 @@
   - egui: an easy-to-use immediate mode GUI in Rust that runs on both web and native
 ** emscripten-core/emscripten
   - Emscripten: An LLVM-to-WebAssembly Compiler
+** endrazine/wcc
+  - The Witchcraft Compiler Collection
 ** enhuiz/vall-e
   - An unofficial PyTorch implementation of the audio LM VALL-E
+** envoyproxy/envoy
+  - Cloud-native high-performance edge/middle/service proxy
 ** EpicGames/raddebugger
   - A native, user-mode, multi-process, graphical debugger.
 ** EpistasisLab/tpot
@@ -648,6 +654,8 @@
   - Official GeoServer repository
 ** geraldneale/py-blink_mojo-secure
   - Chialisp money privacy tool using non-interactive aggregated BLS signatures for security
+** ggerganov/whisper.cpp
+  - Port of OpenAI's Whisper model in C/C++
 ** gianni-rosato/svt-av1-psy
   - perceptual enhancements for psychovisually optimal AV1 encoding
 ** GiovineItalia/Gadfly.jl
@@ -672,6 +680,8 @@
   - GnuCash Double-Entry Accounting Program.
 ** GNUnet-Mirror/GNUnet
   -  Read-only mirror of GNUnet repository, updated periodically. NOTE: do not make pull requests here, nor comment any commits. Maintainers are not tracking this git mirror. -- Submit patches via https://bugs.gnunet.org or https://gnunet.org/en/contact.html -- Official Repo: https://git.gnunet.org/gnunet.git/ - Issues: https://bugs.gnunet.org -
+** gnuradio/gnuradio
+  - GNU Radio – the Free and Open Software Radio Ecosystem
 ** godotengine/godot
   - Godot Engine – Multi-platform 2D and 3D game engine
 ** godot-rust/gdext
@@ -752,6 +762,8 @@
   - ProGuard, Java optimizer and obfuscator
 ** guoyww/AnimateDiff
   - Official implementation of AnimateDiff.
+** GyulyVGC/sniffnet
+  - Comfortably monitor your Internet traffic
 ** hamsolo474/stable-diffusion-gimp-plugin
   - Gimp plugin for Stable Diffusion, based on the Krita Plugin
 ** haproxy/haproxy
@@ -797,7 +809,7 @@
 ** huggingface/safetensors
   - Simple, safe way to store and distribute tensors
 ** huggingface/trl
-  - Train transformer language models with reinforcement learning.
+  - Train transformer language models with reinforcement learning. Can use vllm for fast inference.
 ** hvmi/hvmi
   - Hypervisor Memory Introspection Core Library
 ** hwchase17/langchain
@@ -850,6 +862,8 @@
   - A collection of general purpose Vapoursynth functions to be reused in modules and scripts
 ** irulast/chia-crypto-utils
   - Cryptographic utilities in Dart for the Chia blockchain with a functional object model for manipulating Chia primitive types.
+** ispc/ispc
+  - Intel Implicit SPMD Program Compiler for a variant of the C programming language with SIMD
 ** iv-org/invidious
   - Invidious is an alternative front-end to YouTube
 ** Jackett/Jackett
@@ -988,6 +1002,8 @@
   - Hacker's Keyboard (official)
 ** konsoletyper/teavm
   - Compiler of Java bytecode to JavaScript
+** kovidgoyal/calibre
+  - The official source code repository for the calibre ebook manager
 ** kristerw/pysmtgcc
   - Some experiments with SMT solvers and GIMPLE IR
 ** ktock/container2wasm
@@ -1296,6 +1312,8 @@
   - Turn IP sockets into Unix domain sockets
 ** NixOS/mobile-nixos
   - nixos on mobile
+** nmap/nmap
+  - Nmap - the Network Mapper. Github mirror of official SVN repository.
 ** nobiot/org-transclusion
   - Emacs package to enable transclusion with Org Mode
 ** novnc/noVNC
@@ -1618,6 +1636,8 @@
   - Pure rust implementation of OpenPGP
 ** rqlite/rqlite
   - The lightweight, distributed relational database built on SQLite
+** rr-debugger/rr
+  - Record and Replay Framework
 ** ruediger/VobSub2SRT
   - Converts VobSub subtitles (.idx/.srt format) into .srt subtitles.
 ** rui314/mold
@@ -1854,6 +1874,8 @@
   - Uberjar builder for deps.edn
 ** torproject/stem
   - Python controller library for Tor
+** torproject/tor
+  - unofficial git repo -- report bugs/issues/pull requests on https://gitlab.torproject.org/
 ** torvalds/linux
   - Linux kernel source tree
 ** transcranial/keras-js
@@ -1918,10 +1940,14 @@
   - Wine-wayland allows playing DX9/DX11 and Vulkan games using pure wayland and Wine/DXVK.
 ** vector-im/element-web
   - A glossy Matrix collaboration client for the web.
+** veracrypt/VeraCrypt
+  - Disk encryption with strong security based on TrueCrypt
 ** verus-lang/verus
   - Verified Rust for low-level systems code (contracts)
 ** Victorwz/LongMem
   - adding long term memory to LLMs
+** videolan/vlc
+  - VLC media player - All pull requests are ignored, please follow https://wiki.videolan.org/Sending_Patches_VLC/
 ** virtualagc/virtualagc
   - Virtual Apollo Guidance Computer (AGC) software
 ** virtual-kubelet/virtual-kubelet
@@ -1956,6 +1982,8 @@
   - Virtual-machine Translation Intermediate Language
 ** vtil-project/VTIL-NativeLifters
   - Lifting from native architecture to VTIL. (WIP)
+** wagoodman/dive
+  - A tool for exploring each layer in a docker image
 ** waliedyassen/RuneScript
   - The RuneScript scripting language
 ** wangyu-/udp2raw
@@ -1992,7 +2020,6 @@
   - Google play store without google account
 ** Wilfred/difftastic
   - a structural diff that understands syntax
-
 ** Wilfred/helpful
   - A better Emacs *help* buffer
 ** Wilfred/ht.el
@@ -2107,21 +2134,22 @@
   - Code base for MinD-Vis
 ** zx2c4/password-store
   - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
+
 * machine learning
 ** argilla-io/distilabel
   - Distilabel is a framework for synthetic data and AI feedback for engineers who need fast, reliable and scalable pipelines based on verified research papers.
 ** comfyanonymous/ComfyUI
   - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
 ** continue-revolution/sd-webui-segment-anything
-  - Segment Anything for Stable Diffusion WebUI
+  - Segment Anything for Stable Diffusion WebUI with grounding DINO
 ** dmlc/xgboost
   - Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library, for Python, R, Java, Scala, C++ and more. Runs on single machine, Hadoop, Spark, Dask, Flink and DataFlow. For tabular regression decision tree data.
 ** dottxt-ai/outlines
   - Structured Text Generation output to json, grammar, choice etc
+** EleutherAI/sparsify
+  - Sparsify transformers with SAEs and transcoders
 ** ggerganov/llama.cpp
   - Port of Facebook's LLaMA model in C/C++. llama-run to run models.
-** ggerganov/whisper.cpp
-  - Port of OpenAI's Whisper model in C/C++
 ** huggingface/transformers
   - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
 ** OpenAccess-AI-Collective/axolotl
@@ -2220,6 +2248,8 @@
   - Universal shader translation in Rust
 ** gfx-rs/wgpu
   - Safe and portable GPU abstraction in Rust, implementing WebGPU API.
+** gitlab.torproject.org/tpo/core/arti
+  - An implementation of Tor, in Rust.
 ** google/zerocopy
   - Zero copy serialization for rust
 ** greatest-ape/aquatic
@@ -2360,12 +2390,15 @@
   - Tower is a library of modular and reusable components for building robust networking clients and servers.
 ** tursodatabase/limbo
   - Limbo is a work-in-progress, in-process OLTP database management system, compatible with SQLite.
+** vaivaswatha/pliron
+  - Programming Languages Intermediate Representation
 ** warp-tech/russh
   - Rust SSH client & server library
 ** wasix-org/cargo-wasix
   - Cargo wrapper for working with Webassembly wasi(x).
 ** yewstack/yew
   - Rust / Wasm framework for building client web apps
+
 * utils
 ** andreas-abel/uiCA
   - uops.info Code Analyzer for intel bottleneck performance analysis
@@ -2385,8 +2418,6 @@
   - Chia blockchain python implementation (full node, farmer, harvester, timelord, and wallet)
 ** ClementTsang/bottom
   - Yet another cross-platform graphical process/system monitor.
-** codeberg.org/libreboot/lbmk
-  - boot firmware. SeaBIOS and Grub
 ** compiler-explorer/compiler-explorer
   - Run compilers interactively from your web browser and interact with the assembly
 ** containers/podman
@@ -2395,10 +2426,6 @@
   - A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features
 ** dgoulet/torsocks
   - Library to torify application - NOTE: upstream has been moved to https://gitweb.torproject.org/torsocks.git
-** endrazine/wcc
-  - The Witchcraft Compiler Collection
-** envoyproxy/envoy
-  - Cloud-native high-performance edge/middle/service proxy
 ** evilsocket/opensnitch
   - OpenSnitch is a GNU/Linux interactive application firewall inspired by Little Snitch.
 ** FFmpeg/FFmpeg
@@ -2415,12 +2442,8 @@
   - Network transparency with Wayland.
 ** GNOME/gimp
   - Read-only mirror of https://gitlab.gnome.org/GNOME/gimp
-** gnuradio/gnuradio
-  - GNU Radio – the Free and Open Software Radio Ecosystem
 ** gpg/gnupg
   - The GNU Privacy Guard. NOTE: Maintainers are not tracking this mirror. Do not make pull requests here, nor comment any commits, submit them usual way to bug tracker (https://www.gnupg.org/documentation/bts.html) or to the mailing list (https://www.gnupg.org/documentation/mailing-lists.html).
-** GyulyVGC/sniffnet
-  - Comfortably monitor your Internet traffic
 ** HandBrake/HandBrake
   - HandBrake's main development repository
 ** hasse69/rar2fs
@@ -2435,8 +2458,6 @@
   - Interactive, file-level Time Machine-like tool for ZFS/btrfs/nilfs2
 ** koalaman/shellcheck
   - ShellCheck, a static analysis tool for shell scripts
-** kovidgoyal/calibre
-  - The official source code repository for the calibre ebook manager
 ** kubernetes-sigs/kind
   - Kubernetes IN Docker - local clusters for testing Kubernetes
 ** miniupnp/miniupnp
@@ -2449,8 +2470,6 @@
   - Command line video player
 ** NationalSecurityAgency/ghidra
   - Ghidra is a software reverse engineering (SRE) framework
-** nmap/nmap
-  - Nmap - the Network Mapper. Github mirror of official SVN repository.
 ** NVIDIA/k8s-device-plugin
   - NVIDIA device plugin for Kubernetes
 ** NVIDIA/nvidia-container-toolkit
@@ -2463,8 +2482,6 @@
   - I2P: End-to-End encrypted and anonymous Internet
 ** qemu/qemu
   - Official QEMU mirror. Please see http://wiki.qemu.org/Contribute/SubmitAPatch for how to submit changes to QEMU. Pull Requests are ignored. Please only use release tarballs from the QEMU website.
-** rr-debugger/rr
-  - Record and Replay Framework
 ** rrweb-io/rrweb
   - record and replay the web
 ** sharkdp/fd
@@ -2473,18 +2490,10 @@
   - A command-line benchmarking tool
 ** strace/strace
   - strace is a diagnostic, debugging and instructional userspace utility for Linux
-** torproject/tor
-  - unofficial git repo -- report bugs/issues/pull requests on https://gitlab.torproject.org/
 ** transmission/transmission
   - Official Transmission BitTorrent client repository
 ** uutils/coreutils
   - Cross-platform Rust rewrite of the GNU coreutils
-** veracrypt/VeraCrypt
-  - Disk encryption with strong security based on TrueCrypt
-** videolan/vlc
-  - VLC media player - All pull requests are ignored, please follow https://wiki.videolan.org/Sending_Patches_VLC/
-** wagoodman/dive
-  - A tool for exploring each layer in a docker image
 ** webrecorder/pywb
   - Core Python Web Archiving Toolkit for replay and recording of web archives
 ** wine-mirror/wine

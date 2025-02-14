@@ -30,6 +30,7 @@
         - intel gpus need ioctls from mesa/drm ~DRM_I915_QUERY_MEMORY_REGIONS~
   - [[https://github.com/ClementTsang/bottom/pull/1362][updated tui library]]
   - [[https://github.com/ClementTsang/bottom/issues/1629][helped troubleshoot gpu issues]]
+  - [[https://github.com/ClementTsang/bottom/pull/1667][fixed regression in basic mode after maintainer refactoring]]
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine

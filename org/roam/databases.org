@@ -12,6 +12,7 @@
 - [[id:162f9fba-d1f9-44e8-ae9f-685c578523f1][sqlite]]
 - [[id:46651545-b172-443b-b0db-506019b4456c][postgres]]
 - MySQL
+  - https://enhancedformysql.github.io/The-Art-of-Problem-Solving-in-Software-Engineering_How-to-Make-MySQL-Better/
   - [[https://github.com/pingcap/tidb][TiDB]]
     - somewhat compatible with MySQL
     - TiKV for key value storage
@@ -22,6 +23,7 @@
   - sqlite/postgres scanner support
   - no concurrent readers/writers yet
 - Clickhouse
+- https://transactional.blog/notes-on/disaggregated-oltp
 ** notes
 - BTree based DB's are more cache friendly as nodes can have more than 2 children (abseil uses 62 children) unlike Binary Trees
   - binary tree's (red-black like C++ STL) are better with larger sized nodes (moving pointers) than smaller (moving values)

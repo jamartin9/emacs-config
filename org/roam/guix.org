@@ -37,7 +37,9 @@
      ;;"nzbget"
      ;;"steam-nvidia" ;; steam
      ;;"zfs"
+     "strace"
      "perf"
+     "flamegraph"
      "bpftrace"
      "bcc"
 
@@ -45,8 +47,8 @@
      ;;"make" ;;"cmake"
      ;;"glibc" ;; "musl"
      ;;"gcc-toolchain" ;;"clang-toolchain"
-     ;;"gdb" ;;"lldb"
-     "rr"
+     "gdb" ;;"lldb"
+     ;;"rr"
      ;;"binutils"
      ;;"module-init-tools"
      ;;"msr-tools"
@@ -62,10 +64,12 @@
 
      ;; python
      ;;"python"
+     ;;"vapoursynth";; "ffms2"
 
      ;; shell
      ;;"shellcheck" ;;"bash"
      "htop"; Requires CAP_NET_ADMIN for PERCENT_*_DELAY
+     ;;"bottom"
      ;;"xclip"
      ;;"wl-clipboard"
      ;;"bc"
@@ -85,6 +89,7 @@
      ;;"patch"
      ;;"gash"
      ;;"gash-utils"
+     "screen"
 
      ;; apps
      ;;"wine64"; "wine"
@@ -123,9 +128,7 @@
      ;;"ffmpeg"
      ;;"gnuplot"
      ;;"makemkv"
-     "flamegraph"
      ;;"yt-dlp"
-     ;;"vapoursynth";; "ffms2"
 
      ;; net
      ;;"curl"
@@ -136,18 +139,16 @@
      ;;"onionshare"
      ;;"iptables"
      ;;"ebtables"
-     "wireshark"
+     ;;"wireshark"
      ;;"netcat"
      ;;"net-tools"
      ;;"openssh" ;;"dropbear"
      ;;"wireguard-tools"
      ;;"socat"
-     "strace"
      ;;"tor"
-     "torsocks"
+     ;;"torsocks"
      ;;"i2pd"
-     ;;"screen"
-     "dnsmasq"
+     ;;"dnsmasq"
 
      ;; Desktop
      ;;"notification-daemon"

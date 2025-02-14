@@ -37,3 +37,7 @@ More ricing less productivity!
   - use ~ENABLE_HDR_WSI=1 SDL_VIDEODRIVER=wayland~ for native games
 - Nested Wayland compositor for VMs
   - https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/vm_tools/sommelier/README.md
+- Bluez
+  - dbus interface
+    - https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc
+    - example of file transfer https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/test/simple-obex-agent

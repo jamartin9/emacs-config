@@ -24,6 +24,7 @@
 - records
 - babylon
   - spirv is based on tornadovm's implementation
+    - tornado is faster due to JIT but babylon allows custom data types and is part of openjdk
   - trition kernels
   - bytecode transformations and auto diff
     - https://openjdk.org/projects/babylon/articles/auto-diff

@@ -141,7 +141,7 @@
               url-cookie-file (expand-file-name "cookies" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               url-cache-directory (expand-file-name "cache" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
-              auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo.gpg")) ; auth
+              auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo")) ; auth
               epa-file-cache-passphrase-for-symmetric-encryption t
               display-line-numbers-type t ; defaults
               apropos-do-all t
@@ -626,7 +626,7 @@
    gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
    gnus-secondary-select-methods '(;(nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
-                                   ;(nnatom "github.com/SChernykh/p2pool/releases.atom") (nnatom "github.com/monero-project/monero/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
+                                   ;(nnatom "github.com/monero-project/monero/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
                                    ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
@@ -736,13 +736,13 @@
 ;	                   :type "string"
 ;  	                   :description "The content to write to the file"))
 ;   :category "filesystem")
-  ;(setenv "OLLAMA_MODELS" (concat user-emacs-directory (file-name-as-directory ".local") "ollama-models")); ollama run llama3.2-vision
-  (setq gptel-model 'deepseek-r1:7b ;qwen2.5-coder:14b;llama3.2-vision; use unsloth variants for vision accuracy
-        gptel-backend (gptel-make-ollama "Ollama" ;gptel-make-openai "llama-cpp" :protocol "http"
-                                         :host "localhost:11434"
-                                         :models '((deepseek-r1:7b)
-                                                   (llama3.2-vision :capabilities (media));:mime-types ("image/jpeg" "image/png")
-                                                   (qwen2.5-coder:14b))
+  (setq gptel-model 'deepseek-r1:14b ;qwen2.5-coder:14b;qwen2.5-vl:7b
+        gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
+                                         :host "localhost:8080";"localhost:11434"
+                                         :models '((deepseek-r1:14b)
+                                                   ;(qwen2.5-vl:7B :capabilities (media));:mime-types ("image/jpeg" "image/png")
+                                                   ;(qwen2.5-coder:14b)
+                                                   )
                                          :stream t)))
 
 ;(use-package combobulate

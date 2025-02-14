@@ -12,3 +12,5 @@ Thee who watches the watchers
 - monitoring
   - [[id:da54ebe6-f11a-4431-b50f-ee281502998a][netdata]]
   - [[id:15a1bd83-5412-4ea3-b883-d2026fc2966a][prometheus-tech]]
+- profilers
+  - https://github.com/intel/oneapi-containers/tree/master/images/docker/vtune

@@ -77,6 +77,7 @@
 - Models can be merged with various method to combine feature strengths
 ** image
   - reasoning to vision models https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main
+    - S1 paper shows that you need very few examples (as little as 1000) in order for the model to start being able to build complex reasoning steps and solve non trivial mathematical problems.
   - Lumina-Image 2B close to flux
   - SmolVLM open source training and data
   - Janus-Pro 7B or 1B
@@ -122,6 +123,8 @@
 *** 3D
   - https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon for 3D generation 3B
 ** Large Language Models
+  - fine tune reasoning into models 1.5B+ with https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb
+    - uses vllm for inference
   - vllm can serve openai api locally
     - cpu only avx2 openvino
     - CPU_OFFLOAD with GPU
@@ -130,6 +133,7 @@
     - multimodal
     - VLLM_USE_V1=1 for new arch
     - jinja chat templates
+    - required compute capability higher than 5.2 for gguf and bnb
   - constrain output to json schema or grammar or choice
     - faster inference with constrained output https://blog.dottxt.co/coalescence.html
     - guided decoding https://github.com/dottxt-ai/outlines
@@ -229,6 +233,7 @@ yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
 whisper "/content/${VID}.m4a" --model small --language English
 #+END_SRC
 ** Text to speech
+- Zyphra/Zonos for voice cloning/TTS
 - https://github.com/multimodal-art-projection/YuE
   - YuE: Open Full-song Music Generation Foundation Model, something similar to Suno.ai but open
 - suno bark
