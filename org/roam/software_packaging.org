@@ -20,6 +20,7 @@ Lets make the same thing but differently!
     - multiple nvidia driver versions etc
   - ~flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo~
   - ~gio mime x-scheme-handler/http firefox.desktop~ and ~gio mime x-scheme-handler/https firefox.desktop~
+  - mount ~$HOME/.var~ for flatpak on other drive with ~sudo mound --bind /gnu/xdg/.var $HOME/.var~
 - rpms
   - redhat based distros
   - can use alien to convert deb and rpm

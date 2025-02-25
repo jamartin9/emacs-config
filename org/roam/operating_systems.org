@@ -12,6 +12,8 @@
 ** [[id:5bed75cb-f8b0-41ef-b6da-6cdf05c7053c][windows]]
 ** [[id:52c3b05c-2f7c-4862-b550-916cd689d995][mac]]
 ** Misc
+*** ARM
+- Jazelle DBX (direct bytecode execution) is an extension that allows some ARM processors to execute Java bytecode in hardware as a third execution state alongside the existing ARM and Thumb modes (16bit instructions)
 *** Hurd
 - debian/arch/guix variants
   - ia32 and x86_64 (GNU Binutils 2.40+ and GCC 13+)

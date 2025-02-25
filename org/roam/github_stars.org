@@ -2136,6 +2136,8 @@
   - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
 
 * machine learning
+** sgl-project/sglang
+  - SGLang is a fast serving framework for large language models and vision language models.
 ** argilla-io/distilabel
   - Distilabel is a framework for synthetic data and AI feedback for engineers who need fast, reliable and scalable pipelines based on verified research papers.
 ** comfyanonymous/ComfyUI

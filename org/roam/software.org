@@ -51,6 +51,7 @@
 - Law of Large Numbers - large results over time trend toward the average
   - ex. more code, more bugs
 - Mind Projection Fallacy - when someone thinks that the way they see the world reflects the way the world really is.
+- The purpose of a system is what it does. - Stafford Beer. there is "no point in claiming that the purpose of a system is to do what it constantly fails to do."
 ** Common
 - Birthday Problem - 50% chance for 23 random people to share a birthday
 - release cadence schedule sets expectations

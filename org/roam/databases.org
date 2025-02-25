@@ -12,6 +12,10 @@
 - [[id:162f9fba-d1f9-44e8-ae9f-685c578523f1][sqlite]]
 - [[id:46651545-b172-443b-b0db-506019b4456c][postgres]]
 - MySQL
+  - innodb storage engine prefetches and caches itself with default 16k record size
+    - dzfs_prefetch_disable=1, logbias=throughput, primarycache=metadata, atime=off, xattr=sa, recordsize=16k
+    - innodb_log_write_ahead_size=16384, innodb_doublewrite=0, innodb_checksum_algorithm=none, innodb_flush_neighbors=0, innodb_use_native_aio=0, innodb_use_atomic_writes=0
+    - increase writes by disabling disk flushing with innodb_flush_log_at_trx_commit=0 and sync_binlog=0. ZFS disable all explicit disk flushing to any one file system by setting sync=disabled so it flushes every ~5sec
   - https://enhancedformysql.github.io/The-Art-of-Problem-Solving-in-Software-Engineering_How-to-Make-MySQL-Better/
   - [[https://github.com/pingcap/tidb][TiDB]]
     - somewhat compatible with MySQL

@@ -87,7 +87,8 @@
                            (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
                            (electric-pair-mode 1) ; less typing
                            (context-menu-mode 1); mouse right click menu
-                           (load-theme 'modus-vivendi); built-in does not need to hook server-after-make-frame-hook for daemonp
+                           ;(advice-add 'completion-at-point :after #'minibuffer-hide-completions);(url-handler-mode 1) ; open urls in buffers
+                           (load-theme 'modus-vivendi-tinted); built-in does not need to hook server-after-make-frame-hook for daemonp
                            (require 'xdg)
                            (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg")))))
   :bind (("<M-up>" . (lambda () (interactive) (transpose-lines 1) (forward-line -2))); move line up
@@ -105,6 +106,7 @@
            ("s" . windmove-down)
            ("d" . windmove-right)
            ("f" . select-frame-by-name)
+           ("D" . toggle-window-dedicated)
            ("o" . other-frame)
          :map minibuffer-local-completion-map
          ("<mouse-1>" . (lambda (event) (interactive "e"); call the completion candidate at the row location of EVENT in the minibuffer (choose-completion event ?)
@@ -150,12 +152,13 @@
               visible-cursor nil
               isearch-wrap-pause 'no-ding ; wrap isearch
               ad-redefinition-action 'accept ; ignore warnings
-              completion-auto-help 'lazy; '?' for help w/mouse click
+              ;completion-auto-help 'lazy; '?' for help w/mouse click
               completion-cycle-threshold nil ; flex narrowing instead of cycling
               completions-format 'one-column
               completions-group t
               completion-styles '(basic initials substring partial-completion)
               completions-detailed t
+              completions-sort 'historical
               ;completion-auto-select 'second-tab
               icomplete-scroll t
               column-number-mode t
@@ -213,7 +216,7 @@
               auto-mode-case-fold nil
               kill-do-not-save-duplicates t
               edebug-print-length nil ; print whole edebug result
-              browse-url-browser-function 'xwidget-webkit-browse-url ; libxml-parse-html-region w/ shr
+              browse-url-browser-function 'eww-browse-url ;'xwidget-webkit-browse-url ; libxml-parse-html-region w/ shr
               shr-use-xwidgets-for-media t ; eww display video tags
               display-time-format "%m-%d-%Y %R"
               display-time-default-load-average nil
@@ -233,7 +236,7 @@
               initial-scratch-message nil
               default-input-method nil
               xref-search-program 'ripgrep ; replace grep with ripgrep
-              enable-local-variables :all ; RISKY
+              ;enable-local-variables :all ; RISKY use safe-local-variable-directories
               inhibit-startup-screen t
               inhibit-startup-echo-area-message user-login-name
               inhibit-default-init t)
@@ -249,6 +252,8 @@
       (progn
         (setq menu-bar-mode nil) ; disable menu-bar on non android
         (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
+    (add-to-list 'default-frame-alist '(tool-bar-position . bottom))
+    (add-to-list 'initial-frame-alist '(tool-bar-position . bottom))
     (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin" (getenv "PATH"))) ;; set android termux paths for call-process
     (setenv "LD_LIBRARY_PATH" (format "%s:%s" "/data/data/com.termux/files/usr/lib" (getenv "LD_LIBRARY_PATH")))
     (push "/data/data/com.termux/files/usr/bin" exec-path))
@@ -259,8 +264,8 @@
   (add-to-list 'default-frame-alist '(tool-bar-lines . 0)) ; disable w/o loading mode
   (add-to-list 'default-frame-alist '(vertical-scroll-bars))
   (set-frame-parameter nil 'alpha-background 80)
-  (add-to-list 'default-frame-alist '(alpha-background  . 80))
-  (add-to-list 'initial-frame-alist '(alpha-background  . 80))
+  (add-to-list 'default-frame-alist '(alpha-background . 80))
+  (add-to-list 'initial-frame-alist '(alpha-background . 80))
   (set-language-environment "UTF-8"))
 
 (use-package desktop
@@ -327,6 +332,7 @@
   :config (setq dired-dwim-target t
                 dired-hide-details-hide-symlink-targets nil
                 dired-auto-revert-buffer #'dired-buffer-stale-p
+                dired-listing-switches "-alh"
                 dired-recursive-copies 'always
                 dired-recursive-deletes 'top
                 dired-create-destination-dirs 'ask)
@@ -403,7 +409,7 @@
                 undo-outer-limit 128000000 ; 128mb (default 24mb)
                 undo-tree-enable-undo-in-region t))
 
-(use-package password-store ; pass
+(use-package password-store
   :ensure nil ; built-in
   :bind (:map jam/open ("p" . jam/auth-display))
   :commands (auth-source-search auth-info-password auth-source-pick-first-password auth-source-forget+ auth-source-forget auth-source-delete))
@@ -569,6 +575,7 @@
   :config (require 'em-smart)
   (setq eshell-directory-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eshell")
         eshell-prefer-lisp-functions nil
+        ;pcomplete-remote-file-ignore t
         eshell-cmpl-cycle-completions t; replace # with : for prompt regex using /ssh:jam@10.0.0.1#6969:/tmp
         eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
                                                     (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white")))))))
@@ -588,27 +595,16 @@
   (setq tramp-auto-save-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp-autosave")
         tramp-persistency-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp")))
 
-(use-package company
-  ;:pin gnu ; pin gnu for android
-  :bind (:map jam/toggle ("i" . global-company-mode))
-  :hook ((after-init . global-company-mode))
+(use-package completion-preview
+  :ensure nil ; built-in
+  :bind (:map completion-preview-active-mode-map
+              ("M-n" . completion-preview-next-candidate)
+              ("M-p" . completion-preview-prev-candidate))
+  :config
+  (setq ;completion-preview-idle-delay 0.2
+   completion-preview-minimum-symbol-length 2)
   :init
-  (setq company-minimum-prefix-length 2
-        company-tooltip-limit 14
-        company-tooltip-align-annotations t
-        company-require-match 'never
-        company-global-modes '(not erc-mode message-mode help-mode gud-mode);eshell-mode
-        company-frontends
-        '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
-          company-echo-metadata-frontend)  ; show selected candidate docs in echo area
-        company-backends '(company-capf company-yasnippet); company-ispell company-files company-keywords company-dabbrev
-        company-auto-commit nil
-        company-dabbrev-other-buffers nil
-        company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil)
-  :commands (global-company-mode company-complete-common company-complete-common-or-cycle company-manual-begin company-grab-line)
-  :config (require 'company-tng) ; TabNGo
-  (company-tng-configure-default))
+  (global-completion-preview-mode 1))
 
 (use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all
   :ensure nil ; built-in
@@ -625,8 +621,8 @@
    gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
-   gnus-secondary-select-methods '(;(nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
-                                   ;(nnatom "github.com/monero-project/monero/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
+   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ ; do not include http/https/www
+                                   (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
                                    ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
@@ -663,19 +659,19 @@
                                    (("Releases" visible)) (("Level1Techs" visible)) (("wingolog" visible)) (("Guix" visible)) (("Reddit" visible)) (("Tor" visible)))
              gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
                                 ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts")
-                                ("misc" "nnfolder+archive:sent.2023" "nnfolder+archive:sent.2024" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
-                                ("Level1Techs" "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Guix" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
-                                ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero" "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool")
+                                ("misc" "nnfolder+archive:sent.2024" "nnfolder+archive:sent.2025" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
+                                ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Guix" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+                                ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
                                 ("Gnus")))
        (gnus-topic-set-parameters "gmail" '((display . 200))) (gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
        (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
-       ;(gnus-subscribe-hierarchically "nnatom+yewtu.be/feed/channel/UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
-       ;(gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/SChernykh/p2pool/releases.atom:Release notes from p2pool") (gnus-subscribe-hierarchically "nnatom+github.com/monero-project/monero/releases.atom:Release notes from monero") ; https://gantnews.com/category/police-logs/feed/
+       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
+       (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
        (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix"))))
 
 (use-package which-key
-  ;:ensure nil ;:pin gnu ; built-in emacs >= 30
+  :ensure nil ;:pin gnu ; built-in emacs >= 30
   :hook (after-init . which-key-mode)
   :commands (which-key-mode))
 
@@ -699,8 +695,8 @@
   :commands (dape))
 
 (use-package flyspell ; aspell
-  :bind (:map jam/toggle ("s" . flyspell-mode))
   :ensure nil ; built-in
+  :bind (:map jam/toggle ("s" . flyspell-mode))
   :hook (((org-mode markdown-mode TeX-mode rst-mode message-mode git-commit-mode) . flyspell-mode)
          ((yaml-mode conf-mode prog-mode) . flyspell-prog-mode))
   :commands (flyspell-mode)
@@ -736,12 +732,12 @@
 ;	                   :type "string"
 ;  	                   :description "The content to write to the file"))
 ;   :category "filesystem")
-  (setq gptel-model 'deepseek-r1:14b ;qwen2.5-coder:14b;qwen2.5-vl:7b
+  (setq gptel-model 'deepseek-r1:14b ;qwen2.5-coder:14b;qwen2.5-vl:3b
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
                                          :models '((deepseek-r1:14b)
-                                                   ;(qwen2.5-vl:7B :capabilities (media));:mime-types ("image/jpeg" "image/png")
-                                                   ;(qwen2.5-coder:14b)
+                                                   (qwen2.5-vl:3B :capabilities (media));:mime-types ("image/jpeg" "image/png")
+                                                   (qwen2.5-coder:14b)
                                                    )
                                          :stream t)))
 
@@ -756,20 +752,20 @@
 ;  :config (eglot-x-setup)
 ;  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
 
-;(use-package atomic-chrome
-;;  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev :newest)
-;  :bind (:map jam/toggle ("b" . atomic-chrome-toggle-server))
-;  :commands (atomic-chrome-start-server atomic-chrome-toggle-server)
-;  :config
-;  (setq-default atomic-chrome-buffer-open-style 'frame)
-;  (setq-default atomic-chrome-auto-remove-file t)
-;  (setq-default atomic-chrome-url-major-mode-alist
-;                '(("github.com" . gfm-mode)
-;                  ("gitlab.com" . gfm-mode)))
-;  (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
+(use-package atomic-chrome
+  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev "3387284d8789cf1d2a54425019a27f2e099b80d5")
+  :bind (:map jam/toggle ("b" . atomic-chrome-toggle-server))
+  :commands (atomic-chrome-start-server atomic-chrome-toggle-server)
+  :config
+  (setq-default atomic-chrome-buffer-open-style 'frame)
+  (setq-default atomic-chrome-auto-remove-file t)
+  (setq-default atomic-chrome-url-major-mode-alist
+                '(("github.com" . gfm-mode)
+                  ("gitlab.com" . gfm-mode)))
+  (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
 
 ;;;###autoload
-(defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-string (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil nil (buffer-file-name (current-buffer))))) (find-file (format "/sudo::%s" file)))
+(defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))
 ;;;###autoload
 (defun jam/save-all () "Save all buffers" (interactive) (save-some-buffers t))
 ;;;###autoload
@@ -777,9 +773,13 @@
 ;;;###autoload
 (defun jam/eshell () "Open new eshell" (interactive) (eshell t))
 ;;;###autoload
-(defun jam/mpv-play (url) "Run mpv in eat terminal" (interactive (list (read-string (format "Arguments (https://zeno.fm/radio/gangsta49/): ") nil nil "https://zeno.fm/radio/gangsta49/"))) (eat (concat "mpv " url) 69))
-;;;###autoload
 (defun jam/replace-unicode() "Replaces the following unicode characters: ZERO WIDTH NO-BREAK SPACE (65279, #xfeff) aka BOM, ZERO WIDTH SPACE (codepoint 8203, #x200b), RIGHT-TO-LEFT MARK (8207, #x200f), RIGHT-TO-LEFT OVERRIDE (8238, #x202e), LEFT-TO-RIGHT MARK ‎(8206, #x200e), OBJECT REPLACEMENT CHARACTER (65532, #xfffc)" (interactive) (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" ""))
+;;;###autoload
+(defun jam/screenshot () "Save screenshot to local cache directory" (interactive) (let* ((image (x-export-frames nil 'png)) (image-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (format-time-string "Screenshot-%Y-%m-%d-%T.png")))) (with-temp-file image-file (insert image)) (message "Saved Screenshot %s" image-file)))
+;;;###autoload
+(defun jam/compile-init-bytecode () "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)" (interactive) (byte-recompile-file (concat user-emacs-directory "init.el")) (byte-recompile-file (concat user-emacs-directory "early-init.el")) (byte-recompile-file (concat user-emacs-directory "make-el.el")) (require 'package) (package-quickstart-refresh)(byte-recompile-file (concat user-emacs-directory "package-quickstart.el"))); recompile autoloads
+;;;###autoload
+(defun jam/mpv-play (url) "Run mpv in eat terminal." (interactive (list (read-file-name (format "Args: ") nil "" nil))) (eat (concat "mpv " url)))
 
 ;;;###autoload
 (defun jam/set-rust-path ()
@@ -790,27 +790,6 @@
   (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup"))
   (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo"))
   (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
-
-;;;###autoload
-(defun jam/compile-init-bytecode ()
-  "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)"
-  (interactive)
-  (byte-recompile-file (concat user-emacs-directory "init.el"))
-  (byte-recompile-file (concat user-emacs-directory "early-init.el"))
-  (byte-recompile-file (concat user-emacs-directory "make-el.el"))
-  (require 'package) ; recompile autoloads
-  (package-quickstart-refresh)
-  (byte-recompile-file (concat user-emacs-directory "package-quickstart.el")))
-
-;;;###autoload
-(defun jam/screenshot ()
-  "Save screenshot to local cache directory"
-  (interactive)
-  (let* ((image (x-export-frames nil 'png))
-         (image-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (format-time-string "Screenshot-%Y-%m-%d-%T.png"))))
-    (with-temp-file image-file
-      (insert image))
-    (message "Saved Screenshot %s" image-file)))
 
 ;;; TOTP
 ;;;###autoload

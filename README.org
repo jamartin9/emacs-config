@@ -1,6 +1,6 @@
 
 * emacs-config
-This configuration is for emacs >= 29
+This configuration is for emacs >= 30
 
 Third party packages:
 
@@ -17,8 +17,6 @@ transmission: manage torrent client. alternative is cli
 org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
 
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
-
-company: automatic typing suggestions. alternative is corfu with cape
 
 minions-mode: keeps the modeline visually brief with retained information. alternative is diminish/delight packages and config for each mode
 
