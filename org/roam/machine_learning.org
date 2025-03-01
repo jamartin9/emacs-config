@@ -75,6 +75,7 @@
   - [[https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat]['Extended Mind']] aka active externalism may out preform RAG with citations
 - Chain of thought synthetic dataset to improve implicit deductions (orca/phi)
 - Models can be merged with various method to combine feature strengths
+- Alibaba-NLP/gte-Qwen2-7B-instruct uses semantic understanding for the RAG embeddings to group documents regardless of language
 ** image
   - reasoning to vision models https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main
     - S1 paper shows that you need very few examples (as little as 1000) in order for the model to start being able to build complex reasoning steps and solve non trivial mathematical problems.

@@ -203,3 +203,4 @@ self.addEventListener('fetch', function(e) {
 - https://mangadex.org/
 - ubu.com/film/index.html
 - https://rarefilmm.com/
+- https://feed.animetosho.org/atom

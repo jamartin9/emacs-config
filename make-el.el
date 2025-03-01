@@ -36,6 +36,7 @@ DRY-RUN: do not run the tangled argument"
           ("clean-guix" (message "%s" (process-lines "guix" "package" "-d"))
                         (message "%s" (process-lines "guix" "pull" "-d"))
                         (message "%s" (process-lines "guix" "home" "delete-generations"))
+                        (ignore-errors (message "%s" (process-lines "guix" "system" "delete-generations")))
                         (message "%s" (process-lines "guix" "gc")))
           ("site" (jam/parse-args (list "install-all")); use install to run scripts for timestamps (css, js, sqlite, emacs, etc)
                   (let* ((init-dir (file-name-directory (or load-file-name buffer-file-name)))

@@ -690,6 +690,7 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
   - DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
     - extract core with eac3to or ~ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts~
   - Downmix and transcode to opus at 80Kbs ~ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus~
+    - Eclipsa Audio uses Opus and adds spatial audio metadata
   - PCM - Bluray
   - Opus - RFC extension to add ambisonic("sweetspot" for speakers) spatial sounds instead of objects like atmos. Both use fixed position listener. Has ML extension for VoIP.
 
