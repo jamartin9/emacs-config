@@ -438,14 +438,13 @@
 
 (use-package completion-preview
   :ensure nil ; built-in
+  :hook ((after-init . global-completion-preview-mode))
   :bind (:map completion-preview-active-mode-map
               ("M-n" . completion-preview-next-candidate)
               ("M-p" . completion-preview-prev-candidate))
   :config
   (setq ;completion-preview-idle-delay 0.2
-   completion-preview-minimum-symbol-length 2)
-  :init
-  (global-completion-preview-mode 1))
+   completion-preview-minimum-symbol-length 2))
 
 (use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all
   :ensure nil ; built-in
