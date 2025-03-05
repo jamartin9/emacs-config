@@ -79,7 +79,6 @@
                                                           (selection . (semibold accented intense))
                                                           (popup . (accented))))
                            (fido-vertical-mode 1) ; M-j to ignore completion
-                           (cua-mode 1)
                            (window-divider-mode 1)
                            (display-time-mode 1)
                            (delete-selection-mode 1)
@@ -87,10 +86,10 @@
                            (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
                            (electric-pair-mode 1) ; less typing
                            (context-menu-mode 1); mouse right click menu
-                           ;(advice-add 'completion-at-point :after #'minibuffer-hide-completions);(url-handler-mode 1) ; open urls in buffers
+                           (url-handler-mode 1) ; open urls in buffers
+                           ;(advice-add 'completion-at-point :after #'minibuffer-hide-completions)
                            (load-theme 'modus-vivendi-tinted); built-in does not need to hook server-after-make-frame-hook for daemonp
-                           (require 'xdg)
-                           (setenv "GNUPGHOME" (concat (file-name-as-directory (xdg-data-home)) "gnupg")))))
+                           (cua-mode 1))))
   :bind (("<M-up>" . (lambda () (interactive) (transpose-lines 1) (forward-line -2))); move line up
          ("<M-down>" . (lambda () (interactive) (forward-line 1) (transpose-lines 1) (forward-line -1))); move line down
          ("<M-left>" . (lambda () (interactive) (transpose-words -1))); move word left
@@ -339,45 +338,10 @@
   :commands (dired dired-jump dired-other-frame dired-other-tab dired-other-window)
   :bind (:map jam/open ("-" . dired-jump)))
 
-(use-package guix ; guix
-  :config (require 'guix-autoloads)
-  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
-  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"));(guix-emacs-autoload-packages); set EMACSLOADPATH
-  :commands (guix-popup guix-set-emacs-environment))
-
-(use-package geiser ; guile
-  :hook ((scheme-mode . geiser-mode))
-  :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
-  :config
-  (setq geiser-repl-per-project-p t
-        geiser-repl-current-project-function #'geiser-repl-project-root
-        geiser-repl-history-filename (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-history"))
-  (require 'geiser-guile)); geiser call per buffer?
-
-(use-package macrostep-geiser ; guile
-  :hook (((geiser-mode geiser-repl-mode) . macrostep-geiser-setup))
-  :commands (macrostep-geiser-setup))
-
-(use-package geiser-guile ; guile
-  :init (with-eval-after-load 'geiser-guile
-          (require 'xdg)
-          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")) ; source
-          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache")) ; compiled
-          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
-          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") "3.0"))
-          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache"))
-          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
-  :commands (geiser-guile))
-
-(use-package flymake ; add flycheck backends?
+(use-package password-store
   :ensure nil ; built-in
-  :config (setq flymake-indicator-type 'margins)
-  :commands (flymake-mode))
-
-(use-package flymake-guile ; guile/guild
-  :commands (flymake-guile)
-  :hook (scheme-mode . flymake-guile)
-  :hook (scheme-mode . flymake-mode))
+  :bind (:map jam/open ("p" . jam/auth-display))
+  :commands (auth-source-search auth-info-password auth-source-pick-first-password auth-source-forget+ auth-source-forget auth-source-delete))
 
 (use-package eglot
   :ensure nil ; built-in
@@ -390,121 +354,6 @@
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
                                                           :cargo (:cfgs (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
                                                                          :tokio_unstable "")))))))
-
-(use-package rust-ts-mode
-  :ensure nil ; built-in
-  :mode "\\.rs\\'"
-  :commands (rust-ts-mode)
-  :config (jam/set-rust-path))
-
-(use-package undo-tree
-  ;:pin gnu
-  :hook ((after-init . global-undo-tree-mode))
-  :commands (global-undo-tree-mode)
-  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
-  :config (setq undo-tree-visualizer-diff t
-                undo-tree-auto-save-history t
-                undo-limit 800000 ; 800 kb (default 160kb)
-                undo-strong-limit 12000000 ; 12mb (default 240kb)
-                undo-outer-limit 128000000 ; 128mb (default 24mb)
-                undo-tree-enable-undo-in-region t))
-
-(use-package password-store
-  :ensure nil ; built-in
-  :bind (:map jam/open ("p" . jam/auth-display))
-  :commands (auth-source-search auth-info-password auth-source-pick-first-password auth-source-forget+ auth-source-forget auth-source-delete))
-
-(use-package magit ; git ; magit-diff then magit-patch to save
-  :commands (magit-file-delete magit-status)
-  :bind (:map jam/open ("m" . magit-status)
-         :map magit-mode-map ("q" . kill-buffer)
-         :map transient-map ([escape] . transient-quit-one))
-  :init
-  (setq magit-auto-revert-mode nil)
-  (setq transient-levels-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "levels")
-        transient-values-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "values")
-        transient-history-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "history"))
-  :config
-  (setq transient-default-level 5
-        transient-display-buffer-action '(display-buffer-below-selected)
-        magit-diff-refine-hunk t
-        magit-save-repository-buffers nil
-        magit-revision-insert-related-refs nil
-        magit-bury-buffer-function #'magit-mode-quit-window)
-  (add-hook 'magit-process-mode-hook #'goto-address-mode)); magit-generate-changelog after magit-create-commit for commit msg
-
-(use-package forge ; git ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
-  :after magit
-  :commands (forge-pull forge-add-repository forge-list-issues forge-list-pullreqs forge-list-notifications forge-list-repositories forge-create-issue forge-create-pullreq)
-  :init (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
-  (setq forge-add-default-bindings t))
-
-(use-package transmission ; C-u universal arg for directory prompt ; transmission
-  :commands (transmission transmission-add))
-
-(use-package org-roam ; sqlite-available-p ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
-  :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
-  :bind (:map jam/file ("r" . org-roam-node-find)
-         :map jam/notes
-              ("T" . org-roam-dailies-capture-today)
-              ("d" . org-roam-dailies-goto-date)
-              ("r" . org-roam-capture)
-              ("R" . org-roam-dailies-capture-date)
-              ("i" . org-roam-node-insert)
-              ("N" . org-roam-db-sync)
-              ("n" . org-roam-node-find))
-  :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
-              org-directory org-roam-directory
-              org-id-locations-file (expand-file-name ".orgids" org-directory) ; org-id-update-id-locations org-roam-db-sync
-              org-clock-sound (expand-file-name "alert.wav" org-directory) ; play-sound-file (from flac --decode)
-              org-return-follows-link t
-              org-persist-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "org-persist"))
-              org-roam-dailies-directory ""
-              org-agenda-files (list org-roam-directory)
-              org-roam-db-location (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "org-roam.db")
-              org-modules '(org-crypt);ol-bibtext
-              org-roam-dailies-capture-templates '(("d" "default" entry
-                                                    "* %U %?\n%i\n%a"
-                                                    :if-new (file+datetree "journal.org" "#+title: ${title}\n")
-                                                    :prepend t
-                                                    :unnarrowed t))
-              org-roam-capture-templates `(("d" "default" plain
-                                            "%?"
-                                            :if-new (file+head "${slug}.org" ,(concat "#+title: ${title}\n"
-                                                                                      "#+OPTIONS: toc:nil num:nil date:nil \\n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t\n"
-                                                                                      "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"org-default.css\" />\n"
-                                                                                      "#+HTML_CONTENT_CLASS: container \n"
-                                                                                      "#+HTML_DOCTYPE: html5 \n"
-                                                                                      "#+INCLUDE: \"css.org::navbar\" :only-contents t \n"))
-                                            :unnarrowed t))))
-
-(use-package osm ; curl
-  ;:pin gnu
-  :bind (:map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
-  :commands (osm-home osm-search)
-  :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
-  :custom (osm-copyright nil))
-
-(use-package python ; python
-  :ensure nil ; built-in
-  :commands (python-mode python-mode-hook python-mode-local-vars-hook python-ts-mode python-ts-mode-hook))
-
-(use-package pyvenv ; python ; projects can install pydebug and pylsp inside venv
-  :init (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
-  :hook (((python-mode python-ts-mode) . pyvenv-tracking-mode))
-  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
-
-(use-package minions ; hide minor modes on modeline
-  :hook ((after-init . minions-mode))
-  :commands (minions-mode))
-
-(use-package debbugs
-  ;:pin gnu
-  :bind (:map jam/search ("b" . debbugs-gnu-bugs)); bug number search
-  :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
-  :config ;(setq org-link-elisp-confirm-function nil)
-  (setq debbugs-gnu-default-packages '("guix-patches"))
-  (require 'debbugs-guix) (require 'debbugs-org) (require 'debbugs-gnu) (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
 
 (use-package hideshow
   :ensure nil ; built-in
@@ -579,14 +428,6 @@
         eshell-cmpl-cycle-completions t; replace # with : for prompt regex using /ssh:jam@10.0.0.1#6969:/tmp
         eshell-prompt-function #'(lambda () (concat (propertize (replace-regexp-in-string "[#$]" ":" (abbreviate-file-name (eshell/pwd))) 'face `(:foreground "green"))
                                                     (propertize " $ " 'face (if (= (user-uid) 0) `(:foreground "red") `(:foreground "white")))))))
-
-(use-package eat
-  ;:pin nongnu
-  :bind (:map jam/open ("t" . eat)
-         :map eat-mode-map ("C-S-v" . eat-yank))
-  :hook ((eshell-load . eat-eshell-mode)
-         (eshell-load . eat-eshell-visual-command-mode))
-  :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
 
 (use-package tramp
   :ensure nil ; built-in
@@ -671,28 +512,23 @@
        (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix"))))
 
 (use-package which-key
-  :ensure nil ;:pin gnu ; built-in emacs >= 30
+  :ensure nil ; built-in
   :hook (after-init . which-key-mode)
   :commands (which-key-mode))
 
-(use-package yaml-ts-mode
+(use-package flymake ; add flycheck backends?
   :ensure nil ; built-in
-  :commands (yaml-ts-mode))
+  :config (setq flymake-indicator-type 'margins)
+  :commands (flymake-mode))
 
-(use-package treesit ; libtreesitter-*.so
+(use-package epa ; gpg
   :ensure nil ; built-in
-  :init
-  (if (treesit-available-p)
-      (progn
-        (add-to-list 'treesit-extra-load-path "/usr/lib")
-        (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
-        (push '(python-mode . python-ts-mode) major-mode-remap-alist)
-        (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
-
-(use-package dape ; Extract adapter https://github.com/vadimcn/codelldb/releases unzip codelldb-<platform>-<os>.vsix -d ~/.emacs.d/.local/debug-adapters/codelldb
-  :bind (:map jam/code ("d" . dape))
-  :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
-  :commands (dape))
+  :defer t
+  :config (setq epg-pinentry-mode 'loopback) ; minibuffer for gpg input instead of 'allow-loopback-pinentry' in ~/.gnupg/gpg-agent.conf
+  (require 'xdg)
+  (let ((gpg-dir (concat (file-name-as-directory (xdg-data-home)) "gnupg")))
+    (setenv "GNUPGHOME" gpg-dir) ; setup gnupg
+    (if (not (file-directory-p gpg-dir)) (make-directory gpg-dir t))))
 
 (use-package flyspell ; aspell
   :ensure nil ; built-in
@@ -708,6 +544,178 @@
                 ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
                 ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
+
+(use-package treesit ; libtreesitter-*.so
+  :ensure nil ; built-in
+  :init
+  (if (treesit-available-p)
+      (progn
+        (add-to-list 'treesit-extra-load-path "/usr/lib")
+        (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
+        (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+        (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
+
+(use-package yaml-ts-mode
+  :ensure nil ; built-in
+  :commands (yaml-ts-mode))
+
+(use-package rust-ts-mode
+  :ensure nil ; built-in
+  :mode "\\.rs\\'"
+  :commands (rust-ts-mode)
+  :config (jam/set-rust-path))
+
+(use-package python ; python
+  :ensure nil ; built-in
+  :commands (python-mode python-mode-hook python-mode-local-vars-hook python-ts-mode python-ts-mode-hook))
+
+(use-package flymake-guile ; guile/guild
+  :commands (flymake-guile)
+  :hook (scheme-mode . flymake-guile)
+  :hook (scheme-mode . flymake-mode))
+
+(use-package pyvenv ; python ; projects can install pydebug and pylsp inside venv
+  :init (add-hook 'pyvenv-post-activate-hooks #'eglot-ensure)
+  :hook (((python-mode python-ts-mode) . pyvenv-tracking-mode))
+  :commands (pyvenv-mode pyvenv-activate pyvenv-tracking-mode pyvenv-post-activate-hooks))
+
+(use-package guix ; guix
+  :config (require 'guix-autoloads)
+  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") "profile"))
+  (guix-set-emacs-environment (concat (file-name-as-directory (getenv "HOME")) ".guix-profile"));(guix-emacs-autoload-packages); set EMACSLOADPATH
+  :commands (guix-popup guix-set-emacs-environment))
+
+(use-package geiser ; guile
+  :hook ((scheme-mode . geiser-mode))
+  :commands (geiser geiser-mode geiser-mode-hook geiser-repl-mode geiser-repl-mode-hook)
+  :config
+  (setq geiser-repl-per-project-p t
+        geiser-repl-current-project-function #'geiser-repl-project-root
+        geiser-repl-history-filename (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-history"))
+  (require 'geiser-guile)); geiser call per buffer?
+
+(use-package macrostep-geiser ; guile
+  :hook (((geiser-mode geiser-repl-mode) . macrostep-geiser-setup))
+  :commands (macrostep-geiser-setup))
+
+(use-package geiser-guile ; guile
+  :init (with-eval-after-load 'geiser-guile
+          (require 'xdg)
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0")) ; source
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (xdg-config-home)) (file-name-as-directory "guix") (file-name-as-directory "current") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache")) ; compiled
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") (file-name-as-directory "site") "3.0"))
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "share") (file-name-as-directory "guile") "3.0"))
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache"))
+          (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
+  :commands (geiser-guile))
+
+(use-package undo-tree
+  ;:pin gnu
+  :hook ((after-init . global-undo-tree-mode))
+  :commands (global-undo-tree-mode)
+  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
+  :config (setq undo-tree-visualizer-diff t
+                undo-tree-auto-save-history t
+                undo-limit 800000 ; 800 kb (default 160kb)
+                undo-strong-limit 12000000 ; 12mb (default 240kb)
+                undo-outer-limit 128000000 ; 128mb (default 24mb)
+                undo-tree-enable-undo-in-region t))
+
+(use-package magit ; git ; magit-diff then magit-patch to save
+  :commands (magit-file-delete magit-status)
+  :bind (:map jam/open ("m" . magit-status)
+         :map magit-mode-map ("q" . kill-buffer)
+         :map transient-map ([escape] . transient-quit-one))
+  :init
+  (setq magit-auto-revert-mode nil)
+  (setq transient-levels-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "levels")
+        transient-values-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "values")
+        transient-history-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "transient") "history"))
+  :config
+  (setq transient-default-level 5
+        transient-display-buffer-action '(display-buffer-below-selected)
+        magit-diff-refine-hunk t
+        magit-save-repository-buffers nil
+        magit-revision-insert-related-refs nil
+        magit-bury-buffer-function #'magit-mode-quit-window)
+  (add-hook 'magit-process-mode-hook #'goto-address-mode)); magit-generate-changelog after magit-create-commit for commit msg
+
+(use-package forge ; git ;; authinfo machine api.github.com login USERNAME^forge password 012345abcdef...
+  :after magit
+  :commands (forge-pull forge-add-repository forge-list-issues forge-list-pullreqs forge-list-notifications forge-list-repositories forge-create-issue forge-create-pullreq)
+  :init (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
+  (setq forge-add-default-bindings t))
+
+(use-package transmission ; C-u universal arg for directory prompt ; transmission
+  :commands (transmission transmission-add))
+
+(use-package org-roam ; sqlite-available-p ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
+  :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
+  :bind (:map jam/file ("r" . org-roam-node-find)
+         :map jam/notes
+              ("T" . org-roam-dailies-capture-today)
+              ("d" . org-roam-dailies-goto-date)
+              ("r" . org-roam-capture)
+              ("R" . org-roam-dailies-capture-date)
+              ("i" . org-roam-node-insert)
+              ("N" . org-roam-db-sync)
+              ("n" . org-roam-node-find))
+  :init (setq org-roam-directory (concat (expand-file-name user-emacs-directory) (file-name-as-directory "org") (file-name-as-directory "roam"))
+              org-directory org-roam-directory
+              org-id-locations-file (expand-file-name ".orgids" org-directory) ; org-id-update-id-locations org-roam-db-sync
+              org-clock-sound (expand-file-name "alert.wav" org-directory) ; play-sound-file (from flac --decode)
+              org-return-follows-link t
+              org-persist-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "org-persist"))
+              org-roam-dailies-directory ""
+              org-agenda-files (list org-roam-directory)
+              org-roam-db-location (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "org-roam.db")
+              org-modules '(org-crypt);ol-bibtext
+              org-roam-dailies-capture-templates '(("d" "default" entry
+                                                    "* %U %?\n%i\n%a"
+                                                    :if-new (file+datetree "journal.org" "#+title: ${title}\n")
+                                                    :prepend t
+                                                    :unnarrowed t))
+              org-roam-capture-templates `(("d" "default" plain
+                                            "%?"
+                                            :if-new (file+head "${slug}.org" ,(concat "#+title: ${title}\n"
+                                                                                      "#+OPTIONS: toc:nil num:nil date:nil \\n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t\n"
+                                                                                      "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"org-default.css\" />\n"
+                                                                                      "#+HTML_CONTENT_CLASS: container \n"
+                                                                                      "#+HTML_DOCTYPE: html5 \n"
+                                                                                      "#+INCLUDE: \"css.org::navbar\" :only-contents t \n"))
+                                            :unnarrowed t))))
+
+(use-package osm ; curl
+  ;:pin gnu
+  :bind (:map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
+  :commands (osm-home osm-search)
+  :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
+  :custom (osm-copyright nil))
+
+(use-package minions ; hide minor modes on modeline
+  :hook ((after-init . minions-mode))
+  :commands (minions-mode))
+
+(use-package debbugs
+  ;:pin gnu
+  :bind (:map jam/search ("b" . debbugs-gnu-bugs)); bug number search
+  :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
+  :config ;(setq org-link-elisp-confirm-function nil)
+  (setq debbugs-gnu-default-packages '("guix-patches"))
+  (require 'debbugs-guix) (require 'debbugs-org) (require 'debbugs-gnu) (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
+
+(use-package eat
+  ;:pin nongnu
+  :bind (:map jam/open ("t" . eat)
+         :map eat-mode-map ("C-S-v" . eat-yank))
+  :hook ((eshell-load . eat-eshell-mode)
+         (eshell-load . eat-eshell-visual-command-mode))
+  :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
+
+(use-package dape ; Extract adapter https://github.com/vadimcn/codelldb/releases unzip codelldb-<platform>-<os>.vsix -d ~/.emacs.d/.local/debug-adapters/codelldb
+  :bind (:map jam/code ("d" . dape))
+  :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
+  :commands (dape))
 
 (use-package gptel ; optional curl
   ;:pin nongnu
@@ -779,7 +787,7 @@
 ;;;###autoload
 (defun jam/compile-init-bytecode () "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)" (interactive) (byte-recompile-file (concat user-emacs-directory "init.el")) (byte-recompile-file (concat user-emacs-directory "early-init.el")) (byte-recompile-file (concat user-emacs-directory "make-el.el")) (require 'package) (package-quickstart-refresh)(byte-recompile-file (concat user-emacs-directory "package-quickstart.el"))); recompile autoloads
 ;;;###autoload
-(defun jam/mpv-play (url) "Run mpv in eat terminal." (interactive (list (read-file-name (format "Args: ") nil "" nil))) (eat (concat "mpv " url)))
+(defun jam/mpv-play (url) "Run mpv in eat terminal. 9 is volume down; 0 is up. Requires url-handler-mode for default completion (use home and del)." (interactive (list (read-file-name (format "Args(https://somafm.com/vaporwaves.pls): ") nil nil nil "https://somafm.com/vaporwaves.pls"))) (eat (concat "mpv " url) t))
 
 ;;;###autoload
 (defun jam/set-rust-path ()

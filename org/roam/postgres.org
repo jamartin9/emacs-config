@@ -39,4 +39,13 @@
 - Active-active (any node accepts writes causing disjoint reads)
 - Sharding (citius) requires application change to query shard/tenant for low latency
 - Spanner/Distributed KV (Yugabyte/CockroachDB) not actually postgres (just protocol), no local joins
-
+- synchronous_commit=off
+- wal_level=minimal
+- wal_writer_delay=200ms
+- checkpoint_completion_target=0.9
+- autovacuum=off
+- bgwriter_delay=10000ms
+- shared_buffers=512MB
+- work_mem=64MB
+- UNLOGGED tables
+- run from RAM Disk (/dev/shm)

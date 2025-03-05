@@ -24,6 +24,8 @@ Finally some hardware support!
   - ~vm.max_map_count = 2147483642~ increase memory maps for certain games/apps
     - ~fs.inotify.max_user_watches=524288~ podman log line?
     - ~fs.inotify.max_user_instances=512~ podman log line?
+  - ~fs.aio-max-nr=67108864~ increase max async requests
+
 ** pam
 ** misc
 - ~faillock --user $USER --reset~ for attempt reset

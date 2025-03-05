@@ -47,5 +47,5 @@ a os for my routers
 - builds update image from server with packages and saves config when updating
 - ~luci-app-attendedsysupgrade~ offers a simple tool under System (Attended Sysupgrade)
 
-*** travelmate
+*** travelmate?
 - install package and configure for AP and client
