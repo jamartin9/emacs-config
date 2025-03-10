@@ -2212,6 +2212,8 @@
   - std::autodiff for a differentiable version of Permutationally Invariant Polynomial (PIP) models in JAX and Rust
 ** clap-rs/clap
   - A full featured, fast Command Line Argument Parser for Rust
+** clockworklabs/SpacetimeDB
+  - ECS database and server combined into one.
 ** cloudflare/boringtun
   - Userspace WireGuard Implementation in Rust
 ** cloudflare/foundations
@@ -2340,6 +2342,8 @@
   -  Algebraic effects for Rust
 ** rust-cross/cargo-zigbuild
   - Compile Cargo project with zig as linker
+** RustCrypto/formats
+  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
 ** Rust-GCC/gccrs
   - GCC Front-End for Rust
 ** rust-lang/book
@@ -2356,8 +2360,6 @@
   - libgccjit AOT codegen for rustc
 ** rust-lang/rustup
   - The Rust toolchain installer
-** RustCrypto/formats
-  - Cryptography-related format encoders/decoders: DER, PEM, PKCS, PKIX
 ** rustwasm/wasm-bindgen
   - Facilitating high-level interactions between Wasm modules and JavaScript
 ** sarah-quinones/pulp

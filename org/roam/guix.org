@@ -243,6 +243,8 @@ guix archive --authorize < ~root/.config/guix/current/share/guix/bordeaux.guix.g
 guix package -i glibc-utf8-locales
 #+END_SRC
 - manual install
+  - create image with ~guix system image -t iso9660 ./jam/system/installer.scm~
+    - ~dd if=file.iso of=/dev/sdX status=progress~
   - create wifi.conf with
 #+NAME: guix-install-wifi
 #+BEGIN_SRC conf :tangle no
@@ -253,12 +255,15 @@ network={
 }
 #+END_SRC
   - ~rfkill unblock all && ifconfig -a && wpa_supplicant -c wifi.conf -i INTERFACE -B && dhclient -v INTERFACE~
+  - update time with ~ntpdate pool.ntp.org~
+    - if you need to install nss-certs/git set the profile and add gits libexec directory to the PATH
   - partition with ~lsblk && cfdisk~
   - format with mkfs
   - mount root as mnt and ~/boot/efi~ under ~/mnt/boot/efi~
+    - ensure to have booted with uefi boot if installing efi and not legacy grub
   - swapon the device
   - ~herd start cow-store /mnt~
-  - clone config, symlink channels, pull then ~guix system -L CONFIG_DIR init config.scm /mnt~
+  - clone config, copy channels to ~~/.config/guix/~, ~guix pull --no-check-certificate~ then ~guix system -L CONFIG_DIR init config.scm /mnt~
 #+NAME: guix-fhs-examples
 #+BEGIN_SRC sh :tangle no
 guix shell --container --network --emulate-fhs \
@@ -293,97 +298,4 @@ GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
 GUIX_CONFIGURATION_DIRECTORY=$XDG_CONFIG_HOME/guix/etc
 GUIX_LOCPATH=$XDG_DATA_HOME/guix/var/guix/profiles/per-user/root/guix-profile/lib/locale
 NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
-#+END_SRC
-
-** guix issues
-
-*** TODO [#C] [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’ :patch:
-  [2022-05-02 Mon] Submitted
-  :PROPERTIES:
-  :DEBBUGS_ID: 55231
-  :CREATOR: Brian Cully <bjc@spork.org>
-  :END:
-  [[elisp:(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))][Messages]]
-  [2022-06-21 Tue] Last modified
-
-*** TODO [#C] Add support for file capabilities(7) :patch:
-  [2023-02-12 Sun] Submitted
-  :PROPERTIES:
-  :DEBBUGS_ID: 61462
-  :CREATOR: Tobias Geerinckx-Rice <me@tobias.gr>
-  :END:
-  [[elisp:(debbugs-gnu-select-report)][Messages]]
-  [2023-12-23 Sat] Last modified
-
-#+NAME: guix-manifest-cuirass
-#+BEGIN_SRC scheme :tangle no
-; WIP This does not work as it can't find patches? (ghostscript)
-(define-module (etc httm-manifest)
- #:use-module (guix scripts pack)
- #:use-module (guix gexp)
- #:use-module (guix monads)
- #:use-module (guix profiles)
- #:use-module (guix store)
- #:use-module (guix derivations)
- #:use-module (guix modules)
- #:use-module (gnu packages)
- #:use-module (gnu packages gnupg)
- #:use-module (gnu packages guile)
- #:use-module (gnu packages ghostscript)
-
- )
-
-;(display (source-module-closure '((guix scripts pack)
-;                                  (guix monads)
-;                                  (guix profiles)
-;                                  (guix store)
-;                                  (guix derivations))))
-
-  (manifest
-   (list
-    (manifest-entry
-     (name "httm-binary-tarball")
-     (version "0.30.0")
-     (item (computed-file "httm-directory"
-                          (with-extensions (list guile-gcrypt guile-zlib guile-git guile-bytestructures guile-json-4)
-                                           (with-imported-modules (source-module-closure
-                                                                   '(;(guix packages)
-                                                                     ;(guix utils)
-                                                                     ;(gnu compression)
-                                                                     ;(gnu packages ghostscript)
-                                                                     ;(gnu packages)
-                                                                     (guix scripts pack)
-                                                                     (guix monads)
-                                                                     (guix profiles)
-                                                                     (guix store)
-                                                                     (guix derivations))
-                                                                   ;(append %load-path (%patch-path)); load-path
-                                                                   )
-                          #~(let ((bin (string-append #$output "/bin")))
-                              (mkdir #$output) (mkdir bin)
-                              (use-modules ;(guix packages)
-                                           ;(guix gexp)
-                                           ;(guix utils)
-                                           ;(gnu compression)
-                                           ;(gnu packages ghostscript)
-                                           ;(gnu packages)
-                                           (guix scripts pack)
-                                           (guix monads)
-                                           (guix profiles)
-                                           (guix store)
-                                           (guix derivations))
-                              (define (build-tarballs)
-                                (run-with-store (open-connection)
-                                                (mbegin %store-monad
-                                                        ;(set-guile-for-build (default-guile))
-                                                        (>>= (profile-derivation (packages->manifest (list "rust-httm-0.30")))
-                                                             (lambda (profile)
-                                                               (self-contained-tarball "httm-binary" profile
-                                                                                       #:profile-name "rust-httm"
-                                                                                      ;#:localstatedir? #t
-                                                                                      ;#:compressor (lookup-compressor "xz")
-                                                                                       ))))
-                                                #:system "x86_64-linux"))
-                              (symlink (derivation->output-path (build-tarballs)) (string-append bin "rust-httm.tar.xz"))))))))))
-
 #+END_SRC

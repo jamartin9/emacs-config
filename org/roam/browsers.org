@@ -123,6 +123,8 @@ self.addEventListener('fetch', function(e) {
     - ~brave://flags/#ozone-platform-hint~ set to auto for wayland default instead of x11
     - Alt w to close tab, ctrl tab to cycle, ctrl shift T to reopened closed tab
     - ~--window-size=1920,1080~
+    - ~brave://flags/#brave-split-view~ right click on tab to split
+    - ~brave://flags/#brave-web-view-rounded-corners~ 
   - ungoogled-chromium
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]

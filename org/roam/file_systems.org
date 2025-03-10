@@ -9,6 +9,9 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * File Systems
 Systems need filing!
+** notes
+- mkfs wipes an existing filesystem
+  - uuid changes
 ** [[id:382f92d4-f76f-47b1-b4dd-33a39c11aaa2][zfs]]
 ** swap
 - uses hard drive as memory page cache

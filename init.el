@@ -1,5 +1,6 @@
 ;;; init.el -*- lexical-binding: t; -*-
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
+
 (bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
            ("j" . xref-find-definitions)
            ("c" . compile))
@@ -143,7 +144,6 @@
               url-cache-directory (expand-file-name "cache" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo")) ; auth
-              epa-file-cache-passphrase-for-symmetric-encryption t
               display-line-numbers-type t ; defaults
               apropos-do-all t
               xterm-set-window-title t
@@ -523,7 +523,8 @@
 (use-package epa ; gpg
   :ensure nil ; built-in
   :defer t
-  :config (setq epg-pinentry-mode 'loopback) ; minibuffer for gpg input instead of 'allow-loopback-pinentry' in ~/.gnupg/gpg-agent.conf
+  :config (setq epa-file-cache-passphrase-for-symmetric-encryption t
+                epg-pinentry-mode 'loopback) ; minibuffer for gpg input instead of 'allow-loopback-pinentry' in ~/.gnupg/gpg-agent.conf
   (require 'xdg)
   (let ((gpg-dir (concat (file-name-as-directory (xdg-data-home)) "gnupg")))
     (setenv "GNUPGHOME" gpg-dir) ; setup gnupg
