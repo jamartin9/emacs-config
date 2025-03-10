@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4ba3613">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgb5188b0">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org48c9442" class="outline-2">
-<h2 id="org48c9442">podman</h2>
-<div class="outline-text-2" id="text-org48c9442">
+<div id="outline-container-org2500380" class="outline-2">
+<h2 id="org2500380">podman</h2>
+<div class="outline-text-2" id="text-org2500380">
 </div>
-<div id="outline-container-orge2dc781" class="outline-3">
-<h3 id="orge2dc781">podman notes</h3>
-<div class="outline-text-3" id="text-orge2dc781">
+<div id="outline-container-orgf305411" class="outline-3">
+<h3 id="orgf305411">podman notes</h3>
+<div class="outline-text-3" id="text-orgf305411">
 <ul class="org-ul">
 <li>rootless containers with kernel &gt;= 5.11 overlayfs
 <ul class="org-ul">
@@ -44,6 +44,7 @@
 <li>podman play kube <a href="https://github.com/containers/podman/issues/17833">BUG</a> that does not map device IDs for nvidia gpus. use cli <code>--device nvidia.com/gpu=all</code>
 <ul class="org-ul">
 <li>may need <code>sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml</code></li>
+<li>ollama ex <code>podman run --rm -it --device nvidia.com/gpu=all --security-opt=label=disable --env NVIDIA_DRIVER_CAPABILITIES=all --env NVIDIA_VISIBLE_DEVICES=all -p 11434:11434 -v /gnu/git/llms/ollama-models/:/root/.ollama --name ollama docker.io/ollama/ollama:latest</code></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -57,15 +58,15 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org525c95c" class="outline-3">
-<h3 id="org525c95c">p2pool and monerod kube configs</h3>
-<div class="outline-text-3" id="text-org525c95c">
+<div id="outline-container-orgbf59fb4" class="outline-3">
+<h3 id="orgbf59fb4">p2pool and monerod kube configs</h3>
+<div class="outline-text-3" id="text-orgbf59fb4">
 <p>
 podman play kube p2pool.yaml
 podman play kube xmrig.yaml &#x2013;down
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgb916b20">apiVersion: apps/v1
+<pre class="src src-yaml" id="org756630c">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xmr-deployment
@@ -125,11 +126,11 @@ spec:
 </div>
 </div>
 </div>
-<div id="outline-container-orga7f79fc" class="outline-3">
-<h3 id="orga7f79fc">xmrig</h3>
-<div class="outline-text-3" id="text-orga7f79fc">
+<div id="outline-container-orgde80786" class="outline-3">
+<h3 id="orgde80786">xmrig</h3>
+<div class="outline-text-3" id="text-orgde80786">
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgc22b93b">apiVersion: apps/v1
+<pre class="src src-yaml" id="orgaac4123">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xmrig-deployment

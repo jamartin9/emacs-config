@@ -9,25 +9,36 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf2fbfa0">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org3b3a6e6">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgc08611d" class="outline-2">
-<h2 id="orgc08611d">File Systems</h2>
-<div class="outline-text-2" id="text-orgc08611d">
+<div id="outline-container-org9c4ff5d" class="outline-2">
+<h2 id="org9c4ff5d">File Systems</h2>
+<div class="outline-text-2" id="text-org9c4ff5d">
 <p>
 Systems need filing!
 </p>
 </div>
-<div id="outline-container-orga51d381" class="outline-3">
-<h3 id="orga51d381"><a href="zfs.html#ID-382f92d4-f76f-47b1-b4dd-33a39c11aaa2">zfs</a></h3>
+<div id="outline-container-org97ed5d4" class="outline-3">
+<h3 id="org97ed5d4">notes</h3>
+<div class="outline-text-3" id="text-org97ed5d4">
+<ul class="org-ul">
+<li>mkfs wipes an existing filesystem
+<ul class="org-ul">
+<li>uuid changes</li>
+</ul></li>
+</ul>
 </div>
-<div id="outline-container-orgca5d0b7" class="outline-3">
-<h3 id="orgca5d0b7">swap</h3>
-<div class="outline-text-3" id="text-orgca5d0b7">
+</div>
+<div id="outline-container-org2c7e14f" class="outline-3">
+<h3 id="org2c7e14f"><a href="zfs.html#ID-382f92d4-f76f-47b1-b4dd-33a39c11aaa2">zfs</a></h3>
+</div>
+<div id="outline-container-org8a793ed" class="outline-3">
+<h3 id="org8a793ed">swap</h3>
+<div class="outline-text-3" id="text-org8a793ed">
 <ul class="org-ul">
 <li>uses hard drive as memory page cache</li>
 <li><code>swapoff /swapfile</code> to disable</li>
@@ -39,9 +50,9 @@ Systems need filing!
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf20cd1c" class="outline-3">
-<h3 id="orgf20cd1c">ntfs</h3>
-<div class="outline-text-3" id="text-orgf20cd1c">
+<div id="outline-container-orgb7c63cb" class="outline-3">
+<h3 id="orgb7c63cb">ntfs</h3>
+<div class="outline-text-3" id="text-orgb7c63cb">
 <ul class="org-ul">
 <li>journal file system</li>
 <li><code>ntfsfix -d /dev/sdd1</code> to fix dirty bit on unclear shutdown</li>
@@ -50,6 +61,17 @@ Systems need filing!
 <li><code>sudo mkdir -p /run/media/$USER/Elements/</code></li>
 <li><code>sudo mount.ntfs /dev/sdd1 /run/media/jam/Elements -o rw,nodev,nosuid,uid=1000,gid=1000,windows_names,uhelper=udisks2</code></li>
 </ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9839af8" class="outline-3">
+<h3 id="org9839af8">lustre</h3>
+<div class="outline-text-3" id="text-org9839af8">
+<ul class="org-ul">
+<li>HPC filesystem</li>
+<li>can use zfs as object store</li>
+<li>pure no io metadata server</li>
+<li>zero copy rdma with nvidia gpu direct storage</li>
 </ul>
 </div>
 </div>

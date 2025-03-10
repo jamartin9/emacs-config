@@ -9,22 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0c41d30">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org82aaa5d">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-
-<div id="outline-container-orgb4eaa13" class="outline-2">
-<h2 id="orgb4eaa13">Guix</h2>
-<div class="outline-text-2" id="text-orgb4eaa13">
+<div id="outline-container-orgc943f2a" class="outline-2">
+<h2 id="orgc943f2a">Guix</h2>
+<div class="outline-text-2" id="text-orgc943f2a">
 </div>
-<div id="outline-container-orgcd93e65" class="outline-3">
-<h3 id="orgcd93e65">Link manifest</h3>
-<div class="outline-text-3" id="text-orgcd93e65">
+<div id="outline-container-org7f1508c" class="outline-3">
+<h3 id="org7f1508c">Link manifest</h3>
+<div class="outline-text-3" id="text-org7f1508c">
 <div class="org-src-container">
-<pre class="src src-elisp" id="org35a9f45">(ignore-errors
+<pre class="src src-elisp" id="orgaa7f16d">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -35,11 +34,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org947d138" class="outline-3">
-<h3 id="org947d138">User manifest</h3>
-<div class="outline-text-3" id="text-org947d138">
+<div id="outline-container-org259683c" class="outline-3">
+<h3 id="org259683c">User manifest</h3>
+<div class="outline-text-3" id="text-org259683c">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org876f218">;; Manifest for development env
+<pre class="src src-scheme" id="orgff78092">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
@@ -53,7 +52,9 @@
    ;;"nzbget"
    ;;"steam-nvidia" ;; steam
    ;;"zfs"
+   "strace"
    "perf"
+   "flamegraph"
    "bpftrace"
    "bcc"
 
@@ -61,8 +62,8 @@
    ;;"make" ;;"cmake"
    ;;"glibc" ;; "musl"
    ;;"gcc-toolchain" ;;"clang-toolchain"
-   ;;"gdb" ;;"lldb"
-   "rr"
+   "gdb" ;;"lldb"
+   ;;"rr"
    ;;"binutils"
    ;;"module-init-tools"
    ;;"msr-tools"
@@ -78,10 +79,12 @@
 
    ;; python
    ;;"python"
+   ;;"vapoursynth";; "ffms2"
 
    ;; shell
    ;;"shellcheck" ;;"bash"
-   "htop"
+   "htop"; Requires CAP_NET_ADMIN for PERCENT_*_DELAY
+   ;;"bottom"
    ;;"xclip"
    ;;"wl-clipboard"
    ;;"bc"
@@ -101,6 +104,7 @@
    ;;"patch"
    ;;"gash"
    ;;"gash-utils"
+   "screen"
 
    ;; apps
    ;;"wine64"; "wine"
@@ -120,6 +124,7 @@
    ;;"virt-viewer"
    ;;"dino" ; xmpp client
    ;;"flatpak"
+   ;;"waypipe"
 
    ;; docs
    ;;"libreoffice"
@@ -138,9 +143,7 @@
    ;;"ffmpeg"
    ;;"gnuplot"
    ;;"makemkv"
-   "flamegraph"
    ;;"yt-dlp"
-   ;;"vapoursynth";; "ffms2"
 
    ;; net
    ;;"curl"
@@ -151,18 +154,16 @@
    ;;"onionshare"
    ;;"iptables"
    ;;"ebtables"
-   "wireshark"
+   ;;"wireshark"
    ;;"netcat"
    ;;"net-tools"
    ;;"openssh" ;;"dropbear"
    ;;"wireguard-tools"
    ;;"socat"
-   "strace"
    ;;"tor"
-   "torsocks"
+   ;;"torsocks"
    ;;"i2pd"
-   ;;"screen"
-   "dnsmasq"
+   ;;"dnsmasq"
 
    ;; Desktop
    ;;"notification-daemon"
@@ -172,9 +173,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org761e1f5" class="outline-3">
-<h3 id="org761e1f5">guix notes</h3>
-<div class="outline-text-3" id="text-org761e1f5">
+<div id="outline-container-orgd6ec6f3" class="outline-3">
+<h3 id="orgd6ec6f3">guix notes</h3>
+<div class="outline-text-3" id="text-orgd6ec6f3">
 <ul class="org-ul">
 <li><a href="https://git.genenetwork.org/guix-north-america/about/">https://git.genenetwork.org/guix-north-america/about/</a> for NA substitute server ?</li>
 <li>cuirass ci saves gc roots in <code>/var/guix/gcroots/profiles/per-user/cuirass/cuirass</code> for default of 30 days
@@ -195,7 +196,7 @@
 <li>hpc channel for extra pytorch packages
 <ul class="org-ul">
 <li><a href="https://gitlab.inria.fr/guix-hpc/guix-hpc/">https://gitlab.inria.fr/guix-hpc/guix-hpc/</a></li>
-<li>misc channels <a href="https://git.sr.ht/~whereiseveryone/toys/log">https://git.sr.ht/~whereiseveryone/toys/log</a></li>
+<li>misc channels <a href="https://git.sr.ht/~whereiseveryone/toys/log">https://git.sr.ht/~whereiseveryone/toys/log</a> for services/packages (sops(secrets), cuda, android, rustup, lutris, ollama, tailscaled, jellyfin, tailwindcss-lsp, guile-lsp, goblins, etc)</li>
 </ul></li>
 <li>non root guix can be done through a series of env variables and flags
 <ul class="org-ul">
@@ -241,7 +242,7 @@
 <li>manual setup</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="orgdd3efa1">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
+<pre class="src src-shell" id="org887beac">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
 # get tarball for system=x86_64-linux,aarch64,armhf,i686
 wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
 # check sig
@@ -286,11 +287,15 @@ guix package -i glibc-utf8-locales
 <ul class="org-ul">
 <li>manual install
 <ul class="org-ul">
+<li>create image with <code>guix system image -t iso9660 ./jam/system/installer.scm</code>
+<ul class="org-ul">
+<li><code>dd if=file.iso of=/dev/sdX status=progress</code></li>
+</ul></li>
 <li>create wifi.conf with</li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org9141850">network={
+<pre class="src src-conf" id="org12e2b42">network={
   ssid="ssid-name"
   key_mgmt=WPA-PSK
   psk="unencrypted passphrase"
@@ -299,15 +304,22 @@ guix package -i glibc-utf8-locales
 </div>
 <ul class="org-ul">
 <li><code>rfkill unblock all &amp;&amp; ifconfig -a &amp;&amp; wpa_supplicant -c wifi.conf -i INTERFACE -B &amp;&amp; dhclient -v INTERFACE</code></li>
+<li>update time with <code>ntpdate pool.ntp.org</code>
+<ul class="org-ul">
+<li>if you need to install nss-certs/git set the profile and add gits libexec directory to the PATH</li>
+</ul></li>
 <li>partition with <code>lsblk &amp;&amp; cfdisk</code></li>
 <li>format with mkfs</li>
-<li>mount root as mnt and <code>/boot/efi</code> under <code>/mnt/boot/efi</code></li>
+<li>mount root as mnt and <code>/boot/efi</code> under <code>/mnt/boot/efi</code>
+<ul class="org-ul">
+<li>ensure to have booted with uefi boot if installing efi and not legacy grub</li>
+</ul></li>
 <li>swapon the device</li>
 <li><code>herd start cow-store /mnt</code></li>
-<li>clone config, symlink channels, pull then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
+<li>clone config, copy channels to <code>~/.config/guix/</code>, <code>guix pull --no-check-certificate</code> then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org2631d8f">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="orgf34eeb3">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -332,7 +344,7 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgf3fecd7">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org3a49af2">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
@@ -340,118 +352,6 @@ GUIX_CONFIGURATION_DIRECTORY=$XDG_CONFIG_HOME/guix/etc
 GUIX_LOCPATH=$XDG_DATA_HOME/guix/var/guix/profiles/per-user/root/guix-profile/lib/locale
 NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orge4d6122" class="outline-3">
-<h3 id="orge4d6122">guix issues</h3>
-<div class="outline-text-3" id="text-orge4d6122">
-</div>
-<div id="outline-container-orgcf16313" class="outline-4">
-<h4 id="orgcf16313"><span class="todo TODO">TODO</span> [PATCH v1] initrd: Allow extra search paths with ‘initrd-extra-module-paths’&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-orgcf16313">
-<p>
-<span class="timestamp-wrapper"><span class="timestamp">[2022-05-02 Mon] </span></span> Submitted
-</p>
-<p>
-:DEBBUGS<sub>ID</sub>: 55231
-:CREATOR: Brian Cully &lt;bjc@spork.org&gt;
-</p>
-<p>
-<a href="(progn (debbugs-org-mode 1) (debbugs-gnu-select-report))">Messages</a>
-<span class="timestamp-wrapper"><span class="timestamp">[2022-06-21 Tue] </span></span> Last modified
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgfab93e1" class="outline-4">
-<h4 id="orgfab93e1"><span class="todo TODO">TODO</span> Add support for file capabilities(7)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="patch">patch</span></span></h4>
-<div class="outline-text-4" id="text-orgfab93e1">
-<p>
-<span class="timestamp-wrapper"><span class="timestamp">[2023-02-12 Sun] </span></span> Submitted
-</p>
-<p>
-:DEBBUGS<sub>ID</sub>: 61462
-:CREATOR: Tobias Geerinckx-Rice &lt;me@tobias.gr&gt;
-</p>
-<p>
-<a href="(debbugs-gnu-select-report)">Messages</a>
-<span class="timestamp-wrapper"><span class="timestamp">[2023-12-23 Sat] </span></span> Last modified
-</p>
-
-<div class="org-src-container">
-<pre class="src src-scheme" id="orgea7be22">; WIP This does not work as it can't find patches? (ghostscript)
-(define-module (etc httm-manifest)
- #:use-module (guix scripts pack)
- #:use-module (guix gexp)
- #:use-module (guix monads)
- #:use-module (guix profiles)
- #:use-module (guix store)
- #:use-module (guix derivations)
- #:use-module (guix modules)
- #:use-module (gnu packages)
- #:use-module (gnu packages gnupg)
- #:use-module (gnu packages guile)
- #:use-module (gnu packages ghostscript)
-
- )
-
-;(display (source-module-closure '((guix scripts pack)
-;                                  (guix monads)
-;                                  (guix profiles)
-;                                  (guix store)
-;                                  (guix derivations))))
-
-  (manifest
-   (list
-    (manifest-entry
-     (name "httm-binary-tarball")
-     (version "0.30.0")
-     (item (computed-file "httm-directory"
-                          (with-extensions (list guile-gcrypt guile-zlib guile-git guile-bytestructures guile-json-4)
-                                           (with-imported-modules (source-module-closure
-                                                                   '(;(guix packages)
-                                                                     ;(guix utils)
-                                                                     ;(gnu compression)
-                                                                     ;(gnu packages ghostscript)
-                                                                     ;(gnu packages)
-                                                                     (guix scripts pack)
-                                                                     (guix monads)
-                                                                     (guix profiles)
-                                                                     (guix store)
-                                                                     (guix derivations))
-                                                                   ;(append %load-path (%patch-path)); load-path
-                                                                   )
-                          #~(let ((bin (string-append #$output "/bin")))
-                              (mkdir #$output) (mkdir bin)
-                              (use-modules ;(guix packages)
-                                           ;(guix gexp)
-                                           ;(guix utils)
-                                           ;(gnu compression)
-                                           ;(gnu packages ghostscript)
-                                           ;(gnu packages)
-                                           (guix scripts pack)
-                                           (guix monads)
-                                           (guix profiles)
-                                           (guix store)
-                                           (guix derivations))
-                              (define (build-tarballs)
-                                (run-with-store (open-connection)
-                                                (mbegin %store-monad
-                                                        ;(set-guile-for-build (default-guile))
-                                                        (&gt;&gt;= (profile-derivation (packages-&gt;manifest (list "rust-httm-0.30")))
-                                                             (lambda (profile)
-                                                               (self-contained-tarball "httm-binary" profile
-                                                                                       #:profile-name "rust-httm"
-                                                                                      ;#:localstatedir? #t
-                                                                                      ;#:compressor (lookup-compressor "xz")
-                                                                                       ))))
-                                                #:system "x86_64-linux"))
-                              (symlink (derivation-&gt;output-path (build-tarballs)) (string-append bin "rust-httm.tar.xz"))))))))))
-
-</pre>
-</div>
 </div>
 </div>
 </div>

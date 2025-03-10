@@ -9,22 +9,22 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org45fd8af">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge39625f">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org4a74b3c" class="outline-2">
-<h2 id="org4a74b3c">browsers</h2>
-<div class="outline-text-2" id="text-org4a74b3c">
+<div id="outline-container-org9109a54" class="outline-2">
+<h2 id="org9109a54">browsers</h2>
+<div class="outline-text-2" id="text-org9109a54">
 <p>
 This your brain on the internet
 </p>
 </div>
-<div id="outline-container-org33a9843" class="outline-3">
-<h3 id="org33a9843">notes</h3>
-<div class="outline-text-3" id="text-org33a9843">
+<div id="outline-container-orgfdee620" class="outline-3">
+<h3 id="orgfdee620">notes</h3>
+<div class="outline-text-3" id="text-orgfdee620">
 <ul class="org-ul">
 <li>ctrl-shift-R for force cache reload</li>
 <li>ctrl-w for close tab</li>
@@ -41,9 +41,9 @@ This your brain on the internet
 <li>webgpu has issues on wayland with gl backend</li>
 </ul>
 </div>
-<div id="outline-container-org3d26dc7" class="outline-4">
-<h4 id="org3d26dc7">pwa</h4>
-<div class="outline-text-4" id="text-org3d26dc7">
+<div id="outline-container-org9a78048" class="outline-4">
+<h4 id="org9a78048">pwa</h4>
+<div class="outline-text-4" id="text-org9a78048">
 <ul class="org-ul">
 <li>managed under <code>brave://apps/</code> or <code>chrome://apps</code></li>
 <li>progressive web apps have a manifest and service worker for offline installable apps
@@ -57,7 +57,7 @@ This your brain on the internet
 <li>Isolated Web Apps for signed updates</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org787931f">{
+<pre class="src src-javascript" id="org22b9384">{
     "name": "Progressive Web App",
     "short_name": "PWA",
     "icons": [{
@@ -74,7 +74,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-html" id="orgae33800">&lt;script&gt;
+<pre class="src src-html" id="orga8207b6">&lt;script&gt;
     // register ServiceWorker
     window.onload = () =&gt; {
         'use strict';
@@ -87,7 +87,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org745af48">var cacheName = 'pwa';
+<pre class="src src-javascript" id="org9250659">var cacheName = 'pwa';
 var filesToCache = [
   './',
   './index.html',
@@ -115,12 +115,12 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org8899c35" class="outline-3">
-<h3 id="org8899c35"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
+<div id="outline-container-org6290d45" class="outline-3">
+<h3 id="org6290d45"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
 </div>
-<div id="outline-container-org5330900" class="outline-3">
-<h3 id="org5330900">chrome</h3>
-<div class="outline-text-3" id="text-org5330900">
+<div id="outline-container-orgff3c5be" class="outline-3">
+<h3 id="orgff3c5be">chrome</h3>
+<div class="outline-text-3" id="text-orgff3c5be">
 <ul class="org-ul">
 <li>Type <code>thisisunsafe</code> anywhere on the SSL ERROR window and the browser will let you visit the page.</li>
 <li>Gemini nano AI by default in 128+
@@ -163,13 +163,20 @@ self.addEventListener('fetch', function(e) {
 <li><code>brave://gpu</code></li>
 <li><code>brave://flags</code>
 <ul class="org-ul">
-<li>WebGPU flag <code>--enable-features=Vulkan</code></li>
+<li>file system api flag</li>
+<li>WebGPU flag <code>--enable-features=Vulkan</code>
+<ul class="org-ul">
+<li><code>--enable-features=Vulkan</code> (not compat with wayland/ozone)</li>
+</ul></li>
 </ul></li>
 <li>builtin tor, ad block</li>
 <li>disable wallet, sidebar</li>
 <li>F12 Dev Tools -&gt; Ctrl+Shift+P -&gt; type 'shot' for screen capture options</li>
 <li><code>brave://flags/#ozone-platform-hint</code> set to auto for wayland default instead of x11</li>
 <li>Alt w to close tab, ctrl tab to cycle, ctrl shift T to reopened closed tab</li>
+<li><code>--window-size=1920,1080</code></li>
+<li><code>brave://flags/#brave-split-view</code> right click on tab to split</li>
+<li><code>brave://flags/#brave-web-view-rounded-corners</code></li>
 </ul></li>
 <li>ungoogled-chromium</li>
 <li>microsoft edge</li>
@@ -186,25 +193,25 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org3c41f31" class="outline-3">
-<h3 id="org3c41f31">safari</h3>
-<div class="outline-text-3" id="text-org3c41f31">
+<div id="outline-container-org1dad04b" class="outline-3">
+<h3 id="org1dad04b">safari</h3>
+<div class="outline-text-3" id="text-org1dad04b">
 <ul class="org-ul">
 <li>webkit based</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orgbdeabce" class="outline-2">
-<h2 id="orgbdeabce">search engines</h2>
-<div class="outline-text-2" id="text-orgbdeabce">
+<div id="outline-container-org22991cb" class="outline-2">
+<h2 id="org22991cb">search engines</h2>
+<div class="outline-text-2" id="text-org22991cb">
 </div>
-<div id="outline-container-org733500a" class="outline-3">
-<h3 id="org733500a"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
+<div id="outline-container-org541ff59" class="outline-3">
+<h3 id="org541ff59"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
 </div>
-<div id="outline-container-org1958bc4" class="outline-3">
-<h3 id="org1958bc4">ddg</h3>
-<div class="outline-text-3" id="text-org1958bc4">
+<div id="outline-container-org18af478" class="outline-3">
+<h3 id="org18af478">ddg</h3>
+<div class="outline-text-3" id="text-org18af478">
 <ul class="org-ul">
 <li>fingerprinted users multiple times</li>
 <li>no js version at lite.duckduckgo.com</li>
@@ -220,9 +227,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org3bc29ec" class="outline-3">
-<h3 id="org3bc29ec">brave</h3>
-<div class="outline-text-3" id="text-org3bc29ec">
+<div id="outline-container-orgfe62cda" class="outline-3">
+<h3 id="orgfe62cda">brave</h3>
+<div class="outline-text-3" id="text-orgfe62cda">
 <ul class="org-ul">
 <li>tonemapping support for hdr pngs</li>
 <li>search.brave.com</li>
@@ -233,22 +240,36 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-orga9a1b94" class="outline-2">
-<h2 id="orga9a1b94">sites</h2>
-<div class="outline-text-2" id="text-orga9a1b94">
+<div id="outline-container-org8a8d0f1" class="outline-2">
+<h2 id="org8a8d0f1">sites</h2>
+<div class="outline-text-2" id="text-org8a8d0f1">
 </div>
-<div id="outline-container-orgf878b6a" class="outline-3">
-<h3 id="orgf878b6a">tools</h3>
-<div class="outline-text-3" id="text-orgf878b6a">
+<div id="outline-container-orgd72c016" class="outline-3">
+<h3 id="orgd72c016">info</h3>
+<div class="outline-text-3" id="text-orgd72c016">
 <ul class="org-ul">
-<li><a href="https://wasm-test.libreoffice.org/">libreoffice wasm</a></li>
-<li><a href="https://directfile.irs.gov/">https://directfile.irs.gov/</a></li>
+<li><a href="https://aosabook.org/en/">https://aosabook.org/en/</a></li>
+<li><a href="https://www.youtube.com/@ants_are_everywhere/videos">https://www.youtube.com/@ants_are_everywhere/videos</a></li>
+<li><a href="https://blog.codingconfessions.com/p/linux-context-switching-internals">https://blog.codingconfessions.com/p/linux-context-switching-internals</a></li>
+<li><a href="https://curiouscoding.nl/posts/static-search-tree/">https://curiouscoding.nl/posts/static-search-tree/</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org373140d" class="outline-3">
-<h3 id="org373140d">data</h3>
-<div class="outline-text-3" id="text-org373140d">
+<div id="outline-container-orga12ec72" class="outline-3">
+<h3 id="orga12ec72">tools</h3>
+<div class="outline-text-3" id="text-orga12ec72">
+<ul class="org-ul">
+<li><a href="https://wasm-test.libreoffice.org/">libreoffice wasm</a></li>
+<li><a href="https://directfile.irs.gov/">https://directfile.irs.gov/</a></li>
+<li><a href="https://uica.uops.info/">https://uica.uops.info/</a></li>
+<li><a href="https://qrcode.antfu.me/">https://qrcode.antfu.me/</a></li>
+<li><a href="https://cowasm.sh/">https://cowasm.sh/</a> (python wasm)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbefeb78" class="outline-3">
+<h3 id="orgbefeb78">data</h3>
+<div class="outline-text-3" id="text-orgbefeb78">
 <ul class="org-ul">
 <li><a href="https://ossinsight.io/#trending-repos">https://ossinsight.io/#trending-repos</a></li>
 <li><a href="https://sourcegraph.com/search">https://sourcegraph.com/search</a></li>
@@ -262,12 +283,13 @@ self.addEventListener('fetch', function(e) {
 <li>xrel.to</li>
 <li>srrdb</li>
 <li><a href="https://btdig.com/">https://btdig.com/</a></li>
+<li><a href="https://www.tldraw.com/">https://www.tldraw.com/</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0217d50" class="outline-3">
-<h3 id="org0217d50">alternative frontends</h3>
-<div class="outline-text-3" id="text-org0217d50">
+<div id="outline-container-org9cc0c89" class="outline-3">
+<h3 id="org9cc0c89">alternative frontends</h3>
+<div class="outline-text-3" id="text-org9cc0c89">
 <ul class="org-ul">
 <li>youtube
 <ul class="org-ul">
@@ -279,9 +301,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb076ba0" class="outline-3">
-<h3 id="orgb076ba0">media</h3>
-<div class="outline-text-3" id="text-orgb076ba0">
+<div id="outline-container-org09c400c" class="outline-3">
+<h3 id="org09c400c">media</h3>
+<div class="outline-text-3" id="text-org09c400c">
 <ul class="org-ul">
 <li><a href="https://ustv247.tv/">https://ustv247.tv/</a></li>
 <li><a href="https://scnlog.me/">https://scnlog.me/</a></li>
@@ -301,6 +323,11 @@ self.addEventListener('fetch', function(e) {
 <li><a href="https://subsplease.org/">https://subsplease.org/</a> (Rizon)</li>
 <li>audioz.download</li>
 <li><a href="https://www.binsearch.info/">https://www.binsearch.info/</a></li>
+<li><a href="https://mangareader.to/">https://mangareader.to/</a></li>
+<li><a href="https://mangadex.org/">https://mangadex.org/</a></li>
+<li>ubu.com/film/index.html</li>
+<li><a href="https://rarefilmm.com/">https://rarefilmm.com/</a></li>
+<li><a href="https://feed.animetosho.org/atom">https://feed.animetosho.org/atom</a></li>
 </ul>
 </div>
 </div>

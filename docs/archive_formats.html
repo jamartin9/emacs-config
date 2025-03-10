@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org89617ef">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org555b909">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orga71907c" class="outline-2">
-<h2 id="orga71907c">archive/compression formats</h2>
-<div class="outline-text-2" id="text-orga71907c">
+<div id="outline-container-org1c8c910" class="outline-2">
+<h2 id="org1c8c910">archive/compression formats</h2>
+<div class="outline-text-2" id="text-org1c8c910">
 <p>
 Putting things places for reasons!
 </p>
@@ -45,9 +45,10 @@ Putting things places for reasons!
 <li>Apache Arrow supports operations like querying/reading/writing</li>
 </ul></li>
 <li>web archive (warc with pywb)</li>
+<li>zstd can create 'dictionaries' with the <code>-D</code> option that can greatly help when compressing small files.</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org2d7fdbf">pip install --user pywb
+<pre class="src src-shell" id="orgc97dc72">pip install --user pywb
 wb-manager init my-web-archive
 wget --recursive --warc mywarcfile https://mysite
 wb-manager add my-web-archive &lt;path/to/my_warc.warc.gz&gt;

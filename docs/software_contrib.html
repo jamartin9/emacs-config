@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge90f889">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf1fb77c">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org093d73f" class="outline-2">
-<h2 id="org093d73f">software contributions</h2>
-<div class="outline-text-2" id="text-org093d73f">
+<div id="outline-container-org797172b" class="outline-2">
+<h2 id="org797172b">software contributions</h2>
+<div class="outline-text-2" id="text-org797172b">
 <ul class="org-ul">
 <li>guix-cuirass
 <ul class="org-ul">
@@ -36,7 +36,10 @@
 <li>freebsd used sysctl support for hw temp sensors</li>
 </ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/1044">kept feature working between release refactors</a></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/1248">added zpool dataset io stats</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1248">added zpool dataset io stats</a>
+<ul class="org-ul">
+<li>sysinfo added freebsd ufs io with geom?</li>
+</ul></li>
 </ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/794">added gpu vram support</a>
 <ul class="org-ul">
@@ -49,10 +52,15 @@
 <li>bugfixed battery out of bounds</li>
 <li>maintainer chose to remove util/power until separate widget
 <ul class="org-ul">
-<li>outlined plan for linux intel support with memfd drm proc info</li>
+<li><a href="https://github.com/ClementTsang/bottom/issues/298">outlined plan for linux intel/amd support with memfd drm proc info</a>
+<ul class="org-ul">
+<li>intel gpus need ioctls from mesa/drm <code>DRM_I915_QUERY_MEMORY_REGIONS</code></li>
+</ul></li>
 </ul></li>
 </ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/1362">updated tui library</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/issues/1629">helped troubleshoot gpu issues</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1667">fixed regression in basic mode after maintainer refactoring</a></li>
 </ul></li>
 <li>wine/wine
 <ul class="org-ul">
@@ -154,6 +162,7 @@
 <li><a href="https://github.com/jamartin9/cargo-patch/commit/da103f64d0a8001d6a9479ea31ac9642467ade1b">removed trailing</a> context after git range header</li>
 <li><a href="https://github.com/jamartin9/cargo-patch/commit/b9ad3400f1aad471d787d7a5a0aae1609f736957">removed broken</a> support for new files</li>
 <li>Still needs the a/ b/ stripped and delete/create file support (diff format normalization)</li>
+<li>updated cargo to support 2024 edition (not upstream)</li>
 </ul></li>
 <li><a href="https://github.com/evergreen-xch/cult-lite-farmer/pull/6">evergreen-xch/cult-lite-farmer</a> :notupstream:
 <ul class="org-ul">

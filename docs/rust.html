@@ -9,16 +9,32 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org92dab39">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6b456de">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org75414a1" class="outline-2">
-<h2 id="org75414a1">rust</h2>
-<div class="outline-text-2" id="text-org75414a1">
+<div id="outline-container-orgd27b0fe" class="outline-2">
+<h2 id="orgd27b0fe">rust</h2>
+<div class="outline-text-2" id="text-orgd27b0fe">
 <ul class="org-ul">
+<li>sans-io pattern for protocol state machines
+<ul class="org-ul">
+<li>ex. tokio-codec or <a href="https://www.firezone.dev/blog/sans-io">https://www.firezone.dev/blog/sans-io</a></li>
+</ul></li>
+<li>map/fold can contain specific loop optimizations due to types and ownership for iterator mutation/reuse.
+<ul class="org-ul">
+<li>ex. <code>let flat = flatten.into_iter().fold(Vec::new(), |mut accumulator, list| { acc.extend(list); acc });</code> is likely as fast as a for loop because acc is a moved vec.</li>
+</ul></li>
+<li>std::intrinsics contains llvm intrinsics
+<ul class="org-ul">
+<li>branch prediction with <code>likely</code>, <code>select_unpredictable</code> (cmov's for branchless), <code>unlikely</code> etc</li>
+</ul></li>
+<li>llvm-mca with <code>-bottleneck-analysis</code> for asm profiling
+<ul class="org-ul">
+<li>supported by godbolt</li>
+</ul></li>
 <li><a href="https://github.com/rust-lang/rust/issues/93740#issuecomment-1041391284">https://github.com/rust-lang/rust/issues/93740#issuecomment-1041391284</a> futex/mutex comparisons</li>
 <li>rustc uses stacker crate for segmented stacks to avoid stack overflow</li>
 <li><code>cargo test -- --nocapture</code> for <code>println!()</code></li>
@@ -41,9 +57,11 @@
 <li>freebsd tests only run on qemu runner</li>
 <li>set the image tag for newer cross</li>
 </ul></li>
+<li><code>RUSTFLAGS="-Z location-detail=none -Zfmt-debug=none -C relocation-model=static -Ctarget-feature=+crt-static" cargo +nightly run -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort,optimize_for_size --target x86_64-unknown-linux-gnu --release</code> with eyra for full source build</li>
 </ul>
+
 <div class="org-src-container">
-<pre class="src src-toml" id="org5634042">[target.x86_64-unknown-freebsd]
+<pre class="src src-toml" id="org67d2d28">[target.x86_64-unknown-freebsd]
 image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:main"
 #runner = "qemu-user"
 </pre>
@@ -53,12 +71,64 @@ image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:main"
 <li>cargo release profile</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-toml" id="org2978fb8">[profile.release]
+<pre class="src src-toml" id="org0f2756c">[profile.release]
 lto = true
 codegen-units = 1 # reduce parallel codegen for increased optimization
 strip = true
 opt-level = "z" # smallest binary instead of speed
 panic = "abort"
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-toml" id="org47beb0d">[build]
+# build extra targets and features
+rustflags = [
+          #"-Zlocation-detail=none",
+          #"-Zfmt-debug=none",
+          #"-Ctarget-cpu=native",
+          #"-Clink-args=nostartfiles",
+          #"-Clink-args=-Wl,",
+          #"-Clink-args=-Wl,-n,-N,--no-pie,--no-dynamic-linker,--build-id=none,--gc-sections,-nmagic",
+           "--cfg",
+           "tokio_unstable"]
+target = [
+#    "x86_64-unknown-freebsd",
+    "x86_64-unknown-linux-gnu",
+]
+#[target.x86_64-unknown-linux-gnu]
+#linker = "./ree"
+
+#[unstable]
+#build-std = [
+#          "std",
+#          "panic_abort",
+#]
+#build-std-features = [
+#                   "optimize_for_size",
+#                   "panic_immediate_abort",
+#]
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-rust" id="orgbf80579">fn main() {// minimal with origin
+    println!("cargo:rustc-link-arg=-nostartfiles");
+
+    // The following options optimize for code size!
+
+    // Tell the linker to exclude the .eh_frame_hdr section.
+    println!("cargo:rustc-link-arg=-Wl,--no-eh-frame-hdr");
+    // Tell the linker to make the text and data readable and writable. This
+    // allows them to occupy the same page.
+    println!("cargo:rustc-link-arg=-Wl,-N");
+    // Tell the linker to exclude the `.note.gnu.build-id` section.
+    println!("cargo:rustc-link-arg=-Wl,--build-id=none");
+    // Disable PIE, which adds some code size.
+    println!("cargo:rustc-link-arg=-Wl,--no-pie");
+    // Disable the `GNU-stack` segment, if we're using lld.
+    println!("cargo:rustc-link-arg=-Wl,-z,nognustack");
+}
 </pre>
 </div>
 </div>

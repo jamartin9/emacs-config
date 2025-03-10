@@ -9,16 +9,20 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0f8af1e">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org282d748">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgb33d9ef" class="outline-2">
-<h2 id="orgb33d9ef">guile</h2>
-<div class="outline-text-2" id="text-orgb33d9ef">
+<div id="outline-container-org559492d" class="outline-2">
+<h2 id="org559492d">guile</h2>
+<div class="outline-text-2" id="text-org559492d">
 <ul class="org-ul">
+<li>potential future gc with multiple algos
+<ul class="org-ul">
+<li><a href="https://github.com/wingo/whippet/blob/main/doc/collectors.md">https://github.com/wingo/whippet/blob/main/doc/collectors.md</a></li>
+</ul></li>
 <li>compiler optimizations
 <ul class="org-ul">
 <li>bytevectors for unboxed floating point math
@@ -35,10 +39,13 @@
 <li>can embed precise gc <a href="https://github.com/wingo/whippet-gc">whippet</a></li>
 <li>goblins adding wasm support for distributed objects</li>
 <li>guile wasm <a href="https://gitlab.com/spritely/guile-hoot-updates/">https://gitlab.com/spritely/guile-hoot-updates/</a></li>
-<li>sussmans scheme book on reusable programs uses generics and propagator model (uses MIT scheme)</li>
+<li>sussmans scheme book on reusable programs uses generics and propagator model (uses MIT scheme)
+<ul class="org-ul">
+<li>Propagator model reuse across problem domains (SAT, Datalog, Functional Reactive Programming, etc) <a href="https://www.youtube.com/watch?v=0igYOKcIWUs">https://www.youtube.com/watch?v=0igYOKcIWUs</a></li>
+</ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-guile" id="orgc173f4c">":"; guile -e main -s $0 $@; exit $?
+<pre class="src src-guile" id="org9e01530">":"; guile -e main -s $0 $@; exit $?
 
 (define (main args)
         (map (lambda (arg) (display arg) (display " "))

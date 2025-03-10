@@ -9,23 +9,23 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org675e7a2">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4c13440">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org0ed31c8" class="outline-2">
-<h2 id="org0ed31c8">ZFS</h2>
-<div class="outline-text-2" id="text-org0ed31c8">
+<div id="outline-container-org234e524" class="outline-2">
+<h2 id="org234e524">ZFS</h2>
+<div class="outline-text-2" id="text-org234e524">
 </div>
-<div id="outline-container-org423bbea" class="outline-3">
-<h3 id="org423bbea">openzfs</h3>
-<div class="outline-text-3" id="text-org423bbea">
+<div id="outline-container-orgdf5cc7a" class="outline-3">
+<h3 id="orgdf5cc7a">openzfs</h3>
+<div class="outline-text-3" id="text-orgdf5cc7a">
 </div>
-<div id="outline-container-orgc559c3b" class="outline-4">
-<h4 id="orgc559c3b">install</h4>
-<div class="outline-text-4" id="text-orgc559c3b">
+<div id="outline-container-orgee6a3f3" class="outline-4">
+<h4 id="orgee6a3f3">install</h4>
+<div class="outline-text-4" id="text-orgee6a3f3">
 <ul class="org-ul">
 <li>(This may break pool import) If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
 That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
@@ -44,7 +44,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org4551635">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="orgd36cfd9">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -85,19 +85,21 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org038461a" class="outline-4">
-<h4 id="org038461a">usage</h4>
-<div class="outline-text-4" id="text-org038461a">
+<div id="outline-container-org13dc6d9" class="outline-4">
+<h4 id="org13dc6d9">usage</h4>
+<div class="outline-text-4" id="text-org13dc6d9">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd9eed7f" class="outline-4">
-<h4 id="orgd9eed7f">notes</h4>
-<div class="outline-text-4" id="text-orgd9eed7f">
+<div id="outline-container-org5d62cac" class="outline-4">
+<h4 id="org5d62cac">notes</h4>
+<div class="outline-text-4" id="text-org5d62cac">
 <ul class="org-ul">
+<li><a href="https://github.com/OpenIndiana/time-slider">https://github.com/OpenIndiana/time-slider</a> python time slider tool for backups</li>
+<li>GPTZFSBOOT for bios zfs boot</li>
 <li>If you lose a vdev in a pool you LOSE THE POOL</li>
 <li>Autoexpand allows the 'safe' thing of smallest partition that can grow. WIP raidz expand pool size.
 <ul class="org-ul">
@@ -168,7 +170,394 @@ password   include      zfs-key</li>
 <li>can not be maintained across send/recv (depends on-disk references)</li>
 <li>zpool sync if creating in a loop to ensure the TX finishes</li>
 </ul></li>
+<li><a href="https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=2720&amp;context=honorstheses">https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=2720&amp;context=honorstheses</a> chapter 3 for description of zfs architecture</li>
 </ul>
+<div class="org-src-container">
+<pre class="src src-sh" id="org816e414">#!/usr/bin/env -S guix shell --pure bash coreutils zfs --
+
+#
+# GuixSD install script synthesized from:
+#
+#   - mx00s's install.sh (https://gist.github.com/mx00s/ea2462a3fe6fdaa65692fe7ee824de3e)
+#   - Erase Your Darlings (https://grahamc.com/blog/erase-your-darlings)
+#   - ZFS Datasets for NixOS (https://grahamc.com/blog/nixos-on-zfs)
+#   - NixOS Manual (https://nixos.org/nixos/manual/)
+#
+# It expects the name of the block device (e.g. 'sda') to partition
+# and install GuixSD on and an authorized public ssh key to log in as
+# 'root' remotely. The script must also be executed as root.
+#
+# Example: `sudo ./install.sh sde "ssh-rsa AAAAB..."`
+#
+
+set -euo pipefail
+
+################################################################################
+
+export COLOR_RESET="\033[0m"
+export RED_BG="\033[41m"
+export BLUE_BG="\033[44m"
+
+function err {
+    echo -e "${RED_BG}$1${COLOR_RESET}"
+}
+
+function info {
+    echo -e "${BLUE_BG}$1${COLOR_RESET}"
+}
+
+################################################################################
+
+export DISK=$1
+export AUTHORIZED_SSH_KEY=$2
+
+if ! [[ -v DISK ]]; then
+    err "Missing argument. Expected block device name, e.g. 'sda'"
+    exit 1
+fi
+
+export DISK_PATH="/dev/${DISK}"
+
+if ! [[ -b "$DISK_PATH" ]]; then
+    err "Invalid argument: '${DISK_PATH}' is not a block special file"
+    exit 1
+fi
+
+if ! [[ -v AUTHORIZED_SSH_KEY ]]; then
+    err "Missing argument. Expected public SSH key, e.g. 'ssh-rsa AAAAB...'"
+    exit 1
+fi
+
+if [[ "$EUID" &gt; 0 ]]; then
+    err "Must run as root"
+    exit 1
+fi
+
+export ZFS_POOL="rpool"
+
+# ephemeral datasets
+export ZFS_LOCAL="${ZFS_POOL}/local"
+export ZFS_DS_ROOT="${ZFS_LOCAL}/root"
+export ZFS_DS_GUIX="${ZFS_LOCAL}/guix"
+export ZFS_DS_VAR_GUIX="${ZFS_LOCAL}/var-guix"
+
+# persistent datasets
+export ZFS_SAFE="${ZFS_POOL}/safe"
+export ZFS_DS_HOME="${ZFS_SAFE}/home"
+export ZFS_DS_PERSIST="${ZFS_SAFE}/persist"
+
+export ZFS_BLANK_SNAPSHOT="${ZFS_DS_ROOT}@blank"
+
+################################################################################
+
+info "Running the UEFI (GPT) partitioning and formatting directions from the NixOS manual ..."
+parted "$DISK_PATH" -- mklabel gpt
+parted "$DISK_PATH" -- mkpart primary 512MiB 100%
+parted "$DISK_PATH" -- mkpart ESP fat32 1MiB 512MiB
+parted "$DISK_PATH" -- set 2 boot on
+export DISK_PART_ROOT="${DISK_PATH}1"
+export DISK_PART_BOOT="${DISK_PATH}2"
+
+info "Formatting boot partition ..."
+mkfs.fat -F 32 -n boot "$DISK_PART_BOOT"
+
+info "Creating '$ZFS_POOL' ZFS pool for '$DISK_PART_ROOT' ..."
+zpool create -f "$ZFS_POOL" "$DISK_PART_ROOT"
+
+info "Enabling compression for '$ZFS_POOL' ZFS pool ..."
+zfs set compression=on "$ZFS_POOL"
+
+info "Creating '$ZFS_DS_ROOT' ZFS dataset ..."
+zfs create -p -o mountpoint=legacy "$ZFS_DS_ROOT"
+
+info "Configuring extended attributes setting for '$ZFS_DS_ROOT' ZFS dataset ..."
+zfs set xattr=sa "$ZFS_DS_ROOT"
+
+info "Configuring access control list setting for '$ZFS_DS_ROOT' ZFS dataset ..."
+zfs set acltype=posixacl "$ZFS_DS_ROOT"
+
+info "Creating '$ZFS_BLANK_SNAPSHOT' ZFS snapshot ..."
+zfs snapshot "$ZFS_BLANK_SNAPSHOT"
+
+info "Mounting '$ZFS_DS_ROOT' to /mnt/guix ..."
+mkdir /mnt/guix
+mount -t zfs "$ZFS_DS_ROOT" /mnt/guix
+
+info "Mounting '$DISK_PART_BOOT' to /mnt/guix/boot ..."
+mkdir /mnt/guix/boot
+mount -t vfat "$DISK_PART_BOOT" /mnt/guix/boot
+
+info "Creating '$ZFS_DS_GUIX' ZFS dataset ..."
+zfs create -p -o mountpoint=legacy "$ZFS_DS_GUIX"
+
+info "Disabling access time setting for '$ZFS_DS_GUIX' ZFS dataset ..."
+zfs set atime=off "$ZFS_DS_GUIX"
+
+info "Mounting '$ZFS_DS_GUIX' to /mnt/guix/gnu ..."
+mkdir /mnt/guix/gnu
+mount -t zfs "$ZFS_DS_GUIX" /mnt/guix/gnu
+
+info "Creating '$ZFS_DS_VAR_GUIX' ZFS dataset ..."
+zfs create -p -o mountpoint=legacy "$ZFS_DS_VAR_GUIX"
+
+info "Mounting '$ZFS_DS_VAR_GUIX' to /mnt/guix/var/guix ..."
+mkdir -p /mnt/guix/var/guix
+mount -t zfs "$ZFS_DS_VAR_GUIX" /mnt/guix/var/guix
+
+info "Creating '$ZFS_DS_HOME' ZFS dataset ..."
+zfs create -p -o mountpoint=legacy "$ZFS_DS_HOME"
+
+info "Mounting '$ZFS_DS_HOME' to /mnt/guix/home ..."
+mkdir /mnt/guix/home
+mount -t zfs "$ZFS_DS_HOME" /mnt/guix/home
+
+info "Creating '$ZFS_DS_PERSIST' ZFS dataset ..."
+zfs create -p -o mountpoint=legacy "$ZFS_DS_PERSIST"
+
+info "Mounting '$ZFS_DS_PERSIST' to /mnt/guix/persist ..."
+mkdir /mnt/guix/persist
+mount -t zfs "$ZFS_DS_PERSIST" /mnt/guix/persist
+
+info "Permit ZFS auto-snapshots on ${ZFS_SAFE}/* datasets ..."
+zfs set com.sun:auto-snapshot=true "$ZFS_DS_HOME"
+zfs set com.sun:auto-snapshot=true "$ZFS_DS_PERSIST"
+
+info "Creating persistent directory for host SSH keys ..."
+mkdir -p /mnt/guix/persist/etc/ssh
+
+info "Enter password for the root user ..."
+ROOT_PASSWORD_HASH="$(mkpasswd -m sha-512 | sed 's/\$/\\$/g')"
+
+info "Enter personal user name ..."
+read USER_NAME
+
+info "Enter password for '${USER_NAME}' user ..."
+USER_PASSWORD_HASH="$(mkpasswd -m sha-512 | sed 's/\$/\\$/g')"
+
+info "Writing GuixSD configuration to /persist/guix-config/config.scm ..."
+cat &lt;&lt;EOF &gt; /mnt/guix/persist/guix-config/config.scm
+;; -*- mode: scheme; -*-
+;; This is an operating system configuration template
+;; for a "desktop" setup with Xfce where the root
+;; partition is on ZFS and rolled back to @blank
+;; before boot.
+
+(use-modules (gnu) (gnu system nss) (guix utils))
+(use-service-modules desktop sddm)
+(use-package-modules certs gnome)
+
+;; This is our first monkey-patch.
+(set! (@ (gnu system file-systems) %pseudo-file-system-types)
+  (cons "zfs" %pseudo-file-system-types))
+
+(define %initrd/pre-mount
+  (with-imported-modules (source-module-closure
+                          '((guix build syscalls)
+                            (guix build utils)))
+    #~(begin
+        (use-modules (gnu build file-systems)
+                     (gnu build linux-boot)
+                     ((guix build syscalls)
+                      #:hide (file-system-type))
+                     (guix build utils))
+
+        ;; XXX: Major Hack! Enables mounting ZFS datasets via legacy mountpoints.
+        (let ((orig (@ (gnu build file-systems) canonicalize-device-spec)))
+          (set! (@ (gnu build file-systems) canonicalize-device-spec)
+            (lambda (spec)
+              (let ((device (if (file-system-label? spec)
+                                (file-system-label-&gt;string spec)
+                                spec)))
+                (if (and (string? device)
+                         (char-set-contains? char-set:letter (string-ref device 0))
+                         (#$%initrd/import-device-zpool device))
+                    device
+                    (orig spec))))))
+
+        ;; In my actual config this is where I run plymouth and decrypt keyfiles
+        ;; (but call `load-key' in a per-dataset loop below).
+        )))
+
+(define %initrd/import-device-zpool
+  #~(lambda (device)
+      (let ((zpool (substring device 0 (or (string-index device #\/) 0)))
+            (present? (lambda (device)
+                        (and (not (zero? (string-length device)))
+                             (zero? (system* #$(file-append zfs "/sbin/zfs")
+                                             "list" device))))))
+        (unless (or (zero? (string-length zpool))
+                    (present? device))
+          (invoke #$(file-append zfs "/sbin/zpool") "import" zpool)
+
+          ;; Here's where the rollback happens.
+          ;;
+          ;; In my actual config I have an ugly loop that handles multiple
+          ;; zpools and decryption via load-key, hence the more dynamic parsing
+          ;; above.
+          ;;
+          ;; We're just gonna do this for illustrative purposes:
+          (when (equal? zpool "zpool")
+            (system* #$(file-append zfs "/sbin/zfs")
+                     "rollback" "zpool/local/root@blank"))))))
+
+(define (%initrd file-systems . kwargs)
+  (apply raw-initrd
+    (cons file-systems
+          (substitute-keyword-arguments kwargs
+            ((#:linux linux)
+             #;OMITTED)
+            ((#:pre-mount pre-mount #t)
+             #~(begin #$%initrd/pre-mount
+                      #$pre-mount))))))
+
+(define %users
+  (cons (user-account
+                  (name "${USER_NAME}")
+                  (id 1000) ; Put a pin in this.
+                  (password "${USER_PASSWORD_HASH}")
+                  (supplementary-groups '("wheel" "netdev"
+                                          "audio" "video")))
+                 %base-user-accounts))
+
+(operating-system
+  (host-name "antelope")
+  (timezone "America/Los_Angeles")
+  (locale "en_US.utf8")
+
+  ;; Use the UEFI variant of GRUB with the EFI System
+  ;; Partition mounted on /boot/efi.
+  (bootloader (bootloader-configuration
+                (bootloader grub-efi-bootloader)
+                (targets '("/boot/efi"))))
+
+  ;; ====================
+  ;; SUBSTANTIAL OMISSION
+  ;; ====================
+  ;;
+  ;; The kernel package needs to have the ZFS module either built-in or in
+  ;; its `modules' output. This is left as an exercise to the reader because
+  ;; my current solution involves building the kernel several times,
+  ;; desperately needs re-worked, and is too long / abstracted to
+  ;; include here. Said monstrosity also ensures that the ZFS module
+  ;; is built against the correct kernel by setting the package's `#:linux'
+  ;; argument.
+  ;;
+  (kernel #;OMITTED)
+  (initrd %initrd)
+
+  ;; The rest of the neccessary ZFS bits and bobs *are* included.
+  (initrd-modules
+    (cons "zfs" %base-initrd-modules))
+
+  (file-systems (append
+                 (list (file-system
+                         (mount-point "/")
+                         (device "rpool/local/root")
+                         (type "zfs"))
+                       (map (match-lambda
+                              ((d mp)
+                               (file-system
+                                 (mount-point mp)
+                                 (device d)
+                                 (type "zfs")
+                                 (needed-for-boot? #t))))
+                            '(("rpool/local/root"     . "/")
+                              ("rpool/local/guix"     . "/gnu")
+                              ("rpool/local/var-guix" . "/var/guix")
+                              ("rpool/safe/home"      . "/home")
+                              ("rpool/safe/persist"   . "/persist")))
+                       (file-system
+                         (mount-point "/boot")
+                         (device (uuid "6f62e623-5aa9-4681-a6da-9e0a68e7fbfb"))
+                         (type "ext4"))
+                       (file-system
+                         (device (uuid "1234-ABCD" 'fat))
+                         (mount-point "/boot/efi")
+                         (type "vfat")))
+                 %base-file-systems))
+
+  (users %users)
+
+  (packages (append (list
+                      zfs
+                      nss-certs ;; for HTTPS access
+                      gvfs)     ;; for user mounts
+                    %base-packages))
+
+  (services (cons* (service xfce-desktop-service-type)
+                   (simple-service 'zfs-mod-loader
+                                   kernel-module-loader-service-type
+                                   '("zfs"))
+                   (simple-service 'zfs-udev-rules
+                                   udev-service-type
+                                   `(,zfs)))
+                   ;;
+                   ;; Some directories may have already been populated by other
+                   ;; activation services on first run, so the function below
+                   ;; will move them into /persist before creating a symlink.
+                   ;;
+                   ;; I've thought about doing this in the initfs, but I don't
+                   ;; think we have a hook between file-system-mounts and
+                   ;; activation so we'd have to mount/unmount the datsets
+                   ;; ourselves ahead of when Guix mounts them...
+                   ;;
+                   (simple-service 'symlink-activation activation-service-type
+                     (with-imported-modules (source-module-closure
+                                             '((guix build utils)))
+                       #~(begin
+                           (use-modules (ice-9 match)
+                                        (guix build utils))
+                           (map (lambda (lst)
+                                  (apply (lambda* (dest src #:optional mode user group)
+                                           (let ((users '#$(map (lambda (u) (cons (user-account-name u) (user-account-uid u)))
+                                                                %users))
+                                                 (groups '#$(map (lambda (g) (cons (user-group-name g) (user-group-id g)))
+                                                                 %base-groups))
+                                                 (get-id (lambda (name file)
+                                                           (let* ((port (open-pipe* OPEN_READ #$(file-append gawk "/bin/gawk")
+                                                                                    "-F:" "$1 == NAME {print $3}" (string-append "NAME=" name)
+                                                                                    file))
+                                                                  (str (read-line port)))
+                                                             (close-pipe port)
+                                                             (string-&gt;number str)))))
+                                             (unless (or (not user) (number? user))
+                                               (set! user (or (assoc-ref users user)
+                                                              (get-id user "/etc/passwd"))))
+                                             (unless (or (not group) (number? group))
+                                               (set! group (or (assoc-ref groups group)
+                                                               (get-id group "/etc/group")))))
+
+                                           ;; src-&gt;dest = persist-&gt;root-fs, like a symlink:
+                                           (mkdir-p (dirname dest))
+                                           (let ((perms-target (if src src dest))
+                                                 (tempfile (string-append dest ".tmp")))
+                                             (if (string-suffix? "/" perms-target)
+                                                 (mkdir-p perms-target)
+                                                 (mkdir-p (dirname perms-target)))
+                                             (when (and src (file-exists? dest))
+                                               (unless (file-exists? src)
+                                                 (copy-recursively dest src
+                                                                   #:keep-permissions? #t))
+                                               (delete-file-recursively dest))
+                                             (when src
+                                               (when (file-exists? tempfile)
+                                                 (delete-file tempfile))
+                                               (symlink src tempfile)
+                                               (rename-file tempfile dest))
+                                             (when (file-exists? perms-target)
+                                               (chown perms-target (or user -1) (or group -1))
+                                               (when mode (chmod perms-target mode)))))
+                                         lst))
+                             ;; Fresh parent directories and omitted modes default to '#o755 root:root'.
+                             ;; TODO: Please use the specified permissions for fresh parent directories.
+                             '(("/etc/NetworkManager/system-connections" "/persist/etc/NetworkManager/system-connections/")
+                               ("/etc/machine-id"                        "/persist/etc/machine-id" #o644)
+                               ("/etc/ssh"                               "/persist/etc/ssh/")
+                               ;; Vim won't start without =/var/tmp=.
+                               ("/var/tmp"                               #f))))))
+                   %desktop-services))
+</pre>
+</div>
 </div>
 </div>
 </div>

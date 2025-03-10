@@ -9,23 +9,27 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0940c21">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5a07033">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org2eee190" class="outline-2">
-<h2 id="org2eee190">sqlite</h2>
-<div class="outline-text-2" id="text-org2eee190">
+<div id="outline-container-org02d4dea" class="outline-2">
+<h2 id="org02d4dea">sqlite</h2>
+<div class="outline-text-2" id="text-org02d4dea">
 </div>
-<div id="outline-container-orgcd4b121" class="outline-3">
-<h3 id="orgcd4b121">notes</h3>
-<div class="outline-text-3" id="text-orgcd4b121">
+<div id="outline-container-orgf7c3d97" class="outline-3">
+<h3 id="orgf7c3d97">notes</h3>
+<div class="outline-text-3" id="text-orgf7c3d97">
 <ul class="org-ul">
 <li>Uses bytecode instead of AST like postgres <a href="https://sqlite.org/draft/whybytecode.html">https://sqlite.org/draft/whybytecode.html</a>
 <ul class="org-ul">
-<li>maybe use reval for compiler?</li>
+<li>maybe use bytecodealliance/weval for compiler types?
+<ul class="org-ul">
+<li><a href="https://wingolog.org/archives/2024/09/26/needed-bits-optimizations-in-guile">https://wingolog.org/archives/2024/09/26/needed-bits-optimizations-in-guile</a></li>
+<li><a href="https://llvm.org/doxygen/DemandedBits_8cpp_source.html">https://llvm.org/doxygen/DemandedBits_8cpp_source.html</a></li>
+</ul></li>
 </ul></li>
 <li><a href="https://github.com/mmomtchev/sqlite-wasm-http">https://github.com/mmomtchev/sqlite-wasm-http</a> for httpvfs via range headers
 <ul class="org-ul">
@@ -48,6 +52,7 @@
 <li>C source can be compiled to WASM/Javascript <a href="https://sqlite.org/fiddle/">sqlite.org/fiddle</a></li>
 <li>Replication options
 <ul class="org-ul">
+<li>session extension or hctree</li>
 <li>sqlite<sub>rysnc</sub>
 <ul class="org-ul">
 <li>built in to standard sqlite tools.</li>
@@ -75,6 +80,8 @@
 </ul></li>
 <li>libsql is a fork of sqlite with extra features</li>
 <li>strict tables for type enforcement</li>
+<li>set primary key integer id to avoid adding rowid to a table <code>WITHOUT ROWID</code></li>
+
 <li>session extension for changeset management</li>
 <li>max <code>PRAGMA page_size = 65536</code>
 <ul class="org-ul">
@@ -96,6 +103,7 @@
 </ul></li>
 <li>optimizer can create temporary index's automatically.
 dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</code> query output</li>
+<li>multi column index</li>
 <li>import csv as virtual table or database</li>
 <li><code>pragma journal_mode = WAL;</code> for write ahead log (replaced shared cache)
 <ul class="org-ul">
@@ -109,10 +117,16 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 <li><code>pragma mmap_size = 30000000000;</code> for memory mapping</li>
 <li>open in memory database with <code>:memory:</code></li>
 <li>foreign keys disabled in transactions and by default <code>PRAGMA foreign keys</code></li>
-<li>site database</li>
+<li><code>memsys5</code> memory allocator for embedded or deterministic memory usage</li>
+<li>disable posix advisory locks</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orgc6a4df6" class="outline-3">
+<h3 id="orgc6a4df6">site database</h3>
+<div class="outline-text-3" id="text-orgc6a4df6">
 <div class="org-src-container">
-<pre class="src src-sql" id="org56b7f5b">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="org9b574b7">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
 PRAGMA page_size=512;
 SAVEPOINT ar;
@@ -156,14 +170,14 @@ VACUUM;
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org4b6d515">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="orgd2714d7">-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgad3365c">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="orgc674078">(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -181,13 +195,11 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
 </pre>
 </div>
 </div>
-</div>
-
-<div id="outline-container-org65d447f" class="outline-3">
-<h3 id="org65d447f">site search js/sql</h3>
-<div class="outline-text-3" id="text-org65d447f">
+<div id="outline-container-org33ea781" class="outline-4">
+<h4 id="org33ea781">site search js/sql</h4>
+<div class="outline-text-4" id="text-org33ea781">
 <div class="org-src-container">
-<pre class="src src-javascript" id="org48bb7c7">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+<pre class="src src-javascript" id="org19e3527">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:
@@ -240,7 +252,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org8df16f7">onmessage = (e) =&gt; {
+<pre class="src src-javascript" id="org5b0edeb">onmessage = (e) =&gt; {
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
@@ -316,6 +328,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
     }
 };
 </pre>
+</div>
 </div>
 </div>
 </div>

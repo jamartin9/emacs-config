@@ -9,27 +9,27 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5b0b42d">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0dcc8b5">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-
-<div id="outline-container-org51ec0d5" class="outline-2">
-<h2 id="org51ec0d5">Linux</h2>
-<div class="outline-text-2" id="text-org51ec0d5">
+<div id="outline-container-org0b1f903" class="outline-2">
+<h2 id="org0b1f903">Linux</h2>
+<div class="outline-text-2" id="text-org0b1f903">
 <p>
 Finally some hardware support!
 </p>
 </div>
-<div id="outline-container-org58550f3" class="outline-3">
-<h3 id="org58550f3"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
+<div id="outline-container-orge069bc7" class="outline-3">
+<h3 id="orge069bc7"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
 </div>
-<div id="outline-container-orge5575d6" class="outline-3">
-<h3 id="orge5575d6">Kernel</h3>
-<div class="outline-text-3" id="text-orge5575d6">
+<div id="outline-container-org427ef47" class="outline-3">
+<h3 id="org427ef47">Kernel</h3>
+<div class="outline-text-3" id="text-org427ef47">
 <ul class="org-ul">
+<li>added ebpf netkit in 6.8 (faster than virtual eth)</li>
 <li>removed sysctl system call in 5.5</li>
 <li>io-uring
 <ul class="org-ul">
@@ -46,16 +46,17 @@ Finally some hardware support!
 <li><code>fs.inotify.max_user_watches=524288</code> podman log line?</li>
 <li><code>fs.inotify.max_user_instances=512</code> podman log line?</li>
 </ul></li>
+<li><code>fs.aio-max-nr=67108864</code> increase max async requests</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1c2a9c5" class="outline-3">
-<h3 id="org1c2a9c5">pam</h3>
+<div id="outline-container-orgd4f586f" class="outline-3">
+<h3 id="orgd4f586f">pam</h3>
 </div>
-<div id="outline-container-org572d62d" class="outline-3">
-<h3 id="org572d62d">misc</h3>
-<div class="outline-text-3" id="text-org572d62d">
+<div id="outline-container-orgb404487" class="outline-3">
+<h3 id="orgb404487">misc</h3>
+<div class="outline-text-3" id="text-orgb404487">
 <ul class="org-ul">
 <li><code>faillock --user $USER --reset</code> for attempt reset</li>
 <li><code>LD_LIBRARY_PATH</code> and <code>LD_PRELOAD</code> environment variables override library location and load order respectively.
@@ -73,6 +74,15 @@ Finally some hardware support!
 <li><code>/usr/lib/ld-linux-x86-64.so.2 --help</code> to check for <code>x86_64-v3</code></li>
 <li><code>ethtool -N eth2 rx-flow-hash udp4 sdfn</code> nic to send packets to same thread as ip:port sender</li>
 <li>set <code>SO_ADDRREUSE</code> and <code>SO_SOCKETREUSE</code> on socket creation to allow multiple binds</li>
+<li>set huge page size to reduce pressure on the the translation buffer (TLB)
+<ul class="org-ul">
+<li><code>GRUB_CMDLINE_LINUX="default_hugepagesz=1G hugepagesz=1G hugepages=0:8,1:8"</code> where hugepages is <code>numanode:amount_of_pages</code></li>
+<li>TLB uses an address spaced identifier id (ASID) for processes to void flushing TLB cache
+<ul class="org-ul">
+<li>12 bit so many procs will force a flush</li>
+</ul></li>
+</ul></li>
+<li>get cache line size with <code>getconf LEVEL1_DCACHE_LINESIZE</code> or <code>lscpu</code></li>
 </ul>
 </div>
 </div>

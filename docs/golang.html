@@ -9,17 +9,20 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc3aef06">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4c8cc4b">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgdd68c2e" class="outline-2">
-<h2 id="orgdd68c2e">golang</h2>
-<div class="outline-text-2" id="text-orgdd68c2e">
+<div id="outline-container-org640152a" class="outline-2">
+<h2 id="org640152a">golang</h2>
+<div class="outline-text-2" id="text-org640152a">
 <ul class="org-ul">
-<li>GOMEMLIMIT to control heap size to avoid GC</li>
+<li>GOMEMLIMIT to control heap size to avoid GC
+<ul class="org-ul">
+<li>GC was running every 2 minutes regardless&#x2026; <a href="https://discord.com/blog/why-discord-is-switching-from-go-to-ruts">https://discord.com/blog/why-discord-is-switching-from-go-to-ruts</a></li>
+</ul></li>
 <li>disable default proxy
 <ul class="org-ul">
 <li>go env -w GOPROXY=direct</li>
@@ -36,14 +39,17 @@
 <ul class="org-ul">
 <li>can have ossification issues such as ed25519 signature malleability update cadence
 <ul class="org-ul">
-<li><img src="https://hdevalence.ca/images/ed25519-comparison.png" alt="ed25519-comparison.png"></li>
+<li><img src="https://hdevalence.ca/images/ed25519-comparison.png" alt="ed25519-comparison.png">
+<ul class="org-ul">
+<li><a href="https://hdevalence.ca/blog/2020-10-04-its-25519am">https://hdevalence.ca/blog/2020-10-04-its-25519am</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 <li>TCP <code>NODELAY</code> set by default (no batching with nagle's algorithm)</li>
 <li>http2 pusher (chrome removing support)</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-golang" id="org10dfaf5">// Send HTML and push image
+<pre class="src src-golang" id="org98a8cc0">// Send HTML and push image
 func handlerHtml(w http.ResponseWriter, r *http.Request) {
         pusher, ok := w.(http.Pusher)
         if ok {

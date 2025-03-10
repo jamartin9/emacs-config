@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6588ed5">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6c3d984">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org441e98f" class="outline-2">
-<h2 id="org441e98f">Machine learning</h2>
-<div class="outline-text-2" id="text-org441e98f">
+<div id="outline-container-orge7e9576" class="outline-2">
+<h2 id="orge7e9576">Machine learning</h2>
+<div class="outline-text-2" id="text-orge7e9576">
 </div>
-<div id="outline-container-org8ae920a" class="outline-3">
-<h3 id="org8ae920a">notes</h3>
-<div class="outline-text-3" id="text-org8ae920a">
+<div id="outline-container-orgd0be67d" class="outline-3">
+<h3 id="orgd0be67d">notes</h3>
+<div class="outline-text-3" id="text-orgd0be67d">
 <ul class="org-ul">
 <li>FP8 and LOG representation are efficent on modern GPU
 <ul class="org-ul">
@@ -33,6 +33,7 @@
 <ul class="org-ul">
 <li>vs-quant scale factor for each vector to turn sparse to dense</li>
 </ul></li>
+<li>transistors count is roughly mantissa bits squared</li>
 </ul></li>
 <li>Given enough parameters and data different architectures converge on the same results
 <ul class="org-ul">
@@ -41,6 +42,7 @@
 <li>Recall transformers are Turing complete</li>
 <li>State Space Models (SSM) like MAMBA preform close to transformers
 <ul class="org-ul">
+<li>hybrids models like <a href="https://github.com/NVlabs/hymba">https://github.com/NVlabs/hymba</a> use both</li>
 <li>Vision mamba is comparable to ViTs</li>
 <li>Jamba is a MoE SSM with a transformer block with 256K context, 12B active parameters (total of 52B parameters across all experts)</li>
 <li>calculus differention across data
@@ -52,7 +54,10 @@
 <ul class="org-ul">
 <li>spaces to run in notebook like without colab using gradio</li>
 </ul></li>
-<li>collab gives free 12hrs of compute</li>
+<li>collab gives free 12hrs of compute
+<ul class="org-ul">
+<li>unsloth notebooks provide faster finetuning/inference</li>
+</ul></li>
 <li>Forward Forward is alternative back propagation</li>
 <li>wasi-nn for evaluating ml models in wasm via SIMD extensions with either wasmedge (pytorch) or wasmtime(openvino)</li>
 <li><a href="https://github.com/microsoft/onnxruntime">ONNX</a> for browser evaluation of pytorch models
@@ -64,10 +69,14 @@
 <li>Some models are more sensitive to quantization than others. LLMs are more tolerant than diffusion or whisper models</li>
 <li>LoRA is a finetunning mechanism
 <ul class="org-ul">
-<li>QLoRA is quantized version (4/8 bit). <a href="https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md">cpu version</a></li>
+<li>Meta showed 8 bit quant with no difference but 4bit was &gt;2x worse without QLoRA</li>
+<li>QLoRA is quantized version (4/8 bit). <a href="https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md">cpu version</a>
+<ul class="org-ul">
+<li><a href="https://github.com/intel/intel-extension-for-pytorch">https://github.com/intel/intel-extension-for-pytorch</a></li>
+</ul></li>
 <li>LASER can LoRA select layers and improve accuracy(promote weakly held facts by quantizing later layers)
 <ul class="org-ul">
-<li><a href="https://github.com/cognitivecomputations/laserRMT">LASER-RMT</a> variant</li>
+<li><a href="https://github.com/cognitivecomputations/laserRMT">LASER-RMT</a> variant aka spectrum</li>
 </ul></li>
 <li>LoftQ adds multiple lora adapters to base model and quantizes it. Fine tuning is done to the LoRA adapters to quantize with respect to the fine tuning set</li>
 <li><a href="https://github.com/thomasgauthier/LoRD">LoRD</a> can extract LoRA from fine tuned model
@@ -91,6 +100,7 @@
 <li>stablizes by adding layer normalization re-ordering (Swin transformer normalization strategy) and changing query-key softmax to QK-Norm</li>
 </ul></li>
 </ul></li>
+<li><a href="https://www.goodfire.ai/papers/mapping-latent-spaces-llama/">https://www.goodfire.ai/papers/mapping-latent-spaces-llama/</a> mapping of llama3 70B features</li>
 <li><a href="https://transformer-circuits.pub/2024/crosscoders/index.html">https://transformer-circuits.pub/2024/crosscoders/index.html</a> identifies cross model features by comparing residual blocks
 <ul class="org-ul">
 <li>features for refusal, code review, personal question vector</li>
@@ -125,13 +135,28 @@
 </ul></li>
 <li>Chain of thought synthetic dataset to improve implicit deductions (orca/phi)</li>
 <li>Models can be merged with various method to combine feature strengths</li>
+<li>Alibaba-NLP/gte-Qwen2-7B-instruct uses semantic understanding for the RAG embeddings to group documents regardless of language</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb14db14" class="outline-3">
-<h3 id="orgb14db14">image</h3>
-<div class="outline-text-3" id="text-orgb14db14">
+<div id="outline-container-orgaf3ed64" class="outline-3">
+<h3 id="orgaf3ed64">image</h3>
+<div class="outline-text-3" id="text-orgaf3ed64">
 <ul class="org-ul">
+<li>reasoning to vision models <a href="https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main">https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main</a>
+<ul class="org-ul">
+<li>S1 paper shows that you need very few examples (as little as 1000) in order for the model to start being able to build complex reasoning steps and solve non trivial mathematical problems.</li>
+</ul></li>
+<li>Lumina-Image 2B close to flux</li>
+<li>SmolVLM open source training and data</li>
+<li>Janus-Pro 7B or 1B</li>
+<li><a href="https://github.com/NVlabs/Sana">https://github.com/NVlabs/Sana</a> has 4k generation
+<ul class="org-ul">
+<li><a href="https://github.com/Efficient-Large-Model/ComfyUI_ExtraModels">https://github.com/Efficient-Large-Model/ComfyUI_ExtraModels</a>
+<ul class="org-ul">
+<li>gemma text encoder (unsloth bnb)</li>
+</ul></li>
+</ul></li>
 <li>dalle mini</li>
 <li>flux-dev 12B
 <ul class="org-ul">
@@ -146,6 +171,7 @@
 <li>minicpm and qwenvl for image input
 <ul class="org-ul">
 <li>comfyui-custom-scripts (show text)</li>
+<li>MiniCPM-o-2<sub>6</sub> supports audio/video/images/text</li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -172,21 +198,73 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-orgc41a48a" class="outline-4">
-<h4 id="orgc41a48a">video</h4>
-<div class="outline-text-4" id="text-orgc41a48a">
+<div id="outline-container-org0dbfe1a" class="outline-4">
+<h4 id="org0dbfe1a">video</h4>
+<div class="outline-text-4" id="text-org0dbfe1a">
 <ul class="org-ul">
-<li>added as to LLM input as multidimensional rope to the vision encoder (qwenVL)</li>
+<li><a href="https://github.com/Tencent/HunyuanVideo">https://github.com/Tencent/HunyuanVideo</a>
+<ul class="org-ul">
+<li><a href="https://github.com/zsxkib/cog-comfyui-hunyuan-video">https://github.com/zsxkib/cog-comfyui-hunyuan-video</a>
+<ul class="org-ul">
+<li>toolkit for fine-tuning Hunyuan Video LoRA using LoRA, plus advanced video inference and automatic captioning via QWEN-VL</li>
+</ul></li>
+</ul></li>
+<li><a href="https://github.com/NVlabs/VILA">https://github.com/NVlabs/VILA</a> video analysis better than QwenVL</li>
+<li>added as to LLM input as multidimensional rope to the vision encoder (qwenVL)
+<ul class="org-ul">
+<li>Apollo-LMMs/Apollo finetune (32 tokens per frame) for video analysis</li>
+</ul></li>
 <li><a href="https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt">stable diffusion video</a></li>
 <li>video editing with <a href="https://github.com/rehg-lab/RAVE">RAVE</a></li>
 </ul>
 </div>
 </div>
-</div>
-<div id="outline-container-orgd0c311e" class="outline-3">
-<h3 id="orgd0c311e">Large Language Models</h3>
-<div class="outline-text-3" id="text-orgd0c311e">
+<div id="outline-container-org19ad2cb" class="outline-4">
+<h4 id="org19ad2cb">3D</h4>
+<div class="outline-text-4" id="text-org19ad2cb">
 <ul class="org-ul">
+<li><a href="https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon">https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon</a> for 3D generation 3B</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb771e5f" class="outline-3">
+<h3 id="orgb771e5f">Large Language Models</h3>
+<div class="outline-text-3" id="text-orgb771e5f">
+<ul class="org-ul">
+<li>fine tune reasoning into models 1.5B+ with <a href="https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb">https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb</a>
+<ul class="org-ul">
+<li>uses vllm for inference</li>
+</ul></li>
+<li>vllm can serve openai api locally
+<ul class="org-ul">
+<li>cpu only avx2 openvino</li>
+<li>CPU<sub>OFFLOAD</sub> with GPU</li>
+<li>tool calling</li>
+<li>quants</li>
+<li>multimodal</li>
+<li>VLLM<sub>USE</sub><sub>V1</sub>=1 for new arch</li>
+<li>jinja chat templates</li>
+<li>required compute capability higher than 5.2 for gguf and bnb</li>
+</ul></li>
+<li>constrain output to json schema or grammar or choice
+<ul class="org-ul">
+<li>faster inference with constrained output <a href="https://blog.dottxt.co/coalescence.html">https://blog.dottxt.co/coalescence.html</a></li>
+<li>guided decoding <a href="https://github.com/dottxt-ai/outlines">https://github.com/dottxt-ai/outlines</a></li>
+</ul></li>
+<li>deepseekv3 MoE uses 3 dense layers then MoE with a shared expert, dual pipe and reasoning
+<ul class="org-ul">
+<li>quantized during training for speed</li>
+<li>dynamic 1.58 bit quant <a href="https://unsloth.ai/blog/deepseekr1-dynamic">https://unsloth.ai/blog/deepseekr1-dynamic</a></li>
+<li>open-r1 reproduction</li>
+<li>distilled reasoning into other models</li>
+<li>Min<sub>p</sub> = 0.05 to avoid incorrect tokens</li>
+</ul></li>
+<li>Qwen qwq 32B
+<ul class="org-ul">
+<li>reasoning(worse than deepseek) with cot and monte carlo search tree</li>
+</ul></li>
+<li>distill models with <a href="https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html">https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html</a> student/teacher model beating fine tuning</li>
 <li>Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)</li>
 <li>chinchilla paper showed most models are over parameterized without enough data
 <ul class="org-ul">
@@ -195,7 +273,11 @@
 <li>llama 3
 <ul class="org-ul">
 <li>15T tokens</li>
-<li><a href="https://github.com/unslothai/unsloth">https://github.com/unslothai/unsloth</a> for fine tuning (problems with other frameworks)</li>
+<li><a href="https://github.com/unslothai/unsloth">https://github.com/unslothai/unsloth</a> for fine tuning (problems with other frameworks)
+<ul class="org-ul">
+<li>4 bit quant of vision models selectively does not quant some weights to retain accuracy at cost of slight more vram</li>
+</ul></li>
+<li>tiktoken bpe vocab</li>
 </ul></li>
 <li>llama 2
 <ul class="org-ul">
@@ -267,6 +349,11 @@
 <li>models can be quantized (compressed) by changing the float tensor values from fp32 to fp16 to int8 with little loss.
 <ul class="org-ul">
 <li>fp32 to bfloat16 is lossless</li>
+<li>SmoothQuant uses the layers with high activation errors to scale the weights linearly.
+<ul class="org-ul">
+<li>Decreases the effects of quantization on high activation weights</li>
+<li>AWQ Activation Aware quantization uses activation distribution to choose which salient channels to unquantize</li>
+</ul></li>
 <li>4bit with GPT-Q compression (groupsize 128)</li>
 <li>bitnet ~2bit compression
 <ul class="org-ul">
@@ -278,12 +365,20 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orgd73e952" class="outline-4">
-<h4 id="orgd73e952">Codegen</h4>
-<div class="outline-text-4" id="text-orgd73e952">
+<div id="outline-container-orgce0e527" class="outline-4">
+<h4 id="orgce0e527">Codegen</h4>
+<div class="outline-text-4" id="text-orgce0e527">
 <ul class="org-ul">
+<li>GraalVM added Static Profiles powered by ML branch prediction for inlining (based on decapo data)
+<ul class="org-ul">
+<li>heuristics for outlier cases</li>
+<li>1000's of XGBoost decision trees for regression prediction of the branch probability</li>
+<li>native-image uses when PGO is disabled</li>
+<li>~250KB model for 7.5% speedup</li>
+</ul></li>
 <li>Python has some of the highest entropy for 'tokens vs length' making it the a efficent language to generate</li>
 <li>llm-compiler from facebook to generate LLVM IR</li>
+<li>Qwen-coder with fill in the middle tokens</li>
 <li>CodeLlama
 <ul class="org-ul">
 <li>fine tunes such as 'nous hermes 2', dolphin and WizardCoder for coding instructions</li>
@@ -308,15 +403,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org6993a92" class="outline-3">
-<h3 id="org6993a92">Speech to text</h3>
-<div class="outline-text-3" id="text-org6993a92">
+<div id="outline-container-org248d5c1" class="outline-3">
+<h3 id="org248d5c1">Speech to text</h3>
+<div class="outline-text-3" id="text-org248d5c1">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgcf621ab">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="orgeb2c663">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -325,10 +420,15 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-orgbe86ba5" class="outline-3">
-<h3 id="orgbe86ba5">Text to speech</h3>
-<div class="outline-text-3" id="text-orgbe86ba5">
+<div id="outline-container-orgc91441f" class="outline-3">
+<h3 id="orgc91441f">Text to speech</h3>
+<div class="outline-text-3" id="text-orgc91441f">
 <ul class="org-ul">
+<li>Zyphra/Zonos for voice cloning/TTS</li>
+<li><a href="https://github.com/multimodal-art-projection/YuE">https://github.com/multimodal-art-projection/YuE</a>
+<ul class="org-ul">
+<li>YuE: Open Full-song Music Generation Foundation Model, something similar to Suno.ai but open</li>
+</ul></li>
 <li>suno bark</li>
 <li><a href="https://github.com/neonbjb/tortoise-tts">tortoise-tts</a> based on dalle</li>
 <li><a href="https://github.com/coqui-ai/TTS">coqui-ai</a> with YourTTS/FreeVC voice cloning
@@ -342,11 +442,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-org8b3f3f1" class="outline-3">
-<h3 id="org8b3f3f1">Agent prompts</h3>
-<div class="outline-text-3" id="text-org8b3f3f1">
+<div id="outline-container-org4160f1c" class="outline-3">
+<h3 id="org4160f1c">Agent prompts</h3>
+<div class="outline-text-3" id="text-org4160f1c">
 <div class="org-src-container">
-<pre class="src src-sh" id="orgf200b24">
+<pre class="src src-sh" id="org4df67a7">
 input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
 ```sh
 for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
@@ -373,7 +473,7 @@ ${input_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header
 <li>prompt structures</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-text" id="org6eb5bbb">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-text" id="orgb9fb32f">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -396,14 +496,14 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-org10b63ab" class="outline-3">
-<h3 id="org10b63ab">transformers examples</h3>
-<div class="outline-text-3" id="text-org10b63ab">
+<div id="outline-container-org382de24" class="outline-3">
+<h3 id="org382de24">transformers examples</h3>
+<div class="outline-text-3" id="text-org382de24">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org4d570d7">#!/usr/bin/env python3
+<pre class="src src-python" id="org5128a06">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:

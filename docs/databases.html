@@ -9,24 +9,31 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org1ac79a3">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org808c3cb">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org1646bb3" class="outline-2">
-<h2 id="org1646bb3">Databases</h2>
-<div class="outline-text-2" id="text-org1646bb3">
+<div id="outline-container-org4a6a34a" class="outline-2">
+<h2 id="org4a6a34a">Databases</h2>
+<div class="outline-text-2" id="text-org4a6a34a">
 </div>
-<div id="outline-container-org8512781" class="outline-3">
-<h3 id="org8512781">Relational</h3>
-<div class="outline-text-3" id="text-org8512781">
+<div id="outline-container-orgad714c1" class="outline-3">
+<h3 id="orgad714c1">Relational</h3>
+<div class="outline-text-3" id="text-orgad714c1">
 <ul class="org-ul">
 <li><a href="sqlite.html#ID-162f9fba-d1f9-44e8-ae9f-685c578523f1">sqlite</a></li>
 <li><a href="postgres.html#ID-46651545-b172-443b-b0db-506019b4456c">postgres</a></li>
 <li>MySQL
 <ul class="org-ul">
+<li>innodb storage engine prefetches and caches itself with default 16k record size
+<ul class="org-ul">
+<li>dzfs<sub>prefetch</sub><sub>disable</sub>=1, logbias=throughput, primarycache=metadata, atime=off, xattr=sa, recordsize=16k</li>
+<li>innodb<sub>log</sub><sub>write</sub><sub>ahead</sub><sub>size</sub>=16384, innodb<sub>doublewrite</sub>=0, innodb<sub>checksum</sub><sub>algorithm</sub>=none, innodb<sub>flush</sub><sub>neighbors</sub>=0, innodb<sub>use</sub><sub>native</sub><sub>aio</sub>=0, innodb<sub>use</sub><sub>atomic</sub><sub>writes</sub>=0</li>
+<li>increase writes by disabling disk flushing with innodb<sub>flush</sub><sub>log</sub><sub>at</sub><sub>trx</sub><sub>commit</sub>=0 and sync<sub>binlog</sub>=0. ZFS disable all explicit disk flushing to any one file system by setting sync=disabled so it flushes every ~5sec</li>
+</ul></li>
+<li><a href="https://enhancedformysql.github.io/The-Art-of-Problem-Solving-in-Software-Engineering_How-to-Make-MySQL-Better/">https://enhancedformysql.github.io/The-Art-of-Problem-Solving-in-Software-Engineering_How-to-Make-MySQL-Better/</a></li>
 <li><a href="https://github.com/pingcap/tidb">TiDB</a>
 <ul class="org-ul">
 <li>somewhat compatible with MySQL</li>
@@ -37,9 +44,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org2887715" class="outline-3">
-<h3 id="org2887715">olap</h3>
-<div class="outline-text-3" id="text-org2887715">
+<div id="outline-container-org42e8f65" class="outline-3">
+<h3 id="org42e8f65">olap</h3>
+<div class="outline-text-3" id="text-org42e8f65">
 <ul class="org-ul">
 <li>duckdb
 <ul class="org-ul">
@@ -48,12 +55,13 @@
 <li>no concurrent readers/writers yet</li>
 </ul></li>
 <li>Clickhouse</li>
+<li><a href="https://transactional.blog/notes-on/disaggregated-oltp">https://transactional.blog/notes-on/disaggregated-oltp</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2126037" class="outline-3">
-<h3 id="org2126037">notes</h3>
-<div class="outline-text-3" id="text-org2126037">
+<div id="outline-container-org79860db" class="outline-3">
+<h3 id="org79860db">notes</h3>
+<div class="outline-text-3" id="text-org79860db">
 <ul class="org-ul">
 <li>BTree based DB's are more cache friendly as nodes can have more than 2 children (abseil uses 62 children) unlike Binary Trees
 <ul class="org-ul">

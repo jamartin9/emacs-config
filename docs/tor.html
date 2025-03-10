@@ -9,26 +9,26 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org29521a5">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgbcfaad0">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org2fe9ab7" class="outline-2">
-<h2 id="org2fe9ab7">tor</h2>
-<div class="outline-text-2" id="text-org2fe9ab7">
+<div id="outline-container-org1c7b79f" class="outline-2">
+<h2 id="org1c7b79f">tor</h2>
+<div class="outline-text-2" id="text-org1c7b79f">
 </div>
-<div id="outline-container-org469d8bd" class="outline-3">
-<h3 id="org469d8bd">tor notes</h3>
-<div class="outline-text-3" id="text-org469d8bd">
+<div id="outline-container-org19148ad" class="outline-3">
+<h3 id="org19148ad">tor notes</h3>
+<div class="outline-text-3" id="text-org19148ad">
 <ul class="org-ul">
 <li>Known 0days not disclosed in court as defense. Cope with parallel construction.</li>
 <li>socks5 on 9050 by default</li>
 <li>browser bundle runs 9051 by default</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org03931f2">brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion is brave
+<pre class="src src-conf" id="orga320e7b">brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion is brave
 https://protonmailrmez3lotccipshtkleegetolb73fuirgj7r4o4vfu7ozyd/ is protonmail
 https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/ is cloudflare 1.1.1.1
 MapAddress palladium.libera.chat libera75jm6of4wxpxt4aynol3xjmbtxgfyjpu34ss4d7r7q2v5zrpyd.onion is liberia.chat
@@ -53,7 +53,10 @@ m2ylflyeak6i6o4hsfwcrfwcq2bbjxk6nf2rnmm7fu6qiuu3hybenzid.onion is jabber.ccc.de
 </pre>
 </div>
 <ul class="org-ul">
-<li>digicert offers ev wildcard certs for .onion and harica.gr offers .onion</li>
+<li>digicert offers ev wildcard certs for .onion and harica.gr offers .onion
+<ul class="org-ul">
+<li><a href="https://acmeforonions.org/">https://acmeforonions.org/</a> for certbot certs <code>certbot certonly --server https://acme.api.acmeforonions.org/directory --standalone --http-01-port 8080 --http-01-address 127.0.0.1 -d mysite.onion</code></li>
+</ul></li>
 <li>ensure multi point check or pinned HTTPS verified to avoid bgp att</li>
 <li>tcp 9001 for relay default without bridge</li>
 <li>set <code>DNSPort 127.0.10.1:53</code> and set pihole uservice directory of client/service</li>
@@ -101,11 +104,11 @@ m2ylflyeak6i6o4hsfwcrfwcq2bbjxk6nf2rnmm7fu6qiuu3hybenzid.onion is jabber.ccc.de
 </ul>
 </div>
 </div>
-<div id="outline-container-org67d757f" class="outline-3">
-<h3 id="org67d757f">Link .torrc</h3>
-<div class="outline-text-3" id="text-org67d757f">
+<div id="outline-container-orgdaf45ec" class="outline-3">
+<h3 id="orgdaf45ec">Link .torrc</h3>
+<div class="outline-text-3" id="text-orgdaf45ec">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org15e118c">(ignore-errors
+<pre class="src src-emacs-lisp" id="org1797e45">(ignore-errors
   (let* ((tor-confdir (concat (file-name-as-directory (xdg-config-home) "tor"))
         (tor-conf (concat (file-name-as-directory tor-confdir) ".torrc")))
     (if (not (file-exists-p tor-confdir))
@@ -117,29 +120,29 @@ m2ylflyeak6i6o4hsfwcrfwcq2bbjxk6nf2rnmm7fu6qiuu3hybenzid.onion is jabber.ccc.de
 </div>
 </div>
 </div>
-<div id="outline-container-org42e5f87" class="outline-3">
-<h3 id="org42e5f87">Data Directory</h3>
-<div class="outline-text-3" id="text-org42e5f87">
+<div id="outline-container-org6efbc92" class="outline-3">
+<h3 id="org6efbc92">Data Directory</h3>
+<div class="outline-text-3" id="text-org6efbc92">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org0203305">(concat (file-name-as-directory (xdg-config-home)) "tor")
+<pre class="src src-emacs-lisp" id="orgda817f9">(concat (file-name-as-directory (xdg-config-home)) "tor")
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org030fe42" class="outline-3">
-<h3 id="org030fe42">Control Socket</h3>
-<div class="outline-text-3" id="text-org030fe42">
+<div id="outline-container-org8cdb272" class="outline-3">
+<h3 id="org8cdb272">Control Socket</h3>
+<div class="outline-text-3" id="text-org8cdb272">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org54bf664">(concat (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "tor")) "torSocket")
+<pre class="src src-emacs-lisp" id="orgbdf8749">(concat (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "tor")) "torSocket")
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf58f615" class="outline-3">
-<h3 id="orgf58f615">.torrc</h3>
-<div class="outline-text-3" id="text-orgf58f615">
+<div id="outline-container-orgdf1f015" class="outline-3">
+<h3 id="orgdf1f015">.torrc</h3>
+<div class="outline-text-3" id="text-orgdf1f015">
 <div class="org-src-container">
-<pre class="src src-conf" id="orgfeda009">StrictNodes 1
+<pre class="src src-conf" id="org2f5acc2">StrictNodes 1
 AvoidDiskWrites 1
 Sandbox 1
 #UseBridges 1
