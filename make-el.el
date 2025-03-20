@@ -54,15 +54,15 @@ DRY-RUN: do not run the tangled argument"
                           (directory-files org-dir t "\\(\.png$\\|\.css$\\|\.html$\\|\.sqlite$\\|\.js$\\)"))))
           ((or "-h" "--h" "--help" "help") (message (concat
                            "Usage Information: \n"
-                           " all - tangles all org files \n"
-                           " install - runs README.org's script \n"
-                           " install-all - tangles all org files and runs their scripts \n"
-                           " update - updates doom packages \n"
-                           " update-guix - updates guix packages and guix home \n"
-                           " clean - removes generated files \n"
+                           " all - tangle all org files \n"
+                           " install - run README.org's script \n"
+                           " install-all - tangle all org files and run their scripts \n"
+                           " update - update git submodules \n"
+                           " update-guix - update guix packages and guix home \n"
+                           " clean - remove generated files \n"
                            " clean-guix - collect guix garbage \n"
-                           " ARG.org - tangles and runs ARG \n"
-                           " help - Prints this message \n")))
+                           " ARG.org - tangle and runs ARG \n"
+                           " help - Print this message \n")))
           ((pred (and (string-match-p "\.org$" arg)
                       (file-exists-p arg)))
            (let* ((org-file (expand-file-name arg (file-name-directory (or load-file-name buffer-file-name))))

@@ -26,11 +26,6 @@ gptel: interface with llms. alternative is llm package or cli
 
 dape/geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter: language specific modes with more than regex.
 
-combobulate?: structural editing. alternative is regex
-
-eglot-x?: rust-analyzer extensions for memory layout and structural-search-replace. alternative is to copy the functions
-
-atomic-chrome?: counterpart to https://github.com/KarimAziev/chrome-emacs for using emacs to edit browser buffers. alternative is copy-paste
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

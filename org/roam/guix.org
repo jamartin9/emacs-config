@@ -299,3 +299,17 @@ GUIX_CONFIGURATION_DIRECTORY=$XDG_CONFIG_HOME/guix/etc
 GUIX_LOCPATH=$XDG_DATA_HOME/guix/var/guix/profiles/per-user/root/guix-profile/lib/locale
 NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 #+END_SRC
+
+* TODO [#C] [PATCH 0/6] Rootless guix-daemon :patch:
+  [2025-01-24 Fri] Submitted
+  :PROPERTIES:
+  :DEBBUGS_ID: 75810
+  :CREATOR: Ludovic Courtès <ludo@gnu.org>
+  :END:
+  [[elisp:(debbugs-gnu-select-report)][Messages]]
+  [2025-03-13 Thu] Last modified
+* COMMENT Local Variables
+# Local Variables:
+# mode: org
+# eval: (debbugs-org-mode 1)
+# End:

@@ -12,7 +12,7 @@
 - use ~pinentry-mode loopback~ in ~$GNUPGHOME/gpg.conf~ or on the cli for passworded keys on guix
 - ~--expert --full-generate-key~ for new ecc key
 - ~--armor~ for ascii transferable key
-- ~--export~ , ~--export-secret-key~ and ~--import~  for recovery (can also do it for trust store)
+- ~--export~ , ~--export-secret-key~ and ~--import --batch~  for recovery (can also do it for trust store)
 - pass
   - ~pass init email@stuff.com~ for loading gpg key
   - ~pass add site/name~ with password

@@ -2150,6 +2150,8 @@
   - Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library, for Python, R, Java, Scala, C++ and more. Runs on single machine, Hadoop, Spark, Dask, Flink and DataFlow. For tabular regression decision tree data.
 ** dottxt-ai/outlines
   - Structured Text Generation output to json, grammar, choice etc
+** EleutherAI/lm-evaluation-harness
+  - A framework for few-shot evaluation of language models.
 ** EleutherAI/sparsify
   - Sparsify transformers with SAEs and transcoders
 ** ggerganov/llama.cpp
@@ -2316,6 +2318,8 @@
   - p2p public key based relays
 ** nvzqz/divan
   - Fast, simple, reliable benchmarking for Rust projects
+** nyx-space/nyx
+  - Nyx is a high fidelity, fast, reliable and validated astrodynamics toolkit library written in Rust and available in Python
 ** org-rs/org-rs
   - org-mode parser rewrite in Rust
 ** pacak/cargo-show-asm
@@ -2404,6 +2408,8 @@
   - Rust SSH client & server library
 ** wasix-org/cargo-wasix
   - Cargo wrapper for working with Webassembly wasi(x).
+** wdanilo/crabtime
+  - comptime like macros in rust
 ** yewstack/yew
   - Rust / Wasm framework for building client web apps
 

@@ -49,3 +49,4 @@
 - work_mem=64MB
 - UNLOGGED tables
 - run from RAM Disk (/dev/shm)
+- aurora db is wal with a page service https://github.com/purduedb/OpenAurora/raw/OpenAurora/pictures/E6_ARCH_NEW.png

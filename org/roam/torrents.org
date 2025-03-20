@@ -27,3 +27,5 @@
     - needs ~xs~ linked torrent or non ~ws~ peer for metadata
   - min request size 16 KiB
     - [[https://gitlab.com/boredcaveman/p2psearch][set page size to 16KiB when using sql.js-httpvfs]]
+** transmission notes
+- ~settings.json~ set ~"start-added-torrents": false,~ to start torrents paused

@@ -106,6 +106,34 @@
         newsticker-url-list '(("styx" "https://odysee.com/$/rss/@Styxhexenhammer666:2"))))
 
 #+END_SRC
+#+NAME: emacs-maybe-packages
+#+BEGIN_SRC emacs-lisp :tangle no
+;combobulate?: structural editing. alternative is regex
+(use-package combobulate
+  :init (setq combobulate-key-prefix "C-c e")
+  :hook (((python-ts-mode yaml-ts-mode) . combobulate-mode))
+  :vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
+  :load-path ("/gnu/git/combobulate"))
+
+;eglot-x?: rust-analyzer extensions for memory layout and structural-search-replace. alternative is to copy the functions
+(use-package eglot-x
+  :after eglot
+  :config (eglot-x-setup)
+  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
+
+;atomic-chrome?: counterpart to https://github.com/KarimAziev/chrome-emacs for using emacs to edit browser buffers. alternative is copy-paste
+(use-package atomic-chrome
+  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev "3387284d8789cf1d2a54425019a27f2e099b80d5")
+  :bind (:map jam/toggle ("b" . atomic-chrome-toggle-server))
+  :commands (atomic-chrome-start-server atomic-chrome-toggle-server)
+  :config
+  (setq-default atomic-chrome-buffer-open-style 'frame)
+  (setq-default atomic-chrome-auto-remove-file t)
+  (setq-default atomic-chrome-url-major-mode-alist
+                '(("github.com" . gfm-mode)
+                  ("gitlab.com" . gfm-mode)))
+  (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
+#+END_SRC
 
 - German air control ATC ran on emacs in the 90's
 - calc can plot with gnuplot

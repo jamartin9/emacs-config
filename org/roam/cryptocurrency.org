@@ -21,6 +21,7 @@
 - cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
   - sigma protocols are alternative (COMINT)
 * chia
+- simpleswap.io swaps xch on kucoin
 - Permuto will allow "eligible holders"" to deposit Microsoft stock (MSFT) and issue "dividend" and "appreciation" certificates on the chia blockchain; to be traded seperately. Allowed 10% of total stock and voting is done based on prices of the 'certificates'.
 - ~CHIA_ROOT~ env variable configuration
   - burn if not able to melt

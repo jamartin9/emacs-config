@@ -448,7 +448,9 @@
 
 (use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all
   :ensure nil ; built-in
-  :bind (:map jam/open ("g" . gnus))
+  :bind (:map jam/open ("g" . gnus)
+         :map jam/file ("u" . gnus-cloud-upload-all-data)
+                       ("a" . gnus-cloud-download-all-data))
   :commands (gnus gnus-setup-news-hook)
   :config
   (setq
@@ -456,10 +458,12 @@
    gnus-read-newsrc-file nil
    gnus-use-dribble-file nil;t
    gnus-always-read-dribble-file nil;t
+   gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg"))
+   gnus-cloud-method "nnimap:riseup" ; gnus-cloud-download-all-data gnus-cloud-upload-all-data
    gnus-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
-   gnus-cache-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") (file-name-as-directory "cache"))
-   gnus-dribble-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
-   gnus-startup-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus") "newsrc")
+   gnus-cache-directory (concat gnus-directory (file-name-as-directory "cache"))
+   gnus-dribble-directory gnus-directory
+   gnus-startup-file (concat gnus-directory "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
    gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ ; do not include http/https/www
                                    (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
@@ -748,29 +752,6 @@
                                                    (qwen2.5-coder:14b)
                                                    )
                                          :stream t)))
-
-;(use-package combobulate
-;  :init (setq combobulate-key-prefix "C-c e")
-;  :hook (((python-ts-mode yaml-ts-mode) . combobulate-mode))
-;  :vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
-;  :load-path ("/gnu/git/combobulate"))
-
-;(use-package eglot-x
-;  :after eglot
-;  :config (eglot-x-setup)
-;  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
-
-(use-package atomic-chrome
-  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev "3387284d8789cf1d2a54425019a27f2e099b80d5")
-  :bind (:map jam/toggle ("b" . atomic-chrome-toggle-server))
-  :commands (atomic-chrome-start-server atomic-chrome-toggle-server)
-  :config
-  (setq-default atomic-chrome-buffer-open-style 'frame)
-  (setq-default atomic-chrome-auto-remove-file t)
-  (setq-default atomic-chrome-url-major-mode-alist
-                '(("github.com" . gfm-mode)
-                  ("gitlab.com" . gfm-mode)))
-  (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
 
 ;;;###autoload
 (defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))

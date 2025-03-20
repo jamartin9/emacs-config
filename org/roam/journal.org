@@ -129,3 +129,13 @@ Steps taken:
 :END:
 **** DONE oil change for 2017 f150-raptor [2024-07-22 Sat 14:16]
 - STP filter
+* 2025
+** 2025-03 March
+*** 2025-03-14 Friday
+:PROPERTIES:
+:ID:       12ba1404-2f73-462a-934b-4fb8487c8971
+:END:
+**** DONE add ZFl8F7EF to top left [2025-03-14 Fri 22:26]
+- moved old dead Z42093C1 to bottom left shelf
+- the drive with errors that prompted this is the middle left ZFL7AVVP
+- all amazon drives seem to have issues... use newegg
