@@ -453,6 +453,8 @@
                        ("a" . gnus-cloud-download-all-data))
   :commands (gnus gnus-setup-news-hook)
   :config
+  ;(gnus-demon-add-handler 'gnus-demon-scan-news 2 t); show notifications on new mail
+  ;(add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications); set level of group for notification (nneething to watch dir)
   (setq
    gnus-save-newsrc-file nil
    gnus-read-newsrc-file nil
@@ -460,6 +462,7 @@
    gnus-always-read-dribble-file nil;t
    gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg"))
    gnus-cloud-method "nnimap:riseup" ; gnus-cloud-download-all-data gnus-cloud-upload-all-data
+   gnus-cloud-storage-method nil; disable epg for just ascii armored file
    gnus-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-cache-directory (concat gnus-directory (file-name-as-directory "cache"))
    gnus-dribble-directory gnus-directory
@@ -490,6 +493,10 @@
   (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
   (eval-after-load 'gnus-topic
     '(progn
+       (require 'epa)
+       (advice-add 'gnus-cloud-download-all-data :before 'epa-file-disable); prevent encryption when syncing as authinfo.gpg
+       (advice-add 'gnus-cloud-download-all-data :after 'epa-file-enable)
+       (setq gnus-cloud-sequence 1) ; set to 0 for init sync
        (require 'nnrss) ; setup rss feeds.
        (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lunduke" "https://api.substack.com/feed/podcast/462466.rss" "Lunduke articles") ("bram" "https://bramcohen.com/feed" "Bram blog") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters"))); https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666 https://cacm.acm.org/feed/ https://codeberg.org/gnuastro/gnuastro.rss
        (nnrss-save-server-data nil)
@@ -502,17 +509,19 @@
                                    (("gmail" visible nil nil)) (("riseup" visible nil nil)) (("misc" visible))
                                    (("Releases" visible)) (("Level1Techs" visible)) (("wingolog" visible)) (("Guix" visible)) (("Reddit" visible)) (("Tor" visible)))
              gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
-                                ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts")
+                                ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts" "nnimap+riseup:Emacs-Cloud")
                                 ("misc" "nnfolder+archive:sent.2024" "nnfolder+archive:sent.2025" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
                                 ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Guix" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
                                 ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
                                 ("Gnus")))
        (gnus-topic-set-parameters "gmail" '((display . 200))) (gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
-       (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")
+       (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")(gnus-subscribe-hierarchically "nnimap+riseup:Emacs-Cloud")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
        (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
        (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
-       (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix"))))
+       (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix")
+       ))
+  )
 
 (use-package which-key
   :ensure nil ; built-in
@@ -528,6 +537,7 @@
   :ensure nil ; built-in
   :defer t
   :config (setq epa-file-cache-passphrase-for-symmetric-encryption t
+                epa-armor t ; ascii armored output
                 epg-pinentry-mode 'loopback) ; minibuffer for gpg input instead of 'allow-loopback-pinentry' in ~/.gnupg/gpg-agent.conf
   (require 'xdg)
   (let ((gpg-dir (concat (file-name-as-directory (xdg-data-home)) "gnupg")))
@@ -723,35 +733,21 @@
 
 (use-package gptel ; optional curl
   ;:pin nongnu
-  :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file)
+  :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel)
   :config
-;  (gptel-make-tool ; feature-tool-use branch
-;   :function (lambda (path filename content)
-;               (let ((full-path (expand-file-name filename path)))
-;                 (with-temp-buffer
-;                   (insert content)
-;                   (write-file full-path))
-;                 (format "Created file %s in %s" filename path)))
-;   :name "create_file"
-;   :description "Create a new file with the specified content"
-;   :args (list '(:name "path"
-;	                   :type "string"
-;	                   :description "The directory where to create the file")
-;               '(:name "filename"
-;	                   :type "string"
-;	                   :description "The name of the file to create")
-;               '(:name "content"
-;	                   :type "string"
-;  	                   :description "The content to write to the file"))
-;   :category "filesystem")
-  (setq gptel-model 'deepseek-r1:14b ;qwen2.5-coder:14b;qwen2.5-vl:3b
+  (setq gptel-model 'exaone-deep:7.8b ;qwen2.5-coder:14b;qwen2.5-vl:3b
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
-                                         :models '((deepseek-r1:14b)
-                                                   (qwen2.5-vl:3B :capabilities (media));:mime-types ("image/jpeg" "image/png")
-                                                   (qwen2.5-coder:14b)
-                                                   )
+                                         :models '((exaone-deep:7.8b)
+                                                   (gemma-3:27B :capabilities (media));:mime-types ("image/jpeg" "image/png")
+                                                   (deepseek-r1:14b))
                                          :stream t)))
+
+;(use-package llm-tool-collection
+;  :after (gptel)
+;  :vc (:url "https://github.com/skissue/llm-tool-collection" :rev "304a06aacbe77ce0ee5f2a6c9063d4a3a4bfda22")
+;  :config ;(apply #'gptel-make-tool (llm-tool-collection-get "read_file"))
+;  (mapcar (apply-partially #'apply #'gptel-make-tool) (llm-tool-collection-get-category "filesystem")))
 
 ;;;###autoload
 (defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))

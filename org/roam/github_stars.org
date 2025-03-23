@@ -2160,6 +2160,8 @@
   - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
 ** OpenAccess-AI-Collective/axolotl
   - streamline the fine-tuning of various AI models
+** sammcj/ingest
+  - Parse files (e.g. code repos) and websites to clipboard or a file for ingestions by AI / LLMs
 ** sgl-project/sglang
   - SGLang is a fast serving framework for large language models and vision language models.
 ** stanfordnlp/dspy

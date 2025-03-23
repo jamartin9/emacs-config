@@ -31,3 +31,4 @@
 ** notes
 - BTree based DB's are more cache friendly as nodes can have more than 2 children (abseil uses 62 children) unlike Binary Trees
   - binary tree's (red-black like C++ STL) are better with larger sized nodes (moving pointers) than smaller (moving values)
+- vitess (mysql compat) is used by planetscale and switched from AST interpreter(like postrgres) to bytecodevm(sqlite)
