@@ -679,7 +679,7 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 - DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs. --colormatrix smpte170m --colorprim smpte170m --transfer smpte170m (for NTSC). --colormatrix bt470bg --colorprim bt470bg --transfer bt470bg (for PAL). _Matrix frame property in vs.
 
 - WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter), .ts
-
+  - ~-vf decimate=5,setpts=N/(24000/1001)/TB~
 - Audio options:
   - AAC for directors (usually 2.0 channel)
     - ~-m 5~ for fdk_aac

@@ -10,4 +10,5 @@
 * VPNs
 Virtual things for a virtual world
 ** openvpn
+- https://github.com/kmille/riseup-vpn-configurator/ for config gen
 ** [[id:ad0fee99-2e3b-491b-be6a-58c4ce127628][wireguard]]

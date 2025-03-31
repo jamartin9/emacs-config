@@ -17,7 +17,7 @@
   - [[https://usenet.farm/][free usenet provider]] to test
   - par (parity archive)
     - par2 (v3 is draft)
-    - paired with posts to help repairability of missing files
+    - paired with posts to help repairability of missing files or obfuscated file names
   - nzbget for downloading binaries
     - default user/pass nzbget/tegbzn6789 for web login on port 6789
     - set ParCheck to Force to enable all pars to download (so provider can retain)
@@ -27,19 +27,24 @@
 - Newsgroupdirect/Newsdemon have extra storage not shared with usenetexpress backbone of recent articles
   - IHAVE with usenetexpress to submit old articles https://www.usenetexpress.com/blog/post/20211015_ihave/
     - nyuu has IHAVE support (dont randomize name or use raw-article flag)
-      - use xompage/Nyuu-obfuscated for article obfuscation
+      - use Antidote2151/Nyuu-Obfuscation for article obfuscation
     - https://github.com/Tensai75/nzbrefresh reposter example
   - open peering with usenet express https://usenetexpress.com/peering/
 - usenet data stats https://top1000.anthologeek.net/#stats
-- independent backbones
+- backbones
   - usenet express
     - reseller Thundernews deal 2TB $10: https://members.thundernews.com/block_billinginfo.php?currency=USD&pricepointid=8202888
     - newsgroupdirect has terabyte Tuesday deals
   - usenet farm
-  - netnews (frugal/blocknews/usenetnow)
-- omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)
-  - eweka
-  - newshosting
+  - netnews
+    - frugal
+    - blocknews https://billing.blocknews.net/signup/blockfriday
+  - abavia
+    - hitnews
+  - vipernews
+  - omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)
+    - eweka
+    - newshosting
 - provider tree
   -  https://www.reddit.com/r/usenet/comments/lwupx3/updated_usenet_provider_map/
     - 03/31/2024 https://svgshare.com/s/14tF.svg

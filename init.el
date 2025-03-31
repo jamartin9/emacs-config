@@ -340,8 +340,9 @@
 
 (use-package password-store
   :ensure nil ; built-in
-  :bind (:map jam/open ("p" . jam/auth-display))
-  :commands (auth-source-search auth-info-password auth-source-pick-first-password auth-source-forget+ auth-source-forget auth-source-delete))
+  :bind (:map jam/open ("p" . jam/auth-display)
+         :map jam/toggle ("A" . auth-source-forget-all-cached))
+  :commands (auth-source-search auth-info-password auth-source-pick-first-password auth-source-forget+ auth-source-forget auth-source-delete auth-source-forget-all-cached))
 
 (use-package eglot
   :ensure nil ; built-in
@@ -453,16 +454,11 @@
                        ("a" . gnus-cloud-download-all-data))
   :commands (gnus gnus-setup-news-hook)
   :config
-  ;(gnus-demon-add-handler 'gnus-demon-scan-news 2 t); show notifications on new mail
-  ;(add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications); set level of group for notification (nneething to watch dir)
   (setq
-   gnus-save-newsrc-file nil
-   gnus-read-newsrc-file nil
-   gnus-use-dribble-file nil;t
-   gnus-always-read-dribble-file nil;t
-   gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg"))
-   gnus-cloud-method "nnimap:riseup" ; gnus-cloud-download-all-data gnus-cloud-upload-all-data
-   gnus-cloud-storage-method nil; disable epg for just ascii armored file
+   gnus-save-newsrc-file t
+   gnus-read-newsrc-file t
+   gnus-use-dribble-file nil
+   gnus-always-read-dribble-file nil
    gnus-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "gnus"))
    gnus-cache-directory (concat gnus-directory (file-name-as-directory "cache"))
    gnus-dribble-directory gnus-directory
@@ -470,7 +466,7 @@
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
    gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ ; do not include http/https/www
                                    (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
-                                   ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
+                                   (nntp "news.yhetil.org"); ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
                                    ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
@@ -489,16 +485,20 @@
    gnus-thread-ignore-subject t
    gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"  ;; Make Gnus NOT ignore [Gmail] mailboxes
    gnus-use-correct-string-widths nil)
-  (add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications)
+  (add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications); gnus-notifications-minimum-level level is 3 and notif min is 1
   (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
   (eval-after-load 'gnus-topic
     '(progn
+       (require 'gnus-async) ; async
        (require 'epa)
        (advice-add 'gnus-cloud-download-all-data :before 'epa-file-disable); prevent encryption when syncing as authinfo.gpg
        (advice-add 'gnus-cloud-download-all-data :after 'epa-file-enable)
-       (setq gnus-cloud-sequence 1) ; set to 0 for init sync
+       (setq gnus-cloud-sequence 1; set to 0 for init sync
+             gnus-cloud-method "nnimap:riseup" ; gnus-cloud-download-all-data gnus-cloud-upload-all-data
+             gnus-cloud-storage-method nil; disable epg for just ascii armored file
+             gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg")))
        (require 'nnrss) ; setup rss feeds.
-       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lunduke" "https://api.substack.com/feed/podcast/462466.rss" "Lunduke articles") ("bram" "https://bramcohen.com/feed" "Bram blog") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters"))); https://www.bitchute.com/feeds/rss/channel/Styxhexenhammer666 https://cacm.acm.org/feed/ https://codeberg.org/gnuastro/gnuastro.rss
+       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters"))); https://cacm.acm.org/feed/ https://codeberg.org/gnuastro/gnuastro.rss
        (nnrss-save-server-data nil)
        (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
              gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
@@ -511,15 +511,20 @@
              gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
                                 ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts" "nnimap+riseup:Emacs-Cloud")
                                 ("misc" "nnfolder+archive:sent.2024" "nnfolder+archive:sent.2025" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
-                                ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Guix" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+                                ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+                                ("Guix" "nntp+news.yhetil.org:yhetil.gnu.guix.patches" "nntp+news.yhetil.org:yhetil.gnu.guix.devel" "nntp+news.yhetil.org:yhetil.emacs.devel" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog")
                                 ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
                                 ("Gnus")))
-       (gnus-topic-set-parameters "gmail" '((display . 200))) (gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
+       (gnus-topic-set-parameters "gmail" '((display . 200)) )(gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
        (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")(gnus-subscribe-hierarchically "nnimap+riseup:Emacs-Cloud")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
-       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog");"nnatom+odysee.com/$/rss/@Styxhexenhammer666:2:Styxhexenhammer666 on Odysee"
+       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
        (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
-       (gnus-subscribe-hierarchically "nnrss:bram") (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lunduke") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix")
+       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix")
+       (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.patches") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.devel") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel")
+       ;(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q)
+       ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files
+       ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
        ))
   )
 
@@ -739,7 +744,7 @@
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
                                          :models '((exaone-deep:7.8b)
-                                                   (gemma-3:27B :capabilities (media));:mime-types ("image/jpeg" "image/png")
+                                                   (gemma-3:27B :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
                                                    (deepseek-r1:14b))
                                          :stream t)))
 

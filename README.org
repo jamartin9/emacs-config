@@ -22,7 +22,7 @@ minions-mode: keeps the modeline visually brief with retained information. alter
 
 osm: Map tile viewer. alternative is web browser viewing
 
-gptel: interface with llms. alternative is llm package or cli
+gptel/llm-tool-collection: interface with llms. alternative is llm package or cli
 
 dape/geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter: language specific modes with more than regex.
 

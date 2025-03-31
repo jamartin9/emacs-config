@@ -155,6 +155,7 @@
 #+END_SRC
 
 *** emacs config notes
+- installs to ~${XDG_CONFIG_HOME}/emacs~
 - early-init will use guix-home packages if emacs package directory exists inside it otherwise uses use-package to download
 - Pure elisp instead of makefiles and shell scripts
   - sesquicolon 'shebang'
