@@ -25,17 +25,23 @@
   - diablo for running newservers
 - Add all servers (EU and US) for all providers
 - Newsgroupdirect/Newsdemon have extra storage not shared with usenetexpress backbone of recent articles
+  - https://www.reddit.com/r/usenet/comments/14sckf3/comment/jqwmfhm/ comments on post selection
   - IHAVE with usenetexpress to submit old articles https://www.usenetexpress.com/blog/post/20211015_ihave/
     - nyuu has IHAVE support (dont randomize name or use raw-article flag)
       - use Antidote2151/Nyuu-Obfuscation for article obfuscation
     - https://github.com/Tensai75/nzbrefresh reposter example
   - open peering with usenet express https://usenetexpress.com/peering/
 - usenet data stats https://top1000.anthologeek.net/#stats
+  - https://www.uzantoreto.com/
+  - https://www.newsdemon.com/usenet-newsgroup-feed-size
 - backbones
   - usenet express
     - reseller Thundernews deal 2TB $10: https://members.thundernews.com/block_billinginfo.php?currency=USD&pricepointid=8202888
     - newsgroupdirect has terabyte Tuesday deals
+      - owned by same person as newsdemon
+    - backfills from abavia https://greycoder.com/a-list-of-independent-usenet-providers/
   - usenet farm
+    - backfill from abavia/omnicron
   - netnews
     - frugal
     - blocknews https://billing.blocknews.net/signup/blockfriday
@@ -44,6 +50,7 @@
   - vipernews
   - omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)
     - eweka
+      - gave user up based on x-trace headers that linked to account
     - newshosting
 - provider tree
   -  https://www.reddit.com/r/usenet/comments/lwupx3/updated_usenet_provider_map/

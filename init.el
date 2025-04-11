@@ -348,13 +348,15 @@
   :ensure nil ; built-in
   :bind (:map jam/code ("a" . eglot-code-actions))
   :hook (((rust-ts-mode rust-mode) . eglot-ensure))
+  :hook (((scala-ts-mode scala-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
                                                           :cargo (:cfgs (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
-                                                                         :tokio_unstable "")))))))
+                                                                                    :tokio_unstable ""))))))
+  (add-to-list 'eglot-server-programs `((scala-mode scala-ts-mode) . ,(alist-get 'scala-mode eglot-server-programs))))
 
 (use-package hideshow
   :ensure nil ; built-in
@@ -440,7 +442,7 @@
 (use-package completion-preview
   :ensure nil ; built-in
   :hook ((after-init . global-completion-preview-mode))
-  :bind (:map completion-preview-active-mode-map
+  :bind (:map completion-preview-active-mode-map ; M-i during preview for *Completions* buffer
               ("M-n" . completion-preview-next-candidate)
               ("M-p" . completion-preview-prev-candidate))
   :config
@@ -464,9 +466,9 @@
    gnus-dribble-directory gnus-directory
    gnus-startup-file (concat gnus-directory "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
-   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ"); youtube rss id comes from inspect source on channel page for external-id/externalId ex: https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ ; do not include http/https/www
+   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ");new l1:  UCw_X9HgNg2J9p7wRM0FD4bA ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
                                    (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
-                                   (nntp "news.yhetil.org"); ;(nntp "news.newsgroupdirect.com"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
+                                   (nntp "news.yhetil.org"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
                                    ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
@@ -498,7 +500,7 @@
              gnus-cloud-storage-method nil; disable epg for just ascii armored file
              gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg")))
        (require 'nnrss) ; setup rss feeds.
-       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters"))); https://cacm.acm.org/feed/ https://codeberg.org/gnuastro/gnuastro.rss
+       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters"))); https://cacm.acm.org/feed/
        (nnrss-save-server-data nil)
        (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
              gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
@@ -572,6 +574,7 @@
         (add-to-list 'treesit-extra-load-path "/usr/lib")
         (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
         (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+        (push '(scala-mode . scala-ts-mode) major-mode-remap-alist)
         (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 (use-package yaml-ts-mode
@@ -735,6 +738,20 @@
   :bind (:map jam/code ("d" . dape))
   :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
   :commands (dape))
+
+(use-package scala-mode
+  :mode ("\\.scala\\'" . scala-mode)
+  :interpreter ("scala" . scala-mode)
+  :commands (scala-mode))
+
+(use-package scala-ts-mode
+  :mode ("\\.scala\\'" . scala-ts-mode)
+  :interpreter ("scala" . scala-ts-mode)
+  :commands (scala-ts-mode))
+
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config (setq sbt:program-options '("-Dsbt.supershell=false")))
 
 (use-package gptel ; optional curl
   ;:pin nongnu

@@ -43,6 +43,15 @@ qemu-system-x86_64 -enable-kvm \
 #./run-windows.sh -boot d -drive file=w10prox64.iso,media=cdrom -drive file=virtio-win-0.1.240.iso,media=cdrom # https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md for kvm virtio drivers
 # -device virtio-sound-pci,audiodev=my_audiodev -audiodev alsa,id=my_audiodev
 
+
+#echo "Increase vm disk with: qemu-img resize $1 +30G"
+#echo "After boot growpart and resize2fs"
+#echo "Update vm with: mkdir ~/.config/guix && ln -s /etc/channels.scm ~/.config/guix/channels.scm"
+#echo "Then guix pull && guix system reconfigure"
+#echo "Starting vm with port 8088 and 8080 forwarded. Spice is port 5930"
+#echo "Mount downloads with: sudo mount -t 9p -o trans-virtio downloads /gnu/git/downloads -oversion=9p2000.L,posixacl,msize10485600"
+qemu-system-x86_64 -smp 4 -cpu host -nic user,model=virtio-net-pci,hostfwd=tcp::8088-:6789,hostfwd=tcp::8080-:8080 -enable-kvm -m 8192 -device virtio-blk,drive=myhd -drive if=none,file=$1,id=myhd -virtfs local,path=/gnu/git/downloads,security_model=none,mount_tag=downloads
+
 #+END_SRC
 - firecracker
   - 5.10 lts kernel

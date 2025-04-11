@@ -58,6 +58,12 @@ The tower of babel is your type system as a macro
 - Loom for user mode green threads
 - panama for native library linkage
 *** [[id:2b605045-23e1-4995-9ed4-843699a0481f][java]]
+*** scala
+  - rcardin/yaes for 'direct style' scala based on phatom types and capabilities
+  - for comprehensions for monad, io effect systems or futures
+  - coursier for cli management
+    - native-image need -march=compatability
+    - start metals ~coursier bootstrap --java-opt -XX:+UseStringDeduplication org.scalameta:metals_2.13:1.5.2 -o metals -f~
 ** javascript
 *** typescript
 - compiles to javascript

@@ -29,7 +29,7 @@
      ;; basic
      ;;"shepherd" ;;"glibc-utf8-locales"
 
-     ;;"ungoogled-chromium-nvda"
+     ;;"ungoogled-chromium-nvda" "ublock-origin-chromium"
      ;;"firefox-nvda"; --with-graft=mesa=nvda
      ;;"torbrowser"
 
@@ -89,7 +89,11 @@
      ;;"patch"
      ;;"gash"
      ;;"gash-utils"
+     ;;"alacritty"
+     ;;"xterm"
      "screen"
+     "ripgrep"
+     "fd"
 
      ;; apps
      ;;"wine64"; "wine"
@@ -106,9 +110,9 @@
      ;;"searx"
      ;;"gnuradio"
      ;;"obs"
-     ;;"virt-viewer"
+     ;;"virt-viewer" "qemu"; remote-viewer for spice
      ;;"dino" ; xmpp client
-     ;;"flatpak"
+     ;;"flatpak" ;"xdg-utils" "xdg-dbus-proxy"; "xdg-desktop-portal-gtk" ;"shared-mime-info"; "xorg-server-wayland" ;(list glib "bin")
      ;;"waypipe"
 
      ;; docs
@@ -129,6 +133,7 @@
      ;;"gnuplot"
      ;;"makemkv"
      ;;"yt-dlp"
+     ;;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
 
      ;; net
      ;;"curl"
@@ -300,10 +305,10 @@ GUIX_LOCPATH=$XDG_DATA_HOME/guix/var/guix/profiles/per-user/root/guix-profile/li
 NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 #+END_SRC
 
-* TODO [#C] [PATCH 0/6] Rootless guix-daemon :patch:
+* TODO [#C] [PATCH 0/6] Rootless guix-daemon on Guix System :patch:
   [2025-01-24 Fri] Submitted
   :PROPERTIES:
-  :DEBBUGS_ID: 75810
+  :DEBBUGS_ID: 77288
   :CREATOR: Ludovic Courtès <ludo@gnu.org>
   :END:
   [[elisp:(debbugs-gnu-select-report)][Messages]]
