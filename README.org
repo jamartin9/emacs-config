@@ -12,8 +12,6 @@ magit/forge/code-review: git/forge manipulation. alternative is built-in vc that
 
 debbugs: track emacs/guix bugs. alternative is bookmarking websites/mailing lists
 
-transmission: manage torrent client. alternative is cli
-
 org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
 
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
@@ -24,8 +22,7 @@ osm: Map tile viewer. alternative is web browser viewing
 
 gptel/llm-tool-collection: interface with llms. alternative is llm package or cli
 
-dape/geiser-guile/pyvenv/(rust,yaml,python,scala)-tree-sitter: language specific modes with more than regex.
-
+dape/geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter: language specific modes with more than regex.
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.

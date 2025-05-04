@@ -33,7 +33,7 @@
      ;;"firefox-nvda"; --with-graft=mesa=nvda
      ;;"torbrowser"
 
-     ;;"transmission"
+     ;;"deluge" ;;"transmission"
      ;;"nzbget"
      ;;"steam-nvidia" ;; steam
      ;;"zfs"
@@ -203,51 +203,8 @@
 - packages are standard SRFI-9 guile records (set-fields, etc...)
 - nonguix substitutes at ~substitutes.nonguix.org~ key is ~/signing-key.pub~.
 - ~guix time-machine --commit=a4eae0c3adce8e4c4ac153a4959d18b9897a67e1 -- package -i old~
-- manual setup
-#+NAME: manual-guix
-#+BEGIN_SRC shell tangle: no
-#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
-# get tarball for system=x86_64-linux,aarch64,armhf,i686
-wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
-# check sig
-wget https://sv.gnu.org/people/viewgpg.php?user_id=15145 -qO - | gpg --import
-wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz.sig
-gpg --verify guix-binary-1.0.1.x86_64-linux.tar.xz.sig
-# with root
-sudo -i
-# untar into dirs
-tar --warning=no-timestamp -xf /path/to/guix-binary-1.0.1.x86_64-linux.tar.xz
-mv var/guix /var/ && mv gnu /
-# add guix profile
-mkdir -p ~root/.config/guix
-ln -sf /var/guix/profiles/per-user/root/current-guix ~root/.config/guix/current
-# setup build daemon for multiple users
-cp ~root/.config/guix/current/lib/systemd/system/guix-daemon.service /etc/systemd/system/
-# add build users
-groupadd --system guixbuild
-for i in `seq -w 1 10`;
-do
-    useradd -g guixbuild -G guixbuild           \
-            -d /var/empty -s `which nologin`    \
-            -c "Guix build user $i" --system    \
-            guixbuilder$i;
-done
-# link guix and info for all users
-mkdir -p /usr/local/bin
-cd /usr/local/bin
-ln -s /var/guix/profiles/per-user/root/current-guix/bin/guix
-mkdir -p /usr/local/share/info
-cd /usr/local/share/info
-for i in /var/guix/profiles/per-user/root/current-guix/share/info/* ;
-do ln -s $i ; done
-# source guix profile and add sub servers
-source ~/root/.config/guix/current/etc/profile
-guix archive --authorize < ~root/.config/guix/current/share/guix/ci.guix.gnu.org.pub
-guix archive --authorize < ~root/.config/guix/current/share/guix/bordeaux.guix.gnu.org.pub
-# install locale
-guix package -i glibc-utf8-locales
-#+END_SRC
-- manual install
+- manual setup script ~GUIX_BINARY_FILE_NAME=guix-binary.tar.xz ./guix-install.sh~ from https://guix.gnu.org/install.sh
+- manual install image
   - create image with ~guix system image -t iso9660 ./jam/system/installer.scm~
     - ~dd if=file.iso of=/dev/sdX status=progress~
   - create wifi.conf with
@@ -304,17 +261,3 @@ GUIX_CONFIGURATION_DIRECTORY=$XDG_CONFIG_HOME/guix/etc
 GUIX_LOCPATH=$XDG_DATA_HOME/guix/var/guix/profiles/per-user/root/guix-profile/lib/locale
 NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 #+END_SRC
-
-* TODO [#C] [PATCH 0/6] Rootless guix-daemon on Guix System :patch:
-  [2025-01-24 Fri] Submitted
-  :PROPERTIES:
-  :DEBBUGS_ID: 77288
-  :CREATOR: Ludovic Courtès <ludo@gnu.org>
-  :END:
-  [[elisp:(debbugs-gnu-select-report)][Messages]]
-  [2025-03-13 Thu] Last modified
-* COMMENT Local Variables
-# Local Variables:
-# mode: org
-# eval: (debbugs-org-mode 1)
-# End:

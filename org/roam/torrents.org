@@ -29,3 +29,14 @@
     - [[https://gitlab.com/boredcaveman/p2psearch][set page size to 16KiB when using sql.js-httpvfs]]
 ** transmission notes
 - ~settings.json~ set ~"start-added-torrents": false,~ to start torrents paused
+** deluge notes
+- supports BEP55 for hole punching with utp(w/udp)
+- install config plugin https://github.com/ratanakvlun/deluge-ltconfig/releases
+  - set performance default profile
+  - set ~"validate_https_trackers": false~
+  - set ~"use_write_cache": false~ for ssd
+  - peer_turnover to 0
+  - max concurrent http announces to 75
+  - coalesce reads/writes
+  - checking mem usage to 2048
+  - announce to all trackers

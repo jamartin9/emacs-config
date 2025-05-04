@@ -959,9 +959,9 @@ youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cook
 - open matte can show more of the scene by changing the AR (bad if squashed)
 ** tv
 - discovery atlas
-  - Italy, Australia, Brazil, China are S1 longer
-  - France, India are longer (hard to find german only. Polish has longer india but not france)
-  - Russia, Japan, South Africa, Mexico, Egypt are shorter S2
+  - Italy, Australia, Brazil, China are S1 longer english
+  - Mexico, France, India are longer (german only france/india/german(hdtv too). Polish india.)
+  - Russia, Japan, South Africa, Egypt are shorter S2
 - Secret life of zoo
 S01E01-S01E06 is same
 Secret life of zoo animal planet vs amazon

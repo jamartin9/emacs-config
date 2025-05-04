@@ -1,65 +1,64 @@
 ;;; init.el -*- lexical-binding: t; -*-
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
 
-(bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
-           ("j" . xref-find-definitions)
-           ("c" . compile))
-(bind-keys :prefix-map jam/toggle :prefix "C-c c t"
-           ("v" . visible-mode)
-           ("w" . visual-line-mode)
-           ("x" . xterm-mouse-mode)
-           ("c" . global-display-fill-column-indicator-mode)
-           ("t" . toggle-frame-maximized)
-           ("f" . toggle-frame-fullscreen)
-           ("F" . flymake-mode)
-           ("r" . recentf-mode)
-           ("m" . follow-mode)
-           ("M" . scroll-lock-mode)
-           ("e" . strokes-mode)
-           ("g" . auto-revert-mode))
-(bind-keys :prefix-map jam/open :prefix "C-c c o"
-           ("s" . jam/sudo-edit)
-           ("S" . speedbar-frame-mode)
-           ("b" . browse-url-of-file)
-           ("f" . make-frame)
-           ("D" . jam/draw)
-           ("z" . jam/mpv-play)
-           ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
-           ("U" . eww-browse))
-(bind-keys :prefix-map jam/insert :prefix "C-c c i"
-           ("y" . cua-paste)
-           ("u" . insert-char)
-           ("s" . yas-insert-snippet)
-           ("e" . emojify-insert-emoji)
-           ("b" . bookmark-set)
-           ("R" . re-builder)
-           ("r" . string-insert-rectangle))
-(bind-keys :prefix-map jam/search :prefix "C-c c s"
-           ("l" . shr-copy-url)
-           ("L" . ffap-menu)
-           ("i" . imenu)
-           ("a" . apropos)
-           ("c" . keep-lines)
-           ("m" . bookmark-jump))
-(bind-keys :prefix-map jam/file :prefix "C-c c f"
-           ("d" . dired)
-           ("f" . recentf-open)
-           ("i" . image-crop)
-           ("s" . jam/screenshot))
-(bind-keys :prefix-map jam/quit :prefix "C-c c q"
-           ("f" . delete-frame)
-           ("d" . server-start) ;daemon
-           ("D" . server-force-delete)
-           ("q" . kill-emacs)
-           ("r" . restart-emacs)
-           ("Q" . save-buffers-kill-terminal)
-           ("K" . save-buffers-kill-emacs))
-(bind-keys :prefix-map jam/notes :prefix "C-c c n")
-
 (use-package emacs ; built-in ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
   :hook (((prog-mode text-mode) . (lambda () (setq show-trailing-whitespace t)))
          (tty-setup . xterm-mouse-mode)
          (after-init . (lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
+                         (bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
+                                    ("j" . xref-find-definitions)
+                                    ("c" . compile))
+                         (bind-keys :prefix-map jam/toggle :prefix "C-c c t"
+                                    ("v" . visible-mode)
+                                    ("w" . visual-line-mode)
+                                    ("x" . xterm-mouse-mode)
+                                    ("c" . global-display-fill-column-indicator-mode)
+                                    ("t" . toggle-frame-maximized)
+                                    ("f" . toggle-frame-fullscreen)
+                                    ("F" . flymake-mode)
+                                    ("r" . recentf-mode)
+                                    ("m" . follow-mode)
+                                    ("M" . scroll-lock-mode)
+                                    ("e" . strokes-mode)
+                                    ("g" . auto-revert-mode))
+                         (bind-keys :prefix-map jam/open :prefix "C-c c o"
+                                    ("s" . jam/sudo-edit)
+                                    ("S" . speedbar-frame-mode)
+                                    ("b" . browse-url-of-file)
+                                    ("f" . make-frame)
+                                    ("D" . jam/draw)
+                                    ("z" . jam/mpv-play)
+                                    ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
+                                    ("U" . eww-browse))
+                         (bind-keys :prefix-map jam/insert :prefix "C-c c i"
+                                    ("y" . cua-paste)
+                                    ("u" . insert-char)
+                                    ("s" . yas-insert-snippet)
+                                    ("e" . emojify-insert-emoji)
+                                    ("b" . bookmark-set)
+                                    ("R" . re-builder)
+                                    ("r" . string-insert-rectangle))
+                         (bind-keys :prefix-map jam/search :prefix "C-c c s"
+                                    ("l" . shr-copy-url)
+                                    ("L" . ffap-menu)
+                                    ("i" . imenu)
+                                    ("a" . apropos)
+                                    ("c" . keep-lines)
+                                    ("m" . bookmark-jump))
+                         (bind-keys :prefix-map jam/file :prefix "C-c c f"
+                                    ("d" . dired)
+                                    ("f" . recentf-open)
+                                    ("i" . image-crop)
+                                    ("s" . jam/screenshot))
+                         (bind-keys :prefix-map jam/quit :prefix "C-c c q"
+                                    ("f" . delete-frame)
+                                    ("d" . server-start) ;daemon
+                                    ("D" . server-force-delete)
+                                    ("q" . kill-emacs)
+                                    ("r" . restart-emacs)
+                                    ("Q" . save-buffers-kill-terminal)
+                                    ("K" . save-buffers-kill-emacs))
+                         (bind-keys :prefix-map jam/notes :prefix "C-c c n")
                          (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
                                default-file-name-handler-alist nil
                                modus-themes-mode-line '(accented borderless); theme
@@ -277,7 +276,7 @@
 (use-package calc
   :ensure nil ; built-in
   :commands (calc calc-algebraic-entry) ; a S to solve for var ex. x=y+1
-  :config (with-temp-buffer (calc)); calc-graph-fast ex. [0..10] then x+1 on stack
+  :config (with-temp-buffer (calc)); calc-graph-fast (gf) ex. [0..10] then x+1 on stack
   :bind (:map jam/open ("a" . calc-algebraic-entry)))
 
 (use-package proced
@@ -285,15 +284,15 @@
   :commands proced
   :bind (:map jam/open ("P" . proced)) ; T to toggle tree, k/x to kill, f filter
   :config
-  ;(defun my-proced-node-name (attrs)
-  ;  (cons 'node (or (when (string-prefix-p "java" (cdr (assq 'comm attrs)))
-  ;                    (let ((args (cdr (assq 'args attrs))))
-  ;                      args))
-  ;                  "")))
-  ;(add-to-list 'proced-custom-attributes 'my-proced-node-name)
-  ;(add-to-list 'proced-grammar-alist '(node "My Node" "%s" left proced-string-lessp nil (node pid) (nil t nil)))
-  ;(add-to-list 'proced-format-alist '(java user pid tree pcpu pmem start time node (args comm)));F then type java
-  ;(add-to-list 'proced-filter-alist '(beam (comm . "^beam")));f then type beam
+  (defun my-proced-node-name (attrs)
+    (cons 'node (or (when (string-prefix-p "java" (cdr (assq 'comm attrs)))
+                      (let ((args (cdr (assq 'args attrs))))
+                        args))
+                    "")))
+  (add-to-list 'proced-custom-attributes 'my-proced-node-name)
+  (add-to-list 'proced-grammar-alist '(node "JVM" "%s" left proced-string-lessp nil (node pid) (nil t nil)))
+  (add-to-list 'proced-format-alist '(java user pid tree pcpu pmem start time node (args comm)));F then type java
+  (add-to-list 'proced-filter-alist '(java (comm . "^java")));f then type java
   (setq-default proced-enable-color-flag t
                 proced-filter 'all
                 proced-show-remote-processes t
@@ -348,15 +347,13 @@
   :ensure nil ; built-in
   :bind (:map jam/code ("a" . eglot-code-actions))
   :hook (((rust-ts-mode rust-mode) . eglot-ensure))
-  :hook (((scala-ts-mode scala-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
                                                           :cargo (:cfgs (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
-                                                                                    :tokio_unstable ""))))))
-  (add-to-list 'eglot-server-programs `((scala-mode scala-ts-mode) . ,(alist-get 'scala-mode eglot-server-programs))))
+                                                                                    :tokio_unstable "")))))))
 
 (use-package hideshow
   :ensure nil ; built-in
@@ -466,7 +463,7 @@
    gnus-dribble-directory gnus-directory
    gnus-startup-file (concat gnus-directory "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
-   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ");new l1:  UCw_X9HgNg2J9p7wRM0FD4bA ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
+   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
                                    (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
                                    (nntp "news.yhetil.org"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
@@ -560,8 +557,7 @@
   :config (setq flyspell-issue-welcome-flag nil
                 flyspell-issue-message-flag nil
                 ispell-program-name "aspell" ; runs as own process
-                ispell-extra-args '("--sug-mode=ultra"
-                                    "--run-together")
+                ispell-extra-args '("--sug-mode=ultra" "--run-together")
                 ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
                 ispell-aspell-dict-dir (ispell-get-aspell-config-value "dict-dir")
                 ispell-aspell-data-dir (ispell-get-aspell-config-value "data-dir")))
@@ -574,7 +570,6 @@
         (add-to-list 'treesit-extra-load-path "/usr/lib")
         (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
         (push '(python-mode . python-ts-mode) major-mode-remap-alist)
-        (push '(scala-mode . scala-ts-mode) major-mode-remap-alist)
         (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 (use-package yaml-ts-mode
@@ -668,9 +663,6 @@
   :init (setq forge-database-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") (file-name-as-directory "forge") "forge-database.sqlite"))
   (setq forge-add-default-bindings t))
 
-(use-package transmission ; C-u universal arg for directory prompt ; transmission
-  :commands (transmission transmission-add))
-
 (use-package org-roam ; sqlite-available-p ;; C-u C-c . for agenda with timestamp or org-time-stamp-inactive for no agenda version
   :commands (org-roam-node-find org-roam-node-insert org-roam-dailies-goto-date org-roam-dailies-goto-today org-roam-graph org-roam-db-autosync-enable)
   :bind (:map jam/file ("r" . org-roam-node-find)
@@ -729,7 +721,7 @@
 (use-package eat
   ;:pin nongnu
   :bind (:map jam/open ("t" . eat)
-         :map eat-mode-map ("C-S-v" . eat-yank))
+         :map eat-mode-map ("C-S-v" . eat-yank)); eat-yank-from-kill-ring
   :hook ((eshell-load . eat-eshell-mode)
          (eshell-load . eat-eshell-visual-command-mode))
   :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
@@ -739,30 +731,15 @@
   :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
   :commands (dape))
 
-(use-package scala-mode
-  :mode ("\\.scala\\'" . scala-mode)
-  :interpreter ("scala" . scala-mode)
-  :commands (scala-mode))
-
-(use-package scala-ts-mode
-  :mode ("\\.scala\\'" . scala-ts-mode)
-  :interpreter ("scala" . scala-ts-mode)
-  :commands (scala-ts-mode))
-
-(use-package sbt-mode
-  :commands sbt-start sbt-command
-  :config (setq sbt:program-options '("-Dsbt.supershell=false")))
-
 (use-package gptel ; optional curl
   ;:pin nongnu
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel)
   :config
-  (setq gptel-model 'exaone-deep:7.8b ;qwen2.5-coder:14b;qwen2.5-vl:3b
+  (setq gptel-model 'qwen3:8b ;gemma-3:4b
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
-                                         :models '((exaone-deep:7.8b)
-                                                   (gemma-3:27B :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
-                                                   (deepseek-r1:14b))
+                                         :models '((gemma-3:4B :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
+                                                   (qwen3:8b))
                                          :stream t)))
 
 ;(use-package llm-tool-collection

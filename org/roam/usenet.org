@@ -52,6 +52,8 @@
     - eweka
       - gave user up based on x-trace headers that linked to account
     - newshosting
+    - tweaknews
 - provider tree
   -  https://www.reddit.com/r/usenet/comments/lwupx3/updated_usenet_provider_map/
     - 03/31/2024 https://svgshare.com/s/14tF.svg
+- hdb example of obfuscated post header vs non on page 97 of forums/viewtopic?topicid=65357&page=p1486912#1486912
