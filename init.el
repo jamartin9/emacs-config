@@ -1,64 +1,65 @@
 ;;; init.el -*- lexical-binding: t; -*-
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
 
+(bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
+           ("j" . xref-find-definitions)
+           ("c" . compile))
+(bind-keys :prefix-map jam/toggle :prefix "C-c c t"
+           ("v" . visible-mode)
+           ("w" . visual-line-mode)
+           ("x" . xterm-mouse-mode)
+           ("c" . global-display-fill-column-indicator-mode)
+           ("t" . toggle-frame-maximized)
+           ("f" . toggle-frame-fullscreen)
+           ("F" . flymake-mode)
+           ("r" . recentf-mode)
+           ("m" . follow-mode)
+           ("M" . scroll-lock-mode)
+           ("e" . strokes-mode)
+           ("g" . auto-revert-mode))
+(bind-keys :prefix-map jam/open :prefix "C-c c o"
+           ("s" . jam/sudo-edit)
+           ("S" . speedbar-frame-mode)
+           ("b" . browse-url-of-file)
+           ("f" . make-frame)
+           ("D" . jam/draw)
+           ("z" . jam/mpv-play)
+           ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
+           ("U" . eww-browse))
+(bind-keys :prefix-map jam/insert :prefix "C-c c i"
+           ("y" . cua-paste)
+           ("u" . insert-char)
+           ("s" . yas-insert-snippet)
+           ("e" . emojify-insert-emoji)
+           ("b" . bookmark-set)
+           ("R" . re-builder)
+           ("r" . string-insert-rectangle))
+(bind-keys :prefix-map jam/search :prefix "C-c c s"
+           ("l" . shr-copy-url)
+           ("L" . ffap-menu)
+           ("i" . imenu)
+           ("a" . apropos)
+           ("c" . keep-lines)
+           ("m" . bookmark-jump))
+(bind-keys :prefix-map jam/file :prefix "C-c c f"
+           ("d" . dired)
+           ("f" . recentf-open)
+           ("i" . image-crop)
+           ("s" . jam/screenshot))
+(bind-keys :prefix-map jam/quit :prefix "C-c c q"
+           ("f" . delete-frame)
+           ("d" . server-start) ;daemon
+           ("D" . server-force-delete)
+           ("q" . kill-emacs)
+           ("r" . restart-emacs)
+           ("Q" . save-buffers-kill-terminal)
+           ("K" . save-buffers-kill-emacs))
+(bind-keys :prefix-map jam/notes :prefix "C-c c n")
+
 (use-package emacs ; built-in ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
   :hook (((prog-mode text-mode) . (lambda () (setq show-trailing-whitespace t)))
          (tty-setup . xterm-mouse-mode)
          (after-init . (lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
-                         (bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
-                                    ("j" . xref-find-definitions)
-                                    ("c" . compile))
-                         (bind-keys :prefix-map jam/toggle :prefix "C-c c t"
-                                    ("v" . visible-mode)
-                                    ("w" . visual-line-mode)
-                                    ("x" . xterm-mouse-mode)
-                                    ("c" . global-display-fill-column-indicator-mode)
-                                    ("t" . toggle-frame-maximized)
-                                    ("f" . toggle-frame-fullscreen)
-                                    ("F" . flymake-mode)
-                                    ("r" . recentf-mode)
-                                    ("m" . follow-mode)
-                                    ("M" . scroll-lock-mode)
-                                    ("e" . strokes-mode)
-                                    ("g" . auto-revert-mode))
-                         (bind-keys :prefix-map jam/open :prefix "C-c c o"
-                                    ("s" . jam/sudo-edit)
-                                    ("S" . speedbar-frame-mode)
-                                    ("b" . browse-url-of-file)
-                                    ("f" . make-frame)
-                                    ("D" . jam/draw)
-                                    ("z" . jam/mpv-play)
-                                    ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
-                                    ("U" . eww-browse))
-                         (bind-keys :prefix-map jam/insert :prefix "C-c c i"
-                                    ("y" . cua-paste)
-                                    ("u" . insert-char)
-                                    ("s" . yas-insert-snippet)
-                                    ("e" . emojify-insert-emoji)
-                                    ("b" . bookmark-set)
-                                    ("R" . re-builder)
-                                    ("r" . string-insert-rectangle))
-                         (bind-keys :prefix-map jam/search :prefix "C-c c s"
-                                    ("l" . shr-copy-url)
-                                    ("L" . ffap-menu)
-                                    ("i" . imenu)
-                                    ("a" . apropos)
-                                    ("c" . keep-lines)
-                                    ("m" . bookmark-jump))
-                         (bind-keys :prefix-map jam/file :prefix "C-c c f"
-                                    ("d" . dired)
-                                    ("f" . recentf-open)
-                                    ("i" . image-crop)
-                                    ("s" . jam/screenshot))
-                         (bind-keys :prefix-map jam/quit :prefix "C-c c q"
-                                    ("f" . delete-frame)
-                                    ("d" . server-start) ;daemon
-                                    ("D" . server-force-delete)
-                                    ("q" . kill-emacs)
-                                    ("r" . restart-emacs)
-                                    ("Q" . save-buffers-kill-terminal)
-                                    ("K" . save-buffers-kill-emacs))
-                         (bind-keys :prefix-map jam/notes :prefix "C-c c n")
                          (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
                                default-file-name-handler-alist nil
                                modus-themes-mode-line '(accented borderless); theme
