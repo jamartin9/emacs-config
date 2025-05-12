@@ -10,8 +10,6 @@ eat: graphical terminal emulation. alternative is built-in multi-term w/o visual
 
 magit/forge/code-review: git/forge manipulation. alternative is built-in vc that lacks complex workflows like interactive rebase, forge pull requests or code review comments
 
-debbugs: track emacs/guix bugs. alternative is bookmarking websites/mailing lists
-
 org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
 
 undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone

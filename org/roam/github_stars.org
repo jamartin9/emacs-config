@@ -382,6 +382,8 @@
   - Master programming by recreating your favorite technologies from scratch.
 ** colesbury/nogil
   - Multithreaded Python without the GIL
+** comaps/comaps
+  - The main code repository of CoMaps, a community-led fork of Organic Maps. Reinforced with commitment to transparency, privacy and being not-for-profit. https://www.comaps.app/
 ** comit-network/xmr-btc-swap
   - Bitcoin–Monero Cross-chain Atomic Swap
 ** commaai/openpilot
@@ -486,6 +488,8 @@
   - Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements.
 ** doomemacs/doomemacs
   - An Emacs framework for the stubborn martian hacker
+** dottxt-ai/outlines
+  - Structured Text Generation output to json, grammar, choice etc
 ** dreamworksanimation/openmoonray
   - MCRT renderer
 ** DSecurity/efiSeek
@@ -1058,6 +1062,8 @@
   - Kubescape is an open-source Kubernetes security platform for your IDE, CI/CD pipelines, and clusters. It includes risk analysis, security, compliance, and misconfiguration scanning, saving Kubernetes users and administrators precious time, effort, and resources.
 ** kwrooijen/cargo.el
   - Emacs Minor Mode for Cargo, Rust's Package Manager.
+** lac-dcc/sepe
+  - Synthesis of Optimized Hash Functions
 ** Lameguy64/PSn00bSDK
   - The most powerful open source SDK for the PS1 (as far as open source PS1 SDKs go). Not recommended for beginner use.
 ** lampepfl/dotty
@@ -1932,6 +1938,8 @@
   - unofficial git repo -- report bugs/issues/pull requests on https://gitlab.torproject.org/
 ** torvalds/linux
   - Linux kernel source tree
+** tractordev/wanix
+  - A virtual environment kit for the local-first web, inspired by Plan 9
 ** transcranial/keras-js
   - Run Keras models in the browser, with GPU support using WebGL
 ** tree-sitter/tree-sitter
@@ -2200,8 +2208,6 @@
   - Segment Anything for Stable Diffusion WebUI with grounding DINO
 ** dmlc/xgboost
   - Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library, for Python, R, Java, Scala, C++ and more. Runs on single machine, Hadoop, Spark, Dask, Flink and DataFlow. For tabular regression decision tree data.
-** dottxt-ai/outlines
-  - Structured Text Generation output to json, grammar, choice etc
 ** EleutherAI/lm-evaluation-harness
   - A framework for few-shot evaluation of language models.
 ** EleutherAI/sparsify
@@ -2234,16 +2240,18 @@
   - userspace nvme driver in rust. Close to SPDK perf
 ** build-trust/ockam
   - Build secure-by-design applications that can Trust Data-in-Motion. Orchestrate end-to-end encryption, mutual authentication, key management, credential management & authorization policy enforcement — at scale.
-** BurntSushi/fst
-  - Represent large sets and maps compactly with finite state transducers.
 ** BurntSushi/aho-corasick
   - A fast implementation of Aho-Corasick in Rust for finding occurrences of many patterns at once with SIMD.
+** BurntSushi/fst
+  - Represent large sets and maps compactly with finite state transducers.
 ** BurntSushi/memchr
   - Optimized string search routines for Rust.
 ** bytecodealliance/cap-std
   - Capability-oriented version of the Rust standard library
 ** bytecodealliance/rustix
   - Safe Rust bindings to POSIX-ish APIs
+** cackle-rs/cackle
+  - A code ACL checker for Rust.
 ** calebzulawski/multiversion
   - Easy function multiversioning for Rust
 ** CeleritasCelery/rune
@@ -2264,8 +2272,6 @@
   - “Zero setup” cross compilation and “cross testing” of Rust crates
 ** Cuprate/cuprate
   - Monero node. Written in Rust
-** cackle-rs/cackle
-  - A code ACL checker for Rust.
 ** dragostis/chili
   - Rust port of Spice, a low-overhead parallelization library
 ** dsherret/sys_traits
@@ -2390,6 +2396,8 @@
   - writing correct lock-free and distributed stateful systems in Rust, assisted by TLA+
 ** sunfishcode/eyra
   - Rust programs written entirely in Rust
+** tansu-io/tansu
+  - Apache Kafka compatible broker with S3, PostgreSQL and Apache Iceberg.
 ** tauri-apps/tauri
   - Build smaller, faster, and more secure desktop applications with a web frontend.
 ** testcontainers/testcontainers-rs

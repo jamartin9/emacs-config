@@ -1,6 +1,6 @@
 [submodule "channels/guix-channel"]
 	path = guix-channel
-	url = https://github.com/jamartin9/guix-channel
+	url = ssh://git@codeberg.org/jamartin9/guix-channel.git
 	update = merge
 	shallow = true
 	branch = master

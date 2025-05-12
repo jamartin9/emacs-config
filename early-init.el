@@ -30,12 +30,9 @@
         ;(if (gnutls-available-p) (setq use-package-always-pin "melpa")) ; pin to melpa
         (setq use-package-always-ensure t
               package-pinned-packages '((eat . "nongnu")
-                                        (gptel . "nongnu")
-                                        ;(yaml-mode . "nongnu")
+                                        (gptel . "nongnu");(yaml-mode . "nongnu");(debbugs . "gnu"); (company . "gnu")
                                         (which-key . "gnu")
-                                        (company . "gnu")
                                         (osm . "gnu")
-                                        (debbugs . "gnu")
                                         (undo-tree . "gnu")))))
   (if (file-directory-p default-directory)
       (normal-top-level-add-subdirs-to-load-path)))

@@ -711,14 +711,6 @@
   :hook ((after-init . minions-mode))
   :commands (minions-mode))
 
-(use-package debbugs
-  ;:pin gnu
-  :bind (:map jam/search ("b" . debbugs-gnu-bugs)); bug number search
-  :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
-  :config ;(setq org-link-elisp-confirm-function nil)
-  (setq debbugs-gnu-default-packages '("guix-patches"))
-  (require 'debbugs-guix) (require 'debbugs-org) (require 'debbugs-gnu) (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
-
 (use-package eat
   ;:pin nongnu
   :bind (:map jam/open ("t" . eat)

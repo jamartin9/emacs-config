@@ -41,9 +41,9 @@ DRY-RUN: do not run the tangled argument"
           ("site" (jam/parse-args (list "install-all")); use install to run scripts for timestamps (css, js, sqlite, emacs, etc)
                   (let* ((init-dir (file-name-directory (or load-file-name buffer-file-name)))
                          (org-dir (concat init-dir (file-name-as-directory "org") "roam"))
-                         (site-dir (concat init-dir (file-name-as-directory "gh-pages") "docs")))
+                         (site-dir (concat init-dir (file-name-as-directory "pages") "docs")))
                     (if (not (file-directory-p site-dir)) ; add gh-pages as worktree
-                        (message "%s" (process-lines "git" "worktree" "add" "--track" "-b" "gh-pages" (concat init-dir "gh-pages") "origin/gh-pages")))
+                        (message "%s" (process-lines "git" "worktree" "add" "--track" "-b" "pages" (concat init-dir "pages") "origin/pages")))
                     (mapc #'(lambda (cpy-file); copy files (pngs, css, html, sqlite, js) to site-dir if export is newer than site
                               (message "checking file %s" cpy-file)
                               (let ((dst-file (concat (file-name-as-directory site-dir) (file-name-nondirectory cpy-file))))

@@ -59,7 +59,7 @@ The tower of babel is your type system as a macro
 - panama for native library linkage
 *** [[id:2b605045-23e1-4995-9ed4-843699a0481f][java]]
 *** scala
-  - override apply for the function syntax
+  - override apply for the function syntax(functors instead of constructors?)
   - 'tagless final' is a design pattern that allows type checking interfaces at compile via an algebra (trait) of given higher kinded case class of type Algebra[Expression].
   - rcardin/yaes for 'direct style' scala based on phatom types and capabilities
   - for comprehensions for monad, io effect systems or futures

@@ -22,9 +22,10 @@
 - signal-cli integration init ~signal-cli link --name device_name | head -1 | qrencode --type=UTF8~
 - guile scheme port of emacs lisp https://codeberg.org/ramin_hal9001/gypsum/
 - guile-emacs project https://git.hcoop.net/bpt/emacs.git
+- literal org blocks for artist mode by using ~#+BEGIN_EXAMPLE~ and ~#+END_EXAMPLE~ with each line starting with a colon then a space (avoid special chars)
 #+NAME: signal-cli
 #+BEGIN_SRC emacs-lisp :tangle no
-(use-package! signal-msg ; https://github.com/AsamK/signal-cli
+(use-package signal-msg ; https://github.com/AsamK/signal-cli
   :commands (signal-msg-new-message) ; jam/signal-msg-rec
   :config (setq signal-msg-username (alist-get 'secret (auth-source-pass-parse-entry "signal/account"))
                 signal-msg-number (alist-get 'secret (auth-source-pass-parse-entry "signal/phone")))
@@ -80,8 +81,10 @@
   (setenv "NIX_STORE" (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") (file-name-as-directory "gnu") "store")) ; NIX_STORE_DIR
   (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") "bin"))))
 #+END_SRC
-#+NAME: newsticker-rss-atom-reader
+
+#+NAME: emacs-maybe-packages
 #+BEGIN_SRC emacs-lisp :tangle no
+; rss/atom feed reader
 (use-package newsticker
   :ensure nil ; built-in
   :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
@@ -105,9 +108,15 @@
         newsticker-url-list-defaults nil
         newsticker-url-list '(("styx" "https://odysee.com/$/rss/@Styxhexenhammer666:2"))))
 
-#+END_SRC
-#+NAME: emacs-maybe-packages
-#+BEGIN_SRC emacs-lisp :tangle no
+;debbugs: track emacs bugs (guix moved to forejo). alternative is bookmarking websites/mailing lists
+(use-package debbugs
+  ;:pin gnu
+  :bind (:map jam/search ("b" . debbugs-gnu-bugs)); bug number search
+  :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
+  :config ;(setq org-link-elisp-confirm-function nil)
+  (setq debbugs-gnu-default-packages '("guix-patches"))
+  (require 'debbugs-guix) (require 'debbugs-org) (require 'debbugs-gnu) (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
+
 ;combobulate?: structural editing. alternative is regex
 (use-package combobulate
   :init (setq combobulate-key-prefix "C-c e")
