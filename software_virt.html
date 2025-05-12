@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge7a231d">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6a5fa17">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgb473226" class="outline-2">
-<h2 id="orgb473226">Virtualization</h2>
-<div class="outline-text-2" id="text-orgb473226">
+<div id="outline-container-org36569c4" class="outline-2">
+<h2 id="org36569c4">Virtualization</h2>
+<div class="outline-text-2" id="text-org36569c4">
 <p>
 Simulate the simulation
 </p>
@@ -49,7 +49,7 @@ Simulate the simulation
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="orgc3b78c6">#!/usr/bin/env bash
+<pre class="src src-shell" id="orgb53dc74">#!/usr/bin/env bash
 qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::8081-:8081,hostfwd=tcp::8080-:8080 -enable-kvm -m 2570 -device virtio-blk,drive=myhd -drive if=none,file=/My-image.qcow2,id=myhd -spice port=5930,disable-ticketing
 
 qemu-system-x86_64 -enable-kvm \
@@ -65,6 +65,15 @@ qemu-system-x86_64 -enable-kvm \
 # use cdrom drive and add virtio drivers
 #./run-windows.sh -boot d -drive file=w10prox64.iso,media=cdrom -drive file=virtio-win-0.1.240.iso,media=cdrom # https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md for kvm virtio drivers
 # -device virtio-sound-pci,audiodev=my_audiodev -audiodev alsa,id=my_audiodev
+
+
+#echo "Increase vm disk with: qemu-img resize $1 +30G"
+#echo "After boot growpart and resize2fs"
+#echo "Update vm with: mkdir ~/.config/guix &amp;&amp; ln -s /etc/channels.scm ~/.config/guix/channels.scm"
+#echo "Then guix pull &amp;&amp; guix system reconfigure"
+#echo "Starting vm with port 8088 and 8080 forwarded. Spice is port 5930"
+#echo "Mount downloads with: sudo mount -t 9p -o trans-virtio downloads /gnu/git/downloads -oversion=9p2000.L,posixacl,msize10485600"
+qemu-system-x86_64 -smp 4 -cpu host -nic user,model=virtio-net-pci,hostfwd=tcp::8088-:6789,hostfwd=tcp::8080-:8080 -enable-kvm -m 8192 -device virtio-blk,drive=myhd -drive if=none,file=$1,id=myhd -virtfs local,path=/gnu/git/downloads,security_model=none,mount_tag=downloads
 
 </pre>
 </div>

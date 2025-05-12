@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>software</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgeb79d14">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
+</nav>
+<div id="outline-container-orgff4acda" class="outline-2">
+<h2 id="orgff4acda">Software</h2>
+<div class="outline-text-2" id="text-orgff4acda">
+</div>
+<div id="outline-container-orgf9f4aa1" class="outline-3">
+<h3 id="orgf9f4aa1">algorithms and datastructures</h3>
+<div class="outline-text-3" id="text-orgf9f4aa1">
+<ul class="org-ul">
+<li>distributed
+<ul class="org-ul">
+<li>paxos
+<ul class="org-ul">
+<li>multiple roles</li>
+<li>TLA+ checked</li>
+</ul></li>
+<li>raft
+<ul class="org-ul">
+<li>single role</li>
+</ul></li>
+</ul></li>
+<li>hashing
+<ul class="org-ul">
+<li>mapembed hashing is perfect hashing that supports dynamic updates; still with O(1) lookup time</li>
+</ul></li>
+<li>SIEVE
+<ul class="org-ul">
+<li>Generalized Merge-FIFO(segcache) Queue that can outpreform LRU
+<ul class="org-ul">
+<li>variant ARC-SIEVE replaces ARC with own queue</li>
+</ul></li>
+</ul></li>
+<li>Propgators networks
+<ul class="org-ul">
+<li>can implement multiple problem domains with bounded eventual consistency</li>
+<li>SAT, Functional Reactive Programming, Datalog, constraint programming</li>
+</ul></li>
+<li>Cache-oblivious lookahead array (COLA)</li>
+<li>Log structures merge tree</li>
+<li>separate compute from storage in a sans-io style
+<ul class="org-ul">
+<li>state machine should be driven by IO input</li>
+</ul></li>
+<li>'tagless final' is a design pattern that solves the expression problem for creating DSLs
+<ul class="org-ul">
+<li>allows type checking interfaces at compile via an algebra (trait) of given higher kinded case class of type Algebra[Expression].</li>
+<li>It decouples the interpreter from the language, making alternative implementations extensible.</li>
+<li>defines how the trait can be composed with a 'final style' for host interoperability</li>
+<li>solves type safe printing and parsing in compile time safe format strings
+<ul class="org-ul">
+<li>impl FormattingSpec for Scan and Print</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdb4f0b4" class="outline-3">
+<h3 id="orgdb4f0b4"><a href="archive_formats.html#ID-fd5eb707-7fc5-40ee-a550-f167f8c43635">archive-formats</a></h3>
+</div>
+<div id="outline-container-orgbe9d919" class="outline-3">
+<h3 id="orgbe9d919"><a href="bootloaders.html#ID-20556f17-762b-4534-befa-34dbd8d2ca33">bootloaders</a></h3>
+</div>
+<div id="outline-container-orgd1133e5" class="outline-3">
+<h3 id="orgd1133e5"><a href="browsers.html#ID-536c7bc0-8049-429d-bfe6-641eeb67399c">browsers</a></h3>
+</div>
+<div id="outline-container-orgf16b58d" class="outline-3">
+<h3 id="orgf16b58d"><a href="crypto.html#ID-f9cef312-d52f-4625-afbf-b94d94d6f0cc">crypto</a></h3>
+</div>
+<div id="outline-container-org9b3ca1e" class="outline-3">
+<h3 id="org9b3ca1e"><a href="databases.html#ID-f6550312-62de-4538-8729-a11767d59560">databases</a></h3>
+</div>
+<div id="outline-container-orgc94fe52" class="outline-3">
+<h3 id="orgc94fe52"><a href="desktop.html#ID-7d0ec9d9-0185-4cd3-8b4a-b956c1d3aa5b">desktop</a></h3>
+</div>
+<div id="outline-container-orgd0093b3" class="outline-3">
+<h3 id="orgd0093b3"><a href="email.html#ID-aee3a8d2-a37a-454e-9359-0f56caa3502f">email</a></h3>
+</div>
+<div id="outline-container-org71e20e6" class="outline-3">
+<h3 id="org71e20e6"><a href="file_systems.html#ID-7eb34c6f-cb5e-4e5d-a0c4-0139fb12d66a">file-systems</a></h3>
+</div>
+<div id="outline-container-org89c013c" class="outline-3">
+<h3 id="org89c013c"><a href="firewalls.html#ID-40d61cd0-2c14-4a79-913c-1cefe0060c13">firewalls</a></h3>
+</div>
+<div id="outline-container-orgfb6e0ae" class="outline-3">
+<h3 id="orgfb6e0ae"><a href="init_system.html#ID-c9d0999f-0950-4bca-8f92-e814fe4da4c0">init-system</a></h3>
+</div>
+<div id="outline-container-orgac7fa9f" class="outline-3">
+<h3 id="orgac7fa9f"><a href="machine_learning.html#ID-187181c4-598e-4373-96e0-b66b5c676d23">machine-learning</a></h3>
+</div>
+<div id="outline-container-org8d725b6" class="outline-3">
+<h3 id="org8d725b6"><a href="operating_systems.html#ID-ff9e5548-5857-43a7-88d5-89101c2468c1">operating-systems</a></h3>
+</div>
+<div id="outline-container-org892be15" class="outline-3">
+<h3 id="org892be15"><a href="programming_languages.html#ID-1fd6a775-91da-4939-988f-63d30363ffc2">programming-languages</a></h3>
+</div>
+<div id="outline-container-org254ccfd" class="outline-3">
+<h3 id="org254ccfd">Proverbs</h3>
+<div class="outline-text-3" id="text-org254ccfd">
+<ul class="org-ul">
+<li>Murphy's law - If something can go wrong, it will.</li>
+<li>Goodhart's Law - When a measure becomes a target, it ceases to be a good measure</li>
+<li>Conway's law - Any piece of software reflects the organizational structure that produced it.</li>
+<li>Pareto principle - For many phenomena, 80% of consequences stem from 20% of the causes.</li>
+<li>Peter principle - In a hierarchy, every employee tends to rise to his level of incompetence.</li>
+<li>Moore's law - The power of computers per unit cost doubles every 24 month.</li>
+<li>Aumann's agreement theorem - There is no agreeing to disagree</li>
+<li>Law of Large Numbers - large results over time trend toward the average
+<ul class="org-ul">
+<li>ex. more code, more bugs</li>
+</ul></li>
+<li>Mind Projection Fallacy - when someone thinks that the way they see the world reflects the way the world really is.</li>
+<li>The purpose of a system is what it does. - Stafford Beer. there is "no point in claiming that the purpose of a system is to do what it constantly fails to do."</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org12913d8" class="outline-3">
+<h3 id="org12913d8">Common</h3>
+<div class="outline-text-3" id="text-org12913d8">
+<ul class="org-ul">
+<li>Birthday Problem - 50% chance for 23 random people to share a birthday</li>
+<li>release cadence schedule sets expectations
+<ul class="org-ul">
+<li>large breaking changes fracture and stagnate
+<ul class="org-ul">
+<li>python2 to python3</li>
+<li>perl 5 to perl 6</li>
+<li>scala 2 to scala 3</li>
+</ul></li>
+<li>incremental changes are incorporated into ecosystem over time
+<ul class="org-ul">
+<li>rust editions</li>
+<li>jdk releases</li>
+<li>c++14/17/20/23</li>
+<li>objective C to swift</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3f62af4" class="outline-3">
+<h3 id="org3f62af4">Code review</h3>
+<div class="outline-text-3" id="text-org3f62af4">
+<ul class="org-ul">
+<li>Humility should be paramount when submitting code to a location you do not <b>OWN</b></li>
+<li>Code is meant to be ran by processors
+<ul class="org-ul">
+<li>machine semantics
+<ul class="org-ul">
+<li>iterator vectorization of loops (can allow simd)</li>
+<li>SWAR (simd within a register)</li>
+</ul></li>
+<li>stylistic clarity/future updates
+<ul class="org-ul">
+<li>linters/formatters</li>
+</ul></li>
+</ul></li>
+<li>Version control hygiene
+<ul class="org-ul">
+<li>messages should have a semi standardized format (like gnu changelog messages)
+<ul class="org-ul">
+<li>write in present tense</li>
+</ul></li>
+<li>useful for developers for bug bisection and release changelog generation</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf1d2e31" class="outline-3">
+<h3 id="orgf1d2e31"><a href="service_discovery.html#ID-faee0cd2-0648-4539-bfc2-c8533ac755c4">service-discovery</a></h3>
+</div>
+<div id="outline-container-orgc0091c1" class="outline-3">
+<h3 id="orgc0091c1"><a href="shells.html#ID-b6230d85-cd0e-4bc7-aba2-b7b068897d4f">shells</a></h3>
+</div>
+<div id="outline-container-org733e2f3" class="outline-3">
+<h3 id="org733e2f3"><a href="software_contrib.html#ID-92a1c0fc-707f-4d2c-86af-a55206f51c17">software-contrib</a></h3>
+</div>
+<div id="outline-container-org88f9d3e" class="outline-3">
+<h3 id="org88f9d3e"><a href="software_license.html#ID-6cf45163-2951-43a0-a970-25f64e785e09">software-license</a></h3>
+</div>
+<div id="outline-container-orgba1ad0c" class="outline-3">
+<h3 id="orgba1ad0c"><a href="software_metrics.html#ID-bed575bb-5b8c-4ecd-a078-8d501d25418c">software-metrics</a></h3>
+</div>
+<div id="outline-container-orgba4ca96" class="outline-3">
+<h3 id="orgba4ca96"><a href="software_packaging.html#ID-ab1cf09d-eedf-4134-aa33-2b7cfd1eca78">software-packaging</a></h3>
+</div>
+<div id="outline-container-org62d979b" class="outline-3">
+<h3 id="org62d979b"><a href="software_projects.html#ID-0a94af9d-559e-4c78-b90e-cca4a43e9efe">software-projects</a></h3>
+</div>
+<div id="outline-container-org4e1a152" class="outline-3">
+<h3 id="org4e1a152"><a href="software_virt.html#ID-4462b218-52ce-4445-b1ae-42ff24faf0d6">software-virt</a></h3>
+</div>
+<div id="outline-container-orgc1a4727" class="outline-3">
+<h3 id="orgc1a4727"><a href="text_editors.html#ID-4670cd15-b5f6-42f5-ba1d-07a726aae64d">text-editors</a></h3>
+</div>
+<div id="outline-container-org8847077" class="outline-3">
+<h3 id="org8847077"><a href="version_control.html#ID-5ede22d0-93cd-4951-a2bb-3084a57ed2fc">version-control</a></h3>
+</div>
+<div id="outline-container-org31e6504" class="outline-3">
+<h3 id="org31e6504"><a href="video_encoding.html#ID-d0178e2c-9979-46db-9811-9c99bb12c121">video-encoding</a></h3>
+</div>
+<div id="outline-container-orgf6123fa" class="outline-3">
+<h3 id="orgf6123fa"><a href="video_games.html#ID-acec51e6-a3a8-40a0-a74e-614c2419ef01">video-games</a></h3>
+</div>
+<div id="outline-container-org00e37a6" class="outline-3">
+<h3 id="org00e37a6"><a href="video_playback.html#ID-e2a56828-55c2-4b26-868c-68d4c78903ab">video-playback</a></h3>
+</div>
+<div id="outline-container-org8c43a0d" class="outline-3">
+<h3 id="org8c43a0d"><a href="vpns.html#ID-d3d64983-6929-4267-94b9-caf50c95dfa9">vpns</a></h3>
+</div>
+<div id="outline-container-org8010ca1" class="outline-3">
+<h3 id="org8010ca1"><a href="webserver.html#ID-167b9a3a-353c-4d7f-b706-bf7241bb6c08">webserver</a></h3>
+</div>
+</div>
+</div>
+</body>
+</html>

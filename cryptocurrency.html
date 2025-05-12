@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4c1f8c6">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org07a2d64">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org4ff1b90" class="outline-2">
-<h2 id="org4ff1b90">notes</h2>
-<div class="outline-text-2" id="text-org4ff1b90">
+<div id="outline-container-org7a4bd36" class="outline-2">
+<h2 id="org7a4bd36">notes</h2>
+<div class="outline-text-2" id="text-org7a4bd36">
 <ul class="org-ul">
 <li>fallacies of crypto haters
 <ul class="org-ul">
@@ -48,10 +48,11 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org368eb5e" class="outline-2">
-<h2 id="org368eb5e">chia</h2>
-<div class="outline-text-2" id="text-org368eb5e">
+<div id="outline-container-orgcfb19fe" class="outline-2">
+<h2 id="orgcfb19fe">chia</h2>
+<div class="outline-text-2" id="text-orgcfb19fe">
 <ul class="org-ul">
+<li>simpleswap.io swaps xch on kucoin</li>
 <li>Permuto will allow "eligible holders"" to deposit Microsoft stock (MSFT) and issue "dividend" and "appreciation" certificates on the chia blockchain; to be traded seperately. Allowed 10% of total stock and voting is done based on prices of the 'certificates'.</li>
 <li><code>CHIA_ROOT</code> env variable configuration
 <ul class="org-ul">
@@ -60,7 +61,7 @@
 <li>check plots with <code>chia plots check -n 30 -l</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-org" id="orgcfc2e7d">- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
+<pre class="src src-org" id="orgf8f2e37">- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
 - sends to puzzle hash 0x000000000000000000000000000000000000000000000000000000000000dead
 - testnet burn txch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ksh7qddh
 </pre>
@@ -111,7 +112,7 @@
 <li><a href="https://github.com/dexie-space/splash">https://github.com/dexie-space/splash</a> for decentralized offer broadcasting</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org8757aba">chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
+<pre class="src src-sh" id="orgf224f0c">chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
 </pre>
 </div>
 <ul class="org-ul">
@@ -143,9 +144,9 @@
 <li>xch.events for mempool explorer</li>
 </ul>
 </div>
-<div id="outline-container-orgeb55aa7" class="outline-3">
-<h3 id="orgeb55aa7">blunders</h3>
-<div class="outline-text-3" id="text-orgeb55aa7">
+<div id="outline-container-orgfc2674c" class="outline-3">
+<h3 id="orgfc2674c">blunders</h3>
+<div class="outline-text-3" id="text-orgfc2674c">
 <ul class="org-ul">
 <li>Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling
 <ul class="org-ul">
@@ -184,9 +185,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org4bf9bee" class="outline-2">
-<h2 id="org4bf9bee">monero</h2>
-<div class="outline-text-2" id="text-org4bf9bee">
+<div id="outline-container-orgee84784" class="outline-2">
+<h2 id="orgee84784">monero</h2>
+<div class="outline-text-2" id="text-orgee84784">
 <ul class="org-ul">
 <li>use block &gt; 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)</li>
 <li>supports tor with sending tx's and wallets
@@ -243,12 +244,18 @@
 <li><a href="https://github.com/spackle-xmr/MoneroTools">churn, fracture and consolidate tools</a></li>
 <li>haveno for p2p order book <a href="https://blog.nihilism.network/servers/haveno-client-f2f/index.html">https://blog.nihilism.network/servers/haveno-client-f2f/index.html</a>
 <ul class="org-ul">
-<li><code>make haveno-apps &amp;&amp; make haveno-desktop-mainnet</code></li>
+<li><code>make haveno-apps &amp;&amp; make haveno-desktop-mainnet</code> or <code>./gradlew --no-daemon :core:compileJava :desktop:build -x test -x checkstyleMain -x checkstyleTest</code>
+<ul class="org-ul">
+<li><code>guix package -i monero tor gtk+ mesa libxxf86vm libx11 openjdk:jdk</code></li>
+<li><code>CookieAuthentication 1</code> and <code>ControlPort 9051</code> in <code>tor -f .torrc</code></li>
+<li><code>ln -s ~/.guix-profile/monero-wallet-rpc</code> and ~/.guix-profile/bin/monerod to ~/.local/share/Haveno-reto</li>
+<li><code>LD_LIBRARY_PATH=~/.guix-profile/lib/ ./haveno-desktop --torControlPort='9051' --torControlCookieFile=$HOME/.tor/control_auth_cookie --torControlUseSafeCookieAuth --useTorForXmr='on' --socks5ProxyXmrAddress='127.0.0.1:9050' --baseCurrencyNetwork=XMR_MAINNET --useLocalhostForP2P=false --useDevPrivilegeKeys=false --nodePort=9999 --appName=Haveno-reto --apiPassword=apitest --apiPort=1201 --useNativeXmrWallet=false --ignoreLocalXmrNode=fals</code></li>
+</ul></li>
 <li>reto simplex <a href="https://simplex.chat/contact#/?v=2-4&amp;smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FMplYm7uxopKyUOrKqnWySpXQIGxoJWYB%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAs8PcRwnf_-H30yXfwV0MSbka9I_xBeVNr4vKJNoReBw%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion&amp;data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22YT2t__GnjpZ1W2MjJAz6Sw%3D%3D%22%7D">https://simplex.chat/contact#/?v=2-4&amp;smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FMplYm7uxopKyUOrKqnWySpXQIGxoJWYB%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAs8PcRwnf_-H30yXfwV0MSbka9I_xBeVNr4vKJNoReBw%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion&amp;data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22YT2t__GnjpZ1W2MjJAz6Sw%3D%3D%22%7D</a></li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgdc28d4d">#!/bin/bash -e
+<pre class="src src-sh" id="org64cc160">#!/bin/bash -e
 
 # https://xmrig.com/docs/miner/hugepages#onegb-huge-pages
 
@@ -278,9 +285,9 @@ sudo xmrig --randomx-1gb-pages --huge-pages-jit -t 12 -o 127.0.0.1:3333  -B
 </div>
 </div>
 </div>
-<div id="outline-container-org8e3aa75" class="outline-2">
-<h2 id="org8e3aa75">bitcoin</h2>
-<div class="outline-text-2" id="text-org8e3aa75">
+<div id="outline-container-org9b32bea" class="outline-2">
+<h2 id="org9b32bea">bitcoin</h2>
+<div class="outline-text-2" id="text-org9b32bea">
 <ul class="org-ul">
 <li>reuse of ECDSA signatures can lead to key compromise (polynonce attack). use deterministic dsa instead (eddsa or RFC 6979)</li>
 <li>double sha256</li>
@@ -305,16 +312,16 @@ sudo xmrig --randomx-1gb-pages --huge-pages-jit -t 12 -o 127.0.0.1:3333  -B
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc203e89" class="outline-2">
-<h2 id="orgc203e89">btcpayserver</h2>
-<div class="outline-text-2" id="text-orgc203e89">
+<div id="outline-container-org7b97374" class="outline-2">
+<h2 id="org7b97374">btcpayserver</h2>
+<div class="outline-text-2" id="text-org7b97374">
 <ul class="org-ul">
 <li>crypto payment server that supports invoices (multiple payments, refunds, tolerances etc)</li>
 <li>xmr config requires the view only wallet.keys, wallet and password file be available before sync can complete</li>
 <li>sync MUST be completed before the FIRST store can be created</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgcd115e0">apiVersion: apps/v1
+<pre class="src src-yaml" id="org8a5dcb2">apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: btcpay-deployment

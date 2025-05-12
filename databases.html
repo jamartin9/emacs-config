@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org808c3cb">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org46b56f0">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org4a6a34a" class="outline-2">
-<h2 id="org4a6a34a">Databases</h2>
-<div class="outline-text-2" id="text-org4a6a34a">
+<div id="outline-container-org596cda3" class="outline-2">
+<h2 id="org596cda3">Databases</h2>
+<div class="outline-text-2" id="text-org596cda3">
 </div>
-<div id="outline-container-orgad714c1" class="outline-3">
-<h3 id="orgad714c1">Relational</h3>
-<div class="outline-text-3" id="text-orgad714c1">
+<div id="outline-container-orgf023062" class="outline-3">
+<h3 id="orgf023062">Relational</h3>
+<div class="outline-text-3" id="text-orgf023062">
 <ul class="org-ul">
 <li><a href="sqlite.html#ID-162f9fba-d1f9-44e8-ae9f-685c578523f1">sqlite</a></li>
 <li><a href="postgres.html#ID-46651545-b172-443b-b0db-506019b4456c">postgres</a></li>
@@ -44,9 +44,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org42e8f65" class="outline-3">
-<h3 id="org42e8f65">olap</h3>
-<div class="outline-text-3" id="text-org42e8f65">
+<div id="outline-container-org366ee8c" class="outline-3">
+<h3 id="org366ee8c">olap</h3>
+<div class="outline-text-3" id="text-org366ee8c">
 <ul class="org-ul">
 <li>duckdb
 <ul class="org-ul">
@@ -59,14 +59,15 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org79860db" class="outline-3">
-<h3 id="org79860db">notes</h3>
-<div class="outline-text-3" id="text-org79860db">
+<div id="outline-container-org1233205" class="outline-3">
+<h3 id="org1233205">notes</h3>
+<div class="outline-text-3" id="text-org1233205">
 <ul class="org-ul">
 <li>BTree based DB's are more cache friendly as nodes can have more than 2 children (abseil uses 62 children) unlike Binary Trees
 <ul class="org-ul">
 <li>binary tree's (red-black like C++ STL) are better with larger sized nodes (moving pointers) than smaller (moving values)</li>
 </ul></li>
+<li>vitess (mysql compat) is used by planetscale and switched from AST interpreter(like postrgres) to bytecodevm(sqlite)</li>
 </ul>
 </div>
 </div>

@@ -9,21 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org82aaa5d">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgbca253c">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgc943f2a" class="outline-2">
-<h2 id="orgc943f2a">Guix</h2>
-<div class="outline-text-2" id="text-orgc943f2a">
+<div id="outline-container-orgb149b35" class="outline-2">
+<h2 id="orgb149b35">Guix</h2>
+<div class="outline-text-2" id="text-orgb149b35">
 </div>
-<div id="outline-container-org7f1508c" class="outline-3">
-<h3 id="org7f1508c">Link manifest</h3>
-<div class="outline-text-3" id="text-org7f1508c">
+<div id="outline-container-orge3691c2" class="outline-3">
+<h3 id="orge3691c2">Link manifest</h3>
+<div class="outline-text-3" id="text-orge3691c2">
 <div class="org-src-container">
-<pre class="src src-elisp" id="orgaa7f16d">(ignore-errors
+<pre class="src src-elisp" id="orgacf0272">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -34,21 +34,21 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org259683c" class="outline-3">
-<h3 id="org259683c">User manifest</h3>
-<div class="outline-text-3" id="text-org259683c">
+<div id="outline-container-org0b6d95e" class="outline-3">
+<h3 id="org0b6d95e">User manifest</h3>
+<div class="outline-text-3" id="text-org0b6d95e">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgff78092">;; Manifest for development env
+<pre class="src src-scheme" id="org26ca34a">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
    ;;"shepherd" ;;"glibc-utf8-locales"
 
-   ;;"ungoogled-chromium-nvda"
+   ;;"ungoogled-chromium-nvda" "ublock-origin-chromium"
    ;;"firefox-nvda"; --with-graft=mesa=nvda
    ;;"torbrowser"
 
-   ;;"transmission"
+   ;;"deluge" ;;"transmission"
    ;;"nzbget"
    ;;"steam-nvidia" ;; steam
    ;;"zfs"
@@ -104,7 +104,11 @@
    ;;"patch"
    ;;"gash"
    ;;"gash-utils"
+   ;;"alacritty"
+   ;;"xterm"
    "screen"
+   "ripgrep"
+   "fd"
 
    ;; apps
    ;;"wine64"; "wine"
@@ -121,9 +125,9 @@
    ;;"searx"
    ;;"gnuradio"
    ;;"obs"
-   ;;"virt-viewer"
+   ;;"virt-viewer" "qemu"; remote-viewer for spice
    ;;"dino" ; xmpp client
-   ;;"flatpak"
+   ;;"flatpak" ;"xdg-utils" "xdg-dbus-proxy"; "xdg-desktop-portal-gtk" ;"shared-mime-info"; "xorg-server-wayland" ;(list glib "bin")
    ;;"waypipe"
 
    ;; docs
@@ -144,6 +148,7 @@
    ;;"gnuplot"
    ;;"makemkv"
    ;;"yt-dlp"
+   ;;"mpv"; MAYBE add guix package for mpv with libvdpau-nvidia from nvidia-libs nonguix
 
    ;; net
    ;;"curl"
@@ -173,9 +178,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgd6ec6f3" class="outline-3">
-<h3 id="orgd6ec6f3">guix notes</h3>
-<div class="outline-text-3" id="text-orgd6ec6f3">
+<div id="outline-container-org54e3601" class="outline-3">
+<h3 id="org54e3601">guix notes</h3>
+<div class="outline-text-3" id="text-org54e3601">
 <ul class="org-ul">
 <li><a href="https://git.genenetwork.org/guix-north-america/about/">https://git.genenetwork.org/guix-north-america/about/</a> for NA substitute server ?</li>
 <li>cuirass ci saves gc roots in <code>/var/guix/gcroots/profiles/per-user/cuirass/cuirass</code> for default of 30 days
@@ -239,53 +244,8 @@
 <li>packages are standard SRFI-9 guile records (set-fields, etc&#x2026;)</li>
 <li>nonguix substitutes at <code>substitutes.nonguix.org</code> key is <code>/signing-key.pub</code>.</li>
 <li><code>guix time-machine --commit=a4eae0c3adce8e4c4ac153a4959d18b9897a67e1 -- package -i old</code></li>
-<li>manual setup</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-shell" id="org887beac">#https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
-# get tarball for system=x86_64-linux,aarch64,armhf,i686
-wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz
-# check sig
-wget https://sv.gnu.org/people/viewgpg.php?user_id=15145 -qO - | gpg --import
-wget https://ftp.gnu.org/gnu/guix/guix-binary-1.0.1.x86_64-linux.tar.xz.sig
-gpg --verify guix-binary-1.0.1.x86_64-linux.tar.xz.sig
-# with root
-sudo -i
-# untar into dirs
-tar --warning=no-timestamp -xf /path/to/guix-binary-1.0.1.x86_64-linux.tar.xz
-mv var/guix /var/ &amp;&amp; mv gnu /
-# add guix profile
-mkdir -p ~root/.config/guix
-ln -sf /var/guix/profiles/per-user/root/current-guix ~root/.config/guix/current
-# setup build daemon for multiple users
-cp ~root/.config/guix/current/lib/systemd/system/guix-daemon.service /etc/systemd/system/
-# add build users
-groupadd --system guixbuild
-for i in `seq -w 1 10`;
-do
-    useradd -g guixbuild -G guixbuild           \
-            -d /var/empty -s `which nologin`    \
-            -c "Guix build user $i" --system    \
-            guixbuilder$i;
-done
-# link guix and info for all users
-mkdir -p /usr/local/bin
-cd /usr/local/bin
-ln -s /var/guix/profiles/per-user/root/current-guix/bin/guix
-mkdir -p /usr/local/share/info
-cd /usr/local/share/info
-for i in /var/guix/profiles/per-user/root/current-guix/share/info/* ;
-do ln -s $i ; done
-# source guix profile and add sub servers
-source ~/root/.config/guix/current/etc/profile
-guix archive --authorize &lt; ~root/.config/guix/current/share/guix/ci.guix.gnu.org.pub
-guix archive --authorize &lt; ~root/.config/guix/current/share/guix/bordeaux.guix.gnu.org.pub
-# install locale
-guix package -i glibc-utf8-locales
-</pre>
-</div>
-<ul class="org-ul">
-<li>manual install
+<li>manual setup script <code>GUIX_BINARY_FILE_NAME=guix-binary.tar.xz ./guix-install.sh</code> from <a href="https://guix.gnu.org/install.sh">https://guix.gnu.org/install.sh</a></li>
+<li>manual install image
 <ul class="org-ul">
 <li>create image with <code>guix system image -t iso9660 ./jam/system/installer.scm</code>
 <ul class="org-ul">
@@ -295,7 +255,7 @@ guix package -i glibc-utf8-locales
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org12e2b42">network={
+<pre class="src src-conf" id="org5539800">network={
   ssid="ssid-name"
   key_mgmt=WPA-PSK
   psk="unencrypted passphrase"
@@ -319,7 +279,7 @@ guix package -i glibc-utf8-locales
 <li>clone config, copy channels to <code>~/.config/guix/</code>, <code>guix pull --no-check-certificate</code> then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgf34eeb3">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="org8cbbd36">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -344,7 +304,7 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org3a49af2">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="orgc1b4866">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix

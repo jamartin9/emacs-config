@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6c3d984">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org88a1b24">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orge7e9576" class="outline-2">
-<h2 id="orge7e9576">Machine learning</h2>
-<div class="outline-text-2" id="text-orge7e9576">
+<div id="outline-container-orgbd7b965" class="outline-2">
+<h2 id="orgbd7b965">Machine learning</h2>
+<div class="outline-text-2" id="text-orgbd7b965">
 </div>
-<div id="outline-container-orgd0be67d" class="outline-3">
-<h3 id="orgd0be67d">notes</h3>
-<div class="outline-text-3" id="text-orgd0be67d">
+<div id="outline-container-orgc22690e" class="outline-3">
+<h3 id="orgc22690e">notes</h3>
+<div class="outline-text-3" id="text-orgc22690e">
 <ul class="org-ul">
 <li>FP8 and LOG representation are efficent on modern GPU
 <ul class="org-ul">
@@ -139,10 +139,14 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgaf3ed64" class="outline-3">
-<h3 id="orgaf3ed64">image</h3>
-<div class="outline-text-3" id="text-orgaf3ed64">
+<div id="outline-container-orgb43aa2d" class="outline-3">
+<h3 id="orgb43aa2d">image</h3>
+<div class="outline-text-3" id="text-orgb43aa2d">
 <ul class="org-ul">
+<li>gemma3 and mistral 3.1 small support image input
+<ul class="org-ul">
+<li>gemma3 uses fixed resolution with custom inference for scaling high resolution</li>
+</ul></li>
 <li>reasoning to vision models <a href="https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main">https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main</a>
 <ul class="org-ul">
 <li>S1 paper shows that you need very few examples (as little as 1000) in order for the model to start being able to build complex reasoning steps and solve non trivial mathematical problems.</li>
@@ -198,9 +202,9 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-org0dbfe1a" class="outline-4">
-<h4 id="org0dbfe1a">video</h4>
-<div class="outline-text-4" id="text-org0dbfe1a">
+<div id="outline-container-org90b8cbe" class="outline-4">
+<h4 id="org90b8cbe">video</h4>
+<div class="outline-text-4" id="text-org90b8cbe">
 <ul class="org-ul">
 <li><a href="https://github.com/Tencent/HunyuanVideo">https://github.com/Tencent/HunyuanVideo</a>
 <ul class="org-ul">
@@ -219,22 +223,27 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org19ad2cb" class="outline-4">
-<h4 id="org19ad2cb">3D</h4>
-<div class="outline-text-4" id="text-org19ad2cb">
+<div id="outline-container-orga77d0d1" class="outline-4">
+<h4 id="orga77d0d1">3D</h4>
+<div class="outline-text-4" id="text-orga77d0d1">
 <ul class="org-ul">
 <li><a href="https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon">https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon</a> for 3D generation 3B</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb771e5f" class="outline-3">
-<h3 id="orgb771e5f">Large Language Models</h3>
-<div class="outline-text-3" id="text-orgb771e5f">
+<div id="outline-container-org9482f53" class="outline-3">
+<h3 id="org9482f53">Large Language Models</h3>
+<div class="outline-text-3" id="text-org9482f53">
 <ul class="org-ul">
+<li>multiple serving frameworks with nvidia dynamo
+<ul class="org-ul">
+<li>serve sglang, vllm, mistralrs, etc</li>
+</ul></li>
 <li>fine tune reasoning into models 1.5B+ with <a href="https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb">https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb</a>
 <ul class="org-ul">
 <li>uses vllm for inference</li>
+<li>add agentic tool calling into grpo with trl verifiers</li>
 </ul></li>
 <li>vllm can serve openai api locally
 <ul class="org-ul">
@@ -262,7 +271,8 @@
 </ul></li>
 <li>Qwen qwq 32B
 <ul class="org-ul">
-<li>reasoning(worse than deepseek) with cot and monte carlo search tree</li>
+<li>requires specific options/samplers to avoid degraded output</li>
+<li><code>GGML_CUDA_ENABLE_UNIFIED_MEMORY=1 ./llama-cli --model ./QwQ-32B-Q4_K_M.gguf --threads 8 --ctx-size 16384 --n-gpu-layers 99 --seed 3407 --prio 2 --temp 0.6 --repeat-penalty 1.1 --dry-multiplier 0.5 --min-p 0.0 --top-k 40 --top-p 0.95 -no-cnv --samplers "top_k;top_p;min_p;temperature;dry;typ_p;xtc" --prompt "&lt;|im_start|&gt;user\n${prompt}&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n"</code></li>
 </ul></li>
 <li>distill models with <a href="https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html">https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html</a> student/teacher model beating fine tuning</li>
 <li>Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)</li>
@@ -365,9 +375,9 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orgce0e527" class="outline-4">
-<h4 id="orgce0e527">Codegen</h4>
-<div class="outline-text-4" id="text-orgce0e527">
+<div id="outline-container-orgf9a73dc" class="outline-4">
+<h4 id="orgf9a73dc">Codegen</h4>
+<div class="outline-text-4" id="text-orgf9a73dc">
 <ul class="org-ul">
 <li>GraalVM added Static Profiles powered by ML branch prediction for inlining (based on decapo data)
 <ul class="org-ul">
@@ -403,15 +413,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org248d5c1" class="outline-3">
-<h3 id="org248d5c1">Speech to text</h3>
-<div class="outline-text-3" id="text-org248d5c1">
+<div id="outline-container-orgd77152d" class="outline-3">
+<h3 id="orgd77152d">Speech to text</h3>
+<div class="outline-text-3" id="text-orgd77152d">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgeb2c663">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="org2c01683">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -420,9 +430,9 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-orgc91441f" class="outline-3">
-<h3 id="orgc91441f">Text to speech</h3>
-<div class="outline-text-3" id="text-orgc91441f">
+<div id="outline-container-orgf7881dc" class="outline-3">
+<h3 id="orgf7881dc">Text to speech</h3>
+<div class="outline-text-3" id="text-orgf7881dc">
 <ul class="org-ul">
 <li>Zyphra/Zonos for voice cloning/TTS</li>
 <li><a href="https://github.com/multimodal-art-projection/YuE">https://github.com/multimodal-art-projection/YuE</a>
@@ -442,11 +452,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-org4160f1c" class="outline-3">
-<h3 id="org4160f1c">Agent prompts</h3>
-<div class="outline-text-3" id="text-org4160f1c">
+<div id="outline-container-org1b6bd89" class="outline-3">
+<h3 id="org1b6bd89">Agent prompts</h3>
+<div class="outline-text-3" id="text-org1b6bd89">
 <div class="org-src-container">
-<pre class="src src-sh" id="org4df67a7">
+<pre class="src src-sh" id="org5647807">
 input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
 ```sh
 for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
@@ -473,7 +483,7 @@ ${input_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header
 <li>prompt structures</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-text" id="orgb9fb32f">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-text" id="orga9a05e0">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -496,14 +506,14 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-org382de24" class="outline-3">
-<h3 id="org382de24">transformers examples</h3>
-<div class="outline-text-3" id="text-org382de24">
+<div id="outline-container-orgbccf841" class="outline-3">
+<h3 id="orgbccf841">transformers examples</h3>
+<div class="outline-text-3" id="text-orgbccf841">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org5128a06">#!/usr/bin/env python3
+<pre class="src src-python" id="orgda4f64a">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:

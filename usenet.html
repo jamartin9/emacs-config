@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge057f94">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge007351">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org435edd3" class="outline-2">
-<h2 id="org435edd3">usenet</h2>
-<div class="outline-text-2" id="text-org435edd3">
+<div id="outline-container-org8332543" class="outline-2">
+<h2 id="org8332543">usenet</h2>
+<div class="outline-text-2" id="text-org8332543">
 </div>
-<div id="outline-container-org9f44215" class="outline-3">
-<h3 id="org9f44215">usenet notes</h3>
-<div class="outline-text-3" id="text-org9f44215">
+<div id="outline-container-org768879c" class="outline-3">
+<h3 id="org768879c">usenet notes</h3>
+<div class="outline-text-3" id="text-org768879c">
 <ul class="org-ul">
 <li>spotnet is software to host websites on usenet</li>
 <li>not for mail header</li>
@@ -33,7 +33,7 @@
 <li>par (parity archive)
 <ul class="org-ul">
 <li>par2 (v3 is draft)</li>
-<li>paired with posts to help repairability of missing files</li>
+<li>paired with posts to help repairability of missing files or obfuscated file names</li>
 </ul></li>
 <li>nzbget for downloading binaries
 <ul class="org-ul">
@@ -46,28 +46,56 @@
 <li>Add all servers (EU and US) for all providers</li>
 <li>Newsgroupdirect/Newsdemon have extra storage not shared with usenetexpress backbone of recent articles
 <ul class="org-ul">
+<li><a href="https://www.reddit.com/r/usenet/comments/14sckf3/comment/jqwmfhm/">https://www.reddit.com/r/usenet/comments/14sckf3/comment/jqwmfhm/</a> comments on post selection</li>
 <li>IHAVE with usenetexpress to submit old articles <a href="https://www.usenetexpress.com/blog/post/20211015_ihave/">https://www.usenetexpress.com/blog/post/20211015_ihave/</a>
 <ul class="org-ul">
-<li>nyuu has IHAVE support (dont randomize name or use raw-article flag)</li>
+<li>nyuu has IHAVE support (dont randomize name or use raw-article flag)
+<ul class="org-ul">
+<li>use Antidote2151/Nyuu-Obfuscation for article obfuscation</li>
+</ul></li>
 <li><a href="https://github.com/Tensai75/nzbrefresh">https://github.com/Tensai75/nzbrefresh</a> reposter example</li>
 </ul></li>
 <li>open peering with usenet express <a href="https://usenetexpress.com/peering/">https://usenetexpress.com/peering/</a></li>
 </ul></li>
-<li>usenet data stats <a href="https://top1000.anthologeek.net/#stats">https://top1000.anthologeek.net/#stats</a></li>
-<li>independent backbones
+<li>usenet data stats <a href="https://top1000.anthologeek.net/#stats">https://top1000.anthologeek.net/#stats</a>
+<ul class="org-ul">
+<li><a href="https://www.uzantoreto.com/">https://www.uzantoreto.com/</a></li>
+<li><a href="https://www.newsdemon.com/usenet-newsgroup-feed-size">https://www.newsdemon.com/usenet-newsgroup-feed-size</a></li>
+</ul></li>
+<li>backbones
 <ul class="org-ul">
 <li>usenet express
 <ul class="org-ul">
 <li>reseller Thundernews deal 2TB $10: <a href="https://members.thundernews.com/block_billinginfo.php?currency=USD&amp;pricepointid=8202888">https://members.thundernews.com/block_billinginfo.php?currency=USD&amp;pricepointid=8202888</a></li>
-<li>newsgroupdirect has terabyte Tuesday deals</li>
+<li>newsgroupdirect has terabyte Tuesday deals
+<ul class="org-ul">
+<li>owned by same person as newsdemon</li>
 </ul></li>
-<li>usenet farm</li>
-<li>netnews (frugal/blocknews/usenetnow)</li>
+<li>backfills from abavia <a href="https://greycoder.com/a-list-of-independent-usenet-providers/">https://greycoder.com/a-list-of-independent-usenet-providers/</a></li>
 </ul></li>
+<li>usenet farm
+<ul class="org-ul">
+<li>backfill from abavia/omnicron</li>
+</ul></li>
+<li>netnews
+<ul class="org-ul">
+<li>frugal</li>
+<li>blocknews <a href="https://billing.blocknews.net/signup/blockfriday">https://billing.blocknews.net/signup/blockfriday</a></li>
+</ul></li>
+<li>abavia
+<ul class="org-ul">
+<li>hitnews</li>
+</ul></li>
+<li>vipernews</li>
 <li>omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)
 <ul class="org-ul">
-<li>eweka</li>
+<li>eweka
+<ul class="org-ul">
+<li>gave user up based on x-trace headers that linked to account</li>
+</ul></li>
 <li>newshosting</li>
+<li>tweaknews</li>
+</ul></li>
 </ul></li>
 <li>provider tree
 <ul class="org-ul">
@@ -76,6 +104,7 @@
 <li>03/31/2024 <img src="https://svgshare.com/s/14tF.svg" alt="14tF.svg" class="org-svg"></li>
 </ul></li>
 </ul></li>
+<li>hdb example of obfuscated post header vs non on page 97 of forums/viewtopic?topicid=65357&amp;page=p1486912#1486912</li>
 </ul>
 </div>
 </div>

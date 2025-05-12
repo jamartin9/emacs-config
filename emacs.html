@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0c11ba8">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4bbab9c">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org67bfb72" class="outline-2">
-<h2 id="org67bfb72">Emacs</h2>
-<div class="outline-text-2" id="text-org67bfb72">
+<div id="outline-container-orgdfba8e8" class="outline-2">
+<h2 id="orgdfba8e8">Emacs</h2>
+<div class="outline-text-2" id="text-orgdfba8e8">
 </div>
-<div id="outline-container-org4cec7db" class="outline-3">
-<h3 id="org4cec7db">emacs notes</h3>
-<div class="outline-text-3" id="text-org4cec7db">
+<div id="outline-container-org096ee27" class="outline-3">
+<h3 id="org096ee27">emacs notes</h3>
+<div class="outline-text-3" id="text-org096ee27">
 <ul class="org-ul">
 <li><code>toggle-debug-on-quit</code> for stacktraces of hung commands</li>
 <li>pgtk enabled <code>broadwayd</code> port 8080 with apps env var <code>GDK_BACKEND=broadway</code> (deprecated in GTK 5)</li>
@@ -44,9 +44,10 @@
 <li>signal-cli integration init <code>signal-cli link --name device_name | head -1 | qrencode --type=UTF8</code></li>
 <li>guile scheme port of emacs lisp <a href="https://codeberg.org/ramin_hal9001/gypsum/">https://codeberg.org/ramin_hal9001/gypsum/</a></li>
 <li>guile-emacs project <a href="https://git.hcoop.net/bpt/emacs.git">https://git.hcoop.net/bpt/emacs.git</a></li>
+<li>literal org blocks for artist mode by using <code>#+BEGIN_EXAMPLE</code> and <code>#+END_EXAMPLE</code> with each line starting with a colon then a space (avoid special chars)</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgcb9a2b9">(use-package! signal-msg ; https://github.com/AsamK/signal-cli
+<pre class="src src-emacs-lisp" id="orgbafcee7">(use-package signal-msg ; https://github.com/AsamK/signal-cli
   :commands (signal-msg-new-message) ; jam/signal-msg-rec
   :config (setq signal-msg-username (alist-get 'secret (auth-source-pass-parse-entry "signal/account"))
                 signal-msg-number (alist-get 'secret (auth-source-pass-parse-entry "signal/phone")))
@@ -88,7 +89,7 @@
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org3f624e0">;;;###autoload
+<pre class="src src-emacs-lisp" id="org69b2545">;;;###autoload
 (defun jam/guix-env()
   "Guix variables for local guix daemon/client"
   (interactive)
@@ -103,8 +104,10 @@
   (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "guix") "bin"))))
 </pre>
 </div>
+
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org92e0d1d">(use-package newsticker
+<pre class="src src-emacs-lisp" id="org03d22b5">; rss/atom feed reader
+(use-package newsticker
   :ensure nil ; built-in
   :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
   :bind (:map jam/open ("n" . newsticker-treeview)
@@ -127,6 +130,40 @@
         newsticker-url-list-defaults nil
         newsticker-url-list '(("styx" "https://odysee.com/$/rss/@Styxhexenhammer666:2"))))
 
+;debbugs: track emacs bugs (guix moved to forejo). alternative is bookmarking websites/mailing lists
+(use-package debbugs
+  ;:pin gnu
+  :bind (:map jam/search ("b" . debbugs-gnu-bugs)); bug number search
+  :commands (debbugs-gnu debbugs-gnu-tagged debbugs-org debbugs-org-tagged debbugs-org-mode debbugs-gnu-bugs debbugs-gnu-guix-search debbugs-org-guix-search)
+  :config ;(setq org-link-elisp-confirm-function nil)
+  (setq debbugs-gnu-default-packages '("guix-patches"))
+  (require 'debbugs-guix) (require 'debbugs-org) (require 'debbugs-gnu) (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
+
+;combobulate?: structural editing. alternative is regex
+(use-package combobulate
+  :init (setq combobulate-key-prefix "C-c e")
+  :hook (((python-ts-mode yaml-ts-mode) . combobulate-mode))
+  :vc (:url "https://github.com/mickeynp/combobulate" :rev :newest) ; install from source with package.el or url-copy-file
+  :load-path ("/gnu/git/combobulate"))
+
+;eglot-x?: rust-analyzer extensions for memory layout and structural-search-replace. alternative is to copy the functions
+(use-package eglot-x
+  :after eglot
+  :config (eglot-x-setup)
+  :vc (:url "https://github.com/nemethf/eglot-x" :rev :newest))
+
+;atomic-chrome?: counterpart to https://github.com/KarimAziev/chrome-emacs for using emacs to edit browser buffers. alternative is copy-paste
+(use-package atomic-chrome
+  :vc (:url "https://github.com/KarimAziev/atomic-chrome" :rev "3387284d8789cf1d2a54425019a27f2e099b80d5")
+  :bind (:map jam/toggle ("b" . atomic-chrome-toggle-server))
+  :commands (atomic-chrome-start-server atomic-chrome-toggle-server)
+  :config
+  (setq-default atomic-chrome-buffer-open-style 'frame)
+  (setq-default atomic-chrome-auto-remove-file t)
+  (setq-default atomic-chrome-url-major-mode-alist
+                '(("github.com" . gfm-mode)
+                  ("gitlab.com" . gfm-mode)))
+  (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
 </pre>
 </div>
 
@@ -138,16 +175,16 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-org161a704" class="outline-4">
-<h4 id="org161a704">org-mode notes</h4>
-<div class="outline-text-4" id="text-org161a704">
+<div id="outline-container-org3e4fe22" class="outline-4">
+<h4 id="org3e4fe22">org-mode notes</h4>
+<div class="outline-text-4" id="text-org3e4fe22">
 <ul class="org-ul">
-<li>noweb can link code verbatium with <a id="org3fbd257"></a> or evaluate it with <a id="org5ec8eac"></a>()</li>
+<li>noweb can link code verbatium with <a id="orgb1755ec"></a> or evaluate it with <a id="orgb015a6f"></a>()</li>
 <li><code>#+INCLUDE "file.org::selector" :only-contents t</code> to select heading contents to include from other files</li>
 <li>disable tangling with <code>:tangle no</code> on src blocks</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgfb8b218">(ignore-errors
+<pre class="src src-emacs-lisp" id="org57f443f">(ignore-errors
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (readme (concat base-dir (file-name-as-directory "..") (file-name-as-directory "..") "README.org"))
          (readme-time (file-attribute-modification-time (file-attributes readme)))
@@ -159,10 +196,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgb380314" class="outline-4">
-<h4 id="orgb380314">emacs config notes</h4>
-<div class="outline-text-4" id="text-orgb380314">
+<div id="outline-container-orgdc5cd5b" class="outline-4">
+<h4 id="orgdc5cd5b">emacs config notes</h4>
+<div class="outline-text-4" id="text-orgdc5cd5b">
 <ul class="org-ul">
+<li>installs to <code>${XDG_CONFIG_HOME}/emacs</code></li>
 <li>early-init will use guix-home packages if emacs package directory exists inside it otherwise uses use-package to download</li>
 <li>Pure elisp instead of makefiles and shell scripts
 <ul class="org-ul">
@@ -255,9 +293,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgbdb782d" class="outline-3">
-<h3 id="orgbdb782d">emacs-config README</h3>
-<div class="outline-text-3" id="text-orgbdb782d">
+<div id="outline-container-org6200083" class="outline-3">
+<h3 id="org6200083">emacs-config README</h3>
+<div class="outline-text-3" id="text-org6200083">
 <p>
 This configuration is for emacs &gt;= 30
 </p>
@@ -279,14 +317,6 @@ magit/forge/code-review: git/forge manipulation. alternative is built-in vc that
 </p>
 
 <p>
-debbugs: track emacs/guix bugs. alternative is bookmarking websites/mailing lists
-</p>
-
-<p>
-transmission: manage torrent client. alternative is cli
-</p>
-
-<p>
 org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
 </p>
 
@@ -303,43 +333,31 @@ osm: Map tile viewer. alternative is web browser viewing
 </p>
 
 <p>
-gptel: interface with llms. alternative is llm package or cli
+gptel/llm-tool-collection: interface with llms. alternative is llm package or cli
 </p>
 
 <p>
 dape/geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter: language specific modes with more than regex.
 </p>
-
-<p>
-combobulate?: structural editing. alternative is regex
-</p>
-
-<p>
-eglot-x?: rust-analyzer extensions for memory layout and structural-search-replace. alternative is to copy the functions
-</p>
-
-<p>
-atomic-chrome?: counterpart to <a href="https://github.com/KarimAziev/chrome-emacs">https://github.com/KarimAziev/chrome-emacs</a> for using emacs to edit browser buffers. alternative is copy-paste
-</p>
 </div>
-<div id="outline-container-org3ba6ba6" class="outline-4">
-<h4 id="org3ba6ba6">Clone</h4>
-<div class="outline-text-4" id="text-org3ba6ba6">
+<div id="outline-container-orgda6025e" class="outline-4">
+<h4 id="orgda6025e">Clone</h4>
+<div class="outline-text-4" id="text-orgda6025e">
 <p>
 Branch names diverging and "." complicate fetching the correct heads.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org0c3719d">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
+<pre class="src src-sh" id="orgd3d596b">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
 # get branch heads
 git submodule foreach 'git checkout master'
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org73dc335" class="outline-4">
-<h4 id="org73dc335">Tangle Install</h4>
-<div class="outline-text-4" id="text-org73dc335">
+<div id="outline-container-orgfd39635" class="outline-4">
+<h4 id="orgfd39635">Tangle Install</h4>
+<div class="outline-text-4" id="text-orgfd39635">
 <p>
 Emacs untangles the script from the org file (using noweb to copy/eval code) while expanding INCLUDE directives.
 Tangling is rerun when the org file is newer than the script (if present) and the html file.
@@ -348,62 +366,62 @@ The wrapper is needed for org-roam, org-ids and html export tags.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org6b56f93">pwsh make-el.ps1 install
+<pre class="src src-sh" id="orgb5b1c56">pwsh make-el.ps1 install
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org9327ec1" class="outline-4">
-<h4 id="org9327ec1">Link</h4>
-<div class="outline-text-4" id="text-org9327ec1">
+<div id="outline-container-org0dd60e6" class="outline-4">
+<h4 id="org0dd60e6">Link</h4>
+<div class="outline-text-4" id="text-org0dd60e6">
 <p>
 Installable org files tangle to a script of the same name for installation.
 The script needs itself and emacs on the PATH or CWD.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org8d57442">(ignore-errors
+<pre class="src src-emacs-lisp" id="orgaf21d7a">(ignore-errors
       (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org1916f14" class="outline-4">
-<h4 id="org1916f14">Run</h4>
-<div class="outline-text-4" id="text-org1916f14">
+<div id="outline-container-orge76ac09" class="outline-4">
+<h4 id="orge76ac09">Run</h4>
+<div class="outline-text-4" id="text-orge76ac09">
 <p>
 The one line org-mode sesquicolon 'shebang' is a multipart shell/powershell wrapper.
 Passed arguments to the elisp script are available by argv (ignoring “–” and “$@”).
 To run with powershell use the same wrapper format with a .ps1 extension.
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org56cb026">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
+<pre class="src src-sh" id="orgdc0a2b7">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orga2eb0b9" class="outline-4">
-<h4 id="orga2eb0b9">Cherry Picking</h4>
-<div class="outline-text-4" id="text-orga2eb0b9">
+<div id="outline-container-org9e3382d" class="outline-4">
+<h4 id="org9e3382d">Cherry Picking</h4>
+<div class="outline-text-4" id="text-org9e3382d">
 <p>
 Copy files by url with emacs
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp" id="org4dbf455">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
+<pre class="src src-elisp" id="org869fc00">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
 (url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
 (call-process "git" nil t nil "clone" "https://github.com/jamartin9/emacs-config")
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgbda3cbe" class="outline-4">
-<h4 id="orgbda3cbe">Site</h4>
-<div class="outline-text-4" id="text-orgbda3cbe">
+<div id="outline-container-org5e83776" class="outline-4">
+<h4 id="org5e83776">Site</h4>
+<div class="outline-text-4" id="text-org5e83776">
 <p>
 Clone the site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org94e3b2b">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
+<pre class="src src-sh" id="org303899f">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
 </pre>
 </div>
 
@@ -411,7 +429,7 @@ Clone the site
 Build the updated site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org2ebae86">pwsh make-el.ps1 site
+<pre class="src src-sh" id="orgfb15e5a">pwsh make-el.ps1 site
 </pre>
 </div>
 </div>

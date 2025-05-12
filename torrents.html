@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org34d71b5">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgfa72a06">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org483d92e" class="outline-2">
-<h2 id="org483d92e">Torrents</h2>
-<div class="outline-text-2" id="text-org483d92e">
+<div id="outline-container-org9dad346" class="outline-2">
+<h2 id="org9dad346">Torrents</h2>
+<div class="outline-text-2" id="text-org9dad346">
 </div>
-<div id="outline-container-org3e51d78" class="outline-3">
-<h3 id="org3e51d78">torrent notes</h3>
-<div class="outline-text-3" id="text-org3e51d78">
+<div id="outline-container-org48f3ad4" class="outline-3">
+<h3 id="org48f3ad4">torrent notes</h3>
+<div class="outline-text-3" id="text-org48f3ad4">
 <ul class="org-ul">
 <li>use magnet links that reference public tracker dht hashes</li>
 <li>crawl dht or peer exchange for discovery</li>
@@ -52,6 +52,33 @@
 <li>min request size 16 KiB
 <ul class="org-ul">
 <li><a href="https://gitlab.com/boredcaveman/p2psearch">set page size to 16KiB when using sql.js-httpvfs</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb72644d" class="outline-3">
+<h3 id="orgb72644d">transmission notes</h3>
+<div class="outline-text-3" id="text-orgb72644d">
+<ul class="org-ul">
+<li><code>settings.json</code> set <code>"start-added-torrents": false,</code> to start torrents paused</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org09345fe" class="outline-3">
+<h3 id="org09345fe">deluge notes</h3>
+<div class="outline-text-3" id="text-org09345fe">
+<ul class="org-ul">
+<li>supports BEP55 for hole punching with utp(w/udp)</li>
+<li>install config plugin <a href="https://github.com/ratanakvlun/deluge-ltconfig/releases">https://github.com/ratanakvlun/deluge-ltconfig/releases</a>
+<ul class="org-ul">
+<li>set performance default profile</li>
+<li>set <code>"validate_https_trackers": false</code></li>
+<li>set <code>"use_write_cache": false</code> for ssd</li>
+<li>peer<sub>turnover</sub> to 0</li>
+<li>max concurrent http announces to 75</li>
+<li>coalesce reads/writes</li>
+<li>checking mem usage to 2048</li>
+<li>announce to all trackers</li>
 </ul></li>
 </ul>
 </div>
