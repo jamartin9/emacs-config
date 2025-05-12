@@ -27,7 +27,7 @@ Branch names diverging and "." complicate fetching the correct heads.
 
 #+NAME: clone
 #+BEGIN_SRC sh :tangle no
-git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
+git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 ssh://git@codeberg.org/jamartin9/emacs-config.git
 # get branch heads
 git submodule foreach 'git checkout master'
 #+END_SRC
@@ -66,9 +66,9 @@ To run with powershell use the same wrapper format with a .ps1 extension.
 Copy files by url with emacs
 #+NAME: elisp-copy
 #+BEGIN_SRC elisp :tangle no
-(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
-(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
-(call-process "git" nil t nil "clone" "https://github.com/jamartin9/emacs-config")
+(url-copy-file "https://codeberg.org/jamartin9/emacs-config/raw/branch/master/init.el" "init.el")
+(url-copy-file "https://codeberg.org/jamartin9/emacs-config/raw/branch/master/early-init.el" "early-init.el")
+(call-process "git" nil t nil "clone" "https://codeberg.org/jamartin9/emacs-config")
 #+END_SRC
 
 ** Site
