@@ -19,6 +19,6 @@ package-quickstart.el
 package-quickstart.elc
 # directories
 /.local/
-/gh-pages/
+/pages/
 /eln-cache/
 /elpa/
