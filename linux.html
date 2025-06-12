@@ -9,25 +9,25 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0dcc8b5">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc462762">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org0b1f903" class="outline-2">
-<h2 id="org0b1f903">Linux</h2>
-<div class="outline-text-2" id="text-org0b1f903">
+<div id="outline-container-org23db548" class="outline-2">
+<h2 id="org23db548">Linux</h2>
+<div class="outline-text-2" id="text-org23db548">
 <p>
 Finally some hardware support!
 </p>
 </div>
-<div id="outline-container-orge069bc7" class="outline-3">
-<h3 id="orge069bc7"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
+<div id="outline-container-orgc3c1653" class="outline-3">
+<h3 id="orgc3c1653"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
 </div>
-<div id="outline-container-org427ef47" class="outline-3">
-<h3 id="org427ef47">Kernel</h3>
-<div class="outline-text-3" id="text-org427ef47">
+<div id="outline-container-org1e340be" class="outline-3">
+<h3 id="org1e340be">Kernel</h3>
+<div class="outline-text-3" id="text-org1e340be">
 <ul class="org-ul">
 <li>added ebpf netkit in 6.8 (faster than virtual eth)</li>
 <li>removed sysctl system call in 5.5</li>
@@ -51,12 +51,12 @@ Finally some hardware support!
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd4f586f" class="outline-3">
-<h3 id="orgd4f586f">pam</h3>
+<div id="outline-container-orgcd8b33f" class="outline-3">
+<h3 id="orgcd8b33f">pam</h3>
 </div>
-<div id="outline-container-orgb404487" class="outline-3">
-<h3 id="orgb404487">misc</h3>
-<div class="outline-text-3" id="text-orgb404487">
+<div id="outline-container-org0880151" class="outline-3">
+<h3 id="org0880151">misc</h3>
+<div class="outline-text-3" id="text-org0880151">
 <ul class="org-ul">
 <li><code>faillock --user $USER --reset</code> for attempt reset</li>
 <li><code>LD_LIBRARY_PATH</code> and <code>LD_PRELOAD</code> environment variables override library location and load order respectively.
@@ -67,7 +67,10 @@ Finally some hardware support!
 <li>each shared lib is searched for in the following order:  rpath, libary path, runpath, ld cache, system lib (skipped if compiled with <code>ld -z nodefaultlib</code>)</li>
 </ul></li>
 </ul></li>
-<li>strace for system call debugging</li>
+<li>strace for system call debugging
+<ul class="org-ul">
+<li>ex <code>strace -e trace=clone -e fault=clone:error=EGAIN</code></li>
+</ul></li>
 <li><code>smartctl</code> or <code>gsmartcontrol</code> and <code>nvme smart-log /dev/nvme0</code> for disk stats</li>
 <li><code>iftop</code> for network interface rates</li>
 <li>netconsole can be configured for last gasp udp packet sending(spanner, titus)</li>

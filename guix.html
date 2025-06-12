@@ -9,21 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgbca253c">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org20bac54">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgb149b35" class="outline-2">
-<h2 id="orgb149b35">Guix</h2>
-<div class="outline-text-2" id="text-orgb149b35">
+<div id="outline-container-org4339275" class="outline-2">
+<h2 id="org4339275">Guix</h2>
+<div class="outline-text-2" id="text-org4339275">
 </div>
-<div id="outline-container-orge3691c2" class="outline-3">
-<h3 id="orge3691c2">Link manifest</h3>
-<div class="outline-text-3" id="text-orge3691c2">
+<div id="outline-container-org2440340" class="outline-3">
+<h3 id="org2440340">Link manifest</h3>
+<div class="outline-text-3" id="text-org2440340">
 <div class="org-src-container">
-<pre class="src src-elisp" id="orgacf0272">(ignore-errors
+<pre class="src src-elisp" id="org1f384d4">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -34,11 +34,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org0b6d95e" class="outline-3">
-<h3 id="org0b6d95e">User manifest</h3>
-<div class="outline-text-3" id="text-org0b6d95e">
+<div id="outline-container-org2f57b07" class="outline-3">
+<h3 id="org2f57b07">User manifest</h3>
+<div class="outline-text-3" id="text-org2f57b07">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org26ca34a">;; Manifest for development env
+<pre class="src src-scheme" id="orgb1f8e8c">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
@@ -178,9 +178,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org54e3601" class="outline-3">
-<h3 id="org54e3601">guix notes</h3>
-<div class="outline-text-3" id="text-org54e3601">
+<div id="outline-container-orgc10a0f7" class="outline-3">
+<h3 id="orgc10a0f7">guix notes</h3>
+<div class="outline-text-3" id="text-orgc10a0f7">
 <ul class="org-ul">
 <li><a href="https://git.genenetwork.org/guix-north-america/about/">https://git.genenetwork.org/guix-north-america/about/</a> for NA substitute server ?</li>
 <li>cuirass ci saves gc roots in <code>/var/guix/gcroots/profiles/per-user/cuirass/cuirass</code> for default of 30 days
@@ -255,7 +255,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org5539800">network={
+<pre class="src src-conf" id="org12a9a08">network={
   ssid="ssid-name"
   key_mgmt=WPA-PSK
   psk="unencrypted passphrase"
@@ -279,7 +279,7 @@
 <li>clone config, copy channels to <code>~/.config/guix/</code>, <code>guix pull --no-check-certificate</code> then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org8cbbd36">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="orgbb8fa01">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -304,13 +304,63 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgc1b4866">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org71e5bd0">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
 GUIX_CONFIGURATION_DIRECTORY=$XDG_CONFIG_HOME/guix/etc
 GUIX_LOCPATH=$XDG_DATA_HOME/guix/var/guix/profiles/per-user/root/guix-profile/lib/locale
 NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-guile" id="org041588c">
+(define guix-service ; add type for portable guix package
+  (shepherd-service
+   (provision '(guix))
+   (start #~(make-forkexec-constructor `("guix-daemon" ,(string-append "--listen=" (if (getenv "XDG_DATA_HOME") (getenv "XDG_DATA_HOME")
+                                                                                       (string-append (getenv "HOME")
+                                                                                                      file-name-separator-string
+                                                                                                      ".local"
+                                                                                                      file-name-separator-string
+                                                                                                      "share"))
+                                                                       file-name-separator-string
+                                                                       "guix"
+                                                                       file-name-separator-string
+                                                                       "var"
+                                                                       file-name-separator-string
+                                                                       "guix"
+                                                                       file-name-separator-string
+                                                                       "daemon-socket"
+                                                                       file-name-separator-string
+                                                                       "socket") ;;"--build-users-group=guixbuild"
+                                         "--disable-chroot")
+                                       #:environment-variables `(,(string-append "NIX_STORE=" (if (getenv "XDG_DATA_HOME")
+                                                                                                 (getenv "XDG_DATA_HOME")
+                                                                                                  (string-append (getenv "HOME")
+                                                                                                                 file-name-separator-string
+                                                                                                                 ".local"
+                                                                                                                 file-name-separator-string
+                                                                                                                 "share"))
+                                                                                 file-name-separator-string
+                                                                                 "guix"
+                                                                                 file-name-separator-string
+                                                                                 "gnu"
+                                                                                 file-name-separator-string
+                                                                                 "store")
+                                                                 ,@(environ))))
+   (stop #~(make-kill-destructor))
+   (auto-start? #f)))
+
+(define ssh-service ; writes to /etc/dropbear for keys
+  (set-fields       ; least-authority-wrapper or fork+exec-command/container or run-container to contain
+   (car ((@@ (gnu services ssh) dropbear-shepherd-service) (dropbear-configuration (port-number 2222)
+                                                                                   (syslog-output? #f)
+                                                                                   (password-authentication? #f)
+                                                                                   (pid-file "/tmp/dropbear.pid"))))
+   ((shepherd-service-requirement) '())
+   ((shepherd-service-auto-start?) #f)))
 </pre>
 </div>
 </div>

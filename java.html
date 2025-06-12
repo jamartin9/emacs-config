@@ -9,21 +9,22 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4baf9d0">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org7b0a9a2">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org6f3c779" class="outline-2">
-<h2 id="org6f3c779">java</h2>
-<div class="outline-text-2" id="text-org6f3c779">
+<div id="outline-container-orgc89f4ec" class="outline-2">
+<h2 id="orgc89f4ec">java</h2>
+<div class="outline-text-2" id="text-orgc89f4ec">
 <ul class="org-ul">
 <li><code>alias javaListProps="java -server -XX:+PrintFlagsFinal -XX:+UnlockDiagnosticVMOptions --version"</code></li>
 <li><code>alias javaToolOptions="export JAVA_TOOL_OPTIONS='-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=heapdump.hprof -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true -Xlog:gc:gc.log:utctime,uptime,tid,level:filecount=10,filesize=128m -XX:NativeMemoryTracking=detail -XX:+PreserveFramePointer'"</code></li>
 <li><code>-XX:+UseTransparentHugePages -XX:+AlwaysPreTouch</code></li>
 <li><code>-XX:+PerfDisableSharedMem</code></li>
 <li><code>-XX:+UseStringDeduplication</code></li>
+<li><code>-XX:+UnlockExperimentalVMOptions -XX:+UseCompactObjectHeaders</code></li>
 <li>ZGC takes ~3% of heap</li>
 <li>project leyden for already verified class loading</li>
 <li>6 months release</li>
@@ -66,11 +67,11 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-org6306c15" class="outline-3">
-<h3 id="org6306c15">spark jetty websocket wrapper</h3>
-<div class="outline-text-3" id="text-org6306c15">
+<div id="outline-container-orge0aa6fe" class="outline-3">
+<h3 id="orge0aa6fe">spark jetty websocket wrapper</h3>
+<div class="outline-text-3" id="text-orge0aa6fe">
 <div class="org-src-container">
-<pre class="src src-java" id="org509e358">import io.reactivex.*;
+<pre class="src src-java" id="orga79e911">import io.reactivex.*;
 import org.eclipse.jetty.websocket.api.Session;
 import wrapper.SocketWrapper;
 import static spark.Spark.*;
@@ -105,7 +106,7 @@ public class Main{
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-java" id="org1f52ee3">package wrapper;
+<pre class="src src-java" id="org3575ffb">package wrapper;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;

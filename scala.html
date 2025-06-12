@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>scala</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="org-default.css" />
+</head>
+<body>
+<div id="content" class="container">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgdabb118">
+<ul class="org-ul">
+<li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
+<li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
+</ul>
+</nav>
+<div id="outline-container-org4164a2d" class="outline-2">
+<h2 id="org4164a2d">scala</h2>
+<div class="outline-text-2" id="text-org4164a2d">
+</div>
+<div id="outline-container-org087b462" class="outline-3">
+<h3 id="org087b462">scala notes</h3>
+<div class="outline-text-3" id="text-org087b462">
+<ul class="org-ul">
+<li>type level programming using types in a tuple</li>
+<li>override apply for the function syntax(functors instead of constructors?)</li>
+<li>'tagless final' is a design pattern that allows type checking interfaces at compile via an algebra (trait) of given higher kinded case class of type Algebra[Expression].</li>
+<li>rcardin/yaes for 'direct style' scala based on phatom types and capabilities</li>
+<li>for comprehensions for monad, io effect systems or futures</li>
+<li>coursier for cli management
+<ul class="org-ul">
+<li>native-image need -march=compatability</li>
+<li><code>coursier install metals</code> then <code>coursier install bloop</code>
+<ul class="org-ul">
+<li><code>guix shell --network --container --emulate-fhs bash which zlib sed openjdk:jdk openjdk ncurses coreutils findutils curl grep nss-certs gcc-toolchain pkg-config git</code>
+<ul class="org-ul">
+<li>zlib/which for scala and sed for sbt</li>
+</ul></li>
+<li>dev-ex: <code>guix shell --preserve='^DISPLAY$' --preserve='^XAUTHORITY$' --network --container --emulate-fhs --share=$HOME/temphome=$HOME --expose="${XAUTHORITY}" --share=$HOME/.guix-home=$HOME/.guix-home --share=$HOME/.config/emacs=$HOME/.config/emacs --share=/gnu/store=/gnu/store bash which zlib sed openjdk:jdk openjdk coreutils curl grep nss-certs gcc-toolchain pkg-config git openssh emacs-next aspell aspell-dict-en gnupg guile tree-sitter-rust tree-sitter-yaml tree-sitter-python tree-sitter-scala emacs-gptel emacs-eat emacs-debbugs emacs-org-roam emacs-guix emacs-osm emacs-minions emacs-transmission emacs-undo-tree emacs-dape emacs-macrostep-geiser emacs-geiser-guile emacs-flymake-guile emacs-pyvenv emacs-scala-mode emacs-sbt-mode emacs-scala-ts-mode</code></li>
+</ul></li>
+<li>start metals <code>coursier bootstrap --java-opt -XX:+UseStringDeduplication --java-opt -Dmetals.startMcpServer=true org.scalameta:metals_2.13:1.5.2 -o metals -f</code>
+<ul class="org-ul">
+<li>Set port with in the <code>.metals/mcp.json</code> config server port <code>{"metals": { "startMcpServer": true, "mcpPort": 9040 }}</code> ?</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-json" id="org9a97a49">{
+  "servers": {
+    "/gnu/git/scala-test/scala-3-project-template/-metals": {
+      "url": "http://localhost:39497/sse"
+    }
+  }
+}
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-scala" id="org82712eb">val scala3Version = "3.7.0"
+lazy val root = project
+  .in(file("."))
+  .settings(
+    name := "Scala 3 Project Template",
+    version := "0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    libraryDependencies ++= Seq( // %% adds _3 for scala versions
+      "com.lihaoyi" %% "upickle" % "4.2.1",
+      "com.lihaoyi" %% "upickle-implicits-named-tuples" % "4.2.1", // upickle named tuples as json
+      "org.scala-lang" %% "scala2-library-cc-tasty-experimental" % "3.7.0", // add capture checking to stdlib
+      "org.scalameta" %% "munit" % "1.0.0" % Test))
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-scala" id="org850a0f4">import language.experimental.captureChecking
+case class Pooled(count: Int, msg: String):
+  override def toString: String = count.toString + msg
+val stack = scala.collection.mutable.ArrayBuffer[Pooled]()
+var nextFree = 0
+def withFreshPooled[T](op: Pooled^ =&gt; T, msg: String): T = // remove ^ and val poolRejectClosure = withFreshPooled(pooled =&gt; () =&gt; pooled.toString ) will print garbage instead of be rejected at compile time ex: Main$package$$$Lambda/0x00007f0e8d340ee0@1ae557e0
+  if nextFree &gt;= stack.size then stack.append(new Pooled(nextFree+1, msg)) // grow stack by 1 if we need more room and save out count/index++ objects are reused
+  val pooled = stack(nextFree)
+  nextFree = nextFree + 1
+  val ret = op(pooled)
+  nextFree = nextFree - 1
+  ret
+
+import upickle.default.ReadWriter.join
+import upickle.implicits.namedTuples.default.strict.given
+@main def hello(): Unit =
+  println(msg)
+  val mytuple = ( name = "bob", messages = Seq(( verb = "ing", content = "bazinga" ), ( verb = "ing", content = "bazinga" )))
+  val json = upickle.default.write(mytuple)
+  println(json)
+  println("START "+stack.size)// Capture checking stack allocation
+  val poolAcceptClosure2 = withFreshPooled( pooled =&gt; {
+    println("PoolOne: " + pooled.toString())
+    withFreshPooled( pooled =&gt; {
+      pooled.toString }, "innerPool")
+  }, "outerPool") //; println("NEXT-AFTER: " + nextFree); val poolAcceptClosure = withFreshPooled( pooled =&gt; { pooled.toString }, "outerPool1" ); println(poolAcceptClosure)
+  println("PoolTwo: "+ poolAcceptClosure2)
+  println("END "+stack.size)
+  program[Id]// Run with Id (side effects)
+  val pretty: Pretty[Unit] = program[Pretty] // Run with Pretty (pure, accumulates output)
+  println(pretty)
+def msg = "I was compiled by Scala 3. :)"
+
+// Minimal Monad type class
+trait Monad[F[_]]:
+  extension [A](fa: F[A])
+    def flatMap[B](f: A =&gt; F[B]): F[B]
+    def map[B](f: A =&gt; B): F[B]
+// Define the capability (type class) for Console
+trait Console[F[_]]:
+  def putStrLn(line: String): F[Unit]
+  def getStrLn: F[String]
+// The tagless final program is abstract over F and requires a Console[F] capability
+def program[F[_]: Monad](using Console[F]): F[Unit] =
+  for
+    _    &lt;- summon[Console[F]].putStrLn("What is your name?")
+    name &lt;- summon[Console[F]].getStrLn
+    _    &lt;- summon[Console[F]].putStrLn(s"Hello, $name!")
+  yield ()
+
+// Example interpreter
+type Id[A] = A
+given Console[Id] with
+  def putStrLn(line: String): Id[Unit] = println(line)
+  def getStrLn: Id[String] = scala.io.StdIn.readLine()
+given Monad[Id] with
+  extension [A](fa: Id[A])
+    def flatMap[B](f: A =&gt; Id[B]): Id[B] = f(fa)
+    def map[B](f: A =&gt; B): Id[B] = f(fa)
+
+// Example interpreter for accumulating output as a List[String]
+// Pretty interpreter: accumulates a log of operations
+case class Pretty[A](log: List[String], value: A)
+given Monad[Pretty] with
+  extension [A](fa: Pretty[A])
+    def flatMap[B](f: A =&gt; Pretty[B]): Pretty[B] =
+      val Pretty(log1, a) = fa
+      val Pretty(log2, b) = f(a)
+      Pretty(log1 ++ log2, b)
+    def map[B](f: A =&gt; B): Pretty[B] =
+      Pretty(fa.log, f(fa.value))
+given Console[Pretty] with
+  def putStrLn(line: String): Pretty[Unit] =
+    Pretty(List(s"putStrLn($line)"), ())
+  def getStrLn: Pretty[String] =
+    Pretty(List("getStrLn"), "&lt;input&gt;")
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

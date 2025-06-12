@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4bbab9c">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge1c6079">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgdfba8e8" class="outline-2">
-<h2 id="orgdfba8e8">Emacs</h2>
-<div class="outline-text-2" id="text-orgdfba8e8">
+<div id="outline-container-org31b01d9" class="outline-2">
+<h2 id="org31b01d9">Emacs</h2>
+<div class="outline-text-2" id="text-org31b01d9">
 </div>
-<div id="outline-container-org096ee27" class="outline-3">
-<h3 id="org096ee27">emacs notes</h3>
-<div class="outline-text-3" id="text-org096ee27">
+<div id="outline-container-org56bce7f" class="outline-3">
+<h3 id="org56bce7f">emacs notes</h3>
+<div class="outline-text-3" id="text-org56bce7f">
 <ul class="org-ul">
 <li><code>toggle-debug-on-quit</code> for stacktraces of hung commands</li>
 <li>pgtk enabled <code>broadwayd</code> port 8080 with apps env var <code>GDK_BACKEND=broadway</code> (deprecated in GTK 5)</li>
@@ -46,8 +46,40 @@
 <li>guile-emacs project <a href="https://git.hcoop.net/bpt/emacs.git">https://git.hcoop.net/bpt/emacs.git</a></li>
 <li>literal org blocks for artist mode by using <code>#+BEGIN_EXAMPLE</code> and <code>#+END_EXAMPLE</code> with each line starting with a colon then a space (avoid special chars)</li>
 </ul>
+<pre class="example" id="orgb7a8337">
+:
+:
+:
+:                               ----------                                     \
+:                              /          \--------|                          | \                  |
+:                             /                    |                          / |                /-|                                                                                            -----
+:                            /                     |                         /   \              /   \                              /-\                                                ---------/   |
+:                           /                     /                         |     \           /-    |                           ---   \-                                    ---------/             |
+:                          |         o------------|                         /      \         /       \                         |        \                             +----/                       |
+:                          /         /            \                        |       |        /        |                         /         \                            |                            |
+:                         /         |                                      /        \     /-         |                        |           \-                          |                  /---------+
+:                        /          /                                     /          \   /            \                       /             \                          \              /--
+:                       /          |                                     |           | /-             |                      /               \-                        |           /--
+:                      /          -+--------------|                      /            X                \                    |      --          \                       |         +-
+:                     /                           |                     /                              |                    /     |  \--        \                      |         |
+:                    /                            |                    |         |                     |                   |      /     \-       \-                    |         \
+:                   /                             |                    /         ||         -+          \                  /     /--------\       \                   \         |
+:                  /                             /                    |         / \      --/ |          |                 |                         \                   |         |
+:                 |                              |                    /         |  \  --/    |           \                /                          \-                 \          -\
+:                 /            oo-----------------                   /          |   \/       |           |               /                X            \                 \           \
+:                /             |                                    |          /             |           |              |               -/ -\           \-                \           -\
+:               /              |                                    /          |             \            \             /             -/     -\           \                \            \----------------------+
+:              /               |                                   /           |              |           |            |            -/         \           \               |                                   |
+:             /                +------------------+               |           /               |            \           /          -/            -\          \-              \                                  |
+:            /                                    |               /          -+               |         ---+          /         -/                -\      -----              --                                |
+:           -+                                    |              |       ---/                 |   -----/              o    ----/                    \----/                     \-                             /+
+:            |                                   /               /   ---/                     +--/                     \--/                                                      \--                        /-
+:           oo----------------\                  |             -o---/                                                                                                               \-                    /-
+:                              -------------------                                                                                                                                   \------------------/
+
+</pre>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgbafcee7">(use-package signal-msg ; https://github.com/AsamK/signal-cli
+<pre class="src src-emacs-lisp" id="orga0ac3da">(use-package signal-msg ; https://github.com/AsamK/signal-cli
   :commands (signal-msg-new-message) ; jam/signal-msg-rec
   :config (setq signal-msg-username (alist-get 'secret (auth-source-pass-parse-entry "signal/account"))
                 signal-msg-number (alist-get 'secret (auth-source-pass-parse-entry "signal/phone")))
@@ -89,7 +121,7 @@
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org69b2545">;;;###autoload
+<pre class="src src-emacs-lisp" id="orgd421cca">;;;###autoload
 (defun jam/guix-env()
   "Guix variables for local guix daemon/client"
   (interactive)
@@ -106,7 +138,7 @@
 </div>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org03d22b5">; rss/atom feed reader
+<pre class="src src-emacs-lisp" id="org9ec4c9c">; rss/atom feed reader
 (use-package newsticker
   :ensure nil ; built-in
   :commands (newsticker-start newsticker-treeview newsticker-plainview newsticker-stop)
@@ -164,6 +196,31 @@
                 '(("github.com" . gfm-mode)
                   ("gitlab.com" . gfm-mode)))
   (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
+
+(use-package llm-tool-collection; instead of mcp
+  :after (gptel)
+  :vc (:url "https://github.com/skissue/llm-tool-collection" :rev "304a06aacbe77ce0ee5f2a6c9063d4a3a4bfda22")
+  :config ;(apply #'gptel-make-tool (llm-tool-collection-get "read_file"))
+  (mapcar (apply-partially #'apply #'gptel-make-tool) (llm-tool-collection-get-category "filesystem")))
+
+
+;;(push '(scala-mode . scala-ts-mode) major-mode-remap-alist)
+;; :hook (((scala-ts-mode scala-mode) . eglot-ensure)) ;eglot
+;;(add-to-list 'eglot-server-programs `((scala-mode scala-ts-mode) . ,(alist-get 'scala-mode eglot-server-programs)))
+(use-package scala-mode
+  :mode ("\\.scala\\'" . scala-mode)
+  :interpreter ("scala" . scala-mode)
+  :commands (scala-mode))
+
+(use-package scala-ts-mode
+  :mode ("\\.scala\\'" . scala-ts-mode)
+  :interpreter ("scala" . scala-ts-mode)
+  :config (setq eglot-workspace-configuration '(:metals  (:startMcpServer t)));.dir-locals.el ;((scala-ts-mode . ((eglot-workspace-configuration . (:metals (:startMcpServer t))))))
+  :commands (scala-ts-mode))
+
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config (setq sbt:program-options '("-Dsbt.supershell=false")))
 </pre>
 </div>
 
@@ -175,16 +232,16 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-org3e4fe22" class="outline-4">
-<h4 id="org3e4fe22">org-mode notes</h4>
-<div class="outline-text-4" id="text-org3e4fe22">
+<div id="outline-container-orgcab9ac4" class="outline-4">
+<h4 id="orgcab9ac4">org-mode notes</h4>
+<div class="outline-text-4" id="text-orgcab9ac4">
 <ul class="org-ul">
-<li>noweb can link code verbatium with <a id="orgb1755ec"></a> or evaluate it with <a id="orgb015a6f"></a>()</li>
+<li>noweb can link code verbatium with <a id="org129370b"></a> or evaluate it with <a id="org1b0d5c0"></a>()</li>
 <li><code>#+INCLUDE "file.org::selector" :only-contents t</code> to select heading contents to include from other files</li>
 <li>disable tangling with <code>:tangle no</code> on src blocks</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org57f443f">(ignore-errors
+<pre class="src src-emacs-lisp" id="org9d2dcc8">(ignore-errors
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (readme (concat base-dir (file-name-as-directory "..") (file-name-as-directory "..") "README.org"))
          (readme-time (file-attribute-modification-time (file-attributes readme)))
@@ -196,9 +253,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgdc5cd5b" class="outline-4">
-<h4 id="orgdc5cd5b">emacs config notes</h4>
-<div class="outline-text-4" id="text-orgdc5cd5b">
+<div id="outline-container-org1f0cac1" class="outline-4">
+<h4 id="org1f0cac1">emacs config notes</h4>
+<div class="outline-text-4" id="text-org1f0cac1">
 <ul class="org-ul">
 <li>installs to <code>${XDG_CONFIG_HOME}/emacs</code></li>
 <li>early-init will use guix-home packages if emacs package directory exists inside it otherwise uses use-package to download</li>
@@ -293,9 +350,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org6200083" class="outline-3">
-<h3 id="org6200083">emacs-config README</h3>
-<div class="outline-text-3" id="text-org6200083">
+<div id="outline-container-org0d32496" class="outline-3">
+<h3 id="org0d32496">emacs-config README</h3>
+<div class="outline-text-3" id="text-org0d32496">
 <p>
 This configuration is for emacs &gt;= 30
 </p>
@@ -333,31 +390,31 @@ osm: Map tile viewer. alternative is web browser viewing
 </p>
 
 <p>
-gptel/llm-tool-collection: interface with llms. alternative is llm package or cli
+gptel/llm-tool-collection/mcp.el: interface with llms. alternative is llm package or cli
 </p>
 
 <p>
-dape/geiser-guile/pyvenv/(rust,yaml,python)-tree-sitter: language specific modes with more than regex.
+dape/geiser-guile/pyvenv/sbt/(rust,yaml,python,scala)-tree-sitter: language specific modes with more than regex.
 </p>
 </div>
-<div id="outline-container-orgda6025e" class="outline-4">
-<h4 id="orgda6025e">Clone</h4>
-<div class="outline-text-4" id="text-orgda6025e">
+<div id="outline-container-orgd1e9c0c" class="outline-4">
+<h4 id="orgd1e9c0c">Clone</h4>
+<div class="outline-text-4" id="text-orgd1e9c0c">
 <p>
 Branch names diverging and "." complicate fetching the correct heads.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgd3d596b">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 git@github.com:jamartin9/emacs-config.git
+<pre class="src src-sh" id="orge26d5a5">git clone --single-branch --recurse-submodules --shallow-submodules --depth=1 ssh://git@codeberg.org/jamartin9/emacs-config.git
 # get branch heads
 git submodule foreach 'git checkout master'
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgfd39635" class="outline-4">
-<h4 id="orgfd39635">Tangle Install</h4>
-<div class="outline-text-4" id="text-orgfd39635">
+<div id="outline-container-orgafed0c5" class="outline-4">
+<h4 id="orgafed0c5">Tangle Install</h4>
+<div class="outline-text-4" id="text-orgafed0c5">
 <p>
 Emacs untangles the script from the org file (using noweb to copy/eval code) while expanding INCLUDE directives.
 Tangling is rerun when the org file is newer than the script (if present) and the html file.
@@ -366,62 +423,62 @@ The wrapper is needed for org-roam, org-ids and html export tags.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orgb5b1c56">pwsh make-el.ps1 install
+<pre class="src src-sh" id="org7976a42">pwsh make-el.ps1 install
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org0dd60e6" class="outline-4">
-<h4 id="org0dd60e6">Link</h4>
-<div class="outline-text-4" id="text-org0dd60e6">
+<div id="outline-container-orgabe5848" class="outline-4">
+<h4 id="orgabe5848">Link</h4>
+<div class="outline-text-4" id="text-orgabe5848">
 <p>
 Installable org files tangle to a script of the same name for installation.
 The script needs itself and emacs on the PATH or CWD.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgaf21d7a">(ignore-errors
+<pre class="src src-emacs-lisp" id="org0fe1114">(ignore-errors
       (make-symbolic-link (file-name-directory (or load-file-name buffer-file-name)) (concat (file-name-as-directory (if (getenv "XDG_CONFIG_HOME") (getenv "XDG_CONFIG_HOME") (concat (file-name-as-directory (getenv "HOME")) ".config"))) "emacs")))
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orge76ac09" class="outline-4">
-<h4 id="orge76ac09">Run</h4>
-<div class="outline-text-4" id="text-orge76ac09">
+<div id="outline-container-orgc4b0fe9" class="outline-4">
+<h4 id="orgc4b0fe9">Run</h4>
+<div class="outline-text-4" id="text-orgc4b0fe9">
 <p>
 The one line org-mode sesquicolon 'shebang' is a multipart shell/powershell wrapper.
 Passed arguments to the elisp script are available by argv (ignoring “–” and “$@”).
 To run with powershell use the same wrapper format with a .ps1 extension.
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgdc0a2b7">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
+<pre class="src src-sh" id="orgb20942f">":"; emacs -Q --script README.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org9e3382d" class="outline-4">
-<h4 id="org9e3382d">Cherry Picking</h4>
-<div class="outline-text-4" id="text-org9e3382d">
+<div id="outline-container-orgc92ece1" class="outline-4">
+<h4 id="orgc92ece1">Cherry Picking</h4>
+<div class="outline-text-4" id="text-orgc92ece1">
 <p>
 Copy files by url with emacs
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp" id="org869fc00">(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/init.el" "init.el")
-(url-copy-file "https://raw.githubusercontent.com/jamartin9/emacs-config/master/early-init.el" "early-init.el")
-(call-process "git" nil t nil "clone" "https://github.com/jamartin9/emacs-config")
+<pre class="src src-elisp" id="org2ac9718">(url-copy-file "https://codeberg.org/jamartin9/emacs-config/raw/branch/master/init.el" "init.el")
+(url-copy-file "https://codeberg.org/jamartin9/emacs-config/raw/branch/master/early-init.el" "early-init.el")
+(call-process "git" nil t nil "clone" "https://codeberg.org/jamartin9/emacs-config")
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org5e83776" class="outline-4">
-<h4 id="org5e83776">Site</h4>
-<div class="outline-text-4" id="text-org5e83776">
+<div id="outline-container-org55b307c" class="outline-4">
+<h4 id="org55b307c">Site</h4>
+<div class="outline-text-4" id="text-org55b307c">
 <p>
 Clone the site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org303899f">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
+<pre class="src src-sh" id="org27e4e68">git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
 </pre>
 </div>
 
@@ -429,7 +486,7 @@ Clone the site
 Build the updated site
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgfb15e5a">pwsh make-el.ps1 site
+<pre class="src src-sh" id="orgd61b01c">pwsh make-el.ps1 site
 </pre>
 </div>
 </div>

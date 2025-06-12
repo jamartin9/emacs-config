@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc53383e">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org6ab9a36">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org1964a44" class="outline-2">
-<h2 id="org1964a44">Packaging</h2>
-<div class="outline-text-2" id="text-org1964a44">
+<div id="outline-container-org5959832" class="outline-2">
+<h2 id="org5959832">Packaging</h2>
+<div class="outline-text-2" id="text-org5959832">
 <p>
 Lets make the same thing but differently!
 </p>
@@ -36,8 +36,11 @@ Lets make the same thing but differently!
 </ul></li>
 <li><code>flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></li>
 <li><code>gio mime x-scheme-handler/http firefox.desktop</code> and <code>gio mime x-scheme-handler/https firefox.desktop</code></li>
-<li>mount <code>$HOME/.var</code> for flatpak on other drive with <code>sudo mound --bind /gnu/xdg/.var $HOME/.var</code></li>
+<li>mount <code>$HOME/.var</code> for flatpak on other drive with <code>sudo mount --bind /gnu/xdg/.var $HOME/.var</code></li>
+<li><code>sudo flatpak override &lt;application-id&gt; --filesystem=&lt;path&gt;</code> to share a path</li>
+<li><code>flatpak install --user bundle.flatpak</code> to install from bundle file</li>
 </ul></li>
+
 <li>rpms
 <ul class="org-ul">
 <li>redhat based distros</li>

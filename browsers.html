@@ -9,22 +9,22 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge39625f">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org099574e">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org9109a54" class="outline-2">
-<h2 id="org9109a54">browsers</h2>
-<div class="outline-text-2" id="text-org9109a54">
+<div id="outline-container-org14e5750" class="outline-2">
+<h2 id="org14e5750">browsers</h2>
+<div class="outline-text-2" id="text-org14e5750">
 <p>
 This your brain on the internet
 </p>
 </div>
-<div id="outline-container-orgfdee620" class="outline-3">
-<h3 id="orgfdee620">notes</h3>
-<div class="outline-text-3" id="text-orgfdee620">
+<div id="outline-container-org9ff6800" class="outline-3">
+<h3 id="org9ff6800">notes</h3>
+<div class="outline-text-3" id="text-org9ff6800">
 <ul class="org-ul">
 <li>ctrl-shift-R for force cache reload</li>
 <li>ctrl-w for close tab</li>
@@ -41,9 +41,9 @@ This your brain on the internet
 <li>webgpu has issues on wayland with gl backend</li>
 </ul>
 </div>
-<div id="outline-container-org9a78048" class="outline-4">
-<h4 id="org9a78048">pwa</h4>
-<div class="outline-text-4" id="text-org9a78048">
+<div id="outline-container-orgfeab3ee" class="outline-4">
+<h4 id="orgfeab3ee">pwa</h4>
+<div class="outline-text-4" id="text-orgfeab3ee">
 <ul class="org-ul">
 <li>managed under <code>brave://apps/</code> or <code>chrome://apps</code></li>
 <li>progressive web apps have a manifest and service worker for offline installable apps
@@ -57,7 +57,7 @@ This your brain on the internet
 <li>Isolated Web Apps for signed updates</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org22b9384">{
+<pre class="src src-javascript" id="orgc765017">{
     "name": "Progressive Web App",
     "short_name": "PWA",
     "icons": [{
@@ -74,7 +74,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-html" id="orga8207b6">&lt;script&gt;
+<pre class="src src-html" id="org021a440">&lt;script&gt;
     // register ServiceWorker
     window.onload = () =&gt; {
         'use strict';
@@ -87,7 +87,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org9250659">var cacheName = 'pwa';
+<pre class="src src-javascript" id="org5080033">var cacheName = 'pwa';
 var filesToCache = [
   './',
   './index.html',
@@ -115,12 +115,12 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org6290d45" class="outline-3">
-<h3 id="org6290d45"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
+<div id="outline-container-org4834e7d" class="outline-3">
+<h3 id="org4834e7d"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
 </div>
-<div id="outline-container-orgff3c5be" class="outline-3">
-<h3 id="orgff3c5be">chrome</h3>
-<div class="outline-text-3" id="text-orgff3c5be">
+<div id="outline-container-org1adc1f2" class="outline-3">
+<h3 id="org1adc1f2">chrome</h3>
+<div class="outline-text-3" id="text-org1adc1f2">
 <ul class="org-ul">
 <li>Type <code>thisisunsafe</code> anywhere on the SSL ERROR window and the browser will let you visit the page.</li>
 <li>Gemini nano AI by default in 128+
@@ -166,7 +166,10 @@ self.addEventListener('fetch', function(e) {
 <li>file system api flag</li>
 <li>WebGPU flag <code>--enable-features=Vulkan</code>
 <ul class="org-ul">
-<li><code>--enable-features=Vulkan</code> (not compat with wayland/ozone)</li>
+<li><code>--enable-features=Vulkan</code> (not compat with wayland/ozone)
+<ul class="org-ul">
+<li><a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/gpu/vaapi.md#VaAPI-on-Linux-with-Vulkan">https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/gpu/vaapi.md#VaAPI-on-Linux-with-Vulkan</a> suggests <code>--enable-features=AcceleratedVideoEncoder,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks,Vulkan,DefaultANGLEVulkan,VulkanFromANGL</code></li>
+</ul></li>
 </ul></li>
 </ul></li>
 <li>builtin tor, ad block</li>
@@ -193,25 +196,25 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org1dad04b" class="outline-3">
-<h3 id="org1dad04b">safari</h3>
-<div class="outline-text-3" id="text-org1dad04b">
+<div id="outline-container-orgf88893a" class="outline-3">
+<h3 id="orgf88893a">safari</h3>
+<div class="outline-text-3" id="text-orgf88893a">
 <ul class="org-ul">
 <li>webkit based</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org22991cb" class="outline-2">
-<h2 id="org22991cb">search engines</h2>
-<div class="outline-text-2" id="text-org22991cb">
+<div id="outline-container-org800df6c" class="outline-2">
+<h2 id="org800df6c">search engines</h2>
+<div class="outline-text-2" id="text-org800df6c">
 </div>
-<div id="outline-container-org541ff59" class="outline-3">
-<h3 id="org541ff59"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
+<div id="outline-container-org2b9aa67" class="outline-3">
+<h3 id="org2b9aa67"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
 </div>
-<div id="outline-container-org18af478" class="outline-3">
-<h3 id="org18af478">ddg</h3>
-<div class="outline-text-3" id="text-org18af478">
+<div id="outline-container-orge16465e" class="outline-3">
+<h3 id="orge16465e">ddg</h3>
+<div class="outline-text-3" id="text-orge16465e">
 <ul class="org-ul">
 <li>fingerprinted users multiple times</li>
 <li>no js version at lite.duckduckgo.com</li>
@@ -227,9 +230,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfe62cda" class="outline-3">
-<h3 id="orgfe62cda">brave</h3>
-<div class="outline-text-3" id="text-orgfe62cda">
+<div id="outline-container-org8309b8e" class="outline-3">
+<h3 id="org8309b8e">brave</h3>
+<div class="outline-text-3" id="text-org8309b8e">
 <ul class="org-ul">
 <li>tonemapping support for hdr pngs</li>
 <li>search.brave.com</li>
@@ -240,13 +243,13 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org8a8d0f1" class="outline-2">
-<h2 id="org8a8d0f1">sites</h2>
-<div class="outline-text-2" id="text-org8a8d0f1">
+<div id="outline-container-orga6b33b9" class="outline-2">
+<h2 id="orga6b33b9">sites</h2>
+<div class="outline-text-2" id="text-orga6b33b9">
 </div>
-<div id="outline-container-orgd72c016" class="outline-3">
-<h3 id="orgd72c016">info</h3>
-<div class="outline-text-3" id="text-orgd72c016">
+<div id="outline-container-org7d61486" class="outline-3">
+<h3 id="org7d61486">info</h3>
+<div class="outline-text-3" id="text-org7d61486">
 <ul class="org-ul">
 <li><a href="https://aosabook.org/en/">https://aosabook.org/en/</a></li>
 <li><a href="https://www.youtube.com/@ants_are_everywhere/videos">https://www.youtube.com/@ants_are_everywhere/videos</a></li>
@@ -255,21 +258,32 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-orga12ec72" class="outline-3">
-<h3 id="orga12ec72">tools</h3>
-<div class="outline-text-3" id="text-orga12ec72">
+<div id="outline-container-org50be4b7" class="outline-3">
+<h3 id="org50be4b7">tools</h3>
+<div class="outline-text-3" id="text-org50be4b7">
 <ul class="org-ul">
+<li>web archive <a href="https://replayweb.page/">https://replayweb.page/</a></li>
 <li><a href="https://wasm-test.libreoffice.org/">libreoffice wasm</a></li>
 <li><a href="https://directfile.irs.gov/">https://directfile.irs.gov/</a></li>
 <li><a href="https://uica.uops.info/">https://uica.uops.info/</a></li>
 <li><a href="https://qrcode.antfu.me/">https://qrcode.antfu.me/</a></li>
 <li><a href="https://cowasm.sh/">https://cowasm.sh/</a> (python wasm)</li>
+<li><a href="https://shell.duckdb.org">https://shell.duckdb.org</a>
+<ul class="org-ul">
+<li><code>load sqlite; load ducklake;</code></li>
+<li><code>attach 'ducklake:sqlite:metadata.sqlite' as my_ducklake (DATA_PATH 'data_files/');</code></li>
+<li><code>use my_ducklake;</code>
+<ul class="org-ul">
+<li>inspect files with <code>FROM glob('*')</code></li>
+<li>test data <code>CREATE TABLE nl_train_stations AS FROM 'https://blobs.duckdb.org/nl_stations.csv';</code></li>
+</ul></li>
+</ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbefeb78" class="outline-3">
-<h3 id="orgbefeb78">data</h3>
-<div class="outline-text-3" id="text-orgbefeb78">
+<div id="outline-container-org6940f19" class="outline-3">
+<h3 id="org6940f19">data</h3>
+<div class="outline-text-3" id="text-org6940f19">
 <ul class="org-ul">
 <li><a href="https://ossinsight.io/#trending-repos">https://ossinsight.io/#trending-repos</a></li>
 <li><a href="https://sourcegraph.com/search">https://sourcegraph.com/search</a></li>
@@ -287,9 +301,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org9cc0c89" class="outline-3">
-<h3 id="org9cc0c89">alternative frontends</h3>
-<div class="outline-text-3" id="text-org9cc0c89">
+<div id="outline-container-org2381e78" class="outline-3">
+<h3 id="org2381e78">alternative frontends</h3>
+<div class="outline-text-3" id="text-org2381e78">
 <ul class="org-ul">
 <li>youtube
 <ul class="org-ul">
@@ -301,9 +315,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org09c400c" class="outline-3">
-<h3 id="org09c400c">media</h3>
-<div class="outline-text-3" id="text-org09c400c">
+<div id="outline-container-org6bd320a" class="outline-3">
+<h3 id="org6bd320a">media</h3>
+<div class="outline-text-3" id="text-org6bd320a">
 <ul class="org-ul">
 <li><a href="https://ustv247.tv/">https://ustv247.tv/</a></li>
 <li><a href="https://scnlog.me/">https://scnlog.me/</a></li>
