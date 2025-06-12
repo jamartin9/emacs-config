@@ -700,6 +700,7 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 ** ffmpeg
 - vmaf score for comparing video streams
 - Remove Captions ~ffmpeg -i input.mkv -codec copy -bsf:v "filter_units=remove_types=6" output.mkv~
+- waveforms for spectral audio compares https://trac.ffmpeg.org/wiki/Waveform
 ** HEVC/AVC
 *** x265
 - smears at low bitrate instead of blocking like x264

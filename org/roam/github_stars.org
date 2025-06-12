@@ -156,6 +156,8 @@
   - Atmosphère is a work-in-progress customized firmware for the Nintendo Switch.
 ** atom0s/Steamless
   - Steamless is a DRM remover of the SteamStub variants.  The goal of Steamless is to make a single solution for unpacking all Steam DRM-packed files. Steamless aims to support as many games as possible.
+** audacity/audacity
+  - Audio Editor
 ** autobrr/autobrr
   - Automation for downloads.
 ** AUTOMATIC1111/stable-diffusion-webui
@@ -168,6 +170,8 @@
   - Apache Mesos Framework to run multiple Kubernetes
 ** aws/eks-anywhere
   - Run Amazon EKS on your own infrastructure
+** aws/pgactive
+  - pgactive is a PostgreSQL replication extension for creating an active-active database.
 ** babashka/scittle
   - Execute Clojure(Script) directly from browser script tags via SCI
 ** bard/emacs-director
@@ -206,6 +210,8 @@
   -  A WASI shim for in the browser
 ** BLAKE3-team/BLAKE3
   - the official Rust and C implementations of the BLAKE3 cryptographic hash function
+** blender/blender
+  - Official mirror of Blender
 ** BlinkDL/RWKV-LM
   - RWKV is an RNN with transformer-level LLM performance. It can be directly trained like a GPT (parallelizable). So it's combining the best of RNN and transformer - great performance, fast inference, saves VRAM, fast training, "infinite" ctx_len, and free sentence embedding.
 ** blueturtleai/gimp-stable-diffusion
@@ -290,6 +296,8 @@
   - Chrome extension that records your browser interactions and generates a Playwright or Puppeteer script.
 ** ChemAI-Lab/molpipx
   - std::autodiff for a differentiable version of Permutationally Invariant Polynomial (PIP) models in JAX and Rust
+** Chia-Network/chia-blockchain
+  - Chia blockchain python implementation (full node, farmer, harvester, timelord, and wallet)
 ** Chia-Network/internal-custody
   - Smart coins to secure funds with M of N signature thresholds, re-keying, clawbacks, and timelock spends
 ** chip-red-pill/MicrocodeDecryptor
@@ -474,8 +482,12 @@
   - The missing puzzle piece for NVPTX experience with Rust
 ** dessant/buster
   - Captcha solver extension for humans
+** devsisters/shardcake
+  - Sharding and location transparency for Scala
 ** DFHack/stonesense
   - A retro isometric visualizer for Dwarf Fortress
+** dgoulet/torsocks
+  - Library to torify application - NOTE: upstream has been moved to https://gitweb.torproject.org/torsocks.git
 ** DioxusLabs/dioxus
   - Friendly React-like GUI library for desktop, web, mobile, and more.
 ** DJATOM/x265-aMod
@@ -502,6 +514,8 @@
   - Fills the borders of a clip
 ** dubhater/vapoursynth-mvtools
   - Motion compensation and stuff
+** duckdb/ducklake
+  - DuckLake is an integrated data lake and catalog format that uses a database to manage metadata with less round trips than iceberg/delta lake
 ** ebfull/halo
   - ZK-SNARK setup
 ** eclipse/eclipse.jdt.ls
@@ -654,6 +668,8 @@
   - API Documentation Browser
 ** freedesktop/virglrenderer
   - VirGL virtual OpenGL renderer
+** frida/frida
+  - Clone this repo to build Frida. reverse engineering and api hooking in javascript
 ** Frogging-Family/mingw-on-arch-automator
   - Automate the (annoying) installation of mingw on Arch and Arch-based distros
 ** fsfe/reuse-tool
@@ -670,6 +686,8 @@
   - A tool for analyzing x86-64 binaries.
 ** gaurav-arya/StochasticAD.jl
   - Research package for automatic differentiation of programs containing discrete randomness.
+** gcc-mirror/gcc
+  - Gnu compiler collection
 ** ge0rg/aprsdroid
   - APRSdroid - Geo-Location for Radio Amateurs
 ** generic-ebpf/generic-ebpf
@@ -677,7 +695,7 @@
 ** geohot/qira
   - QEMU Interactive Runtime Analyser
 ** geohot/tinygrad
-  - You like pytorch? You like micrograd? You love tinygrad! ❤
+  - You like pytorch? You like micrograd? You love tinygrad! https://stats.tinygrad.win/
 ** geoserver/geoserver
   - Official GeoServer repository
 ** geraldneale/py-blink_mojo-secure
@@ -704,6 +722,8 @@
   - Create native Java(FX) apps for desktop, mobile and embedded
 ** gnl/ghostwheel
   - Hassle-free inline clojure.spec with semi-automatic generative testing and side effect detection
+** GNOME/gimp
+  - Read-only mirror of https://gitlab.gnome.org/GNOME/gimp
 ** Gnucash/gnucash
   - GnuCash Double-Entry Accounting Program.
 ** GNUnet-Mirror/GNUnet
@@ -798,6 +818,8 @@
   - Comfortably monitor your Internet traffic
 ** hamsolo474/stable-diffusion-gimp-plugin
   - Gimp plugin for Stable Diffusion, based on the Krita Plugin
+** HandBrake/HandBrake
+  - HandBrake's main development repository
 ** haproxy/haproxy
   - HAProxy Load Balancer's development branch (mirror of git.haproxy.org)
 ** harubaru/waifu-diffusion
@@ -1316,6 +1338,8 @@
   - The NASA WorldWind Javascript SDK (WebWW) includes the library and examples for creating geo-browser web applications and for embedding a 3D globe in HTML5 web pages.
 ** nasser/magic
   - Morgan And Grand Iron Clojure
+** NationalSecurityAgency/ghidra
+  - Ghidra is a software reverse engineering (SRE) framework
 ** NationalSecurityAgency/SIMP
   - A system automation and configuration management stack targeted toward operational flexibility and policy compliance.
 ** naver/sqlova
@@ -1942,6 +1966,8 @@
   - A virtual environment kit for the local-first web, inspired by Plan 9
 ** transcranial/keras-js
   - Run Keras models in the browser, with GPU support using WebGL
+** transmission/transmission
+  - Official Transmission BitTorrent client repository
 ** tree-sitter/tree-sitter
   - An incremental parsing system for programming tools
 ** trickster0/OffensiveRust
@@ -1970,6 +1996,8 @@
   - Tvix - A Rust implementation of Nix. Read-only mirror of https://code.tvl.fyi/tree/tvix
 ** typeorm/typeorm
   - ORM for TypeScript and JavaScript. Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL databases. Works in NodeJS, Browser, Ionic, Cordova and Electron platforms.
+** uber/uForwarder
+  - Apache Kafka is an open-source distributed event streaming platform used by thousands of companies. uForwarder aims to address several pain points while using Apache Kafka for pub-sub message queueing at scale, including partition scalability and head-of-line blocking.
 ** ublk-org/ublksrv
   - ublk: userspace block device driver
 ** udevbe/greenfield
@@ -1988,6 +2016,8 @@
   - Tax filing web application
 ** uswds/uswds
   - The U.S. Web Design System helps the federal government build fast, accessible, mobile-friendly websites.
+** uutils/coreutils
+  - Cross-platform Rust rewrite of the GNU coreutils
 ** uvipen/QuickDraw
   - Implementation of Quickdraw - an online game developed by Google
 ** v8/v8
@@ -2072,6 +2102,8 @@
   - Optimizer and compiler/toolchain library for WebAssembly
 ** webfx-project/webfx
   - A JavaFX application transpiler. Write your Web Application in JavaFX and WebFX will transpile it in pure JS.
+** webrecorder/pywb
+  - Core Python Web Archiving Toolkit for replay and recording of web archives
 ** web-seven/overlock
   - CLI tool designed to simplify the management of Crossplane resources. supports KinD, K3s, and K3d clusters, making it ideal for local development and testing of Crossplane configurations, providers and functions
 ** webtorrent/webtorrent
@@ -2230,6 +2262,8 @@
   - Deep learning with ZK-Snarks
 
 * rust
+** axos88/optics-rs
+  - Optics library for rust
 ** aya-rs/aya
   - Aya is an eBPF library for the Rust programming language, built with a focus on developer experience and operability.
 ** bheisler/criterion.rs
@@ -2300,6 +2334,8 @@
   - splice(2) based `copy_bidirectional` in tokio
 ** hermit-os/hermit-rs
   - Hermit Unikernel for Rust
+** hickory-dns/hickory-dns
+  - A Rust based DNS client, server, and resolver
 ** huggingface/candle
   - Minimalist ML framework for Rust
 ** iai-callgrind/iai-callgrind
@@ -2434,20 +2470,14 @@
 * utils
 ** andreas-abel/uiCA
   - uops.info Code Analyzer for intel bottleneck performance analysis
-** audacity/audacity
-  - Audio Editor
 ** blakeblackshear/frigate
   - NVR with realtime local object detection for IP cameras
-** blender/blender
-  - Official mirror of Blender
 ** btcpayserver/btcpayserver
   - Accept Bitcoin payments. Free, open-source & self-hosted, Bitcoin payment processor.
 ** BurntSushi/ripgrep
   - ripgrep recursively searches directories for a regex pattern while respecting your gitignore
 ** checkpoint-restore/criu
   - Checkpoint/Restore tool
-** Chia-Network/chia-blockchain
-  - Chia blockchain python implementation (full node, farmer, harvester, timelord, and wallet)
 ** ClementTsang/bottom
   - Yet another cross-platform graphical process/system monitor.
 ** compiler-explorer/compiler-explorer
@@ -2456,30 +2486,22 @@
   - Podman: A tool for managing OCI containers and pods.
 ** curl/curl
   - A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features
-** dgoulet/torsocks
-  - Library to torify application - NOTE: upstream has been moved to https://gitweb.torproject.org/torsocks.git
 ** evilsocket/opensnitch
   - OpenSnitch is a GNU/Linux interactive application firewall inspired by Little Snitch.
 ** FFmpeg/FFmpeg
   - Mirror of https://git.ffmpeg.org/ffmpeg.git
 ** flatpak/flatpak
   - Linux application sandboxing and distribution framework
-** frida/frida
-  - Clone this repo to build Frida
-** gcc-mirror/gcc
-  - Gnu compiler collection
 ** git/git
   - Git Source Code Mirror - This is a publish-only repository but pull requests can be turned into patches to the mailing list via GitGitGadget (https://gitgitgadget.github.io/). Please follow Documentation/SubmittingPatches procedure for any of your improvements.
 ** gitlab.freedesktop.org/mstoeckl/waypipe
   - Network transparency with Wayland.
-** GNOME/gimp
-  - Read-only mirror of https://gitlab.gnome.org/GNOME/gimp
 ** gpg/gnupg
   - The GNU Privacy Guard. NOTE: Maintainers are not tracking this mirror. Do not make pull requests here, nor comment any commits, submit them usual way to bug tracker (https://www.gnupg.org/documentation/bts.html) or to the mailing list (https://www.gnupg.org/documentation/mailing-lists.html).
-** HandBrake/HandBrake
-  - HandBrake's main development repository
 ** hasse69/rar2fs
   - FUSE file system for reading RAR archives
+** gitlab.torproject.org/tpo/core/oniux
+  - isolate arbitrary application over the Tor network
 ** iovisor/bpftrace
   - High-level tracing language for Linux eBPF
 ** jellyfin/jellyfin
@@ -2500,8 +2522,6 @@
   - Monero: the secure, private, untraceable cryptocurrency
 ** mpv-player/mpv
   - Command line video player
-** NationalSecurityAgency/ghidra
-  - Ghidra is a software reverse engineering (SRE) framework
 ** NVIDIA/k8s-device-plugin
   - NVIDIA device plugin for Kubernetes
 ** NVIDIA/nvidia-container-toolkit
@@ -2520,12 +2540,6 @@
   - A command-line benchmarking tool
 ** strace/strace
   - strace is a diagnostic, debugging and instructional userspace utility for Linux
-** transmission/transmission
-  - Official Transmission BitTorrent client repository
-** uutils/coreutils
-  - Cross-platform Rust rewrite of the GNU coreutils
-** webrecorder/pywb
-  - Core Python Web Archiving Toolkit for replay and recording of web archives
 ** wine-mirror/wine
   - WINE is not a emulator for windows but a windows api on linux
 ** Winetricks/winetricks

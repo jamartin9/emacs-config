@@ -13,6 +13,7 @@
 - ~-XX:+UseTransparentHugePages -XX:+AlwaysPreTouch~
 - ~-XX:+PerfDisableSharedMem~
 - ~-XX:+UseStringDeduplication~
+- ~-XX:+UnlockExperimentalVMOptions -XX:+UseCompactObjectHeaders~
 - ZGC takes ~3% of heap
 - project leyden for already verified class loading
 - 6 months release

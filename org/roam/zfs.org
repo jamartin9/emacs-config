@@ -51,6 +51,7 @@
 - ~zpool~  scrub(error check), resilver(parity), trim(ssd), adding/removing disks
 - ~zfs~ Mounting, keys, snapshots, rollbacks
 *** notes
+- zfs anyraid for different sized disk pools
 - https://github.com/OpenIndiana/time-slider python time slider tool for backups
 - GPTZFSBOOT for bios zfs boot
 - If you lose a vdev in a pool you LOSE THE POOL

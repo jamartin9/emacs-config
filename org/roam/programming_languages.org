@@ -36,6 +36,8 @@ The tower of babel is your type system as a macro
   - parallell stl, std filesystem
 - c++20
   - modules, concepts(templates constraints), ranges, coroutines
+    - "As of C++20, there are no cases in which statically linked programs require virtual functions." https://www.youtube.com/watch?v=gTNJXVmuRRA , concepts bind interfaces(type classes), deduced class templates for object config, std::variant for runtime
+      - most implementations are still just a jump table of pointers
 - c++23
   - generators, import std;, std::expected
 ** [[id:e518d6e6-18f5-4bb5-8b92-135b125b5797][rust]]
@@ -58,18 +60,7 @@ The tower of babel is your type system as a macro
 - Loom for user mode green threads
 - panama for native library linkage
 *** [[id:2b605045-23e1-4995-9ed4-843699a0481f][java]]
-*** scala
-  - override apply for the function syntax(functors instead of constructors?)
-  - 'tagless final' is a design pattern that allows type checking interfaces at compile via an algebra (trait) of given higher kinded case class of type Algebra[Expression].
-  - rcardin/yaes for 'direct style' scala based on phatom types and capabilities
-  - for comprehensions for monad, io effect systems or futures
-  - coursier for cli management
-    - native-image need -march=compatability
-    - ~coursier install metals~ then ~coursier install bloop~
-      - ~guix shell --network --container --emulate-fhs bash which zlib sed openjdk:jdk openjdk ncurses coreutils findutils curl grep nss-certs gcc-toolchain pkg-config git~
-        - zlib/which for scala and sed for sbt
-      - dev-ex: ~guix shell --preserve='^DISPLAY$' --preserve='^XAUTHORITY$' --network --container --emulate-fhs --share=$HOME/temphome=$HOME --expose="${XAUTHORITY}" --share=$HOME/.guix-home=$HOME/.guix-home --share=$HOME/.config/emacs=$HOME/.config/emacs --share=/gnu/store=/gnu/store bash which zlib sed openjdk:jdk openjdk coreutils curl grep nss-certs gcc-toolchain pkg-config git openssh emacs-next aspell aspell-dict-en gnupg guile tree-sitter-rust tree-sitter-yaml tree-sitter-python tree-sitter-scala emacs-gptel emacs-eat emacs-debbugs emacs-org-roam emacs-guix emacs-osm emacs-minions emacs-transmission emacs-undo-tree emacs-dape emacs-macrostep-geiser emacs-geiser-guile emacs-flymake-guile emacs-pyvenv emacs-scala-mode emacs-sbt-mode emacs-scala-ts-mode~
-    - start metals ~coursier bootstrap --java-opt -XX:+UseStringDeduplication org.scalameta:metals_2.13:1.5.2 -o metals -f~
+*** [[id:4dabbc8e-a162-4e85-9803-82ea93e8c61f][scala]]
 ** javascript
 *** typescript
 - compiles to javascript

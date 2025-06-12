@@ -261,3 +261,53 @@ GUIX_CONFIGURATION_DIRECTORY=$XDG_CONFIG_HOME/guix/etc
 GUIX_LOCPATH=$XDG_DATA_HOME/guix/var/guix/profiles/per-user/root/guix-profile/lib/locale
 NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 #+END_SRC
+
+#+NAME: guix-sheperd-home-services
+#+BEGIN_SRC guile :tangle no
+
+  (define guix-service ; add type for portable guix package
+    (shepherd-service
+     (provision '(guix))
+     (start #~(make-forkexec-constructor `("guix-daemon" ,(string-append "--listen=" (if (getenv "XDG_DATA_HOME") (getenv "XDG_DATA_HOME")
+                                                                                         (string-append (getenv "HOME")
+                                                                                                        file-name-separator-string
+                                                                                                        ".local"
+                                                                                                        file-name-separator-string
+                                                                                                        "share"))
+                                                                         file-name-separator-string
+                                                                         "guix"
+                                                                         file-name-separator-string
+                                                                         "var"
+                                                                         file-name-separator-string
+                                                                         "guix"
+                                                                         file-name-separator-string
+                                                                         "daemon-socket"
+                                                                         file-name-separator-string
+                                                                         "socket") ;;"--build-users-group=guixbuild"
+                                           "--disable-chroot")
+                                         #:environment-variables `(,(string-append "NIX_STORE=" (if (getenv "XDG_DATA_HOME")
+                                                                                                   (getenv "XDG_DATA_HOME")
+                                                                                                    (string-append (getenv "HOME")
+                                                                                                                   file-name-separator-string
+                                                                                                                   ".local"
+                                                                                                                   file-name-separator-string
+                                                                                                                   "share"))
+                                                                                   file-name-separator-string
+                                                                                   "guix"
+                                                                                   file-name-separator-string
+                                                                                   "gnu"
+                                                                                   file-name-separator-string
+                                                                                   "store")
+                                                                   ,@(environ))))
+     (stop #~(make-kill-destructor))
+     (auto-start? #f)))
+
+  (define ssh-service ; writes to /etc/dropbear for keys
+    (set-fields       ; least-authority-wrapper or fork+exec-command/container or run-container to contain
+     (car ((@@ (gnu services ssh) dropbear-shepherd-service) (dropbear-configuration (port-number 2222)
+                                                                                     (syslog-output? #f)
+                                                                                     (password-authentication? #f)
+                                                                                     (pid-file "/tmp/dropbear.pid"))))
+     ((shepherd-service-requirement) '())
+     ((shepherd-service-auto-start?) #f)))
+#+END_SRC

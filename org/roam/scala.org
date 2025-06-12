@@ -1,0 +1,128 @@
+:PROPERTIES:
+:ID:       4dabbc8e-a162-4e85-9803-82ea93e8c61f
+:END:
+#+title: scala
+#+OPTIONS: toc:nil num:nil date:nil \n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-default.css" />
+#+HTML_CONTENT_CLASS: container
+#+HTML_DOCTYPE: html5
+#+INCLUDE: "css.org::navbar" :only-contents t
+* scala
+** scala notes
+  - type level programming using types in a tuple
+  - override apply for the function syntax(functors instead of constructors?)
+  - 'tagless final' is a design pattern that allows type checking interfaces at compile via an algebra (trait) of given higher kinded case class of type Algebra[Expression].
+  - rcardin/yaes for 'direct style' scala based on phatom types and capabilities
+  - for comprehensions for monad, io effect systems or futures
+  - coursier for cli management
+    - native-image need -march=compatability
+    - ~coursier install metals~ then ~coursier install bloop~
+      - ~guix shell --network --container --emulate-fhs bash which zlib sed openjdk:jdk openjdk ncurses coreutils findutils curl grep nss-certs gcc-toolchain pkg-config git~
+        - zlib/which for scala and sed for sbt
+      - dev-ex: ~guix shell --preserve='^DISPLAY$' --preserve='^XAUTHORITY$' --network --container --emulate-fhs --share=$HOME/temphome=$HOME --expose="${XAUTHORITY}" --share=$HOME/.guix-home=$HOME/.guix-home --share=$HOME/.config/emacs=$HOME/.config/emacs --share=/gnu/store=/gnu/store bash which zlib sed openjdk:jdk openjdk coreutils curl grep nss-certs gcc-toolchain pkg-config git openssh emacs-next aspell aspell-dict-en gnupg guile tree-sitter-rust tree-sitter-yaml tree-sitter-python tree-sitter-scala emacs-gptel emacs-eat emacs-debbugs emacs-org-roam emacs-guix emacs-osm emacs-minions emacs-transmission emacs-undo-tree emacs-dape emacs-macrostep-geiser emacs-geiser-guile emacs-flymake-guile emacs-pyvenv emacs-scala-mode emacs-sbt-mode emacs-scala-ts-mode~
+    - start metals ~coursier bootstrap --java-opt -XX:+UseStringDeduplication --java-opt -Dmetals.startMcpServer=true org.scalameta:metals_2.13:1.5.2 -o metals -f~
+      - Set port with in the ~.metals/mcp.json~ config server port ~{"metals": { "startMcpServer": true, "mcpPort": 9040 }}~ ?
+#+NAME: .metals/mcp.json
+#+BEGIN_SRC json :tangle no
+{
+  "servers": {
+    "/gnu/git/scala-test/scala-3-project-template/-metals": {
+      "url": "http://localhost:39497/sse"
+    }
+  }
+}
+#+END_SRC
+#+NAME: scala-build-sbt
+#+BEGIN_SRC scala :tangle no
+val scala3Version = "3.7.0"
+lazy val root = project
+  .in(file("."))
+  .settings(
+    name := "Scala 3 Project Template",
+    version := "0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    libraryDependencies ++= Seq( // %% adds _3 for scala versions
+      "com.lihaoyi" %% "upickle" % "4.2.1",
+      "com.lihaoyi" %% "upickle-implicits-named-tuples" % "4.2.1", // upickle named tuples as json
+      "org.scala-lang" %% "scala2-library-cc-tasty-experimental" % "3.7.0", // add capture checking to stdlib
+      "org.scalameta" %% "munit" % "1.0.0" % Test))
+#+END_SRC
+#+NAME: scala-snippets
+#+BEGIN_SRC scala :tangle no
+import language.experimental.captureChecking
+case class Pooled(count: Int, msg: String):
+  override def toString: String = count.toString + msg
+val stack = scala.collection.mutable.ArrayBuffer[Pooled]()
+var nextFree = 0
+def withFreshPooled[T](op: Pooled^ => T, msg: String): T = // remove ^ and val poolRejectClosure = withFreshPooled(pooled => () => pooled.toString ) will print garbage instead of be rejected at compile time ex: Main$package$$$Lambda/0x00007f0e8d340ee0@1ae557e0
+  if nextFree >= stack.size then stack.append(new Pooled(nextFree+1, msg)) // grow stack by 1 if we need more room and save out count/index++ objects are reused
+  val pooled = stack(nextFree)
+  nextFree = nextFree + 1
+  val ret = op(pooled)
+  nextFree = nextFree - 1
+  ret
+
+import upickle.default.ReadWriter.join
+import upickle.implicits.namedTuples.default.strict.given
+@main def hello(): Unit =
+  println(msg)
+  val mytuple = ( name = "bob", messages = Seq(( verb = "ing", content = "bazinga" ), ( verb = "ing", content = "bazinga" )))
+  val json = upickle.default.write(mytuple)
+  println(json)
+  println("START "+stack.size)// Capture checking stack allocation
+  val poolAcceptClosure2 = withFreshPooled( pooled => {
+    println("PoolOne: " + pooled.toString())
+    withFreshPooled( pooled => {
+      pooled.toString }, "innerPool")
+  }, "outerPool") //; println("NEXT-AFTER: " + nextFree); val poolAcceptClosure = withFreshPooled( pooled => { pooled.toString }, "outerPool1" ); println(poolAcceptClosure)
+  println("PoolTwo: "+ poolAcceptClosure2)
+  println("END "+stack.size)
+  program[Id]// Run with Id (side effects)
+  val pretty: Pretty[Unit] = program[Pretty] // Run with Pretty (pure, accumulates output)
+  println(pretty)
+def msg = "I was compiled by Scala 3. :)"
+
+// Minimal Monad type class
+trait Monad[F[_]]:
+  extension [A](fa: F[A])
+    def flatMap[B](f: A => F[B]): F[B]
+    def map[B](f: A => B): F[B]
+// Define the capability (type class) for Console
+trait Console[F[_]]:
+  def putStrLn(line: String): F[Unit]
+  def getStrLn: F[String]
+// The tagless final program is abstract over F and requires a Console[F] capability
+def program[F[_]: Monad](using Console[F]): F[Unit] =
+  for
+    _    <- summon[Console[F]].putStrLn("What is your name?")
+    name <- summon[Console[F]].getStrLn
+    _    <- summon[Console[F]].putStrLn(s"Hello, $name!")
+  yield ()
+
+// Example interpreter
+type Id[A] = A
+given Console[Id] with
+  def putStrLn(line: String): Id[Unit] = println(line)
+  def getStrLn: Id[String] = scala.io.StdIn.readLine()
+given Monad[Id] with
+  extension [A](fa: Id[A])
+    def flatMap[B](f: A => Id[B]): Id[B] = f(fa)
+    def map[B](f: A => B): Id[B] = f(fa)
+
+// Example interpreter for accumulating output as a List[String]
+// Pretty interpreter: accumulates a log of operations
+case class Pretty[A](log: List[String], value: A)
+given Monad[Pretty] with
+  extension [A](fa: Pretty[A])
+    def flatMap[B](f: A => Pretty[B]): Pretty[B] =
+      val Pretty(log1, a) = fa
+      val Pretty(log2, b) = f(a)
+      Pretty(log1 ++ log2, b)
+    def map[B](f: A => B): Pretty[B] =
+      Pretty(fa.log, f(fa.value))
+given Console[Pretty] with
+  def putStrLn(line: String): Pretty[Unit] =
+    Pretty(List(s"putStrLn($line)"), ())
+  def getStrLn: Pretty[String] =
+    Pretty(List("getStrLn"), "<input>")
+#+END_SRC

@@ -84,11 +84,10 @@
                            (display-time-mode 1)
                            (delete-selection-mode 1)
                            (run-with-idle-timer 15 t (lambda () (garbage-collect))) ; collect gc every 15s while idle
-                           (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling
+                           (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling ;(advice-add 'completion-at-point :after #'minibuffer-hide-completions)
                            (electric-pair-mode 1) ; less typing
                            (context-menu-mode 1); mouse right click menu
                            (url-handler-mode 1) ; open urls in buffers
-                           ;(advice-add 'completion-at-point :after #'minibuffer-hide-completions)
                            (load-theme 'modus-vivendi-tinted); built-in does not need to hook server-after-make-frame-hook for daemonp
                            (cua-mode 1))))
   :bind (("<M-up>" . (lambda () (interactive) (transpose-lines 1) (forward-line -2))); move line up
@@ -151,14 +150,12 @@
               visible-cursor nil
               isearch-wrap-pause 'no-ding ; wrap isearch
               ad-redefinition-action 'accept ; ignore warnings
-              ;completion-auto-help 'lazy; '?' for help w/mouse click
               completion-cycle-threshold nil ; flex narrowing instead of cycling
               completions-format 'one-column
               completions-group t
               completion-styles '(basic initials substring partial-completion)
               completions-detailed t
-              completions-sort 'historical
-              ;completion-auto-select 'second-tab
+              completions-sort 'historical ;completion-auto-select 'second-tab ;completion-auto-help 'lazy; '?' for help w/mouse click
               icomplete-scroll t
               column-number-mode t
               sentence-end-double-space nil
@@ -206,11 +203,9 @@
               hscroll-step 1
               fast-but-imprecise-scrolling t
               inhibit-compacting-font-caches t
-              redisplay-skip-fontification-on-input t
+              redisplay-skip-fontification-on-input t ;jit-lock-defer-time 0.05 ; fontification delay
               shift-select-mode t
-              ;jit-lock-defer-time 0.05 ; fontification delay
-              read-process-output-max (* 64 1024)
-              ;gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
+              read-process-output-max (* 64 1024) ;gc-cons-threshold (* 256 1024 1024) ; 256 MiB default before gc
               load-prefer-newer t; noninteractive
               auto-mode-case-fold nil
               kill-do-not-save-duplicates t
@@ -220,7 +215,7 @@
               display-time-format "%m-%d-%Y %R"
               display-time-default-load-average nil
               find-file-visit-truename t ; files
-              vc-follow-symlinks t
+              vc-follow-symlinks t ;enable-local-variables :all ; RISKY use safe-local-variable-directories
               find-file-suppress-same-file-warnings t
               create-lockfiles nil
               make-backup-files nil
@@ -235,7 +230,6 @@
               initial-scratch-message nil
               default-input-method nil
               xref-search-program 'ripgrep ; replace grep with ripgrep
-              ;enable-local-variables :all ; RISKY use safe-local-variable-directories
               inhibit-startup-screen t
               inhibit-startup-echo-area-message user-login-name
               inhibit-default-init t)
@@ -347,9 +341,11 @@
 (use-package eglot
   :ensure nil ; built-in
   :bind (:map jam/code ("a" . eglot-code-actions))
-  :hook (((rust-ts-mode rust-mode) . eglot-ensure))
+  :hook (((rust-ts-mode rust-mode) . eglot-ensure)
+         ((scala-ts-mode scala-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
+  (add-to-list 'eglot-server-programs `((scala-mode scala-ts-mode) . ,(alist-get 'scala-mode eglot-server-programs)))
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
@@ -375,21 +371,16 @@
                 erc-save-buffer-on-part t
                 erc-log-insert-log-on-open t
                 erc-log-channels-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc") "erc")
-                erc-nick '("jaming")
-                erc-user-full-name "jaming"
-                erc-keywords '("jaming")
+                erc-user-full-name "NA";erc-nick '("jaming");erc-keywords '("jaming")
                 erc-server-history-list '("irc.rizon.net" "irc.libera.chat" "irc.choopa.net" "irc.corrupt-net.org")
                 erc-autojoin-timing 'ident
                 erc-autojoin-delay 30
                 erc-max-buffer-size 20000
-                erc-prompt-for-nickserv-password nil
-                ;erc-nickserv-passwords '((Corrupt (("nickname" . "password"))))
-                erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password
-                ;erc-sasl-mechanism 'ecdsa-nist256p-challenge ; expects key file for erc-sasl-password
+                erc-prompt-for-nickserv-password nil;erc-nickserv-passwords '((Corrupt (("nickname" . "password"))))
+                ;erc-dcc-auto-masks '(".*!.*@.*") ; accept dcc files from anyone with 'auto send-requests ;erc-dcc-send-request 'auto ; BUG /dcc get NICK FILE fails with unknown filename (spaces/brackets in name) and daemon default-directory not respected
+                erc-use-auth-source-for-nickserv-password t; format: machine irc.site.net login your_nickname password your_password ;erc-sasl-mechanism 'ecdsa-nist256p-challenge ; expects key file for erc-sasl-password
                 erc-prompt-for-password nil
                 erc-nickserv-identify-mode 'both
-                ;erc-dcc-auto-masks '(".*!.*@.*") ; accept dcc files from anyone with 'auto send-requests
-                ;erc-dcc-send-request 'auto ; BUG /dcc get NICK FILE fails with unknown filename (spaces/brackets in name) and daemon default-directory not respected
                 erc-server-auto-reconnect nil ; /reconnect
                 erc-auto-query 'bury
                 erc-join-buffer 'bury
@@ -408,13 +399,11 @@
                                        ("EFnet" "JOIN" "PART" "QUIT")
                                        ("Corrupt" "JOIN" "PART" "QUIT")))
   (add-to-list 'erc-server-alist '("EFnet: New York reverse proxy scanner" EFnet "irc.choopa.net" ((6665 6669)) 7000 9999))
-  (add-to-list 'erc-server-alist '("Corrupt-Net" Corrupt "irc.corrupt-net.org" ((6666 6669)) 8067 6697 7000))
-  ;(add-to-list 'erc-nickserv-alist '(Corrupt "NickServ!services@shd.u" "This\\s-nickname\\s-is\\s-registered\\s-and\\s-protected.\\s-\\s-If\\s-it\\s-is\\s-your" "NickServ" "IDENTIFY" nil nil "Password\\s-accepted\\s--\\s-you\\s-are\\s-now\\s-recognized."))
+  (add-to-list 'erc-server-alist '("Corrupt-Net" Corrupt "irc.corrupt-net.org" ((6666 6669)) 8067 6697 7000)) ;(add-to-list 'erc-nickserv-alist '(Corrupt "NickServ!services@shd.u" "This\\s-nickname\\s-is\\s-registered\\s-and\\s-protected.\\s-\\s-If\\s-it\\s-is\\s-your" "NickServ" "IDENTIFY" nil nil "Password\\s-accepted\\s--\\s-you\\s-are\\s-now\\s-recognized."))
   (add-to-list 'erc-modules 'dcc);/dcc list and /dcc get -s nick file
   (add-to-list 'erc-modules 'notifications); requires notification-daemon from freedesktop.org
   (add-to-list 'erc-modules 'log)
-  (add-to-list 'erc-modules 'services); nickserv
-  ;(add-to-list 'erc-modules 'sasl)
+  (add-to-list 'erc-modules 'services); nickserv ;(add-to-list 'erc-modules 'sasl)
   (erc-update-modules))
 
 (use-package eshell
@@ -443,9 +432,7 @@
   :bind (:map completion-preview-active-mode-map ; M-i during preview for *Completions* buffer
               ("M-n" . completion-preview-next-candidate)
               ("M-p" . completion-preview-prev-candidate))
-  :config
-  (setq ;completion-preview-idle-delay 0.2
-   completion-preview-minimum-symbol-length 2))
+  :config (setq completion-preview-minimum-symbol-length 2));completion-preview-idle-delay 0.2
 
 (use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all
   :ensure nil ; built-in
@@ -465,12 +452,11 @@
    gnus-startup-file (concat gnus-directory "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
    gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
-                                   (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom") ; not used: https://savannah.gnu.org/news/atom.php?group=emacs
                                    (nntp "news.yhetil.org"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
                                    ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
-                                   )
+                                   (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom")); not used: https://savannah.gnu.org/news/atom.php?group=emacs
    gnus-use-cache t
    gnus-asynchronous t
    gnus-use-header-prefetch t
@@ -520,13 +506,8 @@
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
        (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
        (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
-       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix")
-       (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.patches") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.devel") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel")
-       ;(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q)
-       ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files
-       ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
-       ))
-  )
+       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
+       (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.patches") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.devel") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel"))))
 
 (use-package which-key
   :ensure nil ; built-in
@@ -571,6 +552,7 @@
         (add-to-list 'treesit-extra-load-path "/usr/lib")
         (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
         (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+        (push '(scala-mode . scala-ts-mode) major-mode-remap-alist)
         (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
 
 (use-package yaml-ts-mode
@@ -582,6 +564,22 @@
   :mode "\\.rs\\'"
   :commands (rust-ts-mode)
   :config (jam/set-rust-path))
+
+(use-package scala-mode
+  :mode ("\\.scala\\'" . scala-mode)
+  :interpreter ("scala" . scala-mode)
+  :commands (scala-mode))
+
+(use-package scala-ts-mode
+  :mode ("\\.scala\\'" . scala-ts-mode)
+  :interpreter ("scala" . scala-ts-mode)
+  :config (setq eglot-workspace-configuration '(:metals  (:startMcpServer t)));.dir-locals.el ;((scala-ts-mode . ((eglot-workspace-configuration . (:metals (:startMcpServer t))))))
+  :commands (scala-ts-mode))
+
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config (setq sbt:program-options '("-Dsbt.supershell=false")))
+
 
 (use-package python ; python
   :ensure nil ; built-in
@@ -726,20 +724,22 @@
 
 (use-package gptel ; optional curl
   ;:pin nongnu
-  :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel)
-  :config
-  (setq gptel-model 'qwen3:8b ;gemma-3:4b
+  :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel gptel-mcp-connect)
+  :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
+  (setq mcp-hub-servers '(("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem"))
+                          ("metals" :url "127.0.0.1:39497")
+                          ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db")))
+        gptel-model 'gemma-3:4b; 'qwen3:8b
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
                                          :models '((gemma-3:4B :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
+                                                   (magistral-small)
                                                    (qwen3:8b))
                                          :stream t)))
 
-;(use-package llm-tool-collection
-;  :after (gptel)
-;  :vc (:url "https://github.com/skissue/llm-tool-collection" :rev "304a06aacbe77ce0ee5f2a6c9063d4a3a4bfda22")
-;  :config ;(apply #'gptel-make-tool (llm-tool-collection-get "read_file"))
-;  (mapcar (apply-partially #'apply #'gptel-make-tool) (llm-tool-collection-get-category "filesystem")))
+(use-package mcp-hub
+  :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool);:defer t
+  :vc (:url "https://github.com/lizqwerscott/mcp.el" :rev "18f762b88c49ca3cbd858525bebc223bce7512d8")); :config (mcp-make-text-tool "filesystem" "write_file")
 
 ;;;###autoload
 (defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))

@@ -23,6 +23,38 @@
 - guile scheme port of emacs lisp https://codeberg.org/ramin_hal9001/gypsum/
 - guile-emacs project https://git.hcoop.net/bpt/emacs.git
 - literal org blocks for artist mode by using ~#+BEGIN_EXAMPLE~ and ~#+END_EXAMPLE~ with each line starting with a colon then a space (avoid special chars)
+#+BEGIN_EXAMPLE :tangle no
+ :
+ :
+ :
+ :                               ----------                                     \
+ :                              /          \--------|                          | \                  |
+ :                             /                    |                          / |                /-|                                                                                            -----
+ :                            /                     |                         /   \              /   \                              /-\                                                ---------/   |
+ :                           /                     /                         |     \           /-    |                           ---   \-                                    ---------/             |
+ :                          |         o------------|                         /      \         /       \                         |        \                             +----/                       |
+ :                          /         /            \                        |       |        /        |                         /         \                            |                            |
+ :                         /         |                                      /        \     /-         |                        |           \-                          |                  /---------+
+ :                        /          /                                     /          \   /            \                       /             \                          \              /--
+ :                       /          |                                     |           | /-             |                      /               \-                        |           /--
+ :                      /          -+--------------|                      /            X                \                    |      --          \                       |         +-
+ :                     /                           |                     /                              |                    /     |  \--        \                      |         |
+ :                    /                            |                    |         |                     |                   |      /     \-       \-                    |         \
+ :                   /                             |                    /         ||         -+          \                  /     /--------\       \                   \         |
+ :                  /                             /                    |         / \      --/ |          |                 |                         \                   |         |
+ :                 |                              |                    /         |  \  --/    |           \                /                          \-                 \          -\
+ :                 /            oo-----------------                   /          |   \/       |           |               /                X            \                 \           \
+ :                /             |                                    |          /             |           |              |               -/ -\           \-                \           -\
+ :               /              |                                    /          |             \            \             /             -/     -\           \                \            \----------------------+
+ :              /               |                                   /           |              |           |            |            -/         \           \               |                                   |
+ :             /                +------------------+               |           /               |            \           /          -/            -\          \-              \                                  |
+ :            /                                    |               /          -+               |         ---+          /         -/                -\      -----              --                                |
+ :           -+                                    |              |       ---/                 |   -----/              o    ----/                    \----/                     \-                             /+
+ :            |                                   /               /   ---/                     +--/                     \--/                                                      \--                        /-
+ :           oo----------------\                  |             -o---/                                                                                                               \-                    /-
+ :                              -------------------                                                                                                                                   \------------------/
+
+#+END_EXAMPLE
 #+NAME: signal-cli
 #+BEGIN_SRC emacs-lisp :tangle no
 (use-package signal-msg ; https://github.com/AsamK/signal-cli
@@ -142,6 +174,31 @@
                 '(("github.com" . gfm-mode)
                   ("gitlab.com" . gfm-mode)))
   (add-to-list 'atomic-chrome-create-file-strategy `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "src") :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
+
+(use-package llm-tool-collection; instead of mcp
+  :after (gptel)
+  :vc (:url "https://github.com/skissue/llm-tool-collection" :rev "304a06aacbe77ce0ee5f2a6c9063d4a3a4bfda22")
+  :config ;(apply #'gptel-make-tool (llm-tool-collection-get "read_file"))
+  (mapcar (apply-partially #'apply #'gptel-make-tool) (llm-tool-collection-get-category "filesystem")))
+
+
+;;(push '(scala-mode . scala-ts-mode) major-mode-remap-alist)
+;; :hook (((scala-ts-mode scala-mode) . eglot-ensure)) ;eglot
+;;(add-to-list 'eglot-server-programs `((scala-mode scala-ts-mode) . ,(alist-get 'scala-mode eglot-server-programs)))
+(use-package scala-mode
+  :mode ("\\.scala\\'" . scala-mode)
+  :interpreter ("scala" . scala-mode)
+  :commands (scala-mode))
+
+(use-package scala-ts-mode
+  :mode ("\\.scala\\'" . scala-ts-mode)
+  :interpreter ("scala" . scala-ts-mode)
+  :config (setq eglot-workspace-configuration '(:metals  (:startMcpServer t)));.dir-locals.el ;((scala-ts-mode . ((eglot-workspace-configuration . (:metals (:startMcpServer t))))))
+  :commands (scala-ts-mode))
+
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config (setq sbt:program-options '("-Dsbt.supershell=false")))
 #+END_SRC
 
 - German air control ATC ran on emacs in the 90's

@@ -30,13 +30,15 @@
 ** transmission notes
 - ~settings.json~ set ~"start-added-torrents": false,~ to start torrents paused
 ** deluge notes
+- webui is 8112 by default with pass of deluge
 - supports BEP55 for hole punching with utp(w/udp)
 - install config plugin https://github.com/ratanakvlun/deluge-ltconfig/releases
   - set performance default profile
   - set ~"validate_https_trackers": false~
   - set ~"use_write_cache": false~ for ssd
   - peer_turnover to 0
-  - max concurrent http announces to 75
+  - max concurrent http announces to 15
   - coalesce reads/writes
   - checking mem usage to 2048
   - announce to all trackers
+  - lower connections to 50 so NAT tables do not get overwhelmed

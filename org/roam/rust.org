@@ -10,6 +10,7 @@
 * rust
 - sans-io pattern for protocol state machines
   - ex. tokio-codec or https://www.firezone.dev/blog/sans-io
+  - tagless initial https://www.inferara.com/en/blog/rust-tagless-final-gadt/#the-zero-cost-proof-an-experiment-with-the-never-type
 - map/fold can contain specific loop optimizations due to types and ownership for iterator mutation/reuse.
   - ex. ~let flat = flatten.into_iter().fold(Vec::new(), |mut accumulator, list| { acc.extend(list); acc });~ is likely as fast as a for loop because acc is a moved vec.
 - std::intrinsics contains llvm intrinsics

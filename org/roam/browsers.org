@@ -117,6 +117,7 @@ self.addEventListener('fetch', function(e) {
       - file system api flag
       - WebGPU flag ~--enable-features=Vulkan~
         - ~--enable-features=Vulkan~ (not compat with wayland/ozone)
+          - https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/gpu/vaapi.md#VaAPI-on-Linux-with-Vulkan suggests ~--enable-features=AcceleratedVideoEncoder,VaapiOnNvidiaGPUs,VaapiIgnoreDriverChecks,Vulkan,DefaultANGLEVulkan,VulkanFromANGL~
     - builtin tor, ad block
     - disable wallet, sidebar
     - F12 Dev Tools -> Ctrl+Shift+P -> type 'shot' for screen capture options
@@ -124,7 +125,7 @@ self.addEventListener('fetch', function(e) {
     - Alt w to close tab, ctrl tab to cycle, ctrl shift T to reopened closed tab
     - ~--window-size=1920,1080~
     - ~brave://flags/#brave-split-view~ right click on tab to split
-    - ~brave://flags/#brave-web-view-rounded-corners~ 
+    - ~brave://flags/#brave-web-view-rounded-corners~
   - ungoogled-chromium
   - microsoft edge
   - [[https://github.com/fathyb/carbonyl][terminal browser]]
@@ -157,11 +158,18 @@ self.addEventListener('fetch', function(e) {
 - https://blog.codingconfessions.com/p/linux-context-switching-internals
 - https://curiouscoding.nl/posts/static-search-tree/
 ** tools
+- web archive https://replayweb.page/
 - [[https://wasm-test.libreoffice.org/][libreoffice wasm]]
 - https://directfile.irs.gov/
 - https://uica.uops.info/
 - https://qrcode.antfu.me/
 - https://cowasm.sh/ (python wasm)
+- https://shell.duckdb.org
+  - ~load sqlite; load ducklake;~
+  - ~attach 'ducklake:sqlite:metadata.sqlite' as my_ducklake (DATA_PATH 'data_files/');~
+  - ~use my_ducklake;~
+    - inspect files with ~FROM glob('*')~
+    - test data ~CREATE TABLE nl_train_stations AS FROM 'https://blobs.duckdb.org/nl_stations.csv';~
 ** data
 - https://ossinsight.io/#trending-repos
 - https://sourcegraph.com/search
