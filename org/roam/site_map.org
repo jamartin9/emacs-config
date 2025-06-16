@@ -79,7 +79,7 @@ SQLite FTS Regex Search
                (html-ts (file-attribute-modification-time (file-attributes html-file)))
                (org-html-file (concat org-dir "site_map.html"))
                (org-html-ts (file-attribute-modification-time (file-attributes org-html-file))))
-               (if (time-less-p org-html-ts html-ts)
+               (if (or (time-less-p org-html-ts html-ts) (time-equal-p org-html-ts html-ts))
                  (progn
                    (message "setting %s timestamp to %s's +1s" org-html-file html-file)
                    (set-file-times org-html-file (time-add html-ts (seconds-to-time 1))))
