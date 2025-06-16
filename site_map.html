@@ -11,22 +11,22 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org84d1acd">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4981c6f">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org5897539" class="outline-2">
-<h2 id="org5897539">Site Map</h2>
-<div class="outline-text-2" id="text-org5897539">
-<section class="container" id="orgf1293c9">
+<div id="outline-container-org5244d2a" class="outline-2">
+<h2 id="org5244d2a">Site Map</h2>
+<div class="outline-text-2" id="text-org5244d2a">
+<section class="container" id="org4a954d3">
 <input class="input" type="search" placeholder="Search" id="search">
 </input>
 </section>
 <dialog class="modal" id="modal">
-<article id="org7eed079">
-<header id="org27fe5cc">
+<article id="orgfba7cd3">
+<header id="org861913b">
 <p>
 SQLite FTS Regex Search
 </p>
@@ -327,7 +327,7 @@ SQLite FTS Regex Search
 
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgd50884c">(defun collect-basenames (dir pattern)
+<pre class="src src-emacs-lisp" id="orga87da1b">(defun collect-basenames (dir pattern)
   (mapcar #'file-name-base
           (directory-files-recursively dir pattern)))
 (ignore-errors
@@ -340,7 +340,7 @@ SQLite FTS Regex Search
                (html-ts (file-attribute-modification-time (file-attributes html-file)))
                (org-html-file (concat org-dir "site_map.html"))
                (org-html-ts (file-attribute-modification-time (file-attributes org-html-file))))
-               (if (time-less-p org-html-ts html-ts)
+               (if (or (time-less-p org-html-ts html-ts) (time-equal-p org-html-ts html-ts))
                  (progn
                    (message "setting %s timestamp to %s's +1s" org-html-file html-file)
                    (set-file-times org-html-file (time-add html-ts (seconds-to-time 1))))
