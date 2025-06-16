@@ -33,7 +33,7 @@
      ;;"firefox-nvda"; --with-graft=mesa=nvda
      ;;"torbrowser"
 
-     ;;"deluge-web ;;"transmission"
+     ;;"deluge" ;;"transmission"
      ;;"nzbget"
      ;;"steam-nvidia" ;; steam
      ;;"zfs"

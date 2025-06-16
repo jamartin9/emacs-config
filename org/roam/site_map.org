@@ -62,3 +62,27 @@ SQLite FTS Regex Search
   ;(message "return string is: \n %s"  (format "%s" (mapconcat 'identity (reverse return-string))))
   (format "%s" (mapconcat 'identity (reverse return-string))))
 #+END_SRC
+
+
+#+NAME: sitemap-run
+#+BEGIN_SRC emacs-lisp :tangle site_map.sh :shebang "\":\"; emacs -Q --script site_map.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"
+(defun collect-basenames (dir pattern)
+  (mapcar #'file-name-base
+          (directory-files-recursively dir pattern)))
+(ignore-errors
+(let* ((org-dir (file-name-directory (or load-file-name buffer-file-name)))
+       (org-files (collect-basenames org-dir "\\.org$"))
+       (html-dir (concat (file-name-as-directory user-emacs-directory) (file-name-as-directory "pages")))
+       (html-files (collect-basenames html-dir "\\.html$")))
+       (if (not (equal org-files html-files)) ; each org file is an html page
+         (let* ((html-file (concat html-dir "site_map.html"))
+               (html-ts (file-attribute-modification-time (file-attributes html-file)))
+               (org-html-file (concat org-dir "site_map.html"))
+               (org-html-ts (file-attribute-modification-time (file-attributes org-html-file))))
+               (if (time-less-p org-html-ts html-ts)
+                 (progn
+                   (message "setting %s timestamp to %s's +1s" org-html-file html-file)
+                   (set-file-times org-html-file (time-add html-ts (seconds-to-time 1))))
+                 (message "skipping timestamp update for site_map %s as it is already more recent than %s" org-html-file html-file)))))
+)
+#+END_SRC
