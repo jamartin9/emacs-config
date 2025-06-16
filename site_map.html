@@ -11,22 +11,22 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5dfde8e">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org84d1acd">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org1ea5995" class="outline-2">
-<h2 id="org1ea5995">Site Map</h2>
-<div class="outline-text-2" id="text-org1ea5995">
-<section class="container" id="org7960db7">
+<div id="outline-container-org5897539" class="outline-2">
+<h2 id="org5897539">Site Map</h2>
+<div class="outline-text-2" id="text-org5897539">
+<section class="container" id="orgf1293c9">
 <input class="input" type="search" placeholder="Search" id="search">
 </input>
 </section>
 <dialog class="modal" id="modal">
-<article id="orgeadcbc8">
-<header id="orge7913ad">
+<article id="org7eed079">
+<header id="org27fe5cc">
 <p>
 SQLite FTS Regex Search
 </p>
@@ -58,6 +58,7 @@ SQLite FTS Regex Search
 <li><a href="golang.html#ID-ec8d7fc7-d5fa-4265-b795-043a5e55cd33">golang</a></li>
 <li><a href="ruby.html#ID-0a869230-4f44-4e06-97a1-e35ec5cde213">ruby</a></li>
 <li><a href="java.html#ID-2b605045-23e1-4995-9ed4-843699a0481f">java</a></li>
+<li><a href="scala.html#ID-4dabbc8e-a162-4e85-9803-82ea93e8c61f">scala</a></li>
 <li><a href="docker.html#ID-6cb9147a-f7ca-4b2f-af98-14347eaba82f">docker</a></li>
 <li><a href="gradle.html#ID-b8d0efc3-099f-4791-b65a-a168ff56aafd">gradle</a></li>
 <li><a href="python.html#ID-a7f0c442-c2ec-4d7e-bc65-628631138d81">python</a></li>
@@ -216,6 +217,7 @@ SQLite FTS Regex Search
 <li><a href="python.html#ID-a7f0c442-c2ec-4d7e-bc65-628631138d81">python</a></li>
 <li><a href="gradle.html#ID-b8d0efc3-099f-4791-b65a-a168ff56aafd">gradle</a></li>
 <li><a href="docker.html#ID-6cb9147a-f7ca-4b2f-af98-14347eaba82f">docker</a></li>
+<li><a href="scala.html#ID-4dabbc8e-a162-4e85-9803-82ea93e8c61f">scala</a></li>
 <li><a href="java.html#ID-2b605045-23e1-4995-9ed4-843699a0481f">java</a></li>
 <li><a href="ruby.html#ID-0a869230-4f44-4e06-97a1-e35ec5cde213">ruby</a></li>
 <li><a href="golang.html#ID-ec8d7fc7-d5fa-4265-b795-043a5e55cd33">golang</a></li>
@@ -322,6 +324,30 @@ SQLite FTS Regex Search
 <li><a href="hardware.html#ID-797885a6-0f94-4d02-9df2-2744d5526c4c">hardware</a></li>
 </ul></li>
 </ul>
+
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="orgd50884c">(defun collect-basenames (dir pattern)
+  (mapcar #'file-name-base
+          (directory-files-recursively dir pattern)))
+(ignore-errors
+(let* ((org-dir (file-name-directory (or load-file-name buffer-file-name)))
+       (org-files (collect-basenames org-dir "\\.org$"))
+       (html-dir (concat (file-name-as-directory user-emacs-directory) (file-name-as-directory "pages")))
+       (html-files (collect-basenames html-dir "\\.html$")))
+       (if (not (equal org-files html-files)) ; each org file is an html page
+         (let* ((html-file (concat html-dir "site_map.html"))
+               (html-ts (file-attribute-modification-time (file-attributes html-file)))
+               (org-html-file (concat org-dir "site_map.html"))
+               (org-html-ts (file-attribute-modification-time (file-attributes org-html-file))))
+               (if (time-less-p org-html-ts html-ts)
+                 (progn
+                   (message "setting %s timestamp to %s's +1s" org-html-file html-file)
+                   (set-file-times org-html-file (time-add html-ts (seconds-to-time 1))))
+                 (message "skipping timestamp update for site_map %s as it is already more recent than %s" org-html-file html-file)))))
+)
+</pre>
+</div>
 </div>
 </div>
 </div>
