@@ -1324,6 +1324,8 @@
   - Pssst!... see what Rust is doing behind the curtains
 ** mtth/avsc
   - Avro for JavaScript
+** multigres/multigres
+  - Vitess for Postgres
 ** n64decomp/sm64
   - A Super Mario 64 decompilation, brought to you by a bunch of clever folks.
 ** Nalen98/AngryGhidra
@@ -1538,6 +1540,8 @@
   - Implementation of the Precision Time Protocol (PTP) in Rust
 ** pgmodeler/pgmodeler
   - Open-source data modeling tool designed for PostgreSQL. No more typing DDL commands. Let pgModeler do the work for you!
+** pgmq/pgmq/
+  - A lightweight message queue. Like AWS SQS and RSMQ but on Postgres.
 ** phoenixframework/phoenix_live_view
   - Rich, real-time user experiences with server-rendered HTML
 ** phylum-dev/birdcage

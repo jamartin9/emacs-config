@@ -342,10 +342,9 @@
   :ensure nil ; built-in
   :bind (:map jam/code ("a" . eglot-code-actions))
   :hook (((rust-ts-mode rust-mode) . eglot-ensure)
-         ((scala-ts-mode scala-mode) . eglot-ensure))
+         ((scala-mode) . eglot-ensure)); TODO yaml with schema
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
-  (add-to-list 'eglot-server-programs `((scala-mode scala-ts-mode) . ,(alist-get 'scala-mode eglot-server-programs)))
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
@@ -358,7 +357,7 @@
          :map jam/code ("z" . hs-toggle-hiding)
                        ("v" . hs-hide-block))
   :commands (hs-minor-mode hs-toggle-hiding hs-hide-block hs-hide-level hs-show-all hs-hide-all)
-  :config (setq hs-special-modes-alist (append '((yaml-ts-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#")
+  :config (setq hs-special-modes-alist (append '((yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#")
                                                  (nxml-mode "<!--\\|<[^/>]*[^/]>" "-->\\|</[^/>]*[^/]>" "<!--" sgml-skip-tag-forward nil))
                                                hs-special-modes-alist)))
 
@@ -551,13 +550,7 @@
       (progn
         (add-to-list 'treesit-extra-load-path "/usr/lib")
         (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
-        (push '(python-mode . python-ts-mode) major-mode-remap-alist)
-        (push '(scala-mode . scala-ts-mode) major-mode-remap-alist)
-        (add-to-list 'auto-mode-alist '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-ts-mode)))))
-
-(use-package yaml-ts-mode
-  :ensure nil ; built-in
-  :commands (yaml-ts-mode))
+        (push '(python-mode . python-ts-mode) major-mode-remap-alist))))
 
 (use-package rust-ts-mode
   :ensure nil ; built-in
@@ -565,21 +558,19 @@
   :commands (rust-ts-mode)
   :config (jam/set-rust-path))
 
+(use-package yaml-mode ;:pin nongnu
+  :commands (yaml-mode)
+  :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
+
 (use-package scala-mode
   :mode ("\\.scala\\'" . scala-mode)
   :interpreter ("scala" . scala-mode)
+  :config (setq eglot-workspace-configuration '(:metals  (:startMcpServer t)));.dir-locals.el ;((scala-mode . ((eglot-workspace-configuration . (:metals (:startMcpServer t))))))
   :commands (scala-mode))
-
-(use-package scala-ts-mode
-  :mode ("\\.scala\\'" . scala-ts-mode)
-  :interpreter ("scala" . scala-ts-mode)
-  :config (setq eglot-workspace-configuration '(:metals  (:startMcpServer t)));.dir-locals.el ;((scala-ts-mode . ((eglot-workspace-configuration . (:metals (:startMcpServer t))))))
-  :commands (scala-ts-mode))
 
 (use-package sbt-mode
   :commands sbt-start sbt-command
   :config (setq sbt:program-options '("-Dsbt.supershell=false")))
-
 
 (use-package python ; python
   :ensure nil ; built-in
@@ -693,9 +684,9 @@
                                             :if-new (file+head "${slug}.org" ,(concat "#+title: ${title}\n"
                                                                                       "#+OPTIONS: toc:nil num:nil date:nil \\n:nil html-style:nil author:nil timestamp:nil title:nil html-postamble:nil html5-fancy:t\n"
                                                                                       "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"org-default.css\" />\n"
-                                                                                      "#+HTML_CONTENT_CLASS: container \n"
-                                                                                      "#+HTML_DOCTYPE: html5 \n"
-                                                                                      "#+INCLUDE: \"css.org::navbar\" :only-contents t \n"))
+                                                                                      "#+HTML_CONTENT_CLASS: container\n"
+                                                                                      "#+HTML_DOCTYPE: html5\n"
+                                                                                      "#+INCLUDE: \"css.org::navbar\" :only-contents t\n"))
                                             :unnarrowed t))))
 
 (use-package osm ; curl
@@ -726,15 +717,13 @@
   ;:pin nongnu
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel gptel-mcp-connect)
   :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
-  (setq mcp-hub-servers '(("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem"))
-                          ("metals" :url "127.0.0.1:39497")
-                          ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db")))
-        gptel-model 'gemma-3:4b; 'qwen3:8b
+  (setq mcp-hub-servers '(("metals" :url "127.0.0.1:39497"));("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
+        gptel-model 'gemma-3:4b; 'r1-qwen3:8b magistral-small:ud4
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
-                                         :models '((gemma-3:4B :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
-                                                   (magistral-small)
-                                                   (qwen3:8b))
+                                         :models '((gemma-3:4b :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
+                                                   (magistral-small:ud4 :capabilities (tool-use json media))
+                                                   (r1-qwen3:8b))
                                          :stream t)))
 
 (use-package mcp-hub
@@ -757,16 +746,8 @@
 (defun jam/compile-init-bytecode () "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)" (interactive) (byte-recompile-file (concat user-emacs-directory "init.el")) (byte-recompile-file (concat user-emacs-directory "early-init.el")) (byte-recompile-file (concat user-emacs-directory "make-el.el")) (require 'package) (package-quickstart-refresh)(byte-recompile-file (concat user-emacs-directory "package-quickstart.el"))); recompile autoloads
 ;;;###autoload
 (defun jam/mpv-play (url) "Run mpv in eat terminal. 9 is volume down; 0 is up. Requires url-handler-mode for default completion (use home and del)." (interactive (list (read-file-name (format "Args(https://somafm.com/vaporwaves.pls): ") nil nil nil "https://somafm.com/vaporwaves.pls"))) (eat (concat "mpv " url) t))
-
 ;;;###autoload
-(defun jam/set-rust-path ()
-  "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations"
-  (interactive)
-  (require 'xdg)
-  (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "cargo") "bin")))
-  (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup"))
-  (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo"))
-  (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
+(defun jam/set-rust-path () "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations" (interactive) (require 'xdg) (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "cargo") "bin"))) (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup")) (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo")) (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
 
 ;;; TOTP
 ;;;###autoload

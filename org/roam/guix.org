@@ -33,7 +33,7 @@
      ;;"firefox-nvda"; --with-graft=mesa=nvda
      ;;"torbrowser"
 
-     ;;"deluge" ;;"transmission"
+     ;;"deluge-web ;;"transmission"
      ;;"nzbget"
      ;;"steam-nvidia" ;; steam
      ;;"zfs"
@@ -58,9 +58,6 @@
      ;;"maven"
      ;;"leiningen"
      ;;"clojure"
-
-     ;; julia
-     ;;"julia"
 
      ;; python
      ;;"python"

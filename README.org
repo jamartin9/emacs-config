@@ -8,7 +8,7 @@ guix: package/environment management. alternative is cli and setting exec-path-f
 
 eat: graphical terminal emulation. alternative is built-in multi-term w/o visual commands
 
-magit/forge/code-review: git/forge manipulation. alternative is built-in vc that lacks complex workflows like interactive rebase, forge pull requests or code review comments
+magit/forge: git/forge manipulation. alternative is built-in vc that lacks complex workflows like interactive rebase, forge pull requests or code review comments
 
 org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
 
@@ -18,9 +18,9 @@ minions-mode: keeps the modeline visually brief with retained information. alter
 
 osm: Map tile viewer. alternative is web browser viewing
 
-gptel/llm-tool-collection/mcp.el: interface with llms. alternative is llm package or cli
+gptel/mcp.el: interface with llms. alternative is llm package or cli
 
-dape/geiser-guile/pyvenv/sbt/(rust,yaml,python,scala)-tree-sitter: language specific modes with more than regex.
+dape/geiser-guile/pyvenv/sbt/yaml/(rust,python)-tree-sitter: language specific modes
 
 ** Clone
 Branch names diverging and "." complicate fetching the correct heads.
