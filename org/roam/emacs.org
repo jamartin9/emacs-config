@@ -148,7 +148,27 @@
   :config ;(setq org-link-elisp-confirm-function nil)
   (setq debbugs-gnu-default-packages '("guix-patches"))
   (require 'debbugs-guix) (require 'debbugs-org) (require 'debbugs-gnu) (require 'debbugs-browse)); C-u M-x debbugs-gnu guix-patches n y then tag with t
-
+; removed for built-in completion-preview
+(use-package company
+  ;:pin gnu ; pin gnu for android
+  :bind (:map jam/toggle ("i" . global-company-mode))
+  :hook ((after-init . global-company-mode))
+  (setq company-minimum-prefix-length 2
+        company-tooltip-limit 14
+        company-tooltip-align-annotations t
+        company-require-match 'never
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode);eshell-mode
+        company-frontends
+        '(company-pseudo-tooltip-frontend  ; always show candidates in overlay tooltip
+          company-echo-metadata-frontend)  ; show selected candidate docs in echo area
+        company-backends '(company-capf company-yasnippet); company-ispell company-files company-keywords company-dabbrev
+        company-auto-commit nil
+        company-dabbrev-other-buffers nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil)
+  :commands (global-company-mode company-complete-common company-complete-common-or-cycle company-manual-begin company-grab-line)
+  :config (require 'company-tng) ; TabNGo
+  (company-tng-configure-default))
 ;combobulate?: structural editing. alternative is regex
 (use-package combobulate
   :init (setq combobulate-key-prefix "C-c e")
@@ -185,9 +205,11 @@
 ;;(push '(scala-mode . scala-ts-mode) major-mode-remap-alist)
 ;; :hook (((scala-ts-mode scala-mode) . eglot-ensure)) ;eglot
 ;;(add-to-list 'eglot-server-programs `((scala-mode scala-ts-mode) . ,(alist-get 'scala-mode eglot-server-programs)))
+;;(mcp-hub-servers `(("metals" :url "127.0.0.1:39497")))
 (use-package scala-mode
   :mode ("\\.scala\\'" . scala-mode)
   :interpreter ("scala" . scala-mode)
+  :config (setq eglot-workspace-configuration '(:metals  (:startMcpServer t)));.dir-locals.el ;((scala-mode . ((eglot-workspace-configuration . (:metals (:startMcpServer t))))))
   :commands (scala-mode))
 
 (use-package scala-ts-mode
@@ -199,6 +221,18 @@
 (use-package sbt-mode
   :commands sbt-start sbt-command
   :config (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+;; require packages for sbcl sbcl-coalton emacs-sly
+(use-package sly; (require 'coalton) (in-package #:coalton-user) (coalton (+ 1 1))
+  :hook (lisp-mode . sly-editing-mode)
+  :commands (sly sly-setup sly-enable-contrib sly-editing-mode sly-eval-region sly-mode)
+  :config
+  (setq sly-mrepl-history-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "sly-mrepl-history")
+        sly-kill-without-query-p t
+        sly-net-coding-system 'utf-8-unix
+        sly-complete-symbol-function 'sly-flex-completions
+        sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix))))
+
 #+END_SRC
 
 - German air control ATC ran on emacs in the 90's

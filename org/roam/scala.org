@@ -9,6 +9,11 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * scala
 ** scala notes
+  - caprese
+    - capture checking converts types to capabilities (root, shared, exclusive) and ensures they do not leave their scope with context functions
+    - consumed capabilities such as Mutable can be added to method signature with 'update'
+    - uses labled breaks with suspend(loom based call/cc) for effects
+    - separation checking with 'Ref'
   - type level programming using types in a tuple
   - override apply for the function syntax(functors instead of constructors?)
   - 'tagless final' is a design pattern that allows type checking interfaces at compile via an algebra (trait) of given higher kinded case class of type Algebra[Expression].

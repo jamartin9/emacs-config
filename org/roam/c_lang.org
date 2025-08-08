@@ -10,6 +10,7 @@
 * C programming language
 Standards not correctness are all that matters when the world is a PDP-11
 ** notes
+- effect type only (no handlers) system proposed in C2y
 - shared_libraries can be packaged as executables
   - ~/lib64/ld-linux-x86-64.so.2~ does this as does ~libQt5Core.so.5~
   - Add ~-shared~, ~-fpie~, ~-Wl,--entry,main~, ~-L. -l:hello -Wl,-rpath,.~, flags to gcc

@@ -664,7 +664,7 @@ ec14f2df152cb7 199a8c0bd5f05d ecad5aab44ac2b ca87ab2ba6e905 69c0bf2acdb36c
 d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 #+END_SRC
 ** Sources
-- Dovi spreasheet info for grade/master check https://docs.google.com/spreadsheets/u/0/d/1jBIGF8XTVi9VmDBZ8a5hEyongYMCDlUiLHU9n1f_S74/htmlview#
+- Check Dovi info for grade/master compat
 - The Gamma 0.88 bugs occurs when one source is brighter than other. Due to Apple software conversion of NTSC 2.2 gamma to PC 2.5 gammer requiring them to be raised to the power of 0.88 (2.2/2.5)
   - ~fixlvls~ in awsmfunc defaults to a gamma bug fix in 32-bit
 - Amazon/CrunchyRoll/HBO Max/etc web-dls often have AR/green tint issues from rounding error when converting from masters.
@@ -675,7 +675,12 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 - Tone mapping subtitles from bluray(% white). BT.2020 colorspace 10 bit, .m2ts, dolby vision,SMPTE ST 2084 transfer,Mastering display luminance ~1000.0000 cd/m2
 - For HDR to SDR tonemap screens for colors, gamut compression BT.2407, bit depth reduction to 8bits, change container from H.265 to H.264
   - Rec 709 is ~35.9% of colors human eye can see, P3 is ~53.6% and BT 2020 is 75.8% https://commons.wikimedia.org/w/index.php?curid=116654642
+    - DV mapping to HDR10 has issues as it is potentially not as studio verified to be accurate to the original grade.
+      - https://www.avsforum.com/threads/value-electronics-2024-tv-shootout-evaluation-event.3301936/page-40?post_id=63491496#post-63491496
+    - PQ displays (hdr10 w/o metadata) use absolute not relative for nits with a 1000 nit display only able to use 769nits with 254 clipped.
+      - HLG displays are relative and use all bit levels
 - Dolby Vision is 12 bit with high dynamic range and metadata. FEL can enhance grain/details. MEL otherwise.
+  - https://forum.blu-ray.com/showthread.php?t=276448/1000 for list of movie EL with the added Mb/s
 - HDR10+ is 10 bit with high dynamic range
 - HDR is 10 bit and static
 
@@ -943,7 +948,7 @@ The following settings, for now, probably don't merit an in-depth explanation as
 #+BEGIN_SRC sh :tangle no
 youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
 #+END_SRC
-
+- vevv/subby for subtitles converting
 ** rescene
 - use srrdb for reference files
 - ~srr.py FILE.srr~
@@ -957,7 +962,7 @@ youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cook
 - Try different versions of tsmuxer, you should eventually get the correct sample file with same crc32.
 - Samples are usually taken from within the first 10 min of the movie.
 ** movies
-- open matte can show more of the scene by changing the AR (bad if squashed)
+- open matte can show more of the scene by changing the AR (bad if squashed and non OAR like UK scream 4 disc)
 ** tv
 - discovery atlas
   - Italy, Australia, Brazil, China are S1 longer english

@@ -34,6 +34,7 @@ Lets make the same thing but differently!
   - ~paccache -ruk0~ to delete cache
   - makepkg to build
 - appimages
+  - on wayland use ~QT_QPA_PLATOFROM=xcb ./LibreOffice-fresh.basic-x86_64.AppImage~ if wayland error ~QWindow::requestActivate~
   - uses old glibc
   - uses fuse
     - fuse breakages can break compat (ex. ubuntu 21.04)

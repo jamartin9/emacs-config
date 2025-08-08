@@ -31,6 +31,9 @@
   - [[https://github.com/ClementTsang/bottom/pull/1362][updated tui library]]
   - [[https://github.com/ClementTsang/bottom/issues/1629][helped troubleshoot gpu issues]]
   - [[https://github.com/ClementTsang/bottom/pull/1667][fixed regression in basic mode after maintainer refactoring]]
+  - [[https://github.com/ClementTsang/bottom/issues/1753][answered bug report for unreleased feature]]
+  - [[https://github.com/ClementTsang/bottom/issues/1754][provided comparison tool and library status for future cgroup feature]]
+  - [[https://github.com/ClementTsang/bottom/pull/1772][added feature to hide kernel threads with configuration, documentation and a regression test. bugfix sample config for ci.]]
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine

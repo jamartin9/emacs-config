@@ -89,7 +89,9 @@
                            (context-menu-mode 1); mouse right click menu
                            (url-handler-mode 1) ; open urls in buffers
                            (load-theme 'modus-vivendi-tinted); built-in does not need to hook server-after-make-frame-hook for daemonp
-                           (cua-mode 1))))
+                           (cua-mode 1)
+                           (dolist (sym '(customize-option customize-browse customize-group customize-face customize-rogue customize-saved customize-apropos customize-changed customize-unsaved customize-variable customize-set-value customize-customized customize-set-variable customize-apropos-faces customize-save-variable customize-apropos-groups customize-apropos-options customize-changed-options customize-save-customized customize-themes))
+                             (put sym 'disabled "`customize' is disabled, configure Emacs with use-package instead")))))
   :bind (("<M-up>" . (lambda () (interactive) (transpose-lines 1) (forward-line -2))); move line up
          ("<M-down>" . (lambda () (interactive) (forward-line 1) (transpose-lines 1) (forward-line -1))); move line down
          ("<M-left>" . (lambda () (interactive) (transpose-words -1))); move word left
@@ -97,7 +99,7 @@
          ("C-+" . text-scale-increase)
          ("C--" . text-scale-decrease)
          :map ctl-x-map ("C-S-s" . jam/save-all)
-         :map emacs-lisp-mode-map ("C-c C-S-f" . pp-buffer)
+         :map emacs-lisp-mode-map ("C-c C-S-f" . check-parens);pp-buffer
          :map help-map ("D" . shortdoc)
          :map window-prefix-map ; C-x 1 C-x o ; (windmove-default-keybindings 'control) ; winner-mode?
            ("w" . windmove-up)
@@ -342,7 +344,7 @@
   :ensure nil ; built-in
   :bind (:map jam/code ("a" . eglot-code-actions))
   :hook (((rust-ts-mode rust-mode) . eglot-ensure)
-         ((scala-mode) . eglot-ensure)); TODO yaml with schema
+         ((yaml-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
   (add-to-list 'eglot-server-programs
@@ -423,7 +425,9 @@
   :commands (tramp)
   :config (add-to-list 'tramp-remote-path 'tramp-own-remote-path); use login shell for tramp
   (setq tramp-auto-save-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp-autosave")
-        tramp-persistency-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp")))
+        tramp-persistency-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp"))
+  (connection-local-set-profile-variables 'remote-direct-async-process '((tramp-direct-async-process . t)))
+  (connection-local-set-profiles '(:application tramp :protocol "scp") 'remote-direct-async-process))
 
 (use-package completion-preview
   :ensure nil ; built-in
@@ -515,7 +519,8 @@
 
 (use-package flymake ; add flycheck backends?
   :ensure nil ; built-in
-  :config (setq flymake-indicator-type 'margins)
+  :config (setq flymake-indicator-type 'margins
+                flymake-show-diagnostics-at-end-of-line 'fancy)
   :commands (flymake-mode))
 
 (use-package epa ; gpg
@@ -560,17 +565,14 @@
 
 (use-package yaml-mode ;:pin nongnu
   :commands (yaml-mode)
-  :config (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
-
-(use-package scala-mode
-  :mode ("\\.scala\\'" . scala-mode)
-  :interpreter ("scala" . scala-mode)
-  :config (setq eglot-workspace-configuration '(:metals  (:startMcpServer t)));.dir-locals.el ;((scala-mode . ((eglot-workspace-configuration . (:metals (:startMcpServer t))))))
-  :commands (scala-mode))
-
-(use-package sbt-mode
-  :commands sbt-start sbt-command
-  :config (setq sbt:program-options '("-Dsbt.supershell=false")))
+  :config (setq eglot-workspace-configuration eglot-workspace-configuration '(:yaml (:format (:enable t)
+                                                                                     :validate t
+                                                                                     :hover t
+                                                                                     :completion t
+                                                                                     :schemas (;https://raw.githubusercontent.com/my-user/my-project/project.schema.yml ["project.yml"]
+                                                                                               https://json.schemastore.org/yamllint.json ["/*.yml"])
+                                                                                     :schemaStore (:enable t))))
+  (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
 
 (use-package python ; python
   :ensure nil ; built-in
@@ -616,8 +618,7 @@
           (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
   :commands (geiser-guile))
 
-(use-package undo-tree
-  ;:pin gnu
+(use-package undo-tree ;:pin gnu
   :hook ((after-init . global-undo-tree-mode))
   :commands (global-undo-tree-mode)
   :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
@@ -642,6 +643,7 @@
   (setq transient-default-level 5
         transient-display-buffer-action '(display-buffer-below-selected)
         magit-diff-refine-hunk t
+        magit-tramp-pipe-stty-settings 'pty
         magit-save-repository-buffers nil
         magit-revision-insert-related-refs nil
         magit-bury-buffer-function #'magit-mode-quit-window)
@@ -689,8 +691,7 @@
                                                                                       "#+INCLUDE: \"css.org::navbar\" :only-contents t\n"))
                                             :unnarrowed t))))
 
-(use-package osm ; curl
-  ;:pin gnu
+(use-package osm ; curl ;:pin gnu
   :bind (:map jam/open ("o" . osm-home)) ;(with-eval-after-load 'org (require 'osm-ol))
   :commands (osm-home osm-search)
   :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
@@ -700,8 +701,7 @@
   :hook ((after-init . minions-mode))
   :commands (minions-mode))
 
-(use-package eat
-  ;:pin nongnu
+(use-package eat ;:pin nongnu
   :bind (:map jam/open ("t" . eat)
          :map eat-mode-map ("C-S-v" . eat-yank)); eat-yank-from-kill-ring
   :hook ((eshell-load . eat-eshell-mode)
@@ -713,22 +713,28 @@
   :config (setq dape-adapter-dir (concat user-emacs-directory (file-name-as-directory ".local") "debug-adapters"))
   :commands (dape))
 
-(use-package gptel ; optional curl
-  ;:pin nongnu
+(use-package gptel ; optional curl ;:pin nongnu
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel gptel-mcp-connect)
   :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
-  (setq mcp-hub-servers '(("metals" :url "127.0.0.1:39497"));("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
-        gptel-model 'gemma-3:4b; 'r1-qwen3:8b magistral-small:ud4
+  (setq gptel-model 'gemma-3:4b; 'r1-qwen3:8b magistral-small:ud4
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
                                          :models '((gemma-3:4b :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
-                                                   (magistral-small:ud4 :capabilities (tool-use json media))
-                                                   (r1-qwen3:8b))
+                                                   (magistral-small:ud4 :capabilities (tool-use))
+                                                   (r1-qwen3:8b :capabilities (tool-use json)))
                                          :stream t)))
 
-(use-package mcp-hub
-  :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool);:defer t
-  :vc (:url "https://github.com/lizqwerscott/mcp.el" :rev "18f762b88c49ca3cbd858525bebc223bce7512d8")); :config (mcp-make-text-tool "filesystem" "write_file")
+(use-package mcp
+  :after gptel
+  :config (require 'mcp-hub)
+  :custom (mcp-hub-servers
+           `(("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP tcp://localhost:39496';("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
+  :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))
+
+(use-package nov
+  :config (setq nov-save-place-file (expand-file-name "nov-places" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
+  :mode ("\\.epub\\'" . nov-mode)
+  :commands (nov-mode))
 
 ;;;###autoload
 (defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))

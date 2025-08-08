@@ -167,6 +167,7 @@
   - ~--with-commit=SomeSuchPackage=XXX~
 - ~-L ./guix-channel~ to use local channel changes
 - ~guix pack -S /bin=bin -S /sbin=sbin --localstatedir -RR guix bash-static~
+  - relocatable packs can be run without usernamespace support by setting the execution engine ex. ~export GUIX_EXECUTION_ENGINE=fakeroot~
 - ~guix package --roll-back~ to drop to last version
 - commit signing and downgrading flags are ~--disable-authentication --allow-downgrades~
 - platform specific binaries can be produces with the ~--tune~ flag

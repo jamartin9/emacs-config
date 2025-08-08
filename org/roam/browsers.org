@@ -160,6 +160,11 @@ self.addEventListener('fetch', function(e) {
 ** tools
 - web archive https://replayweb.page/
 - [[https://wasm-test.libreoffice.org/][libreoffice wasm]]
+  - replaced with https://github.com/allotropia/zetajs
+    - https://zetaoffice.net/demos/web-office/
+    - https://zetaoffice.net/demos/convertpdf/
+    - https://zetaoffice.net/demos/letter-address-vuejs3/index.html
+      - include as iframe
 - https://directfile.irs.gov/
 - https://uica.uops.info/
 - https://qrcode.antfu.me/
@@ -170,6 +175,7 @@ self.addEventListener('fetch', function(e) {
   - ~use my_ducklake;~
     - inspect files with ~FROM glob('*')~
     - test data ~CREATE TABLE nl_train_stations AS FROM 'https://blobs.duckdb.org/nl_stations.csv';~
+- https://parquet-viewer.xiangpeng.systems/ is hosted XiangpengHao/parquet-viewer
 ** data
 - https://ossinsight.io/#trending-repos
 - https://sourcegraph.com/search

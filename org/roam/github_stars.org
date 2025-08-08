@@ -8,6 +8,10 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** EXOK/Celeste64
+  - A game made by the Celeste developers in a week(ish, closer to 2)
+** topling/toplingdb
+  - ToplingDB is a cloud native LSM Key-Value Store with searchable compression algo and distributed compaction. Fork of RocksDB
 ** 10XGenomics/rust-boomphf
   - Fast and scalable minimal perfect hashing for massive key sets
 ** 117HD/RLHD
@@ -84,6 +88,8 @@
   - Apache Avro is a data serialization system.
 ** apache/couchdb
   - Seamless multi-master syncing database with an intuitive HTTP/JSON API, designed for reliability
+** apache/datafusion
+  - Apache DataFusion SQL Query Engine in Rust. Can add custom metadata for optimized scans
 ** apache/guacamole-client
   - Mirror of Apache Guacamole Client
 ** apache/jmeter
@@ -1032,6 +1038,8 @@
   - The simplest, fastest repository for training/finetuning medium-sized GPTs.
 ** kateinoigakukun/wasi-vfs
   - A virtual filesystem layer for WASI.
+** KDAB/hotspot
+  - The Linux perf GUI for performance analysis.
 ** KDE/krita
   - Krita is a free and open source cross-platform application that offers an end-to-end solution for creating digital art files from scratch built on the KDE and Qt frameworks.
 ** ken107/read-aloud
@@ -2237,6 +2245,7 @@
 ** zx2c4/password-store
   - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
 
+
 * machine learning
 ** comfyanonymous/ComfyUI
   - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
@@ -2249,7 +2258,7 @@
 ** EleutherAI/sparsify
   - Sparsify transformers with SAEs and transcoders
 ** ggerganov/llama.cpp
-  - Port of Facebook's LLaMA model in C/C++. llama-run to run models.
+  - Port of Facebook's LLaMA model in C/C++. llama-run to run models. see fork ikawrakow/ik_llama.cpp for more quant formats/optimizations
 ** huggingface/transformers
   - Transformers: State-of-the-art Machine Learning for Pytorch, TensorFlow, and JAX.
 ** OpenAccess-AI-Collective/axolotl
@@ -2265,7 +2274,12 @@
 ** zkonduit/ezkl
   - Deep learning with ZK-Snarks
 
+
 * rust
+** tracel-ai/cubecl
+  - Multi-platform high-performance compute language extension for Rust compute kernels.
+** AeneasVerif/aeneas
+  - A verification toolchain for Rust programs
 ** axos88/optics-rs
   - Optics library for rust
 ** aya-rs/aya
@@ -2462,6 +2476,8 @@
   - Limbo is a work-in-progress, in-process OLTP database management system, compatible with SQLite.
 ** vaivaswatha/pliron
   - Programming Languages Intermediate Representation
+** VineLang/vine
+  - an experimental new programming language based on interaction nets
 ** warp-tech/russh
   - Rust SSH client & server library
 ** wasix-org/cargo-wasix
@@ -2470,6 +2486,7 @@
   - comptime like macros in rust
 ** yewstack/yew
   - Rust / Wasm framework for building client web apps
+
 
 * utils
 ** andreas-abel/uiCA
@@ -2548,6 +2565,7 @@
   - WINE is not a emulator for windows but a windows api on linux
 ** Winetricks/winetricks
   - Winetricks is an easy way to work around problems in Wine
+
 
 * Stack
 ** emacs-mirror/emacs

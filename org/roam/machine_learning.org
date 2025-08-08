@@ -522,3 +522,20 @@ image = image_generator(prompt=prompt)
 image.save("test.png")
 
 #+END_SRC
+
+** Gemini-Cli
+- set ~GEMINI_API_KEY~ environment variable or place it in ~$HOME/.env~
+  - tokens can be cached with the api key
+- slash commands to save chat or change options
+  - local model support PR https://github.com/google-gemini/gemini-cli/pull/1939
+#+NAME: .gemini/settings.json
+#+BEGIN_SRC json :tangle no
+{
+  "theme": "ANSI",
+  "autoAccept": false,
+  "usageStatisticsEnabled": false,
+  "sandbox": "podman",
+  "selectedAuthType": "gemini-api-key"
+}
+
+#+END_SRC
