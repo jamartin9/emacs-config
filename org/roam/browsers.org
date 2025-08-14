@@ -176,6 +176,7 @@ self.addEventListener('fetch', function(e) {
     - inspect files with ~FROM glob('*')~
     - test data ~CREATE TABLE nl_train_stations AS FROM 'https://blobs.duckdb.org/nl_stations.csv';~
 - https://parquet-viewer.xiangpeng.systems/ is hosted XiangpengHao/parquet-viewer
+- https://coalton.app/ for browser coalton
 ** data
 - https://ossinsight.io/#trending-repos
 - https://sourcegraph.com/search

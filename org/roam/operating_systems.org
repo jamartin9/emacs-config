@@ -49,3 +49,4 @@
 - fork for sparc
   - https://github.com/klausz65/illumos-gate
 - used by oxide/joyent/etc for kernel, networking and userspace
+- https://illumos.org/docs/developers/build/#getting-the-closed-binaries

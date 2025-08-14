@@ -40,7 +40,9 @@
            ("i" . imenu)
            ("a" . apropos)
            ("c" . keep-lines)
-           ("m" . bookmark-jump))
+           ("m" . bookmark-jump)
+           ("r" . point-to-register)
+           ("R" . register-to-point))
 (bind-keys :prefix-map jam/file :prefix "C-c c f"
            ("d" . dired)
            ("f" . recentf-open)
@@ -500,14 +502,14 @@
              gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
                                 ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts" "nnimap+riseup:Emacs-Cloud")
                                 ("misc" "nnfolder+archive:sent.2024" "nnfolder+archive:sent.2025" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
-                                ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+                                ("Level1Links With Friends" "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
                                 ("Guix" "nntp+news.yhetil.org:yhetil.gnu.guix.patches" "nntp+news.yhetil.org:yhetil.gnu.guix.devel" "nntp+news.yhetil.org:yhetil.emacs.devel" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog")
                                 ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
                                 ("Gnus")))
        (gnus-topic-set-parameters "gmail" '((display . 200)) )(gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
        (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")(gnus-subscribe-hierarchically "nnimap+riseup:Emacs-Cloud")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
-       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ:Level1Techs") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
        (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
        (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
        (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.patches") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.devel") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel"))))
