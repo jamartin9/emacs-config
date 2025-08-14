@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org88a1b24">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga6ad859">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgbd7b965" class="outline-2">
-<h2 id="orgbd7b965">Machine learning</h2>
-<div class="outline-text-2" id="text-orgbd7b965">
+<div id="outline-container-org415d954" class="outline-2">
+<h2 id="org415d954">Machine learning</h2>
+<div class="outline-text-2" id="text-org415d954">
 </div>
-<div id="outline-container-orgc22690e" class="outline-3">
-<h3 id="orgc22690e">notes</h3>
-<div class="outline-text-3" id="text-orgc22690e">
+<div id="outline-container-org3b37627" class="outline-3">
+<h3 id="org3b37627">notes</h3>
+<div class="outline-text-3" id="text-org3b37627">
 <ul class="org-ul">
 <li>FP8 and LOG representation are efficent on modern GPU
 <ul class="org-ul">
@@ -139,9 +139,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb43aa2d" class="outline-3">
-<h3 id="orgb43aa2d">image</h3>
-<div class="outline-text-3" id="text-orgb43aa2d">
+<div id="outline-container-org838a108" class="outline-3">
+<h3 id="org838a108">image</h3>
+<div class="outline-text-3" id="text-org838a108">
 <ul class="org-ul">
 <li>gemma3 and mistral 3.1 small support image input
 <ul class="org-ul">
@@ -202,9 +202,9 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-org90b8cbe" class="outline-4">
-<h4 id="org90b8cbe">video</h4>
-<div class="outline-text-4" id="text-org90b8cbe">
+<div id="outline-container-org504787d" class="outline-4">
+<h4 id="org504787d">video</h4>
+<div class="outline-text-4" id="text-org504787d">
 <ul class="org-ul">
 <li><a href="https://github.com/Tencent/HunyuanVideo">https://github.com/Tencent/HunyuanVideo</a>
 <ul class="org-ul">
@@ -223,18 +223,18 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orga77d0d1" class="outline-4">
-<h4 id="orga77d0d1">3D</h4>
-<div class="outline-text-4" id="text-orga77d0d1">
+<div id="outline-container-org1a023d4" class="outline-4">
+<h4 id="org1a023d4">3D</h4>
+<div class="outline-text-4" id="text-org1a023d4">
 <ul class="org-ul">
 <li><a href="https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon">https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon</a> for 3D generation 3B</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org9482f53" class="outline-3">
-<h3 id="org9482f53">Large Language Models</h3>
-<div class="outline-text-3" id="text-org9482f53">
+<div id="outline-container-org16b46e2" class="outline-3">
+<h3 id="org16b46e2">Large Language Models</h3>
+<div class="outline-text-3" id="text-org16b46e2">
 <ul class="org-ul">
 <li>multiple serving frameworks with nvidia dynamo
 <ul class="org-ul">
@@ -375,9 +375,9 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orgf9a73dc" class="outline-4">
-<h4 id="orgf9a73dc">Codegen</h4>
-<div class="outline-text-4" id="text-orgf9a73dc">
+<div id="outline-container-org7f660e1" class="outline-4">
+<h4 id="org7f660e1">Codegen</h4>
+<div class="outline-text-4" id="text-org7f660e1">
 <ul class="org-ul">
 <li>GraalVM added Static Profiles powered by ML branch prediction for inlining (based on decapo data)
 <ul class="org-ul">
@@ -413,15 +413,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgd77152d" class="outline-3">
-<h3 id="orgd77152d">Speech to text</h3>
-<div class="outline-text-3" id="text-orgd77152d">
+<div id="outline-container-org3bd18b9" class="outline-3">
+<h3 id="org3bd18b9">Speech to text</h3>
+<div class="outline-text-3" id="text-org3bd18b9">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org2c01683">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="orgcdad369">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -430,9 +430,9 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-orgf7881dc" class="outline-3">
-<h3 id="orgf7881dc">Text to speech</h3>
-<div class="outline-text-3" id="text-orgf7881dc">
+<div id="outline-container-orge69ec68" class="outline-3">
+<h3 id="orge69ec68">Text to speech</h3>
+<div class="outline-text-3" id="text-orge69ec68">
 <ul class="org-ul">
 <li>Zyphra/Zonos for voice cloning/TTS</li>
 <li><a href="https://github.com/multimodal-art-projection/YuE">https://github.com/multimodal-art-projection/YuE</a>
@@ -452,11 +452,11 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-org1b6bd89" class="outline-3">
-<h3 id="org1b6bd89">Agent prompts</h3>
-<div class="outline-text-3" id="text-org1b6bd89">
+<div id="outline-container-orgf2172cc" class="outline-3">
+<h3 id="orgf2172cc">Agent prompts</h3>
+<div class="outline-text-3" id="text-orgf2172cc">
 <div class="org-src-container">
-<pre class="src src-sh" id="org5647807">
+<pre class="src src-sh" id="org0b22385">
 input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
 ```sh
 for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
@@ -483,7 +483,7 @@ ${input_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header
 <li>prompt structures</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-text" id="orga9a05e0">Answer the following questions as best you can. You have access to the following tools:
+<pre class="src src-text" id="orgad6f11a">Answer the following questions as best you can. You have access to the following tools:
 
 {tools}
 
@@ -506,14 +506,14 @@ Question: {input}
 </div>
 </div>
 </div>
-<div id="outline-container-orgbccf841" class="outline-3">
-<h3 id="orgbccf841">transformers examples</h3>
-<div class="outline-text-3" id="text-orgbccf841">
+<div id="outline-container-orga570374" class="outline-3">
+<h3 id="orga570374">transformers examples</h3>
+<div class="outline-text-3" id="text-orga570374">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="orgda4f64a">#!/usr/bin/env python3
+<pre class="src src-python" id="org2db1d4e">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:
@@ -732,6 +732,32 @@ image_generator.pipeline.enable_sequential_cpu_offload()
 prompt = "Dog, noble, majestic, realistic, high definition, pitbull"
 image = image_generator(prompt=prompt)
 image.save("test.png")
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org82f9933" class="outline-3">
+<h3 id="org82f9933">Gemini-Cli</h3>
+<div class="outline-text-3" id="text-org82f9933">
+<ul class="org-ul">
+<li>set <code>GEMINI_API_KEY</code> environment variable or place it in <code>$HOME/.env</code>
+<ul class="org-ul">
+<li>tokens can be cached with the api key</li>
+</ul></li>
+<li>slash commands to save chat or change options
+<ul class="org-ul">
+<li>local model support PR <a href="https://github.com/google-gemini/gemini-cli/pull/1939">https://github.com/google-gemini/gemini-cli/pull/1939</a></li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-json" id="orgdfc7214">{
+  "theme": "ANSI",
+  "autoAccept": false,
+  "usageStatisticsEnabled": false,
+  "sandbox": "podman",
+  "selectedAuthType": "gemini-api-key"
+}
 
 </pre>
 </div>

@@ -9,21 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5f250fa">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge1976b9">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org1ed7180" class="outline-2">
-<h2 id="org1ed7180">Guix</h2>
-<div class="outline-text-2" id="text-org1ed7180">
+<div id="outline-container-orga162d26" class="outline-2">
+<h2 id="orga162d26">Guix</h2>
+<div class="outline-text-2" id="text-orga162d26">
 </div>
-<div id="outline-container-org23b7a75" class="outline-3">
-<h3 id="org23b7a75">Link manifest</h3>
-<div class="outline-text-3" id="text-org23b7a75">
+<div id="outline-container-orge9718ef" class="outline-3">
+<h3 id="orge9718ef">Link manifest</h3>
+<div class="outline-text-3" id="text-orge9718ef">
 <div class="org-src-container">
-<pre class="src src-elisp" id="orga41b034">(ignore-errors
+<pre class="src src-elisp" id="org906a6d5">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -34,11 +34,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgf76f11b" class="outline-3">
-<h3 id="orgf76f11b">User manifest</h3>
-<div class="outline-text-3" id="text-orgf76f11b">
+<div id="outline-container-org3398b2b" class="outline-3">
+<h3 id="org3398b2b">User manifest</h3>
+<div class="outline-text-3" id="text-org3398b2b">
 <div class="org-src-container">
-<pre class="src src-scheme" id="orgf2fb8b2">;; Manifest for development env
+<pre class="src src-scheme" id="org5867809">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
@@ -175,9 +175,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgd086192" class="outline-3">
-<h3 id="orgd086192">guix notes</h3>
-<div class="outline-text-3" id="text-orgd086192">
+<div id="outline-container-org3effa96" class="outline-3">
+<h3 id="org3effa96">guix notes</h3>
+<div class="outline-text-3" id="text-org3effa96">
 <ul class="org-ul">
 <li><a href="https://git.genenetwork.org/guix-north-america/about/">https://git.genenetwork.org/guix-north-america/about/</a> for NA substitute server ?</li>
 <li>cuirass ci saves gc roots in <code>/var/guix/gcroots/profiles/per-user/cuirass/cuirass</code> for default of 30 days
@@ -191,7 +191,10 @@
 <li><code>--with-commit=SomeSuchPackage=XXX</code></li>
 </ul></li>
 <li><code>-L ./guix-channel</code> to use local channel changes</li>
-<li><code>guix pack -S /bin=bin -S /sbin=sbin --localstatedir -RR guix bash-static</code></li>
+<li><code>guix pack -S /bin=bin -S /sbin=sbin --localstatedir -RR guix bash-static</code>
+<ul class="org-ul">
+<li>relocatable packs can be run without usernamespace support by setting the execution engine ex. <code>export GUIX_EXECUTION_ENGINE=fakeroot</code></li>
+</ul></li>
 <li><code>guix package --roll-back</code> to drop to last version</li>
 <li>commit signing and downgrading flags are <code>--disable-authentication --allow-downgrades</code></li>
 <li>platform specific binaries can be produces with the <code>--tune</code> flag</li>
@@ -252,7 +255,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orge2b3bb6">network={
+<pre class="src src-conf" id="orgff99a1e">network={
   ssid="ssid-name"
   key_mgmt=WPA-PSK
   psk="unencrypted passphrase"
@@ -276,7 +279,7 @@
 <li>clone config, copy channels to <code>~/.config/guix/</code>, <code>guix pull --no-check-certificate</code> then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org4a90660">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="org5026c31">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -301,7 +304,7 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="orga4a1137">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org6d995c4">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
@@ -312,7 +315,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </div>
 
 <div class="org-src-container">
-<pre class="src src-guile" id="orge0476d8">
+<pre class="src src-guile" id="org705f1e3">
 (define guix-service ; add type for portable guix package
   (shepherd-service
    (provision '(guix))

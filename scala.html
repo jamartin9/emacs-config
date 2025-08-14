@@ -9,20 +9,27 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgdabb118">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf470eda">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org4164a2d" class="outline-2">
-<h2 id="org4164a2d">scala</h2>
-<div class="outline-text-2" id="text-org4164a2d">
+<div id="outline-container-org5b4ab55" class="outline-2">
+<h2 id="org5b4ab55">scala</h2>
+<div class="outline-text-2" id="text-org5b4ab55">
 </div>
-<div id="outline-container-org087b462" class="outline-3">
-<h3 id="org087b462">scala notes</h3>
-<div class="outline-text-3" id="text-org087b462">
+<div id="outline-container-org976f31a" class="outline-3">
+<h3 id="org976f31a">scala notes</h3>
+<div class="outline-text-3" id="text-org976f31a">
 <ul class="org-ul">
+<li>caprese
+<ul class="org-ul">
+<li>capture checking converts types to capabilities (root, shared, exclusive) and ensures they do not leave their scope with context functions</li>
+<li>consumed capabilities such as Mutable can be added to method signature with 'update'</li>
+<li>uses labled breaks with suspend(loom based call/cc) for effects</li>
+<li>separation checking with 'Ref'</li>
+</ul></li>
 <li>type level programming using types in a tuple</li>
 <li>override apply for the function syntax(functors instead of constructors?)</li>
 <li>'tagless final' is a design pattern that allows type checking interfaces at compile via an algebra (trait) of given higher kinded case class of type Algebra[Expression].</li>
@@ -46,7 +53,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-json" id="org9a97a49">{
+<pre class="src src-json" id="org8ff193d">{
   "servers": {
     "/gnu/git/scala-test/scala-3-project-template/-metals": {
       "url": "http://localhost:39497/sse"
@@ -56,7 +63,7 @@
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-scala" id="org82712eb">val scala3Version = "3.7.0"
+<pre class="src src-scala" id="org8b55a5b">val scala3Version = "3.7.0"
 lazy val root = project
   .in(file("."))
   .settings(
@@ -71,7 +78,7 @@ lazy val root = project
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-scala" id="org850a0f4">import language.experimental.captureChecking
+<pre class="src src-scala" id="org581c6d2">import language.experimental.captureChecking
 case class Pooled(count: Int, msg: String):
   override def toString: String = count.toString + msg
 val stack = scala.collection.mutable.ArrayBuffer[Pooled]()
