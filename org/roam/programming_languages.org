@@ -40,6 +40,9 @@ The tower of babel is your type system as a macro
       - most implementations are still just a jump table of pointers
 - c++23
   - generators, import std;, std::expected
+- c++ 26
+  - reflection (string like templates)
+  - std::exec (standard async runtime)
 ** [[id:e518d6e6-18f5-4bb5-8b92-135b125b5797][rust]]
 - win 7 support removed in 1.75
 - ~rr record -c 10000 <program> <args>~ context switches thread after 10000 cpu ticks

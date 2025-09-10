@@ -9,6 +9,9 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Openwrt
 a os for my routers
+* notes
+- open wisp for large deployments (20+ devices) https://github.com/openwisp/OpenWISP-Website
+- open soho for smaller (2-20 devices) https://github.com/rubenbe/opensoho
 ** LINKSYS EA6500v2
 - official firmware beyond 1.1.40.166281 check signing and rollback is only 1 version
   - rollback via tftp

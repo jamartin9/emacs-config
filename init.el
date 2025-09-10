@@ -6,7 +6,7 @@
            ("c" . compile))
 (bind-keys :prefix-map jam/toggle :prefix "C-c c t"
            ("v" . visible-mode)
-           ("w" . visual-line-mode)
+           ("w" . visual-line-mode); toggle-truncate-lines
            ("x" . xterm-mouse-mode)
            ("c" . global-display-fill-column-indicator-mode)
            ("t" . toggle-frame-maximized)
@@ -319,10 +319,9 @@
   :config (setq org-timer-default-timer 60
                 org-src-tab-acts-natively nil
                 org-edit-src-content-indentation 0)
-  :bind (:map jam/notes
-              ("D" . org-id-update-id-locations)
-              ("t" . org-todo-list)
-              ("a" . org-agenda)))
+  :bind (:map jam/notes ("D" . org-id-update-id-locations)
+                        ("t" . org-todo-list)
+                        ("a" . org-agenda)))
 
 (use-package dired ;; M-j newline in regex
   :ensure nil ; built-in
@@ -489,7 +488,7 @@
              gnus-cloud-storage-method nil; disable epg for just ascii armored file
              gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg")))
        (require 'nnrss) ; setup rss feeds.
-       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters"))); https://cacm.acm.org/feed/
+       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters") ("tanelp" "https://tanelpoder.com/posts/index.xml" "tanelp") ("igalia" "https://planet.igalia.com/rss20.xml" "igalia"))); https://cacm.acm.org/feed/
        (nnrss-save-server-data nil)
        (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
              gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
@@ -511,7 +510,7 @@
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
        (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
        (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
-       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
+       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix") (gnus-subscribe-hierarchically "nnrss:tanelp") (gnus-subscribe-hierarchically "nnrss:igalia");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
        (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.patches") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.devel") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel"))))
 
 (use-package which-key
@@ -527,7 +526,8 @@
 
 (use-package epa ; gpg
   :ensure nil ; built-in
-  :defer t
+  :defer t ; epa-file-cache-passphrase-for-symmetric-encryption
+  :bind (:map jam/toggle ("a" . (lambda () (interactive) (setq epa-file-cache-passphrase-for-symmetric-encryption nil))))
   :config (setq epa-file-cache-passphrase-for-symmetric-encryption t
                 epa-armor t ; ascii armored output
                 epg-pinentry-mode 'loopback) ; minibuffer for gpg input instead of 'allow-loopback-pinentry' in ~/.gnupg/gpg-agent.conf
@@ -722,8 +722,8 @@
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
                                          :models '((gemma-3:4b :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
-                                                   (magistral-small:ud4 :capabilities (tool-use))
-                                                   (r1-qwen3:8b :capabilities (tool-use json)))
+                                                   (gpt-oss:20b :capabilities (tool-use))
+                                                   (qwen3:30b :capabilities (tool-use json)))
                                          :stream t)))
 
 (use-package mcp

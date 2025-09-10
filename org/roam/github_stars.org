@@ -8,14 +8,6 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
-** Barre/ZeroFS
-  - ZeroFS - The Filesystem That Makes S3 your Primary Storage. ZeroFS is 9P/NFS/NBD on top of S3. With zfs
-** john-parton/slatedb-nbd
-  - NBD binding over SlateDB with minimal abstractions.(zfs on block device backed by object storage)
-** EXOK/Celeste64
-  - A game made by the Celeste developers in a week(ish, closer to 2)
-** topling/toplingdb
-  - ToplingDB is a cloud native LSM Key-Value Store with searchable compression algo and distributed compaction. Fork of RocksDB
 ** 10XGenomics/rust-boomphf
   - Fast and scalable minimal perfect hashing for massive key sets
 ** 117HD/RLHD
@@ -186,6 +178,8 @@
   - Execute Clojure(Script) directly from browser script tags via SCI
 ** bard/emacs-director
   - Script Emacs sessions for automated screencasts and end-to-end tests
+** Barre/ZeroFS
+  - ZeroFS - The Filesystem That Makes S3 your Primary Storage. ZeroFS is 9P/NFS/NBD on top of S3. With zfs
 ** bearcove/fluke
   - HTTP 1+2 in Rust, with io_uring & ktls
 ** bearcove/ktls
@@ -594,6 +588,8 @@
   - Build, Distribute and Run CO-RE eBPF programs easier with JSON and Webassembly
 ** evergreen-xch/cult-lite-farmer
   - A lite farmer and harvester for the Chia Blockchain.
+** EXOK/Celeste64
+  - A game made by the Celeste developers in a week(ish, closer to 2)
 ** extism/extism
   - The Universal Plug-in System. Extend anything with WebAssembly.
 ** facebookexperimental/hermit
@@ -720,6 +716,8 @@
   - A Git platform powered by Scala with easy installation, high extensibility & GitHub API compatibility
 ** gitlab.com/android_translation_layer/android_translation_layer
   - A translation layer that allows running Android apps on a Linux system
+** gitlab.gnome.org/GNOME/sysprof
+  - sampling profiler using a kernel module to generate stacktraces for userland sysprof.
 ** git-lfs/git-lfs
   - Git extension for versioning large files
 ** glfw/glfw
@@ -978,6 +976,8 @@
   - A template system for Emacs
 ** johanhelsing/matchbox
   - Painless peer-to-peer WebRTC networking for rust wasm
+** john-parton/slatedb-nbd
+  - NBD binding over SlateDB with minimal abstractions.(zfs on block device backed by object storage)
 ** JoinMarket-Org/joinmarket-clientserver
   - Bitcoin CoinJoin implementation with incentive structure to convince people to take part
 ** joinr/clclojure
@@ -1042,8 +1042,6 @@
   - The simplest, fastest repository for training/finetuning medium-sized GPTs.
 ** kateinoigakukun/wasi-vfs
   - A virtual filesystem layer for WASI.
-** KDAB/hotspot
-  - The Linux perf GUI for performance analysis.
 ** KDE/krita
   - Krita is a free and open source cross-platform application that offers an end-to-end solution for creating digital art files from scratch built on the KDE and Qt frameworks.
 ** ken107/read-aloud
@@ -1142,6 +1140,8 @@
   - Lightning Network Daemon
 ** LineageOS/android
   - OSS android
+** linux-credentials/credentialsd
+  - Proposal for a Linux credential management xdg portal D-Bus specification, including webauthn/passkey support
 ** liquibase/liquibase
   - Main Liquibase Source
 ** lkrg-org/lkrg
@@ -1418,8 +1418,12 @@
   - Combined repo for the RTX-Remix runtime. dxd9 game modding. (require RTX GPU for mod creation)
 ** NVIDIA/gpu-monitoring-tools
   - Tools for monitoring NVIDIA GPUs on Linux
+** NVIDIA/k8s-device-plugin
+  - NVIDIA device plugin for Kubernetes
 ** NVIDIA/libcudacxx
   - The C++ Standard Library for your entire system.
+** NVIDIA/nvidia-container-toolkit
+  - Build and run containers leveraging NVIDIA GPUs
 ** NVIDIA/nvidia-docker
   - Build and run Docker containers leveraging NVIDIA GPUs
 ** NVIDIA/nvidia-installer
@@ -1919,7 +1923,7 @@
 ** tadfisher/pass-otp
   - A pass extension for managing one-time-password (OTP) tokens
 ** tanelpoder/0xtools
-  - 0x.Tools: X-Ray vision for Linux systems. BPF like top with traces
+  - 0x.Tools: X-Ray vision for Linux systems. BPF like top with traces. xtop, xstack etc.
 ** tcdi/pgx
   - Build Postgres Extensions with Rust!
 ** technomancy/leiningen
@@ -1972,6 +1976,8 @@
   - Free monospaced font with programming ligatures
 ** tonsky/uberdeps
   - Uberjar builder for deps.edn
+** topling/toplingdb
+  - ToplingDB is a cloud native LSM Key-Value Store with searchable compression algo and distributed compaction. Fork of RocksDB
 ** torproject/stem
   - Python controller library for Tor
 ** torproject/tor
@@ -2521,18 +2527,20 @@
   - Git Source Code Mirror - This is a publish-only repository but pull requests can be turned into patches to the mailing list via GitGitGadget (https://gitgitgadget.github.io/). Please follow Documentation/SubmittingPatches procedure for any of your improvements.
 ** gitlab.freedesktop.org/mstoeckl/waypipe
   - Network transparency with Wayland.
+** gitlab.torproject.org/tpo/core/oniux
+  - isolate arbitrary application over the Tor network
 ** gpg/gnupg
   - The GNU Privacy Guard. NOTE: Maintainers are not tracking this mirror. Do not make pull requests here, nor comment any commits, submit them usual way to bug tracker (https://www.gnupg.org/documentation/bts.html) or to the mailing list (https://www.gnupg.org/documentation/mailing-lists.html).
 ** hasse69/rar2fs
   - FUSE file system for reading RAR archives
-** gitlab.torproject.org/tpo/core/oniux
-  - isolate arbitrary application over the Tor network
 ** iovisor/bpftrace
   - High-level tracing language for Linux eBPF
 ** jellyfin/jellyfin
   - The Free Software Media System
 ** KarimAziev/chrome-emacs
   - Chrome and Firefox extension designed for bi-directional editing from Emacs, providing cursor and scroll synchronization, auto-major mode detection, and support for most online editors.
+** KDAB/hotspot
+  - The Linux perf GUI for performance analysis.
 ** kimono-koans/httm
   - Interactive, file-level Time Machine-like tool for ZFS/btrfs/nilfs2
 ** koalaman/shellcheck
@@ -2547,10 +2555,6 @@
   - Monero: the secure, private, untraceable cryptocurrency
 ** mpv-player/mpv
   - Command line video player
-** NVIDIA/k8s-device-plugin
-  - NVIDIA device plugin for Kubernetes
-** NVIDIA/nvidia-container-toolkit
-  - Build and run containers leveraging NVIDIA GPUs
 ** nzbgetcom/nzbget
   - Efficient Usenet Downloader
 ** obsproject/obs-studio

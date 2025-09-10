@@ -35,6 +35,7 @@
   - lacks offload support for disk, cpu, gpu
   - huggingface.js
 - Some models are more sensitive to quantization than others. LLMs are more tolerant than diffusion or whisper models
+  - unsloth uses custom quant skipping layers based on activation spikes
 - LoRA is a finetunning mechanism
   - Meta showed 8 bit quant with no difference but 4bit was >2x worse without QLoRA
   - QLoRA is quantized version (4/8 bit). [[https://github.com/intel/intel-extension-for-transformers/blob/main/docs/qloracpu.md][cpu version]]
@@ -143,6 +144,8 @@
   - constrain output to json schema or grammar or choice
     - faster inference with constrained output https://blog.dottxt.co/coalescence.html
     - guided decoding https://github.com/dottxt-ai/outlines
+  - GPT-OSS is like phi-5 (synthetic data)
+  - gemma3n uses matformer (Matryoshka transformer) to tradeoff sizes between modals ie a range of weights between 3B and 7B
   - deepseekv3 MoE uses 3 dense layers then MoE with a shared expert, dual pipe and reasoning
     - quantized during training for speed
     - dynamic 1.58 bit quant https://unsloth.ai/blog/deepseekr1-dynamic
@@ -150,7 +153,7 @@
     - distilled reasoning into other models
     - Min_p = 0.05 to avoid incorrect tokens
   - Qwen qwq 32B
-    - requires specific options/samplers to avoid degraded output
+    - requires specific options/samplers to avoid degraded output. See unsloth guides
     - ~GGML_CUDA_ENABLE_UNIFIED_MEMORY=1 ./llama-cli --model ./QwQ-32B-Q4_K_M.gguf --threads 8 --ctx-size 16384 --n-gpu-layers 99 --seed 3407 --prio 2 --temp 0.6 --repeat-penalty 1.1 --dry-multiplier 0.5 --min-p 0.0 --top-k 40 --top-p 0.95 -no-cnv --samplers "top_k;top_p;min_p;temperature;dry;typ_p;xtc" --prompt "<|im_start|>user\n${prompt}<|im_end|>\n<|im_start|>assistant\n<think>\n"~
   - distill models with https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html student/teacher model beating fine tuning
   - Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)
@@ -524,6 +527,7 @@ image.save("test.png")
 #+END_SRC
 
 ** Gemini-Cli
+- custom slash commands in toml files under the command dir
 - set ~GEMINI_API_KEY~ environment variable or place it in ~$HOME/.env~
   - tokens can be cached with the api key
 - slash commands to save chat or change options

@@ -101,6 +101,8 @@
   - can not be maintained across send/recv (depends on-disk references)
   - zpool sync if creating in a loop to ensure the TX finishes
 - https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=2720&context=honorstheses chapter 3 for description of zfs architecture
+*** guix on zfs
+- see https://codeberg.org/guix/guix/pulls/1917#issuecomment-6976089 for modern patch based on the script/notes below
 #+NAME: zfs-install-root-script
 #+BEGIN_SRC sh :tangle no
 #!/usr/bin/env -S guix shell --pure bash coreutils zfs --

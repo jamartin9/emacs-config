@@ -19,6 +19,9 @@
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
       - sysinfo added freebsd ufs io with geom?
+    - to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path
+    - Added option to subtract freeable arc from memory?
+      - fixed broken arc collection on freebsd?
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
     - hide swap when not used in basic mode
     - bugfixed freebsd build / percentage toggle
@@ -30,10 +33,17 @@
         - intel gpus need ioctls from mesa/drm ~DRM_I915_QUERY_MEMORY_REGIONS~
   - [[https://github.com/ClementTsang/bottom/pull/1362][updated tui library]]
   - [[https://github.com/ClementTsang/bottom/issues/1629][helped troubleshoot gpu issues]]
+    - [[https://github.com/ClementTsang/bottom/pull/1791][suggested gpu naming convention]]
   - [[https://github.com/ClementTsang/bottom/pull/1667][fixed regression in basic mode after maintainer refactoring]]
   - [[https://github.com/ClementTsang/bottom/issues/1753][answered bug report for unreleased feature]]
   - [[https://github.com/ClementTsang/bottom/issues/1754][provided comparison tool and library status for future cgroup feature]]
-  - [[https://github.com/ClementTsang/bottom/pull/1772][added feature to hide kernel threads with configuration, documentation and a regression test. bugfix sample config for ci.]]
+  - [[https://github.com/ClementTsang/bottom/pull/1793][code review clarified approach to detecting kernel threads]]
+    - htop decided against empty cmdline in favour of PF_KTHREAD (freebsd can use sysctl mib or kvm_getprocs)
+  - [[https://github.com/ClementTsang/bottom/issues/1777][helped identify slow proc widget after release]]
+  - [[https://github.com/ClementTsang/bottom/pull/1772][added feature to hide kernel threads with configuration, documentation and a regression test.]]
+    - outlined future freebsd support and library migration strategy
+  - Enabled basic cpu for advanced layout?
+  - fix duplicate cpu average in basic mode when using dedicated row?
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine
