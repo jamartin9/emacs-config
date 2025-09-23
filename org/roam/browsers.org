@@ -156,7 +156,8 @@ self.addEventListener('fetch', function(e) {
 - https://aosabook.org/en/
 - https://www.youtube.com/@ants_are_everywhere/videos
 - https://blog.codingconfessions.com/p/linux-context-switching-internals
-- https://curiouscoding.nl/posts/static-search-tree/
+- https://en.algorithmica.org/hpc/
+  - https://curiouscoding.nl/posts/static-search-tree/
 ** tools
 - profile webkit(mesa too) with sysprof
 - web archive https://replayweb.page/

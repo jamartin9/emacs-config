@@ -20,8 +20,8 @@
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
       - sysinfo added freebsd ufs io with geom?
     - to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path
-    - Added option to subtract freeable arc from memory?
-      - fixed broken arc collection on freebsd?
+    - [[https://github.com/ClementTsang/bottom/pull/1812][Added option to subtract freeable arc from memory]]
+      - fixed broken arc collection on freebsd
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
     - hide swap when not used in basic mode
     - bugfixed freebsd build / percentage toggle
@@ -42,8 +42,7 @@
   - [[https://github.com/ClementTsang/bottom/issues/1777][helped identify slow proc widget after release]]
   - [[https://github.com/ClementTsang/bottom/pull/1772][added feature to hide kernel threads with configuration, documentation and a regression test.]]
     - outlined future freebsd support and library migration strategy
-  - Enabled basic cpu for advanced layout?
-  - fix duplicate cpu average in basic mode when using dedicated row?
+  - [[https://github.com/ClementTsang/bottom/pull/1811][fix duplicate cpu average in basic mode when using dedicated row]]
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine

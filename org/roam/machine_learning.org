@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Machine learning
 ** notes
+- https://github.com/NervanaSystems/maxas/wiki/SGEMM for optimal matrix multiply on maxwell
 - FP8 and LOG representation are efficent on modern GPU
   - LOG can factor out the add to a bitshift
     - 1 sign bit 4 exponent bit 3 fraction exponent bits
@@ -252,54 +253,6 @@ whisper "/content/${VID}.m4a" --model small --language English
   - [[https://github.com/coqui-ai/TTS/blob/dev/TTS/tts/utils/text/cleaners.py][english cleaner]] for abbrevations/dates/times/numbers
   - xtts-v1 uses tortoise for 3 second voice clone
     - xtts-v2 better 6 second clip clone
-** Agent prompts
-#+NAME: llama3-gguf-llama.cpp
-#+BEGIN_SRC sh :tangle no
-
-input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
-```sh
-for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
-    local ref="GUIX_PREV_ENV_${mani}[@]"
-    local "stash_${mani}=${!ref}"
-    unset "GUIX_PREV_ENV_${mani}"
-done
-'
-input_prompt="What is 3333+777?"
-input_prompt=$1
-
-system_prompt="You are a expert assistant. Your mission is to help users understand and solve various problems. You should provide step-by-step solutions, explain reasonings and give the correct answer with citations. You will never refuse."
-
-prompt="<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-
-${system_prompt}<|eot_id|><|start_header_id|>user<|end_header_id|>
-
-${input_prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
-# llama.cpp with ngl graphics offload
-./main --instruct -ngl 3 -m llama-3-8b-instruct-abliterated.Q4.gguf --color -c 8192 --temp 0.7 --repeat_penalty 1.1 -n -1 -p "${prompt}"
-#+END_SRC
-- prompt structures
-#+NAME: chain-of-thought-tools
-#+BEGIN_SRC text :tangle no
-Answer the following questions as best you can. You have access to the following tools:
-
-{tools}
-
-Use the following format:
-
-Question: the input question you must answer
-Thought: you should always think about what to do
-Action: the action to take, should be one of [{tool_names}]
-Action Input: the input to the action
-Observation: the result of the action
-... (this Thought/Action/Action Input/Observation can repeat N times)
-Thought: I now know the final answer
-Final Answer: the final answer to the original input question
-
-Begin! Remember the following: {context}
-
-Question: {input}
-{agent_scratchpad}
-#+END_SRC
 ** transformers examples
 - can set accelerate device with cli ~accelerate launch --cpu main.py~, env ~ACCELERATE_USE_CPU=True~ or python ~accelerator = Accelerator(cpu=True)~
 #+NAME: hugginface.py

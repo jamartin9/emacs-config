@@ -17,6 +17,10 @@
   - branch prediction with ~likely~, ~select_unpredictable~ (cmov's for branchless), ~unlikely~ etc
 - llvm-mca with ~-bottleneck-analysis~ for asm profiling
   - supported by godbolt
+- lldb-mcp for assisted debug in llvm 21.1.1+
+  - ~git clone --depth 1 --branch llvmorg-21.1.1 https://github.com/llvm/llvm-project~
+    - ~cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;lldb" ../llvm~ then build with ~ninja lldb lldb-server~
+      - ~./bin/lldb -O 'protocol-server start MCP listen://localhost:39496'~
 - https://github.com/rust-lang/rust/issues/93740#issuecomment-1041391284 futex/mutex comparisons
 - rustc uses stacker crate for segmented stacks to avoid stack overflow
 -  ~cargo test -- --nocapture~ for ~println!()~

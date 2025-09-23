@@ -9,6 +9,8 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * sqlite
 ** notes
+- turso rust rewrite is async
+  - with wasm https://github.com/tursodatabase/turso/blob/main/bindings/javascript/examples/wasm/index.html MAYBE switch site?
 - Uses bytecode instead of AST like postgres https://sqlite.org/draft/whybytecode.html
   - maybe use bytecodealliance/weval for compiler types?
     - https://wingolog.org/archives/2024/09/26/needed-bits-optimizations-in-guile
@@ -202,7 +204,7 @@ onmessage = (e) => {
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
         importScripts('sqlite3.js'); // mjs module?
         globalThis.sqlite3InitModule().then((sqlite3)=> {
-            sqlite3.installOpfsSAHPoolVfs().then((poolUtil)=> { // use opfs for storage
+            sqlite3.installOpfsSAHPoolVfs().then((poolUtil)=> { // use opfs for storage. MAYBE Add weblocks and broadcast api for multi tab
                 if (poolUtil.getFileCount() == 0) {
                     console.log("fetching sqlite opfs files");
                     fetch('sqlar.sqlite').then(response => response.arrayBuffer()).then(arrayBuffer => {

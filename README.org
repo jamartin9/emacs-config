@@ -20,7 +20,7 @@ osm: Map tile viewer. alternative is web browser viewing
 
 gptel/mcp.el: interface with llms. alternative is llm package or cli
 
-dape/geiser-guile/pyvenv/sly/yaml/(rust,python)-tree-sitter: language specific modes
+dape/geiser-guile/pyvenv/yaml: language specific modes
 
 nov: epub reader. alternative is external program
 

@@ -74,6 +74,7 @@
 - relatime for normal timestamps
 - SLOG requires devices that will write data on power loss
 - SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down
+  - can function as ZIL offload like L2 in 2.4.0+
 - spare drive helps resilver time (zed auto replace)
 - Single device zfs can use the COPIES attribute to help redundancy
 - /tmp sync off

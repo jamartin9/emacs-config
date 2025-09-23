@@ -19,7 +19,7 @@
            ("g" . auto-revert-mode))
 (bind-keys :prefix-map jam/open :prefix "C-c c o"
            ("s" . jam/sudo-edit)
-           ("S" . speedbar-frame-mode)
+           ("S" . speedbar)
            ("b" . browse-url-of-file)
            ("f" . make-frame)
            ("D" . jam/draw)
@@ -61,6 +61,7 @@
 (use-package emacs ; built-in ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
   :hook (((prog-mode text-mode) . (lambda () (setq show-trailing-whitespace t)))
          (tty-setup . xterm-mouse-mode)
+         (tty-setup . (lambda () (if (featurep 'tty-child-frames) (tty-tip-mode))))
          (after-init . (lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
                          (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
                                default-file-name-handler-alist nil
@@ -108,9 +109,9 @@
            ("a" . windmove-left)
            ("s" . windmove-down)
            ("d" . windmove-right)
-           ("f" . select-frame-by-name)
+           ("F" . select-frame-by-name)
            ("D" . toggle-window-dedicated)
-           ("o" . other-frame)
+           ("O" . other-frame)
          :map minibuffer-local-completion-map
          ("<mouse-1>" . (lambda (event) (interactive "e"); call the completion candidate at the row location of EVENT in the minibuffer (choose-completion event ?)
                           (with-selected-window (active-minibuffer-window)
@@ -157,7 +158,8 @@
               completion-cycle-threshold nil ; flex narrowing instead of cycling
               completions-format 'one-column
               completions-group t
-              completion-styles '(basic initials substring partial-completion)
+              completion-eager-update t ;completion-eager-display t
+              completion-styles '(basic initials substring partial-completion); completion-pcm-leading-wildcard
               completions-detailed t
               completions-sort 'historical ;completion-auto-select 'second-tab ;completion-auto-help 'lazy; '?' for help w/mouse click
               icomplete-scroll t
@@ -169,6 +171,8 @@
               auto-revert-remote-files nil ; dired
               auto-revert-interval 1
               use-short-answers t ; annoying
+              speedbar-prefer-window t
+              kill-region-dwim t
               confirm-kill-processes nil
               visible-bell t
               ring-bell-function #'ignore
@@ -245,7 +249,7 @@
               native-comp-async-report-warnings-errors nil
               native-comp-eln-load-path (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))
               native-compile-target-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eln"))))
-  (if (not (memq window-system '(android))) ; old fdroid android builds do not enable gnutls. Use sourceforge build w/termux for utils https://sourceforge.net/projects/android-ports-for-gnu-emacs/files/termux/ ex. emacs-30.0.50-29-arm64-v8a.apk
+  (if (not (memq window-system '(android))) ; Use sourceforge build w/termux for utils https://sourceforge.net/projects/android-ports-for-gnu-emacs/files/termux/ ex. emacs-30.0.50-29-arm64-v8a.apk
       (progn
         (setq menu-bar-mode nil) ; disable menu-bar on non android
         (add-to-list 'default-frame-alist '(menu-bar-lines . 0)))
@@ -348,6 +352,7 @@
          ((yaml-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
   :config (fset #'jsonrpc--log-event #'ignore); stop logging
+  (add-to-list 'eglot-server-programs '((yaml-ts-mode yaml-mode) . ("npx"  "yaml-language-server" "--stdio")))
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
@@ -360,7 +365,8 @@
          :map jam/code ("z" . hs-toggle-hiding)
                        ("v" . hs-hide-block))
   :commands (hs-minor-mode hs-toggle-hiding hs-hide-block hs-hide-level hs-show-all hs-hide-all)
-  :config (setq hs-special-modes-alist (append '((yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#")
+  :config (setq hs-show-indicators t
+                hs-special-modes-alist (append '((yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#")
                                                  (nxml-mode "<!--\\|<[^/>]*[^/]>" "-->\\|</[^/>]*[^/]>" "<!--" sgml-skip-tag-forward nil))
                                                hs-special-modes-alist)))
 
@@ -428,14 +434,17 @@
   (setq tramp-auto-save-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp-autosave")
         tramp-persistency-file-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tramp"))
   (connection-local-set-profile-variables 'remote-direct-async-process '((tramp-direct-async-process . t)))
-  (connection-local-set-profiles '(:application tramp :protocol "scp") 'remote-direct-async-process))
+  (connection-local-set-profiles '(:application tramp :protocol "scp") 'remote-direct-async-process)
+  (connection-local-set-profiles '(:application tramp :protocol "ssh") 'remote-direct-async-process))
 
 (use-package completion-preview
   :ensure nil ; built-in
   :hook ((after-init . global-completion-preview-mode))
   :bind (:map completion-preview-active-mode-map ; M-i during preview for *Completions* buffer
-              ("M-n" . completion-preview-next-candidate)
-              ("M-p" . completion-preview-prev-candidate))
+              ("<M-left>" . completion-preview-next-candidate)
+              ("<M-up>" . minibuffer-previous-completion)
+              ("<M-down>" . minibuffer-next-completion)
+              ("<M-right>" . completion-preview-prev-candidate))
   :config (setq completion-preview-minimum-symbol-length 2));completion-preview-idle-delay 0.2
 
 (use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all
@@ -554,10 +563,10 @@
   :ensure nil ; built-in
   :init
   (if (treesit-available-p)
-      (progn
-        (add-to-list 'treesit-extra-load-path "/usr/lib")
-        (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
-        (push '(python-mode . python-ts-mode) major-mode-remap-alist))))
+      (progn (add-to-list 'treesit-extra-load-path "/usr/lib")
+             (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
+             (setq treesit-auto-install-grammar t
+                   treesit-enabled-modes t))))
 
 (use-package rust-ts-mode
   :ensure nil ; built-in
@@ -567,13 +576,13 @@
 
 (use-package yaml-mode ;:pin nongnu
   :commands (yaml-mode)
-  :config (setq eglot-workspace-configuration eglot-workspace-configuration '(:yaml (:format (:enable t)
-                                                                                     :validate t
-                                                                                     :hover t
-                                                                                     :completion t
-                                                                                     :schemas (;https://raw.githubusercontent.com/my-user/my-project/project.schema.yml ["project.yml"]
-                                                                                               https://json.schemastore.org/yamllint.json ["/*.yml"])
-                                                                                     :schemaStore (:enable t))))
+  :config (setq eglot-workspace-configuration '(:yaml (:format (:enable t)
+                                                               :validate t
+                                                               :hover t
+                                                               :completion t
+                                                               :schemas (https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.1-standalone/deployment.json ["/*.k8s.yaml"]
+                                                                         https://json.schemastore.org/yamllint.json ["/*.yml"]);https://raw.githubusercontent.com/my-user/my-project/project.schema.yml ["project.yml"]
+                                                               :schemaStore (:enable t))))
   (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
 
 (use-package python ; python
@@ -730,7 +739,7 @@
   :after gptel
   :config (require 'mcp-hub)
   :custom (mcp-hub-servers
-           `(("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP tcp://localhost:39496';("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
+           `(("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496';("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
   :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))
 
 (use-package nov
@@ -739,7 +748,7 @@
   :commands (nov-mode))
 
 ;;;###autoload
-(defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name." (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))
+(defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name. Use tramp-dired-find-file-with-sudo with emacs >31" (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))
 ;;;###autoload
 (defun jam/save-all () "Save all buffers" (interactive) (save-some-buffers t))
 ;;;###autoload
