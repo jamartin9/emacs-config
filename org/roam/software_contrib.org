@@ -37,12 +37,14 @@
   - [[https://github.com/ClementTsang/bottom/pull/1667][fixed regression in basic mode after maintainer refactoring]]
   - [[https://github.com/ClementTsang/bottom/issues/1753][answered bug report for unreleased feature]]
   - [[https://github.com/ClementTsang/bottom/issues/1754][provided comparison tool and library status for future cgroup feature]]
+    - htop does namespaces for its 'container' detection with proc fd status counting "NSpid: XXX 1"
   - [[https://github.com/ClementTsang/bottom/pull/1793][code review clarified approach to detecting kernel threads]]
     - htop decided against empty cmdline in favour of PF_KTHREAD (freebsd can use sysctl mib or kvm_getprocs)
   - [[https://github.com/ClementTsang/bottom/issues/1777][helped identify slow proc widget after release]]
   - [[https://github.com/ClementTsang/bottom/pull/1772][added feature to hide kernel threads with configuration, documentation and a regression test.]]
     - outlined future freebsd support and library migration strategy
   - [[https://github.com/ClementTsang/bottom/pull/1811][fix duplicate cpu average in basic mode when using dedicated row]]
+  - [[https://github.com/ClementTsang/bottom/issues/1819#issuecomment-3330632727][tested dependency update for bug fix]]
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine

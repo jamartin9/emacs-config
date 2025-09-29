@@ -8,6 +8,28 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** webyrd/Barliman
+  - propagator network for smart editor that performs program systhesis
+** miniupnp/miniupnp
+  - UPnP IGD implementation
+** openzfs/zfs
+  - OpenZFS on Linux and FreeBSD
+** kimono-koans/httm
+  - Interactive, file-level Time Machine-like tool for ZFS/btrfs/nilfs2
+** monero-project/monero-gui
+  - Monero: the secure, private, untraceable cryptocurrency
+** wine-mirror/wine
+  - WINE is not a emulator for windows but a windows api on linux
+** lukefleed/compressed-intvec
+  - fixedVec for fixed-width encoding, O(1) mutable and atomic access and IntVec for variable-length.
+** build-trust/ockam
+  - Build secure-by-design applications that can Trust Data-in-Motion. Orchestrate end-to-end encryption, mutual authentication, key management, credential management & authorization policy enforcement — at scale.
+** cloudflare/pingora
+  - A library for building fast, reliable and evolvable network services.
+** dsherret/sys_traits
+  - Trait per function for system related functionality.
+** CeleritasCelery/rune
+  - Rust VM for Emacs
 ** TomasMikula/jing
   - Typesafe, spec-first APIs without codegen. Just Import 'N' Go!
 ** 10XGenomics/rust-boomphf
@@ -2288,6 +2310,18 @@
 
 
 * rust
+** davidlattimore/wild
+  - A very fast linker for Linux
+** marvinborner/optimal-effects
+  - lambda calculus interaction net eval
+** almogdepaz/veil
+  - Zero-knowledge proof system for running Chialisp programs privately
+** bootreer/vroom
+  - userspace nvme driver in rust. Close to SPDK perf
+** spiraldb/fastlanes
+  - FastLanes compression Library rust port for SIMD bitpacking
+** ashvardanian/StringZilla
+  - fast string search, hashing, sorting, edit distances, sketches, and memory ops
 ** tracel-ai/cubecl
   - Multi-platform high-performance compute language extension for Rust compute kernels.
 ** AeneasVerif/aeneas
@@ -2300,10 +2334,6 @@
   - Statistics-driven benchmarking library for Rust
 ** bluecatengineering/dora
   - A Rust DHCP server
-** bootreer/vroom
-  - userspace nvme driver in rust. Close to SPDK perf
-** build-trust/ockam
-  - Build secure-by-design applications that can Trust Data-in-Motion. Orchestrate end-to-end encryption, mutual authentication, key management, credential management & authorization policy enforcement — at scale.
 ** BurntSushi/aho-corasick
   - A fast implementation of Aho-Corasick in Rust for finding occurrences of many patterns at once with SIMD.
 ** BurntSushi/fst
@@ -2318,8 +2348,6 @@
   - A code ACL checker for Rust.
 ** calebzulawski/multiversion
   - Easy function multiversioning for Rust
-** CeleritasCelery/rune
-  - Rust VM for Emacs
 ** clap-rs/clap
   - A full featured, fast Command Line Argument Parser for Rust
 ** cloudflare/boringtun
@@ -2328,8 +2356,6 @@
   - Cloudflare's Rust service foundations library.
 ** cloudflare/mmap-sync
   - Rust library for concurrent data access, using memory-mapped files, zero-copy deserialization, and wait-free synchronization.
-** cloudflare/pingora
-  - A library for building fast, reliable and evolvable network services.
 ** creusot-rs/creusot
   - Creusot helps you prove your code is correct in an automated fashion.
 ** cross-rs/cross
@@ -2338,8 +2364,6 @@
   - Monero node. Written in Rust
 ** dragostis/chili
   - Rust port of Spice, a low-overhead parallelization library
-** dsherret/sys_traits
-  - Trait per function for system related functionality.
 ** dtolnay/anyhow
   - Flexible concrete Error type built on std::error::Error
 ** embassy-rs/embassy
@@ -2545,18 +2569,12 @@
   - The Linux perf GUI for performance analysis.
 ** KDE/kdeconnect-android
   - Native Android port of the KDE Connect Qt app
-** kimono-koans/httm
-  - Interactive, file-level Time Machine-like tool for ZFS/btrfs/nilfs2
 ** koalaman/shellcheck
   - ShellCheck, a static analysis tool for shell scripts
 ** kubernetes-sigs/kind
   - Kubernetes IN Docker - local clusters for testing Kubernetes
-** miniupnp/miniupnp
-  - UPnP IGD implementation
 ** mitmproxy/mitmproxy
   - An interactive TLS-capable intercepting HTTP proxy for penetration testers and software developers.
-** monero-project/monero-gui
-  - Monero: the secure, private, untraceable cryptocurrency
 ** mpv-player/mpv
   - Command line video player
 ** nzbgetcom/nzbget
@@ -2573,8 +2591,6 @@
   - A command-line benchmarking tool
 ** strace/strace
   - strace is a diagnostic, debugging and instructional userspace utility for Linux
-** wine-mirror/wine
-  - WINE is not a emulator for windows but a windows api on linux
 ** Winetricks/winetricks
   - Winetricks is an easy way to work around problems in Wine
 
@@ -2584,7 +2600,5 @@
   - Mirror of GNU Emacs
 ** guix-mirror/guix
   - Read-only mirror of GNU Guix — pull requests are ignored, see https://guix.gnu.org/en/manual/en/guix.html#Submitting-Patches instead
-** openzfs/zfs
-  - OpenZFS on Linux and FreeBSD
 ** rust-lang/rust
   - Empowering everyone to build reliable and efficient software.

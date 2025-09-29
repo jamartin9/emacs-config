@@ -13,6 +13,7 @@
 - [[id:46651545-b172-443b-b0db-506019b4456c][postgres]]
 - MySQL
   - innodb storage engine prefetches and caches itself with default 16k record size
+    - https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html
     - dzfs_prefetch_disable=1, logbias=throughput, primarycache=metadata, atime=off, xattr=sa, recordsize=16k
     - innodb_log_write_ahead_size=16384, innodb_doublewrite=0, innodb_checksum_algorithm=none, innodb_flush_neighbors=0, innodb_use_native_aio=0, innodb_use_atomic_writes=0
     - increase writes by disabling disk flushing with innodb_flush_log_at_trx_commit=0 and sync_binlog=0. ZFS disable all explicit disk flushing to any one file system by setting sync=disabled so it flushes every ~5sec

@@ -53,6 +53,10 @@
   - Yi-VL
   - imp-v1-3b (phi)
   - Qwen-VL
+    - https://huggingface.co/Qwen/Qwen-Image-Edit-2509
+    - https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct
+    - https://huggingface.co/Qwen/Qwen3-Omni-30B-A3B-Instruct
+      - omni adds audio
   - Deepseek Janus uses same image/lang representation with different input and output decoders
   - tokenized image multimodal data softmax diverges https://arxiv.org/html/2405.09818v1 ('logit drift problem')
     - stablizes by adding layer normalization re-ordering (Swin transformer normalization strategy) and changing query-key softmax to QK-Norm

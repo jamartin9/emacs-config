@@ -10,6 +10,8 @@
 * Jellyfin
 ** notes
 - change .net GC to Server in ~/etc/default/jellyfin~ ie ~COMPlus_gcServer=1~ for lower cpu but more ram usage
+  - possible with env var in .net 10+ (10.11.0 is .net 9)
+  - set ~DOTNET_GCConserveMemory=9~ for minimum memory usage but more runs
 - ffmpeg needs patched with -force_dts_monotonicity for streams with adds/interrupts
 - [[https://emby.media/support/articles/Strm-Files.html][STRM]] files for remote streaming
 - roku client

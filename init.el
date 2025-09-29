@@ -355,9 +355,9 @@
   (add-to-list 'eglot-server-programs '((yaml-ts-mode yaml-mode) . ("npx"  "yaml-language-server" "--stdio")))
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
-                 ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave :json-false ;(:command "clippy")
-                                                          :cargo (:cfgs (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enable :json-false)
-                                                                                    :tokio_unstable "")))))))
+                 ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave (:command "clippy"); :procMacro (:enable t)
+                                                          :cargo (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enabled :json-false)
+                                                                             :tokio_unstable ""))))))
 
 (use-package hideshow
   :ensure nil ; built-in
@@ -561,12 +561,13 @@
 
 (use-package treesit ; libtreesitter-*.so
   :ensure nil ; built-in
-  :init
-  (if (treesit-available-p)
-      (progn (add-to-list 'treesit-extra-load-path "/usr/lib")
-             (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
-             (setq treesit-auto-install-grammar t
-                   treesit-enabled-modes t))))
+  :custom (treesit-enabled-modes t) ;(treesit-auto-install-grammar t)
+  :init (if (treesit-available-p)
+            (progn
+              (setq treesit--install-language-grammar-out-dir-history (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "tree-sitter")))
+              (add-to-list 'treesit-extra-load-path "/usr/lib")
+              (add-to-list 'treesit-extra-load-path "~/.guix-home/profile/lib/tree-sitter")
+              (add-to-list 'treesit-extra-load-path (car treesit--install-language-grammar-out-dir-history)))))
 
 (use-package rust-ts-mode
   :ensure nil ; built-in
@@ -580,7 +581,7 @@
                                                                :validate t
                                                                :hover t
                                                                :completion t
-                                                               :schemas (https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.1-standalone/deployment.json ["/*.k8s.yaml"]
+                                                               :schemas (https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.1-standalone/deployment.json ["/*.k8s.yaml"] ; fork of openapi json schema generator
                                                                          https://json.schemastore.org/yamllint.json ["/*.yml"]);https://raw.githubusercontent.com/my-user/my-project/project.schema.yml ["project.yml"]
                                                                :schemaStore (:enable t))))
   (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
@@ -738,8 +739,9 @@
 (use-package mcp
   :after gptel
   :config (require 'mcp-hub)
-  :custom (mcp-hub-servers
-           `(("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496';("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
+  :custom (mcp-hub-servers ;("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
+           `(("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest" "--browseUrl" "http://127.0.0.1:39495")); chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
+             ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496'
   :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))
 
 (use-package nov

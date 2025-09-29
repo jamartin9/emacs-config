@@ -9,6 +9,8 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Postgresql
 ** notes
+- max_standby_streaming_delay with queries that conflict with replication can cause lag in hybrid olap/oltp workloads
+- requires vaccums on row deletion to avoid page fragmentation. It appends to bottom unlike mysql/innodb
 *** addons
 - [[https://github.com/neondatabase/neon][neon]]
   - purpose
@@ -50,3 +52,4 @@
 - UNLOGGED tables
 - run from RAM Disk (/dev/shm)
 - aurora db is wal with a page service https://github.com/purduedb/OpenAurora/raw/OpenAurora/pictures/E6_ARCH_NEW.png
+-  https://www.neki.dev/

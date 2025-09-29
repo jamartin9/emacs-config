@@ -67,4 +67,6 @@ qemu-system-x86_64 -smp 4 -cpu host -nic user,model=virtio-net-pci,hostfwd=tcp::
     - [[id:a07e64d0-5cee-451a-af80-3f6c006dd0a1][bpftrace]]
     - [[id:bee863b2-bd4f-4332-a227-976b3cef1e45][bcc]]
 - Hyper-V supports gpu virtualization via GPU-P with ~VMGPUPartitionAdapter~ for ~Msvm_PartitionableGpu~
-  - only certain models supported through the driver nvidia grid. Some cards only support passthrough. 
+  - only certain models supported through the driver nvidia grid. Some cards only support passthrough.
+- SR-IOV for splitting single pcie device into multiple for gpu vm sharing
+  - https://github.com/strongtz/i915-sriov-dkms for i915 dkms module sharing
