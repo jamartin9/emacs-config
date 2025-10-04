@@ -79,10 +79,14 @@
   - [[https://github.com/google/flaxformer/blob/ee62754ebe5a5eeb111493622de5537133822e3e/flaxformer/components/attention/dense_attention.py#L50][already used by other models in the past]]
 - RAG dataset summary on dataset may help QnA
   - [[https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat]['Extended Mind']] aka active externalism may out preform RAG with citations
+  - extended mind transformers add cache of KV tokens(memory) to attend to each token in the attention head at a specific position based on similarity search after removing invalid tokens from the source.
 - Chain of thought synthetic dataset to improve implicit deductions (orca/phi)
 - Models can be merged with various method to combine feature strengths
 - Alibaba-NLP/gte-Qwen2-7B-instruct uses semantic understanding for the RAG embeddings to group documents regardless of language
 ** image
+  - PaliGemma gets embedding vectors for document image retrieval with gemma text encoder and siglp vision(32x32 patches per pdf image page with with 128 dim vector for each)
+    - late interaction max similarity (MaxSim) matches query tokens to image patches then aggregates with a special max-sum operation
+    - supports segementation, masks, questions, etc
   - gemma3 and mistral 3.1 small support image input
     - gemma3 uses fixed resolution with custom inference for scaling high resolution
   - reasoning to vision models https://huggingface.co/lmms-lab/Qwen2-VL-2B-GRPO-8k/tree/main

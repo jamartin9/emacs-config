@@ -233,6 +233,14 @@
         sly-complete-symbol-function 'sly-flex-completions
         sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix))))
 
+;;;###autoload
+(defun jam/mpv-play (url)
+  "Run mpv in eat terminal. 9 is volume down; 0 is up. Requires url-handler-mode for default completion (use home and del)."
+  (interactive (list (read-file-name (format "Args(https://somafm.com/vaporwaves.pls): ") nil nil nil "https://somafm.com/vaporwaves.pls")))
+  (eat (concat "mpv -vo=sixel " url) t))
+
+;;;###autoload
+(defun jam/eshell () "Open new eshell" (interactive) (eshell t));  :bind (:map jam/open ("e" . jam/eshell))
 #+END_SRC
 
 - German air control ATC ran on emacs in the 90's

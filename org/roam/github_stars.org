@@ -8,6 +8,10 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** yaledb/calvin
+  - Calvin is a scalable transactional database system that leverages determinism to guarantee active replication and full ACID-compliance of distributed transactions without two-phase commit. Most of the code is for VLDB 2014 paper: An Evaluation of the Advantages and Disadvantages of Deterministic Database System.
+** mwette/nyacc
+  - parser generator, C parser and FFI helper for Guile with SXML. c99/javascript/julia/python/java
 ** webyrd/Barliman
   - propagator network for smart editor that performs program systhesis
 ** miniupnp/miniupnp
@@ -2281,6 +2285,8 @@
 
 
 * machine learning
+** normal-computing/extended-mind-transformers
+  -  decoder-only transformer that retrieve and attend to an external cache of key-value pairs without finetuning
 ** comfyanonymous/ComfyUI
   - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
 ** continue-revolution/sd-webui-segment-anything
@@ -2310,6 +2316,10 @@
 
 
 * rust
+** rust-netlink/netlink-proto/
+  - asynchronous implementation of the netlink protocol
+** helsing-ai/sguaba
+  - rigid body transforms (aka "spatial math")
 ** davidlattimore/wild
   - A very fast linker for Linux
 ** marvinborner/optimal-effects

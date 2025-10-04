@@ -47,3 +47,7 @@ Finally some hardware support!
     - 12 bit so many procs will force a flush
 - get cache line size with ~getconf LEVEL1_DCACHE_LINESIZE~ or ~lscpu~
 - ~sudo setcap CAP_BPF=ep ./bpftop~
+- ioctl is an sync unix style socket that you send commands with args to get responses
+  - zfs encodes its ioctl params into an nvlist
+- netlink is an async socket interface that you send and read messages from
+  - htop uses netlink for process io/cpu/block delay information (alternative is delaytop)

@@ -23,7 +23,6 @@
            ("b" . browse-url-of-file)
            ("f" . make-frame)
            ("D" . jam/draw)
-           ("z" . jam/mpv-play)
            ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
            ("U" . eww-browse))
 (bind-keys :prefix-map jam/insert :prefix "C-c c i"
@@ -417,7 +416,6 @@
 (use-package eshell
   :ensure nil ; built-in
   :hook ((eshell-mode . (lambda () (add-to-list 'eshell-visual-commands "btm"))))
-  :bind (:map jam/open ("e" . jam/eshell))
   :commands (eshell)
   :config (require 'em-smart)
   (setq eshell-directory-name (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "eshell")
@@ -714,8 +712,9 @@
   :commands (minions-mode))
 
 (use-package eat ;:pin nongnu
+  :config (setq eat-sixel-scale 2.0); eat-message-handler-alist for shell integration with _eat_msg. eat-tramp-shells or eat-shell to set default shell
   :bind (:map jam/open ("t" . eat)
-         :map eat-mode-map ("C-S-v" . eat-yank)); eat-yank-from-kill-ring
+         :map eat-mode-map ("C-S-v" . eat-yank)); eat-yank-from-kill-ring ; eat-send-password
   :hook ((eshell-load . eat-eshell-mode)
          (eshell-load . eat-eshell-visual-command-mode))
   :commands (eat eat-mode eat-eshell-mode eat-eshell-visual-command-mode))
@@ -756,15 +755,11 @@
 ;;;###autoload
 (defun jam/draw () "Activate artist-mode polygon in *scratch* buffer." (interactive) (switch-to-buffer "*scratch*") (artist-mode 1) (artist-select-op-poly-line)); (picture-mode)
 ;;;###autoload
-(defun jam/eshell () "Open new eshell" (interactive) (eshell t))
-;;;###autoload
 (defun jam/replace-unicode() "Replaces the following unicode characters: ZERO WIDTH NO-BREAK SPACE (65279, #xfeff) aka BOM, ZERO WIDTH SPACE (codepoint 8203, #x200b), RIGHT-TO-LEFT MARK (8207, #x200f), RIGHT-TO-LEFT OVERRIDE (8238, #x202e), LEFT-TO-RIGHT MARK ‎(8206, #x200e), OBJECT REPLACEMENT CHARACTER (65532, #xfffc)" (interactive) (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" ""))
 ;;;###autoload
 (defun jam/screenshot () "Save screenshot to local cache directory" (interactive) (let* ((image (x-export-frames nil 'png)) (image-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (format-time-string "Screenshot-%Y-%m-%d-%T.png")))) (with-temp-file image-file (insert image)) (message "Saved Screenshot %s" image-file)))
 ;;;###autoload
 (defun jam/compile-init-bytecode () "Recompile init.el, early-init.el, make-el.el and package-quickstart.el (autoloads)" (interactive) (byte-recompile-file (concat user-emacs-directory "init.el")) (byte-recompile-file (concat user-emacs-directory "early-init.el")) (byte-recompile-file (concat user-emacs-directory "make-el.el")) (require 'package) (package-quickstart-refresh)(byte-recompile-file (concat user-emacs-directory "package-quickstart.el"))); recompile autoloads
-;;;###autoload
-(defun jam/mpv-play (url) "Run mpv in eat terminal. 9 is volume down; 0 is up. Requires url-handler-mode for default completion (use home and del)." (interactive (list (read-file-name (format "Args(https://somafm.com/vaporwaves.pls): ") nil nil nil "https://somafm.com/vaporwaves.pls"))) (eat (concat "mpv " url) t))
 ;;;###autoload
 (defun jam/set-rust-path () "Set PATH, exec-path, RUSTUP_HOME and CARGO_HOME to XDG_DATA_HOME locations" (interactive) (require 'xdg) (setenv "PATH" (concat (getenv "PATH") path-separator (concat (file-name-as-directory (xdg-data-home)) (file-name-as-directory "cargo") "bin"))) (setenv "RUSTUP_HOME" (concat (file-name-as-directory (xdg-data-home)) "rustup")) (setenv "CARGO_HOME" (concat (file-name-as-directory (xdg-data-home)) "cargo")) (setq exec-path (append `(,(concat (file-name-as-directory (getenv "CARGO_HOME")) "bin")) exec-path)))
 

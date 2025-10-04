@@ -158,7 +158,8 @@
      ))
 #+END_SRC
 ** guix notes
-- https://git.genenetwork.org/guix-north-america/about/ for NA substitute server ?
+- add ~(add-after 'install 'fail (lambda* (#:key outputs #:allow-other-keys) (exit 1)))~ in the ~modify-phases~ with -K to keep a copy of an otherwise working build directory
+- https://git.genenetwork.org/guix-north-america/about/ for NA substitute server
 - cuirass ci saves gc roots in ~/var/guix/gcroots/profiles/per-user/cuirass/cuirass~ for default of 30 days
   - can unlink and gc for space
 - ~guix system image -t iso9660 ./installer.scm~
