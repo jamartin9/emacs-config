@@ -488,7 +488,10 @@ image.save("test.png")
 #+END_SRC
 
 ** Gemini-Cli
+- ~make clean build-all~ to build container and app
 - custom slash commands in toml files under the command dir
+- extension for mcp, commands and context
+  - ex. ~gemini extensions install --pre-release https://github.com/gemini-cli-extensions/code-review~
 - set ~GEMINI_API_KEY~ environment variable or place it in ~$HOME/.env~
   - tokens can be cached with the api key
 - slash commands to save chat or change options
@@ -503,4 +506,65 @@ image.save("test.png")
   "selectedAuthType": "gemini-api-key"
 }
 
+#+END_SRC
+** Codex-Cli
+- install will ~npx -y @openai/codex~ or get binary
+#+NAME: .codex/config.toml
+#+BEGIN_SRC toml :tangle no
+approval_policy = "untrusted" # "never"
+sandbox_mode = "workspace-write" # "read-only" # "danger-full-access"
+experimental_use_rmcp_client = true # http mcp
+file_opener = "none"
+
+model = "gemini-2.5-flash"
+model_provider = "gemini" # gemini does not work as profile only
+
+[history]
+persistence = "none"  # "save-all"
+
+[model_providers.openai]
+name = "openai"
+base_url = "https://localhost:8080/v1" # OPENAI_BASE_URL env var
+
+[model_providers.gemini]
+name = "gemini"
+model = "gemini-2.5-flash"
+env_key = "GEMINI_API_KEY" # OPENAI_API_KEY
+base_url = "https://generativelanguage.googleapis.com/v1beta/openai"
+wire_api = "chat" #"responses"
+#model_supports_reasoning_summaries = true # force on for models we know support
+
+[profiles.gptoss]
+model = "gpt-oss"
+model_provider = "openai"
+approval_policy = "untrusted" #"never"
+model_reasoning_effort = "high"
+model_reasoning_summary = "detailed" #"none"
+#hide_agent_reasoning = true
+#show_raw_agent_reasoning = true
+#project_doc_max_bytes # defaults to 32KiB of AGENTS.md
+#project_doc_fallback_filenames = ["CLAUDE.md", ".exampleagentrules.md"]
+
+[profiles.qwen]
+model = "qwen3"
+[profiles.gemma]
+model = "gemma"
+
+[mcp_servers.lldb]
+url = "http://127.0.0.1:39496"
+enabled = false
+#command = "lldb"
+#args = ["-O", "'protocol-server start MCP listen://localhost:39496'"]
+
+[mcp_servers.chromedevtools]
+url = "http://127.0.0.1:39495"
+enabled = false
+#command = "npx"
+#args = ["-y", "chrome-devtools-mcp@latest", "--browseUrl", "http://127.0.0.1:39495"]
+#env = { "API_KEY" = "value" }
+#[tui]
+#notifications = true
+#[model_providers.ollama]
+#name = "ollama"
+#base_url = "http://localhost:8080/v1"
 #+END_SRC

@@ -8,6 +8,10 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** ulissesf/qmassa
+  - Rust terminal-based tool for displaying GPUs usage stats on Linux.
+** facebook/openzl
+  - takes a description of your data and builds from it a specialized compressor optimized for your specific format
 ** yaledb/calvin
   - Calvin is a scalable transactional database system that leverages determinism to guarantee active replication and full ACID-compliance of distributed transactions without two-phase commit. Most of the code is for VLDB 2014 paper: An Evaluation of the Advantages and Disadvantages of Deterministic Database System.
 ** mwette/nyacc
@@ -2316,7 +2320,7 @@
 
 
 * rust
-** rust-netlink/netlink-proto/
+** rust-netlink/netlink-proto
   - asynchronous implementation of the netlink protocol
 ** helsing-ai/sguaba
   - rigid body transforms (aka "spatial math")

@@ -203,14 +203,16 @@ self.addEventListener('fetch', function(e) {
   - https://incogtube.com
 - https://incogsnoo.com/ (reddit)
 ** media
-- https://ustv247.tv/
 - https://scnlog.me/
-- https://nr4.d-snf.net/
-- https://z-lib.org/
-- https://libgen.is/
+- https://z-library.cc/
 - https://hianime.to
-- https://zoroxtv.to/
-- https://upmovies.net/
+- https://animekai.to
+  - https://animekai.cc
+  - https://animekai.ac
+  - https://anikai.to
+  - hardsub sites
+    - https://gogoanime.by/
+    - https://animepahe.si/
 - https://cs.rin.ru
 - https://cdm-project.com/Download-Tools/StreamFab
 - sanet.st

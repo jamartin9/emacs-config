@@ -19,7 +19,9 @@
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
       - sysinfo added freebsd ufs io with geom?
-    - to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path or parse zfs iostat json output
+    - to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path or parse zpool iostat json output in zfs 2.3+
+      - lzc_ioctl for the zfs_ioc_pool_stats(spa_get_stats/ZFS_IOC_POOL_STATS/* 0x5a05 */) is not exposed by pyzfs yet. Poke it through and test info recieved as nvlists
+        - zfs_ioc_pool_configs for the spa_all_configs(ZFS_IOC_POOL_CONFIGS/* 0x5a04 */) to get all pools/devicepaths
     - [[https://github.com/ClementTsang/bottom/pull/1812][Added option to subtract freeable arc from memory]]
       - fixed broken arc collection on freebsd
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]

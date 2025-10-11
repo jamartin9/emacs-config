@@ -355,7 +355,7 @@
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) . ; set RA_LOG=rust_analyzer=info for logs
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy" :allTargets :json-false :workspace :json-false);:checkOnSave (:command "clippy"); :procMacro (:enable t)
-                                                          :cargo (:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enabled :json-false)
+                                                          :cargo (;:extraArgs ["offline"] ;:features "all"; :noDefaultFeatures t; :buildScripts (:enabled :json-false)
                                                                              :tokio_unstable ""))))))
 
 (use-package hideshow

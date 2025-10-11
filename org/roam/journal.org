@@ -139,3 +139,41 @@ Steps taken:
 - moved old dead Z42093C1 to bottom left shelf
 - the drive with errors that prompted this is the middle left ZFL7AVVP
 - all amazon drives seem to have issues... use newegg
+** 2025-07 July
+*** 2025-07-23 Thursday
+:PROPERTIES:
+:ID:       e3b804a2-2b5e-4283-8e73-67e1e0e9aebc
+:END:
+**** DONE oil change f150 [2025-07-23 Thu 06:01]
+** 2025-10 October
+*** 2025-10-09 Thursday
+:PROPERTIES:
+:ID:       0518a7fd-cb1f-4ea0-afdc-8b6b289aa5a7
+:END:
+**** DONE modem/router troubleshooting [2025-10-09 Thu 11:30]
+- asus router with new modem still loses connection to isp sometimes
+  - tech said modem was too old (still listed as support on site) and could not bind multiple upstreams
+    - router shows ISP DHCP is not properly configured
+    - persists after firmware update to router and daily reboots
+- Changed
+  - DHCP options from aggressive to continuous which seemed to help recover
+    - toggled extend the TTL value (no difference so left off)
+  - disables asusnat tunnel and hdcpd WPAD carriage return
+  - disabled samba in openvpn and usb server applications
+  - disabled upnp igd(media server too)/nat-pmp/pcp (cgnat anyways)
+  - disabled security auto checks for firmware updates
+  - disabled smart connect
+  - disabled 160Mhz
+  - changed ethernet cord (twice) as linkdown before dhcp re lease
+  - using port 1-4 for single nic instead of 5-8 for chained
+    - moved to port 4 instead of 1 on modem (since not using dual link agg)
+  - moved to wall plug instead of power strip
+- WAN is the only one getting cycled as wifi to lan still works
+  - Seems idle cpu temps are extremely high (85C) and the nics are ~50C (fine).
+    - added 2 fans (below and above) cpu now at 72C and nics are ~45C.
+      - no fans by default so a bad thermal pad(no paste on teardown video)
+      - no issues since cooling fans installed
+        - still see ~Deauth_ind, Disassoc, Auth, Assoc~ but no drops
+  - maybe downgrade firmware? (unlikely as upgrades had no effect and already on merlin)
+  - maybe switch tp-link and asus?
+- check firmware temps with unlisted endpoint ~/ajax_coretmp.asp~
