@@ -8,6 +8,18 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** future-file-format/F3
+  - data file format via embedded Wasm decoders
+** archwisp/OBD2Proxy
+  - OBD-II Proxy and Emulator
+** fenugrec/freediag
+  - OBD2 scantool
+** cedricp/ddt4all
+  - OBD tool (fiat?)
+** xenodium/agent-shell
+  - With agent-shell, you can chat with the likes of Gemini CLI, Claude Code, or any other ACP-driven agent.
+** osmus/layercake
+  - Thematic extracts of OpenStreetMap data in geoparquet and flatgeobuf formats
 ** ulissesf/qmassa
   - Rust terminal-based tool for displaying GPUs usage stats on Linux.
 ** facebook/openzl
@@ -2332,6 +2344,8 @@
   - Zero-knowledge proof system for running Chialisp programs privately
 ** bootreer/vroom
   - userspace nvme driver in rust. Close to SPDK perf
+** vortex-data/vortex
+  - An extensible, state of the art columnar file format. Formerly at @spiraldb, now an Incubation Stage project at LFAI&Data, part of the Linux Foundation.
 ** spiraldb/fastlanes
   - FastLanes compression Library rust port for SIMD bitpacking
 ** ashvardanian/StringZilla

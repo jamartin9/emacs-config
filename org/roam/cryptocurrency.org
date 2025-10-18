@@ -137,7 +137,7 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
     - ~CookieAuthentication 1~ and ~ControlPort 9051~ in ~tor -f .torrc~
     - ~ln -s ~/.guix-profile/monero-wallet-rpc~ and ~/.guix-profile/bin/monerod to ~/.local/share/Haveno-reto
     - ~LD_LIBRARY_PATH=~/.guix-profile/lib/ ./haveno-desktop --torControlPort='9051' --torControlCookieFile=$HOME/.tor/control_auth_cookie --torControlUseSafeCookieAuth --useTorForXmr='on' --socks5ProxyXmrAddress='127.0.0.1:9050' --baseCurrencyNetwork=XMR_MAINNET --useLocalhostForP2P=false --useDevPrivilegeKeys=false --nodePort=9999 --appName=Haveno-reto --apiPassword=apitest --apiPort=1201 --useNativeXmrWallet=false --ignoreLocalXmrNode=fals~
-  - reto simplex https://simplex.chat/contact#/?v=2-4&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FMplYm7uxopKyUOrKqnWySpXQIGxoJWYB%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAs8PcRwnf_-H30yXfwV0MSbka9I_xBeVNr4vKJNoReBw%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22YT2t__GnjpZ1W2MjJAz6Sw%3D%3D%22%7D
+  - reto simplex https://smp5.simplex.im/g#-_h6fBWisca6RKhteZtVuXol1a49vFH1Jo-n74fnRK0
 #+NAME: xmr-script
 #+BEGIN_SRC sh :tangle no
 #!/bin/bash -e

@@ -233,6 +233,27 @@
         sly-complete-symbol-function 'sly-flex-completions
         sly-lisp-implementations '((sbcl ("sbcl") :coding-system utf-8-unix))))
 
+(use-package shell-maker ; melpa error?
+  :after agent-shell
+  :vc (:url "https://github.com/xenodium/shell-maker"))
+(use-package acp
+  :after agent-shell
+  :vc (:url "https://github.com/xenodium/acp.el"))
+(use-package agent-shell
+  :vc (:url "https://github.com/xenodium/agent-shell")
+  :commands (agent-shell agent-shell-openai-start-codex)
+  :config
+  (jam/set-rust-path) ; need codex-acp ; set CODEX_HOME so the defaults can use local
+  (setq ; agent-shell-openai-codex-command with agent-shell-path-resolver-function #'agent-shell--resolve-devcontainer-path for container
+   agent-shell-goose-authentication (agent-shell-make-goose-authentication :openai-api-key (lambda ()
+                                                                                             (let ((gemini-key (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY")))))
+                                                                                               (setenv "GEMINI_API_KEY" gemini-key)
+                                                                                               (setenv "GOOGLE_API_KEY" gemini-key)
+                                                                                               (setenv "OPENAI_API_KEY" ""))
+                                                                                             ""))
+   agent-shell-openai-authentication (agent-shell-openai-make-authentication :api-key (lambda () (setenv "GEMINI_API_KEY" (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY")))) "")))) ; use codex for gemini
+
+
 ;;;###autoload
 (defun jam/mpv-play (url)
   "Run mpv in eat terminal. 9 is volume down; 0 is up. Requires url-handler-mode for default completion (use home and del)."

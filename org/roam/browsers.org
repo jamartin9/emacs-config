@@ -154,8 +154,6 @@ self.addEventListener('fetch', function(e) {
 * sites
 ** info
 - https://aosabook.org/en/
-- https://www.youtube.com/@ants_are_everywhere/videos
-- https://blog.codingconfessions.com/p/linux-context-switching-internals
 - https://en.algorithmica.org/hpc/
   - https://curiouscoding.nl/posts/static-search-tree/
 ** tools
@@ -169,7 +167,6 @@ self.addEventListener('fetch', function(e) {
       - include as iframe
 - https://directfile.irs.gov/
 - https://uica.uops.info/
-- https://qrcode.antfu.me/
 - https://cowasm.sh/ (python wasm)
 - https://shell.duckdb.org
   - ~load sqlite; load ducklake;~
@@ -219,7 +216,7 @@ self.addEventListener('fetch', function(e) {
 - https://annas-archive.org/
 - https://search.rlsbb.cc/
 - https://nibl.co.uk/bots (Rizon)
-- https://animk.info/xdcc (Xertion)
+- https://animk.info/xdcc/ (Xertion)
 - https://subsplease.org/ (Rizon)
 - audioz.download
 - https://www.binsearch.info/

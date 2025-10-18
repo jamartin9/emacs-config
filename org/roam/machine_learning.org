@@ -488,36 +488,52 @@ image.save("test.png")
 #+END_SRC
 
 ** Gemini-Cli
-- ~make clean build-all~ to build container and app
+- ~GEMINI_SANDBOX=podman make clean build-all~ to build container and app
 - custom slash commands in toml files under the command dir
 - extension for mcp, commands and context
   - ex. ~gemini extensions install --pre-release https://github.com/gemini-cli-extensions/code-review~
 - set ~GEMINI_API_KEY~ environment variable or place it in ~$HOME/.env~
   - tokens can be cached with the api key
 - slash commands to save chat or change options
-  - local model support PR https://github.com/google-gemini/gemini-cli/pull/1939
 #+NAME: .gemini/settings.json
 #+BEGIN_SRC json :tangle no
 {
-  "theme": "ANSI",
-  "autoAccept": false,
-  "usageStatisticsEnabled": false,
-  "sandbox": "podman",
-  "selectedAuthType": "gemini-api-key"
+  "tools": {
+    "autoAccept": false,
+    "sandbox": "podman"
+  },
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    }
+  },
+  "ui": {
+    "theme": "ANSI"
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  }
 }
 
 #+END_SRC
 ** Codex-Cli
 - install will ~npx -y @openai/codex~ or get binary
+- set ~CODEX_HOME~ env var for changing config location
+- ~npx @modelcontextprotocol/inspector codex mcp-server~ to inspect codex as an mcp server
 #+NAME: .codex/config.toml
 #+BEGIN_SRC toml :tangle no
 approval_policy = "untrusted" # "never"
 sandbox_mode = "workspace-write" # "read-only" # "danger-full-access"
-experimental_use_rmcp_client = true # http mcp
+#experimental_use_rmcp_client = true # http mcp
 file_opener = "none"
 
 model = "gemini-2.5-flash"
 model_provider = "gemini" # gemini does not work as profile only
+model_reasoning_effort = "high"
+model_reasoning_summary = "detailed" #"none"
+model_supports_reasoning_summaries = true # force on for models we know support
+#hide_agent_reasoning = true
+show_raw_agent_reasoning = true
 
 [history]
 persistence = "none"  # "save-all"
@@ -532,16 +548,11 @@ model = "gemini-2.5-flash"
 env_key = "GEMINI_API_KEY" # OPENAI_API_KEY
 base_url = "https://generativelanguage.googleapis.com/v1beta/openai"
 wire_api = "chat" #"responses"
-#model_supports_reasoning_summaries = true # force on for models we know support
 
 [profiles.gptoss]
 model = "gpt-oss"
 model_provider = "openai"
 approval_policy = "untrusted" #"never"
-model_reasoning_effort = "high"
-model_reasoning_summary = "detailed" #"none"
-#hide_agent_reasoning = true
-#show_raw_agent_reasoning = true
 #project_doc_max_bytes # defaults to 32KiB of AGENTS.md
 #project_doc_fallback_filenames = ["CLAUDE.md", ".exampleagentrules.md"]
 
@@ -557,14 +568,112 @@ enabled = false
 #args = ["-O", "'protocol-server start MCP listen://localhost:39496'"]
 
 [mcp_servers.chromedevtools]
-url = "http://127.0.0.1:39495"
 enabled = false
-#command = "npx"
-#args = ["-y", "chrome-devtools-mcp@latest", "--browseUrl", "http://127.0.0.1:39495"]
-#env = { "API_KEY" = "value" }
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest"] #, "--browseUrl", "http://127.0.0.1:39495"]
+
+[mcp_servers.acp_fs]
+enabled = false
+command = "codex-acp"
+args = ["--acp-fs-mcp"]
+
+[mcp_servers.codex]
+enabled = true
+command = "codex"
+args = ["mcp-server", "-c", "sandbox_permissions=['read-only']", "-c", "approval_policy='untrusted'"] # stdio subagent needs permissions and approval set with prompt and api key
+env = {"GEMINI_API_KEY" = "somesuchkey"}
+#tool_timeout_sec = 600000
+#startup_timeout_ms = 600000 # 10 mins
+
 #[tui]
 #notifications = true
 #[model_providers.ollama]
 #name = "ollama"
 #base_url = "http://localhost:8080/v1"
+#+END_SRC
+** goose
+- need to fork like codex-acp to disable the system prompt...
+- ~~/.config/goose/.goosehints~ the .goosehints file gets sent with every request to Goose
+  - ~export CONTEXT_FILE_NAMES='[".cursorrules", "AGENTS.md"]'~ for files read by default
+#+NAME: .config/goose/config.toml
+#+BEGIN_SRC yaml :tangle no
+GOOSE_CLI_MIN_PRIORITY: 0.0
+GOOSE_MODE: smart_approve
+GOOSE_ENABLE_ROUTER: 'false'
+GOOSE_MODEL: gemini-2.5-flash
+GOOSE_PROVIDER: google
+GOOSE_TOOLSHIM: true
+ALPHA_FEATURES: true
+extensions:
+  autovisualiser:
+    available_tools: []
+    bundled: true
+    description: Data visualisation and UI generation tools
+    display_name: Auto Visualiser
+    enabled: false
+    name: autovisualiser
+    timeout: 300
+    type: builtin
+  computercontroller:
+    available_tools: []
+    bundled: true
+    description: controls for webscraping, file caching, and automations
+    display_name: Computer Controller
+    enabled: false
+    name: computercontroller
+    timeout: 300
+    type: builtin
+  developer:
+    available_tools: []
+    bundled: true
+    description: Code editing and shell access
+    display_name: Developer Tools
+    enabled: true
+    name: developer
+    timeout: 300
+    type: builtin
+  memory:
+    available_tools: []
+    bundled: true
+    description: Tools to save and retrieve durable memories
+    display_name: Memory
+    enabled: false
+    name: memory
+    timeout: 300
+    type: builtin
+  container-use:
+    name: container-use
+    type: stdio
+    enabled: false
+    cmd: cu
+    args:
+    - stdio
+    envs: {}
+    timeout: 300
+  chrome-devtools:
+    name: chrome-devtools
+    type: stdio
+    enabled: false
+    cmd: npx
+    args:
+    - y
+    - chrome-devtools-mcp@latest
+    envs: {}
+    timeout: 300
+# TODO add lldb (proxy?)
+subagent:
+  args:
+  - mcp-server # app-server?
+  bundled: true
+  cmd: codex
+  description: OpenAI Codex CLI Sub-agent
+  enabled: true
+  env_keys:
+  - GEMINI_API_KEY
+  - CODEX_HOME
+  #- OPENAI_API_KEY
+  envs: {}
+  name: subagent
+  timeout: 300
+  type: stdio
 #+END_SRC

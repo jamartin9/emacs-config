@@ -23,6 +23,7 @@ Having many flavors makes some lovely hot garbage...
     - Flux for gitops
     - eksctl for control
   - same pod and node limit at kubernetes (5000 nodes, 110 pods per node, 150000 total pods, 300000 total containers)
+    - https://bchess.github.io/k8s-1m/ for more
   - build own ova https://github.com/aws/eks-distro-build-tooling
   - can run locally with containers (based on amazon linux 2)
     - requires docker with cgroupsv1

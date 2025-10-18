@@ -40,6 +40,7 @@
 ** python -m http.server
 - 2k r/s with 10ms response with 3.10.5 ~t12~
 ** caddy
+- maintainer drama with fqdn and blaming users
 - 2.6 beta
   -  65k r/s default settings file serving 50ms response ~t12~
     - 55k r/s 4ms ~t1~

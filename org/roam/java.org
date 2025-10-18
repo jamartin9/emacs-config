@@ -15,6 +15,7 @@
 - ~-XX:+UseStringDeduplication~
 - ~-XX:+UnlockExperimentalVMOptions -XX:+UseCompactObjectHeaders~
 - ZGC takes ~3% of heap
+- ZGC emits jfr event ZAllocationStall
 - project leyden for already verified class loading
 - 6 months release
 - 3 year lts release

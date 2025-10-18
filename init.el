@@ -728,6 +728,7 @@
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel gptel-mcp-connect)
   :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
   (setq gptel-model 'gemma-3:4b; 'r1-qwen3:8b magistral-small:ud4
+        gptel-include-reasoning t
         gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
                                          :models '((gemma-3:4b :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
@@ -739,8 +740,9 @@
   :after gptel
   :config (require 'mcp-hub)
   :custom (mcp-hub-servers ;("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
-           `(("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest" "--browseUrl" "http://127.0.0.1:39495")); chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
-             ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496'
+           `(("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest"));"--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
+             ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496' use stdio with 'nc localhost 59999'
+
   :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))
 
 (use-package nov
