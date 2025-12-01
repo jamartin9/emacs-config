@@ -16,6 +16,7 @@
 * Lutris
 - installers battle.net
 * Protonfixes for some games
+- replaced by ~Open-Wine-Components/umu-protonfixes~
 ** Link localfixes
 #+NAME: link-localfixes-el
 #+BEGIN_SRC elisp :tangle no :shebang "\":\"; emacs -Q --script steam.sh -- $@ $args ; exit $? # -*- mode: emacs-lisp; lexical-binding: t; -*-"

@@ -253,7 +253,6 @@
                                                                                              ""))
    agent-shell-openai-authentication (agent-shell-openai-make-authentication :api-key (lambda () (setenv "GEMINI_API_KEY" (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY")))) "")))) ; use codex for gemini
 
-
 ;;;###autoload
 (defun jam/mpv-play (url)
   "Run mpv in eat terminal. 9 is volume down; 0 is up. Requires url-handler-mode for default completion (use home and del)."

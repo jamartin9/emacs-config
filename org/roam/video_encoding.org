@@ -278,7 +278,8 @@ vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film 
 - intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
   - https://media.ccc.de/v/37c3-12296-full_aacsess_exposing_and_exploiting_aacsv2_uhd_drm_for_your_viewing_pleasure
   - sgx discontinued in 11 gen +
-  - sgx.fail site has examples
+    - sgx.fail site has examples
+  - https://tee.fail/ breaks sgx and tdx attenstation by extracting ECDSA keys from Intel's Provisioning Certification Enclave (PCE). Fully automated manner from a single signing operation with a ddr5 memory interposition logic analyzer
 - UHD discs
 ** AACS v1 KEY
 ~09 F9 11 02 9D 74 E3 5B D8 41 56 C5 63 56 88 C0~

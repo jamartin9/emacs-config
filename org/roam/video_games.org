@@ -11,6 +11,7 @@
 The only winning move is not to play
 - [[id:274d4b9e-b898-4eb6-a44e-063e7ed34e89][steam]]
 ** notes
+- lossless scaling uses extra gpu (steam on windows) for upscaling
 - engines
   - unreal requires github org signup for source
 - GGPO

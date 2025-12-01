@@ -346,7 +346,7 @@
 
 (use-package eglot
   :ensure nil ; built-in
-  :bind (:map jam/code ("a" . eglot-code-actions))
+  :bind (:map jam/code ("a" . eglot-code-actions));eglot-menu eglot-format-buffer
   :hook (((rust-ts-mode rust-mode) . eglot-ensure)
          ((yaml-mode) . eglot-ensure))
   :custom (eglot-send-changes-idle-time 0.1)
@@ -727,21 +727,24 @@
 (use-package gptel ; optional curl ;:pin nongnu
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel gptel-mcp-connect)
   :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
-  (setq gptel-model 'gemma-3:4b; 'r1-qwen3:8b magistral-small:ud4
-        gptel-include-reasoning t
-        gptel-backend (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
+  (gptel-make-preset 'high-thinking :request-params '(:reasoning_effort "high"))
+  (gptel-make-preset 'web-search :request-params '(:tools [(:google_search ())]))
+  (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
-                                         :models '((gemma-3:4b :capabilities (tool-use json media));:mime-types ("image/jpeg" "image/png" "application/pdf" "text/plain" "text/csv" "text/html")
+                                         :models '((gemma-3:4b :capabilities (tool-use json media))
                                                    (gpt-oss:20b :capabilities (tool-use))
                                                    (qwen3:30b :capabilities (tool-use json)))
-                                         :stream t)))
+                                         :stream t)
+  (setq gptel-model 'gemini-2.5-flash; 'gemma-3:4b
+        ;gptel-include-reasoning t; disables reasoning_effort in gemini
+        gptel-backend (gptel-make-gemini "Gemini" :key (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY"))) :stream t)))
 
 (use-package mcp
   :after gptel
   :config (require 'mcp-hub)
-  :custom (mcp-hub-servers ;("git" :command "uvx" :args ("mcp-server-git" "--repository" "/gnu/git/rav1d"));("memory" :command "npx" :args ("-y" "@modelcontextprotocol/server-memory"));("fetch" :command "uvx" :args ("mcp-server-fetch"));("filesystem" :command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem")); ("sqlite" :command "uvx" :args ("mcp-server-sqlite" "--db-path" "/gnu/git/mcp-sqlite.db"))
-           `(("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest"));"--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
-             ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496' use stdio with 'nc localhost 59999'
+  :custom (mcp-hub-servers `(("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest"));"--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
+                             ("codex" :command "codex" :args ("mcp-server" "-c" "sandbox_permissions=['read-only']" "-c" "approval_policy='untrusted'"))
+                             ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496' use stdio with 'nc localhost 59999'
 
   :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))
 

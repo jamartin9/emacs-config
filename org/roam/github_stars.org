@@ -8,6 +8,16 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** micytao/vllm-playground
+  - web interface for managing and interacting with vLLM servers
+** hirrolot/mazeppa
+  - Mazeppa is a modern supercompiler intended to be a compilation target for call-by-value functional languages to c11
+** lakehq/sail
+  - Rust based Compatible with the Spark Connect protocol, supporting the Spark SQL and DataFrame API compute engine.
+** runestubbe/Crinkler
+  - Crinkler is an executable file compressor (or rather, a compressing linker) for compressing small 32-bit Windows demoscene executables
+** superfly/corrosion
+  - Gossip-based service discovery (and more) for large distributed systems.
 ** future-file-format/F3
   - data file format via embedded Wasm decoders
 ** archwisp/OBD2Proxy
@@ -48,10 +58,10 @@
   - A library for building fast, reliable and evolvable network services.
 ** dsherret/sys_traits
   - Trait per function for system related functionality.
-** CeleritasCelery/rune
-  - Rust VM for Emacs
 ** TomasMikula/jing
   - Typesafe, spec-first APIs without codegen. Just Import 'N' Go!
+** continue-revolution/sd-webui-segment-anything
+  - Segment Anything for Stable Diffusion WebUI with grounding DINO
 ** 10XGenomics/rust-boomphf
   - Fast and scalable minimal perfect hashing for massive key sets
 ** 117HD/RLHD
@@ -1867,7 +1877,7 @@
 ** simias/rustation
   - Playstation emulator in the Rust programing language
 ** simplex-chat/simplex-chat
-  - SimpleX - the first messaging network operating without user identifiers of any kind - 100% private by design! iOS, Android and desktop apps
+  - SimpleX - the first messaging network operating without user identifiers of any kind - 100% private by design! iOS, Android and desktop apps. Dead from adding crypto bs - https://x.com/SimpleXChat/status/1983849427640193293
 ** simplex-chat/simplexmq
   - SimpleXMQ - A reference implementation of the SimpleX Messaging Protocol for simplex queues over public networks. Includes xftp, smp and ntf servers
 ** skeeto/elfeed
@@ -2301,12 +2311,12 @@
 
 
 * machine learning
+** cfregly/ai-performance-engineering
+  - O'Reilly book code
 ** normal-computing/extended-mind-transformers
   -  decoder-only transformer that retrieve and attend to an external cache of key-value pairs without finetuning
 ** comfyanonymous/ComfyUI
   - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
-** continue-revolution/sd-webui-segment-anything
-  - Segment Anything for Stable Diffusion WebUI with grounding DINO
 ** dmlc/xgboost
   - Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library, for Python, R, Java, Scala, C++ and more. Runs on single machine, Hadoop, Spark, Dask, Flink and DataFlow. For tabular regression decision tree data.
 ** EleutherAI/lm-evaluation-harness
@@ -2332,6 +2342,10 @@
 
 
 * rust
+** CeleritasCelery/rune
+  - Rust VM for Emacs
+** kanidm/kanidm
+  - A simple, secure, and fast identity management platform in Rust
 ** rust-netlink/netlink-proto
   - asynchronous implementation of the netlink protocol
 ** helsing-ai/sguaba
