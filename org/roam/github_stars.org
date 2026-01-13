@@ -8,6 +8,40 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** nimtable/nimtable
+  - The observability platform for Iceberg lakehouses. Optimization and compaction.
+** Aiven-Open/tiered-storage-for-apache-kafka
+  - RemoteStorageManager for Apache Kafka® Tiered Storage
+** lakekeeper/lakekeeper
+  - Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Catalog written in Rust.
+** risingwavelabs/risingwave
+  - Streaming data platform. Real-time stream processing, low-latency serving, and Iceberg table management.
+** LizardByte/Sunshine
+  - Self-hosted game stream host for Moonlight. Self-hosted GeForce NOW alternative
+** moonlight-stream/moonlight-qt
+  - GameStream client for PCs (Windows, Mac, Linux, and Steam Link).
+** edin-dal/scair
+  - MLIR Scala Compiler Framework
+** boonzy00/ringmpsc
+  - Lock-free MPSC channel in Zig achieving 50+ billion messages/second via ring-decomposed architecture
+** ZHZisZZ/dllm
+  - dLLM: Simple Diffusion Language Modeling. Can convert AR to diffusion model.
+** sraoss/pg_ivm
+  - IVM (Incremental View Maintenance) implementation as a PostgreSQL extension
+** gudzpoz/Juicemacs
+  - An absolutely-not-solid Emacs implementation (WIP) using graal and truffle
+** fractalbits-labs/fractalbits-main
+  - The ultimate S3 compatible high performance object storage in the AI era.
+** intelxed/xed
+  - The X86 Encoder Decoder (XED), is a software library for encoding and decoding X86 (IA32 and Intel64) instructions
+** cortexproject/cortex
+  - A horizontally scalable, highly available, multi-tenant, long term Prometheus.
+** NVIDIA/cutile-python
+  - cuTile is a programming model for writing parallel kernels for NVIDIA GPUs
+** deuxfleurs-org/garage
+  - S3-compatible object store for small self-hosted geo-distributed deployments. Main repo: https://git.deuxfleurs.fr/Deuxfleurs/garage
+** rustfs/rustfs
+  - RustFS is an open-source, S3-compatible high-performance object storage system supporting migration and coexistence with other S3-compatible platforms such as MinIO and Ceph.
 ** micytao/vllm-playground
   - web interface for managing and interacting with vLLM servers
 ** hirrolot/mazeppa
@@ -20,6 +54,10 @@
   - Gossip-based service discovery (and more) for large distributed systems.
 ** future-file-format/F3
   - data file format via embedded Wasm decoders
+** yandex/perforator
+  - Perforator is a cluster-wide continuous profiling tool designed for large data centers
+** bearcove/arborium
+  - An opinionated tree-sitter + tree-sitter-highlight + grammars bundle
 ** archwisp/OBD2Proxy
   - OBD-II Proxy and Emulator
 ** fenugrec/freediag
@@ -46,6 +84,10 @@
   - OpenZFS on Linux and FreeBSD
 ** kimono-koans/httm
   - Interactive, file-level Time Machine-like tool for ZFS/btrfs/nilfs2
+** cloudflare/boringtun
+  - Userspace WireGuard Implementation in Rust
+** cloudflare/foundations
+  - Cloudflare's Rust service foundations library.
 ** monero-project/monero-gui
   - Monero: the secure, private, untraceable cryptocurrency
 ** wine-mirror/wine
@@ -2308,13 +2350,22 @@
   - Code base for MinD-Vis
 ** zx2c4/password-store
   - Read-only mirror of https://git.zx2c4.com/password-store - https://www.passwordstore.org/ . Pull requests and issues on GitHub cannot be accepted and will be automatically closed. The proper way to submit changes is via the mailing list; see https://lists.zx2c4.com/mailman/listinfo/password-store .
-
+** blakeblackshear/frigate
+  - NVR with realtime local object detection for IP cameras
+** eunomia-bpf/bpftime
+  - Userspace eBPF runtime for Observability, Network, GPU & General Extensions Framework (sm_60+)
 
 * machine learning
+** THUDM/slime
+  - slime is an LLM post-training framework for RL Scaling.
+** luminal-ai/luminal
+  - Luminal is a deep learning library that uses search-based compilation to achieve high performance.
+** mirage-project/mirage
+  - Mirage Persistent Kernel: Compiling LLMs into a MegaKernel
 ** cfregly/ai-performance-engineering
   - O'Reilly book code
 ** normal-computing/extended-mind-transformers
-  -  decoder-only transformer that retrieve and attend to an external cache of key-value pairs without finetuning
+  - decoder-only transformer that retrieve and attend to an external cache of key-value pairs without finetuning
 ** comfyanonymous/ComfyUI
   - A powerful and modular stable diffusion GUI with a graph/nodes interface. (Stable Diffusion XL)
 ** dmlc/xgboost
@@ -2342,6 +2393,12 @@
 
 
 * rust
+** Palkovsky/stackaroo
+  - Swap out of the OS-provided stack with your own custom stack (e.g. heap-backed).
+** rex-rs/rex
+  - Rex is a safe and usable kernel extension framework that allows loading and executing Rust kernel extension programs in the place of eBPF.
+** mullvad/gotatun
+  - Userspace WireGuard® Implementation in Rust
 ** CeleritasCelery/rune
   - Rust VM for Emacs
 ** kanidm/kanidm
@@ -2392,10 +2449,6 @@
   - Easy function multiversioning for Rust
 ** clap-rs/clap
   - A full featured, fast Command Line Argument Parser for Rust
-** cloudflare/boringtun
-  - Userspace WireGuard Implementation in Rust
-** cloudflare/foundations
-  - Cloudflare's Rust service foundations library.
 ** cloudflare/mmap-sync
   - Rust library for concurrent data access, using memory-mapped files, zero-copy deserialization, and wait-free synchronization.
 ** creusot-rs/creusot
@@ -2567,10 +2620,10 @@
 
 
 * utils
+** andikleen/pmu-tools
+  - Intel PMU profiling tools
 ** andreas-abel/uiCA
   - uops.info Code Analyzer for intel bottleneck performance analysis
-** blakeblackshear/frigate
-  - NVR with realtime local object detection for IP cameras
 ** btcpayserver/btcpayserver
   - Accept Bitcoin payments. Free, open-source & self-hosted, Bitcoin payment processor.
 ** BurntSushi/ripgrep

@@ -1,67 +1,12 @@
 ;;; init.el -*- lexical-binding: t; -*-
 (setq gc-cons-threshold (* 256 1024 1024)) ; 256 MiB default before gc
 
-(bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
-           ("j" . xref-find-definitions)
-           ("c" . compile))
-(bind-keys :prefix-map jam/toggle :prefix "C-c c t"
-           ("v" . visible-mode)
-           ("w" . visual-line-mode); toggle-truncate-lines
-           ("x" . xterm-mouse-mode)
-           ("c" . global-display-fill-column-indicator-mode)
-           ("t" . toggle-frame-maximized)
-           ("f" . toggle-frame-fullscreen)
-           ("F" . flymake-mode)
-           ("r" . recentf-mode)
-           ("m" . follow-mode)
-           ("M" . scroll-lock-mode)
-           ("e" . strokes-mode)
-           ("g" . auto-revert-mode))
-(bind-keys :prefix-map jam/open :prefix "C-c c o"
-           ("s" . jam/sudo-edit)
-           ("S" . speedbar)
-           ("b" . browse-url-of-file)
-           ("f" . make-frame)
-           ("D" . jam/draw)
-           ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
-           ("U" . eww-browse))
-(bind-keys :prefix-map jam/insert :prefix "C-c c i"
-           ("y" . cua-paste)
-           ("u" . insert-char)
-           ("s" . yas-insert-snippet)
-           ("e" . emojify-insert-emoji)
-           ("b" . bookmark-set)
-           ("R" . re-builder)
-           ("r" . string-insert-rectangle))
-(bind-keys :prefix-map jam/search :prefix "C-c c s"
-           ("l" . shr-copy-url)
-           ("L" . ffap-menu)
-           ("i" . imenu)
-           ("a" . apropos)
-           ("c" . keep-lines)
-           ("m" . bookmark-jump)
-           ("r" . point-to-register)
-           ("R" . register-to-point))
-(bind-keys :prefix-map jam/file :prefix "C-c c f"
-           ("d" . dired)
-           ("f" . recentf-open)
-           ("i" . image-crop)
-           ("s" . jam/screenshot))
-(bind-keys :prefix-map jam/quit :prefix "C-c c q"
-           ("f" . delete-frame)
-           ("d" . server-start) ;daemon
-           ("D" . server-force-delete)
-           ("q" . kill-emacs)
-           ("r" . restart-emacs)
-           ("Q" . save-buffers-kill-terminal)
-           ("K" . save-buffers-kill-emacs))
-(bind-keys :prefix-map jam/notes :prefix "C-c c n")
-
 (use-package emacs ; built-in ;; Movement: f b n p, a e, M-g-g, F3/F4 for macros
   :hook (((prog-mode text-mode) . (lambda () (setq show-trailing-whitespace t)))
          (tty-setup . xterm-mouse-mode)
          (tty-setup . (lambda () (if (featurep 'tty-child-frames) (tty-tip-mode))))
          (after-init . (lambda () (message "after-init-hook running after %s" (float-time (time-subtract after-init-time before-init-time)))
+                         ;(setq-default inhibit-redisplay nil)
                          (setq file-name-handler-alist default-file-name-handler-alist ;; restore default
                                default-file-name-handler-alist nil
                                modus-themes-mode-line '(accented borderless); theme
@@ -266,7 +211,62 @@
   (set-frame-parameter nil 'alpha-background 80)
   (add-to-list 'default-frame-alist '(alpha-background . 80))
   (add-to-list 'initial-frame-alist '(alpha-background . 80))
-  (set-language-environment "UTF-8"))
+  (set-language-environment "UTF-8")
+  (bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
+           ("j" . xref-find-definitions)
+           ("c" . compile))
+  (bind-keys :prefix-map jam/toggle :prefix "C-c c t"
+           ("v" . visible-mode)
+           ("w" . visual-line-mode); toggle-truncate-lines
+           ("x" . xterm-mouse-mode)
+           ("c" . global-display-fill-column-indicator-mode)
+           ("t" . toggle-frame-maximized)
+           ("f" . toggle-frame-fullscreen)
+           ("F" . flymake-mode)
+           ("r" . recentf-mode)
+           ("m" . follow-mode)
+           ("M" . scroll-lock-mode)
+           ("e" . strokes-mode)
+           ("g" . auto-revert-mode))
+  (bind-keys :prefix-map jam/open :prefix "C-c c o"
+           ("s" . jam/sudo-edit)
+           ("S" . speedbar)
+           ("b" . browse-url-of-file)
+           ("f" . make-frame)
+           ("D" . jam/draw)
+           ("u" . xwidget-webkit-browse-url) ; upstream needs ported to WPE for offscreen render crashing
+           ("U" . eww-browse))
+  (bind-keys :prefix-map jam/insert :prefix "C-c c i"
+           ("y" . cua-paste)
+           ("u" . insert-char)
+           ("s" . yas-insert-snippet)
+           ("e" . emojify-insert-emoji)
+           ("b" . bookmark-set)
+           ("R" . re-builder)
+           ("r" . string-insert-rectangle))
+  (bind-keys :prefix-map jam/search :prefix "C-c c s"
+           ("l" . shr-copy-url)
+           ("L" . ffap-menu)
+           ("i" . imenu)
+           ("a" . apropos)
+           ("c" . keep-lines)
+           ("m" . bookmark-jump)
+           ("r" . point-to-register)
+           ("R" . register-to-point))
+  (bind-keys :prefix-map jam/file :prefix "C-c c f"
+           ("d" . dired)
+           ("f" . recentf-open)
+           ("i" . image-crop)
+           ("s" . jam/screenshot))
+  (bind-keys :prefix-map jam/quit :prefix "C-c c q"
+           ("f" . delete-frame)
+           ("d" . server-start) ;daemon
+           ("D" . server-force-delete)
+           ("q" . kill-emacs)
+           ("r" . restart-emacs)
+           ("Q" . save-buffers-kill-terminal)
+           ("K" . save-buffers-kill-emacs))
+  (bind-keys :prefix-map jam/notes :prefix "C-c c n"))
 
 (use-package desktop
   :ensure nil ; built-in
@@ -462,7 +462,7 @@
    gnus-dribble-directory gnus-directory
    gnus-startup-file (concat gnus-directory "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
-   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "guix.gnu.org/feeds/blog.atom") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
+   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "planet.guix.gnu.org/atom.xml") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
                                    (nntp "news.yhetil.org"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
@@ -507,15 +507,15 @@
                                    (("Releases" visible)) (("Level1Techs" visible)) (("wingolog" visible)) (("Guix" visible)) (("Reddit" visible)) (("Tor" visible)))
              gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
                                 ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts" "nnimap+riseup:Emacs-Cloud")
-                                ("misc" "nnfolder+archive:sent.2024" "nnfolder+archive:sent.2025" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
+                                ("misc" "nnfolder+archive:sent.2025" "nnfolder+archive:sent.2026" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
                                 ("Level1Links With Friends" "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
-                                ("Guix" "nntp+news.yhetil.org:yhetil.gnu.guix.patches" "nntp+news.yhetil.org:yhetil.gnu.guix.devel" "nntp+news.yhetil.org:yhetil.emacs.devel" "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog")
+                                ("Guix" "nntp+news.yhetil.org:yhetil.gnu.guix.patches" "nntp+news.yhetil.org:yhetil.gnu.guix.devel" "nntp+news.yhetil.org:yhetil.emacs.devel" "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix")
                                 ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
                                 ("Gnus")))
        (gnus-topic-set-parameters "gmail" '((display . 200)) )(gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
        (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")(gnus-subscribe-hierarchically "nnimap+riseup:Emacs-Cloud")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
-       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+guix.gnu.org/feeds/blog.atom:GNU Guix — Blog") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
        (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
        (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix") (gnus-subscribe-hierarchically "nnrss:tanelp") (gnus-subscribe-hierarchically "nnrss:igalia");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
        (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.patches") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.devel") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel"))))
@@ -725,17 +725,19 @@
   :commands (dape))
 
 (use-package gptel ; optional curl ;:pin nongnu
+  ;:vc (:url "https://github.com/karthink/gptel" :rev "5027bb7d5b9c39dce4729ac83012353e9d1d6bec") ; install from source until release >0.9.9.3 for gemini3
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel gptel-mcp-connect)
   :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
-  (gptel-make-preset 'high-thinking :request-params '(:reasoning_effort "high"))
-  (gptel-make-preset 'web-search :request-params '(:tools [(:google_search ())]))
+  (gptel-make-preset 'openai-reasoning :request-params '(:reasoning_effort "high"))
+  (gptel-make-preset 'gemini-reasoning :request-params '(:generationConfig (:thinkingConfig (:thinkingLevel "high" :includeThoughts t))))
+  (gptel-make-preset 'gemini-search :request-params '(:tools [(:google_search ())]))
   (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
                                          :models '((gemma-3:4b :capabilities (tool-use json media))
                                                    (gpt-oss:20b :capabilities (tool-use))
                                                    (qwen3:30b :capabilities (tool-use json)))
                                          :stream t)
-  (setq gptel-model 'gemini-2.5-flash; 'gemma-3:4b
+  (setq gptel-model 'gemini-2.5-flash ;'gemini-3-flash-preview; 'gemma-3:4b
         ;gptel-include-reasoning t; disables reasoning_effort in gemini
         gptel-backend (gptel-make-gemini "Gemini" :key (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY"))) :stream t)))
 
@@ -760,7 +762,7 @@
 ;;;###autoload
 (defun jam/draw () "Activate artist-mode polygon in *scratch* buffer." (interactive) (switch-to-buffer "*scratch*") (artist-mode 1) (artist-select-op-poly-line)); (picture-mode)
 ;;;###autoload
-(defun jam/replace-unicode() "Replaces the following unicode characters: ZERO WIDTH NO-BREAK SPACE (65279, #xfeff) aka BOM, ZERO WIDTH SPACE (codepoint 8203, #x200b), RIGHT-TO-LEFT MARK (8207, #x200f), RIGHT-TO-LEFT OVERRIDE (8238, #x202e), LEFT-TO-RIGHT MARK ‎(8206, #x200e), OBJECT REPLACEMENT CHARACTER (65532, #xfffc)" (interactive) (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" ""))
+(defun jam/replace-unicode() "Replaces the following unicode characters: ZERO WIDTH NO-BREAK SPACE (65279, #xfeff) aka BOM, ZERO WIDTH SPACE (codepoint 8203, #x200b), RIGHT-TO-LEFT MARK (8207, #x200f), RIGHT-TO-LEFT OVERRIDE (8238, #x202e), LEFT-TO-RIGHT MARK ‎(8206, #x200e), OBJECT REPLACEMENT CHARACTER (65532, #xfffc)" (interactive) (query-replace-regexp "\ufeff\\|\u200b\\|\u200f\\|\u202e\\|\u200e\\|\ufffc" "")) ; MAYBE include other 'invisible' unicodes like 'hangul filler' for removal
 ;;;###autoload
 (defun jam/screenshot () "Save screenshot to local cache directory" (interactive) (let* ((image (x-export-frames nil 'png)) (image-file (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (format-time-string "Screenshot-%Y-%m-%d-%T.png")))) (with-temp-file image-file (insert image)) (message "Saved Screenshot %s" image-file)))
 ;;;###autoload

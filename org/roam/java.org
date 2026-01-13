@@ -44,6 +44,7 @@
 - https://openjdk.org/jeps/8279184 Instruction Issue Cache Hardware Accommodation
   - can mitigate the negative effect of instruction issue hardware limitations (IIHL) on generated code performance. Such hardware includes, but is not limited to, on-chip memory caches, ITLBs (Instruction Translation Lookaside Buffers), and BTPs (Branch Target Predictors)
 - C2 uses SuperWord paper for optimization via alignment with simd vectorization
+- java adding type classes with witness and Monoid from 'Growing the Java Language #JVMLS' by Brian Goetz
 ** spark jetty websocket wrapper
 #+NAME: java-jetty-main
 #+BEGIN_SRC java :tangle no

@@ -12,6 +12,7 @@ Having many flavors makes some lovely hot garbage...
 *** [[id:8005808d-1b21-48df-9706-6b999ee9aff6][android]]
 *** ubuntu
 - debian based
+  - https://sources.debian.org/patches/ shows custom patches
 - snaps and apt for packages
 - zfs by default
 - aws EKS for baremetal

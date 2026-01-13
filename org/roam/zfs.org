@@ -11,7 +11,7 @@
 ** openzfs
 *** install
 - (This may break pool import) If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
-  That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
+  That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0 ?)
   ~mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX~ and
   ~grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1~.
   A larger partition can allow proper fat32 fs type, grub installation(~--boot-directory~) and kernel/initramfs storage.
@@ -51,6 +51,7 @@
 - ~zpool~  scrub(error check), resilver(parity), trim(ssd), adding/removing disks
 - ~zfs~ Mounting, keys, snapshots, rollbacks
 *** notes
+- 2.3+ disable prefetch per dataset
 - zfs anyraid for different sized disk pools
 - https://github.com/OpenIndiana/time-slider python time slider tool for backups
 - GPTZFSBOOT for bios zfs boot
@@ -59,6 +60,7 @@
   - Manual pool config can get more out of smaller disks with the same redundancy
     - Linux 4.12+ udev IO rule for ~zfs_vdev_scheduler~ to reduce cpu for manual partition
 - When expanding rebalancing is not done leaving potentially higher resilver times in the future increasing the chance of cascading failure.
+  - zfs rewrite added for rebalancing datasets
   - snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset
     - manual de-dupe can be done with ~cp --reflink~ as of 2.2.0
     - ~sudo zfs send zroot/data/tmp@snap-1 | sudo zfs receive -Fduv POOL~ will create ~POOL/data/tmp@snap-1~

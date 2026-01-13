@@ -88,6 +88,7 @@ self.addEventListener('fetch', function(e) {
 #+END_SRC
 ** [[id:aae21430-637a-4b92-8f8a-d35e9991e396][firefox]]
 ** chrome
+- ~chrome://on-device-internals/~ for model directory/status for ~window.Summarizer.availability()~
 - Type ~thisisunsafe~ anywhere on the SSL ERROR window and the browser will let you visit the page.
 - Gemini nano AI by default in 128+
   - ~chrome://flags/#prompt-api-for-gemini-nano~, summarization, writer, rewritter etc

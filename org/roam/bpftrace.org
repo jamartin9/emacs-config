@@ -9,8 +9,11 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * bpftrace
 ** notes
+- bpf programs sometimes are forced to be split into several components and connected by BPF tail-calls using loop/branch implementations to please the verifier
 - needs cap or sudo
 - <EVENT>/<FILTER>/<BLOCK> structure
+- https://github.com/eunomia-bpf/bpf-developer-tutorial/blob/main/src/xpu/gpu-kernel-driver/scripts/nvidia_driver.bt for nvidia and i915 drm watch
+- bpftime is userspace ebpf runtime that compiles bpf programs with llvm for call interception/instrumentation of gpu kernels
 ** oneliners
 - tools for oneline usually installed in /usr/share/bpftrace/tools/*.bt
 #+NAME: bpftrace-poll

@@ -65,6 +65,17 @@
   - ex. more code, more bugs
 - Mind Projection Fallacy - when someone thinks that the way they see the world reflects the way the world really is.
 - The purpose of a system is what it does. - Stafford Beer. there is "no point in claiming that the purpose of a system is to do what it constantly fails to do."
+*** philosophy
+- albert camus
+  - one much imagine sisyphus happy
+- henry david thoreau
+  - "Most of the luxuries and many of the so-called comforts of life are not only not indispensable, but positive hindrances to the elevation of mankind."
+  - "I ask for, not at once no government, but at once a better government."
+  - wrote walden (natural living)
+  - wrote Civil Disobedience (disobedience against unjust state)
+- Ted Kaczynski
+  - "The Industrial Revolution and its consequences have been a disaster for the human race"
+  - "the system has to regulate human behavior closely in order to function"
 ** Common
 - Birthday Problem - 50% chance for 23 random people to share a birthday
 - release cadence schedule sets expectations
@@ -81,7 +92,7 @@
 - Humility should be paramount when submitting code to a location you do not *OWN*
 - Code is meant to be ran by processors
   - machine semantics
-    - iterator vectorization of loops (can allow simd)
+    - iterator vectorization of loops (can allow simd instrinsics)
     - SWAR (simd within a register)
   - stylistic clarity/future updates
     - linters/formatters

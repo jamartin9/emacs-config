@@ -9,8 +9,53 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Metrics
 Thee who watches the watchers
+** notes
+- most profilers require frame pointers, almost all require debug information(can store seperately)
+- ~sudo scx_lavd --performance~ for latency aware scheduler (gpu/drm is wip)
 - monitoring
   - [[id:da54ebe6-f11a-4431-b50f-ee281502998a][netdata]]
   - [[id:15a1bd83-5412-4ea3-b883-d2026fc2966a][prometheus-tech]]
 - profilers
   - https://github.com/intel/oneapi-containers/tree/master/images/docker/vtune
+- perforator
+  - record flamegraph and compare (ebpf collection)
+- pyroscope
+  - aggregates profiling data for flamegraphs
+  - compare flamegraphs with grafana and alloy(ebpf collection)
+    - grafana config: https://github.com/grafana/pyroscope/tree/main/examples/grafana-alloy-auto-instrumentation/ebpf
+      - rename urls for localhost and remove alloy as root dns on rootless podman was not resolving...
+    - ~sudo ./alloy-linux-amd64 run /gnu/git/alloy.config --storage.path=/gnu/git/alloy~
+#+NAME: alloy.config
+#+BEGIN_SRC conf :tangle no
+discovery.process "all" {}
+
+discovery.relabel "btm" {
+    targets = discovery.process.all.targets
+    // Filter needed processes
+    rule {
+        source_labels = ["__meta_process_exe"]
+        regex = ".*/btm"
+        action = "keep"
+    }
+     // provide arbitrary service_name label, otherwise it will be "unspecified"
+    rule {
+        source_labels = ["__meta_process_exe"]
+        target_label = "service_name"
+        regex = ".*/btm"
+        action = "replace"
+        replacement = "bottom"
+    }
+}
+pyroscope.ebpf "instance" {
+    demangle = "full"
+    off_cpu_threshold = 1
+    forward_to = [pyroscope.write.endpoint.receiver]
+    targets = discovery.relabel.btm.output
+}
+
+pyroscope.write "endpoint" {
+    endpoint {
+        url = "http://localhost:4040"
+    }
+}
+#+END_SRC

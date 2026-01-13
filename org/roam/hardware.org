@@ -9,6 +9,16 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * hardware
 Mechanical Sympathy Symphony
+** RAM
+ - ddr5 has on die ecc
+*** SRAM
+  - multiple transistors for faster memory (cpu cache)
+*** DRAM
+  - transistor and capacitor(needs refresh to not leak)
+*** HBM
+  - high bandwidth memory stacked in 3D
+*** GDDR
+  - GPU ram
 ** CPU
  - https://travisdowns.github.io/blog/2019/06/11/speed-limits.html
 ** Backdoors
@@ -72,7 +82,7 @@ Mechanical Sympathy Symphony
 ** gpu
 - egpus for external gpu
   - OCuLink (optical-copper link) for PCIe connectivity
-
+- dual issues instructions level pointer for memory and compute in a single cycle
 ** ISA
 - RISC-V
   - free ISA
@@ -80,6 +90,9 @@ Mechanical Sympathy Symphony
   - 32 (16 embeded) int registers
   - 32 floating point registers
 - Instructions are decoded into micro ops from bit patterns and executed via ports
+- ARM
+  - thumb instructions are reduced to 16bit with half the registers
+    - x86 equivalent is operand size prefix as it is cisc
 ** sim
 - Breadboard
   - simulation https://www.withdiode.com/
@@ -93,7 +106,9 @@ Mechanical Sympathy Symphony
 ** firearms
 - 'auto sear' plastic converts gun to fully automatic
 - tannerite is used for exploding targets
-
+- 50 yard zero raises 1.5inches and zeros again at 200
+- 100 yard zero drops after
+- LE uses 36 yard
 ** vehicle
 - forscan
   - [[https://forscan.org/support/prepare_trial_el_request.php?lang=en][Require extended license for modification]]. can request multiple.

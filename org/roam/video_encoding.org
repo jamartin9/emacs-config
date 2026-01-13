@@ -8,9 +8,6 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * vapoursynth
-- ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata
-- add ~UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/~ to ~XDG_CONFIG/vapoursynth/vapoursynth.conf~ to auto load plugin from directory
-  - ~UserPluginDir=/home/jam/.guix-profile/lib/vapoursynth~
 #+NAME: tonemap-vpy
 #+BEGIN_SRC python :tangle no
 #!/usr/bin/env python3
@@ -258,6 +255,9 @@ vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --h
 vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film --bframes=16 --aq-mode=3 --aq-strength=0.75 --me=umh --merange=32 --subme=10 --qcomp=0.6 --deblock=-3:-3 --level=4.1 --ref=8 --b-adapt=2 --direct auto --analyse=all --trellis=2 --no-fast-pskip --no-mbtree --rc-lookahead=250 --no-dct-decimate --b-pyramid normal --crf ${CRF} --output Test-count.mkv -
 #+END_SRC
 * notes
+- ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata
+- add ~UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/~ to ~XDG_CONFIG/vapoursynth/vapoursynth.conf~ to auto load plugin from directory
+  - ~UserPluginDir=/home/jam/.guix-profile/lib/vapoursynth~
 - Some bluray players limit the number of subs to 64
 - Handbrake can tonemap HDR to SDR when the color filter is set to BT709
   - mobile compat: use mp4, profile high 3.1, 720p, AAC 2.0 stereo, under 4GB for FAT32 (~3Kbps - 6Kbps)
@@ -274,6 +274,18 @@ vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film 
   - Y' is the luma/brightness
     - Y is chroma
   - Cb/Cr are red-blue difference
+** Spatial Audio
+  - Binauralization (HRTF)
+    - sound as if from a full 3D space around you, with headphones only(cross-talk cancellation not suitable for stereo)
+      - ffmpeg filter ~-af "headphone=map=FL|FR|FC|LFE|SL|SR|BL|BR gain=3"~ or ~sofalizer~
+        - gain to adjust 'loudness'
+  - Spatial Objects
+    - ffmpeg does not use atmos object metadata when transcoding, only the base track.
+  - ambisonics
+    - soundfield-based format that doesn't have channels but represents them as spherical
+      - ffmpeg filter for ambisonics afir and custom pan filter for handling center vocals/sounds
+  - Opus - RFC 8486 extension to add ambisonic("sweetspot" for speakers) spatial sounds (instead of objects like atmos). Both use fixed position listener.
+    - Eclipsa Audio uses Opus and adds spatial audio metadata
 ** AACS v2
 - intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
   - https://media.ccc.de/v/37c3-12296-full_aacsess_exposing_and_exploiting_aacsv2_uhd_drm_for_your_viewing_pleasure
@@ -699,9 +711,8 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
   - DTS-HD.MA - (DTS core inside for compat) transcoded with 'DTS HD Encoder Suite' from .wavs, sampling rate 48 or 96 or 192 kHz
     - extract core with eac3to or ~ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts~
   - Downmix and transcode to opus at 80Kbs ~ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus~
-    - Eclipsa Audio uses Opus and adds spatial audio metadata
   - PCM - Bluray
-  - Opus - RFC extension to add ambisonic("sweetspot" for speakers) spatial sounds instead of objects like atmos. Both use fixed position listener. Has ML extension for VoIP.
+  - Opus has a ML extension for VoIP.
 
 ** ffmpeg
 - vmaf score for comparing video streams
