@@ -14,6 +14,7 @@
 - ~-XX:+PerfDisableSharedMem~
 - ~-XX:+UseStringDeduplication~
 - ~-XX:+UnlockExperimentalVMOptions -XX:+UseCompactObjectHeaders~
+- openjdk 26 added ~-Xlog:cpu~ and the ~MemoryMXBean.getTotalGcCpuTime()~ for measuring cpu overhead on heap sizes
 - ZGC takes ~3% of heap
 - ZGC emits jfr event ZAllocationStall
 - project leyden for already verified class loading

@@ -253,6 +253,18 @@
                                                                                              ""))
    agent-shell-openai-authentication (agent-shell-openai-make-authentication :api-key (lambda () (setenv "GEMINI_API_KEY" (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY")))) "")))) ; use codex for gemini
 
+(use-package geiser-hoot ; guile-hoot (v0.8 in guix is missing repl.js - https://codeberg.org/spritely/hoot/issues/845)
+  ;:vc (:url "https://codeberg.org/spritely/geiser-hoot" :rev "08b7702e9d2d2bd377ea7fd89608f09e84d2f26a") ; install from source until release
+  :config (setq geiser-hoot-scheme-local-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-hoot"))
+  :commands (geiser-hoot)) ;geiser-hoot-load-path
+
+   ; mcp.el
+  (defun extract-structuredContent (orig-fun &rest args)
+    (let ((structured (plist-get args :structuredContent)))
+      (message "structured is : %s" structured)
+      (concat (apply orig-fun args) "\n" structured))); add on structured data for codex's structuredContent { "threadId": "" }
+  (advice-add 'mcp--parse-tool-call-result :around #'extract-structuredContent)
+
 ;;;###autoload
 (defun jam/mpv-play (url)
   "Run mpv in eat terminal. 9 is volume down; 0 is up. Requires url-handler-mode for default completion (use home and del)."
@@ -289,7 +301,7 @@
   - sesquicolon 'shebang'
   - build system
     - runs any untangled elisp scripts
-    - sets timestamps
+    - sets timestamps to 1 second after original file
     - exports custom elements for html/org-roam and expands INCLUDE directives
     - build site
       - git worktree

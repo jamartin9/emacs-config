@@ -8,6 +8,14 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** codeberg.org/ezemtsov/ewm
+  - Wayland compositor that runs inside Emacs. requires PGTK for native Wayland frame creation
+** Open-Wine-Components/umu-launcher
+  - Unified launcher for Windows games on Linux. Shared protonfixes. Essentially a copy of the Steam Runtime Tools and Steam Linux Runtime with some modifications for use outside of Steam.
+** zio/zio-blocks
+  - Powerful, joyful building blocks for modern cloud-native applications. Supports optic schema derivation and patch generation.
+** mkirchner/hamt
+  - A hash array-mapped trie implementation in C99. Uses tagged pointers for node type with murmur3 (32bit)
 ** nimtable/nimtable
   - The observability platform for Iceberg lakehouses. Optimization and compaction.
 ** Aiven-Open/tiered-storage-for-apache-kafka
@@ -2356,6 +2364,8 @@
   - Userspace eBPF runtime for Observability, Network, GPU & General Extensions Framework (sm_60+)
 
 * machine learning
+** arcee-ai/DistillKit
+  - An Open Source Toolkit For LLM Distillation. Supports offline, online and moes.
 ** THUDM/slime
   - slime is an LLM post-training framework for RL Scaling.
 ** luminal-ai/luminal
@@ -2372,6 +2382,8 @@
   - Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library, for Python, R, Java, Scala, C++ and more. Runs on single machine, Hadoop, Spark, Dask, Flink and DataFlow. For tabular regression decision tree data.
 ** EleutherAI/lm-evaluation-harness
   - A framework for few-shot evaluation of language models.
+** EvolvingLMMs-Lab/lmms-eval
+  - One-for-All Multimodal Evaluation Toolkit Across Text, Image, Video, and Audio Tasks
 ** EleutherAI/sparsify
   - Sparsify transformers with SAEs and transcoders
 ** ggerganov/llama.cpp

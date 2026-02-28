@@ -462,7 +462,7 @@
    gnus-dribble-directory gnus-directory
    gnus-startup-file (concat gnus-directory "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
-   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom")(nnatom "planet.guix.gnu.org/atom.xml") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
+   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom") (nnatom "planet.guix.gnu.org/atom.xml") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
                                    (nntp "news.yhetil.org"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
@@ -733,19 +733,19 @@
   (gptel-make-preset 'gemini-search :request-params '(:tools [(:google_search ())]))
   (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
-                                         :models '((gemma-3:4b :capabilities (tool-use json media))
-                                                   (gpt-oss:20b :capabilities (tool-use))
-                                                   (qwen3:30b :capabilities (tool-use json)))
+                                         :models '((gemma-3:4b :capabilities (tool-use json media)); ministral
+                                                   (olmo:7b :capabilities (tool-use)); glm4.6V
+                                                   (trinity:26b :capabilities (tool-use json))); nemotron
                                          :stream t)
-  (setq gptel-model 'gemini-2.5-flash ;'gemini-3-flash-preview; 'gemma-3:4b
+  (setq gptel-model 'gemini-3-flash-preview; 'gemma-3:4b
         ;gptel-include-reasoning t; disables reasoning_effort in gemini
         gptel-backend (gptel-make-gemini "Gemini" :key (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY"))) :stream t)))
 
 (use-package mcp
   :after gptel
   :config (require 'mcp-hub)
-  :custom (mcp-hub-servers `(("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest"));"--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
-                             ("codex" :command "codex" :args ("mcp-server" "-c" "sandbox_permissions=['read-only']" "-c" "approval_policy='untrusted'"))
+  :custom (mcp-hub-servers `(;("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest"));"--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
+                             ;("codex" :command "codex" :args ("mcp-server" "-c" "sandbox_permissions=['read-only']" "-c" "approval_policy='untrusted'"))
                              ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496' use stdio with 'nc localhost 59999'
 
   :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))
@@ -790,7 +790,7 @@ DIGITS is the number of pin digits and defaults to 6."
          (counter (truncate (/ (or time (time-to-seconds)) 30)))
          (digits (or digits 6))
          (format-string (format "%%0%dd" digits))
-         (counter-bytes (bindat-pack  '((:high u32) (:low u32)) ;; split the 64 bit number (u64 not supported in Emacs 27.2)
+         (counter-bytes (bindat-pack  '((:high u32) (:low u32)) ;; split the 64 bit number
                                       `((:high . ,(ash counter -32)) (:low . ,(logand counter #xffffffff)))))
          (mac (gnutls-hash-mac 'SHA1 key-bytes counter-bytes))
          (offset (logand (bindat-get-field (bindat-unpack '((:offset u8)) mac 19) :offset) #xf)))
@@ -838,6 +838,7 @@ DIGITS is the number of pin digits and defaults to 6."
   (let ((code (if (string-prefix-p "TOTP:" (plist-get auth :host))
                   (jam/totp (jam/base32-hex-decode (funcall (plist-get auth :secret))))
                 (funcall (plist-get auth :secret)))))
-    (message "%s sent to kill ring" (if auth-source-debug (propertize code 'face 'font-lock-string-face) "AUTH"))
+    (message "%s sent to kill ring. Expires in %d seconds." (if auth-source-debug (propertize code 'face 'font-lock-string-face) "AUTH") password-cache-expiry)
     (kill-new code)
+    (password-cache-add (format "%s@%s" (plist-get auth :user) (plist-get auth :host)) code); cleanup kill-ring
     code))

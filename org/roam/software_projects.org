@@ -32,7 +32,7 @@ The coding will continue until morale improves!
 - emacs-config
   - elisp/org configuration for emacs
   - uses elisp wrapper script to untangle/eval org file code for setup
-  - uses submodules for guix-channel of with custom emacs packages
+  - uses git submodule for guix-channel with emacs packages in guix home
   - publishes site from org-mode files
     - does not use org-publish but each page is customizable from the org-roam-capture-template header
 - resume

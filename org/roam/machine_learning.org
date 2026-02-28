@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Machine learning
 ** notes
+- kernel dev prompt collection https://github.com/masoncl/review-prompts
 - https://www.neuronpedia.org/ for sae identification
 - speculative encoding like eagle uses post training data to generate a predictive model
 - gemma scope is a sae for gemma feature exploration
@@ -205,15 +206,38 @@
       - torrent ~magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA~ (hugginface has several copies too)
     - more than 1,000,000 hours of 40GiB GPU (400 watts) compute hours for 65B model
       - 1000 tons of CO2 (2.6 million KWh hours)
-  - [[https://github.com/ggerganov/llama.cpp][gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
+  - [[https://github.com/ggerganov/llama.cpp][llama.cpp gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
+    - ik_llama.cpp fork with cpu/quant improvements
+      - fused deltanet for qwen3.5
+        - ~-fdn 65536~ fuse deltanet when smaller than ubatch
+        - 2782.81 MiB KV cache with q8 and 2142.81 with q6
+        - fused deltanet3 (patched for f32 attention to stop rambling)
+        - segfaults at warmup image using ~--mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf~
+        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad --cache-ram 0 -fdn 65536 --threads-http 1 --no-warmup --jinja~
+        - ~-mqkv -rtr~ disable mmap but gives 0.5 tk/s more
+          - cpu mmap 16 tk/s 16.5tk/s with mkqv rtr w/fused deltanet q6 cache
+      - flash mla ~-mla 3~ supported for cpu offloading on quants Q6 and Q8 for deepseek or glm4.7 lesser quants need ~-DGGML_IQK_FA_ALL_QUANTS=ON~ for cmake
+        - ~../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -khad -amb 256 --cache-ram 0 -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0~
+        - 16 tk/s w/16 threads on iq4 and 11 tk/s with Q6
+        - context 200k(202752 is 5561.79 MiB), 32k is 898.88 MiB of KV cache
+        - khad (Hadamard transforms for K-cache) with quantized cache (special q8_KV for the cache-type-K causes assert error?)
+          - reduces need for iquants in kv cache?
+        - cache-ram 0 to remove prompt cache
+        - amb 256 to reduce compute buffer size to 700MiB from 9000.90 MiB default
+          - doesn't seem to affect speed on cpu only?
+        - mqkv for merged matrix but disables mmap, use rtr for runtime repack as it disable mmap too
+        - ger for GROUPED_TOPK
+        - fmoe defaults to on
+        - multiple of 4 for threads for simd(gh issue mentioned this?)
+        - cpu build ~cmake -B build -DGGML_CUDA=OFF -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON && cmake --build build --config Release -j 8~
     - enable cuda support ~cmake -B build -DGGML_CUDA=ON && cmake --build build --config Release~
       - cuda sdk 12 was last for maxwell; 13 dropped.
         - cuda 12 needs gcc14 ~-DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14~
           - older cudnn ~9.11 for opencv-cuda
           - add both to ignore in pacman.conf
       - env variable to enable unified memory support ~GGML_CUDA_ENABLE_UNIFIED_MEMORY=1~
-    - set params to ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
-    - bfloat16 added for precision
+    - set params ex ~-fit~, ~top_k=40~, ~temperature=0.7~, ~top_p=0~ and a repeat penalty ~repeat_last_n=64~ and ~repeat_penalty=1.3~
+    - bfloat16 added for precision on supported newer archs
       - create lossless f32 from hf model with ~CUDA_VISIBLE_DEVICES="" ./convert-hf-to-gguf.py --outtype f32 --outfile ./llama-3-8b-instruct-1048k.f32.gguf /gnu/xdg/.cache/huggingface/hub/models--gradientai--Llama-3-8B-Instruct-Gradient-1048k/snapshots/41e3fb886bb111c52dcebd87e357b4fe81f7ad3b~
         - convert f32 to bfloat16 losslessly ~CUDA_VISIBLE_DEVICES="" ./bin/quantize ./llama-3-8b-instruct-1048k.f32.gguf ./llama-3-8b-instruct-1048k.bf16gguf bf16~ or 4bit quant ~Q4_K_M.gguf Q4_K_M~
   - Most model refusals are [[https://www.alignmentforum.org/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction][controlled by features on the residual level]] and flow directionally to end
@@ -514,7 +538,7 @@ image.save("test.png")
 - ~GEMINI_SANDBOX=podman make clean build-all~ to build container and app
 - custom slash commands in toml files under the command dir
 - extension for mcp, commands and context
-  - ex. ~gemini extensions install --pre-release https://github.com/gemini-cli-extensions/code-review~
+  - gemini swe review prompt ex. ~gemini extensions install --pre-release https://github.com/gemini-cli-extensions/code-review~
 - set ~GEMINI_API_KEY~ environment variable or place it in ~$HOME/.env~
   - tokens can be cached with the api key
 - slash commands to save chat or change options

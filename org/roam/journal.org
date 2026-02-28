@@ -177,3 +177,18 @@ Steps taken:
   - maybe downgrade firmware? (unlikely as upgrades had no effect and already on merlin)
   - maybe switch tp-link and asus?
 - check firmware temps with unlisted endpoint ~/ajax_coretmp.asp~
+* 2026
+** 2026-01 January
+*** 2026-01-22 Thursday
+:PROPERTIES:
+:ID:       92c9d6f9-e735-496f-96ea-a987b512a8d9
+:END:
+**** DONE keurig platinum [2026-01-22 Thu 15:13]
+- residue from years of inactivity
+  - disable auto turn off
+  - largest serve size
+  - flush numerous times with white vinegar and water
+    - leave sit for several hours between flushes to remove internal build up until clean output
+    - unplug/replug immediately before next flush to reset when unable to brew
+- turns off on pressing brew
+  - spring loaded power switch is a toggle; sticking wrong direction will short/cycle

@@ -22,6 +22,8 @@
   - nzbget for downloading binaries
     - default user/pass nzbget/tegbzn6789 for web login on port 6789
     - set ParCheck to Force to enable all pars to download (so provider can retain)
+      - set ~WebDir=/home/jam/.guix-profile/share/nzbget/webui~ and ~ConfigTemplate=/home/jam/nzbget-template.conf~ in ~~/.nzbget~
+        - copy ~~/.guix-profile/share/nzbget/nzbget.conf~ for template
   - gnus for reading posts
   - diablo for running newservers
 - Add all servers (EU and US) for all providers
@@ -55,6 +57,6 @@
     - newshosting
     - tweaknews
 - provider tree
-  -  https://www.reddit.com/r/usenet/comments/lwupx3/updated_usenet_provider_map/
+  - https://www.reddit.com/r/usenet/comments/lwupx3/updated_usenet_provider_map/
     - 03/31/2024 https://svgshare.com/s/14tF.svg
 - hdb example of obfuscated post header vs non on page 97 of forums/viewtopic?topicid=65357&page=p1486912#1486912

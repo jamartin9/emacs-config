@@ -88,6 +88,7 @@
     - jdk releases
     - c++14/17/20/23
     - objective C to swift
+- storage caching for 5-minute rule in the cloud after 7 requests per second in non-latency-sensitive workloads and 2 requests per hour in latency-sensitive cases.
 ** Code review
 - Humility should be paramount when submitting code to a location you do not *OWN*
 - Code is meant to be ran by processors
