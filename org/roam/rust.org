@@ -8,6 +8,8 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * rust
+- ~!Forget~ unlocks linear types
+- ~!Move~ unlocks ordered types
 - sans-io pattern for protocol state machines
   - ex. tokio-codec or https://www.firezone.dev/blog/sans-io
   - tagless initial https://www.inferara.com/en/blog/rust-tagless-final-gadt/#the-zero-cost-proof-an-experiment-with-the-never-type

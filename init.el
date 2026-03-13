@@ -93,6 +93,8 @@
               nsm-settings-file (expand-file-name "network-security.data" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache")))
               auth-sources (list (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg") (concat (file-name-as-directory (getenv "HOME")) ".authinfo")) ; auth
               display-line-numbers-type t ; defaults
+              package-review-policy t ; review packages changes. emacs 31+
+              package-review-diff-command '("git" "diff" "--no-index" "--color=never" "--diff-filter=d")
               apropos-do-all t
               xterm-set-window-title t
               xterm-extra-capabilities '(getSelection setSelection) ; osc term copy/paste
@@ -725,7 +727,6 @@
   :commands (dape))
 
 (use-package gptel ; optional curl ;:pin nongnu
-  ;:vc (:url "https://github.com/karthink/gptel" :rev "5027bb7d5b9c39dce4729ac83012353e9d1d6bec") ; install from source until release >0.9.9.3 for gemini3
   :commands (gptel-send gptel gptel-menu gptel-add gptel-add-file gptel gptel-mcp-connect)
   :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
   (gptel-make-preset 'openai-reasoning :request-params '(:reasoning_effort "high"))
@@ -733,9 +734,9 @@
   (gptel-make-preset 'gemini-search :request-params '(:tools [(:google_search ())]))
   (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
                                          :host "localhost:8080";"localhost:11434"
-                                         :models '((gemma-3:4b :capabilities (tool-use json media)); ministral
-                                                   (olmo:7b :capabilities (tool-use)); glm4.6V
-                                                   (trinity:26b :capabilities (tool-use json))); nemotron
+                                         :models '((qwen3.5:0.8b :capabilities (tool-use json media))
+                                                   (qwen3.5:A3b :capabilities (tool-use json media))
+                                                   (glm4.7-flash:A3b :capabilities (tool-use json)))
                                          :stream t)
   (setq gptel-model 'gemini-3-flash-preview; 'gemma-3:4b
         ;gptel-include-reasoning t; disables reasoning_effort in gemini

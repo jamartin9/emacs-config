@@ -181,6 +181,7 @@ self.addEventListener('fetch', function(e) {
   - add user/repo on url path to generate
   - https://sidekickdev.com/ generates agent markdown from deepwiki repos
 ** data
+- https://www.alphaxiv.org/briefs/
 - https://ossinsight.io/#trending-repos
 - https://sourcegraph.com/search
 - https://search.marginalia.nu/
@@ -226,3 +227,5 @@ self.addEventListener('fetch', function(e) {
 - ubu.com/film/index.html
 - https://rarefilmm.com/
 - https://feed.animetosho.org/atom
+  -  terminated in May 2026
+

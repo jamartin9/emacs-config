@@ -208,16 +208,21 @@
       - 1000 tons of CO2 (2.6 million KWh hours)
   - [[https://github.com/ggerganov/llama.cpp][llama.cpp gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
     - ik_llama.cpp fork with cpu/quant improvements
-      - fused deltanet for qwen3.5
-        - ~-fdn 65536~ fuse deltanet when smaller than ubatch
+      - ~--smart-expert-reduction~ is basically REAP
+      - supports vision for some models
+      - fused deltanet for qwen3.5 (35B-A3B)
+        - ~-muge~ merged gate/up/down ~ffn_down_exps~, ~ffn_down_exps~, ~ffn_down_exps~ requires the same attention type
+          -  unsloth ~Q4_K_L~ does match but the IQ quants do not match and cause assertion error in ik_llama
+          - bartowski quants match
+          - conflicts with runtime repack ~-rtr~
+        - should support mtp (not yet?)
+        - disable thinking with ~--chat-template-kwargs '{"enable_thinking":false}'~
+        - try to force full prompt processing with ~--cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift~
         - 2782.81 MiB KV cache with q8 and 2142.81 with q6
-        - fused deltanet3 (patched for f32 attention to stop rambling)
-        - segfaults at warmup image using ~--mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf~
-        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad --cache-ram 0 -fdn 65536 --threads-http 1 --no-warmup --jinja~
+        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad -muge --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja~
         - ~-mqkv -rtr~ disable mmap but gives 0.5 tk/s more
-          - cpu mmap 16 tk/s 16.5tk/s with mkqv rtr w/fused deltanet q6 cache
       - flash mla ~-mla 3~ supported for cpu offloading on quants Q6 and Q8 for deepseek or glm4.7 lesser quants need ~-DGGML_IQK_FA_ALL_QUANTS=ON~ for cmake
-        - ~../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -khad -amb 256 --cache-ram 0 -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0~
+        - ~../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -khad -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0~
         - 16 tk/s w/16 threads on iq4 and 11 tk/s with Q6
         - context 200k(202752 is 5561.79 MiB), 32k is 898.88 MiB of KV cache
         - khad (Hadamard transforms for K-cache) with quantized cache (special q8_KV for the cache-type-K causes assert error?)
@@ -227,9 +232,11 @@
           - doesn't seem to affect speed on cpu only?
         - mqkv for merged matrix but disables mmap, use rtr for runtime repack as it disable mmap too
         - ger for GROUPED_TOPK
+        - muge for merged projections
         - fmoe defaults to on
         - multiple of 4 for threads for simd(gh issue mentioned this?)
-        - cpu build ~cmake -B build -DGGML_CUDA=OFF -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON && cmake --build build --config Release -j 8~
+        - cpu build ~cmake -B build -DGGML_CUDA=OFF -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON && cmake --build build --config Release -j 8 --clean-first~
+        - cuda build ~cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON -DGGML_DEBUG=1 && cmake --build build --config RelWithDebInfo -j 8 --target llama-server~
     - enable cuda support ~cmake -B build -DGGML_CUDA=ON && cmake --build build --config Release~
       - cuda sdk 12 was last for maxwell; 13 dropped.
         - cuda 12 needs gcc14 ~-DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14~
