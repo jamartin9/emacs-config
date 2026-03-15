@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0d9b285">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga210806">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org51bc0f0" class="outline-2">
-<h2 id="org51bc0f0">webservers</h2>
-<div class="outline-text-2" id="text-org51bc0f0">
+<div id="outline-container-orge7456c2" class="outline-2">
+<h2 id="orge7456c2">webservers</h2>
+<div class="outline-text-2" id="text-orge7456c2">
 </div>
-<div id="outline-container-orge4d5126" class="outline-3">
-<h3 id="orge4d5126">webserver notes</h3>
-<div class="outline-text-3" id="text-orge4d5126">
+<div id="outline-container-org6c3f4bb" class="outline-3">
+<h3 id="org6c3f4bb">webserver notes</h3>
+<div class="outline-text-3" id="text-org6c3f4bb">
 <ul class="org-ul">
 <li>Alt-Svc headers for http3/onion service</li>
 <li>http3 is udp (quic)
@@ -46,12 +46,12 @@ This leads to higher latency/less requests per second but more robust connection
 </ul>
 </div>
 </div>
-<div id="outline-container-org566275f" class="outline-3">
-<h3 id="org566275f">pingora (coming soon?)</h3>
+<div id="outline-container-orgd8b2b87" class="outline-3">
+<h3 id="orgd8b2b87">pingora (coming soon?)</h3>
 </div>
-<div id="outline-container-org0bd7bed" class="outline-3">
-<h3 id="org0bd7bed">nginx</h3>
-<div class="outline-text-3" id="text-org0bd7bed">
+<div id="outline-container-org12e3825" class="outline-3">
+<h3 id="org12e3825">nginx</h3>
+<div class="outline-text-3" id="text-org12e3825">
 <ul class="org-ul">
 <li>1.23.1
 <ul class="org-ul">
@@ -61,24 +61,24 @@ This leads to higher latency/less requests per second but more robust connection
 <li>worker process per core with auto</li>
 </ul>
 </div>
-<div id="outline-container-orgb720ddc" class="outline-4">
-<h4 id="orgb720ddc">nginx unit</h4>
-<div class="outline-text-4" id="text-orgb720ddc">
+<div id="outline-container-orgeb956c0" class="outline-4">
+<h4 id="orgeb956c0">nginx unit</h4>
+<div class="outline-text-4" id="text-orgeb956c0">
 <ul class="org-ul">
 <li>can run php without php-fpm</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org7b76903" class="outline-3">
-<h3 id="org7b76903">kong</h3>
+<div id="outline-container-org298b870" class="outline-3">
+<h3 id="org298b870">kong</h3>
 </div>
-<div id="outline-container-orga0a5fc3" class="outline-3">
-<h3 id="orga0a5fc3">apache</h3>
+<div id="outline-container-org16f136e" class="outline-3">
+<h3 id="org16f136e">apache</h3>
 </div>
-<div id="outline-container-orgdde943a" class="outline-3">
-<h3 id="orgdde943a">lighttpd</h3>
-<div class="outline-text-3" id="text-orgdde943a">
+<div id="outline-container-org2656182" class="outline-3">
+<h3 id="org2656182">lighttpd</h3>
+<div class="outline-text-3" id="text-org2656182">
 <ul class="org-ul">
 <li>60k r/s with timeouts default settings file serving 7ms response 1.4.66 <code>t12</code>
 <ul class="org-ul">
@@ -87,27 +87,28 @@ This leads to higher latency/less requests per second but more robust connection
 </ul>
 </div>
 </div>
-<div id="outline-container-org3595d98" class="outline-3">
-<h3 id="org3595d98">redbean</h3>
-<div class="outline-text-3" id="text-org3595d98">
+<div id="outline-container-orgbe78247" class="outline-3">
+<h3 id="orgbe78247">redbean</h3>
+<div class="outline-text-3" id="text-orgbe78247">
 <ul class="org-ul">
 <li>lua scripting</li>
 <li>segfaulted on launch</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf468fb6" class="outline-3">
-<h3 id="orgf468fb6">python -m http.server</h3>
-<div class="outline-text-3" id="text-orgf468fb6">
+<div id="outline-container-orgb6999eb" class="outline-3">
+<h3 id="orgb6999eb">python -m http.server</h3>
+<div class="outline-text-3" id="text-orgb6999eb">
 <ul class="org-ul">
 <li>2k r/s with 10ms response with 3.10.5 <code>t12</code></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2a6c6df" class="outline-3">
-<h3 id="org2a6c6df">caddy</h3>
-<div class="outline-text-3" id="text-org2a6c6df">
+<div id="outline-container-org1be74f8" class="outline-3">
+<h3 id="org1be74f8">caddy</h3>
+<div class="outline-text-3" id="text-org1be74f8">
 <ul class="org-ul">
+<li>maintainer drama with fqdn and blaming users</li>
 <li>2.6 beta
 <ul class="org-ul">
 <li>65k r/s default settings file serving 50ms response <code>t12</code>
@@ -128,7 +129,7 @@ This leads to higher latency/less requests per second but more robust connection
 <li><code>caddy run --config Caddyfile</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org497acdb">:42000 {
+<pre class="src src-conf" id="org5302bef">:42000 {
         header -Server # remove identifying headers
         root * {$XDG_CONFIG_HOME}/emacs/org/roam
         log {
@@ -185,9 +186,9 @@ This leads to higher latency/less requests per second but more robust connection
 </div>
 </div>
 </div>
-<div id="outline-container-orgc854408" class="outline-3">
-<h3 id="orgc854408">workerd</h3>
-<div class="outline-text-3" id="text-orgc854408">
+<div id="outline-container-org139c47a" class="outline-3">
+<h3 id="org139c47a">workerd</h3>
+<div class="outline-text-3" id="text-org139c47a">
 <ul class="org-ul">
 <li>cloudflares fork of V8</li>
 <li>config is capnproto (binary, rpc, text)</li>
@@ -210,7 +211,7 @@ This leads to higher latency/less requests per second but more robust connection
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgcfecf17"># By default this will serve a subdirectory called `content-dir`
+<pre class="src src-conf" id="orgac53991"># By default this will serve a subdirectory called `content-dir`
 #     workerd serve config.capnp --directory-path site-files=/path/to/files
 # Wrangler.toml integration using: npx wrangler dev --experimental-local
 #[site]
@@ -242,7 +243,7 @@ const siteWorker :Workerd.Worker = (
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-rust" id="org3fbf862">// cf worker for fileserver in rust with worker-build
+<pre class="src src-rust" id="org17659fd">// cf worker for fileserver in rust with worker-build
 use worker::*;
 //#[event(start)]// once per worker
 #[event(fetch)]

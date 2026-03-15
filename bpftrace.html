@@ -9,33 +9,36 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org938a6f7">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga2b5eb5">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org1c4c329" class="outline-2">
-<h2 id="org1c4c329">bpftrace</h2>
-<div class="outline-text-2" id="text-org1c4c329">
+<div id="outline-container-org04b54e2" class="outline-2">
+<h2 id="org04b54e2">bpftrace</h2>
+<div class="outline-text-2" id="text-org04b54e2">
 </div>
-<div id="outline-container-org98c869b" class="outline-3">
-<h3 id="org98c869b">notes</h3>
-<div class="outline-text-3" id="text-org98c869b">
+<div id="outline-container-orgcbd57ab" class="outline-3">
+<h3 id="orgcbd57ab">notes</h3>
+<div class="outline-text-3" id="text-orgcbd57ab">
 <ul class="org-ul">
+<li>bpf programs sometimes are forced to be split into several components and connected by BPF tail-calls using loop/branch implementations to please the verifier</li>
 <li>needs cap or sudo</li>
 <li>&lt;EVENT&gt;/&lt;FILTER&gt;/&lt;BLOCK&gt; structure</li>
+<li><a href="https://github.com/eunomia-bpf/bpf-developer-tutorial/blob/main/src/xpu/gpu-kernel-driver/scripts/nvidia_driver.bt">https://github.com/eunomia-bpf/bpf-developer-tutorial/blob/main/src/xpu/gpu-kernel-driver/scripts/nvidia_driver.bt</a> for nvidia and i915 drm watch</li>
+<li>bpftime is userspace ebpf runtime that compiles bpf programs with llvm for call interception/instrumentation of gpu kernels</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge7b5c70" class="outline-3">
-<h3 id="orge7b5c70">oneliners</h3>
-<div class="outline-text-3" id="text-orge7b5c70">
+<div id="outline-container-orgdac2993" class="outline-3">
+<h3 id="orgdac2993">oneliners</h3>
+<div class="outline-text-3" id="text-orgdac2993">
 <ul class="org-ul">
 <li>tools for oneline usually installed in /usr/share/bpftrace/tools/*.bt</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org75d2b04"># print results on internval. Add to end to poll probe
+<pre class="src src-sh" id="org5863606"># print results on internval. Add to end to poll probe
 BPF_POLL='interval:s:1 { print(@); clear(@); }'
 # profile pid 6969
 BPF_PROFILE='profile:hz:99 /pid == 6969/ { @[ustack] = count(); }'

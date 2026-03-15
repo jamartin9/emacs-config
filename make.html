@@ -9,25 +9,25 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5c72816">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga4f0683">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org35ca1ee" class="outline-2">
-<h2 id="org35ca1ee">make</h2>
-<div class="outline-text-2" id="text-org35ca1ee">
+<div id="outline-container-org7dcecbf" class="outline-2">
+<h2 id="org7dcecbf">make</h2>
+<div class="outline-text-2" id="text-org7dcecbf">
 </div>
-<div id="outline-container-orgb013986" class="outline-3">
-<h3 id="orgb013986">snippets</h3>
-<div class="outline-text-3" id="text-orgb013986">
+<div id="outline-container-orgc8ffd2d" class="outline-3">
+<h3 id="orgc8ffd2d">snippets</h3>
+<div class="outline-text-3" id="text-orgc8ffd2d">
 </div>
-<div id="outline-container-orgd6a7a86" class="outline-4">
-<h4 id="orgd6a7a86">makefile for docker copy</h4>
-<div class="outline-text-4" id="text-orgd6a7a86">
+<div id="outline-container-org9eda3ce" class="outline-4">
+<h4 id="org9eda3ce">makefile for docker copy</h4>
+<div class="outline-text-4" id="text-org9eda3ce">
 <div class="org-src-container">
-<pre class="src src-makefile" id="orgc0a0b96">DOCKER ?= docker
+<pre class="src src-makefile" id="org3406622">DOCKER ?= docker
 DOCKER_PREFIX ?= jam
 
 DOCKER_BUILD_IMG_NAME ?= jyvert
@@ -83,11 +83,11 @@ $(OUTPUT): build-base
 </div>
 </div>
 </div>
-<div id="outline-container-orgc9b624a" class="outline-4">
-<h4 id="orgc9b624a">makefile for emacs</h4>
-<div class="outline-text-4" id="text-orgc9b624a">
+<div id="outline-container-orgc266902" class="outline-4">
+<h4 id="orgc266902">makefile for emacs</h4>
+<div class="outline-text-4" id="text-orgc266902">
 <div class="org-src-container">
-<pre class="src src-makefile" id="org614976e">EMACS_PROG ?= emacs
+<pre class="src src-makefile" id="orgcd87a86">EMACS_PROG ?= emacs
 EMACS_FLAGS ?= -Q --batch
 EMACS_CMD ::= $(EMACS_PROG) $(EMACS_FLAGS)
 
@@ -153,11 +153,11 @@ clean : prune
 </div>
 </div>
 </div>
-<div id="outline-container-org783f6c7" class="outline-4">
-<h4 id="org783f6c7">makefile for executable guile wrapper</h4>
-<div class="outline-text-4" id="text-org783f6c7">
+<div id="outline-container-org85d9c1e" class="outline-4">
+<h4 id="org85d9c1e">makefile for executable guile wrapper</h4>
+<div class="outline-text-4" id="text-org85d9c1e">
 <div class="org-src-container">
-<pre class="src src-makefile" id="org23f62a5"># simple makefile using guile for libs/linking
+<pre class="src src-makefile" id="org73b0749"># simple makefile using guile for libs/linking
 # make static-pie ?
 
 # sources
@@ -231,13 +231,13 @@ test: Makefile.bak
 </div>
 </div>
 </div>
-<div id="outline-container-orgad9eaed" class="outline-3">
-<h3 id="orgad9eaed">autotools</h3>
-<div class="outline-text-3" id="text-orgad9eaed">
+<div id="outline-container-orgb9339e3" class="outline-3">
+<h3 id="orgb9339e3">autotools</h3>
+<div class="outline-text-3" id="text-orgb9339e3">
 </div>
-<div id="outline-container-org56c43d2" class="outline-4">
-<h4 id="org56c43d2">auto conf</h4>
-<div class="outline-text-4" id="text-org56c43d2">
+<div id="outline-container-org929a55e" class="outline-4">
+<h4 id="org929a55e">auto conf</h4>
+<div class="outline-text-4" id="text-org929a55e">
 <ul class="org-ul">
 <li>Uses m4 text macros</li>
 <li>relies on env variables such as <code>PKG_CONFIG_PATH</code> or <code>LDFLAGS</code></li>
@@ -245,7 +245,7 @@ test: Makefile.bak
 <li>example of guile autoconf file</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-autoconf" id="org8891b09"># at least
+<pre class="src src-autoconf" id="org9ee272e"># at least
 AC_PREREQ([2.69])
 AC_INIT([eg], [1.0])
 
@@ -286,14 +286,14 @@ AC_OUTPUT
 </div>
 </div>
 </div>
-<div id="outline-container-org9d22b4b" class="outline-4">
-<h4 id="org9d22b4b">automake</h4>
-<div class="outline-text-4" id="text-org9d22b4b">
+<div id="outline-container-orge3bf955" class="outline-4">
+<h4 id="orge3bf955">automake</h4>
+<div class="outline-text-4" id="text-orge3bf955">
 <ul class="org-ul">
 <li>example of guile automake file</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-automake" id="org2f780fa"># This is an automake file; process in automake
+<pre class="src src-automake" id="orga6f8348"># This is an automake file; process in automake
 ACLOCAL_AMFLAGS = -I m4 --install
 EXTRA_DIST = example.sh guix-channel/ src/hello.scm README.org Makefile.bak
 

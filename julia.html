@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org453d9df">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org1743393">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org6d1abb4" class="outline-2">
-<h2 id="org6d1abb4">julia</h2>
-<div class="outline-text-2" id="text-org6d1abb4">
+<div id="outline-container-org6ca385d" class="outline-2">
+<h2 id="org6ca385d">julia</h2>
+<div class="outline-text-2" id="text-org6ca385d">
 </div>
-<div id="outline-container-org4404066" class="outline-3">
-<h3 id="org4404066">julia notes</h3>
-<div class="outline-text-3" id="text-org4404066">
+<div id="outline-container-org79cd29e" class="outline-3">
+<h3 id="org79cd29e">julia notes</h3>
+<div class="outline-text-3" id="text-org79cd29e">
 <ul class="org-ul">
 <li>some <a href="https://yuri.is/not-julia/">heisenbugs</a></li>
 <li>lisp for hoisting (used to be guile in early versions) <code>julia --lisp</code></li>
@@ -32,7 +32,7 @@
 <li>automatic differentiation and optimization libraries turn grammar into symbolic variables</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-julia" id="org59c7aed">using ModelingToolkit, GalacticOptim
+<pre class="src src-julia" id="org0551216">using ModelingToolkit, GalacticOptim
 
 @variables x y
 @parameters a b
@@ -53,7 +53,7 @@ solve(prob,Newton())
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-julia" id="orgf78ae90">@enum MatchType unmatched=0 matched=1 unstable=2 nm1gen=3 nm1=4 nm2=5
+<pre class="src src-julia" id="org2514684">@enum MatchType unmatched=0 matched=1 unstable=2 nm1gen=3 nm1=4 nm2=5
 mutable struct Element
     x::Int
     y::Int

@@ -9,20 +9,24 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5a07033">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org390e1f2">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org02d4dea" class="outline-2">
-<h2 id="org02d4dea">sqlite</h2>
-<div class="outline-text-2" id="text-org02d4dea">
+<div id="outline-container-org30e6b36" class="outline-2">
+<h2 id="org30e6b36">sqlite</h2>
+<div class="outline-text-2" id="text-org30e6b36">
 </div>
-<div id="outline-container-orgf7c3d97" class="outline-3">
-<h3 id="orgf7c3d97">notes</h3>
-<div class="outline-text-3" id="text-orgf7c3d97">
+<div id="outline-container-org75d97a4" class="outline-3">
+<h3 id="org75d97a4">notes</h3>
+<div class="outline-text-3" id="text-org75d97a4">
 <ul class="org-ul">
+<li>turso rust rewrite is async
+<ul class="org-ul">
+<li>with wasm <a href="https://github.com/tursodatabase/turso/blob/main/bindings/javascript/examples/wasm/index.html">https://github.com/tursodatabase/turso/blob/main/bindings/javascript/examples/wasm/index.html</a> MAYBE switch site?</li>
+</ul></li>
 <li>Uses bytecode instead of AST like postgres <a href="https://sqlite.org/draft/whybytecode.html">https://sqlite.org/draft/whybytecode.html</a>
 <ul class="org-ul">
 <li>maybe use bytecodealliance/weval for compiler types?
@@ -98,7 +102,10 @@
 <li>opfs enabled when loaded from worker
 <ul class="org-ul">
 <li>opfs not limited in size unlike localstorage</li>
-<li>currently locking issues between threads/tabs</li>
+<li>currently locking issues between threads/tabs
+<ul class="org-ul">
+<li>mitigated with pausing/unpausing in v3.50</li>
+</ul></li>
 </ul></li>
 </ul></li>
 <li>optimizer can create temporary index's automatically.
@@ -122,11 +129,11 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc6a4df6" class="outline-3">
-<h3 id="orgc6a4df6">site database</h3>
-<div class="outline-text-3" id="text-orgc6a4df6">
+<div id="outline-container-org581fd55" class="outline-3">
+<h3 id="org581fd55">site database</h3>
+<div class="outline-text-3" id="text-org581fd55">
 <div class="org-src-container">
-<pre class="src src-sql" id="org9b574b7">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="org7c3b407">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
 PRAGMA page_size=512;
 SAVEPOINT ar;
@@ -170,14 +177,14 @@ VACUUM;
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="orgd2714d7">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="org056c671">-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgc674078">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="org0a615d2">(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -195,11 +202,12 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
 </pre>
 </div>
 </div>
-<div id="outline-container-org33ea781" class="outline-4">
-<h4 id="org33ea781">site search js/sql</h4>
-<div class="outline-text-4" id="text-org33ea781">
+<div id="outline-container-org4f761b1" class="outline-4">
+<h4 id="org4f761b1">site search js/sql</h4>
+<div class="outline-text-4" id="text-org4f761b1">
 <div class="org-src-container">
-<pre class="src src-javascript" id="org19e3527">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+<pre class="src src-javascript" id="orgbf61e54">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+    // MAYBE use shared worker for cross page sharing
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:
@@ -252,20 +260,22 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org5b0edeb">onmessage = (e) =&gt; {
+<pre class="src src-javascript" id="org833bcf7">onmessage = (e) =&gt; {
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
         importScripts('sqlite3.js'); // mjs module?
-        globalThis.sqlite3InitModule().then((sqlite3)=&gt; {
+        globalThis.sqlite3InitModule().then((sqlite3)=&gt; {// shouldnt be possible to get here on the second run so no need to check for poolUtil and unlock
             sqlite3.installOpfsSAHPoolVfs().then((poolUtil)=&gt; { // use opfs for storage
+                globalThis.poolUtil = poolUtil; // MAYBE Add weblocks and broadcast api for multi tab with shared workers instead of just vfs pausing
                 if (poolUtil.getFileCount() == 0) {
                     console.log("fetching sqlite opfs files");
                     fetch('sqlar.sqlite').then(response =&gt; response.arrayBuffer()).then(arrayBuffer =&gt; {
                         poolUtil.importDb('/sqlar.sqlite', arrayBuffer); // requires absolute path (lack of transparent naming obscures real name)
                         const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
-                        globalThis.db = db;
                         const res = db.exec([sql], opt);
+                        db.close(); // close and release vfs
+                        globalThis.poolUtil.pauseVfs();
                         postMessage(res);
                     });
                 } else {
@@ -280,8 +290,9 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
                         console.log("Header size is: " + header_size + " DB size is: " + size);
                         if (size == header_size) {
                             console.log("Database is up to date");
-                            globalThis.db = db;
                             const res = db.exec([sql], opt);
+                            db.close(); // close and release vfs
+                            globalThis.poolUtil.pauseVfs();
                             postMessage(res);
                         } else {
                             console.log("Updating database with fetch");
@@ -290,8 +301,9 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
                                 poolUtil.wipeFiles().then(_ =&gt; {
                                     poolUtil.importDb('/sqlar.sqlite', arrayBuffer);
                                     const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
-                                    globalThis.db = db;
                                     const res = db.exec([sql], opt);
+                                    db.close(); // close and release vfs
+                                    globalThis.poolUtil.pauseVfs();
                                     postMessage(res);
                                 });
                             });
@@ -299,8 +311,9 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
                     }).catch((error) =&gt; {
                         console.log("Failed to fetch HEAD. Using Existing DB.");
                         const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
-                        globalThis.db = db;
                         const res = db.exec([sql], opt);
+                        db.close(); // close and release vfs
+                        globalThis.poolUtil.pauseVfs();
                         postMessage(res);
                     });
                 }
@@ -315,16 +328,29 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
                     const p = sqlite3.wasm.allocFromTypedArray(bytes);
                     const rc = sqlite3.capi.sqlite3_deserialize(db.pointer, 'main', p, bytes.length, bytes.length,sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
                     //db.checkRc(rc);
-
-                    globalThis.db = db;
+                    globalThis.db = db; // opfs db is no longer shared via globalThis only the global temp db
                     const res = globalThis.db.exec([sql], opt);
-                    postMessage(res);
+                    postMessage(res);// leave db connection open as it is single tab w/o opfs
                 });
             });
         });
     }else {
-        const res = globalThis.db.exec([sql], opt);
-        postMessage(res);
+        if (typeof globalThis.poolUtil === 'undefined') {
+            console.log("Querying global temp db");
+            const res = globalThis.db.exec([sql], opt);// fallback to global temp db from first run; gc will close
+            postMessage(res);
+        } else {
+            globalThis.poolUtil.unpauseVfs().then(() =&gt; {// get handle back
+                console.log("Querying existing OPFS database");
+                const db = new globalThis.poolUtil.OpfsSAHPoolDb('/sqlar.sqlite'); // just load db as first run handles update/cache
+                const res = db.exec([sql], opt);
+                db.close(); // close to release vfs
+                globalThis.poolUtil.pauseVfs();
+                postMessage(res);
+            }).catch(err =&gt; {
+                console.log("Failed to unpause OPFS VFS")
+            });
+        }
     }
 };
 </pre>

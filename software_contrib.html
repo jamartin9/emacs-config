@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgbed9f18">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgac41795">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgbe430a1" class="outline-2">
-<h2 id="orgbe430a1">software contributions</h2>
-<div class="outline-text-2" id="text-orgbe430a1">
+<div id="outline-container-org84e608b" class="outline-2">
+<h2 id="org84e608b">software contributions</h2>
+<div class="outline-text-2" id="text-org84e608b">
 <ul class="org-ul">
 <li>guix-cuirass
 <ul class="org-ul">
@@ -40,6 +40,23 @@
 <ul class="org-ul">
 <li>sysinfo added freebsd ufs io with geom?</li>
 </ul></li>
+<li>to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS<sub>IOC</sub><sub>POOL</sub><sub>CONFIG</sub> for the cache device path or parse zpool iostat json output in zfs 2.3+
+<ul class="org-ul">
+<li><a href="https://github.com/robn/veneer">https://github.com/robn/veneer</a> does this already in dataset<sub>list</sub> and pools</li>
+<li>libzfs<sub>core</sub> python bindings are generated from <code>include/libzfs/libzfs_core.h</code> which only contains lzc<sub>ioctl</sub><sub>fd</sub> (no bindings generated atm) and not the real lzc<sub>ioctl</sub> in <code>lib/libzfs_core/libzfs_core.c</code>
+<ul class="org-ul">
+<li>lzc<sub>ioctl</sub> for the zfs<sub>ioc</sub><sub>pool</sub><sub>stats</sub>(spa<sub>get</sub><sub>stats</sub>/ZFS<sub>IOC</sub><sub>POOL</sub><sub>STATS</sub>/* 0x5a05 */) is not exposed by pyzfs yet.
+<ul class="org-ul">
+<li>lzc<sub>ioctl</sub> calls lzc<sub>ioctl</sub><sub>fd</sub> but is static</li>
+<li>call open on <code>/dev/zfs</code> and use that for the fd. Still requires mocking out <code>zfs_cmd_t</code></li>
+</ul></li>
+<li>zfs<sub>ioc</sub><sub>pool</sub><sub>configs</sub> for the spa<sub>all</sub><sub>configs</sub>(ZFS<sub>IOC</sub><sub>POOL</sub><sub>CONFIGS</sub>/* 0x5a04 */) to get all pools/devicepaths</li>
+</ul></li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1812">Added option to subtract freeable arc from memory</a>
+<ul class="org-ul">
+<li>fixed broken arc collection on freebsd</li>
+</ul></li>
 </ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/794">added gpu vram support</a>
 <ul class="org-ul">
@@ -59,11 +76,29 @@
 </ul></li>
 </ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/1362">updated tui library</a></li>
-<li><a href="https://github.com/ClementTsang/bottom/issues/1629">helped troubleshoot gpu issues</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/issues/1629">helped troubleshoot gpu issues</a>
+<ul class="org-ul">
+<li><a href="https://github.com/ClementTsang/bottom/pull/1791">suggested gpu naming convention</a></li>
+</ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/1667">fixed regression in basic mode after maintainer refactoring</a></li>
 <li><a href="https://github.com/ClementTsang/bottom/issues/1753">answered bug report for unreleased feature</a></li>
-<li><a href="https://github.com/ClementTsang/bottom/issues/1754">provided comparison tool and library status for future cgroup feature</a></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/1772">added feature to hide kernel threads with configuration, documentation and a regression test. bugfix sample config for ci.</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/issues/1754">provided comparison tool and library status for future cgroup feature</a>
+<ul class="org-ul">
+<li>htop does namespaces for its 'container' detection with proc fd status counting "NSpid: XXX 1"</li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1793">code review clarified approach to detecting kernel threads</a>
+<ul class="org-ul">
+<li>htop decided against empty cmdline in favour of PF<sub>KTHREAD</sub> (freebsd can use sysctl mib or kvm<sub>getprocs</sub>)</li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/issues/1777">helped identify slow proc widget after release</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1772">added feature to hide kernel threads with configuration, documentation and a regression test.</a>
+<ul class="org-ul">
+<li>outlined future freebsd support and library migration strategy</li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1811">fix duplicate cpu average in basic mode when using dedicated row</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/issues/1819#issuecomment-3330632727">tested dependency update for bug fix</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/issues/1826">identified regression with network monitoring</a></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1938#discussion_r2652149593">code review</a> for basic layout adding network packet rate rows</li>
 </ul></li>
 <li>wine/wine
 <ul class="org-ul">

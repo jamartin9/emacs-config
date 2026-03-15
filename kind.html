@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0ee4c4a">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org61c74a4">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org21bcf53" class="outline-2">
-<h2 id="org21bcf53">kind</h2>
-<div class="outline-text-2" id="text-org21bcf53">
+<div id="outline-container-orgd4137f2" class="outline-2">
+<h2 id="orgd4137f2">kind</h2>
+<div class="outline-text-2" id="text-orgd4137f2">
 </div>
-<div id="outline-container-org78c3e8e" class="outline-3">
-<h3 id="org78c3e8e">kind</h3>
-<div class="outline-text-3" id="text-org78c3e8e">
+<div id="outline-container-orgea5486c" class="outline-3">
+<h3 id="orgea5486c">kind</h3>
+<div class="outline-text-3" id="text-orgea5486c">
 <ul class="org-ul">
 <li>HPAScaleToZero and HPAContainerMetrics feature gates for scale to zero without Keda</li>
 <li>kubernetes in docker with podman <code>KIND_EXPERIMENTAL_PROVIDER=podman ./kind-linux-amd64 create cluster --config cluster.yaml</code>
@@ -43,7 +43,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgd339f3e">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
+<pre class="src src-sh" id="org927b09a">PG_CLUSTER_PRIMARY_POD=$(kubectl get pod -n postgres-operator -o name -l postgres-operator.crunchydata.com/cluster=hippo,postgres-operator.crunchydata.com/role=master)
 kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </pre>
 </div>
@@ -51,7 +51,7 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 <li>default connection</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgd2bfd27">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
+<pre class="src src-sh" id="orgcf70cc5">PGPASSWORD=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.password | base64decode}}') PGUSER=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.user | base64decode}}') PGDATABASE=$(kubectl get secrets -n postgres-operator "${PG_CLUSTER_USER_SECRET_NAME}" -o go-template='{{.data.dbname | base64decode}}') psql -h localhost
 </pre>
 </div>
 <ul class="org-ul">
@@ -90,7 +90,10 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </ul></li>
 </ul></li>
 <li>cluster api instead of federation</li>
-<li>Gateway api instead of ingress api</li>
+<li>Gateway api instead of ingress api
+<ul class="org-ul">
+<li>kubernetes-sigs/gateway-api-inference-extension for model serving</li>
+</ul></li>
 <li><a href="https://github.com/k3s-io/kine">kine</a> is a shim for etcd to use mysql, postgres or sqlite as a backing store
 <ul class="org-ul">
 <li>used with k3s along with tunnel proxy for simple kube setups</li>
@@ -113,7 +116,7 @@ kubectl -n postgres-operator port-forward "${PG_CLUSTER_PRIMARY_POD}" 5432:5432
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orga5732a3">kind: Cluster
+<pre class="src src-yaml" id="orga3fc9c8">kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 featureGates:
   HPAScaleToZero: true
@@ -126,7 +129,7 @@ nodes:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-yaml" id="org82a3e0e">apiVersion: autoscaling/v2
+<pre class="src src-yaml" id="orgcd22488">apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: resource-consumer-v2

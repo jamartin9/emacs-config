@@ -9,20 +9,24 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf470eda">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgfd2c550">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org5b4ab55" class="outline-2">
-<h2 id="org5b4ab55">scala</h2>
-<div class="outline-text-2" id="text-org5b4ab55">
+<div id="outline-container-org379e491" class="outline-2">
+<h2 id="org379e491">scala</h2>
+<div class="outline-text-2" id="text-org379e491">
 </div>
-<div id="outline-container-org976f31a" class="outline-3">
-<h3 id="org976f31a">scala notes</h3>
-<div class="outline-text-3" id="text-org976f31a">
+<div id="outline-container-orgbf157e2" class="outline-3">
+<h3 id="orgbf157e2">scala notes</h3>
+<div class="outline-text-3" id="text-orgbf157e2">
 <ul class="org-ul">
+<li>Scala's immutable Map and Set implementations are vulnerable to hash collision-based denial-of-service (DoS) attacks, primarily due to their use of ListMap for handling collisions in HashMap and HashSet
+<ul class="org-ul">
+<li>added CollisionProofHashMap</li>
+</ul></li>
 <li>caprese
 <ul class="org-ul">
 <li>capture checking converts types to capabilities (root, shared, exclusive) and ensures they do not leave their scope with context functions</li>
@@ -53,7 +57,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-json" id="org8ff193d">{
+<pre class="src src-json" id="org87a13b7">{
   "servers": {
     "/gnu/git/scala-test/scala-3-project-template/-metals": {
       "url": "http://localhost:39497/sse"
@@ -63,7 +67,7 @@
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-scala" id="org8b55a5b">val scala3Version = "3.7.0"
+<pre class="src src-scala" id="orgb857069">val scala3Version = "3.7.0"
 lazy val root = project
   .in(file("."))
   .settings(
@@ -78,7 +82,7 @@ lazy val root = project
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-scala" id="org581c6d2">import language.experimental.captureChecking
+<pre class="src src-scala" id="org016bc05">import language.experimental.captureChecking
 case class Pooled(count: Int, msg: String):
   override def toString: String = count.toString + msg
 val stack = scala.collection.mutable.ArrayBuffer[Pooled]()

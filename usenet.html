@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf362c05">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgd0d7790">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgb7a6ed2" class="outline-2">
-<h2 id="orgb7a6ed2">usenet</h2>
-<div class="outline-text-2" id="text-orgb7a6ed2">
+<div id="outline-container-orgffba2b5" class="outline-2">
+<h2 id="orgffba2b5">usenet</h2>
+<div class="outline-text-2" id="text-orgffba2b5">
 </div>
-<div id="outline-container-org48dcd9e" class="outline-3">
-<h3 id="org48dcd9e">usenet notes</h3>
-<div class="outline-text-3" id="text-org48dcd9e">
+<div id="outline-container-org2ee8581" class="outline-3">
+<h3 id="org2ee8581">usenet notes</h3>
+<div class="outline-text-3" id="text-org2ee8581">
 <ul class="org-ul">
 <li><a href="https://github.com/javi11/postie">https://github.com/javi11/postie</a> is wip poster</li>
 <li>spotnet is software to host websites on usenet</li>
@@ -39,7 +39,13 @@
 <li>nzbget for downloading binaries
 <ul class="org-ul">
 <li>default user/pass nzbget/tegbzn6789 for web login on port 6789</li>
-<li>set ParCheck to Force to enable all pars to download (so provider can retain)</li>
+<li>set ParCheck to Force to enable all pars to download (so provider can retain)
+<ul class="org-ul">
+<li>set <code>WebDir=/home/jam/.guix-profile/share/nzbget/webui</code> and <code>ConfigTemplate=/home/jam/nzbget-template.conf</code> in <code>~/.nzbget</code>
+<ul class="org-ul">
+<li>copy <code>~/.guix-profile/share/nzbget/nzbget.conf</code> for template</li>
+</ul></li>
+</ul></li>
 </ul></li>
 <li>gnus for reading posts</li>
 <li>diablo for running newservers</li>

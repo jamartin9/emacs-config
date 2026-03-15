@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org7b0a9a2">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org4a140a2">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgc89f4ec" class="outline-2">
-<h2 id="orgc89f4ec">java</h2>
-<div class="outline-text-2" id="text-orgc89f4ec">
+<div id="outline-container-org9fab8bb" class="outline-2">
+<h2 id="org9fab8bb">java</h2>
+<div class="outline-text-2" id="text-org9fab8bb">
 <ul class="org-ul">
 <li><code>alias javaListProps="java -server -XX:+PrintFlagsFinal -XX:+UnlockDiagnosticVMOptions --version"</code></li>
 <li><code>alias javaToolOptions="export JAVA_TOOL_OPTIONS='-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=heapdump.hprof -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true -Xlog:gc:gc.log:utctime,uptime,tid,level:filecount=10,filesize=128m -XX:NativeMemoryTracking=detail -XX:+PreserveFramePointer'"</code></li>
@@ -25,7 +25,9 @@
 <li><code>-XX:+PerfDisableSharedMem</code></li>
 <li><code>-XX:+UseStringDeduplication</code></li>
 <li><code>-XX:+UnlockExperimentalVMOptions -XX:+UseCompactObjectHeaders</code></li>
+<li>openjdk 26 added <code>-Xlog:cpu</code> and the <code>MemoryMXBean.getTotalGcCpuTime()</code> for measuring cpu overhead on heap sizes</li>
 <li>ZGC takes ~3% of heap</li>
+<li>ZGC emits jfr event ZAllocationStall</li>
 <li>project leyden for already verified class loading</li>
 <li>6 months release</li>
 <li>3 year lts release</li>
@@ -65,13 +67,15 @@
 <ul class="org-ul">
 <li>can mitigate the negative effect of instruction issue hardware limitations (IIHL) on generated code performance. Such hardware includes, but is not limited to, on-chip memory caches, ITLBs (Instruction Translation Lookaside Buffers), and BTPs (Branch Target Predictors)</li>
 </ul></li>
+<li>C2 uses SuperWord paper for optimization via alignment with simd vectorization</li>
+<li>java adding type classes with witness and Monoid from 'Growing the Java Language #JVMLS' by Brian Goetz</li>
 </ul>
 </div>
-<div id="outline-container-orge0aa6fe" class="outline-3">
-<h3 id="orge0aa6fe">spark jetty websocket wrapper</h3>
-<div class="outline-text-3" id="text-orge0aa6fe">
+<div id="outline-container-orgde8ce2c" class="outline-3">
+<h3 id="orgde8ce2c">spark jetty websocket wrapper</h3>
+<div class="outline-text-3" id="text-orgde8ce2c">
 <div class="org-src-container">
-<pre class="src src-java" id="orga79e911">import io.reactivex.*;
+<pre class="src src-java" id="orgb640f95">import io.reactivex.*;
 import org.eclipse.jetty.websocket.api.Session;
 import wrapper.SocketWrapper;
 import static spark.Spark.*;
@@ -106,7 +110,7 @@ public class Main{
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-java" id="org3575ffb">package wrapper;
+<pre class="src src-java" id="org29fc80b">package wrapper;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;

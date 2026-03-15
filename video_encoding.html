@@ -9,24 +9,17 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org9226e32">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org73b7cf9">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgad668d6" class="outline-2">
-<h2 id="orgad668d6">vapoursynth</h2>
-<div class="outline-text-2" id="text-orgad668d6">
-<ul class="org-ul">
-<li>ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata</li>
-<li>add <code>UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/</code> to <code>XDG_CONFIG/vapoursynth/vapoursynth.conf</code> to auto load plugin from directory
-<ul class="org-ul">
-<li><code>UserPluginDir=/home/jam/.guix-profile/lib/vapoursynth</code></li>
-</ul></li>
-</ul>
+<div id="outline-container-org1b743c6" class="outline-2">
+<h2 id="org1b743c6">vapoursynth</h2>
+<div class="outline-text-2" id="text-org1b743c6">
 <div class="org-src-container">
-<pre class="src src-python" id="org63e3f44">#!/usr/bin/env python3
+<pre class="src src-python" id="org8474d65">#!/usr/bin/env python3
 #awsmfun dynamic tonemap function includes chroma shift
 import vapoursynth as vs
 from vapoursynth import core
@@ -194,11 +187,11 @@ def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
 </div>
 </div>
 </div>
-<div id="outline-container-org0006584" class="outline-2">
-<h2 id="org0006584">scripts</h2>
-<div class="outline-text-2" id="text-org0006584">
+<div id="outline-container-org34ea0de" class="outline-2">
+<h2 id="org34ea0de">scripts</h2>
+<div class="outline-text-2" id="text-org34ea0de">
 <div class="org-src-container">
-<pre class="src src-bash" id="org4f7a3a2">#!/usr/bin/env bash
+<pre class="src src-bash" id="orgd7250fa">#!/usr/bin/env bash
 COUNTER=1
 while [  $COUNTER -lt 31 ]; do
     mkvextract $1 tracks ${COUNTER}:"subtitle${COUNTER}.sup" # extract sup from mkv
@@ -277,10 +270,15 @@ vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film 
 </div>
 </div>
 </div>
-<div id="outline-container-org7824028" class="outline-2">
-<h2 id="org7824028">notes</h2>
-<div class="outline-text-2" id="text-org7824028">
+<div id="outline-container-org7611276" class="outline-2">
+<h2 id="org7611276">notes</h2>
+<div class="outline-text-2" id="text-org7611276">
 <ul class="org-ul">
+<li>ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata</li>
+<li>add <code>UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/</code> to <code>XDG_CONFIG/vapoursynth/vapoursynth.conf</code> to auto load plugin from directory
+<ul class="org-ul">
+<li><code>UserPluginDir=/home/jam/.guix-profile/lib/vapoursynth</code></li>
+</ul></li>
 <li>Some bluray players limit the number of subs to 64</li>
 <li>Handbrake can tonemap HDR to SDR when the color filter is set to BT709
 <ul class="org-ul">
@@ -315,36 +313,71 @@ vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film 
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orgb7dce00" class="outline-3">
-<h3 id="orgb7dce00">AACS v2</h3>
-<div class="outline-text-3" id="text-orgb7dce00">
+<div id="outline-container-orga41cd55" class="outline-3">
+<h3 id="orga41cd55">Spatial Audio</h3>
+<div class="outline-text-3" id="text-orga41cd55">
+<ul class="org-ul">
+<li>Binauralization (HRTF)
+<ul class="org-ul">
+<li>sound as if from a full 3D space around you, with headphones only(cross-talk cancellation not suitable for stereo)
+<ul class="org-ul">
+<li>ffmpeg filter <code>-af "headphone=map=FL|FR|FC|LFE|SL|SR|BL|BR gain=3"</code> or <code>sofalizer</code>
+<ul class="org-ul">
+<li>gain to adjust 'loudness'</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Spatial Objects
+<ul class="org-ul">
+<li>ffmpeg does not use atmos object metadata when transcoding, only the base track.</li>
+</ul></li>
+<li>ambisonics
+<ul class="org-ul">
+<li>soundfield-based format that doesn't have channels but represents them as spherical
+<ul class="org-ul">
+<li>ffmpeg filter for ambisonics afir and custom pan filter for handling center vocals/sounds</li>
+</ul></li>
+</ul></li>
+<li>Opus - RFC 8486 extension to add ambisonic("sweetspot" for speakers) spatial sounds (instead of objects like atmos). Both use fixed position listener.
+<ul class="org-ul">
+<li>Eclipsa Audio uses Opus and adds spatial audio metadata</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org42324f2" class="outline-3">
+<h3 id="org42324f2">AACS v2</h3>
+<div class="outline-text-3" id="text-org42324f2">
 <ul class="org-ul">
 <li>intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
 <ul class="org-ul">
 <li><a href="https://media.ccc.de/v/37c3-12296-full_aacsess_exposing_and_exploiting_aacsv2_uhd_drm_for_your_viewing_pleasure">https://media.ccc.de/v/37c3-12296-full_aacsess_exposing_and_exploiting_aacsv2_uhd_drm_for_your_viewing_pleasure</a></li>
-<li>sgx discontinued in 11 gen +</li>
+<li>sgx discontinued in 11 gen +
+<ul class="org-ul">
 <li>sgx.fail site has examples</li>
+</ul></li>
+<li><a href="https://tee.fail/">https://tee.fail/</a> breaks sgx and tdx attenstation by extracting ECDSA keys from Intel's Provisioning Certification Enclave (PCE). Fully automated manner from a single signing operation with a ddr5 memory interposition logic analyzer</li>
 </ul></li>
 <li>UHD discs</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgedc4225" class="outline-3">
-<h3 id="orgedc4225">AACS v1 KEY</h3>
-<div class="outline-text-3" id="text-orgedc4225">
+<div id="outline-container-orgfc2c2e6" class="outline-3">
+<h3 id="orgfc2c2e6">AACS v1 KEY</h3>
+<div class="outline-text-3" id="text-orgfc2c2e6">
 <p>
 <code>09 F9 11 02 9D 74 E3 5B D8 41 56 C5 63 56 88 C0</code>
 </p>
 </div>
 </div>
-<div id="outline-container-orgaa73d90" class="outline-3">
-<h3 id="orgaa73d90"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h3>
+<div id="outline-container-org2ece36e" class="outline-3">
+<h3 id="org2ece36e"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h3>
 </div>
-<div id="outline-container-orgf558f62" class="outline-3">
-<h3 id="orgf558f62">HDCP key</h3>
-<div class="outline-text-3" id="text-orgf558f62">
+<div id="outline-container-orga2b0f9b" class="outline-3">
+<h3 id="orga2b0f9b">HDCP key</h3>
+<div class="outline-text-3" id="text-orga2b0f9b">
 <div class="org-src-container">
-<pre class="src src-sh" id="orgeca40f6">HDCP MASTER KEY (MIRROR THIS TEXT!)
+<pre class="src src-sh" id="org76cb6fe">HDCP MASTER KEY (MIRROR THIS TEXT!)
 
 This is a forty times forty element matrix of fifty-six bit
 hexadecimal numbers.
@@ -724,9 +757,9 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 </div>
 </div>
 </div>
-<div id="outline-container-orgafaed9c" class="outline-3">
-<h3 id="orgafaed9c">Sources</h3>
-<div class="outline-text-3" id="text-orgafaed9c">
+<div id="outline-container-orgf1b2499" class="outline-3">
+<h3 id="orgf1b2499">Sources</h3>
+<div class="outline-text-3" id="text-orgf1b2499">
 <ul class="org-ul">
 <li>Check Dovi info for grade/master compat</li>
 <li>The Gamma 0.88 bugs occurs when one source is brighter than other. Due to Apple software conversion of NTSC 2.2 gamma to PC 2.5 gammer requiring them to be raised to the power of 0.88 (2.2/2.5)
@@ -784,19 +817,16 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 <ul class="org-ul">
 <li>extract core with eac3to or <code>ffmpeg -i DTS-HD_MA.dts -bsf:a dca_core -c:a copy TS-Core.dts</code></li>
 </ul></li>
-<li>Downmix and transcode to opus at 80Kbs <code>ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus</code>
-<ul class="org-ul">
-<li>Eclipsa Audio uses Opus and adds spatial audio metadata</li>
-</ul></li>
+<li>Downmix and transcode to opus at 80Kbs <code>ffmpeg -i ./FILE.AC3 -c:a libopus -ac 2 -b:a 80K output.opus</code></li>
 <li>PCM - Bluray</li>
-<li>Opus - RFC extension to add ambisonic("sweetspot" for speakers) spatial sounds instead of objects like atmos. Both use fixed position listener. Has ML extension for VoIP.</li>
+<li>Opus has a ML extension for VoIP.</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org68742f0" class="outline-3">
-<h3 id="org68742f0">ffmpeg</h3>
-<div class="outline-text-3" id="text-org68742f0">
+<div id="outline-container-orgcb8ece1" class="outline-3">
+<h3 id="orgcb8ece1">ffmpeg</h3>
+<div class="outline-text-3" id="text-orgcb8ece1">
 <ul class="org-ul">
 <li>vmaf score for comparing video streams</li>
 <li>Remove Captions <code>ffmpeg -i input.mkv -codec copy -bsf:v "filter_units=remove_types=6" output.mkv</code></li>
@@ -804,13 +834,13 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 </ul>
 </div>
 </div>
-<div id="outline-container-org4273c2a" class="outline-3">
-<h3 id="org4273c2a">HEVC/AVC</h3>
-<div class="outline-text-3" id="text-org4273c2a">
+<div id="outline-container-orgf894dee" class="outline-3">
+<h3 id="orgf894dee">HEVC/AVC</h3>
+<div class="outline-text-3" id="text-orgf894dee">
 </div>
-<div id="outline-container-orgb5f3ff5" class="outline-4">
-<h4 id="orgb5f3ff5">x265</h4>
-<div class="outline-text-4" id="text-orgb5f3ff5">
+<div id="outline-container-org528e3e7" class="outline-4">
+<h4 id="org528e3e7">x265</h4>
+<div class="outline-text-4" id="text-org528e3e7">
 <ul class="org-ul">
 <li>smears at low bitrate instead of blocking like x264</li>
 <li>x265 &#x2013;crf 18 &#x2013;preset slower &#x2013;profile main10 &#x2013;output-depth 10 &#x2013;rc-lookahead 60 &#x2013;ctu 32 &#x2013;frame-threads 1 &#x2013;no-sao &#x2013;deblock -2:-2 &#x2013;qcomp 0.65 &#x2013;aq-mode 3 &#x2013;ref 6 &#x2013;bframes 16 &#x2013;merange 38</li>
@@ -870,7 +900,7 @@ extract the RPU ~dovi_tool -m 0 extract-rpu EL.hevc</code> for EL or <code>ffmpe
 crop dolby <code>dovi_tool editor RPU.bin -j edits.json</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-json" id="org4da036a">{
+<pre class="src src-json" id="org1e0c9d0">{
 "mode": 2,
   "active_area": {
       "crop": true,
@@ -897,13 +927,13 @@ L5 metadata offset black bars are 132 top and bottom for 1080p. 2x for 4k. 0 whe
 </div>
 </div>
 </div>
-<div id="outline-container-org6fbee98" class="outline-3">
-<h3 id="org6fbee98">AVC</h3>
-<div class="outline-text-3" id="text-org6fbee98">
+<div id="outline-container-org8ee8228" class="outline-3">
+<h3 id="org8ee8228">AVC</h3>
+<div class="outline-text-3" id="text-org8ee8228">
 </div>
-<div id="outline-container-orgb195fe0" class="outline-4">
-<h4 id="orgb195fe0">x264</h4>
-<div class="outline-text-4" id="text-orgb195fe0">
+<div id="outline-container-org1aa3c7d" class="outline-4">
+<h4 id="org1aa3c7d">x264</h4>
+<div class="outline-text-4" id="text-org1aa3c7d">
 <p>
 Ref
 </p>
@@ -1158,13 +1188,13 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-org99e808a" class="outline-3">
-<h3 id="org99e808a">AV1</h3>
-<div class="outline-text-3" id="text-org99e808a">
+<div id="outline-container-org10ddab9" class="outline-3">
+<h3 id="org10ddab9">AV1</h3>
+<div class="outline-text-3" id="text-org10ddab9">
 </div>
-<div id="outline-container-org7f946d3" class="outline-4">
-<h4 id="org7f946d3">SVT-AV1</h4>
-<div class="outline-text-4" id="text-org7f946d3">
+<div id="outline-container-orged6d318" class="outline-4">
+<h4 id="orged6d318">SVT-AV1</h4>
+<div class="outline-text-4" id="text-orged6d318">
 <ul class="org-ul">
 <li>fork <a href="https://github.com/gianni-rosato/svt-av1-psy/">https://github.com/gianni-rosato/svt-av1-psy/</a>
 <ul class="org-ul">
@@ -1192,13 +1222,13 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-org63763c3" class="outline-3">
-<h3 id="org63763c3">ripping</h3>
-<div class="outline-text-3" id="text-org63763c3">
+<div id="outline-container-org50bbd39" class="outline-3">
+<h3 id="org50bbd39">ripping</h3>
+<div class="outline-text-3" id="text-org50bbd39">
 </div>
-<div id="outline-container-org37aea3c" class="outline-4">
-<h4 id="org37aea3c">tools</h4>
-<div class="outline-text-4" id="text-org37aea3c">
+<div id="outline-container-orgda5fdb9" class="outline-4">
+<h4 id="orgda5fdb9">tools</h4>
+<div class="outline-text-4" id="text-orgda5fdb9">
 <ul class="org-ul">
 <li>AnyDVDHD (redfox) free trail
 <ul class="org-ul">
@@ -1213,7 +1243,7 @@ The following settings, for now, probably don't merit an in-depth explanation as
 <li>brasero(w/libcss) iso copy</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org9e5fc67">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
+<pre class="src src-sh" id="org806cc75">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
 </pre>
 </div>
 <ul class="org-ul">
@@ -1222,18 +1252,18 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-org52d546e" class="outline-3">
-<h3 id="org52d546e">rescene</h3>
-<div class="outline-text-3" id="text-org52d546e">
+<div id="outline-container-orgb229a97" class="outline-3">
+<h3 id="orgb229a97">rescene</h3>
+<div class="outline-text-3" id="text-orgb229a97">
 <ul class="org-ul">
 <li>use srrdb for reference files</li>
 <li><code>srr.py FILE.srr</code></li>
 <li><code>srs.py FILE.srs FILE.mkv</code></li>
 </ul>
 </div>
-<div id="outline-container-org2346e2c" class="outline-4">
-<h4 id="org2346e2c">m2ts samples</h4>
-<div class="outline-text-4" id="text-org2346e2c">
+<div id="outline-container-org141d717" class="outline-4">
+<h4 id="org141d717">m2ts samples</h4>
+<div class="outline-text-4" id="text-org141d717">
 <ul class="org-ul">
 <li>tsmuxer ~2.6.12 <a href="https://www.videohelp.com/software/tsMuxeR/old-versions">https://www.videohelp.com/software/tsMuxeR/old-versions</a></li>
 <li>First start by looking for the date this movie was released by the scene, don’t use any tsmuxer version newer than this date.</li>
@@ -1246,17 +1276,17 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-org36d7f0c" class="outline-3">
-<h3 id="org36d7f0c">movies</h3>
-<div class="outline-text-3" id="text-org36d7f0c">
+<div id="outline-container-org30cd1f0" class="outline-3">
+<h3 id="org30cd1f0">movies</h3>
+<div class="outline-text-3" id="text-org30cd1f0">
 <ul class="org-ul">
 <li>open matte can show more of the scene by changing the AR (bad if squashed and non OAR like UK scream 4 disc)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org8bbea6a" class="outline-3">
-<h3 id="org8bbea6a">tv</h3>
-<div class="outline-text-3" id="text-org8bbea6a">
+<div id="outline-container-org2c5040e" class="outline-3">
+<h3 id="org2c5040e">tv</h3>
+<div class="outline-text-3" id="text-org2c5040e">
 <ul class="org-ul">
 <li>discovery atlas
 <ul class="org-ul">
@@ -1352,9 +1382,9 @@ S04E13 is SPECIAL
 </p>
 </div>
 </div>
-<div id="outline-container-orga1fcdbc" class="outline-3">
-<h3 id="orga1fcdbc">Prompt</h3>
-<div class="outline-text-3" id="text-orga1fcdbc">
+<div id="outline-container-orgdb57fcd" class="outline-3">
+<h3 id="orgdb57fcd">Prompt</h3>
+<div class="outline-text-3" id="text-orgdb57fcd">
 <ul class="org-ul">
 <li></li>
 </ul>

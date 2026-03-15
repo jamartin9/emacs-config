@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org46b56f0">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgb0b1b4d">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org596cda3" class="outline-2">
-<h2 id="org596cda3">Databases</h2>
-<div class="outline-text-2" id="text-org596cda3">
+<div id="outline-container-org21f882e" class="outline-2">
+<h2 id="org21f882e">Databases</h2>
+<div class="outline-text-2" id="text-org21f882e">
 </div>
-<div id="outline-container-orgf023062" class="outline-3">
-<h3 id="orgf023062">Relational</h3>
-<div class="outline-text-3" id="text-orgf023062">
+<div id="outline-container-org0019cc6" class="outline-3">
+<h3 id="org0019cc6">Relational</h3>
+<div class="outline-text-3" id="text-org0019cc6">
 <ul class="org-ul">
 <li><a href="sqlite.html#ID-162f9fba-d1f9-44e8-ae9f-685c578523f1">sqlite</a></li>
 <li><a href="postgres.html#ID-46651545-b172-443b-b0db-506019b4456c">postgres</a></li>
@@ -29,6 +29,7 @@
 <ul class="org-ul">
 <li>innodb storage engine prefetches and caches itself with default 16k record size
 <ul class="org-ul">
+<li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html">https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html</a></li>
 <li>dzfs<sub>prefetch</sub><sub>disable</sub>=1, logbias=throughput, primarycache=metadata, atime=off, xattr=sa, recordsize=16k</li>
 <li>innodb<sub>log</sub><sub>write</sub><sub>ahead</sub><sub>size</sub>=16384, innodb<sub>doublewrite</sub>=0, innodb<sub>checksum</sub><sub>algorithm</sub>=none, innodb<sub>flush</sub><sub>neighbors</sub>=0, innodb<sub>use</sub><sub>native</sub><sub>aio</sub>=0, innodb<sub>use</sub><sub>atomic</sub><sub>writes</sub>=0</li>
 <li>increase writes by disabling disk flushing with innodb<sub>flush</sub><sub>log</sub><sub>at</sub><sub>trx</sub><sub>commit</sub>=0 and sync<sub>binlog</sub>=0. ZFS disable all explicit disk flushing to any one file system by setting sync=disabled so it flushes every ~5sec</li>
@@ -44,9 +45,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org366ee8c" class="outline-3">
-<h3 id="org366ee8c">olap</h3>
-<div class="outline-text-3" id="text-org366ee8c">
+<div id="outline-container-org639699b" class="outline-3">
+<h3 id="org639699b">olap</h3>
+<div class="outline-text-3" id="text-org639699b">
 <ul class="org-ul">
 <li>duckdb
 <ul class="org-ul">
@@ -59,9 +60,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org1233205" class="outline-3">
-<h3 id="org1233205">notes</h3>
-<div class="outline-text-3" id="text-org1233205">
+<div id="outline-container-org8ca7e8d" class="outline-3">
+<h3 id="org8ca7e8d">notes</h3>
+<div class="outline-text-3" id="text-org8ca7e8d">
 <ul class="org-ul">
 <li>BTree based DB's are more cache friendly as nodes can have more than 2 children (abseil uses 62 children) unlike Binary Trees
 <ul class="org-ul">

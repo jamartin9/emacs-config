@@ -9,22 +9,22 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga9d7d96">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org66a0e71">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org0300c5d" class="outline-2">
-<h2 id="org0300c5d">Steam</h2>
-<div class="outline-text-2" id="text-org0300c5d">
+<div id="outline-container-org06d7923" class="outline-2">
+<h2 id="org06d7923">Steam</h2>
+<div class="outline-text-2" id="text-org06d7923">
 <ul class="org-ul">
 <li><a href="https://gitlab.com/Mr_Goldberg/goldberg_emulator">steam emulator</a></li>
 </ul>
 </div>
-<div id="outline-container-orgcfa17a5" class="outline-3">
-<h3 id="orgcfa17a5">steam proton notes</h3>
-<div class="outline-text-3" id="text-orgcfa17a5">
+<div id="outline-container-orgd27d3cd" class="outline-3">
+<h3 id="orgd27d3cd">steam proton notes</h3>
+<div class="outline-text-3" id="text-orgd27d3cd">
 <ul class="org-ul">
 <li>pressure vessel added in &gt; 5.10
 <ul class="org-ul">
@@ -35,23 +35,26 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org3858859" class="outline-2">
-<h2 id="org3858859">Lutris</h2>
-<div class="outline-text-2" id="text-org3858859">
+<div id="outline-container-org9382484" class="outline-2">
+<h2 id="org9382484">Lutris</h2>
+<div class="outline-text-2" id="text-org9382484">
 <ul class="org-ul">
 <li>installers battle.net</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org42454bc" class="outline-2">
-<h2 id="org42454bc">Protonfixes for some games</h2>
-<div class="outline-text-2" id="text-org42454bc">
+<div id="outline-container-org8f62e03" class="outline-2">
+<h2 id="org8f62e03">Protonfixes for some games</h2>
+<div class="outline-text-2" id="text-org8f62e03">
+<ul class="org-ul">
+<li>replaced by <code>Open-Wine-Components/umu-protonfixes</code></li>
+</ul>
 </div>
-<div id="outline-container-org115ef10" class="outline-3">
-<h3 id="org115ef10">Link localfixes</h3>
-<div class="outline-text-3" id="text-org115ef10">
+<div id="outline-container-orgdfdc791" class="outline-3">
+<h3 id="orgdfdc791">Link localfixes</h3>
+<div class="outline-text-3" id="text-orgdfdc791">
 <div class="org-src-container">
-<pre class="src src-elisp" id="org1041d1f">(ignore-errors (let* ((proton-dir (concat (file-name-as-directory (xdg-config-home)) "protonfixes"))
+<pre class="src src-elisp" id="org4075d86">(ignore-errors (let* ((proton-dir (concat (file-name-as-directory (xdg-config-home)) "protonfixes"))
                       (localfixes-dir (concat (file-name-as-directory proton-dir) "localfixes")))
   (if (not (or (file-exists-p localfixes-dir) (file-symlink-p localfixes-dir)))
       (progn (make-directory localfixes-dir 1)
@@ -69,11 +72,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org3432f08" class="outline-3">
-<h3 id="org3432f08">Jade Empire (process affinity)</h3>
-<div class="outline-text-3" id="text-org3432f08">
+<div id="outline-container-orgd467103" class="outline-3">
+<h3 id="orgd467103">Jade Empire (process affinity)</h3>
+<div class="outline-text-3" id="text-orgd467103">
 <div class="org-src-container">
-<pre class="src src-python" id="org93e0e66">""" Game fix Jade Empire: Special Edition
+<pre class="src src-python" id="orgc79e8d1">""" Game fix Jade Empire: Special Edition
 """
 #pylint: disable=C0103
 
@@ -113,12 +116,11 @@ def main():
 </div>
 </div>
 </div>
-
-<div id="outline-container-org5cb4e83" class="outline-3">
-<h3 id="org5cb4e83">Fallout New Vegas (audio/vk issues)</h3>
-<div class="outline-text-3" id="text-org5cb4e83">
+<div id="outline-container-org291e7fe" class="outline-3">
+<h3 id="org291e7fe">Fallout New Vegas (audio/vk issues)</h3>
+<div class="outline-text-3" id="text-org291e7fe">
 <div class="org-src-container">
-<pre class="src src-python" id="org90ec5b5">""" Game fix for Fallout: New Vegas
+<pre class="src src-python" id="orgfad1bf3">""" Game fix for Fallout: New Vegas
 """
 # pylint: disable=C0103
 from protonfixes import util

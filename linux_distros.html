@@ -9,27 +9,30 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org203b78c">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org3e51b81">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orge03c415" class="outline-2">
-<h2 id="orge03c415">Linux distributions</h2>
-<div class="outline-text-2" id="text-orge03c415">
+<div id="outline-container-org7e3ad4b" class="outline-2">
+<h2 id="org7e3ad4b">Linux distributions</h2>
+<div class="outline-text-2" id="text-org7e3ad4b">
 <p>
 Having many flavors makes some lovely hot garbage&#x2026;
 </p>
 </div>
-<div id="outline-container-org7a0fff0" class="outline-4">
-<h4 id="org7a0fff0"><a href="android.html#ID-8005808d-1b21-48df-9706-6b999ee9aff6">android</a></h4>
+<div id="outline-container-org918f038" class="outline-4">
+<h4 id="org918f038"><a href="android.html#ID-8005808d-1b21-48df-9706-6b999ee9aff6">android</a></h4>
 </div>
-<div id="outline-container-org65b92ab" class="outline-4">
-<h4 id="org65b92ab">ubuntu</h4>
-<div class="outline-text-4" id="text-org65b92ab">
+<div id="outline-container-org4c12fe2" class="outline-4">
+<h4 id="org4c12fe2">ubuntu</h4>
+<div class="outline-text-4" id="text-org4c12fe2">
 <ul class="org-ul">
-<li>debian based</li>
+<li>debian based
+<ul class="org-ul">
+<li><a href="https://sources.debian.org/patches/">https://sources.debian.org/patches/</a> shows custom patches</li>
+</ul></li>
 <li>snaps and apt for packages</li>
 <li>zfs by default</li>
 <li>aws EKS for baremetal
@@ -43,7 +46,10 @@ Having many flavors makes some lovely hot garbage&#x2026;
 <li>Flux for gitops</li>
 <li>eksctl for control</li>
 </ul></li>
-<li>same pod and node limit at kubernetes (5000 nodes, 110 pods per node, 150000 total pods, 300000 total containers)</li>
+<li>same pod and node limit at kubernetes (5000 nodes, 110 pods per node, 150000 total pods, 300000 total containers)
+<ul class="org-ul">
+<li><a href="https://bchess.github.io/k8s-1m/">https://bchess.github.io/k8s-1m/</a> for more</li>
+</ul></li>
 <li>build own ova <a href="https://github.com/aws/eks-distro-build-tooling">https://github.com/aws/eks-distro-build-tooling</a></li>
 <li>can run locally with containers (based on amazon linux 2)
 <ul class="org-ul">
@@ -53,9 +59,9 @@ Having many flavors makes some lovely hot garbage&#x2026;
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb66942c" class="outline-4">
-<h4 id="orgb66942c">arch/manjaro</h4>
-<div class="outline-text-4" id="text-orgb66942c">
+<div id="outline-container-orgc82d1da" class="outline-4">
+<h4 id="orgc82d1da">arch/manjaro</h4>
+<div class="outline-text-4" id="text-orgc82d1da">
 <ul class="org-ul">
 <li>arch based</li>
 <li>pamac and pacman for packages</li>
@@ -70,7 +76,7 @@ Having many flavors makes some lovely hot garbage&#x2026;
 <li><code>pacman -Syu</code> to update</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgbcb8316">pkgname=cross-mingw-w64-gdb
+<pre class="src src-sh" id="org33cace3">pkgname=cross-mingw-w64-gdb
 pkgver=13.1
 pkgrel=1
 pkgdesc="The GNU Debugger (compiled to debug target mingw-w64)"
@@ -113,12 +119,12 @@ package() {
 </div>
 </div>
 </div>
-<div id="outline-container-orgf66c4ff" class="outline-4">
-<h4 id="orgf66c4ff"><a href="openwrt.html#ID-18ebc285-c771-4420-a040-011fd3b96b51">openwrt</a></h4>
+<div id="outline-container-orgd53ee1d" class="outline-4">
+<h4 id="orgd53ee1d"><a href="openwrt.html#ID-18ebc285-c771-4420-a040-011fd3b96b51">openwrt</a></h4>
 </div>
-<div id="outline-container-org38583b9" class="outline-4">
-<h4 id="org38583b9">RHEL</h4>
-<div class="outline-text-4" id="text-org38583b9">
+<div id="outline-container-org236a004" class="outline-4">
+<h4 id="org236a004">RHEL</h4>
+<div class="outline-text-4" id="text-org236a004">
 <ul class="org-ul">
 <li>dracut for initraramfs</li>
 <li>yum/dnf for package managers</li>
@@ -130,9 +136,9 @@ package() {
 </ul>
 </div>
 </div>
-<div id="outline-container-orge53a6b2" class="outline-4">
-<h4 id="orge53a6b2">gentoo</h4>
-<div class="outline-text-4" id="text-orge53a6b2">
+<div id="outline-container-orgcc6c4c0" class="outline-4">
+<h4 id="orgcc6c4c0">gentoo</h4>
+<div class="outline-text-4" id="text-orgcc6c4c0">
 <ul class="org-ul">
 <li>portage for packages
 <ul class="org-ul">

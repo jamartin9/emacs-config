@@ -9,20 +9,34 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orga6ad859">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org1d92c59">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org415d954" class="outline-2">
-<h2 id="org415d954">Machine learning</h2>
-<div class="outline-text-2" id="text-org415d954">
+<div id="outline-container-org6d811b0" class="outline-2">
+<h2 id="org6d811b0">Machine learning</h2>
+<div class="outline-text-2" id="text-org6d811b0">
 </div>
-<div id="outline-container-org3b37627" class="outline-3">
-<h3 id="org3b37627">notes</h3>
-<div class="outline-text-3" id="text-org3b37627">
+<div id="outline-container-orgbe42796" class="outline-3">
+<h3 id="orgbe42796">notes</h3>
+<div class="outline-text-3" id="text-orgbe42796">
 <ul class="org-ul">
+<li>kernel dev prompt collection <a href="https://github.com/masoncl/review-prompts">https://github.com/masoncl/review-prompts</a></li>
+<li><a href="https://www.neuronpedia.org/">https://www.neuronpedia.org/</a> for sae identification</li>
+<li>speculative encoding like eagle uses post training data to generate a predictive model</li>
+<li>gemma scope is a sae for gemma feature exploration</li>
+<li>olmo3 has full data with ngram output linkage to pretraining sources</li>
+<li>mirage for megakernel generation</li>
+<li>standford megakernels use gpu interpreter so each sm gets an instruction stream</li>
+<li>nvidia tensor core introduced in volta and made async by blackwell
+<ul class="org-ul">
+<li>volta added independent Program Counter for each thread in a warp</li>
+</ul></li>
+<li><a href="https://generate.mako.dev/">https://generate.mako.dev/</a> for llm kernel optimization</li>
+<li><a href="https://www.alphaxiv.org/labs/tensor-trace">https://www.alphaxiv.org/labs/tensor-trace</a> ggml 3D model visualizer</li>
+<li><a href="https://github.com/NervanaSystems/maxas/wiki/SGEMM">https://github.com/NervanaSystems/maxas/wiki/SGEMM</a> for optimal matrix multiply on maxwell</li>
 <li>FP8 and LOG representation are efficent on modern GPU
 <ul class="org-ul">
 <li>LOG can factor out the add to a bitshift
@@ -66,7 +80,10 @@
 <li>lacks offload support for disk, cpu, gpu</li>
 <li>huggingface.js</li>
 </ul></li>
-<li>Some models are more sensitive to quantization than others. LLMs are more tolerant than diffusion or whisper models</li>
+<li>Some models are more sensitive to quantization than others. LLMs are more tolerant than diffusion or whisper models
+<ul class="org-ul">
+<li>unsloth uses custom quant skipping layers based on activation spikes</li>
+</ul></li>
 <li>LoRA is a finetunning mechanism
 <ul class="org-ul">
 <li>Meta showed 8 bit quant with no difference but 4bit was &gt;2x worse without QLoRA</li>
@@ -93,7 +110,15 @@
 </ul></li>
 <li>Yi-VL</li>
 <li>imp-v1-3b (phi)</li>
-<li>Qwen-VL</li>
+<li>Qwen-VL
+<ul class="org-ul">
+<li><a href="https://huggingface.co/Qwen/Qwen-Image-Edit-2509">https://huggingface.co/Qwen/Qwen-Image-Edit-2509</a></li>
+<li><a href="https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct">https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct</a></li>
+<li><a href="https://huggingface.co/Qwen/Qwen3-Omni-30B-A3B-Instruct">https://huggingface.co/Qwen/Qwen3-Omni-30B-A3B-Instruct</a>
+<ul class="org-ul">
+<li>omni adds audio</li>
+</ul></li>
+</ul></li>
 <li>Deepseek Janus uses same image/lang representation with different input and output decoders</li>
 <li>tokenized image multimodal data softmax diverges <a href="https://arxiv.org/html/2405.09818v1">https://arxiv.org/html/2405.09818v1</a> ('logit drift problem')
 <ul class="org-ul">
@@ -132,6 +157,7 @@
 <li>RAG dataset summary on dataset may help QnA
 <ul class="org-ul">
 <li><a href="https://huggingface.co/normalcomputing/extended-mind-mpt-7b-chat">'Extended Mind'</a> aka active externalism may out preform RAG with citations</li>
+<li>extended mind transformers add cache of KV tokens(memory) to attend to each token in the attention head at a specific position based on similarity search after removing invalid tokens from the source.</li>
 </ul></li>
 <li>Chain of thought synthetic dataset to improve implicit deductions (orca/phi)</li>
 <li>Models can be merged with various method to combine feature strengths</li>
@@ -139,10 +165,17 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org838a108" class="outline-3">
-<h3 id="org838a108">image</h3>
-<div class="outline-text-3" id="text-org838a108">
+<div id="outline-container-org5733db1" class="outline-3">
+<h3 id="org5733db1">image</h3>
+<div class="outline-text-3" id="text-org5733db1">
 <ul class="org-ul">
+<li>nvidia nemotron nano models use ssm/mamba hybrid layers</li>
+<li>DeepSeekOCR found uses image tokens can be used for text for compression</li>
+<li>PaliGemma gets embedding vectors for document image retrieval with gemma text encoder and siglp vision(32x32 patches per pdf image page with with 128 dim vector for each)
+<ul class="org-ul">
+<li>late interaction max similarity (MaxSim) matches query tokens to image patches then aggregates with a special max-sum operation</li>
+<li>supports segementation, masks, questions, etc</li>
+</ul></li>
 <li>gemma3 and mistral 3.1 small support image input
 <ul class="org-ul">
 <li>gemma3 uses fixed resolution with custom inference for scaling high resolution</li>
@@ -202,9 +235,9 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-org504787d" class="outline-4">
-<h4 id="org504787d">video</h4>
-<div class="outline-text-4" id="text-org504787d">
+<div id="outline-container-org7413be8" class="outline-4">
+<h4 id="org7413be8">video</h4>
+<div class="outline-text-4" id="text-org7413be8">
 <ul class="org-ul">
 <li><a href="https://github.com/Tencent/HunyuanVideo">https://github.com/Tencent/HunyuanVideo</a>
 <ul class="org-ul">
@@ -223,19 +256,20 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org1a023d4" class="outline-4">
-<h4 id="org1a023d4">3D</h4>
-<div class="outline-text-4" id="text-org1a023d4">
+<div id="outline-container-org27ca5a8" class="outline-4">
+<h4 id="org27ca5a8">3D</h4>
+<div class="outline-text-4" id="text-org27ca5a8">
 <ul class="org-ul">
 <li><a href="https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon">https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon</a> for 3D generation 3B</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org16b46e2" class="outline-3">
-<h3 id="org16b46e2">Large Language Models</h3>
-<div class="outline-text-3" id="text-org16b46e2">
+<div id="outline-container-org1b4cf97" class="outline-3">
+<h3 id="org1b4cf97">Large Language Models</h3>
+<div class="outline-text-3" id="text-org1b4cf97">
 <ul class="org-ul">
+<li><a href="https://arxiv.org/html/2502.13577v1">https://arxiv.org/html/2502.13577v1</a> posits that the data manifold structure is not smooth uniform global structure but a stratified manifold</li>
 <li>multiple serving frameworks with nvidia dynamo
 <ul class="org-ul">
 <li>serve sglang, vllm, mistralrs, etc</li>
@@ -255,12 +289,18 @@
 <li>VLLM<sub>USE</sub><sub>V1</sub>=1 for new arch</li>
 <li>jinja chat templates</li>
 <li>required compute capability higher than 5.2 for gguf and bnb</li>
+<li>build custom docker image for cpu only avx2 (bf16,f32,f16 only) using <code>--build-arg VLLM_CPU_DISABLE_AVX512=true</code>
+<ul class="org-ul">
+<li><a href="https://arxiv.org/html/2505.06461v1">https://arxiv.org/html/2505.06461v1</a> shows cpu slows down and bottlenecks with more than ~4 cores but can beat gpu on small local models</li>
+</ul></li>
 </ul></li>
 <li>constrain output to json schema or grammar or choice
 <ul class="org-ul">
 <li>faster inference with constrained output <a href="https://blog.dottxt.co/coalescence.html">https://blog.dottxt.co/coalescence.html</a></li>
 <li>guided decoding <a href="https://github.com/dottxt-ai/outlines">https://github.com/dottxt-ai/outlines</a></li>
 </ul></li>
+<li>GPT-OSS is like phi-5 (synthetic data)</li>
+<li>gemma3n uses matformer (Matryoshka transformer) to tradeoff sizes between modals ie a range of weights between 3B and 7B</li>
 <li>deepseekv3 MoE uses 3 dense layers then MoE with a shared expert, dual pipe and reasoning
 <ul class="org-ul">
 <li>quantized during training for speed</li>
@@ -271,12 +311,15 @@
 </ul></li>
 <li>Qwen qwq 32B
 <ul class="org-ul">
-<li>requires specific options/samplers to avoid degraded output</li>
+<li>requires specific options/samplers to avoid degraded output. See unsloth guides</li>
 <li><code>GGML_CUDA_ENABLE_UNIFIED_MEMORY=1 ./llama-cli --model ./QwQ-32B-Q4_K_M.gguf --threads 8 --ctx-size 16384 --n-gpu-layers 99 --seed 3407 --prio 2 --temp 0.6 --repeat-penalty 1.1 --dry-multiplier 0.5 --min-p 0.0 --top-k 40 --top-p 0.95 -no-cnv --samplers "top_k;top_p;min_p;temperature;dry;typ_p;xtc" --prompt "&lt;|im_start|&gt;user\n${prompt}&lt;|im_end|&gt;\n&lt;|im_start|&gt;assistant\n&lt;think&gt;\n"</code></li>
 </ul></li>
-<li>distill models with <a href="https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html">https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html</a> student/teacher model beating fine tuning</li>
+<li>distill models with <a href="https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html">https://pytorch.org/torchtune/main/tutorials/llama_kd_tutorial.html</a> student/teacher model beating fine tuning
+<ul class="org-ul">
+<li>uses the logits of the teacher model with to model output distribution <a href="https://openrouter.ai/models?distillable=true">https://openrouter.ai/models?distillable=true</a></li>
+</ul></li>
 <li>Falcon 180B at 4bit takes ~128GiB of RAM (4bit showed little to no degradation)</li>
-<li>chinchilla paper showed most models are over parameterized without enough data
+<li>chinchilla paper showed most models are over parameterized without enough data. 20 tokens to parameter.
 <ul class="org-ul">
 <li><a href="https://arxiv.org/pdf/2401.00448.pdf">beyond chinchilla</a> shows smaller models with more parameters as inference approaches dataset size.</li>
 </ul></li>
@@ -317,14 +360,64 @@
 <li>1000 tons of CO2 (2.6 million KWh hours)</li>
 </ul></li>
 </ul></li>
-<li><a href="https://github.com/ggerganov/llama.cpp">gguf is 4 bit and cpu</a> (adding more gpu and 3/5/6 bit quant)
+<li><a href="https://github.com/ggerganov/llama.cpp">llama.cpp gguf is 4 bit and cpu</a> (adding more gpu and 3/5/6 bit quant)
 <ul class="org-ul">
+<li>ik<sub>llama.cpp</sub> fork with cpu/quant improvements
+<ul class="org-ul">
+<li><code>--smart-expert-reduction</code> is basically REAP</li>
+<li>supports vision for some models</li>
+<li>fused deltanet for qwen3.5 (35B-A3B)
+<ul class="org-ul">
+<li><code>-muge</code> merged gate/up/down <code>ffn_down_exps</code>, <code>ffn_down_exps</code>, <code>ffn_down_exps</code> requires the same attention type
+<ul class="org-ul">
+<li>unsloth <code>Q4_K_L</code> does match but the IQ quants do not match and cause assertion error in ik<sub>llama</sub></li>
+<li>bartowski quants match</li>
+<li>conflicts with runtime repack <code>-rtr</code></li>
+</ul></li>
+<li>should support mtp (not yet?)</li>
+<li>disable thinking with <code>--chat-template-kwargs '{"enable_thinking":false}'</code></li>
+<li>try to force full prompt processing with <code>--cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift</code></li>
+<li>2782.81 MiB KV cache with q8 and 2142.81 with q6</li>
+<li><code>../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad -muge --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja</code></li>
+<li><code>-mqkv -rtr</code> disable mmap but gives 0.5 tk/s more</li>
+</ul></li>
+<li>flash mla <code>-mla 3</code> supported for cpu offloading on quants Q6 and Q8 for deepseek or glm4.7 lesser quants need <code>-DGGML_IQK_FA_ALL_QUANTS=ON</code> for cmake
+<ul class="org-ul">
+<li><code>../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -khad -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0</code></li>
+<li>16 tk/s w/16 threads on iq4 and 11 tk/s with Q6</li>
+<li>context 200k(202752 is 5561.79 MiB), 32k is 898.88 MiB of KV cache</li>
+<li>khad (Hadamard transforms for K-cache) with quantized cache (special q8<sub>KV</sub> for the cache-type-K causes assert error?)
+<ul class="org-ul">
+<li>reduces need for iquants in kv cache?</li>
+</ul></li>
+<li>cache-ram 0 to remove prompt cache</li>
+<li>amb 256 to reduce compute buffer size to 700MiB from 9000.90 MiB default
+<ul class="org-ul">
+<li>doesn't seem to affect speed on cpu only?</li>
+</ul></li>
+<li>mqkv for merged matrix but disables mmap, use rtr for runtime repack as it disable mmap too</li>
+<li>ger for GROUPED<sub>TOPK</sub></li>
+<li>muge for merged projections</li>
+<li>fmoe defaults to on</li>
+<li>multiple of 4 for threads for simd(gh issue mentioned this?)</li>
+<li>cpu build <code>cmake -B build -DGGML_CUDA=OFF -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON &amp;&amp; cmake --build build --config Release -j 8 --clean-first</code></li>
+<li>cuda build <code>cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON -DGGML_DEBUG=1 &amp;&amp; cmake --build build --config RelWithDebInfo -j 8 --target llama-server</code></li>
+</ul></li>
+</ul></li>
 <li>enable cuda support <code>cmake -B build -DGGML_CUDA=ON &amp;&amp; cmake --build build --config Release</code>
 <ul class="org-ul">
+<li>cuda sdk 12 was last for maxwell; 13 dropped.
+<ul class="org-ul">
+<li>cuda 12 needs gcc14 <code>-DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14</code>
+<ul class="org-ul">
+<li>older cudnn ~9.11 for opencv-cuda</li>
+<li>add both to ignore in pacman.conf</li>
+</ul></li>
+</ul></li>
 <li>env variable to enable unified memory support <code>GGML_CUDA_ENABLE_UNIFIED_MEMORY=1</code></li>
 </ul></li>
-<li>set params to <code>top_k=40</code>, <code>temperature=0.7</code>, <code>top_p=0</code> and a repeat penalty <code>repeat_last_n=64</code> and <code>repeat_penalty=1.3</code></li>
-<li>bfloat16 added for precision
+<li>set params ex <code>-fit</code>, <code>top_k=40</code>, <code>temperature=0.7</code>, <code>top_p=0</code> and a repeat penalty <code>repeat_last_n=64</code> and <code>repeat_penalty=1.3</code></li>
+<li>bfloat16 added for precision on supported newer archs
 <ul class="org-ul">
 <li>create lossless f32 from hf model with <code>CUDA_VISIBLE_DEVICES="" ./convert-hf-to-gguf.py --outtype f32 --outfile ./llama-3-8b-instruct-1048k.f32.gguf /gnu/xdg/.cache/huggingface/hub/models--gradientai--Llama-3-8B-Instruct-Gradient-1048k/snapshots/41e3fb886bb111c52dcebd87e357b4fe81f7ad3b</code>
 <ul class="org-ul">
@@ -372,12 +465,15 @@
 <li>constructs a LUT from quantized values</li>
 </ul></li>
 </ul></li>
+<li>K2 uses a QAT finetuning step during post training for moe layers to be int4(attention still bf16) for 'native' inference instead of post training quantization like awq/gpt-q</li>
+<li>sglang/vllm with intel's autoround can quantize int2-int8, mxfp4, mxfp8 and fp8</li>
+<li>vllm/sglang can train and serve moe's with fp8 with same accuracy as bf16</li>
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-org7f660e1" class="outline-4">
-<h4 id="org7f660e1">Codegen</h4>
-<div class="outline-text-4" id="text-org7f660e1">
+<div id="outline-container-orge9136d5" class="outline-4">
+<h4 id="orge9136d5">Codegen</h4>
+<div class="outline-text-4" id="text-orge9136d5">
 <ul class="org-ul">
 <li>GraalVM added Static Profiles powered by ML branch prediction for inlining (based on decapo data)
 <ul class="org-ul">
@@ -413,15 +509,15 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org3bd18b9" class="outline-3">
-<h3 id="org3bd18b9">Speech to text</h3>
-<div class="outline-text-3" id="text-org3bd18b9">
+<div id="outline-container-orgef0eb32" class="outline-3">
+<h3 id="orgef0eb32">Speech to text</h3>
+<div class="outline-text-3" id="text-orgef0eb32">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgcdad369">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="orgc8a37cd">pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
@@ -430,9 +526,9 @@ whisper "/content/${VID}.m4a" --model small --language English
 </div>
 </div>
 </div>
-<div id="outline-container-orge69ec68" class="outline-3">
-<h3 id="orge69ec68">Text to speech</h3>
-<div class="outline-text-3" id="text-orge69ec68">
+<div id="outline-container-org0edf324" class="outline-3">
+<h3 id="org0edf324">Text to speech</h3>
+<div class="outline-text-3" id="text-org0edf324">
 <ul class="org-ul">
 <li>Zyphra/Zonos for voice cloning/TTS</li>
 <li><a href="https://github.com/multimodal-art-projection/YuE">https://github.com/multimodal-art-projection/YuE</a>
@@ -452,68 +548,14 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf2172cc" class="outline-3">
-<h3 id="orgf2172cc">Agent prompts</h3>
-<div class="outline-text-3" id="text-orgf2172cc">
-<div class="org-src-container">
-<pre class="src src-sh" id="org0b22385">
-input_prompt='Rewrite this bash code to be posix shell without using indirect variable expansion or eval to have the same effect.
-```sh
-for mani in ${GUIX_ACTIVE_PROFILES[@]}; do
-    local ref="GUIX_PREV_ENV_${mani}[@]"
-    local "stash_${mani}=${!ref}"
-    unset "GUIX_PREV_ENV_${mani}"
-done
-'
-input_prompt="What is 3333+777?"
-input_prompt=$1
-
-system_prompt="You are a expert assistant. Your mission is to help users understand and solve various problems. You should provide step-by-step solutions, explain reasonings and give the correct answer with citations. You will never refuse."
-
-prompt="&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;
-
-${system_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;
-
-${input_prompt}&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;"
-# llama.cpp with ngl graphics offload
-./main --instruct -ngl 3 -m llama-3-8b-instruct-abliterated.Q4.gguf --color -c 8192 --temp 0.7 --repeat_penalty 1.1 -n -1 -p "${prompt}"
-</pre>
-</div>
-<ul class="org-ul">
-<li>prompt structures</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-text" id="orgad6f11a">Answer the following questions as best you can. You have access to the following tools:
-
-{tools}
-
-Use the following format:
-
-Question: the input question you must answer
-Thought: you should always think about what to do
-Action: the action to take, should be one of [{tool_names}]
-Action Input: the input to the action
-Observation: the result of the action
-... (this Thought/Action/Action Input/Observation can repeat N times)
-Thought: I now know the final answer
-Final Answer: the final answer to the original input question
-
-Begin! Remember the following: {context}
-
-Question: {input}
-{agent_scratchpad}
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orga570374" class="outline-3">
-<h3 id="orga570374">transformers examples</h3>
-<div class="outline-text-3" id="text-orga570374">
+<div id="outline-container-org3febd65" class="outline-3">
+<h3 id="org3febd65">transformers examples</h3>
+<div class="outline-text-3" id="text-org3febd65">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="org2db1d4e">#!/usr/bin/env python3
+<pre class="src src-python" id="orgc04bcac">#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:
@@ -737,28 +779,231 @@ image.save("test.png")
 </div>
 </div>
 </div>
-<div id="outline-container-org82f9933" class="outline-3">
-<h3 id="org82f9933">Gemini-Cli</h3>
-<div class="outline-text-3" id="text-org82f9933">
+<div id="outline-container-orgc736010" class="outline-3">
+<h3 id="orgc736010">Gemini-Cli</h3>
+<div class="outline-text-3" id="text-orgc736010">
 <ul class="org-ul">
+<li><code>GEMINI_SANDBOX=podman make clean build-all</code> to build container and app</li>
+<li>custom slash commands in toml files under the command dir</li>
+<li>extension for mcp, commands and context
+<ul class="org-ul">
+<li>gemini swe review prompt ex. <code>gemini extensions install --pre-release https://github.com/gemini-cli-extensions/code-review</code></li>
+</ul></li>
 <li>set <code>GEMINI_API_KEY</code> environment variable or place it in <code>$HOME/.env</code>
 <ul class="org-ul">
 <li>tokens can be cached with the api key</li>
 </ul></li>
-<li>slash commands to save chat or change options
+<li>slash commands to save chat or change options</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-json" id="org478aebe">{
+  "tools": {
+    "autoAccept": false,
+    "sandbox": "podman"
+  },
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    }
+  },
+  "ui": {
+    "theme": "ANSI"
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  }
+}
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org018a314" class="outline-3">
+<h3 id="org018a314">Codex-Cli</h3>
+<div class="outline-text-3" id="text-org018a314">
 <ul class="org-ul">
-<li>local model support PR <a href="https://github.com/google-gemini/gemini-cli/pull/1939">https://github.com/google-gemini/gemini-cli/pull/1939</a></li>
+<li><code>codex exec "Extract details of the project" --output-schema ~/schema.json</code> to use schema for output</li>
+<li><code>codex exec --json "Some Such prompt"</code> contains a threadId for <code>codex exec resume threadId "Some such prompt"</code></li>
+<li>install will <code>npx -y @openai/codex</code> or get binary</li>
+<li>set <code>CODEX_HOME</code> env var for changing config location
+<ul class="org-ul">
+<li><code>/prompts</code> are markdown stored under the prompts dir of codex home</li>
+</ul></li>
+<li><code>npx @modelcontextprotocol/inspector codex mcp-server</code> to inspect codex as an mcp server
+<ul class="org-ul">
+<li>the mcp reply for resume needs a <code>session_id</code> given in the first message. the python api messes this up&#x2026; but can manually be done in the inspector
+<ul class="org-ul">
+<li>add session<sub>id</sub> into out forks prompt md or maybe reading env var ACP<sub>FS</sub><sub>SESSION</sub><sub>ID</sub> for the acp agent?</li>
+</ul></li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-json" id="orgdfc7214">{
-  "theme": "ANSI",
-  "autoAccept": false,
-  "usageStatisticsEnabled": false,
-  "sandbox": "podman",
-  "selectedAuthType": "gemini-api-key"
-}
+<pre class="src src-toml" id="orgc6ce45b">approval_policy = "untrusted" # "never"
+sandbox_mode = "workspace-write" # "read-only" # "danger-full-access"
+file_opener = "none"
 
+model = "gemini-2.5-flash"
+model_provider = "gemini" # gemini does not work as profile only
+model_reasoning_effort = "high"
+model_reasoning_summary = "detailed" #"none"
+model_supports_reasoning_summaries = true # force on for models we know support
+show_raw_agent_reasoning = true
+#hide_agent_reasoning = true
+#project_doc_max_bytes # defaults to 32KiB of AGENTS.md
+#project_doc_fallback_filenames = ["CLAUDE.md", ".exampleagentrules.md"]
+#experimental_use_rmcp_client = true # http mcp
+
+[history]
+persistence = "none"  # "save-all"
+
+[model_providers.openai]
+name = "openai"
+base_url = "https://localhost:8080/v1" # OPENAI_BASE_URL env var
+
+[model_providers.gemini]
+name = "gemini"
+model = "gemini-2.5-flash"
+env_key = "GEMINI_API_KEY" # OPENAI_API_KEY
+base_url = "https://generativelanguage.googleapis.com/v1beta/openai"
+wire_api = "chat" #"responses"
+
+[profiles.gptoss]
+model = "gpt-oss"
+model_provider = "openai"
+approval_policy = "untrusted" #"never"
+
+[profiles.qwen]
+model = "qwen3"
+[profiles.gemma]
+model = "gemma"
+
+[mcp_servers.lldb]
+url = "http://127.0.0.1:39496"
+enabled = false
+#command = "lldb"
+#args = ["-O", "'protocol-server start MCP listen://localhost:39496'"]
+
+[mcp_servers.chromedevtools]
+enabled = false
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest"] #, "--browseUrl", "http://127.0.0.1:39495"]
+
+[mcp_servers.acp_fs]
+enabled = false
+command = "codex-acp"
+args = ["--acp-fs-mcp"]
+env = {"ACP_FS_SESSION_ID" = "somesuch seessionid", "ACP_FS_BRIDGE_ADDR" = "somesuchaddress"}
+
+[mcp_servers.codex]
+enabled = true
+command = "codex"
+args = ["mcp-server", "-c", "sandbox_permissions=['read-only']", "-c", "approval_policy='untrusted'"] # stdio subagent needs permissions and approval set with prompt and api key
+env = {"GEMINI_API_KEY" = "somesuchkey"}
+#tool_timeout_sec = 600000
+#startup_timeout_ms = 600000 # 10 mins
+
+[tools]
+web_search = true
+
+#[tui]
+#notifications = true
+#[model_providers.ollama]
+#name = "ollama"
+#base_url = "http://localhost:8080/v1"
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga94b18b" class="outline-3">
+<h3 id="orga94b18b">goose</h3>
+<div class="outline-text-3" id="text-orga94b18b">
+<ul class="org-ul">
+<li>need to fork like codex-acp to disable the system prompt&#x2026;</li>
+<li><code>~/.config/goose/.goosehints</code> the .goosehints file gets sent with every request to Goose
+<ul class="org-ul">
+<li><code>export CONTEXT_FILE_NAMES='[".cursorrules", "AGENTS.md"]'</code> for files read by default</li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org623bb7d">GOOSE_CLI_MIN_PRIORITY: 0.0
+GOOSE_MODE: smart_approve
+GOOSE_ENABLE_ROUTER: 'false'
+GOOSE_MODEL: gemini-2.5-flash
+GOOSE_PROVIDER: google
+GOOSE_TOOLSHIM: true
+ALPHA_FEATURES: true
+extensions:
+  autovisualiser:
+    available_tools: []
+    bundled: true
+    description: Data visualisation and UI generation tools
+    display_name: Auto Visualiser
+    enabled: false
+    name: autovisualiser
+    timeout: 300
+    type: builtin
+  computercontroller:
+    available_tools: []
+    bundled: true
+    description: controls for webscraping, file caching, and automations
+    display_name: Computer Controller
+    enabled: false
+    name: computercontroller
+    timeout: 300
+    type: builtin
+  developer:
+    available_tools: []
+    bundled: true
+    description: Code editing and shell access
+    display_name: Developer Tools
+    enabled: true
+    name: developer
+    timeout: 300
+    type: builtin
+  memory:
+    available_tools: []
+    bundled: true
+    description: Tools to save and retrieve durable memories
+    display_name: Memory
+    enabled: false
+    name: memory
+    timeout: 300
+    type: builtin
+  container-use:
+    name: container-use
+    type: stdio
+    enabled: false
+    cmd: cu
+    args:
+    - stdio
+    envs: {}
+    timeout: 300
+  chrome-devtools:
+    name: chrome-devtools
+    type: stdio
+    enabled: false
+    cmd: npx
+    args:
+    - y
+    - chrome-devtools-mcp@latest
+    envs: {}
+    timeout: 300
+# TODO add lldb (proxy?)
+subagent:
+  args:
+  - mcp-server # app-server?
+  bundled: true
+  cmd: codex
+  description: OpenAI Codex CLI Sub-agent
+  enabled: true
+  env_keys:
+  - GEMINI_API_KEY
+  - CODEX_HOME
+  #- OPENAI_API_KEY
+  envs: {}
+  name: subagent
+  timeout: 300
+  type: stdio
 </pre>
 </div>
 </div>

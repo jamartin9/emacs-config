@@ -9,24 +9,27 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgaf276ea">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org34f3dbe">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org1537309" class="outline-2">
-<h2 id="org1537309">browsers</h2>
-<div class="outline-text-2" id="text-org1537309">
+<div id="outline-container-orga86c99e" class="outline-2">
+<h2 id="orga86c99e">browsers</h2>
+<div class="outline-text-2" id="text-orga86c99e">
 <p>
 This your brain on the internet
 </p>
 </div>
-<div id="outline-container-org4d293b7" class="outline-3">
-<h3 id="org4d293b7">notes</h3>
-<div class="outline-text-3" id="text-org4d293b7">
+<div id="outline-container-org274c39b" class="outline-3">
+<h3 id="org274c39b">notes</h3>
+<div class="outline-text-3" id="text-org274c39b">
 <ul class="org-ul">
-<li>ctrl-shift-R for force cache reload</li>
+<li>ctrl-shift-R for force cache reload
+<ul class="org-ul">
+<li>does not always work for wasm files; use network devtools 'Disable Cache'</li>
+</ul></li>
 <li>ctrl-w for close tab</li>
 <li>ctrl-t for new tab</li>
 <li>ctrl-tab for switch tab</li>
@@ -41,9 +44,9 @@ This your brain on the internet
 <li>webgpu has issues on wayland with gl backend</li>
 </ul>
 </div>
-<div id="outline-container-org28b4aff" class="outline-4">
-<h4 id="org28b4aff">pwa</h4>
-<div class="outline-text-4" id="text-org28b4aff">
+<div id="outline-container-org5f0a641" class="outline-4">
+<h4 id="org5f0a641">pwa</h4>
+<div class="outline-text-4" id="text-org5f0a641">
 <ul class="org-ul">
 <li>managed under <code>brave://apps/</code> or <code>chrome://apps</code></li>
 <li>progressive web apps have a manifest and service worker for offline installable apps
@@ -57,7 +60,7 @@ This your brain on the internet
 <li>Isolated Web Apps for signed updates</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org4ebb024">{
+<pre class="src src-javascript" id="org0df0965">{
     "name": "Progressive Web App",
     "short_name": "PWA",
     "icons": [{
@@ -74,7 +77,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-html" id="org7ef23ba">&lt;script&gt;
+<pre class="src src-html" id="org1a6b753">&lt;script&gt;
     // register ServiceWorker
     window.onload = () =&gt; {
         'use strict';
@@ -87,7 +90,7 @@ This your brain on the internet
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="orgc9057cd">var cacheName = 'pwa';
+<pre class="src src-javascript" id="org207ead7">var cacheName = 'pwa';
 var filesToCache = [
   './',
   './index.html',
@@ -115,13 +118,14 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org75178b0" class="outline-3">
-<h3 id="org75178b0"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
+<div id="outline-container-orgf987c2b" class="outline-3">
+<h3 id="orgf987c2b"><a href="firefox.html#ID-aae21430-637a-4b92-8f8a-d35e9991e396">firefox</a></h3>
 </div>
-<div id="outline-container-org5e116f7" class="outline-3">
-<h3 id="org5e116f7">chrome</h3>
-<div class="outline-text-3" id="text-org5e116f7">
+<div id="outline-container-org8fe15d5" class="outline-3">
+<h3 id="org8fe15d5">chrome</h3>
+<div class="outline-text-3" id="text-org8fe15d5">
 <ul class="org-ul">
+<li><code>chrome://on-device-internals/</code> for model directory/status for <code>window.Summarizer.availability()</code></li>
 <li>Type <code>thisisunsafe</code> anywhere on the SSL ERROR window and the browser will let you visit the page.</li>
 <li>Gemini nano AI by default in 128+
 <ul class="org-ul">
@@ -196,25 +200,25 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org027b196" class="outline-3">
-<h3 id="org027b196">safari</h3>
-<div class="outline-text-3" id="text-org027b196">
+<div id="outline-container-orgbbd28aa" class="outline-3">
+<h3 id="orgbbd28aa">safari</h3>
+<div class="outline-text-3" id="text-orgbbd28aa">
 <ul class="org-ul">
 <li>webkit based</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orga40edf8" class="outline-2">
-<h2 id="orga40edf8">search engines</h2>
-<div class="outline-text-2" id="text-orga40edf8">
+<div id="outline-container-orgfcb0c5c" class="outline-2">
+<h2 id="orgfcb0c5c">search engines</h2>
+<div class="outline-text-2" id="text-orgfcb0c5c">
 </div>
-<div id="outline-container-org89321b1" class="outline-3">
-<h3 id="org89321b1"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
+<div id="outline-container-orgd50adab" class="outline-3">
+<h3 id="orgd50adab"><a href="searx.html#ID-b4a6be9e-1cb6-416a-b6e0-392ee9a28734">searx</a></h3>
 </div>
-<div id="outline-container-orga30a40f" class="outline-3">
-<h3 id="orga30a40f">ddg</h3>
-<div class="outline-text-3" id="text-orga30a40f">
+<div id="outline-container-org02f3559" class="outline-3">
+<h3 id="org02f3559">ddg</h3>
+<div class="outline-text-3" id="text-org02f3559">
 <ul class="org-ul">
 <li>fingerprinted users multiple times</li>
 <li>no js version at lite.duckduckgo.com</li>
@@ -230,9 +234,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org8f0c406" class="outline-3">
-<h3 id="org8f0c406">brave</h3>
-<div class="outline-text-3" id="text-org8f0c406">
+<div id="outline-container-orgac0110c" class="outline-3">
+<h3 id="orgac0110c">brave</h3>
+<div class="outline-text-3" id="text-orgac0110c">
 <ul class="org-ul">
 <li>tonemapping support for hdr pngs</li>
 <li>search.brave.com</li>
@@ -243,25 +247,27 @@ self.addEventListener('fetch', function(e) {
 </div>
 </div>
 </div>
-<div id="outline-container-org2c0e161" class="outline-2">
-<h2 id="org2c0e161">sites</h2>
-<div class="outline-text-2" id="text-org2c0e161">
+<div id="outline-container-orgb38a7fd" class="outline-2">
+<h2 id="orgb38a7fd">sites</h2>
+<div class="outline-text-2" id="text-orgb38a7fd">
 </div>
-<div id="outline-container-org19ce4d9" class="outline-3">
-<h3 id="org19ce4d9">info</h3>
-<div class="outline-text-3" id="text-org19ce4d9">
+<div id="outline-container-orgd4e3450" class="outline-3">
+<h3 id="orgd4e3450">info</h3>
+<div class="outline-text-3" id="text-orgd4e3450">
 <ul class="org-ul">
 <li><a href="https://aosabook.org/en/">https://aosabook.org/en/</a></li>
-<li><a href="https://www.youtube.com/@ants_are_everywhere/videos">https://www.youtube.com/@ants_are_everywhere/videos</a></li>
-<li><a href="https://blog.codingconfessions.com/p/linux-context-switching-internals">https://blog.codingconfessions.com/p/linux-context-switching-internals</a></li>
+<li><a href="https://en.algorithmica.org/hpc/">https://en.algorithmica.org/hpc/</a>
+<ul class="org-ul">
 <li><a href="https://curiouscoding.nl/posts/static-search-tree/">https://curiouscoding.nl/posts/static-search-tree/</a></li>
+</ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org27dd423" class="outline-3">
-<h3 id="org27dd423">tools</h3>
-<div class="outline-text-3" id="text-org27dd423">
+<div id="outline-container-orgbb1635e" class="outline-3">
+<h3 id="orgbb1635e">tools</h3>
+<div class="outline-text-3" id="text-orgbb1635e">
 <ul class="org-ul">
+<li>profile webkit(mesa too) with sysprof</li>
 <li>web archive <a href="https://replayweb.page/">https://replayweb.page/</a></li>
 <li><a href="https://wasm-test.libreoffice.org/">libreoffice wasm</a>
 <ul class="org-ul">
@@ -277,7 +283,6 @@ self.addEventListener('fetch', function(e) {
 </ul></li>
 <li><a href="https://directfile.irs.gov/">https://directfile.irs.gov/</a></li>
 <li><a href="https://uica.uops.info/">https://uica.uops.info/</a></li>
-<li><a href="https://qrcode.antfu.me/">https://qrcode.antfu.me/</a></li>
 <li><a href="https://cowasm.sh/">https://cowasm.sh/</a> (python wasm)</li>
 <li><a href="https://shell.duckdb.org">https://shell.duckdb.org</a>
 <ul class="org-ul">
@@ -291,13 +296,19 @@ self.addEventListener('fetch', function(e) {
 </ul></li>
 <li><a href="https://parquet-viewer.xiangpeng.systems/">https://parquet-viewer.xiangpeng.systems/</a> is hosted XiangpengHao/parquet-viewer</li>
 <li><a href="https://coalton.app/">https://coalton.app/</a> for browser coalton</li>
+<li><a href="https://deepwiki.com/">https://deepwiki.com/</a> for repo summary
+<ul class="org-ul">
+<li>add user/repo on url path to generate</li>
+<li><a href="https://sidekickdev.com/">https://sidekickdev.com/</a> generates agent markdown from deepwiki repos</li>
+</ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0cabede" class="outline-3">
-<h3 id="org0cabede">data</h3>
-<div class="outline-text-3" id="text-org0cabede">
+<div id="outline-container-org749a39d" class="outline-3">
+<h3 id="org749a39d">data</h3>
+<div class="outline-text-3" id="text-org749a39d">
 <ul class="org-ul">
+<li><a href="https://www.alphaxiv.org/briefs/">https://www.alphaxiv.org/briefs/</a></li>
 <li><a href="https://ossinsight.io/#trending-repos">https://ossinsight.io/#trending-repos</a></li>
 <li><a href="https://sourcegraph.com/search">https://sourcegraph.com/search</a></li>
 <li><a href="https://search.marginalia.nu/">https://search.marginalia.nu/</a></li>
@@ -314,9 +325,9 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-org5a159d6" class="outline-3">
-<h3 id="org5a159d6">alternative frontends</h3>
-<div class="outline-text-3" id="text-org5a159d6">
+<div id="outline-container-org1fedb2b" class="outline-3">
+<h3 id="org1fedb2b">alternative frontends</h3>
+<div class="outline-text-3" id="text-org1fedb2b">
 <ul class="org-ul">
 <li>youtube
 <ul class="org-ul">
@@ -328,25 +339,34 @@ self.addEventListener('fetch', function(e) {
 </ul>
 </div>
 </div>
-<div id="outline-container-orge3e7440" class="outline-3">
-<h3 id="orge3e7440">media</h3>
-<div class="outline-text-3" id="text-orge3e7440">
+<div id="outline-container-org5e4420c" class="outline-3">
+<h3 id="org5e4420c">media</h3>
+<div class="outline-text-3" id="text-org5e4420c">
 <ul class="org-ul">
-<li><a href="https://ustv247.tv/">https://ustv247.tv/</a></li>
 <li><a href="https://scnlog.me/">https://scnlog.me/</a></li>
-<li><a href="https://nr4.d-snf.net/">https://nr4.d-snf.net/</a></li>
-<li><a href="https://z-lib.org/">https://z-lib.org/</a></li>
-<li><a href="https://libgen.is/">https://libgen.is/</a></li>
-<li><a href="https://hianime.to">https://hianime.to</a></li>
-<li><a href="https://zoroxtv.to/">https://zoroxtv.to/</a></li>
-<li><a href="https://upmovies.net/">https://upmovies.net/</a></li>
+<li><a href="https://z-library.cc/">https://z-library.cc/</a></li>
+<li><a href="https://hianime.to">https://hianime.to</a>
+<ul class="org-ul">
+<li>shutdown 3/13/2026</li>
+</ul></li>
+<li><a href="https://animekai.to">https://animekai.to</a>
+<ul class="org-ul">
+<li><a href="https://animekai.cc">https://animekai.cc</a></li>
+<li><a href="https://animekai.ac">https://animekai.ac</a></li>
+<li><a href="https://anikai.to">https://anikai.to</a></li>
+<li>hardsub sites
+<ul class="org-ul">
+<li><a href="https://gogoanime.by/">https://gogoanime.by/</a></li>
+<li><a href="https://animepahe.si/">https://animepahe.si/</a></li>
+</ul></li>
+</ul></li>
 <li><a href="https://cs.rin.ru">https://cs.rin.ru</a></li>
 <li><a href="https://cdm-project.com/Download-Tools/StreamFab">https://cdm-project.com/Download-Tools/StreamFab</a></li>
 <li>sanet.st</li>
 <li><a href="https://annas-archive.org/">https://annas-archive.org/</a></li>
 <li><a href="https://search.rlsbb.cc/">https://search.rlsbb.cc/</a></li>
 <li><a href="https://nibl.co.uk/bots">https://nibl.co.uk/bots</a> (Rizon)</li>
-<li><a href="https://animk.info/xdcc">https://animk.info/xdcc</a> (Xertion)</li>
+<li><a href="https://animk.info/xdcc/">https://animk.info/xdcc/</a> (Xertion)</li>
 <li><a href="https://subsplease.org/">https://subsplease.org/</a> (Rizon)</li>
 <li>audioz.download</li>
 <li><a href="https://www.binsearch.info/">https://www.binsearch.info/</a></li>
@@ -354,7 +374,10 @@ self.addEventListener('fetch', function(e) {
 <li><a href="https://mangadex.org/">https://mangadex.org/</a></li>
 <li>ubu.com/film/index.html</li>
 <li><a href="https://rarefilmm.com/">https://rarefilmm.com/</a></li>
-<li><a href="https://feed.animetosho.org/atom">https://feed.animetosho.org/atom</a></li>
+<li><a href="https://feed.animetosho.org/atom">https://feed.animetosho.org/atom</a>
+<ul class="org-ul">
+<li>terminated in May 2026</li>
+</ul></li>
 </ul>
 </div>
 </div>

@@ -3,15 +3,17 @@ onmessage = (e) => {
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '<b>','</b>', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
         importScripts('sqlite3.js'); // mjs module?
-        globalThis.sqlite3InitModule().then((sqlite3)=> {
+        globalThis.sqlite3InitModule().then((sqlite3)=> {// shouldnt be possible to get here on the second run so no need to check for poolUtil and unlock
             sqlite3.installOpfsSAHPoolVfs().then((poolUtil)=> { // use opfs for storage
+                globalThis.poolUtil = poolUtil; // MAYBE Add weblocks and broadcast api for multi tab with shared workers instead of just vfs pausing
                 if (poolUtil.getFileCount() == 0) {
                     console.log("fetching sqlite opfs files");
                     fetch('sqlar.sqlite').then(response => response.arrayBuffer()).then(arrayBuffer => {
                         poolUtil.importDb('/sqlar.sqlite', arrayBuffer); // requires absolute path (lack of transparent naming obscures real name)
                         const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
-                        globalThis.db = db;
                         const res = db.exec([sql], opt);
+                        db.close(); // close and release vfs
+                        globalThis.poolUtil.pauseVfs();
                         postMessage(res);
                     });
                 } else {
@@ -26,8 +28,9 @@ onmessage = (e) => {
                         console.log("Header size is: " + header_size + " DB size is: " + size);
                         if (size == header_size) {
                             console.log("Database is up to date");
-                            globalThis.db = db;
                             const res = db.exec([sql], opt);
+                            db.close(); // close and release vfs
+                            globalThis.poolUtil.pauseVfs();
                             postMessage(res);
                         } else {
                             console.log("Updating database with fetch");
@@ -36,8 +39,9 @@ onmessage = (e) => {
                                 poolUtil.wipeFiles().then(_ => {
                                     poolUtil.importDb('/sqlar.sqlite', arrayBuffer);
                                     const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
-                                    globalThis.db = db;
                                     const res = db.exec([sql], opt);
+                                    db.close(); // close and release vfs
+                                    globalThis.poolUtil.pauseVfs();
                                     postMessage(res);
                                 });
                             });
@@ -45,8 +49,9 @@ onmessage = (e) => {
                     }).catch((error) => {
                         console.log("Failed to fetch HEAD. Using Existing DB.");
                         const db = new poolUtil.OpfsSAHPoolDb('/sqlar.sqlite');
-                        globalThis.db = db;
                         const res = db.exec([sql], opt);
+                        db.close(); // close and release vfs
+                        globalThis.poolUtil.pauseVfs();
                         postMessage(res);
                     });
                 }
@@ -61,15 +66,28 @@ onmessage = (e) => {
                     const p = sqlite3.wasm.allocFromTypedArray(bytes);
                     const rc = sqlite3.capi.sqlite3_deserialize(db.pointer, 'main', p, bytes.length, bytes.length,sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
                     //db.checkRc(rc);
-
-                    globalThis.db = db;
+                    globalThis.db = db; // opfs db is no longer shared via globalThis only the global temp db
                     const res = globalThis.db.exec([sql], opt);
-                    postMessage(res);
+                    postMessage(res);// leave db connection open as it is single tab w/o opfs
                 });
             });
         });
     }else {
-        const res = globalThis.db.exec([sql], opt);
-        postMessage(res);
+        if (typeof globalThis.poolUtil === 'undefined') {
+            console.log("Querying global temp db");
+            const res = globalThis.db.exec([sql], opt);// fallback to global temp db from first run; gc will close
+            postMessage(res);
+        } else {
+            globalThis.poolUtil.unpauseVfs().then(() => {// get handle back
+                console.log("Querying existing OPFS database");
+                const db = new globalThis.poolUtil.OpfsSAHPoolDb('/sqlar.sqlite'); // just load db as first run handles update/cache
+                const res = db.exec([sql], opt);
+                db.close(); // close to release vfs
+                globalThis.poolUtil.pauseVfs();
+                postMessage(res);
+            }).catch(err => {
+                console.log("Failed to unpause OPFS VFS")
+            });
+        }
     }
 };

@@ -9,26 +9,26 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf5b1914">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org1e5dfe9">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orga888ce7" class="outline-2">
-<h2 id="orga888ce7">prometheus</h2>
-<div class="outline-text-2" id="text-orga888ce7">
+<div id="outline-container-org43607c8" class="outline-2">
+<h2 id="org43607c8">prometheus</h2>
+<div class="outline-text-2" id="text-org43607c8">
 </div>
-<div id="outline-container-orgd30402d" class="outline-3">
-<h3 id="orgd30402d">prometheus/grafana/node-exporter</h3>
-<div class="outline-text-3" id="text-orgd30402d">
+<div id="outline-container-org48c87c1" class="outline-3">
+<h3 id="org48c87c1">prometheus/grafana/node-exporter</h3>
+<div class="outline-text-3" id="text-org48c87c1">
 <ul class="org-ul">
 <li>grafana standalone oss, port 3000, node<sub>exporter</sub> dashboard: <a href="https://grafana.com/grafana/dashboards/1860">https://grafana.com/grafana/dashboards/1860</a> , import datasource first</li>
 <li>node-exporter from prometheus or cloudflare for ebpf, port 9100</li>
 <li>prometheus &#x2013;config.file=thing.yaml, port 9090,</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orge61a826">global:
+<pre class="src src-yaml" id="org8c30fd8">global:
   scrape_interval: 15s
 scrape_configs:
 - job_name: node

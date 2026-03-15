@@ -9,21 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge1976b9">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc8b0e8b">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orga162d26" class="outline-2">
-<h2 id="orga162d26">Guix</h2>
-<div class="outline-text-2" id="text-orga162d26">
+<div id="outline-container-org70e4bc6" class="outline-2">
+<h2 id="org70e4bc6">Guix</h2>
+<div class="outline-text-2" id="text-org70e4bc6">
 </div>
-<div id="outline-container-orge9718ef" class="outline-3">
-<h3 id="orge9718ef">Link manifest</h3>
-<div class="outline-text-3" id="text-orge9718ef">
+<div id="outline-container-org522f6f4" class="outline-3">
+<h3 id="org522f6f4">Link manifest</h3>
+<div class="outline-text-3" id="text-org522f6f4">
 <div class="org-src-container">
-<pre class="src src-elisp" id="org906a6d5">(ignore-errors
+<pre class="src src-elisp" id="org448771b">(ignore-errors
 (let* ((manifest-dir (file-name-as-directory (concat (file-name-as-directory (xdg-config-home)) "guix-manifests")))
         (manifest-dir-file (concat manifest-dir "user.scm")))
     (if (not (file-exists-p manifest-dir))
@@ -34,11 +34,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org3398b2b" class="outline-3">
-<h3 id="org3398b2b">User manifest</h3>
-<div class="outline-text-3" id="text-org3398b2b">
+<div id="outline-container-org2d197b7" class="outline-3">
+<h3 id="org2d197b7">User manifest</h3>
+<div class="outline-text-3" id="text-org2d197b7">
 <div class="org-src-container">
-<pre class="src src-scheme" id="org5867809">;; Manifest for development env
+<pre class="src src-lisp" id="org49762c1">;; Manifest for development env
 (specifications-&gt;manifest
  '(
    ;; basic
@@ -175,11 +175,12 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org3effa96" class="outline-3">
-<h3 id="org3effa96">guix notes</h3>
-<div class="outline-text-3" id="text-org3effa96">
+<div id="outline-container-orgdb64b15" class="outline-3">
+<h3 id="orgdb64b15">guix notes</h3>
+<div class="outline-text-3" id="text-orgdb64b15">
 <ul class="org-ul">
-<li><a href="https://git.genenetwork.org/guix-north-america/about/">https://git.genenetwork.org/guix-north-america/about/</a> for NA substitute server ?</li>
+<li>add <code>(add-after 'install 'fail (lambda* (#:key outputs #:allow-other-keys) (exit 1)))</code> in the <code>modify-phases</code> with -K to keep a copy of an otherwise working build directory</li>
+<li><a href="https://git.genenetwork.org/guix-north-america/about/">https://git.genenetwork.org/guix-north-america/about/</a> for NA substitute server</li>
 <li>cuirass ci saves gc roots in <code>/var/guix/gcroots/profiles/per-user/cuirass/cuirass</code> for default of 30 days
 <ul class="org-ul">
 <li>can unlink and gc for space</li>
@@ -255,7 +256,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgff99a1e">network={
+<pre class="src src-conf" id="org53fc4a6">network={
   ssid="ssid-name"
   key_mgmt=WPA-PSK
   psk="unencrypted passphrase"
@@ -279,7 +280,7 @@
 <li>clone config, copy channels to <code>~/.config/guix/</code>, <code>guix pull --no-check-certificate</code> then <code>guix system -L CONFIG_DIR init config.scm /mnt</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org5026c31">guix shell --container --network --emulate-fhs \
+<pre class="src src-sh" id="orgf58b658">guix shell --container --network --emulate-fhs \
     --development ungoogled-chromium gcc:lib \
     --preserve='^DISPLAY$' \
     --preserve='^XAUTHORITY$' --expose=$XAUTHORITY \
@@ -304,7 +305,7 @@ guix shell --container --network --emulate-fhs \
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh" id="org6d995c4">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
+<pre class="src src-sh" id="org65ac61e">GUIX_DAEMON_SOCKET=$XDG_DATA_HOME/guix/var/guix/daemon-socket/socket
 GUIX_DATABASE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix/db
 GUIX_LOG_DIRECTORY=$XDG_DATA_HOME/guix/var/log/guix
 GUIX_STATE_DIRECTORY=$XDG_DATA_HOME/guix/var/guix
@@ -315,7 +316,7 @@ NIX_STORE=$XDG_DATA_HOME/guix/gnu/store
 </div>
 
 <div class="org-src-container">
-<pre class="src src-guile" id="org705f1e3">
+<pre class="src src-guile" id="orgac23d3e">
 (define guix-service ; add type for portable guix package
   (shepherd-service
    (provision '(guix))

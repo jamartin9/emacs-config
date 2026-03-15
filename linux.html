@@ -9,25 +9,25 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc462762">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org0a8875d">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org23db548" class="outline-2">
-<h2 id="org23db548">Linux</h2>
-<div class="outline-text-2" id="text-org23db548">
+<div id="outline-container-org4034abd" class="outline-2">
+<h2 id="org4034abd">Linux</h2>
+<div class="outline-text-2" id="text-org4034abd">
 <p>
 Finally some hardware support!
 </p>
 </div>
-<div id="outline-container-orgc3c1653" class="outline-3">
-<h3 id="orgc3c1653"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
+<div id="outline-container-orgbe0308f" class="outline-3">
+<h3 id="orgbe0308f"><a href="linux_distros.html#ID-1545c3b7-0dff-4196-b73b-7fce0518b6af">linux-distros</a></h3>
 </div>
-<div id="outline-container-org1e340be" class="outline-3">
-<h3 id="org1e340be">Kernel</h3>
-<div class="outline-text-3" id="text-org1e340be">
+<div id="outline-container-org2d8313a" class="outline-3">
+<h3 id="org2d8313a">Kernel</h3>
+<div class="outline-text-3" id="text-org2d8313a">
 <ul class="org-ul">
 <li>added ebpf netkit in 6.8 (faster than virtual eth)</li>
 <li>removed sysctl system call in 5.5</li>
@@ -48,15 +48,16 @@ Finally some hardware support!
 </ul></li>
 <li><code>fs.aio-max-nr=67108864</code> increase max async requests</li>
 </ul></li>
+<li>add vDSO functions/variables with custom kernel to avoid syscall overhead</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcd8b33f" class="outline-3">
-<h3 id="orgcd8b33f">pam</h3>
+<div id="outline-container-orgc5d4a24" class="outline-3">
+<h3 id="orgc5d4a24">pam</h3>
 </div>
-<div id="outline-container-org0880151" class="outline-3">
-<h3 id="org0880151">misc</h3>
-<div class="outline-text-3" id="text-org0880151">
+<div id="outline-container-org73d9463" class="outline-3">
+<h3 id="org73d9463">misc</h3>
+<div class="outline-text-3" id="text-org73d9463">
 <ul class="org-ul">
 <li><code>faillock --user $USER --reset</code> for attempt reset</li>
 <li><code>LD_LIBRARY_PATH</code> and <code>LD_PRELOAD</code> environment variables override library location and load order respectively.
@@ -86,6 +87,15 @@ Finally some hardware support!
 </ul></li>
 </ul></li>
 <li>get cache line size with <code>getconf LEVEL1_DCACHE_LINESIZE</code> or <code>lscpu</code></li>
+<li><code>sudo setcap CAP_BPF=ep ./bpftop</code></li>
+<li>ioctl is an sync unix style socket that you send commands with args to get responses
+<ul class="org-ul">
+<li>zfs encodes its ioctl params into an nvlist</li>
+</ul></li>
+<li>netlink is an async socket interface that you send and read messages from
+<ul class="org-ul">
+<li>htop uses netlink for process io/cpu/block delay information (alternative is delaytop)</li>
+</ul></li>
 </ul>
 </div>
 </div>

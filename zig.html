@@ -9,21 +9,21 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf1abe23">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgb8c8f09">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orga185906" class="outline-2">
-<h2 id="orga185906">zig</h2>
-<div class="outline-text-2" id="text-orga185906">
+<div id="outline-container-org0f8b2b5" class="outline-2">
+<h2 id="org0f8b2b5">zig</h2>
+<div class="outline-text-2" id="text-org0f8b2b5">
 </div>
-<div id="outline-container-org7ae5e1a" class="outline-3">
-<h3 id="org7ae5e1a">Using linked C libraries</h3>
-<div class="outline-text-3" id="text-org7ae5e1a">
+<div id="outline-container-orgf6ee2ac" class="outline-3">
+<h3 id="orgf6ee2ac">Using linked C libraries</h3>
+<div class="outline-text-3" id="text-orgf6ee2ac">
 <div class="org-src-container">
-<pre class="src src-zig" id="org0e8120f">const std = @import("std");
+<pre class="src src-zig" id="org90adedf">const std = @import("std");
 
 pub fn build(b: *std.build.Builder) !void {
     const target = b.standardTargetOptions(.{});
@@ -49,7 +49,7 @@ pub fn build(b: *std.build.Builder) !void {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-zig" id="org00270a6">const std = @import("std");
+<pre class="src src-zig" id="org8ffccaf">const std = @import("std");
 
 const c = @cImport({
     @cInclude("libguile.h");
@@ -72,7 +72,7 @@ pub fn main() anyerror!void {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-zig" id="org87b64c3">const std = @import("std");
+<pre class="src src-zig" id="orgcd44054">const std = @import("std");
 
 const c = @cImport({
     @cDefine("JULIA_DEFINE_FAST_TLS()", {});
@@ -89,7 +89,7 @@ pub fn main() anyerror!void {
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-zig" id="orgf417724">const std = @import("std");
+<pre class="src src-zig" id="orgef15749">const std = @import("std");
 
 pub fn build(b: *std.build.Builder) void {
     const target = b.standardTargetOptions(.{});

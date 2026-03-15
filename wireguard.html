@@ -9,23 +9,23 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge0d8462">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org01d9dc5">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org68f15f6" class="outline-2">
-<h2 id="org68f15f6">Wireguard</h2>
-<div class="outline-text-2" id="text-org68f15f6">
+<div id="outline-container-orga36e74e" class="outline-2">
+<h2 id="orga36e74e">Wireguard</h2>
+<div class="outline-text-2" id="text-orga36e74e">
 </div>
-<div id="outline-container-org6e7f3d4" class="outline-3">
-<h3 id="org6e7f3d4">wireguard</h3>
-<div class="outline-text-3" id="text-org6e7f3d4">
+<div id="outline-container-org8b9d04b" class="outline-3">
+<h3 id="org8b9d04b">wireguard</h3>
+<div class="outline-text-3" id="text-org8b9d04b">
 </div>
-<div id="outline-container-org6dcc486" class="outline-4">
-<h4 id="org6dcc486">install</h4>
-<div class="outline-text-4" id="text-org6dcc486">
+<div id="outline-container-org85ce035" class="outline-4">
+<h4 id="org85ce035">install</h4>
+<div class="outline-text-4" id="text-org85ce035">
 <ul class="org-ul">
 <li>module added with <a href="linux.html#ID-9e9bcdb8-ac35-4420-a2c0-c32b96cb4803">linux</a> kernel 5.6</li>
 <li>use network manager for user in network group to add vpn w/o root
@@ -97,6 +97,10 @@ Endpoint = 127.0.0.1:42069</li>
 <li>PostUp = wg set %i private-key &lt;(su user -c "export PASSWORD<sub>STORE</sub><sub>DIR</sub>=/path/to/your/store/; pass WireGuard/private-keys/%i")</li>
 </ul></li>
 <li><a href="https://github.com/nitred/nr-wg-mtu-finder">https://github.com/nitred/nr-wg-mtu-finder</a> for best MTU setting</li>
+<li><a href="https://github.com/amnezia-vpn/amnezia-client">https://github.com/amnezia-vpn/amnezia-client</a> for obsfucation
+<ul class="org-ul">
+<li><a href="https://github.com/fevid/wireguard-dpi-circumvention-converter">https://github.com/fevid/wireguard-dpi-circumvention-converter</a> for junk packets</li>
+</ul></li>
 </ul>
 </div>
 </div>

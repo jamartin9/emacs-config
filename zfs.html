@@ -9,26 +9,26 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgdf71bd4">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5c3894b">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orge92fc0b" class="outline-2">
-<h2 id="orge92fc0b">ZFS</h2>
-<div class="outline-text-2" id="text-orge92fc0b">
+<div id="outline-container-orgc7e9c8d" class="outline-2">
+<h2 id="orgc7e9c8d">ZFS</h2>
+<div class="outline-text-2" id="text-orgc7e9c8d">
 </div>
-<div id="outline-container-orgcb533fb" class="outline-3">
-<h3 id="orgcb533fb">openzfs</h3>
-<div class="outline-text-3" id="text-orgcb533fb">
+<div id="outline-container-orgbb0b834" class="outline-3">
+<h3 id="orgbb0b834">openzfs</h3>
+<div class="outline-text-3" id="text-orgbb0b834">
 </div>
-<div id="outline-container-org26bd50f" class="outline-4">
-<h4 id="org26bd50f">install</h4>
-<div class="outline-text-4" id="text-org26bd50f">
+<div id="outline-container-org326a542" class="outline-4">
+<h4 id="org326a542">install</h4>
+<div class="outline-text-4" id="text-org326a542">
 <ul class="org-ul">
 <li>(This may break pool import) If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
-That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0)
+That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0 ?)
 <code>mkfs.vfat -F 16 /dev/disk/by-uuid/XXXXXX</code> and
 <code>grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=DISK1</code>.
 A larger partition can allow proper fat32 fs type, grub installation(<code>--boot-directory</code>) and kernel/initramfs storage.</li>
@@ -44,7 +44,7 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="orgaf2cfee">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="org5ae3259">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
@@ -85,19 +85,20 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org893a00a" class="outline-4">
-<h4 id="org893a00a">usage</h4>
-<div class="outline-text-4" id="text-org893a00a">
+<div id="outline-container-org17ff4f2" class="outline-4">
+<h4 id="org17ff4f2">usage</h4>
+<div class="outline-text-4" id="text-org17ff4f2">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org180f8df" class="outline-4">
-<h4 id="org180f8df">notes</h4>
-<div class="outline-text-4" id="text-org180f8df">
+<div id="outline-container-org5f8b4a5" class="outline-4">
+<h4 id="org5f8b4a5">notes</h4>
+<div class="outline-text-4" id="text-org5f8b4a5">
 <ul class="org-ul">
+<li>2.3+ disable prefetch per dataset</li>
 <li>zfs anyraid for different sized disk pools</li>
 <li><a href="https://github.com/OpenIndiana/time-slider">https://github.com/OpenIndiana/time-slider</a> python time slider tool for backups</li>
 <li>GPTZFSBOOT for bios zfs boot</li>
@@ -111,6 +112,7 @@ password   include      zfs-key</li>
 </ul></li>
 <li>When expanding rebalancing is not done leaving potentially higher resilver times in the future increasing the chance of cascading failure.
 <ul class="org-ul">
+<li>zfs rewrite added for rebalancing datasets</li>
 <li>snapshot, make tmp dataset, send | recv to new dataset to redistribute blocks, destroy old snapshot, rename dataset
 <ul class="org-ul">
 <li>manual de-dupe can be done with <code>cp --reflink</code> as of 2.2.0</li>
@@ -132,7 +134,10 @@ password   include      zfs-key</li>
 <li><code>zfs set canmount=noauto ztank/dataset</code> to disable auto mounting</li>
 <li>relatime for normal timestamps</li>
 <li>SLOG requires devices that will write data on power loss</li>
-<li>SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down</li>
+<li>SPECIAL vdevs store metadata (good for ssd) but need redundancy as they can take the pool down
+<ul class="org-ul">
+<li>can function as ZIL offload like L2 in 2.4.0+</li>
+</ul></li>
 <li>spare drive helps resilver time (zed auto replace)</li>
 <li>Single device zfs can use the COPIES attribute to help redundancy</li>
 <li>/tmp sync off</li>
@@ -173,8 +178,19 @@ password   include      zfs-key</li>
 </ul></li>
 <li><a href="https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=2720&amp;context=honorstheses">https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=2720&amp;context=honorstheses</a> chapter 3 for description of zfs architecture</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orga50ccec" class="outline-4">
+<h4 id="orga50ccec">guix on zfs</h4>
+<div class="outline-text-4" id="text-orga50ccec">
+<ul class="org-ul">
+<li>see <a href="https://codeberg.org/guix/guix/pulls/1917#issuecomment-6976089">https://codeberg.org/guix/guix/pulls/1917#issuecomment-6976089</a> for modern patch based on the script/notes below
+<ul class="org-ul">
+<li><a href="https://codeberg.org/hako/Rosenthal/">https://codeberg.org/hako/Rosenthal/</a> with 2 patches at <code>modules/rosenthal/packages/patches</code></li>
+</ul></li>
+</ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orge6fe580">#!/usr/bin/env -S guix shell --pure bash coreutils zfs --
+<pre class="src src-sh" id="org6b42140">#!/usr/bin/env -S guix shell --pure bash coreutils zfs --
 
 #
 # GuixSD install script synthesized from:

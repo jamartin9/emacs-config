@@ -9,25 +9,25 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgdfde24e">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org2e6dd75">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org118d63d" class="outline-2">
-<h2 id="org118d63d">Searxng config</h2>
-<div class="outline-text-2" id="text-org118d63d">
+<div id="outline-container-orgc5627e9" class="outline-2">
+<h2 id="orgc5627e9">Searxng config</h2>
+<div class="outline-text-2" id="text-orgc5627e9">
 <p>
 The <code>secret_key</code> is dynamically generated.
 The http(s) proxies are changed to socks5 for tor.
 </p>
 </div>
-<div id="outline-container-org9dcbdc7" class="outline-3">
-<h3 id="org9dcbdc7">Link searxng</h3>
-<div class="outline-text-3" id="text-org9dcbdc7">
+<div id="outline-container-org7f9fe31" class="outline-3">
+<h3 id="org7f9fe31">Link searxng</h3>
+<div class="outline-text-3" id="text-org7f9fe31">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgd3e16aa">(ignore-errors
+<pre class="src src-emacs-lisp" id="orgd930216">(ignore-errors
   (let* ((searx-confdir (concat (file-name-as-directory (xdg-config-home)) "searxng"))
         (searx-conf (concat (file-name-as-directory searx-confdir) "searxng.yml")))
     (if (not (file-exists-p searx-confdir))
@@ -39,24 +39,24 @@ The http(s) proxies are changed to socks5 for tor.
 </div>
 </div>
 </div>
-<div id="outline-container-org4c74bdb" class="outline-3">
-<h3 id="org4c74bdb">Tor Proxy</h3>
+<div id="outline-container-org103af4f" class="outline-3">
+<h3 id="org103af4f">Tor Proxy</h3>
 </div>
-<div id="outline-container-org7772ded" class="outline-3">
-<h3 id="org7772ded">Secret Key</h3>
-<div class="outline-text-3" id="text-org7772ded">
+<div id="outline-container-orgffe5556" class="outline-3">
+<h3 id="orgffe5556">Secret Key</h3>
+<div class="outline-text-3" id="text-orgffe5556">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgb28f958">(random t) ; seed
+<pre class="src src-emacs-lisp" id="orgba2f6b4">(random t) ; seed
 (number-to-string (random 999999999999999999999))
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd2705a1" class="outline-3">
-<h3 id="orgd2705a1">searxng.yml</h3>
-<div class="outline-text-3" id="text-orgd2705a1">
+<div id="outline-container-org217ea39" class="outline-3">
+<h3 id="org217ea39">searxng.yml</h3>
+<div class="outline-text-3" id="text-org217ea39">
 <div class="org-src-container">
-<pre class="src src-yaml" id="orgc4db98b">general:
+<pre class="src src-yaml" id="org094ca06">general:
     debug : False # Debug mode, only for development
     instance_name : "jam-searx" # displayed name
     contact_url: False # mailto:contact@example.com
@@ -80,7 +80,7 @@ search:
 server:
     port : 8888
     bind_address : "0.0.0.0" # address to listen on
-    secret_key : "905347308337764226985" # change this!
+    secret_key : "37341127791642371756" # change this!
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     image_proxy : False # Proxying image results through searx
     http_protocol_version : "1.0"  # 1.0 and 1.1 are supported
