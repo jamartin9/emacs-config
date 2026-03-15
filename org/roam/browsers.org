@@ -11,6 +11,7 @@
 This your brain on the internet
 ** notes
 - ctrl-shift-R for force cache reload
+  - does not always work for wasm files; use network devtools 'Disable Cache'
 - ctrl-w for close tab
 - ctrl-t for new tab
 - ctrl-tab for switch tab
@@ -205,6 +206,7 @@ self.addEventListener('fetch', function(e) {
 - https://scnlog.me/
 - https://z-library.cc/
 - https://hianime.to
+  - shutdown 3/13/2026
 - https://animekai.to
   - https://animekai.cc
   - https://animekai.ac

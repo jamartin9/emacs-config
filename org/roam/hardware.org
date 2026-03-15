@@ -21,6 +21,11 @@ Mechanical Sympathy Symphony
   - GPU ram
 ** CPU
  - https://travisdowns.github.io/blog/2019/06/11/speed-limits.html
+*** Intel
+- haswell added hardware lock elision (HLE) with intel TSX
+  - disabled in microcode due to security issues with instructions added later for mitigations
+  - QEMU has options for passthrough ~tsx-ctrl~
+  - RSPCS3 used it for large framerate improvements
 ** Backdoors
   - [[https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf][ubiquity devices]](unifi)
     - any calvium processor

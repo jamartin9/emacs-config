@@ -11,13 +11,13 @@ DRY-RUN: do not run the tangled argument"
           ("all" (jam/parse-args (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                               "\.org$" nil
                                                               #'(lambda (local-dir)
-                                                                  (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))
+                                                                  (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))
                                  t))
           ("install" (jam/parse-args (list "README.org")))
           ("install-all" (jam/parse-args (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                                       "\.org$" nil
                                                                       #'(lambda (local-dir)
-                                                                          (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))))
+                                                                          (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))))
           ("update" (let ((dir (file-name-directory (or load-file-name buffer-file-name))))
                       (message "%s" (process-lines "git" "-C" dir "submodule" "update" "--recursive" "--remote"))))
 
@@ -32,7 +32,7 @@ DRY-RUN: do not run the tangled argument"
                            (directory-files-recursively (file-name-directory (or load-file-name buffer-file-name))
                                                 "\\(\.sh$\\|\.yml$\\|^\.torrc$\\|\.py$\\|\.scm$\\|\.css$\\|\.html$\\|\.html~$\\|\.sql$\\|\.sqlite$\\|\.js$\\)" nil
                                                 #'(lambda (local-dir)
-                                                    (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))))
+                                                    (if (string-match-p "\\(\.git$\\|\.local$\\|guix-channel$\\|profile$\\|gh-pages$\\|pages$\\|elpa$\\|eln-cache$\\)" local-dir) nil t)))))
           ("clean-guix" (message "%s" (process-lines "guix" "package" "-d"))
                         (message "%s" (process-lines "guix" "pull" "-d"))
                         (message "%s" (process-lines "guix" "home" "delete-generations"))

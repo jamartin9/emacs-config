@@ -22,7 +22,7 @@
 #+END_SRC
 ** User manifest
 #+NAME: manifest-scm
-#+BEGIN_SRC scheme :tangle user.scm
+#+BEGIN_SRC lisp :tangle user.scm
   ;; Manifest for development env
   (specifications->manifest
    '(
