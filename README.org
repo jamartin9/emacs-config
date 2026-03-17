@@ -77,7 +77,7 @@ Copy files by url with emacs
 Clone the site
 #+NAME: clone-gh-pages
 #+BEGIN_SRC sh :tangle no
-git worktree add --track -b gh-pages ./gh-pages origin/gh-pages
+git worktree add --track -b pages ./pages origin/pages
 #+END_SRC
 
 Build the updated site

@@ -214,12 +214,11 @@
         - ~-muge~ merged gate/up/down ~ffn_down_exps~, ~ffn_down_exps~, ~ffn_down_exps~ requires the same attention type
           -  unsloth ~Q4_K_L~ does match but the IQ quants do not match and cause assertion error in ik_llama
           - bartowski quants match
-          - conflicts with runtime repack ~-rtr~
         - should support mtp (not yet?)
         - disable thinking with ~--chat-template-kwargs '{"enable_thinking":false}'~
         - try to force full prompt processing with ~--cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift~
         - 2782.81 MiB KV cache with q8 and 2142.81 with q6
-        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad -muge --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja~
+        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k iq4_nl --cache-type-v iq4_nl -fa on -ger -khad -muge -rtr --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja~
         - ~-mqkv -rtr~ disable mmap but gives 0.5 tk/s more
       - flash mla ~-mla 3~ supported for cpu offloading on quants Q6 and Q8 for deepseek or glm4.7 lesser quants need ~-DGGML_IQK_FA_ALL_QUANTS=ON~ for cmake
         - ~../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -khad -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0~
@@ -230,9 +229,10 @@
         - cache-ram 0 to remove prompt cache
         - amb 256 to reduce compute buffer size to 700MiB from 9000.90 MiB default
           - doesn't seem to affect speed on cpu only?
-        - mqkv for merged matrix but disables mmap, use rtr for runtime repack as it disable mmap too
+        - mqkv for merged matrix. disables mmap
+        - rtr for runtime repack. disables mmap
         - ger for GROUPED_TOPK
-        - muge for merged projections
+        - muge for merged projections. disables mmap
         - fmoe defaults to on
         - multiple of 4 for threads for simd(gh issue mentioned this?)
         - cpu build ~cmake -B build -DGGML_CUDA=OFF -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON && cmake --build build --config Release -j 8 --clean-first~

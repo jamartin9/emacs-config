@@ -307,7 +307,7 @@
       - git worktree
       - sitemap self untangles an org document
         - site search uses sqlite fts index and stores the db in opfs for reuse
-          - uses Sync Acess Handle
+          - uses Sync Access Handle
             - works without special headers
             - best perf for sqlite
             - pausing vfs for cross tab
