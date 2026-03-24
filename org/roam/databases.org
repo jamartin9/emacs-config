@@ -12,6 +12,10 @@
 - [[id:162f9fba-d1f9-44e8-ae9f-685c578523f1][sqlite]]
 - [[id:46651545-b172-443b-b0db-506019b4456c][postgres]]
 - MySQL
+  - mariab db fork
+    - galera multi master clustering
+      - https://jepsen.io/analyses/mariadb-galera-cluster-12.1.2 shows faults with even single node
+        - "exhibits Stale Read, Lost Update, and other forms of G-single in healthy clusters, when no faults occur. Transactions may (apparently) modify data in the interval between a single transaction’s reads and writes; read-modify-write patterns, like those used in many ORMs, are likely unsafe."
   - innodb storage engine prefetches and caches itself with default 16k record size
     - https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html
     - dzfs_prefetch_disable=1, logbias=throughput, primarycache=metadata, atime=off, xattr=sa, recordsize=16k

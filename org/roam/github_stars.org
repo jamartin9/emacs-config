@@ -8,6 +8,12 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** hectorvent/floci
+  - Light, fluffy, and always free - AWS Local Emulator. Foss localstack
+** turnstonelabs/turnstone
+  - Multi-node AI orchestration platform. Deploy tool-using AI agents across a cluster of servers, driven by message queues or interactive interfaces.
+** level1techs/siomon
+  - A comprehensive Linux hardware information and real-time sensor monitoring tool
 ** codeberg.org/tazjin/reka
   - window manager inside of Emacs for Wayland
 ** wizicer/anonymous_predicting_market

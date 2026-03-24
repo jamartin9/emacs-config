@@ -30,6 +30,14 @@ More ricing less productivity!
     - qt project withholds patches for up to a year
   - alt+space then ~kquitapp5 plasmashell;plasmashell~ to restart desktop
   - kde6 has experimental hdr support
+  - kde6 built in remote desktop support
+  - brave pip draw over all windows with 'Window Management' -> 'Window Rules'
+    - window class (application) as unimportant and 'brave-browser'
+    - no for 'Match whole window class'
+    - 'Window types' as 'All selected'
+    - 'Window title' as 'Substring match' set to 'Picture in picture'
+    - under 'Arrangement & Access' add property for 'Keep above other windows' to 'Force' and 'Yes'
+    - 'Detect Window Properties' set to 'Instantly'
 - aero (windows)
 - quartz (mac)
 - gamescope compositor for wayland desktops supports experimental HDR

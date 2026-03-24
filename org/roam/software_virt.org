@@ -18,6 +18,7 @@ Simulate the simulation
 - qemu
   - ~-M microvm~
   - binfmt for running binaries for other archs
+  - add ~-bios /usr/share/ovmf/x64/OVMF.4m.fd~ for uefi boot
   - ovmf/vfio for gpu pass through to vms
     - must have second card as sharing/virtualization is not supported on older cards
       - vGpus are [[https://github.com/DualCoder/vgpu_unlock][software locked]] but available as cloud offerings (grid etc)

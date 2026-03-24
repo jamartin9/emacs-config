@@ -107,6 +107,8 @@
 *** guix on zfs
 - see https://codeberg.org/guix/guix/pulls/1917#issuecomment-6976089 for modern patch based on the script/notes below
   - https://codeberg.org/hako/Rosenthal/ with 2 patches at ~modules/rosenthal/packages/patches~
+    - UKI kernel with limine failed on deploy and vm image creation with qcow-gpt
+    - zfs filesystem entries hang boot with vm image and error on deploy even with 2nd hd with pool and datasets
 #+NAME: zfs-install-root-script
 #+BEGIN_SRC sh :tangle no
 #!/usr/bin/env -S guix shell --pure bash coreutils zfs --

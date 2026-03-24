@@ -464,7 +464,7 @@
    gnus-dribble-directory gnus-directory
    gnus-startup-file (concat gnus-directory "newsrc")
    gnus-select-method '(nnnil ""); / N or M-g inside summary to refresh, / o for read articles
-   gnus-secondary-select-methods '((nnatom "wingolog.org/feed/atom") (nnatom "planet.guix.gnu.org/atom.xml") (nnatom "www.reddit.com/r/news/.rss") (nnatom "blog.torproject.org/rss.xml") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
+   gnus-secondary-select-methods '((nnatom "planet.guix.gnu.org/atom.xml") (nnatom "www.reddit.com/r/news/.rss") (nnatom "youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA") ;youtube id is from inspect source on the channel page for external-id/externalId; do not include http/https/www
                                    (nntp "news.yhetil.org"); ^ or Shift 6  to list all groups after username/password prompt ; gnus-binary-mode g for uudecode
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
@@ -492,12 +492,12 @@
        (require 'epa)
        (advice-add 'gnus-cloud-download-all-data :before 'epa-file-disable); prevent encryption when syncing as authinfo.gpg
        (advice-add 'gnus-cloud-download-all-data :after 'epa-file-enable)
-       (setq gnus-cloud-sequence 1; set to 0 for init sync
+       (setq gnus-cloud-sequence 0; set to 0 for init sync
              gnus-cloud-method "nnimap:riseup" ; gnus-cloud-download-all-data gnus-cloud-upload-all-data
              gnus-cloud-storage-method nil; disable epg for just ascii armored file
              gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg")))
        (require 'nnrss) ; setup rss feeds.
-       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters") ("tanelp" "https://tanelpoder.com/posts/index.xml" "tanelp") ("igalia" "https://planet.igalia.com/rss20.xml" "igalia"))); https://cacm.acm.org/feed/
+       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters") ("igalia" "https://planet.igalia.com/rss20.xml" "igalia"))); https://cacm.acm.org/feed/
        (nnrss-save-server-data nil)
        (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
              gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
@@ -506,21 +506,21 @@
                                   (nnfolder-inhibit-expiry t)))
              gnus-topic-topology '(("Gnus" visible);"Gnus" is the root folder. three mail accounts, "gmail", "riseup", "misc" then the nnatom feeds
                                    (("gmail" visible nil nil)) (("riseup" visible nil nil)) (("misc" visible))
-                                   (("Releases" visible)) (("Level1Techs" visible)) (("wingolog" visible)) (("Guix" visible)) (("Reddit" visible)) (("Tor" visible)))
+                                   (("Releases" visible)) (("Level1Techs" visible)) (("Lisp" visible)) (("Reddit" visible)))
              gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
                                 ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts" "nnimap+riseup:Emacs-Cloud")
                                 ("misc" "nnfolder+archive:sent.2025" "nnfolder+archive:sent.2026" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
-                                ("Level1Links With Friends" "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") ("wingolog" "nnatom+wingolog.org/feed/atom:wingolog") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News") ("Tor" "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
-                                ("Guix" "nntp+news.yhetil.org:yhetil.gnu.guix.patches" "nntp+news.yhetil.org:yhetil.gnu.guix.devel" "nntp+news.yhetil.org:yhetil.emacs.devel" "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix")
+                                ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News")
+                                ("Lisp" "nntp+news.yhetil.org:yhetil.emacs.devel" "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix")
                                 ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
                                 ("Gnus")))
        (gnus-topic-set-parameters "gmail" '((display . 200)) )(gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
        (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")(gnus-subscribe-hierarchically "nnimap+riseup:Emacs-Cloud")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
-       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") (gnus-subscribe-hierarchically "nnatom+wingolog.org/feed/atom:wingolog") (gnus-subscribe-hierarchically "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News") (gnus-subscribe-hierarchically "nnatom+blog.torproject.org/rss.xml:Tor Project blog")
+       (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") (gnus-subscribe-hierarchically "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News")
        (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
-       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix") (gnus-subscribe-hierarchically "nnrss:tanelp") (gnus-subscribe-hierarchically "nnrss:igalia");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
-       (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.patches") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.gnu.guix.devel") (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel"))))
+       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix") (gnus-subscribe-hierarchically "nnrss:igalia");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
+       (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel"))))
 
 (use-package which-key
   :ensure nil ; built-in
@@ -575,6 +575,10 @@
   :commands (rust-ts-mode)
   :config (jam/set-rust-path))
 
+(use-package python ; python
+  :ensure nil ; built-in
+  :commands (python-mode python-mode-hook python-mode-local-vars-hook python-ts-mode python-ts-mode-hook))
+
 (use-package yaml-mode ;:pin nongnu
   :commands (yaml-mode)
   :config (setq eglot-workspace-configuration '(:yaml (:format (:enable t)
@@ -585,10 +589,6 @@
                                                                          https://json.schemastore.org/yamllint.json ["/*.yml"]);https://raw.githubusercontent.com/my-user/my-project/project.schema.yml ["project.yml"]
                                                                :schemaStore (:enable t))))
   (add-hook 'yaml-mode-hook #'(lambda () (setq-local tab-width yaml-indent-offset))))
-
-(use-package python ; python
-  :ensure nil ; built-in
-  :commands (python-mode python-mode-hook python-mode-local-vars-hook python-ts-mode python-ts-mode-hook))
 
 (use-package flymake-guile ; guile/guild
   :commands (flymake-guile)
@@ -629,17 +629,6 @@
           (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "site-ccache"))
           (add-to-list 'geiser-guile-load-path (concat (file-name-as-directory (getenv "HOME")) (file-name-as-directory ".guix-home") (file-name-as-directory "profile") (file-name-as-directory "lib") (file-name-as-directory "guile") (file-name-as-directory "3.0") "ccache")))
   :commands (geiser-guile))
-
-(use-package undo-tree ;:pin gnu
-  :hook ((after-init . global-undo-tree-mode))
-  :commands (global-undo-tree-mode)
-  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
-  :config (setq undo-tree-visualizer-diff t
-                undo-tree-auto-save-history t
-                undo-limit 800000 ; 800 kb (default 160kb)
-                undo-strong-limit 12000000 ; 12mb (default 240kb)
-                undo-outer-limit 128000000 ; 128mb (default 24mb)
-                undo-tree-enable-undo-in-region t))
 
 (use-package magit ; git ; magit-diff then magit-patch to save
   :commands (magit-file-delete magit-status)
@@ -751,11 +740,6 @@
 
   :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))
 
-(use-package nov
-  :config (setq nov-save-place-file (expand-file-name "nov-places" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
-  :mode ("\\.epub\\'" . nov-mode)
-  :commands (nov-mode))
-
 ;;;###autoload
 (defun jam/sudo-edit (file) "Edit file with sudo. Defaults to current buffer's file name. Use tramp-dired-find-file-with-sudo with emacs >31" (interactive (list (read-file-name (format "Sudo Edit File(%s): " (buffer-file-name (current-buffer))) nil (buffer-file-name (current-buffer)) nil))) (find-file (format "/sudo::%s" file)))
 ;;;###autoload
@@ -795,11 +779,7 @@ DIGITS is the number of pin digits and defaults to 6."
                                       `((:high . ,(ash counter -32)) (:low . ,(logand counter #xffffffff)))))
          (mac (gnutls-hash-mac 'SHA1 key-bytes counter-bytes))
          (offset (logand (bindat-get-field (bindat-unpack '((:offset u8)) mac 19) :offset) #xf)))
-    (format format-string
-            (mod
-             (logand (bindat-get-field (bindat-unpack '((:totp-pin u32)) mac offset) :totp-pin)
-                     #x7fffffff)
-             (expt 10 digits)))))
+    (format format-string (mod (logand (bindat-get-field (bindat-unpack '((:totp-pin u32)) mac offset) :totp-pin) #x7fffffff) (expt 10 digits)))))
 
 ;;;###autoload
 (defun jam/base32-hex-decode (string) ; Base32 for TOTP
@@ -820,8 +800,7 @@ DIGITS is the number of pin digits and defaults to 6."
   (setq string (upcase string))
   (let* ((trimmed-array (append (string-trim-right string "=+") nil))
          (ntrail (mod (* 5 (length trimmed-array)) 8))) ; shift for partial bits
-    (format "%X" (ash (seq-reduce (lambda (acc char) (+ (ash acc 5) (aref jam/base32-alphabet char))) trimmed-array 0)
-                      (- ntrail)))))
+    (format "%X" (ash (seq-reduce (lambda (acc char) (+ (ash acc 5) (aref jam/base32-alphabet char))) trimmed-array 0) (- ntrail)))))
 
 ;;;###autoload
 (defun jam/auth-display (auth)

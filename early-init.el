@@ -31,10 +31,8 @@
         (setq use-package-always-ensure t
               package-pinned-packages '((eat . "nongnu")
                                         (gptel . "nongnu")
-                                        (yaml-mode . "nongnu");(debbugs . "gnu"); (company . "gnu")
-                                        (which-key . "gnu")
-                                        (osm . "gnu")
-                                        (undo-tree . "gnu")))))
+                                        (yaml-mode . "nongnu")
+                                        (osm . "gnu")))))
   (if (file-directory-p default-directory)
       (normal-top-level-add-subdirs-to-load-path)))
 

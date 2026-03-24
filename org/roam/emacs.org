@@ -258,6 +258,22 @@
   :config (setq geiser-hoot-scheme-local-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-hoot"))
   :commands (geiser-hoot)) ;geiser-hoot-load-path
 
+(use-package undo-tree ;:pin gnu
+  :hook ((after-init . global-undo-tree-mode))
+  :commands (global-undo-tree-mode)
+  :custom (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "undo-tree-hist")))))
+  :config (setq undo-tree-visualizer-diff t
+                undo-tree-auto-save-history t
+                undo-limit 800000 ; 800 kb (default 160kb)
+                undo-strong-limit 12000000 ; 12mb (default 240kb)
+                undo-outer-limit 128000000 ; 128mb (default 24mb)
+                undo-tree-enable-undo-in-region t))
+
+(use-package nov
+  :config (setq nov-save-place-file (expand-file-name "nov-places" (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache"))))
+  :mode ("\\.epub\\'" . nov-mode)
+  :commands (nov-mode))
+
    ; mcp.el
   (defun extract-structuredContent (orig-fun &rest args)
     (let ((structured (plist-get args :structuredContent)))
@@ -273,6 +289,14 @@
 
 ;;;###autoload
 (defun jam/eshell () "Open new eshell" (interactive) (eshell t));  :bind (:map jam/open ("e" . jam/eshell))
+
+; reka config with just emacs-pgtk in ~/.config/river/init
+(module-load "/gnu/git/reka/target/release/libreka.so")
+(load-file "/gnu/git/reka/lisp/reka.el")
+(require 'reka)
+(reka-enable)
+(reka-push-intercept-prefix "s-f" 'toggle-fullscreen)
+
 #+END_SRC
 
 - German air control ATC ran on emacs in the 90's

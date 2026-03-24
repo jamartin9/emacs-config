@@ -12,8 +12,6 @@ magit/forge: git/forge manipulation. alternative is built-in vc that lacks compl
 
 org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
 
-undo-tree: undo edit persist restarts. alternative is built-in undo with session persistence redone
-
 minions-mode: keeps the modeline visually brief with retained information. alternative is diminish/delight packages and config for each mode
 
 osm: Map tile viewer. alternative is web browser viewing
