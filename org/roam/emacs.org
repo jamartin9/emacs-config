@@ -274,6 +274,19 @@
   :mode ("\\.epub\\'" . nov-mode)
   :commands (nov-mode))
 
+(when (featurep 'pgtk); reka config of 'emacs' in ~/.config/river/init
+  (let ((module "/gnu/git/reka/target/release/libreka.so"))
+    (if (file-exists-p module)
+        (progn
+          (module-load module)
+          (use-package reka
+            :load-path "/gnu/git/reka/lisp/"
+            :demand t ;load immediately
+            :config
+            (reka-enable)
+            (reka-push-intercept-prefix "s-f" 'toggle-fullscreen)))
+      (message "REKA: Module file not found at %s" module))))
+
    ; mcp.el
   (defun extract-structuredContent (orig-fun &rest args)
     (let ((structured (plist-get args :structuredContent)))
@@ -289,14 +302,6 @@
 
 ;;;###autoload
 (defun jam/eshell () "Open new eshell" (interactive) (eshell t));  :bind (:map jam/open ("e" . jam/eshell))
-
-; reka config with just emacs-pgtk in ~/.config/river/init
-(module-load "/gnu/git/reka/target/release/libreka.so")
-(load-file "/gnu/git/reka/lisp/reka.el")
-(require 'reka)
-(reka-enable)
-(reka-push-intercept-prefix "s-f" 'toggle-fullscreen)
-
 #+END_SRC
 
 - German air control ATC ran on emacs in the 90's

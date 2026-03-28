@@ -59,7 +59,7 @@
          :map minibuffer-local-completion-map
          ("<mouse-1>" . (lambda (event) (interactive "e"); call the completion candidate at the row location of EVENT in the minibuffer (choose-completion event ?)
                           (with-selected-window (active-minibuffer-window)
-                            (when-let ((object (posn-object (event-end event)))
+                            (when-let* ((object (posn-object (event-end event)))
                                        (colrow (posn-col-row (event-end event)))
                                        ((and (consp object) (>= (cdr colrow) 1)))
                                        (cand (car (split-string (nth (- (cdr colrow) 1) (split-string (car object) "[\n\r]+" t "[ ]+"))))))
@@ -720,21 +720,22 @@
   :config (require 'gptel-integrations) ; mcp.el ; gptel-mcp-connect
   (gptel-make-preset 'openai-reasoning :request-params '(:reasoning_effort "high"))
   (gptel-make-preset 'gemini-reasoning :request-params '(:generationConfig (:thinkingConfig (:thinkingLevel "high" :includeThoughts t))))
-  (gptel-make-preset 'gemini-search :request-params '(:tools [(:google_search ())]))
-  (gptel-make-openai "llama-cpp" :protocol "http" ;gptel-make-ollama "Ollama"
-                                         :host "localhost:8080";"localhost:11434"
+  (gptel-make-preset 'gemini-search :request-params '(:tools [(:google_search ())])) ; free tier only for search/maps in gemini-flash-2.5
+  (gptel-make-preset 'gemini-maps :request-params '(:tools [(:googleMaps ())]))
+  (gptel-make-openai "llama-cpp" :protocol "http"
+                                         :host "localhost:8080"
                                          :models '((qwen3.5:0.8b :capabilities (tool-use json media))
                                                    (qwen3.5:A3b :capabilities (tool-use json media))
                                                    (glm4.7-flash:A3b :capabilities (tool-use json)))
                                          :stream t)
-  (setq gptel-model 'gemini-3-flash-preview; 'gemma-3:4b
+  (setq gptel-model 'gemini-3-flash-preview; 'qwen3.5:A3b
         ;gptel-include-reasoning t; disables reasoning_effort in gemini
         gptel-backend (gptel-make-gemini "Gemini" :key (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY"))) :stream t)))
 
 (use-package mcp
   :after gptel
   :config (require 'mcp-hub)
-  :custom (mcp-hub-servers `(;("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest"));"--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
+  :custom (mcp-hub-servers `(;("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest" "--no-usage-statistics")); "--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
                              ;("codex" :command "codex" :args ("mcp-server" "-c" "sandbox_permissions=['read-only']" "-c" "approval_policy='untrusted'"))
                              ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496' use stdio with 'nc localhost 59999'
 
@@ -815,10 +816,24 @@ DIGITS is the number of pin digits and defaults to 6."
                    auth))
            (auth-source-search :max 10000))))
       (cdr (assoc (completing-read "Pick an AUTH> " candidates) candidates)))))
-  (let ((code (if (string-prefix-p "TOTP:" (plist-get auth :host))
+  (let* ((code (if (string-prefix-p "TOTP:" (plist-get auth :host))
                   (jam/totp (jam/base32-hex-decode (funcall (plist-get auth :secret))))
-                (funcall (plist-get auth :secret)))))
-    (message "%s sent to kill ring. Expires in %d seconds." (if auth-source-debug (propertize code 'face 'font-lock-string-face) "AUTH") password-cache-expiry)
-    (kill-new code)
-    (password-cache-add (format "%s@%s" (plist-get auth :user) (plist-get auth :host)) code); cleanup kill-ring
+                (funcall (plist-get auth :secret))))
+        (code-copy (copy-sequence code)))
+    (message "%s sent to kill ring. Expires in %d seconds." (if auth-source-debug (propertize code-copy 'face 'font-lock-string-face) "AUTH") password-cache-expiry)
+    (kill-new code-copy)
+    (password-cache-add (format "%s@%s" (plist-get auth :user) (plist-get auth :host)) code-copy); cleanup kill-ring with copy to not invalidate authinfo cache or calling functions
     code))
+
+(when (featurep 'pgtk); reka config of 'emacs' in ~/.config/river/init
+  (let ((module "/gnu/git/reka/target/release/libreka.so"))
+    (if (file-exists-p module)
+        (progn
+          (module-load module)
+          (use-package reka
+            :load-path "/gnu/git/reka/lisp/"
+            :demand t ;load immediately
+            :config
+            (reka-enable)
+            (reka-push-intercept-prefix "s-f" 'toggle-fullscreen)))
+      (message "REKA: Module file not found at %s" module))))

@@ -11,6 +11,7 @@
   - array syntax ~[@]~
   - ~--posix~ for sh mode
   - ~&>~ ~2>&1~ redirects stderr and stdout
+  - constant diskio ~while true; do dd if=/dev/random of=testio.tmp bs=1M count=100 status=none; rm testio.tmp; sleep 1; done &~
 ** snippets
 #+NAME: bash-examples
 #+BEGIN_SRC bash :tangle no

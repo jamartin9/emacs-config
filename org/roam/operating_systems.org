@@ -28,6 +28,13 @@
 - zfs by default
 - support for linux emulation
   - [[https://github.com/ravynsoft/ravynos][macos compat fork]]
+*** netbsd
+- ~export PKG_PATH="https://cdn.NetBSD.org/pub/pkgsrc/packages/NetBSD/amd64/10.1/All/"~
+- disable ipv6 with ~ip6addrctl=YES~ and ~ip6addrctl_policy="ipv4_prefer"~ in ~/etc/rc.conf~
+  - without it makes ~pkg_add pkgin~ hang on QEMU from ICMPv6
+- add ~nameserver 1.1.1.1~ to ~/etc/resolv.conf~
+- add ~dhcpcd=YES~ for dhcp
+- zfs only supports devices not files
 *** illumos
 - https://news.illumos.am/feed/
 **** smartos

@@ -26,6 +26,8 @@ Mechanical Sympathy Symphony
   - disabled in microcode due to security issues with instructions added later for mitigations
   - QEMU has options for passthrough ~tsx-ctrl~
   - RSPCS3 used it for large framerate improvements
+** M Series
+  - 128 bit cache line(false sharing?)
 ** Backdoors
   - [[https://research.tue.nl/files/197416841/20220325_Appelbaum_hf.pdf][ubiquity devices]](unifi)
     - any calvium processor

@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Machine learning
 ** notes
+- turboquant 2/3/4 bit for kv cache added by google improves quant by coordinate translation and rotation(reduces irregularity)
 - kernel dev prompt collection https://github.com/masoncl/review-prompts
 - https://www.neuronpedia.org/ for sae identification
 - speculative encoding like eagle uses post training data to generate a predictive model
@@ -205,9 +206,13 @@
       - 1000 tons of CO2 (2.6 million KWh hours)
   - [[https://github.com/ggerganov/llama.cpp][llama.cpp gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
     - ik_llama.cpp fork with cpu/quant improvements
+      - ~-mtp~ ~--draft-max 10 --draft-p-min 0.85~ for mtp speculative decoding (poor perf with moe as memory bandwidth bound) and does not support qwen3.5 mtp yet...
+      - ~--fit~ and ~--fit-margin~ for gpu tensor offload
       - ~--smart-expert-reduction~ is basically REAP
       - supports vision for some models
       - fused deltanet for qwen3.5 (35B-A3B)
+        - ~-khad~ or ~-vhad~ needs power of 2 attention head size (no MLA)
+          - Hadamard transforms rotates the K or V cache for better quantized accuracy
         - ~-muge~ merged gate/up/down ~ffn_down_exps~, ~ffn_down_exps~, ~ffn_down_exps~ requires the same attention type
           -  unsloth ~Q4_K_L~ does match but the IQ quants do not match and cause assertion error in ik_llama
           - bartowski quants match as do ubergarms (and AesSedia?)
@@ -216,17 +221,17 @@
         - try to force full prompt processing with ~--cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift~
         - 2782.81 MiB KV cache with q8 and 2142.81 with q6
           - K quant is more important than V quant
-        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q8_0 --cache-type-v q8_0 -fa on -ger -khad -muge -rtr --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja~
+        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad -vhad -muge -rtr --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja~
         - ~-mqkv -rtr~ disable mmap but gives 0.5 tk/s more
       - flash mla ~-mla 3~ supported for cpu offloading on quants Q6 and Q8 for deepseek or glm4.7 lesser quants need ~-DGGML_IQK_FA_ALL_QUANTS=ON~ for cmake
-        - ~../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -khad -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0~
+        - ~../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0~
         - 16 tk/s w/16 threads on iq4 and 11 tk/s with Q6
         - context 200k(202752 is 5561.79 MiB), 32k is 898.88 MiB of KV cache
         - khad (Hadamard transforms for K-cache) with quantized cache (special q8_KV for the cache-type-K causes assert error?)
           - reduces need for iquants in kv cache?
         - cache-ram 0 to remove prompt cache
         - amb 256 to reduce compute buffer size to 700MiB from 9000.90 MiB default
-          - doesn't seem to affect speed on cpu only?
+          - doesn't seem to affect speed on cpu only
         - mqkv for merged matrix. disables mmap
         - rtr for runtime repack. disables mmap
         - ger for GROUPED_TOPK
@@ -366,7 +371,7 @@ whisper "/content/${VID}.m4a" --model small --language English
 # PEP 722 deps
 #
 # Script Dependencies:
-#    transformers[agents]>=4.31
+#    transformers[agents]>=5.3.0
 #    diffusers>=0.19.3
 #    datasets
 #    torch
@@ -380,6 +385,14 @@ whisper "/content/${VID}.m4a" --model small --language English
 #    pdf2image
 #    protobuf
 #    invisible-watermark>=0.2.0
+#    accelerate
+#    fastapi
+#    torchao
+#    optimum-intel[openvino,nncf] @ git+https://github.com/huggingface/optimum-intel.git" # doesnt support qwen3.5 yet or transformers 5 (also needed for qwen)
+#    openvino>=2026.0.0
+#    nncf>=2.14.0
+#    uvicorn
+#    ninja>=1.13.0 # for build native
 
 #optimum[onnxruntime]>=1.10.0
 #sympy
@@ -581,6 +594,85 @@ image_generator.pipeline.enable_sequential_cpu_offload()
 prompt = "Dog, noble, majestic, realistic, high definition, pitbull"
 image = image_generator(prompt=prompt)
 image.save("test.png")
+
+# serving qwen3.5 0.8B
+#!/usr/bin/env python
+import os
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, TorchAoConfig #BitsAndBytesConfig
+from fastapi import FastAPI
+import uvicorn
+from time import perf_counter
+#import openvino
+#import nncf
+#from optimum.intel import OVModelForCausalLM, OVWeightQuantizationConfig # doesnt support qwen 3.5 or transformers 5 yet...
+import torchao
+from torchao.quantization import Int8DynamicActivationIntxWeightConfig, Int8DynamicActivationInt8WeightConfig, PerRow # quantize_ QAT supported Int4WeightOnlyConfig failed with cpu (hqq and gemm backends)
+#from torchao.quantization.qat import QATConfig # wrap config with QATConfig(quant_config) for 'fake quant' before and after training
+
+#lib_path = "/gnu/git/llms/scripts/pyserv/ao/torchao/_C.abi3.so" # will throw library not loaded error when kernels are not found...
+#try:
+#    torch.ops.load_library(lib_path)
+#    print("✅ Success: Library loaded manually!")
+#except Exception as e:
+#    print(f"❌ Failed to load: {e}")
+#torch.ops.torchao._pack_8bit_act_4bit_weight # is the check in torchao and seems to be arm only?
+
+os.environ["TORCHINDUCTOR_CACHE_DIR"] = "/gnu/git/llms/scripts/pyserv/kernel_cache"
+torch._inductor.config.fx_graph_cache = True
+
+model_id = "Qwen/Qwen3.5-0.8B"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+#bnb_quant_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=torch.float32)
+#vino_quant_config  = OVWeightQuantizationConfig(bits=4) # bits=8
+torchao_quant_config = Int8DynamicActivationInt8WeightConfig(set_inductor_config=True, version=2)#weight_only_decode=True,  #Int8DynamicActivationIntxWeightConfig(weight_dtype=torch.int4) # use the da8w4 kernel path # intx_packing_format="opaque_torchao_auto" lowbit is arm only # QAT only support int8dynamicintx with weight int4 activation int8, cpu TorchAO kernel library is not loaded and uses lowbit w/o arm for kledia kernels
+tochao_quantization_config = TorchAoConfig(quant_type=torchao_quant_config)
+
+model = AutoModelForCausalLM.from_pretrained( #OVModelForCausalLM.from_pretrained(
+    model_id,
+    dtype=torch.float32, # torch_dtype is deprecated but dtype throws error when saving some configs...
+#    quantization_config=tochao_quantization_config,#vino_quant_config,#bnb_quant_config,
+    device_map="cpu")
+model = torch.compile(model, #mode="max-autotune",
+                      fullgraph=False#, backend="openvino", options={"device": "CPU", "model_caching": True, "cache_dir": "/gnu/git/llms/scripts/pyserv/vino", "config":{ "PERFORMANCE_HINT": "LATENCY", "INFERENCE_PRECISION_HINT": "f32"}} # fullgraph off so it doesn't silently fail on gaps
+                      )
+print("Checking kernel cache...")
+with torch.no_grad():
+    input_ids = torch.ones((1, 128), dtype=torch.long)
+    model(input_ids)# generate doesn't compile?
+
+#output_dir = "/gnu/git/llms/scripts/pyserv/qwen3.5-0.8B-torchao-int8-dynamic-8bit-cpuv2" # change name when quant changes
+#model.save_pretrained(output_dir) # save and reload models for weight only config?
+#model = AutoModelForCausalLM.from_pretrained(output_dir, device_map="cpu")
+
+app = FastAPI()
+@app.post("/chat")
+async def chat(prompt: str):
+    inputs = tokenizer(prompt, return_tensors="pt").to("cpu")
+    with torch.no_grad():
+        start = perf_counter()
+        output = model.generate(**inputs,
+                                max_new_tokens=256,
+                                temperature=1.0,
+                                top_p=1.0,
+                                #top_k=20,
+                                #min_p=0.0,
+                                #presence_penalty=2.0,
+                                #cache_implementation="static",
+                                repetition_penalty=1.0,
+                                return_dict_in_generate=True) # dict for perf measurement
+        stop = perf_counter()
+        gen_tokens = output.sequences[0][inputs.input_ids.shape[1]:]
+        tks = len(gen_tokens) / (stop - start)
+        print("tk/s: " + str(tks)) # dont count decode only gen
+    return {"response": tokenizer.decode(output[0], skip_special_tokens=True)}
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+#curl "127.0.0.1:8000/chat?prompt=What%20is%20the%20capital%20of%20France?" -XPOST
+# f32: just under ~9tk/s with vino or inductor or plain no compile. ik_llama gives ~14tk/s with same F32
+# quantized: bnb gives 0.5 tk/s and torachao Int8DynamicActivationInt8WeightConfig() gives 3.5 tk/s, 1.5 with weight_only v2 8 tk/s plain. Int8DynamicActivationIntxWeightConfig 4bit weight gives ~2 tk/s. Int4WeightOnly gives does not support. Vino does not support yet. vllm does not support yet.
+# for tochao maybe add BUILD_TORCHAO_EXPERIMENTAL=1 but seems cpu inference is arm/mac only - UV_LINK_MODE=copy USE_CPP=1 USE_CUDA=0 USE_CPU_KERNELS=1 uv pip install --no-build-isolation -v --no-binary torchao -e ./ao 2>&1 | tee -a output.log
+# LD_LIBRARY_PATH=/gnu/git/llms/scripts/pyserv/.venv/lib/python3.12/site-packages/torch/lib
 
 #+END_SRC
 
