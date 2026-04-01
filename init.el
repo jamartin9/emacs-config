@@ -826,10 +826,13 @@ DIGITS is the number of pin digits and defaults to 6."
     code))
 
 (use-package reka
-  :demand t ;load immediately
-  :if (and
-       (featurep 'pgtk)
-       (file-expand-wildcards "~/.guix-profile/share/emacs/site-lisp/reka-*/lisp/libreka.so"))
-  :load-path (car (file-expand-wildcards "~/.guix-profile/share/emacs/site-lisp/reka-*/lisp/"))
-  :config (reka-enable)
+  :ensure nil ; guix managed until published
+  :if (and (featurep 'pgtk) (file-expand-wildcards "~/.guix-profile/share/emacs/site-lisp/reka-*/lisp/libreka.so"))
+  :init
+  (let ((path (car (file-expand-wildcards "~/.guix-profile/share/emacs/site-lisp/reka-*/lisp/"))))
+    (when path
+      (add-to-list 'load-path path)))
+  :demand t
+  :config
+  (reka-enable)
   (reka-push-intercept-prefix "s-f" 'toggle-fullscreen))
