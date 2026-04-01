@@ -825,15 +825,11 @@ DIGITS is the number of pin digits and defaults to 6."
     (password-cache-add (format "%s@%s" (plist-get auth :user) (plist-get auth :host)) code-copy); cleanup kill-ring with copy to not invalidate authinfo cache or calling functions
     code))
 
-(when (featurep 'pgtk); reka config of 'emacs' in ~/.config/river/init
-  (let ((module "/gnu/git/reka/target/release/libreka.so"))
-    (if (file-exists-p module)
-        (progn
-          (module-load module)
-          (use-package reka
-            :load-path "/gnu/git/reka/lisp/"
-            :demand t ;load immediately
-            :config
-            (reka-enable)
-            (reka-push-intercept-prefix "s-f" 'toggle-fullscreen)))
-      (message "REKA: Module file not found at %s" module))))
+(use-package reka
+  :demand t ;load immediately
+  :if (and
+       (featurep 'pgtk)
+       (file-expand-wildcards "~/.guix-profile/share/emacs/site-lisp/reka-*/lisp/libreka.so"))
+  :load-path (car (file-expand-wildcards "~/.guix-profile/share/emacs/site-lisp/reka-*/lisp/"))
+  :config (reka-enable)
+  (reka-push-intercept-prefix "s-f" 'toggle-fullscreen))

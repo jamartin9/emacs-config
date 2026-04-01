@@ -9,7 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * software contributions
 - GuillaumeGomez/sysinfo
-  - WIP [[https://github.com/GuillaumeGomez/sysinfo/pull/1646][Added support for zfs dataset names on FreeBSD]]
+  - [[https://github.com/GuillaumeGomez/sysinfo/pull/1646][support for zfs dataset names on FreeBSD]]
 - guix-cuirass
   - [[https://git.savannah.gnu.org/cgit/guix/guix-cuirass.git/commit/?id=c8022d51f4c6c34c4ea0ce2d3502d4a683946888][Added a null check to js to allow adding channels on specification page]]
 - huggingface/transformers
@@ -22,9 +22,6 @@
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
     - WIP sysinfo added freebsd ufs io with geom.
       - send | recv of unmounted datasets will not be shown despite having stats
-      - NetBSD builds but isn't functional.
-        - sysctl lacks netbsd support
-          - has arc kstats but not objset ie no dataset io counters
     - WIP to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path or parse zpool iostat json output in zfs 2.3+
       - add arc and l2arc to disk menu, get arc r/w bytes from procfs iostat. include note about not getting vdev level iostats as that would need ioctl like issue, so no total l2cache
       - ZFS_IOC_POOL_STATS does not contain the spa_iostats exposed by under the per pool proc directory iostats file for per pool arc
@@ -38,6 +35,9 @@
           - lzc_ioctl calls lzc_ioctl_fd but is static
           - call open on ~/dev/zfs~ and use that for the fd. Still requires mocking out ~zfs_cmd_t~
         - zfs_ioc_pool_configs for the spa_all_configs(ZFS_IOC_POOL_CONFIGS/* 0x5a04 */) to get all pools/devicepaths
+          - NetBSD builds but isn't functional in bottom or sysinfo with netbsd 10.1 as there is statvfs and getmntinfo changes from 9 that havent been done in libc yet (wait for EOL of 9)
+      - sysctl lacks netbsd support
+        - has arc kstats but not objset ie no dataset io counters
     - [[https://github.com/ClementTsang/bottom/pull/1812][Added option to subtract freeable arc from memory]]
       - fixed broken arc collection on freebsd
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]

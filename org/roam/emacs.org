@@ -274,19 +274,6 @@
   :mode ("\\.epub\\'" . nov-mode)
   :commands (nov-mode))
 
-(when (featurep 'pgtk); reka config of 'emacs' in ~/.config/river/init
-  (let ((module "/gnu/git/reka/target/release/libreka.so"))
-    (if (file-exists-p module)
-        (progn
-          (module-load module)
-          (use-package reka
-            :load-path "/gnu/git/reka/lisp/"
-            :demand t ;load immediately
-            :config
-            (reka-enable)
-            (reka-push-intercept-prefix "s-f" 'toggle-fullscreen)))
-      (message "REKA: Module file not found at %s" module))))
-
    ; mcp.el
   (defun extract-structuredContent (orig-fun &rest args)
     (let ((structured (plist-get args :structuredContent)))

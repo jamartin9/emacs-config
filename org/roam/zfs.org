@@ -106,8 +106,9 @@
 - https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=2720&context=honorstheses chapter 3 for description of zfs architecture
 *** guix on zfs
 - see https://codeberg.org/guix/guix/pulls/1917#issuecomment-6976089 for modern patch based on the script/notes below
-  - https://codeberg.org/hako/Rosenthal/ with 2 patches at ~modules/rosenthal/packages/patches~
-    - UKI kernel with limine failed on deploy and vm image creation with qcow-gpt
+  - https://codeberg.org/hako/Rosenthal/ with patch at ~modules/rosenthal/packages/patches~
+    - built into kernel https://github.com/openzfs/zfs/issues/10450#issuecomment-643654436 for (initramfs issues)
+    - UKI kernel with limine failed on deploy and vm image creation with qcow-gpt (grub-efi issues)
     - zfs filesystem entries hang boot with vm image and error on deploy even with 2nd hd with pool and datasets
 #+NAME: zfs-install-root-script
 #+BEGIN_SRC sh :tangle no
