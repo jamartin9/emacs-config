@@ -8,6 +8,8 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * software contributions
+- XCHPay/btcpayserver-chia-plugin
+  - WIP [[https://github.com/XCHPay/btcpayserver-chia-plugin/pull/1][update for btcpayserver 2.3.9(dotnet10) and SIGILL on native lib]]
 - GuillaumeGomez/sysinfo
   - [[https://github.com/GuillaumeGomez/sysinfo/pull/1646][support for zfs dataset names on FreeBSD]]
 - guix-cuirass
@@ -21,9 +23,9 @@
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
     - WIP sysinfo added freebsd ufs io with geom.
-      - send | recv of unmounted datasets will not be shown despite having stats
     - WIP to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path or parse zpool iostat json output in zfs 2.3+
       - add arc and l2arc to disk menu, get arc r/w bytes from procfs iostat. include note about not getting vdev level iostats as that would need ioctl like issue, so no total l2cache
+      - send | recv of unmounted datasets will not be shown despite having stats currently
       - ZFS_IOC_POOL_STATS does not contain the spa_iostats exposed by under the per pool proc directory iostats file for per pool arc
         - includes 'vs_bytes' index with the read/write total bytes for each vdev_stat_t returned
         - appends 'l2cache' on vdev_root

@@ -210,10 +210,16 @@
       - ~--fit~ and ~--fit-margin~ for gpu tensor offload
       - ~--smart-expert-reduction~ is basically REAP
       - supports vision for some models
+      - gemma4
+        - ~llama-server-ik --model ../google_gemma-4-26B-A4B-it-IQ4_NL.gguf --ctx-size 32768 --temp 1.0 --top-p 0.95 --top-k 64 --min-p 0.0 --repeat-penalty 1.0 --cache-type-k q6_0 --cache-type-v q6_0 -khad -vhad --threads 12 -fa on --cache-ram 0 --no-context-shift --no-warmup -ger -muge -rtr -mqkv --threads-http 1 --jinja --chat-template-kwargs '{"enable_thinking":true}'~
+          - use ~--swa-full~ with llama.cpp for comparable SWA. llama.cpp supports iSWA(checkpointing, compression, fixed size instead of growing with context)
       - fused deltanet for qwen3.5 (35B-A3B)
+        - qwen 3.6 improved on qwen 3.5
+          - drift in ssm_conv1d tensors for qwen 3.6 corrected with Wasserstein and Qwen-Plus quants
         - ~-khad~ or ~-vhad~ needs power of 2 attention head size (no MLA)
           - Hadamard transforms rotates the K or V cache for better quantized accuracy
-        - ~-muge~ merged gate/up/down ~ffn_down_exps~, ~ffn_down_exps~, ~ffn_down_exps~ requires the same attention type
+          - only quant kv to q8 without Hadamard for accuracy
+        - ~-muge~ merged gate/up/down ~ffn_down_exps~, ~ffn_gate_exps~, ~ffn_up_exps~ requires the same attention type
           -  unsloth ~Q4_K_L~ does match but the IQ quants do not match and cause assertion error in ik_llama
           - bartowski quants match as do ubergarms (and AesSedia?)
         - should support mtp (not yet?)

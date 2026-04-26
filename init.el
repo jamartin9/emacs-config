@@ -724,11 +724,12 @@
   (gptel-make-preset 'gemini-maps :request-params '(:tools [(:googleMaps ())]))
   (gptel-make-openai "llama-cpp" :protocol "http"
                                          :host "localhost:8080"
-                                         :models '((qwen3.5:0.8b :capabilities (tool-use json media))
-                                                   (qwen3.5:A3b :capabilities (tool-use json media))
-                                                   (glm4.7-flash:A3b :capabilities (tool-use json)))
+                                         :models '((gemma4:A4B :capabilities (tool-use json media audio))
+                                                   (qwen3.6:A3B :capabilities (tool-use json media))
+                                                   (qwen3.6:27B :capabilities (tool-use json media))
+                                                   (glm4.7-flash:A3B :capabilities (tool-use json)))
                                          :stream t)
-  (setq gptel-model 'gemini-3-flash-preview; 'qwen3.5:A3b
+  (setq gptel-model 'gemini-3-flash-preview; 'qwen3.6:27B
         ;gptel-include-reasoning t; disables reasoning_effort in gemini
         gptel-backend (gptel-make-gemini "Gemini" :key (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY"))) :stream t)))
 
@@ -737,6 +738,7 @@
   :config (require 'mcp-hub)
   :custom (mcp-hub-servers `(;("chrome-devtools" :command "npx" :args ("-y" "chrome-devtools-mcp@latest" "--no-usage-statistics")); "--browseUrl" "http://127.0.0.1:39495"; chrome --remote-debugging-port=39495 ; chrome://inspect/#devices
                              ;("codex" :command "codex" :args ("mcp-server" "-c" "sandbox_permissions=['read-only']" "-c" "approval_policy='untrusted'"))
+                             ;("duckdb" :command "uvx" :args ("mcp-server-motherduck" "--db-path" ":memory:" "--read-write" "--allow-switch-databases"))
                              ("lldb" :url "127.0.0.1:39496")));lldb -O 'protocol-server start MCP listen://localhost:39496' use stdio with 'nc localhost 59999'
 
   :commands (mcp-hub-start-server mcp-hub-start-all-server mcp-hub-get-all-tool))

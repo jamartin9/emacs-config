@@ -31,6 +31,9 @@
   - column store for faster analytics
   - sqlite/postgres scanner support
   - no concurrent readers/writers yet
+    - DuckLake adds multiple with postgres as catalog or sqlite as local
+  - duckdb-wasm shell 1.5.2 does not support fts extension test or snippet function
+  - lindel extension for morton/hilbert codes (z-ordering for physical column indices)
 - Clickhouse
 - https://transactional.blog/notes-on/disaggregated-oltp
 ** notes

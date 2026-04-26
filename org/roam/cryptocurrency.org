@@ -302,3 +302,159 @@ spec:
           containerPort: 5432
           hostPort: 5432
 #+END_SRC
+- Sage: Logout of your wallet, click the (...) on your wallet, then Details to get the public key
+- publish chia plugin with ~dotnet build -c Release~
+  - https://plugin-builder.btcpayserver.org/public/plugins has monero and chia plugin at conflicting minimum/max versions for btcpay so use my fork to change the compat for .net10 on chia or use older
+  - run without userns-id
+  - changes
+    - updated btcpayserver submodule to latest
+    - change dotnet from 8 to 10 and lang to 14 in ~.csproj~
+    - vendored Nethermind.Crypto.Bls for newer dotnet 10 version
+    - updated chia-dotnet for dotnet10
+  - BTCPayServer.PluginPacker with ~dotnet run ../../BTCPayServer.Plugins.Chia/bin/Release/net10.0/ BTCPayServer.Plugins.Chia .~ from ~btcpayserver-chia-plugin/btcpayserver/BTCPayServer.PluginPacker~
+    - manual .btcpay for web ui ~cd ./BTCPayServer.Plugins.Chia/bin/Release/net10.0/ && zip -r ../BTCPayServer.Plugins.Chia.btcpay ./~
+    - alternatively copy libs and deps json ~cp -r /gnu/git/btcpayserver-chia-plugin/BTCPayServer.Plugins.Chia/bin/Release/net10.0/* /gnu/git/btcpay/btcpay-plugins/BTCPayServer.Plugins.Chia~
+      - check deps.json for native lib in path
+#+NAME: btcpayserver-podman-updated-deps-json
+#+BEGIN_SRC json :tangle no
+      "Nethermind.Crypto.Bls/1.0.5": {
+        "runtime": {
+          "Nethermind.Crypto.Bls.dll": {
+            "assemblyVersion": "1.0.5.0",
+            "fileVersion": "1.0.5.0"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libblst.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          }
+        }
+      }
+#+END_SRC
+    - Nethermind.Crypto.Bls vendors a precompiled native library that does not support cpu feature(ADX but it has BMI) unless https://github.com/supranational/blst/ is rebuilt for the native lib with ~./build.sh -D__BLST_PORTABLE__ -shared~
+      - copy ~cp libblst.so /gnu/git/btcpay/btcpay-plugins/BTCPayServer.Plugins.Chia/runtimes/linux-x64/native/libblst.so~ or into the vendored (the project does this within the github pipeline)
+      - if you vendor with a project reference in .csproj you must edit the deps.json for native lib as the unpublished project (for .net10 unpublish commit) doesn't add the native entry without nuget package(long standing issues dotnet/sdk#765 dotnet/sdk#1088 dotnet/sdk#24708)
+      - 1.5.0 is built with portable flags
+  - restart btcpayserver and view logs ~podman logs btcpay-deployment-pod-btcpay~
+  - create plugin json
+#+NAME: btcpayserver-podman-updated-json
+#+BEGIN_SRC json :tangle no
+{
+  "Identifier": "BTCPayServer.Plugins.Chia",
+  "Name": "Chia",
+  "Version": "1.0.4",
+  "Description": "Chia integration",
+  "SystemPlugin": false,
+  "Dependencies": [
+    {
+      "Identifier": "BTCPayServer",
+      "Condition": ">=2.3.7"
+    }
+  ],
+  "Documentation": null,
+  "Source": null,
+  "Author": null,
+  "AuthorLink": null
+}
+#+END_SRC
+#+NAME: btcpayserver-podman-updated
+#+BEGIN_SRC yaml :tangle no
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: btcpay-deployment
+  labels:
+    app: btcpay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: btcpay
+  template:
+    metadata:
+      labels:
+        app: btcpay
+    spec:
+      volumes:
+      - name: btcpay-data
+        hostPath:
+          path: /gnu/git/btcpay/btcpay-data
+      - name: btcpay-plugins
+        hostPath:
+          path: /gnu/git/btcpay/btcpay-plugins
+      - name: postgres-data
+        hostPath:
+          path: /gnu/git/btcpay/btcpay-postgres
+      containers:
+      - name: btcpay
+        image: btcpayserver/btcpayserver:2.3.9
+        volumeMounts:
+        - name: btcpay-data
+          mountPath: /datadir
+        - name: btcpay-plugins
+          mountPath: /root/.btcpayserver/Plugins
+        env:
+        - name: BTCPAY_POSTGRES
+          value: "User ID=postgres;Host=127.0.0.1;Port=5432;Application Name=btcpayserver;Database=btcpayserver"
+        - name: BTCPAY_NETWORK
+          value: mainnet
+        - name: BTCPAY_BIND
+          value: 0.0.0.0:49392
+        - name: BTCPAY_ROOTPATH
+          value: /
+        - name: BTCPAY_SSHCONNECTION
+          value: "root@host.docker.internal"
+        - name: BTCPAY_SSHTRUSTEDFINGERPRINTS
+          value: ""
+        - name: BTCPAY_SSHKEYFILE
+          value: ""
+        - name: BTCPAY_SSHAUTHORIZEDKEYS
+          value: ""
+        - name: BTCPAY_DEBUGLOG
+          value: btcpay.log
+        - name: BTCPAY_UPDATEURL
+          value: https://api.github.com/repos/btcpayserver/btcpayserver/releases/latest
+        - name: BTCPAY_DOCKERDEPLOYMENT
+          value: "true"
+        - name: "BTCPAY_NODEFAULTCHAIN"
+          value: "true"
+        - name: "COREHOST_TRACE"
+          value: "1"
+#        - name: BTCPAY_XMR_DAEMON_URI
+#          value: http://127.0.0.1:18081
+#        - name: BTCPAY_XMR_WALLET_DAEMON_URI
+#          value: http://127.0.0.1:18082
+#        - name: BTCPAY_XMR_WALLET_DAEMON_WALLETDIR
+#          value: /root/xmr_wallet
+        ports:
+        - name: btcpay-port
+          containerPort: 49392
+          hostPort: 49392
+      - name: postgres
+        image: btcpayserver/postgres:18.1-1
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql
+        args: ["-c", "random_page_cost=1.0", "-c", "shared_preload_libraries=pg_stat_statements"]
+        env:
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: trust
+        ports:
+        - name: postgres-port
+          containerPort: 5432
+          hostPort: 5432
+#+END_SRC
+  - Debug
+    - set master key hex from greenfield api
+      - create unrestricted api access token from account -> settings -> api keys
+      - curl post the key. add optional ~, "addresses": ["xchADDR"]~ to the config object to create an initial invoice (generation seems broken with tested random pubkey?)
+        - reset bad config with ~podman exec -it CONTAINER_ID psql -U postgres -d btcpayserver~ then ~UPDATE "Stores" SET "DerivationStrategies" = "DerivationStrategies" - 'XCH-CHIA' WHERE "Id" = 'STORE_ID';~ replacing STORE_ID and CONTAINER_ID
+#+NAME: btcpayserver-podman-curl-json
+#+BEGIN_SRC json :tangle no
+curl -X PUT "http://127.0.0.1:49392/api/v1/stores/STORE_ID/payment-methods/XCH-CHIA"   -H "Authorization: token API_KEY"   -H "Content-Type: application/json"   -d '{
+    "enabled": true,
+    "config": { "masterPublicKey": "96ce91d974daa0990e6681ac2de3e3f49142f6b655a081817832265c143e658a6e60a5dec856f292f45fe2d04c7856f6" }
+  }'
+#+END_SRC
+      - check results with ~curl -H "Authorization: token API_KEY" "http://127.0.0.1:49392/api/v1/stores/STORE_ID/payment-methods?includeConfig=true"~

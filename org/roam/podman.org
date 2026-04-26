@@ -9,6 +9,9 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * podman
 ** podman notes
+- see logs from containers that fail to start with ~podman start CONTAINER_ID -a~
+- see exit code ~podman inspect btcpay-deployment-pod-btcpay --format '{{.State.ExitCode}}'~ ex 132 is illegal instruction
+  - ~podman update --restart=no ID~ to prevent restarts
 - rootless containers with kernel >= 5.11 overlayfs
   - ~rm -rf ~/.{config,local/share}/containers /run/user/$(id -u)/{libpod,runc,vfs-*}~ or ~podman system migrate~ or ~podman system reset~
   - ~touch /etc/subuid /etc/subgid && usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $(whoami)~ for pid/gid

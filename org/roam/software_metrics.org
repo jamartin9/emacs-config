@@ -17,6 +17,8 @@ Thee who watches the watchers
   - [[id:15a1bd83-5412-4ea3-b883-d2026fc2966a][prometheus-tech]]
 - profilers
   - https://github.com/intel/oneapi-containers/tree/master/images/docker/vtune
+  - async profiler
+    - native example ~LD_PRELOAD=/libasyncProfiler.so ASPROF_COMMAND=start,nativemem,total,event=cpu,wall,loop=10m,cstack=dwarf,file=profile-%t.jfr ./ree~
 - perforator
   - record flamegraph and compare (ebpf collection)
 - pyroscope
