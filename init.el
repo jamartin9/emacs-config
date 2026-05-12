@@ -131,7 +131,7 @@
               touch-screen-display-keyboard t
               scroll-bar-mode nil
               mouse-yank-at-point t
-              mouse-drag-and-drop-region t
+              mouse-drag-and-drop-region t ; mouse-shift-adjust-mode
               x-stretch-cursor nil
               indicate-buffer-boundaries nil
               indicate-empty-lines nil
@@ -147,6 +147,7 @@
               split-width-threshold 160
               resize-mini-windows 'grow-only
               truncate-partial-width-windows nil
+              mode-line-collapse-minor-modes t ; hide minor modes in button
               auto-window-vscroll nil ; scrolling
               mouse-wheel-tilt-scroll t ; horizontal scrolling
               mouse-wheel-flip-direction t ; horizontal scrolling
@@ -215,20 +216,23 @@
   (add-to-list 'initial-frame-alist '(alpha-background . 80))
   (set-language-environment "UTF-8")
   (bind-keys :prefix-map jam/code :prefix "C-c c" ; all bind maps under C-c c
-           ("j" . xref-find-definitions)
+           ("j" . xref-find-definitions) ; global-xref-mouse-mode for ctrl click
            ("c" . compile))
   (bind-keys :prefix-map jam/toggle :prefix "C-c c t"
            ("v" . visible-mode)
-           ("w" . visual-line-mode); toggle-truncate-lines
+           ("w" . visual-line-mode)
+           ("W" . delete-trailing-whitespace-mode)
            ("x" . xterm-mouse-mode)
            ("c" . global-display-fill-column-indicator-mode)
            ("t" . toggle-frame-maximized)
+           ("T" . toggle-truncate-lines)
            ("f" . toggle-frame-fullscreen)
            ("F" . flymake-mode)
            ("r" . recentf-mode)
            ("m" . follow-mode)
            ("M" . scroll-lock-mode)
            ("e" . strokes-mode)
+           ("h" . mode-line-invisible-mode)
            ("g" . auto-revert-mode))
   (bind-keys :prefix-map jam/open :prefix "C-c c o"
            ("s" . jam/sudo-edit)
@@ -280,7 +284,9 @@
 (use-package calc
   :ensure nil ; built-in
   :commands (calc calc-algebraic-entry) ; a S to solve for var ex. x=y+1
-  :config (with-temp-buffer (calc)); calc-graph-fast (gf) ex. [0..10] then x+1 on stack
+  :config
+  (setq calc-inhibit-startup-message t)
+  (with-temp-buffer (calc)); calc-graph-fast (gf) ex. [0..10] then x+1 on stack
   :bind (:map jam/open ("a" . calc-algebraic-entry)))
 
 (use-package proced
@@ -469,7 +475,7 @@
                                    (nnimap "riseup" (nnimap-address "mail.riseup.net") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-wait 90)) ; prompts for authinfo.gpg with format: machine gmail login your_user password your_password
                                    (nnimap "gmail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl) (nnir-search-engine imap) (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash") (nnmail-expiry-wait immediate)); 'B m' to move, 'B DEL' to delete, 'E' is expire with 'B e'. Mark with '#' for mass operations.  x to execute
                                    ;(nneething "/tmp"); G m for solid or G D for ephemeral (gnus-group-enter-directory) (over ange-ftp /ftp.hpc.uh.edu:/pub/emacs/ding-list/ ?)
-                                   (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom")); not used: https://savannah.gnu.org/news/atom.php?group=emacs
+                                   (nnatom "github.com/jellyfin/jellyfin/releases.atom") (nnatom "github.com/nzbgetcom/nzbget/tags.atom") (nnatom "github.com/emacs-mirror/emacs/tags.atom")); not used: https://savannah.gnu.org/news/atom.php?group=emacs
    gnus-use-cache t
    gnus-asynchronous t
    gnus-use-header-prefetch t
@@ -497,7 +503,7 @@
              gnus-cloud-storage-method nil; disable epg for just ascii armored file
              gnus-cloud-synced-files `(,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "authinfo.gpg")))
        (require 'nnrss) ; setup rss feeds.
-       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters") ("igalia" "https://planet.igalia.com/rss20.xml" "igalia"))); https://cacm.acm.org/feed/
+       (setq nnrss-group-alist '(("phoronix" "https://www.phoronix.com/rss.php" "Tech stuff") ("lwn" "https://lwn.net/headlines/newrss" "Linux stuff") ("lobste" "https://lobste.rs/rss" "Tech lobsters") ("igalia" "https://planet.igalia.com/rss20.xml" "igalia") ("gant" "https://gantnews.com/category/police-logs/feed/" "news") ("acm" "https://cacm.acm.org/feed/" "cacm")))
        (nnrss-save-server-data nil)
        (setq gnus-message-archive-group '((format-time-string "sent.%Y"))
              gnus-server-alist `(("archive" nnfolder "archive" (nnfolder-directory ,(concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "archive"))
@@ -506,20 +512,21 @@
                                   (nnfolder-inhibit-expiry t)))
              gnus-topic-topology '(("Gnus" visible);"Gnus" is the root folder. three mail accounts, "gmail", "riseup", "misc" then the nnatom feeds
                                    (("gmail" visible nil nil)) (("riseup" visible nil nil)) (("misc" visible))
-                                   (("Releases" visible)) (("Level1Techs" visible)) (("Lisp" visible)) (("Reddit" visible)))
+                                   (("Releases" visible)) (("Level1Techs" visible)) (("Lisp" visible)) (("News" visible)))
              gnus-topic-alist '(("gmail" "nnimap+gmail:INBOX" "nnimap+gmail:[Gmail]/All Mail" "nnimap+gmail:[Gmail]/Sent Mail" "nnimap+gmail:[Gmail]/Spam" "nnimap+gmail:[Gmail]/Trash" "nnimap+gmail:Drafts")
                                 ("riseup" "nnimap+riseup:INBOX" "nnimap+riseup:Sent" "nnimap+riseup:Trash" "nnimap+riseup:Drafts" "nnimap+riseup:Emacs-Cloud")
                                 ("misc" "nnfolder+archive:sent.2025" "nnfolder+archive:sent.2026" "nndraft:drafts"); the key of topic corresponds to a public imap folder or feed
-                                ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") ("Reddit" "nnatom+www.reddit.com/r/news/.rss:News")
+                                ("Level1Techs" "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends")
+                                ("News" "nnatom+www.reddit.com/r/news/.rss:News")
                                 ("Lisp" "nntp+news.yhetil.org:yhetil.emacs.devel" "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix")
-                                ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
+                                ("Releases" "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs" "nnatom+github.com/nzbgetcom/nzbget/tags.atom:Tags from nzbget" "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin")
                                 ("Gnus")))
        (gnus-topic-set-parameters "gmail" '((display . 200)) )(gnus-topic-set-parameters "riseup" '((display . 200))); see latest 200 mails in topic then press Enter on any group
        (gnus-subscribe-hierarchically "nnimap+riseup:INBOX") (gnus-subscribe-hierarchically "nnimap+riseup:Sent") (gnus-subscribe-hierarchically "nnimap+riseup:Trash") (gnus-subscribe-hierarchically "nnimap+riseup:Drafts")(gnus-subscribe-hierarchically "nnimap+riseup:Emacs-Cloud")
        (gnus-subscribe-hierarchically "nnimap+gmail:INBOX") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/All Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Sent Mail") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Trash") (gnus-subscribe-hierarchically "nnimap+gmail:[Gmail]/Spam") (gnus-subscribe-hierarchically "nnimap+gmail:Drafts")
        (gnus-subscribe-hierarchically "nnatom+youtube.com/feeds/videos.xml?channel_id=UCw_X9HgNg2J9p7wRM0FD4bA:Level1Links With Friends") (gnus-subscribe-hierarchically "nnatom+planet.guix.gnu.org/atom.xml:Planet Guix") (gnus-subscribe-hierarchically "nnatom+www.reddit.com/r/news/.rss:News")
-       (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
-       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix") (gnus-subscribe-hierarchically "nnrss:igalia");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
+       (gnus-subscribe-hierarchically "nnatom+github.com/emacs-mirror/emacs/tags.atom:Tags from emacs") (gnus-subscribe-hierarchically "nnatom+github.com/nzbgetcom/nzbget/tags.atom:Tags from nzbget") (gnus-subscribe-hierarchically "nnatom+github.com/jellyfin/jellyfin/releases.atom:Release notes from jellyfin") ; https://gantnews.com/category/police-logs/feed/
+       (gnus-subscribe-hierarchically "nnrss:lwn") (gnus-subscribe-hierarchically "nnrss:lobste") (gnus-subscribe-hierarchically "nnrss:phoronix") (gnus-subscribe-hierarchically "nnrss:igalia") (gnus-subscribe-hierarchically "nnrss:gant") (gnus-subscribe-hierarchically "nnrss:acm");(gnus-subscribe-hierarchically "nneething:/tmp") ; (setq gnus-verbose 8) and remove .nneething cache file (make sure to quit summary buffers with q) ;(gnus-group-set-subscription "nneething:/tmp" 1) ; set nneething to level 1 for notifications of new files ;(gnus-demon-add-handler 'gnus-demon-scan-news 1 t) ; scan news every 10 mins
        (gnus-subscribe-hierarchically "nntp+news.yhetil.org:yhetil.emacs.devel"))))
 
 (use-package which-key
@@ -552,7 +559,7 @@
          ((yaml-mode conf-mode prog-mode) . flyspell-prog-mode))
   :commands (flyspell-mode)
   :config (setq flyspell-issue-welcome-flag nil
-                flyspell-issue-message-flag nil
+                flyspell-issue-message-flag nil; flyspell-delay-use-timer
                 ispell-program-name "aspell" ; runs as own process
                 ispell-extra-args '("--sug-mode=ultra" "--run-together")
                 ispell-personal-dictionary (expand-file-name (concat (file-name-as-directory "ispell") ispell-dictionary ".pws") (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "etc")))
@@ -698,10 +705,6 @@
   :config (setq osm-tile-directory (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") (file-name-as-directory "osm")))
   :custom (osm-copyright nil))
 
-(use-package minions ; hide minor modes on modeline
-  :hook ((after-init . minions-mode))
-  :commands (minions-mode))
-
 (use-package eat ;:pin nongnu
   :config (setq eat-sixel-scale 2.0); eat-message-handler-alist for shell integration with _eat_msg. eat-tramp-shells or eat-shell to set default shell
   :bind (:map jam/open ("t" . eat)
@@ -726,8 +729,7 @@
                                          :host "localhost:8080"
                                          :models '((gemma4:A4B :capabilities (tool-use json media audio))
                                                    (qwen3.6:A3B :capabilities (tool-use json media))
-                                                   (qwen3.6:27B :capabilities (tool-use json media))
-                                                   (glm4.7-flash:A3B :capabilities (tool-use json)))
+                                                   (qwen3.6:27B :capabilities (tool-use json media)))
                                          :stream t)
   (setq gptel-model 'gemini-3-flash-preview; 'qwen3.6:27B
         ;gptel-include-reasoning t; disables reasoning_effort in gemini

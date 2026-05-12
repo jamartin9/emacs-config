@@ -42,3 +42,39 @@
   - checking mem usage to 2048
   - announce to all trackers
   - lower connections to 50 so NAT tables do not get overwhelmed
+- ltconfig (replace IP and PORT and connection_speed)
+#+NAME: ltconfig.conf
+#+BEGIN_SRC conf :tangle no
+{
+    "file": 1,
+    "format": 1
+}{
+    "apply_on_start": true,
+    "settings": {
+        "active_limit": 9001,
+        "active_seeds": 9001,
+        "active_tracker_limit": 9001,
+        "aio_threads": 8,
+        "allow_multiple_connections_per_ip": true,
+        "announce_to_all_tiers": false,
+        "announce_to_all_trackers": false,
+        "ban_web_seeds": false,
+        "broadcast_lsd": false,
+        "cache_expiry": 30,
+        "cache_size": 65536,
+        "checking_mem_usage": 2048,
+        "coalesce_reads": true,
+        "coalesce_writes": true,
+        "connection_speed": 500,
+        "connections_limit": 8000,
+        "listen_interfaces": "IP:PORT",
+        "mixed_mode_algorithm": 1,
+        "outgoing_interfaces": "IP",
+        "outgoing_port": 0,
+        "tracker_backoff": 22,
+        "tracker_completion_timeout": 60,
+        "unchoke_slots_limit": 2000,
+        "validate_https_trackers": true
+    }
+}
+#+END_SRC

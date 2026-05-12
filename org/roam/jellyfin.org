@@ -15,7 +15,7 @@
 - ffmpeg needs patched with -force_dts_monotonicity for streams with adds/interrupts
 - [[https://emby.media/support/articles/Strm-Files.html][STRM]] files for remote streaming
 - roku client
-  - disable direct playback and set bitrate limit (default 10 mbps h264 roku) to force transcode on errors
+  - disable direct playback and set bitrate limit (default 10 mbps h264 roku) to force transcode on errors. set force transcode with remux disabled for compat
 - web client
 - create ~.ignore~ file under directory to be ignored (sample directory)
 - config
@@ -23,16 +23,14 @@
   - enable tone mapping with nvenc for HDR -> SDR
   - add plugins for anidb
   - set series under shows/
-  - set subtitles from web user page to None to stop default play
+  - set subtitles from web user page to None or Forced and relog on each client to stop default play
 - running jellyfin with podman container
   - must have proper underlying volume mount permissions
     - ~fuse.conf~ with ~user_allow_other~ for ~-o allow_other~ if not same user/group ie with user level namespaced containers
     - same permissions as underlying fs for ro/rw
   - rshared/rbind opts for recursive mounts
-    - With [[id:308edd9a-90d8-44f3-ab1f-fae4942b0eae][rarfs]] the container must be started before the mounts under volume for propagation or the mounts passed as volumes at creation time.
-    - BUG propagating existing fuse mounts on creation
+    - rslave with [[id:308edd9a-90d8-44f3-ab1f-fae4942b0eae][rarfs]] using a container for volume mount propagation
       - affects podman run only and not kube deployment
-- [[id:90cf48a5-3b01-4667-b100-72acea67034f][podman]] run configuration with nvidia support
 #+NAME: iptv.m3u8
 #+BEGIN_SRC text :tangle no
 #EXTM3U
@@ -52,6 +50,7 @@ https://apollo.production-public.tubi.io/live/ac-gordon-ramsey.m3u8
 https://apollo.production-public.tubi.io/live/tubi-originals.m3u8
 #+END_SRC
 - https://www.wtaj.com/video-sitemap.xml?yyyy=2025&mm=04&dd=10 require parse for m3u8?
+- [[id:90cf48a5-3b01-4667-b100-72acea67034f][podman]] run configuration with nvidia support
 #+NAME: jellyfin
 #+BEGIN_SRC shell :tangle no
   podman run \
@@ -70,8 +69,7 @@ https://apollo.production-public.tubi.io/live/tubi-originals.m3u8
   --volume /storage/jellyfin-cache:/cache:Z \
   --volume /storage/jellyfin-config:/config:Z \
   --volume /home/jam/Videos:/media:ro \
-  --volume /home/jam/Shows:/media2:ro \
-  --volume /run/media/jam/Elements/Me/Shows/:/media4:ro \
+  --volume /home/jam/rarfs:/media2:rslave \
   --volume /run/media/jam/Elements/Me/Video:/media3:rshared,rbind \
   docker.io/jellyfin/jellyfin:latest
 #+END_SRC
@@ -82,12 +80,11 @@ https://apollo.production-public.tubi.io/live/tubi-originals.m3u8
 # unstable jellyfin ID is d55573d17f58
 podman run --rm -it --device nvidia.com/gpu=all --security-opt=label=disable --env NVIDIA_DRIVER_CAPABILITIES=all --env NVIDIA_VISIBLE_DEVICES=all -p 8096:8096 \
        -v /gnu/git/jellyfin-config:/config  \
-       -v /run/media/jam/Elements/Me/Shows:/media4 \
-       -v /zroot/storage/:/media3 \
-       -v /gnu/git/rarfs-mount/:/media2 \
        -v /gnu/git/jellyfin-cache:/cache \
-       -v /storage/Videos/:/media \
-       docker.io/jellyfin/jellyfin:unstable
+       -v /gnu/git/torrents/videos/:/media3:rslave \
+       -v /storage/Videos/:/media3/Videos \
+       -v /gnu/git/torrents/shows/:/media5 \
+       docker.io/jellyfin/jellyfin:10.11.8
 #+END_SRC
 
 #+NAME: media-stack

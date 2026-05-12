@@ -207,13 +207,15 @@ self.addEventListener('fetch', function(e) {
 - https://z-library.cc/
 - https://hianime.to
   - shutdown 3/13/2026
+    - check popular https://everythingmoe.com/
 - https://animekai.to
   - https://animekai.cc
   - https://animekai.ac
   - https://anikai.to
   - hardsub sites
     - https://gogoanime.by/
-    - https://animepahe.si/
+      - https://anitaku.io/
+    - animepahe.pw animepahe.com animepahe.org
 - https://cs.rin.ru
 - https://cdm-project.com/Download-Tools/StreamFab
 - sanet.st
@@ -230,4 +232,7 @@ self.addEventListener('fetch', function(e) {
 - https://rarefilmm.com/
 - https://feed.animetosho.org/atom
   -  terminated in May 2026
+  - https://amenzb.moe/
+  - https://www.tokyoinsider.com/
+  - https://animetoki.com/
 

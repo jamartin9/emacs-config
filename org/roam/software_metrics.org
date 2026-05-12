@@ -21,6 +21,32 @@ Thee who watches the watchers
     - native example ~LD_PRELOAD=/libasyncProfiler.so ASPROF_COMMAND=start,nativemem,total,event=cpu,wall,loop=10m,cstack=dwarf,file=profile-%t.jfr ./ree~
 - perforator
   - record flamegraph and compare (ebpf collection)
+- trace-cmd
+#+NAME: trace-args
+#+BEGIN_SRC sh :tangle no
+trace-cmd record -i \
+    -e "sched:sched_switch" \
+    -e "sched:sched_process_exec" \
+    -e "sched:sched_process_fork" \
+    -e "sched:sched_process_exit" \
+    -e "amdgpu:amdgpu_vm_flush" \
+    -e "amdgpu:amdgpu_cs_ioctl" \
+    -e "amdgpu:amdgpu_sched_run_job" \
+    -e "*fence:*fence_signaled" \
+    -e "drm:drm_vblank_event" \
+    -e "drm:drm_vblank_event_queued" \
+    -e "i915:i915_flip_request" \
+    -e "i915:i915_flip_complete" \
+    -e "i915:intel_gpu_freq_change" \
+    -e "i915:i915_gem_request_add" \
+    -e "i915:i915_gem_request_submit" \
+    -e "i915:i915_gem_request_in" \
+    -e "i915:i915_gem_request_out" \
+    -e "i915:intel_engine_notify" \
+    -e "i915:i915_gem_request_wait_begin" \
+    -e "i915:i915_gem_request_wait_end" \
+    sleep 4
+#+END_SRC
 - pyroscope
   - aggregates profiling data for flamegraphs
   - compare flamegraphs with grafana and alloy(ebpf collection)

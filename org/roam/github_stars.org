@@ -8,6 +8,8 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** cbftp/cbftp-svn
+  - Cbftp is an advanced multi-purpose FTP/FXP client that focuses on efficient large-scale data spreading, while also supporting most regular FTP/FXP use cases in a modern way. It runs in a terminal and provides a semi-graphical user interface through ncurses
 ** johnmn3/injest
   - +>, +>>, x>>, =>>: Auto-transducifying, auto-parallelizing path thread macros for clojure performance
 ** VirtusLab/sandcat
@@ -1172,8 +1174,6 @@
   - Official Code for DiffMorpher: Unleashing the Capability of Diffusion Models for Image Morphing
 ** keybase/saltpack
   - a modern crypto messaging format
-** keylase/nvidia-patch
-  - This patch removes restriction on maximum number of simultaneous NVENC video encoding sessions imposed by Nvidia to consumer-grade GPUs.
 ** keystone-engine/keystone
   - Keystone assembler framework: Core (Arm, Arm64, Hexagon, Mips, PowerPC, Sparc, SystemZ & X86) + bindings
 ** KhoomeiK/LlamaGym
@@ -2379,7 +2379,12 @@
 ** yandex/perforator
   - Perforator is a cluster-wide continuous profiling tool designed for large data centers
 
+
 * machine learning
+** taco-project/FlexKV
+  - A KVCache Manager for High-Performance Distributed Inference
+** ai-dynamo/aiperf
+  - AIPerf is a comprehensive benchmarking tool that measures the performance of generative AI models served by your preferred inference solution.
 ** lampepfl/TACIT
   - TACIT — Tracked Agent Capabilities In Types for Scala
 ** llm4s/rag_in_a_box
@@ -2429,7 +2434,14 @@
 ** zkonduit/ezkl
   - Deep learning with ZK-Snarks
 
+
 * rust
+** mstange/samply
+  - samply is a command line CPU profiler which uses the Firefox profiler as its UI.
+** NVlabs/cuda-oxide
+  - cuda-oxide is an experimental Rust-to-CUDA compiler that lets you write (SIMT) GPU kernels in safe(ish), idiomatic Rust. It compiles standard Rust code directly to PTX — no DSLs, no foreign language bindings, just Rust.
+** ClementTsang/bottom
+  - Yet another cross-platform graphical process/system monitor.
 ** hotdata-dev/datafusion-ducklake
   - A Rust-native DuckLake engine built on Apache DataFusion
 ** datafusion-contrib/datafusion-federation
@@ -2663,6 +2675,10 @@
 
 
 * utils
+** mikesart/gpuvis
+  - trace-cmd gpu visualizer for intel/amd/mesa/steamvr
+** keylase/nvidia-patch
+  - This patch removes restriction on maximum number of simultaneous NVENC video encoding sessions imposed by Nvidia to consumer-grade GPUs.
 ** codeberg.org/tazjin/reka
   - window manager inside of Emacs pgtk for Wayland
 ** andikleen/pmu-tools
@@ -2670,13 +2686,11 @@
 ** andreas-abel/uiCA
   - uops.info Code Analyzer for intel bottleneck performance analysis
 ** btcpayserver/btcpayserver
-  - Accept Bitcoin payments. Free, open-source & self-hosted, Bitcoin payment processor.
+  - Accept Bitcoin payments. Free, open-source & self-hosted, Bitcoin payment processor. Plugins for monero and chia.
 ** BurntSushi/ripgrep
   - ripgrep recursively searches directories for a regex pattern while respecting your gitignore
 ** checkpoint-restore/criu
   - Checkpoint/Restore tool
-** ClementTsang/bottom
-  - Yet another cross-platform graphical process/system monitor.
 ** compiler-explorer/compiler-explorer
   - Run compilers interactively from your web browser and interact with the assembly
 ** containers/podman
@@ -2735,6 +2749,7 @@
   - Winetricks is an easy way to work around problems in Wine
 ** async-profiler/async-profiler
   - Sampling CPU and HEAP profiler for Java featuring AsyncGetCallTrace + perf_events
+
 
 * Stack
 ** emacs-mirror/emacs

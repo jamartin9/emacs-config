@@ -1,6 +1,6 @@
 
 * emacs-config
-This configuration is for emacs >= 30
+This configuration is for emacs >= 31
 
 Third party packages:
 
@@ -11,8 +11,6 @@ eat: graphical terminal emulation. alternative is built-in multi-term w/o visual
 magit/forge: git/forge manipulation. alternative is built-in vc that lacks complex workflows like interactive rebase, forge pull requests or code review comments
 
 org-roam: tag system for note database. alternative is org-node or self devised naming/search scheme with a datetree journal
-
-minions-mode: keeps the modeline visually brief with retained information. alternative is diminish/delight packages and config for each mode
 
 osm: Map tile viewer. alternative is web browser viewing
 

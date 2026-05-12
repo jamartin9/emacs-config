@@ -8,19 +8,13 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * notes
-- fallacies of crypto haters
-  - wrought with fraud so it needs 'regulation'
-    - banks are the biggest scamming hucksters around and they facilitate most of financial fraud in the world within 'regulations'
-  - not decentralized
-    - 'people do not want to run their own servers' - moxie marlinspike
-      - they will and do; a nakamoto number greater than 1 is still more than the status quo
-- fallacies of crypto bros
-  - 'trapped energy'
-    - sets lower bound on energy production price beyond the government; thus encourages more production regardless of means
-    - wasting compute cycles on hashing random numbers instead of folding proteins, simulating fluid dynamics, SETI etc (need internet connection for blockchain sync); price should not be the primary factor for investing in hard research problems.
 - cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
   - sigma protocols are alternative (COMINT)
 * chia
+- https://arcade21.games/ for games
+- https://beta.xch.trade/ to view swap prices between dexie and tibetswap
+- https://weso.forgeros.fr/tokenomics for incentive on compaction
+- https://xch.ninja/ for prefarm tracker
 - simpleswap.io swaps xch on kucoin
 - Permuto will allow "eligible holders"" to deposit Microsoft stock (MSFT) and issue "dividend" and "appreciation" certificates on the chia blockchain; to be traded seperately. Allowed 10% of total stock and voting is done based on prices of the 'certificates'.
 - ~CHIA_ROOT~ env variable configuration
@@ -79,28 +73,6 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
 - space farmers pool runs community node
   - light farming alternative since flexpool shutdown
 - xch.events for mempool explorer
-** blunders
-- Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling
- - 0.59 btc in reserved. Required 1btc deposit to withdrawl.
-- CEO/CSO/Employees flame users on reddit (ex. Windows SSL issue)
-- Trademark trolling chiaplot (news site)/xchscan(block explorer) with fresh law grad
-  - the chia plot needed a lawyer for them to buzz off
-- large premine (promised to not use) is being used(sold) to 'marketing' and 'market makers'
-- layoff of devs after being told "we have years of runway"
-- hiring WEF managers and fossils(L. Goldman) for DevRel.
-- Gatekeeping timelord asics
-- exploited own vulnerability with catv1/v2 upgrade
-- stably scam
-  - chia has better custody tools than custodian. Total lack of DD
-- misrepresent the plot filter increase and effects it will have on farming k32's
-  - higher quality proofs will be more likely to win. k33 will provide higher proof quality than k32 given same storage space.
-- Slow development
-  - pooling release
-  - compressed plots
-    - announced needing new plot format but still bought drplotter compressed farmer
-  - node perf (dust storm)
-  - no blockchain download for years (offer torrent now)
-- atomic swaps and zkrollups not integrated into client for years
 * monero
 - use block > 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)
 - supports tor with sending tx's and wallets

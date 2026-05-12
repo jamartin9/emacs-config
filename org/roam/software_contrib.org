@@ -22,7 +22,7 @@
       - freebsd used sysctl support for hw temp sensors
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
-    - WIP sysinfo added freebsd ufs io with geom.
+    - WIP [[https://github.com/ClementTsang/bottom/pull/2055][sysinfo add freebsd ufs io and feature build flags]]
     - WIP to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path or parse zpool iostat json output in zfs 2.3+
       - add arc and l2arc to disk menu, get arc r/w bytes from procfs iostat. include note about not getting vdev level iostats as that would need ioctl like issue, so no total l2cache
       - send | recv of unmounted datasets will not be shown despite having stats currently
@@ -77,7 +77,7 @@
 - simons-public/protonfixes
   - added python support for proton [[https://github.com/simons-public/protonfixes/pull/80][4.11 option for d9vk]]
 - guix/guix
-  - patched [[https://issues.guix.gnu.org/53711][home services for i18n]] guix module and fix setlocale
+  - patched [[https://issues.guix.gnu.org/53711][home services for i18n]] guix module and fix setlocale [[https://codeberg.org/guix/guix/commit/41efa45508b292d947371dd6b9df943c33727c3d][commit]]
 - zdharma-continuum/zinit
   - [[https://github.com/zdharma-continuum/zinit/commit/5828f7202967a4be159c32153139876d994fbd42][added 'cloneopts' ice option]]
     - owner deleted original repo

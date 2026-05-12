@@ -13,7 +13,9 @@
 - kernel dev prompt collection https://github.com/masoncl/review-prompts
 - https://www.neuronpedia.org/ for sae identification
 - speculative encoding like eagle uses post training data to generate a predictive model
-- gemma scope is a sae for gemma feature exploration
+- gemma scope is a sae for gemma feature exploration https://hf.co/google/gemma-scope
+  - gemma scope 2 https://hf.co/google/gemma-scope-2
+- qwen scope is a sae for qwen3.5 dense and moe https://hf.co/spaces/Qwen/QwenScope
 - olmo3 has full data with ngram output linkage to pretraining sources
 - mirage for megakernel generation
 - standford megakernels use gpu interpreter so each sm gets an instruction stream
@@ -159,10 +161,10 @@
     - tool calling
     - quants
     - multimodal
-    - VLLM_USE_V1=1 for new arch
     - jinja chat templates
     - required compute capability higher than 5.2 for gguf and bnb
     - build custom docker image for cpu only avx2 (bf16,f32,f16 only) using ~--build-arg VLLM_CPU_DISABLE_AVX512=true~
+      - cpu docker images now available ~podman run  -v /gnu/git/llms/scripts/vllm:/root/.cache/vllm:z -v /gnu/git/llms/huggingface:/root/.cache/huggingface:z -e "HF_TOKEN=$HF_TOKEN" -e "VLLM_LOGGING_LEVEL=DEBUG" -e "ON_CPU=1" -e "VLLM_CPU_X86=true" -e "ONEDNN_MAX_CPU_ISA=AVX2" -e "VLLM_TARGET_DEVICE=cpu" -e "VLLM_CPU_KVCACHE_SPACE=2" -p 8000:8000 --ipc=host --rm vllm/vllm-openai-cpu:v0.20.1-x86_64 --model google/gemma-4-E2B-it --max-model-len 1024 --language-model-only~
       - https://arxiv.org/html/2505.06461v1 shows cpu slows down and bottlenecks with more than ~4 cores but can beat gpu on small local models
   - constrain output to json schema or grammar or choice
     - faster inference with constrained output https://blog.dottxt.co/coalescence.html
@@ -206,7 +208,12 @@
       - 1000 tons of CO2 (2.6 million KWh hours)
   - [[https://github.com/ggerganov/llama.cpp][llama.cpp gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
     - ik_llama.cpp fork with cpu/quant improvements
-      - ~-mtp~ ~--draft-max 10 --draft-p-min 0.85~ for mtp speculative decoding (poor perf with moe as memory bandwidth bound) and does not support qwen3.5 mtp yet...
+      - ~-mtp~ ~--draft-max 10 --draft-p-min 0.85~ for mtp speculative decoding (poor perf with moe as memory bandwidth bound)
+        - model must have either a drafter or MTP tensors preserved
+        - ~-mtp --draft-max 1 --draft-p-min 0.0~ for current qwen3.6 dense mtp support (perf degrades with more than 1)
+        - gemma4 assistant drafter MTP with ~--spec-type mtp -md ../gemma-4-26B-A4B-it-assistant-Q8_0.gguf --draft-max 3 --draft-p-min 0.0~
+          - ~-ngld 99~ for drafter gpu offload
+      - ~-c 524288 --rope-scaling yarn --rope-scale 2 --yarn-orig-ctx 262144~ for yarn scaling to larger context for qwen3.6
       - ~--fit~ and ~--fit-margin~ for gpu tensor offload
       - ~--smart-expert-reduction~ is basically REAP
       - supports vision for some models
@@ -215,7 +222,7 @@
           - use ~--swa-full~ with llama.cpp for comparable SWA. llama.cpp supports iSWA(checkpointing, compression, fixed size instead of growing with context)
       - fused deltanet for qwen3.5 (35B-A3B)
         - qwen 3.6 improved on qwen 3.5
-          - drift in ssm_conv1d tensors for qwen 3.6 corrected with Wasserstein and Qwen-Plus quants
+          - drift in ssm_conv1d tensors for qwen 3.6 corrected with Wasserstein and Qwen-Plus quants?
         - ~-khad~ or ~-vhad~ needs power of 2 attention head size (no MLA)
           - Hadamard transforms rotates the K or V cache for better quantized accuracy
           - only quant kv to q8 without Hadamard for accuracy
@@ -676,7 +683,7 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 #curl "127.0.0.1:8000/chat?prompt=What%20is%20the%20capital%20of%20France?" -XPOST
 # f32: just under ~9tk/s with vino or inductor or plain no compile. ik_llama gives ~14tk/s with same F32
-# quantized: bnb gives 0.5 tk/s and torachao Int8DynamicActivationInt8WeightConfig() gives 3.5 tk/s, 1.5 with weight_only v2 8 tk/s plain. Int8DynamicActivationIntxWeightConfig 4bit weight gives ~2 tk/s. Int4WeightOnly gives does not support. Vino does not support yet. vllm does not support yet.
+# quantized: bnb gives 0.5 tk/s and torachao Int8DynamicActivationInt8WeightConfig() gives 3.5 tk/s, 1.5 with weight_only v2 8 tk/s plain. Int8DynamicActivationIntxWeightConfig 4bit weight gives ~2 tk/s. Int4WeightOnly gives does not support. Vino does not support yet.
 # for tochao maybe add BUILD_TORCHAO_EXPERIMENTAL=1 but seems cpu inference is arm/mac only - UV_LINK_MODE=copy USE_CPP=1 USE_CUDA=0 USE_CPU_KERNELS=1 uv pip install --no-build-isolation -v --no-binary torchao -e ./ao 2>&1 | tee -a output.log
 # LD_LIBRARY_PATH=/gnu/git/llms/scripts/pyserv/.venv/lib/python3.12/site-packages/torch/lib
 
