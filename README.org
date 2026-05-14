@@ -18,8 +18,6 @@ gptel/mcp.el: interface with llms. alternative is llm package or cli
 
 dape/geiser-guile/pyvenv/yaml: language specific modes
 
-nov: epub reader. alternative is external program
-
 reka: river wayland window manager for emacs to run applications inside emacs under external wayland desktops (needs pgtk feature).
 
 ** Clone

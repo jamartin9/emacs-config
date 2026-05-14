@@ -253,7 +253,7 @@
                                                                                              ""))
    agent-shell-openai-authentication (agent-shell-openai-make-authentication :api-key (lambda () (setenv "GEMINI_API_KEY" (jam/auth-display (car (auth-source-search :user "GEMINI_API_KEY")))) "")))) ; use codex for gemini
 
-(use-package geiser-hoot ; guile-hoot (v0.8 in guix is missing repl.js - https://codeberg.org/spritely/hoot/issues/845)
+(use-package geiser-hoot ; guile-hoot
   ;:vc (:url "https://codeberg.org/spritely/geiser-hoot" :rev "08b7702e9d2d2bd377ea7fd89608f09e84d2f26a") ; install from source until release
   :config (setq geiser-hoot-scheme-local-dir (concat user-emacs-directory (file-name-as-directory ".local") (file-name-as-directory "cache") "geiser-hoot"))
   :commands (geiser-hoot)) ;geiser-hoot-load-path
