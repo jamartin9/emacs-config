@@ -9,23 +9,23 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org5c3894b">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org492c64f">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgc7e9c8d" class="outline-2">
-<h2 id="orgc7e9c8d">ZFS</h2>
-<div class="outline-text-2" id="text-orgc7e9c8d">
+<div id="outline-container-org9759f65" class="outline-2">
+<h2 id="org9759f65">ZFS</h2>
+<div class="outline-text-2" id="text-org9759f65">
 </div>
-<div id="outline-container-orgbb0b834" class="outline-3">
-<h3 id="orgbb0b834">openzfs</h3>
-<div class="outline-text-3" id="text-orgbb0b834">
+<div id="outline-container-org73c6406" class="outline-3">
+<h3 id="org73c6406">openzfs</h3>
+<div class="outline-text-3" id="text-org73c6406">
 </div>
-<div id="outline-container-org326a542" class="outline-4">
-<h4 id="org326a542">install</h4>
-<div class="outline-text-4" id="text-org326a542">
+<div id="outline-container-org55f4af4" class="outline-4">
+<h4 id="org55f4af4">install</h4>
+<div class="outline-text-4" id="text-org55f4af4">
 <ul class="org-ul">
 <li>(This may break pool import) If given whole disk zfs will leave small partition at begin/end and mark it with a wholedisk property.
 That small space is useful for uefi bootloader via: (zfs raidz expansion uses this since 2.2.0 ?)
@@ -44,11 +44,11 @@ A larger partition can allow proper fat32 fs type, grub installation(<code>--boo
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org5ae3259">auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
+<pre class="src src-conf" id="org72b61c1"><code>auth       optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 session [success=1 default=ignore]     pam_succeed_if.so service = systemd-user quiet
 session    optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
 password   optional                    pam_zfs_key.so homes=zroot/data/home runstatedir=/run/pam_zfs_key
-</pre>
+</code></pre>
 </div>
 <ul class="org-ul">
 <li>/etc/pam.d/system-auth and /etc/pam.d/su-l
@@ -85,18 +85,18 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org17ff4f2" class="outline-4">
-<h4 id="org17ff4f2">usage</h4>
-<div class="outline-text-4" id="text-org17ff4f2">
+<div id="outline-container-org3064a87" class="outline-4">
+<h4 id="org3064a87">usage</h4>
+<div class="outline-text-4" id="text-org3064a87">
 <ul class="org-ul">
 <li><code>zpool</code>  scrub(error check), resilver(parity), trim(ssd), adding/removing disks</li>
 <li><code>zfs</code> Mounting, keys, snapshots, rollbacks</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5f8b4a5" class="outline-4">
-<h4 id="org5f8b4a5">notes</h4>
-<div class="outline-text-4" id="text-org5f8b4a5">
+<div id="outline-container-org2a532e8" class="outline-4">
+<h4 id="org2a532e8">notes</h4>
+<div class="outline-text-4" id="text-org2a532e8">
 <ul class="org-ul">
 <li>2.3+ disable prefetch per dataset</li>
 <li>zfs anyraid for different sized disk pools</li>
@@ -180,17 +180,22 @@ password   include      zfs-key</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orga50ccec" class="outline-4">
-<h4 id="orga50ccec">guix on zfs</h4>
-<div class="outline-text-4" id="text-orga50ccec">
+<div id="outline-container-orgfa3b7ae" class="outline-4">
+<h4 id="orgfa3b7ae">guix on zfs</h4>
+<div class="outline-text-4" id="text-orgfa3b7ae">
 <ul class="org-ul">
 <li>see <a href="https://codeberg.org/guix/guix/pulls/1917#issuecomment-6976089">https://codeberg.org/guix/guix/pulls/1917#issuecomment-6976089</a> for modern patch based on the script/notes below
 <ul class="org-ul">
-<li><a href="https://codeberg.org/hako/Rosenthal/">https://codeberg.org/hako/Rosenthal/</a> with 2 patches at <code>modules/rosenthal/packages/patches</code></li>
+<li><a href="https://codeberg.org/hako/Rosenthal/">https://codeberg.org/hako/Rosenthal/</a> with patch at <code>modules/rosenthal/packages/patches</code>
+<ul class="org-ul">
+<li>built into kernel <a href="https://github.com/openzfs/zfs/issues/10450#issuecomment-643654436">https://github.com/openzfs/zfs/issues/10450#issuecomment-643654436</a> for (initramfs issues)</li>
+<li>UKI kernel with limine failed on deploy and vm image creation with qcow-gpt (grub-efi issues)</li>
+<li>zfs filesystem entries hang boot with vm image and error on deploy even with 2nd hd with pool and datasets</li>
+</ul></li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org6b42140">#!/usr/bin/env -S guix shell --pure bash coreutils zfs --
+<pre class="src src-sh" id="org1e9ee34"><code>#!/usr/bin/env -S guix shell --pure bash coreutils zfs --
 
 #
 # GuixSD install script synthesized from:
@@ -573,7 +578,7 @@ cat &lt;&lt;EOF &gt; /mnt/guix/persist/guix-config/config.scm
                                ;; Vim won't start without =/var/tmp=.
                                ("/var/tmp"                               #f))))))
                    %desktop-services))
-</pre>
+</code></pre>
 </div>
 </div>
 </div>

@@ -9,24 +9,34 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgb0b1b4d">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org3f5b156">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org21f882e" class="outline-2">
-<h2 id="org21f882e">Databases</h2>
-<div class="outline-text-2" id="text-org21f882e">
+<div id="outline-container-org646e387" class="outline-2">
+<h2 id="org646e387">Databases</h2>
+<div class="outline-text-2" id="text-org646e387">
 </div>
-<div id="outline-container-org0019cc6" class="outline-3">
-<h3 id="org0019cc6">Relational</h3>
-<div class="outline-text-3" id="text-org0019cc6">
+<div id="outline-container-orgafc3553" class="outline-3">
+<h3 id="orgafc3553">Relational</h3>
+<div class="outline-text-3" id="text-orgafc3553">
 <ul class="org-ul">
 <li><a href="sqlite.html#ID-162f9fba-d1f9-44e8-ae9f-685c578523f1">sqlite</a></li>
 <li><a href="postgres.html#ID-46651545-b172-443b-b0db-506019b4456c">postgres</a></li>
 <li>MySQL
 <ul class="org-ul">
+<li>mariab db fork
+<ul class="org-ul">
+<li>galera multi master clustering
+<ul class="org-ul">
+<li><a href="https://jepsen.io/analyses/mariadb-galera-cluster-12.1.2">https://jepsen.io/analyses/mariadb-galera-cluster-12.1.2</a> shows faults with even single node
+<ul class="org-ul">
+<li>"exhibits Stale Read, Lost Update, and other forms of G-single in healthy clusters, when no faults occur. Transactions may (apparently) modify data in the interval between a single transaction’s reads and writes; read-modify-write patterns, like those used in many ORMs, are likely unsafe."</li>
+</ul></li>
+</ul></li>
+</ul></li>
 <li>innodb storage engine prefetches and caches itself with default 16k record size
 <ul class="org-ul">
 <li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html">https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html</a></li>
@@ -45,24 +55,29 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org639699b" class="outline-3">
-<h3 id="org639699b">olap</h3>
-<div class="outline-text-3" id="text-org639699b">
+<div id="outline-container-orga40a87f" class="outline-3">
+<h3 id="orga40a87f">olap</h3>
+<div class="outline-text-3" id="text-orga40a87f">
 <ul class="org-ul">
 <li>duckdb
 <ul class="org-ul">
 <li>column store for faster analytics</li>
 <li>sqlite/postgres scanner support</li>
-<li>no concurrent readers/writers yet</li>
+<li>no concurrent readers/writers yet
+<ul class="org-ul">
+<li>DuckLake adds multiple with postgres as catalog or sqlite as local</li>
+</ul></li>
+<li>duckdb-wasm shell 1.5.2 does not support fts extension test or snippet function</li>
+<li>lindel extension for morton/hilbert codes (z-ordering for physical column indices)</li>
 </ul></li>
 <li>Clickhouse</li>
 <li><a href="https://transactional.blog/notes-on/disaggregated-oltp">https://transactional.blog/notes-on/disaggregated-oltp</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org8ca7e8d" class="outline-3">
-<h3 id="org8ca7e8d">notes</h3>
-<div class="outline-text-3" id="text-org8ca7e8d">
+<div id="outline-container-org9c91dcb" class="outline-3">
+<h3 id="org9c91dcb">notes</h3>
+<div class="outline-text-3" id="text-org9c91dcb">
 <ul class="org-ul">
 <li>BTree based DB's are more cache friendly as nodes can have more than 2 children (abseil uses 62 children) unlike Binary Trees
 <ul class="org-ul">

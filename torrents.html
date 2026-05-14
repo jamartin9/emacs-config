@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org53033d2">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org1cc9088">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org791bcff" class="outline-2">
-<h2 id="org791bcff">Torrents</h2>
-<div class="outline-text-2" id="text-org791bcff">
+<div id="outline-container-org1e24aae" class="outline-2">
+<h2 id="org1e24aae">Torrents</h2>
+<div class="outline-text-2" id="text-org1e24aae">
 </div>
-<div id="outline-container-org3dfeb68" class="outline-3">
-<h3 id="org3dfeb68">torrent notes</h3>
-<div class="outline-text-3" id="text-org3dfeb68">
+<div id="outline-container-orgb4e5c12" class="outline-3">
+<h3 id="orgb4e5c12">torrent notes</h3>
+<div class="outline-text-3" id="text-orgb4e5c12">
 <ul class="org-ul">
 <li>use magnet links that reference public tracker dht hashes</li>
 <li>crawl dht or peer exchange for discovery</li>
@@ -56,17 +56,17 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcb1a925" class="outline-3">
-<h3 id="orgcb1a925">transmission notes</h3>
-<div class="outline-text-3" id="text-orgcb1a925">
+<div id="outline-container-org4f15bdd" class="outline-3">
+<h3 id="org4f15bdd">transmission notes</h3>
+<div class="outline-text-3" id="text-org4f15bdd">
 <ul class="org-ul">
 <li><code>settings.json</code> set <code>"start-added-torrents": false,</code> to start torrents paused</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org3546903" class="outline-3">
-<h3 id="org3546903">deluge notes</h3>
-<div class="outline-text-3" id="text-org3546903">
+<div id="outline-container-org2c1fff0" class="outline-3">
+<h3 id="org2c1fff0">deluge notes</h3>
+<div class="outline-text-3" id="text-org2c1fff0">
 <ul class="org-ul">
 <li>webui is 8112 by default with pass of deluge</li>
 <li>supports BEP55 for hole punching with utp(w/udp)</li>
@@ -82,7 +82,43 @@
 <li>announce to all trackers</li>
 <li>lower connections to 50 so NAT tables do not get overwhelmed</li>
 </ul></li>
+<li>ltconfig (replace IP and PORT and connection<sub>speed</sub>)</li>
 </ul>
+<div class="org-src-container">
+<pre class="src src-conf" id="org1d71aed"><code>{
+    "file": 1,
+    "format": 1
+}{
+    "apply_on_start": true,
+    "settings": {
+        "active_limit": 9001,
+        "active_seeds": 9001,
+        "active_tracker_limit": 9001,
+        "aio_threads": 8,
+        "allow_multiple_connections_per_ip": true,
+        "announce_to_all_tiers": false,
+        "announce_to_all_trackers": false,
+        "ban_web_seeds": false,
+        "broadcast_lsd": false,
+        "cache_expiry": 30,
+        "cache_size": 65536,
+        "checking_mem_usage": 2048,
+        "coalesce_reads": true,
+        "coalesce_writes": true,
+        "connection_speed": 500,
+        "connections_limit": 8000,
+        "listen_interfaces": "IP:PORT",
+        "mixed_mode_algorithm": 1,
+        "outgoing_interfaces": "IP",
+        "outgoing_port": 0,
+        "tracker_backoff": 22,
+        "tracker_completion_timeout": 60,
+        "unchoke_slots_limit": 2000,
+        "validate_https_trackers": true
+    }
+}
+</code></pre>
+</div>
 </div>
 </div>
 </div>

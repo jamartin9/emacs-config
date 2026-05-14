@@ -9,15 +9,15 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org7a0bd32">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org70043f9">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org8341d5d" class="outline-2">
-<h2 id="org8341d5d">Virtualization</h2>
-<div class="outline-text-2" id="text-org8341d5d">
+<div id="outline-container-org398cb06" class="outline-2">
+<h2 id="org398cb06">Virtualization</h2>
+<div class="outline-text-2" id="text-org398cb06">
 <p>
 Simulate the simulation
 </p>
@@ -36,6 +36,7 @@ Simulate the simulation
 <ul class="org-ul">
 <li><code>-M microvm</code></li>
 <li>binfmt for running binaries for other archs</li>
+<li>add <code>-bios /usr/share/ovmf/x64/OVMF.4m.fd</code> for uefi boot</li>
 <li>ovmf/vfio for gpu pass through to vms
 <ul class="org-ul">
 <li>must have second card as sharing/virtualization is not supported on older cards
@@ -49,7 +50,7 @@ Simulate the simulation
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-shell" id="org16b4dca">#!/usr/bin/env bash
+<pre class="src src-shell" id="org2f6dcc5"><code>#!/usr/bin/env bash
 qemu-system-x86_64 -nic user,model=virtio-net-pci,hostfwd=tcp::8081-:8081,hostfwd=tcp::8080-:8080 -enable-kvm -m 2570 -device virtio-blk,drive=myhd -drive if=none,file=/My-image.qcow2,id=myhd -spice port=5930,disable-ticketing
 
 qemu-system-x86_64 -enable-kvm \
@@ -75,7 +76,7 @@ qemu-system-x86_64 -enable-kvm \
 #echo "Mount downloads with: sudo mount -t 9p -o trans-virtio downloads /gnu/git/downloads -oversion=9p2000.L,posixacl,msize10485600"
 qemu-system-x86_64 -smp 4 -cpu host -nic user,model=virtio-net-pci,hostfwd=tcp::8088-:6789,hostfwd=tcp::8080-:8080 -enable-kvm -m 8192 -device virtio-blk,drive=myhd -drive if=none,file=$1,id=myhd -virtfs local,path=/gnu/git/downloads,security_model=none,mount_tag=downloads
 
-</pre>
+</code></pre>
 </div>
 <ul class="org-ul">
 <li>firecracker

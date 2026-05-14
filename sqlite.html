@@ -9,19 +9,19 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org390e1f2">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgc6bc626">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org30e6b36" class="outline-2">
-<h2 id="org30e6b36">sqlite</h2>
-<div class="outline-text-2" id="text-org30e6b36">
+<div id="outline-container-org6f04eff" class="outline-2">
+<h2 id="org6f04eff">sqlite</h2>
+<div class="outline-text-2" id="text-org6f04eff">
 </div>
-<div id="outline-container-org75d97a4" class="outline-3">
-<h3 id="org75d97a4">notes</h3>
-<div class="outline-text-3" id="text-org75d97a4">
+<div id="outline-container-org240f542" class="outline-3">
+<h3 id="org240f542">notes</h3>
+<div class="outline-text-3" id="text-org240f542">
 <ul class="org-ul">
 <li>turso rust rewrite is async
 <ul class="org-ul">
@@ -129,11 +129,11 @@ dictated as <code>USING AUTOMATIC COVERING INDEX</code> in the <code>explain</co
 </ul>
 </div>
 </div>
-<div id="outline-container-org581fd55" class="outline-3">
-<h3 id="org581fd55">site database</h3>
-<div class="outline-text-3" id="text-org581fd55">
+<div id="outline-container-org3c5730b" class="outline-3">
+<h3 id="org3c5730b">site database</h3>
+<div class="outline-text-3" id="text-org3c5730b">
 <div class="org-src-container">
-<pre class="src src-sql" id="org7c3b407">-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
+<pre class="src src-sql" id="org4c49135"><code>-- create sqlar table from directory. Derived from '.archive -cn *.org' or 'sqlite3 -Acn *.org'
 -- setup db
 PRAGMA page_size=512;
 SAVEPOINT ar;
@@ -171,20 +171,20 @@ INSERT INTO site_pages(site_pages) VALUES('optimize');
 DROP TABLE IF EXISTS sqlar;
 RELEASE ar;
 VACUUM;
-</pre>
+</code></pre>
 </div>
 <ul class="org-ul">
 <li>view query ex:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sql" id="org056c671">-- get pages and preview from query (json?)
+<pre class="src src-sql" id="orgee6f2f3"><code>-- get pages and preview from query (json?)
 .mode box --wrap 30
 .param set $query 'emacs'
 SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH $query ORDER BY rank;
-</pre>
+</code></pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org0a615d2">(ignore-errors ; create db and set mtime to newest
+<pre class="src src-emacs-lisp" id="org9e83ed7"><code>(ignore-errors ; create db and set mtime to newest
   (let* ((base-dir (file-name-directory (or load-file-name buffer-file-name)))
          (db (concat base-dir "sqlar.sqlite")))
     (call-process "sqlite3" nil t nil db (format ".read %s" (concat base-dir "db.sql"))); create db
@@ -199,15 +199,15 @@ SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;
             (directory-files base-dir t "\.org$"))
     (set-file-times (concat base-dir "sqlite-query.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))
     (set-file-times (concat base-dir "sql-worker.js") (file-attribute-modification-time (file-attributes (concat base-dir "sqlite.org"))))))
-</pre>
+</code></pre>
 </div>
 </div>
-<div id="outline-container-org4f761b1" class="outline-4">
-<h4 id="org4f761b1">site search js/sql</h4>
-<div class="outline-text-4" id="text-org4f761b1">
+<div id="outline-container-orgf3bd163" class="outline-4">
+<h4 id="orgf3bd163">site search js/sql</h4>
+<div class="outline-text-4" id="text-orgf3bd163">
 <div class="org-src-container">
-<pre class="src src-javascript" id="orgbf61e54">    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
-    // MAYBE use shared worker for cross page sharing
+<pre class="src src-javascript" id="org4ad2f34"><code>    /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
+    // MAYBE use shared worker for cross page sharing(pglite uses leader election)
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:
@@ -257,10 +257,10 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
         }
     });
 });
-</pre>
+</code></pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-javascript" id="org833bcf7">onmessage = (e) =&gt; {
+<pre class="src src-javascript" id="orgc804e90"><code>onmessage = (e) =&gt; {
     const opt = {"returnValue": "resultRows"};
     const sql ="SELECT REPLACE(name, '.org', '.html') AS name, snippet(site_pages, 1, '&lt;b&gt;','&lt;/b&gt;', '', 64) AS snippet FROM site_pages WHERE data MATCH '"+ e.data +"' ORDER BY rank;";
     if (typeof globalThis.sqlite3InitModule === 'undefined') { // load sqlite3
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded',() =&gt; {
         }
     }
 };
-</pre>
+</code></pre>
 </div>
 </div>
 </div>

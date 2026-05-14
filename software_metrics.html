@@ -9,22 +9,22 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgec04054">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgf5f22cf">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgabe1ddb" class="outline-2">
-<h2 id="orgabe1ddb">Metrics</h2>
-<div class="outline-text-2" id="text-orgabe1ddb">
+<div id="outline-container-org8f2095e" class="outline-2">
+<h2 id="org8f2095e">Metrics</h2>
+<div class="outline-text-2" id="text-org8f2095e">
 <p>
 Thee who watches the watchers
 </p>
 </div>
-<div id="outline-container-org0279b6e" class="outline-3">
-<h3 id="org0279b6e">notes</h3>
-<div class="outline-text-3" id="text-org0279b6e">
+<div id="outline-container-org3c9a17f" class="outline-3">
+<h3 id="org3c9a17f">notes</h3>
+<div class="outline-text-3" id="text-org3c9a17f">
 <ul class="org-ul">
 <li>most profilers require frame pointers, almost all require debug information(can store seperately)</li>
 <li><code>sudo scx_lavd --performance</code> for latency aware scheduler (gpu/drm is wip)</li>
@@ -36,11 +36,43 @@ Thee who watches the watchers
 <li>profilers
 <ul class="org-ul">
 <li><a href="https://github.com/intel/oneapi-containers/tree/master/images/docker/vtune">https://github.com/intel/oneapi-containers/tree/master/images/docker/vtune</a></li>
+<li>async profiler
+<ul class="org-ul">
+<li>native example <code>LD_PRELOAD=/libasyncProfiler.so ASPROF_COMMAND=start,nativemem,total,event=cpu,wall,loop=10m,cstack=dwarf,file=profile-%t.jfr ./ree</code></li>
+</ul></li>
 </ul></li>
 <li>perforator
 <ul class="org-ul">
 <li>record flamegraph and compare (ebpf collection)</li>
 </ul></li>
+<li>trace-cmd</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh" id="org1f1e979"><code>trace-cmd record -i \
+    -e "sched:sched_switch" \
+    -e "sched:sched_process_exec" \
+    -e "sched:sched_process_fork" \
+    -e "sched:sched_process_exit" \
+    -e "amdgpu:amdgpu_vm_flush" \
+    -e "amdgpu:amdgpu_cs_ioctl" \
+    -e "amdgpu:amdgpu_sched_run_job" \
+    -e "*fence:*fence_signaled" \
+    -e "drm:drm_vblank_event" \
+    -e "drm:drm_vblank_event_queued" \
+    -e "i915:i915_flip_request" \
+    -e "i915:i915_flip_complete" \
+    -e "i915:intel_gpu_freq_change" \
+    -e "i915:i915_gem_request_add" \
+    -e "i915:i915_gem_request_submit" \
+    -e "i915:i915_gem_request_in" \
+    -e "i915:i915_gem_request_out" \
+    -e "i915:intel_engine_notify" \
+    -e "i915:i915_gem_request_wait_begin" \
+    -e "i915:i915_gem_request_wait_end" \
+    sleep 4
+</code></pre>
+</div>
+<ul class="org-ul">
 <li>pyroscope
 <ul class="org-ul">
 <li>aggregates profiling data for flamegraphs</li>
@@ -48,14 +80,14 @@ Thee who watches the watchers
 <ul class="org-ul">
 <li>grafana config: <a href="https://github.com/grafana/pyroscope/tree/main/examples/grafana-alloy-auto-instrumentation/ebpf">https://github.com/grafana/pyroscope/tree/main/examples/grafana-alloy-auto-instrumentation/ebpf</a>
 <ul class="org-ul">
-<li>rename urls for localhost and remove alloy as root dns on rootless podman was not resolving&#x2026;</li>
+<li>rename urls for localhost and remove alloy as root dns on rootless podman was not resolving&hellip;</li>
 </ul></li>
 <li><code>sudo ./alloy-linux-amd64 run /gnu/git/alloy.config --storage.path=/gnu/git/alloy</code></li>
 </ul></li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-conf" id="org3aef362">discovery.process "all" {}
+<pre class="src src-conf" id="orgdda24be"><code>discovery.process "all" {}
 
 discovery.relabel "btm" {
     targets = discovery.process.all.targets
@@ -86,7 +118,7 @@ pyroscope.write "endpoint" {
         url = "http://localhost:4040"
     }
 }
-</pre>
+</code></pre>
 </div>
 </div>
 </div>

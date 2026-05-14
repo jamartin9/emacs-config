@@ -9,17 +9,17 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org73b7cf9">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge5f52db">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org1b743c6" class="outline-2">
-<h2 id="org1b743c6">vapoursynth</h2>
-<div class="outline-text-2" id="text-org1b743c6">
+<div id="outline-container-orgd8a0b76" class="outline-2">
+<h2 id="orgd8a0b76">vapoursynth</h2>
+<div class="outline-text-2" id="text-orgd8a0b76">
 <div class="org-src-container">
-<pre class="src src-python" id="org8474d65">#!/usr/bin/env python3
+<pre class="src src-python" id="org8d9f029"><code>#!/usr/bin/env python3
 #awsmfun dynamic tonemap function includes chroma shift
 import vapoursynth as vs
 from vapoursynth import core
@@ -183,15 +183,15 @@ def Tweak(clip, hue=None, sat=None, bright=None, cont=None, coring=True):
             clip = clip.std.Expr(expr=[expression, "", ""])
 
     return clip
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org34ea0de" class="outline-2">
-<h2 id="org34ea0de">scripts</h2>
-<div class="outline-text-2" id="text-org34ea0de">
+<div id="outline-container-orgab3befc" class="outline-2">
+<h2 id="orgab3befc">scripts</h2>
+<div class="outline-text-2" id="text-orgab3befc">
 <div class="org-src-container">
-<pre class="src src-bash" id="orgd7250fa">#!/usr/bin/env bash
+<pre class="src src-bash" id="org314c735"><code>#!/usr/bin/env bash
 COUNTER=1
 while [  $COUNTER -lt 31 ]; do
     mkvextract $1 tracks ${COUNTER}:"subtitle${COUNTER}.sup" # extract sup from mkv
@@ -266,13 +266,13 @@ vspipe -c y4m ./vs/simple.vpy - | x265 --y4m - --preset slow --level-idc 5.1 --h
 
 # x264 example
 vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film --bframes=16 --aq-mode=3 --aq-strength=0.75 --me=umh --merange=32 --subme=10 --qcomp=0.6 --deblock=-3:-3 --level=4.1 --ref=8 --b-adapt=2 --direct auto --analyse=all --trellis=2 --no-fast-pskip --no-mbtree --rc-lookahead=250 --no-dct-decimate --b-pyramid normal --crf ${CRF} --output Test-count.mkv -
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org7611276" class="outline-2">
-<h2 id="org7611276">notes</h2>
-<div class="outline-text-2" id="text-org7611276">
+<div id="outline-container-orgfc74ca6" class="outline-2">
+<h2 id="orgfc74ca6">notes</h2>
+<div class="outline-text-2" id="text-orgfc74ca6">
 <ul class="org-ul">
 <li>ffms requires from source or newer than 2.40 for dolby vision and hdr10+ metadata</li>
 <li>add <code>UserPluginDir=/gnu/git/encoding/vs-nlq/target/debug/</code> to <code>XDG_CONFIG/vapoursynth/vapoursynth.conf</code> to auto load plugin from directory
@@ -313,9 +313,9 @@ vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film 
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orga41cd55" class="outline-3">
-<h3 id="orga41cd55">Spatial Audio</h3>
-<div class="outline-text-3" id="text-orga41cd55">
+<div id="outline-container-org6883648" class="outline-3">
+<h3 id="org6883648">Spatial Audio</h3>
+<div class="outline-text-3" id="text-org6883648">
 <ul class="org-ul">
 <li>Binauralization (HRTF)
 <ul class="org-ul">
@@ -345,9 +345,9 @@ vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film 
 </ul>
 </div>
 </div>
-<div id="outline-container-org42324f2" class="outline-3">
-<h3 id="org42324f2">AACS v2</h3>
-<div class="outline-text-3" id="text-org42324f2">
+<div id="outline-container-org29ece8c" class="outline-3">
+<h3 id="org29ece8c">AACS v2</h3>
+<div class="outline-text-3" id="text-org29ece8c">
 <ul class="org-ul">
 <li>intel sgx broken by spectre attack leaking key used for ecdh and signing phony quotes
 <ul class="org-ul">
@@ -362,22 +362,22 @@ vspipe -c y4m ./vs/count.vpy - | x264 --demuxer y4m --preset slower --tune film 
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfc2c2e6" class="outline-3">
-<h3 id="orgfc2c2e6">AACS v1 KEY</h3>
-<div class="outline-text-3" id="text-orgfc2c2e6">
+<div id="outline-container-orgf6d443d" class="outline-3">
+<h3 id="orgf6d443d">AACS v1 KEY</h3>
+<div class="outline-text-3" id="text-orgf6d443d">
 <p>
 <code>09 F9 11 02 9D 74 E3 5B D8 41 56 C5 63 56 88 C0</code>
 </p>
 </div>
 </div>
-<div id="outline-container-org2ece36e" class="outline-3">
-<h3 id="org2ece36e"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h3>
+<div id="outline-container-org325e6f9" class="outline-3">
+<h3 id="org325e6f9"><a href="https://cryptome.org/dvd-hoy-reply.htm#ExhibitB">DeCSS</a></h3>
 </div>
-<div id="outline-container-orga2b0f9b" class="outline-3">
-<h3 id="orga2b0f9b">HDCP key</h3>
-<div class="outline-text-3" id="text-orga2b0f9b">
+<div id="outline-container-orgad93708" class="outline-3">
+<h3 id="orgad93708">HDCP key</h3>
+<div class="outline-text-3" id="text-orgad93708">
 <div class="org-src-container">
-<pre class="src src-sh" id="org76cb6fe">HDCP MASTER KEY (MIRROR THIS TEXT!)
+<pre class="src src-sh" id="orgaa1cef8"><code>HDCP MASTER KEY (MIRROR THIS TEXT!)
 
 This is a forty times forty element matrix of fifty-six bit
 hexadecimal numbers.
@@ -753,13 +753,13 @@ acf1faaebf7412 f55d55d548bd86 5b34112ed53d06 1b58692e1e33b7 cc7e3cb6d32fe2
 ec0a470647b248 2fd9e8eea1f10e 94439285677960 4d11f6e6a426e0 06378817230b68
 ec14f2df152cb7 199a8c0bd5f05d ecad5aab44ac2b ca87ab2ba6e905 69c0bf2acdb36c
 d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf1b2499" class="outline-3">
-<h3 id="orgf1b2499">Sources</h3>
-<div class="outline-text-3" id="text-orgf1b2499">
+<div id="outline-container-org09c2dd6" class="outline-3">
+<h3 id="org09c2dd6">Sources</h3>
+<div class="outline-text-3" id="text-org09c2dd6">
 <ul class="org-ul">
 <li>Check Dovi info for grade/master compat</li>
 <li>The Gamma 0.88 bugs occurs when one source is brighter than other. Due to Apple software conversion of NTSC 2.2 gamma to PC 2.5 gammer requiring them to be raised to the power of 0.88 (2.2/2.5)
@@ -795,7 +795,7 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 <li>HDR10+ is 10 bit with high dynamic range</li>
 <li>HDR is 10 bit and static</li>
 
-<li>DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs. &#x2013;colormatrix smpte170m &#x2013;colorprim smpte170m &#x2013;transfer smpte170m (for NTSC). &#x2013;colormatrix bt470bg &#x2013;colorprim bt470bg &#x2013;transfer bt470bg (for PAL). _Matrix frame property in vs.</li>
+<li>DVD - PAL vs NTSC (23.976/29.970 vs 24 fps), deinterlace/detelecine, BT.601 colorspace 8bit, vobs. &ndash;colormatrix smpte170m &ndash;colorprim smpte170m &ndash;transfer smpte170m (for NTSC). &ndash;colormatrix bt470bg &ndash;colorprim bt470bg &ndash;transfer bt470bg (for PAL). _Matrix frame property in vs.</li>
 
 <li>WEB-DL - deinterlace/detelecine for dupe frames(lossless rip with hdcp splitter), .ts
 <ul class="org-ul">
@@ -824,30 +824,31 @@ d66279737bc807 4dd946eb19d81b 4e9c473b5e9846 5a016f7ca86f9d d02c2b7dca744a
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcb8ece1" class="outline-3">
-<h3 id="orgcb8ece1">ffmpeg</h3>
-<div class="outline-text-3" id="text-orgcb8ece1">
+<div id="outline-container-orgc14c7d7" class="outline-3">
+<h3 id="orgc14c7d7">ffmpeg</h3>
+<div class="outline-text-3" id="text-orgc14c7d7">
 <ul class="org-ul">
 <li>vmaf score for comparing video streams</li>
 <li>Remove Captions <code>ffmpeg -i input.mkv -codec copy -bsf:v "filter_units=remove_types=6" output.mkv</code></li>
 <li>waveforms for spectral audio compares <a href="https://trac.ffmpeg.org/wiki/Waveform">https://trac.ffmpeg.org/wiki/Waveform</a></li>
+<li>intra-refresh and set 0 bframes (GOP too) for streaming immediately transmitted in a single packet for on arrival immediate decode</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf894dee" class="outline-3">
-<h3 id="orgf894dee">HEVC/AVC</h3>
-<div class="outline-text-3" id="text-orgf894dee">
+<div id="outline-container-org153f78f" class="outline-3">
+<h3 id="org153f78f">HEVC/AVC</h3>
+<div class="outline-text-3" id="text-org153f78f">
 </div>
-<div id="outline-container-org528e3e7" class="outline-4">
-<h4 id="org528e3e7">x265</h4>
-<div class="outline-text-4" id="text-org528e3e7">
+<div id="outline-container-org0f65b70" class="outline-4">
+<h4 id="org0f65b70">x265</h4>
+<div class="outline-text-4" id="text-org0f65b70">
 <ul class="org-ul">
 <li>smears at low bitrate instead of blocking like x264</li>
-<li>x265 &#x2013;crf 18 &#x2013;preset slower &#x2013;profile main10 &#x2013;output-depth 10 &#x2013;rc-lookahead 60 &#x2013;ctu 32 &#x2013;frame-threads 1 &#x2013;no-sao &#x2013;deblock -2:-2 &#x2013;qcomp 0.65 &#x2013;aq-mode 3 &#x2013;ref 6 &#x2013;bframes 16 &#x2013;merange 38</li>
+<li>x265 &ndash;crf 18 &ndash;preset slower &ndash;profile main10 &ndash;output-depth 10 &ndash;rc-lookahead 60 &ndash;ctu 32 &ndash;frame-threads 1 &ndash;no-sao &ndash;deblock -2:-2 &ndash;qcomp 0.65 &ndash;aq-mode 3 &ndash;ref 6 &ndash;bframes 16 &ndash;merange 38</li>
 </ul>
 <p>
-x265 &#x2013;y4m - &#x2013;preset slow &#x2013;level-idc 5.1 &#x2013;high-tier &#x2013;input-depth 10 &#x2013;output-depth 10 &#x2013;rd 4 &#x2013;ref 5 &#x2013;psy-rd 2 &#x2013;psy-rdoq 1 &#x2013;no-rect &#x2013;no-amp &#x2013;aq-mode 4 &#x2013;no-hevc-aq &#x2013;aq-strength 0.9 &#x2013;ctu 64 &#x2013;ipratio 1.3 &#x2013;pbratio 1.2 &#x2013;no-cutree &#x2013;rc-lookahead 40 &#x2013;subme 5 &#x2013;me 3 &#x2013;merange 57 &#x2013;bframes 12 &#x2013;qcomp 0.6 &#x2013;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" &#x2013;colorprim bt2020 &#x2013;colormatrix bt2020nc &#x2013;transfer smpte2084 &#x2013;range limited &#x2013;max-cll "729,159" &#x2013;vbv-bufsize 160000 &#x2013;vbv-maxrate 160000 &#x2013;hdr10 &#x2013;hdr10-opt &#x2013;repeat-headers &#x2013;hrd &#x2013;aud &#x2013;deblock -2:-2 &#x2013;no-sao &#x2013;selective-sao 0 &#x2013;strong-intra-smoothing &#x2013;rskip 0 &#x2013;crf 15 &#x2013;limit-modes &#x2013;limit-refs 1 &#x2013;limit-tu 4 &#x2013;max-merge 4 &#x2013;tu-intra-depth 4 &#x2013;tu-inter-depth 4 &#x2013;b-intra &#x2013;weightb &#x2013;no-pmode &#x2013;chromaloc 2 &#x2013;no-frame-dup &#x2013;dolby-vision-profile 8.1 &#x2013;dolby-vision-rpu "RPU<sub>modified.bin</sub>" &#x2013;y4m &#x2013;output Testing.hevc &#x2013; 2&gt; Testing.log
-changes to above args: &#x2013;ref 6 &#x2013;max-merge 5 &#x2013;psy-rdoq 2 &#x2013;ipratio 1.4 &#x2013;pbratio 1.3 &#x2013;aq-mode 3 &#x2013;aq-strength 0.85 &#x2013;qcomp 0.65 &#x2013;deblock -3:-3
+x265 &ndash;y4m - &ndash;preset slow &ndash;level-idc 5.1 &ndash;high-tier &ndash;input-depth 10 &ndash;output-depth 10 &ndash;rd 4 &ndash;ref 5 &ndash;psy-rd 2 &ndash;psy-rdoq 1 &ndash;no-rect &ndash;no-amp &ndash;aq-mode 4 &ndash;no-hevc-aq &ndash;aq-strength 0.9 &ndash;ctu 64 &ndash;ipratio 1.3 &ndash;pbratio 1.2 &ndash;no-cutree &ndash;rc-lookahead 40 &ndash;subme 5 &ndash;me 3 &ndash;merange 57 &ndash;bframes 12 &ndash;qcomp 0.6 &ndash;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" &ndash;colorprim bt2020 &ndash;colormatrix bt2020nc &ndash;transfer smpte2084 &ndash;range limited &ndash;max-cll "729,159" &ndash;vbv-bufsize 160000 &ndash;vbv-maxrate 160000 &ndash;hdr10 &ndash;hdr10-opt &ndash;repeat-headers &ndash;hrd &ndash;aud &ndash;deblock -2:-2 &ndash;no-sao &ndash;selective-sao 0 &ndash;strong-intra-smoothing &ndash;rskip 0 &ndash;crf 15 &ndash;limit-modes &ndash;limit-refs 1 &ndash;limit-tu 4 &ndash;max-merge 4 &ndash;tu-intra-depth 4 &ndash;tu-inter-depth 4 &ndash;b-intra &ndash;weightb &ndash;no-pmode &ndash;chromaloc 2 &ndash;no-frame-dup &ndash;dolby-vision-profile 8.1 &ndash;dolby-vision-rpu "RPU<sub>modified.bin</sub>" &ndash;y4m &ndash;output Testing.hevc &ndash; 2&gt; Testing.log
+changes to above args: &ndash;ref 6 &ndash;max-merge 5 &ndash;psy-rdoq 2 &ndash;ipratio 1.4 &ndash;pbratio 1.3 &ndash;aq-mode 3 &ndash;aq-strength 0.85 &ndash;qcomp 0.65 &ndash;deblock -3:-3
 aq-mode 2 aq-strength 1
 </p>
 
@@ -861,11 +862,11 @@ crf 14 - 18 for quality, crf 19-22 for speed
 
 <p>
 mapping with
-&#x2013;colorprim bt2020 &#x2013;colormatrix bt2020nc &#x2013;transfer smpte-st-2084 &#x2013;max-cll
+&ndash;colorprim bt2020 &ndash;colormatrix bt2020nc &ndash;transfer smpte-st-2084 &ndash;max-cll
 </p>
 
 <p>
-HDR10+ metadata can be added as json argument &#x2013;dhdr10-info "metadata.json"
+HDR10+ metadata can be added as json argument &ndash;dhdr10-info "metadata.json"
 Dolby Vision profile 8.1 should be as it has hdr fallback
 encode hdr10+ then mux in DV (as it should have frame offset information?)
 </p>
@@ -876,22 +877,22 @@ main10 for nvidia gpu decoding
 
 <p>
 Chroma subsampling:
-&#x2013;hdr10-opt is for 4:2:0 HDR
-&#x2013;no-hdr10-opt are for 4:4:4 HDR and SDR
-x265 seems to struggle with deep reds without: &#x2013;cbqpoffs -1 &#x2013;crqpoffs -2
+&ndash;hdr10-opt is for 4:2:0 HDR
+&ndash;no-hdr10-opt are for 4:4:4 HDR and SDR
+x265 seems to struggle with deep reds without: &ndash;cbqpoffs -1 &ndash;crqpoffs -2
 </p>
 
 
 <p>
-&#x2013;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" is for BT.2020
-&#x2013;master-display "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(10000000,1)" is for Display P3
+&ndash;master-display "G(8500,39850)B(6550,2300)R(35400,14600)WP(15635,16450)L(10000000,20)" is for BT.2020
+&ndash;master-display "G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(10000000,1)" is for Display P3
 The L values above use Mastering display luminance ex:
 min: 0.0001 cd/m2, max: 1000 cd/m2 =&gt; L(10000000,1)
 min:0.0050 cd/m2, max: 4000 cd/m2 =&gt; L(40000000,50)
 </p>
 
 <p>
-&#x2013;max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level if not listed
+&ndash;max-cll "0,0" of Maximum Content Light Level, Maximum Frame-Average Light Level if not listed
 </p>
 
 <p>
@@ -900,7 +901,7 @@ extract the RPU ~dovi_tool -m 0 extract-rpu EL.hevc</code> for EL or <code>ffmpe
 crop dolby <code>dovi_tool editor RPU.bin -j edits.json</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-json" id="org1e0c9d0">{
+<pre class="src src-json" id="orgefdcb09"><code>{
 "mode": 2,
   "active_area": {
       "crop": true,
@@ -918,7 +919,7 @@ crop dolby <code>dovi_tool editor RPU.bin -j edits.json</code>
       }
   }
 }
-</pre>
+</code></pre>
 </div>
 <p>
 L5 metadata offset black bars are 132 top and bottom for 1080p. 2x for 4k. 0 when cropped/non Imax.
@@ -927,274 +928,121 @@ L5 metadata offset black bars are 132 top and bottom for 1080p. 2x for 4k. 0 whe
 </div>
 </div>
 </div>
-<div id="outline-container-org8ee8228" class="outline-3">
-<h3 id="org8ee8228">AVC</h3>
-<div class="outline-text-3" id="text-org8ee8228">
+<div id="outline-container-org7ef62f9" class="outline-3">
+<h3 id="org7ef62f9">AVC</h3>
+<div class="outline-text-3" id="text-org7ef62f9">
 </div>
-<div id="outline-container-org1aa3c7d" class="outline-4">
-<h4 id="org1aa3c7d">x264</h4>
-<div class="outline-text-4" id="text-org1aa3c7d">
+<div id="outline-container-org9a2d21d" class="outline-4">
+<h4 id="org9a2d21d">x264</h4>
+<div class="outline-text-4" id="text-org9a2d21d">
 <p>
 Ref
+Once you have cropped your source in AvsPmod or whatever other script editor you are using, take the equation 8388608 / (width after cropping x height after cropping), Take the result and round it down to the nearest whole number. This is the number you are to use for the &ndash;ref setting.
+    If you use a number larger than what the formula yields for a 720p or 1080p encode, it will still play but will only look slightly better and will not play on standalone devices. (roku etc)
+        If you are encoding to a Standard Definition resolution (i.e. smaller than 720p), you may skip the math and simply use 16 as your ref number.
+            Keep in mind that by design, you cannot use a number larger than 16 here.
 </p>
-
-<p>
-Once you have cropped your source in AvsPmod or whatever other script editor you are using, take the equation 8388608 / (width after cropping x height after cropping), Take the result and round it down to the nearest whole number. This is the number you are to use for the &#x2013;ref setting.
-</p>
-
-
-<p>
-If you use a number larger than what the formula yields for a 720p or 1080p encode, it will still play but will only look slightly better and will not play on standalone devices. (roku etc)
-    If you are encoding to a Standard Definition resolution (i.e. smaller than 720p), you may skip the math and simply use 16 as your ref number.
-	Keep in mind that by design, you cannot use a number larger than 16 here.
-</p>
-
-
-
-
 
 <p>
 B-frames
-</p>
-
-<p>
-B-frames have a fair amount of control over the compressibility (size) of your encode. More bframes = longer encoding time but also smaller file sizes. But you cannot exactly force more bframes into an encode if x264 decides it doesn't need them&#x2026; well, not without using b-bias and catastrophically breaking things. Anyway, the ideal number of b-frames needed for an encode can be determined in a single test encode. And by 'single' I mean you'll need to use the avisynth filter SelectRangeEvery() to grab a few thousand frames to test using &#x2013;bframes 16. x264 will spit out a log file when the test encode is done. Somewhere in this log will be a line that looks like this:
-</p>
-
-
-<p>
+Bidirectional frames can use information from future or past.
+B-frames have a fair amount of control over the compressibility (size) of your encode. More bframes = longer encoding time but also smaller file sizes. But you cannot exactly force more bframes into an encode if x264 decides it doesn't need them&hellip; well, not without using b-bias and catastrophically breaking things. Anyway, the ideal number of b-frames needed for an encode can be determined in a single test encode. And by 'single' I mean you'll need to use the avisynth filter SelectRangeEvery() to grab a few thousand frames to test using &ndash;bframes 16. x264 will spit out a log file when the test encode is done. Somewhere in this log will be a line that looks like this:
 x264 [info]: consecutive B-frames: 0.5% 1.1% 3.6% 24.0% 14.4% 43.3% 4.0% 3.4% 1.1% 1.4% 0.5% 0.9% 0.3% 0.3% 0.2% 0.9% 0.1%
-</p>
-
-
-<p>
 There are 17 values listed. Each one represents a specific number of b-frames, from 0 to 16. Each value shows the percentage of total frames that were able to make use of that number of consecutive b-frames. From these numbers I usually select the largest one = 1.0% but have made exceptions for 0.9% values.
 </p>
 
-
-
 <p>
 CRF and 2-Pass
-</p>
-
-<p>
 Whether you choose to encode crf or 2-pass, this setting will have the most significant impact on your encode's overall quality. With 2-pass, you choose a bitrate. With crf you choose a quality level in the form of a numerical rate factor. The bitrate/quality will vary throughout the extent of whatever you are encoding, but will average out to whatever your input for this value was.
-</p>
-
-<p>
 CRF and 2-pass use the exact same algorithm and therefore there is literally no advantage to using one over the other. If a crf 20 encode gives you an average bitrate of 6000 kbps, a 2-pass encode @ 6000 kbps will yield the exact same quality. Additionally, the log from the first pass of a 2-pass encode will give you the equivalent rate factor one would use for a crf encode.
-</p>
-
-<p>
-Again, there is NO advantage to either method. Many people prefer 2-pass due to not fully understanding how to use the next setting I'll go over. Others will do test encodes with both crf and 2-pass to achieve ideal quality. My preference happens to be crf, but only because I feel that bitrate/filesize should be irrelevant and picture quality should never be compromised. Then again, everything I've ever encoded is like 400 GB&#x2026;
-</p>
-
-<p>
+Again, there is NO advantage to either method. Many people prefer 2-pass due to not fully understanding how to use the next setting I'll go over. Others will do test encodes with both crf and 2-pass to achieve ideal quality. My preference happens to be crf, but only because I feel that bitrate/filesize should be irrelevant and picture quality should never be compromised. Then again, everything I've ever encoded is like 400 GB&hellip;
 Reasonable bitrates for 2-pass/crf will vary depending on your source and a few other settings. I can't say much on bitrate, but crf should nearly always be between 16 and 23.
 </p>
 
-
-
 <p>
 QComp
-</p>
-
-<p>
 While crf and 2-pass affect the overall quality of the encode, qcomp affects how crf and 2-pass are applied. Next to crf/2-pass it is the most important x264 parameter for affecting the quality of your final encode. qcomp will always be a number between 0.0 and 1.0. At 0.0, your crf number or 2-pass bitrate will yield a constant bitrate throughout the entire encode. At 1.0, the encode's bitrate variance is completely uncapped and so will flail around like a crack-addicted preschooler.
-</p>
-
-<p>
 The default is 0.6 but for live-action should be bumped to 0.7, or 0.75 for sources with a lot of grain/noise. For lower quality sources with little or no grain, low-quality animation or dark movies without much grain you can try around 0.55 or 0.5. Essentially the viable qcomp range for any source will be (roughly) 0.45 - 0.75.
-</p>
-
-<p>
 This is a setting where testing multiple values is definitely worth it.
 </p>
 
-
-
 <p>
 ME and MERange
-</p>
-
-<p>
 ME (Motion Estimation) and MERange (Motion Eestimation Range) help x264 predict motion across frames and compress at a higher level of quality based on the information these two parameters allow it to gather. The higher the quality of the motion estimation algorithm and the higher the motion estimation range, the greater the quality yielded. BUT this also means increased encoding time. Also, as expected, you'll begin to see diminishing returns with respect to quality as you increase these two parameters.
+For our purposes however, these two parameters are dead simple. If your computer has an older/slower processor, use &ndash;me umh &ndash;merange 24. These were determined to be the best tradeoff between quality and encoding time, and umh is highly capable of yielding the kind of quality you should be striving for. However, for those of you with faster hardware that want a bit more quality: &ndash;me tesa &ndash;merange 16 is the final word here.
 </p>
-
-<p>
-For our purposes however, these two parameters are dead simple. If your computer has an older/slower processor, use &#x2013;me umh &#x2013;merange 24. These were determined to be the best tradeoff between quality and encoding time, and umh is highly capable of yielding the kind of quality you should be striving for. However, for those of you with faster hardware that want a bit more quality: &#x2013;me tesa &#x2013;merange 16 is the final word here.
-</p>
-
-
 
 <p>
 AQ-Mode
+aq-mode affects how the next setting we'll discuss, aq-strength, is applied. There are three options available to you. &ndash;aq-mode 2 was supposed to replace mode 1, but is one of those things that appears to have been optimized at least slightly for anime tentacle porn. Mode 2 <b>should</b> work better on lower quality sources or those that have very little grain. For everything else, you'll want to use &ndash;aq-mode 1. It's not perfect but as of right now there is no better alternative. It works well enough. Please note that &ndash;aq-mode 0 disables aq-strength entirely and should never be used.
 </p>
-
-<p>
-aq-mode affects how the next setting we'll discuss, aq-strength, is applied. There are three options available to you. &#x2013;aq-mode 2 was supposed to replace mode 1, but is one of those things that appears to have been optimized at least slightly for anime tentacle porn. Mode 2 <b>should</b> work better on lower quality sources or those that have very little grain. For everything else, you'll want to use &#x2013;aq-mode 1. It's not perfect but as of right now there is no better alternative. It works well enough. Please note that &#x2013;aq-mode 0 disables aq-strength entirely and should never be used.
-</p>
-
-
 
 <p>
 AQ-Strength
-</p>
-
-<p>
 In any given frame, x264 gives priority (more bitrate) to higher-quality macroblocks. aq-strength determines the magnitude of that priority. 1.00 is the default. Anything above 1.00 will, increasingly, give more and more priority to lower-quality macroblocks. Lower than 1.00 will give more priority to higher-quality macroblocks. Generally everything you encode should have an aq-strength between 0.50 and 1.30.
+    Higher quality sources and sources with more grain/noise will benefit from lower aq-strength values.
+        Lower quality sources, non-HD sources, etc should benefit more from higher values.
 </p>
-
-<p>
-Higher quality sources and sources with more grain/noise will benefit from lower aq-strength values.
-    Lower quality sources, non-HD sources, etc should benefit more from higher values.
-</p>
-
-
-
-
 
 <p>
 MBTree
-</p>
-
-<p>
 While most of what x264 does handles compression within a given frame, mbtree looks to compress information across frames. Yet another x264 parameter dreamt up to improve compression, mbtree is a solid idea that actually performs quite poorly on most higher quality live-action sources.
+This parameter is enabled by default but can be turned off with &ndash;no-mbtree. MBTree should be turned off for any source with even a modest amount of grain/noise. It will help on lower-quality sources, many DVDs, anything shot on a digital camera (The Social Network, District 9, etc), but due to the somewhat random nature of video grain, will significantly increase an encode's bitrate if the source was grainy/noisy.
 </p>
 
 <p>
-This parameter is enabled by default but can be turned off with &#x2013;no-mbtree. MBTree should be turned off for any source with even a modest amount of grain/noise. It will help on lower-quality sources, many DVDs, anything shot on a digital camera (The Social Network, District 9, etc), but due to the somewhat random nature of video grain, will significantly increase an encode's bitrate if the source was grainy/noisy.
-</p>
-
-<p>
-RC-Lookahead is another x264 setting that directly affects how many frames mbtree takes into consideration during an encode. This is important as mbtree is known for performing badly in scene fades (fading to or from black). To mitigate this, I recommend using &#x2013;rc-lookahead 250 on literally every encode you do that uses mbtree. The only downside to this is that if your computer has 2 GB of memory or less, it will be somewhat unusable during the encoding process.
-</p>
-
-<p>
+RC-Lookahead is another x264 setting that directly affects how many frames mbtree takes into consideration during an encode. This is important as mbtree is known for performing badly in scene fades (fading to or from black). To mitigate this, I recommend using &ndash;rc-lookahead 250 on literally every encode you do that uses mbtree. The only downside to this is that if your computer has 2 GB of memory or less, it will be somewhat unusable during the encoding process.
 It should be noted that qcomp affects how mbtree is applied, but not in a way that your usage of mbtree should affect your decisions with qcomp in any way whatsoever.
 </p>
 
-
-
 <p>
 Psy-RDO and Psy-Trellis
-</p>
-
-<p>
-These two settings are controlled by a single parameter, in the format &#x2013;psy-rd x.xx:y.yy. Psy-RDO is x.xx and Psy-Trellis is y.yy Psy-RDO should be used on any source that isnt completely devoid of grain. Psy-Trellis is an unwieldy bastard that can either save a reasonable amount of bitrate or destroy picture quality.
-</p>
-
-<p>
+These two settings are controlled by a single parameter, in the format &ndash;psy-rd x.xx:y.yy. Psy-RDO is x.xx and Psy-Trellis is y.yy Psy-RDO should be used on any source that isnt completely devoid of grain. Psy-Trellis is an unwieldy bastard that can either save a reasonable amount of bitrate or destroy picture quality.
 Technically, psy-rdo lowers picture quality on a mathematical level. But it also applies a layer of noise to the encode in a way that increases the perceived complexity of the video. Given that noise/grain in any given source is somewhat random to begin with, this is actually a good thing. It increases the visually perceived quality level while allowing the overall bitrate/filesize to be decreased.
-</p>
-
-<p>
 Psy-rdo also assumes that grain was applied evenly throughout each frame in the source. Psy-trellis does not, and is useful if you have a source where parts of a frame are grainier than others. If you can look through a source and see that grain is blanketed evenly throughout each frame, it is probably better to keep psy-trellis disabled. Otherwise, you should test psy-trellis.
-</p>
-
-<p>
 Psy-RDO is mostly just about grain matching. For <b>most</b> live-action, generally a value between 0.90 and 1.30 will suffice. For <b>most</b> animation, 0.50 to 0.90 is a good testing range. Once you have found your source's ideal psy-rdo value, you can test psy-trellis. I recommend running 6 test encodes with psy trellis: 0.05, 0.10, 0.15, 0.20, 0.25 and 0.30. The 6 test encodes should be a few thousand frames long, again using SelectRangeEvery(), and should be compared against a test encode with psy-trellis disabled. If one of the encodes with psy-trellis enabled looks the best, leave that psy-trellis value but do a few tests with slight changes to psy-rdo.
 </p>
 
-
-
 <p>
 Deblock
+Deblock smooths out the blockiness that can occur in a lower-quality source or occasionally in a lower-quality x264 encode. Deblock consists of two numbers. The first number is the strength of the deblocking filter, and the second is the threshold at which the filter decides whether something is a block or detail that needs to be preserved. Generally you should use &ndash;deblock -3,-3 for everything that isnt a terrible quality source. You can go below -3,-3 (as low as -6,-6) if you want, but I wouldn't recommend that unless you're a huge fan of placebos or your televsion is by far the most expensive thing you own.
 </p>
-
-<p>
-Deblock smooths out the blockiness that can occur in a lower-quality source or occasionally in a lower-quality x264 encode. Deblock consists of two numbers. The first number is the strength of the deblocking filter, and the second is the threshold at which the filter decides whether something is a block or detail that needs to be preserved. Generally you should use &#x2013;deblock -3,-3 for everything that isnt a terrible quality source. You can go below -3,-3 (as low as -6,-6) if you want, but I wouldn't recommend that unless you're a huge fan of placebos or your televsion is by far the most expensive thing you own.
-</p>
-
-
 
 <p>
 SSIM
+Adding &ndash;ssim to your x264 parameters can be useful for test encodes. It will give you data on ssim/db which will give you a fairly accurate numerical representation of fidelity with respect to your source. This number becomes more useful when comparing multiple test encodes, and much less useful if the encode(s) used psy-rdo in any way. Please take note that when trying to reach visual transparency, db is a better choice over ssim simply for the fact that it follows a linear scale as it approaches 100% transparency, while ssim follows a logarithmic scale which by design devalues visual improvement increasingly as you approach transparency.
 </p>
-
-<p>
-Adding &#x2013;ssim to your x264 parameters can be useful for test encodes. It will give you data on ssim/db which will give you a fairly accurate numerical representation of fidelity with respect to your source. This number becomes more useful when comparing multiple test encodes, and much less useful if the encode(s) used psy-rdo in any way. Please take note that when trying to reach visual transparency, db is a better choice over ssim simply for the fact that it follows a linear scale as it approaches 100% transparency, while ssim follows a logarithmic scale which by design devalues visual improvement increasingly as you approach transparency.
-</p>
-
-
 
 <p>
 VF
+&ndash;vf aka video filter, is an early attempt at replacing core avisynth filters with filters built-in to x264. Avisynth is a critical part of video encoding but also a significant bottleneck in terms of encoding time and is the only real hurdle keeping x264 encoding from being viable on non-windows platforms. For practical purposes I will only discuss how using &ndash;vf will improve encoding time:
+&ndash;vf crop:{left},{top},{right},{bottom}/resize:{width},{height},0:0,method=spline
+&hellip;will allow you to crop and/or resize your source video without the need for using an AviSynth script. Do not use this parameter in your test encodes, only for the full encode. For the full movie encode, you will copy any cropping and resizing numbers from the .avs test script to this parameter. Crop should always be before resize. Anything outside of brackets should be left the same. The / is for separating the crop and resize filters. If you do not need to resize the source video, omit the / and everything after it.
 </p>
-
-<p>
-&#x2013;vf aka video filter, is an early attempt at replacing core avisynth filters with filters built-in to x264. Avisynth is a critical part of video encoding but also a significant bottleneck in terms of encoding time and is the only real hurdle keeping x264 encoding from being viable on non-windows platforms. For practical purposes I will only discuss how using &#x2013;vf will improve encoding time:
-</p>
-
-
-
-<p>
-&#x2013;vf crop:{left},{top},{right},{bottom}/resize:{width},{height},0:0,method=spline
-</p>
-
-
-
-<p>
-&#x2026;will allow you to crop and/or resize your source video without the need for using an AviSynth script. Do not use this parameter in your test encodes, only for the full encode. For the full movie encode, you will copy any cropping and resizing numbers from the .avs test script to this parameter. Crop should always be before resize. Anything outside of brackets should be left the same. The / is for separating the crop and resize filters. If you do not need to resize the source video, omit the / and everything after it.
-</p>
-
-
 
 <p>
 Minor Settings
-</p>
-
-<p>
 The following settings, for now, probably don't merit an in-depth explanation as they should remain the same for everything you encode:
-</p>
-
-
-
-<p>
-&#x2013;b-pyramid normal
-</p>
-
-<p>
-&#x2013;no-dct-decimate
-</p>
-
-<p>
-&#x2013;analyse all / &#x2013;partitions all These two parameters are interchangeable. Many sites/guides still refer to this parameter when mentioning L4.1 (standalone device) compatibility. And while it is technically part of the L4.1 standard, no standalone device actually adheres to this portion of it. In other words, you can safely use &#x2013;analyse/partitions all on every encode and still not break standalone device playback in any way.
-</p>
-
-<p>
-&#x2013;direct auto
-</p>
-
-<p>
-&#x2013;b-adapt 2
-</p>
-
-<p>
-&#x2013;trellis 2
-</p>
-
-<p>
-&#x2013;no-fast-pskip
-</p>
-
-<p>
-&#x2013;subme 11
-</p>
-
-<p>
-&#x2013;no-weightb May help quality retention on CGI material. Otherwise, don't use this parameter.
+&ndash;b-pyramid normal
+&ndash;no-dct-decimate
+&ndash;analyse all / &ndash;partitions all These two parameters are interchangeable. Many sites/guides still refer to this parameter when mentioning L4.1 (standalone device) compatibility. And while it is technically part of the L4.1 standard, no standalone device actually adheres to this portion of it. In other words, you can safely use &ndash;analyse/partitions all on every encode and still not break standalone device playback in any way.
+&ndash;direct auto
+&ndash;b-adapt 2
+&ndash;trellis 2
+&ndash;no-fast-pskip
+&ndash;subme 11
+&ndash;no-weightb May help quality retention on CGI material. Otherwise, don't use this parameter.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org10ddab9" class="outline-3">
-<h3 id="org10ddab9">AV1</h3>
-<div class="outline-text-3" id="text-org10ddab9">
+<div id="outline-container-org1f34022" class="outline-3">
+<h3 id="org1f34022">AV1</h3>
+<div class="outline-text-3" id="text-org1f34022">
 </div>
-<div id="outline-container-orged6d318" class="outline-4">
-<h4 id="orged6d318">SVT-AV1</h4>
-<div class="outline-text-4" id="text-orged6d318">
+<div id="outline-container-orgc8eb688" class="outline-4">
+<h4 id="orgc8eb688">SVT-AV1</h4>
+<div class="outline-text-4" id="text-orgc8eb688">
 <ul class="org-ul">
 <li>fork <a href="https://github.com/gianni-rosato/svt-av1-psy/">https://github.com/gianni-rosato/svt-av1-psy/</a>
 <ul class="org-ul">
@@ -1217,18 +1065,18 @@ The following settings, for now, probably don't merit an in-depth explanation as
 <li><code>scm=1</code> hurts performance but improves efficency</li>
 <li>crf <code>SvtAv1EncApp --passes 2 --rc 0 --crf 18 -b dest_filename -i src_filename</code></li>
 <li>supports hdr <code>enable-hdr</code></li>
-<li>ex. Video : 1080p AV1 10bit @ 3153kbps | Constant Quality: 17 | Grain Synthesis: 16 / Audio : English Opus 5.1 @ 374kbps / Enc Args : -e aom -v "&#x2013;cpu-used=4 &#x2013;end-usage=q &#x2013;cq-level=21 &#x2013;bit-depth=10 &#x2013;threads=2 &#x2013;tune=ssim &#x2013;tune-content=psy &#x2013;lag-in-frames=48 &#x2013;denoise-noise-level=22 &#x2013;deltaq-mode=6 &#x2013;disable-kf &#x2013;kf-max-dist=9999 &#x2013;enable-cdef=0 &#x2013;enable-qm=1 &#x2013;qm-min=2 &#x2013;qm-max=8"</li>
+<li>ex. Video : 1080p AV1 10bit @ 3153kbps | Constant Quality: 17 | Grain Synthesis: 16 / Audio : English Opus 5.1 @ 374kbps / Enc Args : -e aom -v "&ndash;cpu-used=4 &ndash;end-usage=q &ndash;cq-level=21 &ndash;bit-depth=10 &ndash;threads=2 &ndash;tune=ssim &ndash;tune-content=psy &ndash;lag-in-frames=48 &ndash;denoise-noise-level=22 &ndash;deltaq-mode=6 &ndash;disable-kf &ndash;kf-max-dist=9999 &ndash;enable-cdef=0 &ndash;enable-qm=1 &ndash;qm-min=2 &ndash;qm-max=8"</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org50bbd39" class="outline-3">
-<h3 id="org50bbd39">ripping</h3>
-<div class="outline-text-3" id="text-org50bbd39">
+<div id="outline-container-org2a33ff7" class="outline-3">
+<h3 id="org2a33ff7">ripping</h3>
+<div class="outline-text-3" id="text-org2a33ff7">
 </div>
-<div id="outline-container-orgda5fdb9" class="outline-4">
-<h4 id="orgda5fdb9">tools</h4>
-<div class="outline-text-4" id="text-orgda5fdb9">
+<div id="outline-container-org2b53ed0" class="outline-4">
+<h4 id="org2b53ed0">tools</h4>
+<div class="outline-text-4" id="text-org2b53ed0">
 <ul class="org-ul">
 <li>AnyDVDHD (redfox) free trail
 <ul class="org-ul">
@@ -1243,8 +1091,8 @@ The following settings, for now, probably don't merit an in-depth explanation as
 <li>brasero(w/libcss) iso copy</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org806cc75">youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
-</pre>
+<pre class="src src-sh" id="org42423c3"><code>youtube-dl --write-auto-sub --merge-output-format mkv --cookies ~/Downloads/cookies.txt -f 'bestvideo[height&lt;=720]+bestaudio/best[height&lt;=720]' "https://somsuchurl/${vid}" # --all-subs --convert-subs=srt
+</code></pre>
 </div>
 <ul class="org-ul">
 <li>vevv/subby for subtitles converting</li>
@@ -1252,18 +1100,18 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-orgb229a97" class="outline-3">
-<h3 id="orgb229a97">rescene</h3>
-<div class="outline-text-3" id="text-orgb229a97">
+<div id="outline-container-org0c86fdf" class="outline-3">
+<h3 id="org0c86fdf">rescene</h3>
+<div class="outline-text-3" id="text-org0c86fdf">
 <ul class="org-ul">
 <li>use srrdb for reference files</li>
 <li><code>srr.py FILE.srr</code></li>
 <li><code>srs.py FILE.srs FILE.mkv</code></li>
 </ul>
 </div>
-<div id="outline-container-org141d717" class="outline-4">
-<h4 id="org141d717">m2ts samples</h4>
-<div class="outline-text-4" id="text-org141d717">
+<div id="outline-container-org4e8b5d4" class="outline-4">
+<h4 id="org4e8b5d4">m2ts samples</h4>
+<div class="outline-text-4" id="text-org4e8b5d4">
 <ul class="org-ul">
 <li>tsmuxer ~2.6.12 <a href="https://www.videohelp.com/software/tsMuxeR/old-versions">https://www.videohelp.com/software/tsMuxeR/old-versions</a></li>
 <li>First start by looking for the date this movie was released by the scene, don’t use any tsmuxer version newer than this date.</li>
@@ -1276,17 +1124,17 @@ The following settings, for now, probably don't merit an in-depth explanation as
 </div>
 </div>
 </div>
-<div id="outline-container-org30cd1f0" class="outline-3">
-<h3 id="org30cd1f0">movies</h3>
-<div class="outline-text-3" id="text-org30cd1f0">
+<div id="outline-container-org1e8143f" class="outline-3">
+<h3 id="org1e8143f">movies</h3>
+<div class="outline-text-3" id="text-org1e8143f">
 <ul class="org-ul">
 <li>open matte can show more of the scene by changing the AR (bad if squashed and non OAR like UK scream 4 disc)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2c5040e" class="outline-3">
-<h3 id="org2c5040e">tv</h3>
-<div class="outline-text-3" id="text-org2c5040e">
+<div id="outline-container-org808f189" class="outline-3">
+<h3 id="org808f189">tv</h3>
+<div class="outline-text-3" id="text-org808f189">
 <ul class="org-ul">
 <li>discovery atlas
 <ul class="org-ul">
@@ -1382,9 +1230,9 @@ S04E13 is SPECIAL
 </p>
 </div>
 </div>
-<div id="outline-container-orgdb57fcd" class="outline-3">
-<h3 id="orgdb57fcd">Prompt</h3>
-<div class="outline-text-3" id="text-orgdb57fcd">
+<div id="outline-container-org4896d20" class="outline-3">
+<h3 id="org4896d20">Prompt</h3>
+<div class="outline-text-3" id="text-org4896d20">
 <ul class="org-ul">
 <li></li>
 </ul>

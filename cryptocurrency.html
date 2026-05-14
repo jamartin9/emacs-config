@@ -9,38 +9,16 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org8d9d697">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orge098d87">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgb3f57c5" class="outline-2">
-<h2 id="orgb3f57c5">notes</h2>
-<div class="outline-text-2" id="text-orgb3f57c5">
+<div id="outline-container-orga40caa2" class="outline-2">
+<h2 id="orga40caa2">notes</h2>
+<div class="outline-text-2" id="text-orga40caa2">
 <ul class="org-ul">
-<li>fallacies of crypto haters
-<ul class="org-ul">
-<li>wrought with fraud so it needs 'regulation'
-<ul class="org-ul">
-<li>banks are the biggest scamming hucksters around and they facilitate most of financial fraud in the world within 'regulations'</li>
-</ul></li>
-<li>not decentralized
-<ul class="org-ul">
-<li>'people do not want to run their own servers' - moxie marlinspike
-<ul class="org-ul">
-<li>they will and do; a nakamoto number greater than 1 is still more than the status quo</li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li>fallacies of crypto bros
-<ul class="org-ul">
-<li>'trapped energy'
-<ul class="org-ul">
-<li>sets lower bound on energy production price beyond the government; thus encourages more production regardless of means</li>
-<li>wasting compute cycles on hashing random numbers instead of folding proteins, simulating fluid dynamics, SETI etc (need internet connection for blockchain sync); price should not be the primary factor for investing in hard research problems.</li>
-</ul></li>
-</ul></li>
 <li>cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
 <ul class="org-ul">
 <li>sigma protocols are alternative (COMINT)</li>
@@ -48,10 +26,14 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org4c474a9" class="outline-2">
-<h2 id="org4c474a9">chia</h2>
-<div class="outline-text-2" id="text-org4c474a9">
+<div id="outline-container-org8e6c359" class="outline-2">
+<h2 id="org8e6c359">chia</h2>
+<div class="outline-text-2" id="text-org8e6c359">
 <ul class="org-ul">
+<li><a href="https://arcade21.games/">https://arcade21.games/</a> for games</li>
+<li><a href="https://beta.xch.trade/">https://beta.xch.trade/</a> to view swap prices between dexie and tibetswap</li>
+<li><a href="https://weso.forgeros.fr/tokenomics">https://weso.forgeros.fr/tokenomics</a> for incentive on compaction</li>
+<li><a href="https://xch.ninja/">https://xch.ninja/</a> for prefarm tracker</li>
 <li>simpleswap.io swaps xch on kucoin</li>
 <li>Permuto will allow "eligible holders"" to deposit Microsoft stock (MSFT) and issue "dividend" and "appreciation" certificates on the chia blockchain; to be traded seperately. Allowed 10% of total stock and voting is done based on prices of the 'certificates'.</li>
 <li><code>CHIA_ROOT</code> env variable configuration
@@ -61,10 +43,10 @@
 <li>check plots with <code>chia plots check -n 30 -l</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-org" id="org9875a89">- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
+<pre class="src src-org" id="org1ce58c9"><code>- mainnet burn xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ks6e8mvy
 - sends to puzzle hash 0x000000000000000000000000000000000000000000000000000000000000dead
 - testnet burn txch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ksh7qddh
-</pre>
+</code></pre>
 </div>
 <ul class="org-ul">
 <li><code>coin_type</code> is 8444 in BLS HD key path</li>
@@ -112,11 +94,11 @@
 <li><a href="https://github.com/dexie-space/splash">https://github.com/dexie-space/splash</a> for decentralized offer broadcasting</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgb758a4c">chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
-</pre>
+<pre class="src src-sh" id="org8a475c4"><code>chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09rlzm9cc82mhuqtp5tlmsj4kuqvs69s2wsl90su4 -e "___SevenCharName.xch:xchYOURxchaddress" --override
+</code></pre>
 </div>
 <ul class="org-ul">
-<li><a href="https://pawket.app/">https://pawket.app/</a> for some online chia tools. debugger coming soon&#x2026;
+<li><a href="https://pawket.app/">https://pawket.app/</a> for some online chia tools. debugger coming soon&hellip;
 <ul class="org-ul">
 <li>implemented ecdh for chia addresses</li>
 <li>ecdh for encrypted messages</li>
@@ -144,50 +126,10 @@
 <li>xch.events for mempool explorer</li>
 </ul>
 </div>
-<div id="outline-container-orga7403da" class="outline-3">
-<h3 id="orga7403da">blunders</h3>
-<div class="outline-text-3" id="text-orga7403da">
-<ul class="org-ul">
-<li>Stably provider scammed with PrimeTrust USDS and wrapper btc redemption disabling
-<ul class="org-ul">
-<li>0.59 btc in reserved. Required 1btc deposit to withdrawl.</li>
-</ul></li>
-<li>CEO/CSO/Employees flame users on reddit (ex. Windows SSL issue)</li>
-<li>Trademark trolling chiaplot (news site)/xchscan(block explorer) with fresh law grad
-<ul class="org-ul">
-<li>the chia plot needed a lawyer for them to buzz off</li>
-</ul></li>
-<li>large premine (promised to not use) is being used(sold) to 'marketing' and 'market makers'</li>
-<li>layoff of devs after being told "we have years of runway"</li>
-<li>hiring WEF managers and fossils(L. Goldman) for DevRel.</li>
-<li>Gatekeeping timelord asics</li>
-<li>exploited own vulnerability with catv1/v2 upgrade</li>
-<li>stably scam
-<ul class="org-ul">
-<li>chia has better custody tools than custodian. Total lack of DD</li>
-</ul></li>
-<li>misrepresent the plot filter increase and effects it will have on farming k32's
-<ul class="org-ul">
-<li>higher quality proofs will be more likely to win. k33 will provide higher proof quality than k32 given same storage space.</li>
-</ul></li>
-<li>Slow development
-<ul class="org-ul">
-<li>pooling release</li>
-<li>compressed plots
-<ul class="org-ul">
-<li>announced needing new plot format but still bought drplotter compressed farmer</li>
-</ul></li>
-<li>node perf (dust storm)</li>
-<li>no blockchain download for years (offer torrent now)</li>
-</ul></li>
-<li>atomic swaps and zkrollups not integrated into client for years</li>
-</ul>
 </div>
-</div>
-</div>
-<div id="outline-container-orgf877649" class="outline-2">
-<h2 id="orgf877649">monero</h2>
-<div class="outline-text-2" id="text-orgf877649">
+<div id="outline-container-org4ef4f42" class="outline-2">
+<h2 id="org4ef4f42">monero</h2>
+<div class="outline-text-2" id="text-org4ef4f42">
 <ul class="org-ul">
 <li>use block &gt; 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)</li>
 <li>supports tor with sending tx's and wallets
@@ -255,7 +197,7 @@
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="org640730f">#!/bin/bash -e
+<pre class="src src-sh" id="org92a5722"><code>#!/bin/bash -e
 
 # https://xmrig.com/docs/miner/hugepages#onegb-huge-pages
 
@@ -281,13 +223,13 @@ echo "1GB pages successfully enabled"
 
 sudo xmrig --randomx-1gb-pages --huge-pages-jit -t 12 -o 127.0.0.1:3333  -B
 
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org3d88773" class="outline-2">
-<h2 id="org3d88773">bitcoin</h2>
-<div class="outline-text-2" id="text-org3d88773">
+<div id="outline-container-org8935a8e" class="outline-2">
+<h2 id="org8935a8e">bitcoin</h2>
+<div class="outline-text-2" id="text-org8935a8e">
 <ul class="org-ul">
 <li>reuse of ECDSA signatures can lead to key compromise (polynonce attack). use deterministic dsa instead (eddsa or RFC 6979)</li>
 <li>double sha256</li>
@@ -312,16 +254,16 @@ sudo xmrig --randomx-1gb-pages --huge-pages-jit -t 12 -o 127.0.0.1:3333  -B
 </ul>
 </div>
 </div>
-<div id="outline-container-org6fe4829" class="outline-2">
-<h2 id="org6fe4829">btcpayserver</h2>
-<div class="outline-text-2" id="text-org6fe4829">
+<div id="outline-container-org9f8c98f" class="outline-2">
+<h2 id="org9f8c98f">btcpayserver</h2>
+<div class="outline-text-2" id="text-org9f8c98f">
 <ul class="org-ul">
 <li>crypto payment server that supports invoices (multiple payments, refunds, tolerances etc)</li>
 <li>xmr config requires the view only wallet.keys, wallet and password file be available before sync can complete</li>
 <li>sync MUST be completed before the FIRST store can be created</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="orga412c6d">apiVersion: apps/v1
+<pre class="src src-yaml" id="org480bc0e"><code>apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: btcpay-deployment
@@ -433,8 +375,190 @@ spec:
         - name: postgres-port
           containerPort: 5432
           hostPort: 5432
-</pre>
+</code></pre>
 </div>
+<ul class="org-ul">
+<li>Sage: Logout of your wallet, click the (&hellip;) on your wallet, then Details to get the public key</li>
+<li>publish chia plugin with <code>dotnet build -c Release</code>
+<ul class="org-ul">
+<li><a href="https://plugin-builder.btcpayserver.org/public/plugins">https://plugin-builder.btcpayserver.org/public/plugins</a> has monero and chia plugin at conflicting minimum/max versions for btcpay so use my fork to change the compat for .net10 on chia or use older</li>
+<li>run without userns-id</li>
+<li>changes
+<ul class="org-ul">
+<li>updated btcpayserver submodule to latest</li>
+<li>change dotnet from 8 to 10 and lang to 14 in <code>.csproj</code></li>
+<li>vendored Nethermind.Crypto.Bls for newer dotnet 10 version</li>
+<li>updated chia-dotnet for dotnet10</li>
+</ul></li>
+<li>BTCPayServer.PluginPacker with <code>dotnet run ../../BTCPayServer.Plugins.Chia/bin/Release/net10.0/ BTCPayServer.Plugins.Chia .</code> from <code>btcpayserver-chia-plugin/btcpayserver/BTCPayServer.PluginPacker</code>
+<ul class="org-ul">
+<li>manual .btcpay for web ui <code>cd ./BTCPayServer.Plugins.Chia/bin/Release/net10.0/ &amp;&amp; zip -r ../BTCPayServer.Plugins.Chia.btcpay ./</code></li>
+<li>alternatively copy libs and deps json <code>cp -r /gnu/git/btcpayserver-chia-plugin/BTCPayServer.Plugins.Chia/bin/Release/net10.0/* /gnu/git/btcpay/btcpay-plugins/BTCPayServer.Plugins.Chia</code>
+<ul class="org-ul">
+<li>check deps.json for native lib in path</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-json" id="orgdcbcc52"><code>"Nethermind.Crypto.Bls/1.0.5": {
+  "runtime": {
+    "Nethermind.Crypto.Bls.dll": {
+      "assemblyVersion": "1.0.5.0",
+      "fileVersion": "1.0.5.0"
+    }
+  },
+  "runtimeTargets": {
+    "runtimes/linux-x64/native/libblst.so": {
+      "rid": "linux-x64",
+      "assetType": "native"
+    }
+  }
+}
+</code></pre>
+</div>
+<ul class="org-ul">
+<li>Nethermind.Crypto.Bls vendors a precompiled native library that does not support cpu feature(ADX but it has BMI) unless <a href="https://github.com/supranational/blst/">https://github.com/supranational/blst/</a> is rebuilt for the native lib with <code>./build.sh -D__BLST_PORTABLE__ -shared</code>
+<ul class="org-ul">
+<li>copy <code>cp libblst.so /gnu/git/btcpay/btcpay-plugins/BTCPayServer.Plugins.Chia/runtimes/linux-x64/native/libblst.so</code> or into the vendored (the project does this within the github pipeline)</li>
+<li>if you vendor with a project reference in .csproj you must edit the deps.json for native lib as the unpublished project (for .net10 unpublish commit) doesn't add the native entry without nuget package(long standing issues dotnet/sdk#765 dotnet/sdk#1088 dotnet/sdk#24708)</li>
+<li>1.5.0 is built with portable flags</li>
+</ul></li>
+</ul>
+<ul class="org-ul">
+<li>restart btcpayserver and view logs <code>podman logs btcpay-deployment-pod-btcpay</code></li>
+<li>create plugin json</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-json" id="org510c33f"><code>{
+  "Identifier": "BTCPayServer.Plugins.Chia",
+  "Name": "Chia",
+  "Version": "1.0.4",
+  "Description": "Chia integration",
+  "SystemPlugin": false,
+  "Dependencies": [
+    {
+      "Identifier": "BTCPayServer",
+      "Condition": "&gt;=2.3.7"
+    }
+  ],
+  "Documentation": null,
+  "Source": null,
+  "Author": null,
+  "AuthorLink": null
+}
+</code></pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-yaml" id="org75a9499"><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: btcpay-deployment
+  labels:
+    app: btcpay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: btcpay
+  template:
+    metadata:
+      labels:
+        app: btcpay
+    spec:
+      volumes:
+      - name: btcpay-data
+        hostPath:
+          path: /gnu/git/btcpay/btcpay-data
+      - name: btcpay-plugins
+        hostPath:
+          path: /gnu/git/btcpay/btcpay-plugins
+      - name: postgres-data
+        hostPath:
+          path: /gnu/git/btcpay/btcpay-postgres
+      containers:
+      - name: btcpay
+        image: btcpayserver/btcpayserver:2.3.9
+        volumeMounts:
+        - name: btcpay-data
+          mountPath: /datadir
+        - name: btcpay-plugins
+          mountPath: /root/.btcpayserver/Plugins
+        env:
+        - name: BTCPAY_POSTGRES
+          value: "User ID=postgres;Host=127.0.0.1;Port=5432;Application Name=btcpayserver;Database=btcpayserver"
+        - name: BTCPAY_NETWORK
+          value: mainnet
+        - name: BTCPAY_BIND
+          value: 0.0.0.0:49392
+        - name: BTCPAY_ROOTPATH
+          value: /
+        - name: BTCPAY_SSHCONNECTION
+          value: "root@host.docker.internal"
+        - name: BTCPAY_SSHTRUSTEDFINGERPRINTS
+          value: ""
+        - name: BTCPAY_SSHKEYFILE
+          value: ""
+        - name: BTCPAY_SSHAUTHORIZEDKEYS
+          value: ""
+        - name: BTCPAY_DEBUGLOG
+          value: btcpay.log
+        - name: BTCPAY_UPDATEURL
+          value: https://api.github.com/repos/btcpayserver/btcpayserver/releases/latest
+        - name: BTCPAY_DOCKERDEPLOYMENT
+          value: "true"
+        - name: "BTCPAY_NODEFAULTCHAIN"
+          value: "true"
+        - name: "COREHOST_TRACE"
+          value: "1"
+#        - name: BTCPAY_XMR_DAEMON_URI
+#          value: http://127.0.0.1:18081
+#        - name: BTCPAY_XMR_WALLET_DAEMON_URI
+#          value: http://127.0.0.1:18082
+#        - name: BTCPAY_XMR_WALLET_DAEMON_WALLETDIR
+#          value: /root/xmr_wallet
+        ports:
+        - name: btcpay-port
+          containerPort: 49392
+          hostPort: 49392
+      - name: postgres
+        image: btcpayserver/postgres:18.1-1
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql
+        args: ["-c", "random_page_cost=1.0", "-c", "shared_preload_libraries=pg_stat_statements"]
+        env:
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: trust
+        ports:
+        - name: postgres-port
+          containerPort: 5432
+          hostPort: 5432
+</code></pre>
+</div>
+<ul class="org-ul">
+<li>Debug
+<ul class="org-ul">
+<li>set master key hex from greenfield api
+<ul class="org-ul">
+<li>create unrestricted api access token from account -&gt; settings -&gt; api keys</li>
+<li>curl post the key. add optional <code>, "addresses": ["xchADDR"]</code> to the config object to create an initial invoice (generation seems broken with tested random pubkey?)
+<ul class="org-ul">
+<li>reset bad config with <code>podman exec -it CONTAINER_ID psql -U postgres -d btcpayserver</code> then <code>UPDATE "Stores" SET "DerivationStrategies" = "DerivationStrategies" - 'XCH-CHIA' WHERE "Id" = 'STORE_ID';</code> replacing STORE<sub>ID</sub> and CONTAINER<sub>ID</sub></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-json" id="org1c40e91"><code>curl -X PUT "http://127.0.0.1:49392/api/v1/stores/STORE_ID/payment-methods/XCH-CHIA"   -H "Authorization: token API_KEY"   -H "Content-Type: application/json"   -d '{
+    "enabled": true,
+    "config": { "masterPublicKey": "96ce91d974daa0990e6681ac2de3e3f49142f6b655a081817832265c143e658a6e60a5dec856f292f45fe2d04c7856f6" }
+  }'
+</code></pre>
+</div>
+<ul class="org-ul">
+<li>check results with <code>curl -H "Authorization: token API_KEY" "http://127.0.0.1:49392/api/v1/stores/STORE_ID/payment-methods?includeConfig=true"</code></li>
+</ul>
 </div>
 </div>
 </div>

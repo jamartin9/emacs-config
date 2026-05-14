@@ -9,24 +9,29 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org1d92c59">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org67bdea4">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org6d811b0" class="outline-2">
-<h2 id="org6d811b0">Machine learning</h2>
-<div class="outline-text-2" id="text-org6d811b0">
+<div id="outline-container-org3f37bed" class="outline-2">
+<h2 id="org3f37bed">Machine learning</h2>
+<div class="outline-text-2" id="text-org3f37bed">
 </div>
-<div id="outline-container-orgbe42796" class="outline-3">
-<h3 id="orgbe42796">notes</h3>
-<div class="outline-text-3" id="text-orgbe42796">
+<div id="outline-container-org5631ebb" class="outline-3">
+<h3 id="org5631ebb">notes</h3>
+<div class="outline-text-3" id="text-org5631ebb">
 <ul class="org-ul">
+<li>turboquant 2/3/4 bit for kv cache added by google improves quant by coordinate translation and rotation(reduces irregularity)</li>
 <li>kernel dev prompt collection <a href="https://github.com/masoncl/review-prompts">https://github.com/masoncl/review-prompts</a></li>
 <li><a href="https://www.neuronpedia.org/">https://www.neuronpedia.org/</a> for sae identification</li>
 <li>speculative encoding like eagle uses post training data to generate a predictive model</li>
-<li>gemma scope is a sae for gemma feature exploration</li>
+<li>gemma scope is a sae for gemma feature exploration <a href="https://hf.co/google/gemma-scope">https://hf.co/google/gemma-scope</a>
+<ul class="org-ul">
+<li>gemma scope 2 <a href="https://hf.co/google/gemma-scope-2">https://hf.co/google/gemma-scope-2</a></li>
+</ul></li>
+<li>qwen scope is a sae for qwen3.5 dense and moe <a href="https://hf.co/spaces/Qwen/QwenScope">https://hf.co/spaces/Qwen/QwenScope</a></li>
 <li>olmo3 has full data with ngram output linkage to pretraining sources</li>
 <li>mirage for megakernel generation</li>
 <li>standford megakernels use gpu interpreter so each sm gets an instruction stream</li>
@@ -139,14 +144,8 @@
 <li><a href="https://github.com/vgel/repeng/">https://github.com/vgel/repeng/</a> for control vector generation</li>
 </ul></li>
 <li>vector databases can be used for Retrieval Augmented Generation by finding content close to query for context</li>
-<li>transformers context length prediction can be expanded from the size used in training by using <a href="https://arxiv.org/pdf/2108.12409.pdf">ALiBi in MPT</a>, ROPE, sliding context window
+<li>transformers context length prediction can be expanded from the size used in after mid training during the long-context extension stage with long documents
 <ul class="org-ul">
-<li><a href="https://github.com/salesforce/xGen">xGen 8k context</a></li>
-<li><a href="https://huggingface.co/lmsys/longchat-13b-16k">longchat 16k context</a></li>
-<li><a href="https://huggingface.co/syzymon/long_llama_3b">long llama 256k</a>
-<ul class="org-ul">
-<li><a href="https://huggingface.co/01-ai/Yi-34B-200K">yi-34B-200k</a> Needle-in-a-Haystack score is 99.8%</li>
-</ul></li>
 <li><a href="https://huggingface.co/gradientai/Llama-3-8B-Instruct-Gradient-1048k">https://huggingface.co/gradientai/Llama-3-8B-Instruct-Gradient-1048k</a> by scaling rope theta while fine tuning on 1.4B tokens of augmented slimpajama</li>
 </ul></li>
 <li><a href="https://github.com/EleutherAI/lm-evaluation-harness">https://github.com/EleutherAI/lm-evaluation-harness</a></li>
@@ -165,11 +164,10 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org5733db1" class="outline-3">
-<h3 id="org5733db1">image</h3>
-<div class="outline-text-3" id="text-org5733db1">
+<div id="outline-container-org1341959" class="outline-3">
+<h3 id="org1341959">image</h3>
+<div class="outline-text-3" id="text-org1341959">
 <ul class="org-ul">
-<li>nvidia nemotron nano models use ssm/mamba hybrid layers</li>
 <li>DeepSeekOCR found uses image tokens can be used for text for compression</li>
 <li>PaliGemma gets embedding vectors for document image retrieval with gemma text encoder and siglp vision(32x32 patches per pdf image page with with 128 dim vector for each)
 <ul class="org-ul">
@@ -235,9 +233,9 @@
 <li>GLIGEN for regional prompting</li>
 </ul>
 </div>
-<div id="outline-container-org7413be8" class="outline-4">
-<h4 id="org7413be8">video</h4>
-<div class="outline-text-4" id="text-org7413be8">
+<div id="outline-container-org26bd8dd" class="outline-4">
+<h4 id="org26bd8dd">video</h4>
+<div class="outline-text-4" id="text-org26bd8dd">
 <ul class="org-ul">
 <li><a href="https://github.com/Tencent/HunyuanVideo">https://github.com/Tencent/HunyuanVideo</a>
 <ul class="org-ul">
@@ -256,19 +254,23 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org27ca5a8" class="outline-4">
-<h4 id="org27ca5a8">3D</h4>
-<div class="outline-text-4" id="text-org27ca5a8">
+<div id="outline-container-org3b79833" class="outline-4">
+<h4 id="org3b79833">3D</h4>
+<div class="outline-text-4" id="text-org3b79833">
 <ul class="org-ul">
 <li><a href="https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon">https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon</a> for 3D generation 3B</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org1b4cf97" class="outline-3">
-<h3 id="org1b4cf97">Large Language Models</h3>
-<div class="outline-text-3" id="text-org1b4cf97">
+<div id="outline-container-org4f7ec6b" class="outline-3">
+<h3 id="org4f7ec6b">Large Language Models</h3>
+<div class="outline-text-3" id="text-org4f7ec6b">
 <ul class="org-ul">
+<li>nvidia nemotron nano models use ssm/mamba hybrid layers
+<ul class="org-ul">
+<li>added latent attention</li>
+</ul></li>
 <li><a href="https://arxiv.org/html/2502.13577v1">https://arxiv.org/html/2502.13577v1</a> posits that the data manifold structure is not smooth uniform global structure but a stratified manifold</li>
 <li>multiple serving frameworks with nvidia dynamo
 <ul class="org-ul">
@@ -286,11 +288,11 @@
 <li>tool calling</li>
 <li>quants</li>
 <li>multimodal</li>
-<li>VLLM<sub>USE</sub><sub>V1</sub>=1 for new arch</li>
 <li>jinja chat templates</li>
 <li>required compute capability higher than 5.2 for gguf and bnb</li>
 <li>build custom docker image for cpu only avx2 (bf16,f32,f16 only) using <code>--build-arg VLLM_CPU_DISABLE_AVX512=true</code>
 <ul class="org-ul">
+<li>cpu docker images now available <code>podman run  -v /gnu/git/llms/scripts/vllm:/root/.cache/vllm:z -v /gnu/git/llms/huggingface:/root/.cache/huggingface:z -e "HF_TOKEN=$HF_TOKEN" -e "VLLM_LOGGING_LEVEL=DEBUG" -e "ON_CPU=1" -e "VLLM_CPU_X86=true" -e "ONEDNN_MAX_CPU_ISA=AVX2" -e "VLLM_TARGET_DEVICE=cpu" -e "VLLM_CPU_KVCACHE_SPACE=2" -p 8000:8000 --ipc=host --rm vllm/vllm-openai-cpu:v0.20.1-x86_64 --model google/gemma-4-E2B-it --max-model-len 1024 --language-model-only</code></li>
 <li><a href="https://arxiv.org/html/2505.06461v1">https://arxiv.org/html/2505.06461v1</a> shows cpu slows down and bottlenecks with more than ~4 cores but can beat gpu on small local models</li>
 </ul></li>
 </ul></li>
@@ -364,26 +366,55 @@
 <ul class="org-ul">
 <li>ik<sub>llama.cpp</sub> fork with cpu/quant improvements
 <ul class="org-ul">
+<li><code>-mtp</code> <code>--draft-max 10 --draft-p-min 0.85</code> for mtp speculative decoding (poor perf with moe as memory bandwidth bound)
+<ul class="org-ul">
+<li>model must have either a drafter or MTP tensors preserved</li>
+<li><code>-mtp --draft-max 1 --draft-p-min 0.0</code> for current qwen3.6 dense mtp support (perf degrades with more than 1)</li>
+<li>gemma4 assistant drafter MTP with <code>--spec-type mtp -md ../gemma-4-26B-A4B-it-assistant-Q8_0.gguf --draft-max 3 --draft-p-min 0.0</code>
+<ul class="org-ul">
+<li><code>-ngld 99</code> for drafter gpu offload</li>
+</ul></li>
+</ul></li>
+<li><code>-c 524288 --rope-scaling yarn --rope-scale 2 --yarn-orig-ctx 262144</code> for yarn scaling to larger context for qwen3.6</li>
+<li><code>--fit</code> and <code>--fit-margin</code> for gpu tensor offload</li>
 <li><code>--smart-expert-reduction</code> is basically REAP</li>
 <li>supports vision for some models</li>
+<li>gemma4
+<ul class="org-ul">
+<li><code>llama-server-ik --model ../google_gemma-4-26B-A4B-it-IQ4_NL.gguf --ctx-size 32768 --temp 1.0 --top-p 0.95 --top-k 64 --min-p 0.0 --repeat-penalty 1.0 --cache-type-k q6_0 --cache-type-v q6_0 -khad -vhad --threads 12 -fa on --cache-ram 0 --no-context-shift --no-warmup -ger -muge -rtr -mqkv --threads-http 1 --jinja --chat-template-kwargs '{"enable_thinking":true}'</code>
+<ul class="org-ul">
+<li>use <code>--swa-full</code> with llama.cpp for comparable SWA. llama.cpp supports iSWA(checkpointing, compression, fixed size instead of growing with context)</li>
+</ul></li>
+</ul></li>
 <li>fused deltanet for qwen3.5 (35B-A3B)
 <ul class="org-ul">
-<li><code>-muge</code> merged gate/up/down <code>ffn_down_exps</code>, <code>ffn_down_exps</code>, <code>ffn_down_exps</code> requires the same attention type
+<li>qwen 3.6 improved on qwen 3.5
+<ul class="org-ul">
+<li>drift in ssm<sub>conv1d</sub> tensors for qwen 3.6 corrected with Wasserstein and Qwen-Plus quants?</li>
+</ul></li>
+<li><code>-khad</code> or <code>-vhad</code> needs power of 2 attention head size (no MLA)
+<ul class="org-ul">
+<li>Hadamard transforms rotates the K or V cache for better quantized accuracy</li>
+<li>only quant kv to q8 without Hadamard for accuracy</li>
+</ul></li>
+<li><code>-muge</code> merged gate/up/down <code>ffn_down_exps</code>, <code>ffn_gate_exps</code>, <code>ffn_up_exps</code> requires the same attention type
 <ul class="org-ul">
 <li>unsloth <code>Q4_K_L</code> does match but the IQ quants do not match and cause assertion error in ik<sub>llama</sub></li>
-<li>bartowski quants match</li>
-<li>conflicts with runtime repack <code>-rtr</code></li>
+<li>bartowski quants match as do ubergarms (and AesSedia?)</li>
 </ul></li>
 <li>should support mtp (not yet?)</li>
 <li>disable thinking with <code>--chat-template-kwargs '{"enable_thinking":false}'</code></li>
 <li>try to force full prompt processing with <code>--cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift</code></li>
-<li>2782.81 MiB KV cache with q8 and 2142.81 with q6</li>
-<li><code>../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad -muge --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja</code></li>
+<li>2782.81 MiB KV cache with q8 and 2142.81 with q6
+<ul class="org-ul">
+<li>K quant is more important than V quant</li>
+</ul></li>
+<li><code>../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad -vhad -muge -rtr --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja</code></li>
 <li><code>-mqkv -rtr</code> disable mmap but gives 0.5 tk/s more</li>
 </ul></li>
 <li>flash mla <code>-mla 3</code> supported for cpu offloading on quants Q6 and Q8 for deepseek or glm4.7 lesser quants need <code>-DGGML_IQK_FA_ALL_QUANTS=ON</code> for cmake
 <ul class="org-ul">
-<li><code>../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -khad -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0</code></li>
+<li><code>../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0</code></li>
 <li>16 tk/s w/16 threads on iq4 and 11 tk/s with Q6</li>
 <li>context 200k(202752 is 5561.79 MiB), 32k is 898.88 MiB of KV cache</li>
 <li>khad (Hadamard transforms for K-cache) with quantized cache (special q8<sub>KV</sub> for the cache-type-K causes assert error?)
@@ -393,14 +424,15 @@
 <li>cache-ram 0 to remove prompt cache</li>
 <li>amb 256 to reduce compute buffer size to 700MiB from 9000.90 MiB default
 <ul class="org-ul">
-<li>doesn't seem to affect speed on cpu only?</li>
+<li>doesn't seem to affect speed on cpu only</li>
 </ul></li>
-<li>mqkv for merged matrix but disables mmap, use rtr for runtime repack as it disable mmap too</li>
+<li>mqkv for merged matrix. disables mmap</li>
+<li>rtr for runtime repack. disables mmap</li>
 <li>ger for GROUPED<sub>TOPK</sub></li>
-<li>muge for merged projections</li>
+<li>muge for merged projections. disables mmap</li>
 <li>fmoe defaults to on</li>
 <li>multiple of 4 for threads for simd(gh issue mentioned this?)</li>
-<li>cpu build <code>cmake -B build -DGGML_CUDA=OFF -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON &amp;&amp; cmake --build build --config Release -j 8 --clean-first</code></li>
+<li>cpu build <code>cmake -B build -DGGML_CUDA=OFF -DGGML_IQK_FA_ALL_QUANTS=ON &amp;&amp; cmake --build build --config RelWithDebInfo -j 8 --clean-first</code></li>
 <li>cuda build <code>cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_FLAGS="-Wno-deprecated-gpu-targets" -DCMAKE_CUDA_HOST_COMPILER=g++-14 -DGGML_IQK_FA_ALL_QUANTS=ON -DGGML_DEBUG=1 &amp;&amp; cmake --build build --config RelWithDebInfo -j 8 --target llama-server</code></li>
 </ul></li>
 </ul></li>
@@ -425,6 +457,53 @@
 </ul></li>
 </ul></li>
 </ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh" id="org3e60ed0"><code>#!/usr/bin/env bash
+# https://github.com/ikawrakow/ik_llama.cpp/issues/1471
+custom="
+# 60 Repeating Layers [0-59]
+
+## Gated Attention/Delta Net [Blended 0-59]
+blk\..*\.attn_gate\.weight=q6_0
+blk\..*\.attn_qkv\.weight=q6_0
+blk\..*\.attn_output\.weight=q6_0
+blk\..*\.attn_q\.weight=q6_0
+blk\..*\.attn_k\.weight=q6_0
+blk\..*\.attn_v\.weight=q6_0
+blk\..*\.ssm_alpha\.weight=q8_0
+blk\..*\.ssm_beta\.weight=q8_0
+blk\..*\.ssm_out\.weight=q8_0
+
+# Shared Expert Layers [0-59]
+blk\..*\.ffn_down_shexp\.weight=q6_0
+blk\..*\.ffn_(gate|up)_shexp\.weight=q6_0
+
+# Routed Experts Layers [0-59]
+blk\.[0-4]\.ffn_down_exps\.weight=iq5_ks
+blk\..*\.ffn_down_exps\.weight=iq4_ks
+blk\..*\.ffn_(gate|up)_exps\.weight=iq4_ks
+
+# Non-Repeating Layers
+token_embd\.weight=q6_0
+output\.weight=q6_0
+"
+
+custom=$(
+  echo "$custom" | grep -v '^#' | \
+  sed -Ez 's:\n+:,:g;s:,$::;s:^,::'
+)
+
+../llama-quantize \
+    --ffn-gate-inp-type q8_0 \
+    --custom-q "$custom" \
+    --allow-requantize \
+    --imatrix ../imatrix-Qwen3.5-35B-A3B-BF16.dat \
+    ../Qwen3.5-35B-A3B-IQ4_KS.gguf \
+    output.bin IQ4_KS
+</code></pre>
+</div>
+<ul class="org-ul">
 <li>Most model refusals are <a href="https://www.alignmentforum.org/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction">controlled by features on the residual level</a> and flow directionally to end
 <ul class="org-ul">
 <li><a href="https://huggingface.co/cognitivecomputations/Llama-3-8B-Instruct-abliterated-v2-gguf">abliterated models</a> use 'harmful' prompts to identify the activations and zero them out to uncensor the model responses. can be reversed from output embeddings.</li>
@@ -471,9 +550,9 @@
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orge9136d5" class="outline-4">
-<h4 id="orge9136d5">Codegen</h4>
-<div class="outline-text-4" id="text-orge9136d5">
+<div id="outline-container-org6045bc9" class="outline-4">
+<h4 id="org6045bc9">Codegen</h4>
+<div class="outline-text-4" id="text-org6045bc9">
 <ul class="org-ul">
 <li>GraalVM added Static Profiles powered by ML branch prediction for inlining (based on decapo data)
 <ul class="org-ul">
@@ -509,26 +588,26 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgef0eb32" class="outline-3">
-<h3 id="orgef0eb32">Speech to text</h3>
-<div class="outline-text-3" id="text-orgef0eb32">
+<div id="outline-container-org3f5ea8d" class="outline-3">
+<h3 id="org3f5ea8d">Speech to text</h3>
+<div class="outline-text-3" id="text-org3f5ea8d">
 <ul class="org-ul">
 <li>SeamlessM4T</li>
 <li>open ai whisper translation</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh" id="orgc8a37cd">pip install --user git+https://github.com/openai/whisper.git
+<pre class="src src-sh" id="org2af049c"><code>pip install --user git+https://github.com/openai/whisper.git
 pip install --user yt-dlp
 VID="TyvE8oexEAA"
 yt-dlp https://www.youtube.com/watch?v=${VID} --format m4a -o "%(id)s.%(ext)s"
 whisper "/content/${VID}.m4a" --model small --language English
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org0edf324" class="outline-3">
-<h3 id="org0edf324">Text to speech</h3>
-<div class="outline-text-3" id="text-org0edf324">
+<div id="outline-container-org9a2bf19" class="outline-3">
+<h3 id="org9a2bf19">Text to speech</h3>
+<div class="outline-text-3" id="text-org9a2bf19">
 <ul class="org-ul">
 <li>Zyphra/Zonos for voice cloning/TTS</li>
 <li><a href="https://github.com/multimodal-art-projection/YuE">https://github.com/multimodal-art-projection/YuE</a>
@@ -548,18 +627,18 @@ whisper "/content/${VID}.m4a" --model small --language English
 </ul>
 </div>
 </div>
-<div id="outline-container-org3febd65" class="outline-3">
-<h3 id="org3febd65">transformers examples</h3>
-<div class="outline-text-3" id="text-org3febd65">
+<div id="outline-container-orgaf81fe6" class="outline-3">
+<h3 id="orgaf81fe6">transformers examples</h3>
+<div class="outline-text-3" id="text-orgaf81fe6">
 <ul class="org-ul">
 <li>can set accelerate device with cli <code>accelerate launch --cpu main.py</code>, env <code>ACCELERATE_USE_CPU=True</code> or python <code>accelerator = Accelerator(cpu=True)</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python" id="orgc04bcac">#!/usr/bin/env python3
+<pre class="src src-python" id="orgeb48715"><code>#!/usr/bin/env python3
 # PEP 722 deps
 #
 # Script Dependencies:
-#    transformers[agents]&gt;=4.31
+#    transformers[agents]&gt;=5.3.0
 #    diffusers&gt;=0.19.3
 #    datasets
 #    torch
@@ -573,6 +652,14 @@ whisper "/content/${VID}.m4a" --model small --language English
 #    pdf2image
 #    protobuf
 #    invisible-watermark&gt;=0.2.0
+#    accelerate
+#    fastapi
+#    torchao
+#    optimum-intel[openvino,nncf] @ git+https://github.com/huggingface/optimum-intel.git" # doesnt support qwen3.5 yet or transformers 5 (also needed for qwen)
+#    openvino&gt;=2026.0.0
+#    nncf&gt;=2.14.0
+#    uvicorn
+#    ninja&gt;=1.13.0 # for build native
 
 #optimum[onnxruntime]&gt;=1.10.0
 #sympy
@@ -775,13 +862,92 @@ prompt = "Dog, noble, majestic, realistic, high definition, pitbull"
 image = image_generator(prompt=prompt)
 image.save("test.png")
 
-</pre>
+# serving qwen3.5 0.8B
+#!/usr/bin/env python
+import os
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, TorchAoConfig #BitsAndBytesConfig
+from fastapi import FastAPI
+import uvicorn
+from time import perf_counter
+#import openvino
+#import nncf
+#from optimum.intel import OVModelForCausalLM, OVWeightQuantizationConfig # doesnt support qwen 3.5 or transformers 5 yet...
+import torchao
+from torchao.quantization import Int8DynamicActivationIntxWeightConfig, Int8DynamicActivationInt8WeightConfig, PerRow # quantize_ QAT supported Int4WeightOnlyConfig failed with cpu (hqq and gemm backends)
+#from torchao.quantization.qat import QATConfig # wrap config with QATConfig(quant_config) for 'fake quant' before and after training
+
+#lib_path = "/gnu/git/llms/scripts/pyserv/ao/torchao/_C.abi3.so" # will throw library not loaded error when kernels are not found...
+#try:
+#    torch.ops.load_library(lib_path)
+#    print("✅ Success: Library loaded manually!")
+#except Exception as e:
+#    print(f"❌ Failed to load: {e}")
+#torch.ops.torchao._pack_8bit_act_4bit_weight # is the check in torchao and seems to be arm only?
+
+os.environ["TORCHINDUCTOR_CACHE_DIR"] = "/gnu/git/llms/scripts/pyserv/kernel_cache"
+torch._inductor.config.fx_graph_cache = True
+
+model_id = "Qwen/Qwen3.5-0.8B"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+#bnb_quant_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=torch.float32)
+#vino_quant_config  = OVWeightQuantizationConfig(bits=4) # bits=8
+torchao_quant_config = Int8DynamicActivationInt8WeightConfig(set_inductor_config=True, version=2)#weight_only_decode=True,  #Int8DynamicActivationIntxWeightConfig(weight_dtype=torch.int4) # use the da8w4 kernel path # intx_packing_format="opaque_torchao_auto" lowbit is arm only # QAT only support int8dynamicintx with weight int4 activation int8, cpu TorchAO kernel library is not loaded and uses lowbit w/o arm for kledia kernels
+tochao_quantization_config = TorchAoConfig(quant_type=torchao_quant_config)
+
+model = AutoModelForCausalLM.from_pretrained( #OVModelForCausalLM.from_pretrained(
+    model_id,
+    dtype=torch.float32, # torch_dtype is deprecated but dtype throws error when saving some configs...
+#    quantization_config=tochao_quantization_config,#vino_quant_config,#bnb_quant_config,
+    device_map="cpu")
+model = torch.compile(model, #mode="max-autotune",
+                      fullgraph=False#, backend="openvino", options={"device": "CPU", "model_caching": True, "cache_dir": "/gnu/git/llms/scripts/pyserv/vino", "config":{ "PERFORMANCE_HINT": "LATENCY", "INFERENCE_PRECISION_HINT": "f32"}} # fullgraph off so it doesn't silently fail on gaps
+                      )
+print("Checking kernel cache...")
+with torch.no_grad():
+    input_ids = torch.ones((1, 128), dtype=torch.long)
+    model(input_ids)# generate doesn't compile?
+
+#output_dir = "/gnu/git/llms/scripts/pyserv/qwen3.5-0.8B-torchao-int8-dynamic-8bit-cpuv2" # change name when quant changes
+#model.save_pretrained(output_dir) # save and reload models for weight only config?
+#model = AutoModelForCausalLM.from_pretrained(output_dir, device_map="cpu")
+
+app = FastAPI()
+@app.post("/chat")
+async def chat(prompt: str):
+    inputs = tokenizer(prompt, return_tensors="pt").to("cpu")
+    with torch.no_grad():
+        start = perf_counter()
+        output = model.generate(**inputs,
+                                max_new_tokens=256,
+                                temperature=1.0,
+                                top_p=1.0,
+                                #top_k=20,
+                                #min_p=0.0,
+                                #presence_penalty=2.0,
+                                #cache_implementation="static",
+                                repetition_penalty=1.0,
+                                return_dict_in_generate=True) # dict for perf measurement
+        stop = perf_counter()
+        gen_tokens = output.sequences[0][inputs.input_ids.shape[1]:]
+        tks = len(gen_tokens) / (stop - start)
+        print("tk/s: " + str(tks)) # dont count decode only gen
+    return {"response": tokenizer.decode(output[0], skip_special_tokens=True)}
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+#curl "127.0.0.1:8000/chat?prompt=What%20is%20the%20capital%20of%20France?" -XPOST
+# f32: just under ~9tk/s with vino or inductor or plain no compile. ik_llama gives ~14tk/s with same F32
+# quantized: bnb gives 0.5 tk/s and torachao Int8DynamicActivationInt8WeightConfig() gives 3.5 tk/s, 1.5 with weight_only v2 8 tk/s plain. Int8DynamicActivationIntxWeightConfig 4bit weight gives ~2 tk/s. Int4WeightOnly gives does not support. Vino does not support yet.
+# for tochao maybe add BUILD_TORCHAO_EXPERIMENTAL=1 but seems cpu inference is arm/mac only - UV_LINK_MODE=copy USE_CPP=1 USE_CUDA=0 USE_CPU_KERNELS=1 uv pip install --no-build-isolation -v --no-binary torchao -e ./ao 2&gt;&amp;1 | tee -a output.log
+# LD_LIBRARY_PATH=/gnu/git/llms/scripts/pyserv/.venv/lib/python3.12/site-packages/torch/lib
+
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc736010" class="outline-3">
-<h3 id="orgc736010">Gemini-Cli</h3>
-<div class="outline-text-3" id="text-orgc736010">
+<div id="outline-container-org588af2b" class="outline-3">
+<h3 id="org588af2b">Gemini-Cli</h3>
+<div class="outline-text-3" id="text-org588af2b">
 <ul class="org-ul">
 <li><code>GEMINI_SANDBOX=podman make clean build-all</code> to build container and app</li>
 <li>custom slash commands in toml files under the command dir</li>
@@ -796,7 +962,7 @@ image.save("test.png")
 <li>slash commands to save chat or change options</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-json" id="org478aebe">{
+<pre class="src src-json" id="org663003f"><code>{
   "tools": {
     "autoAccept": false,
     "sandbox": "podman"
@@ -814,13 +980,13 @@ image.save("test.png")
   }
 }
 
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org018a314" class="outline-3">
-<h3 id="org018a314">Codex-Cli</h3>
-<div class="outline-text-3" id="text-org018a314">
+<div id="outline-container-orgc409a7b" class="outline-3">
+<h3 id="orgc409a7b">Codex-Cli</h3>
+<div class="outline-text-3" id="text-orgc409a7b">
 <ul class="org-ul">
 <li><code>codex exec "Extract details of the project" --output-schema ~/schema.json</code> to use schema for output</li>
 <li><code>codex exec --json "Some Such prompt"</code> contains a threadId for <code>codex exec resume threadId "Some such prompt"</code></li>
@@ -831,14 +997,14 @@ image.save("test.png")
 </ul></li>
 <li><code>npx @modelcontextprotocol/inspector codex mcp-server</code> to inspect codex as an mcp server
 <ul class="org-ul">
-<li>the mcp reply for resume needs a <code>session_id</code> given in the first message. the python api messes this up&#x2026; but can manually be done in the inspector
+<li>the mcp reply for resume needs a <code>session_id</code> given in the first message. the python api messes this up&hellip; but can manually be done in the inspector
 <ul class="org-ul">
 <li>add session<sub>id</sub> into out forks prompt md or maybe reading env var ACP<sub>FS</sub><sub>SESSION</sub><sub>ID</sub> for the acp agent?</li>
 </ul></li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-toml" id="orgc6ce45b">approval_policy = "untrusted" # "never"
+<pre class="src src-toml" id="orge24b225"><code>approval_policy = "untrusted" # "never"
 sandbox_mode = "workspace-write" # "read-only" # "danger-full-access"
 file_opener = "none"
 
@@ -910,22 +1076,22 @@ web_search = true
 #[model_providers.ollama]
 #name = "ollama"
 #base_url = "http://localhost:8080/v1"
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orga94b18b" class="outline-3">
-<h3 id="orga94b18b">goose</h3>
-<div class="outline-text-3" id="text-orga94b18b">
+<div id="outline-container-org5ac32e7" class="outline-3">
+<h3 id="org5ac32e7">goose</h3>
+<div class="outline-text-3" id="text-org5ac32e7">
 <ul class="org-ul">
-<li>need to fork like codex-acp to disable the system prompt&#x2026;</li>
+<li>need to fork like codex-acp to disable the system prompt&hellip;</li>
 <li><code>~/.config/goose/.goosehints</code> the .goosehints file gets sent with every request to Goose
 <ul class="org-ul">
 <li><code>export CONTEXT_FILE_NAMES='[".cursorrules", "AGENTS.md"]'</code> for files read by default</li>
 </ul></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-yaml" id="org623bb7d">GOOSE_CLI_MIN_PRIORITY: 0.0
+<pre class="src src-yaml" id="org35166ee"><code>GOOSE_CLI_MIN_PRIORITY: 0.0
 GOOSE_MODE: smart_approve
 GOOSE_ENABLE_ROUTER: 'false'
 GOOSE_MODEL: gemini-2.5-flash
@@ -1004,7 +1170,7 @@ subagent:
   name: subagent
   timeout: 300
   type: stdio
-</pre>
+</code></pre>
 </div>
 </div>
 </div>

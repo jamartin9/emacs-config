@@ -1,5 +1,5 @@
 /* Requires sqlite3.js, sqlite3.wasm and sql-worker.js(my worker wrapper)
-    // MAYBE use shared worker for cross page sharing
+    // MAYBE use shared worker for cross page sharing(pglite uses leader election)
     // MAYBE add service-worker caching with http.vfs splitting
     // MAYBE use opfs vfs with sync support (multiple tabs)
     // example page:

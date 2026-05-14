@@ -9,23 +9,31 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgac41795">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org7fd7d50">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-org84e608b" class="outline-2">
-<h2 id="org84e608b">software contributions</h2>
-<div class="outline-text-2" id="text-org84e608b">
+<div id="outline-container-org61ee20c" class="outline-2">
+<h2 id="org61ee20c">software contributions</h2>
+<div class="outline-text-2" id="text-org61ee20c">
 <ul class="org-ul">
+<li>XCHPay/btcpayserver-chia-plugin
+<ul class="org-ul">
+<li>WIP <a href="https://github.com/XCHPay/btcpayserver-chia-plugin/pull/1">update for btcpayserver 2.3.9(dotnet10) and SIGILL on native lib</a></li>
+</ul></li>
+<li>GuillaumeGomez/sysinfo
+<ul class="org-ul">
+<li><a href="https://github.com/GuillaumeGomez/sysinfo/pull/1646">support for zfs dataset names on FreeBSD</a></li>
+</ul></li>
 <li>guix-cuirass
 <ul class="org-ul">
 <li><a href="https://git.savannah.gnu.org/cgit/guix/guix-cuirass.git/commit/?id=c8022d51f4c6c34c4ea0ce2d3502d4a683946888">Added a null check to js to allow adding channels on specification page</a></li>
 </ul></li>
 <li>huggingface/transformers
 <ul class="org-ul">
-<li><a href="https://github.com/huggingface/transformers/pull/24736">typo bugfix to allow models to be ran with LocalAgent</a></li>
+<li><a href="https://github.com/huggingface/transformers/pull/24736">bugfix to allow models to be ran with LocalAgent</a></li>
 </ul></li>
 <li>ClementTsang/bottom
 <ul class="org-ul">
@@ -36,13 +44,19 @@
 <li>freebsd used sysctl support for hw temp sensors</li>
 </ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/1044">kept feature working between release refactors</a></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/1248">added zpool dataset io stats</a>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1248">added zpool dataset io stats</a></li>
+<li>WIP to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS<sub>IOC</sub><sub>POOL</sub><sub>CONFIG</sub> for the cache device path or parse zpool iostat json output in zfs 2.3+
 <ul class="org-ul">
-<li>sysinfo added freebsd ufs io with geom?</li>
+<li>add arc and l2arc to disk menu, get arc r/w bytes from procfs iostat. include note about not getting vdev level iostats as that would need ioctl like issue, so no total l2cache</li>
+<li>send | recv of unmounted datasets will not be shown despite having stats currently as it uses a different flow</li>
+<li>ZFS<sub>IOC</sub><sub>POOL</sub><sub>STATS</sub> does not contain the spa<sub>iostats</sub> exposed by under the per pool proc directory iostats file for per pool arc
+<ul class="org-ul">
+<li>includes 'vs<sub>bytes</sub>' index with the read/write total bytes for each vdev<sub>stat</sub><sub>t</sub> returned</li>
+<li>appends 'l2cache' on vdev<sub>root</sub></li>
+<li>appends 'spares' on vdev<sub>root</sub> (active spare?)</li>
+<li>zvols?</li>
 </ul></li>
-<li>to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS<sub>IOC</sub><sub>POOL</sub><sub>CONFIG</sub> for the cache device path or parse zpool iostat json output in zfs 2.3+
-<ul class="org-ul">
-<li><a href="https://github.com/robn/veneer">https://github.com/robn/veneer</a> does this already in dataset<sub>list</sub> and pools</li>
+<li><a href="https://github.com/robn/veneer">https://github.com/robn/veneer</a> does most of this already in dataset<sub>list</sub> and pools. The per dataset arc usage counters from iostats and total L2 io still come from procfs.</li>
 <li>libzfs<sub>core</sub> python bindings are generated from <code>include/libzfs/libzfs_core.h</code> which only contains lzc<sub>ioctl</sub><sub>fd</sub> (no bindings generated atm) and not the real lzc<sub>ioctl</sub> in <code>lib/libzfs_core/libzfs_core.c</code>
 <ul class="org-ul">
 <li>lzc<sub>ioctl</sub> for the zfs<sub>ioc</sub><sub>pool</sub><sub>stats</sub>(spa<sub>get</sub><sub>stats</sub>/ZFS<sub>IOC</sub><sub>POOL</sub><sub>STATS</sub>/* 0x5a05 */) is not exposed by pyzfs yet.
@@ -50,13 +64,17 @@
 <li>lzc<sub>ioctl</sub> calls lzc<sub>ioctl</sub><sub>fd</sub> but is static</li>
 <li>call open on <code>/dev/zfs</code> and use that for the fd. Still requires mocking out <code>zfs_cmd_t</code></li>
 </ul></li>
-<li>zfs<sub>ioc</sub><sub>pool</sub><sub>configs</sub> for the spa<sub>all</sub><sub>configs</sub>(ZFS<sub>IOC</sub><sub>POOL</sub><sub>CONFIGS</sub>/* 0x5a04 */) to get all pools/devicepaths</li>
-</ul></li>
-</ul></li>
-<li><a href="https://github.com/ClementTsang/bottom/pull/1812">Added option to subtract freeable arc from memory</a>
+<li>zfs<sub>ioc</sub><sub>pool</sub><sub>configs</sub> for the spa<sub>all</sub><sub>configs</sub>(ZFS<sub>IOC</sub><sub>POOL</sub><sub>CONFIGS</sub>/* 0x5a04 */) to get all pools/devicepaths
 <ul class="org-ul">
-<li>fixed broken arc collection on freebsd</li>
+<li>NetBSD builds but isn't functional in bottom or sysinfo with netbsd 10.1 as there is statvfs and getmntinfo changes from 9 that havent been done in libc yet (wait for EOL of 9)</li>
 </ul></li>
+</ul></li>
+<li>sysctl lacks netbsd support
+<ul class="org-ul">
+<li>has arc kstats but not objset ie no dataset io counters</li>
+</ul></li>
+</ul></li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/1812">Added option to subtract freeable arc from memory and fixed broken arc collection on freebsd</a></li>
 </ul></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/794">added gpu vram support</a>
 <ul class="org-ul">
@@ -99,6 +117,7 @@
 <li><a href="https://github.com/ClementTsang/bottom/issues/1819#issuecomment-3330632727">tested dependency update for bug fix</a></li>
 <li><a href="https://github.com/ClementTsang/bottom/issues/1826">identified regression with network monitoring</a></li>
 <li><a href="https://github.com/ClementTsang/bottom/pull/1938#discussion_r2652149593">code review</a> for basic layout adding network packet rate rows</li>
+<li><a href="https://github.com/ClementTsang/bottom/pull/2055">sysinfo(updated to avoid bug) add freebsd ufs io and feature build flags for gpu sans nvidia</a></li>
 </ul></li>
 <li>wine/wine
 <ul class="org-ul">
@@ -119,7 +138,7 @@
 </ul></li>
 <li>guix/guix
 <ul class="org-ul">
-<li>patched <a href="https://issues.guix.gnu.org/53711">home services for i18n</a> guix module and fix setlocale</li>
+<li>patched <a href="https://issues.guix.gnu.org/53711">home services for i18n</a> guix module and fix setlocale <a href="https://codeberg.org/guix/guix/commit/41efa45508b292d947371dd6b9df943c33727c3d">commit</a></li>
 </ul></li>
 <li>zdharma-continuum/zinit
 <ul class="org-ul">
@@ -167,7 +186,8 @@
 </ul></li>
 <li>yewstack/yew
 <ul class="org-ul">
-<li><a href="https://github.com/yewstack/yew/issues/359">suggested workaround</a> for users getting setup</li>
+<li><a href="https://github.com/yewstack/yew/issues/359">helped debug build issues</a> for users using wasm</li>
+<li><a href="https://github.com/yewstack/yew/issues/412">helped debug build issues</a> for users using emscripten</li>
 </ul></li>
 <li>mesosphere/spark-build
 <ul class="org-ul">
@@ -179,27 +199,17 @@
 </ul></li>
 <li>borkdude/deps.clj :notupstream:
 <ul class="org-ul">
-<li>not upstream as author said it was 'not important'</li>
+<li>not upstream as owner said it was 'not important'</li>
 <li><a href="https://github.com/jamartin9/deps.clj/commit/80c5973a7889cb3ab06764384a72c5509711317e">added musl static build</a></li>
 </ul></li>
 <li><a href="https://github.com/thedodd/ybc/pull/42">thedodd/ybc</a> :notupstream:
 <ul class="org-ul">
 <li>Update textarea for is-loading control</li>
 <li>Add navbar menu css configuration</li>
-<li>patched for newer yew-agent
-<ul class="org-ul">
-<li>not upstream as test and example code are broken for modal</li>
-</ul></li>
+<li>patched for newer yew-agent</li>
 </ul></li>
 <li>itmettkeDE/cargo-patch :notupstream:
 <ul class="org-ul">
-<li>not upstream as 'proper' fix is to change input parsing
-<ul class="org-ul">
-<li>only used to patch old version of ssh-key for exposing private key in key2words until updated version was pushed</li>
-</ul></li>
-<li><a href="https://github.com/jamartin9/cargo-patch/commit/da103f64d0a8001d6a9479ea31ac9642467ade1b">removed trailing</a> context after git range header</li>
-<li><a href="https://github.com/jamartin9/cargo-patch/commit/b9ad3400f1aad471d787d7a5a0aae1609f736957">removed broken</a> support for new files</li>
-<li>Still needs the a/ b/ stripped and delete/create file support (diff format normalization)</li>
 <li>updated cargo to support 2024 edition (not upstream)</li>
 </ul></li>
 <li><a href="https://github.com/evergreen-xch/cult-lite-farmer/pull/6">evergreen-xch/cult-lite-farmer</a> :notupstream:
@@ -208,7 +218,7 @@
 <li>added lto/codgen to release flags</li>
 <li>closed after several months
 <ul class="org-ul">
-<li>same team released dg<sub>fast</sub><sub>farmer</sub> instead with compression support</li>
+<li>same team released dg<sub>fast</sub><sub>farmer</sub> instead with launcher id and compression support</li>
 </ul></li>
 </ul></li>
 </ul>

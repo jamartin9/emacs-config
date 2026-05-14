@@ -9,26 +9,27 @@
 </head>
 <body>
 <div id="content" class="container">
-<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="orgea6a10d">
+<nav aria-label="breadcrumb" style="--pico-nav-breadcrumb-divider: '|';" id="org49bec45">
 <ul class="org-ul">
 <li><a href="index.html#ID-3a34d6d7-6f37-4573-b20e-3c93894e54ac">🏠</a></li>
 <li><a href="site_map.html#ID-30ea5e38-9b41-4bcd-8631-76821e93e294">🗺</a></li>
 </ul>
 </nav>
-<div id="outline-container-orgc83bf63" class="outline-2">
-<h2 id="orgc83bf63">bash</h2>
-<div class="outline-text-2" id="text-orgc83bf63">
+<div id="outline-container-orgac26b54" class="outline-2">
+<h2 id="orgac26b54">bash</h2>
+<div class="outline-text-2" id="text-orgac26b54">
 <ul class="org-ul">
 <li>array syntax <code>[@]</code></li>
 <li><code>--posix</code> for sh mode</li>
 <li><code>&amp;&gt;</code> <code>2&gt;&amp;1</code> redirects stderr and stdout</li>
+<li>constant diskio <code>while true; do dd if=/dev/random of=testio.tmp bs=1M count=100 status=none; rm testio.tmp; sleep 1; done &amp;</code></li>
 </ul>
 </div>
-<div id="outline-container-orgb6c5cad" class="outline-3">
-<h3 id="orgb6c5cad">snippets</h3>
-<div class="outline-text-3" id="text-orgb6c5cad">
+<div id="outline-container-org2818fac" class="outline-3">
+<h3 id="org2818fac">snippets</h3>
+<div class="outline-text-3" id="text-org2818fac">
 <div class="org-src-container">
-<pre class="src src-bash" id="org351fa8e">#!/usr/bin/env bash
+<pre class="src src-bash" id="orgf6a11c2"><code>#!/usr/bin/env bash
 # trap errors
 set -Eeuxo pipefail
 trap "ERROR TRAPPED" ERR
@@ -56,7 +57,7 @@ _install_stuff
 unset _install_stuff
 THING=$(&lt;somefile.txt)
 wg set %i private-key &lt;(su user -c "export PASSWORD_STORE_DIR=/path/to/your/store/; pass WireGuard/private-keys/%i")
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
