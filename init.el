@@ -251,7 +251,7 @@
            ("R" . re-builder)
            ("r" . string-insert-rectangle))
   (bind-keys :prefix-map jam/search :prefix "C-c c s"
-           ("l" . shr-copy-url)
+           ;("l" . shr-copy-url)
            ("L" . ffap-menu)
            ("i" . imenu)
            ("a" . apropos)

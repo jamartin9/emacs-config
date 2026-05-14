@@ -9,6 +9,7 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * usenet
 ** usenet notes
+- http://csiph.com/ for text browsing
 - https://github.com/javi11/postie is wip poster
 - spotnet is software to host websites on usenet
 - not for mail header
@@ -51,6 +52,7 @@
   - abavia
     - hitnews
   - vipernews
+    - shares feed with usenet express
   - omnicron has longest retention but logs activity (fbi connection with ipvanish, eweka gave customer up to brein, reseller accusations of 'junk' feed and contract strong arming)
     - eweka
       - gave user up based on x-trace headers that linked to account

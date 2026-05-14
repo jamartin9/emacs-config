@@ -15,23 +15,22 @@
 - guix-cuirass
   - [[https://git.savannah.gnu.org/cgit/guix/guix-cuirass.git/commit/?id=c8022d51f4c6c34c4ea0ce2d3502d4a683946888][Added a null check to js to allow adding channels on specification page]]
 - huggingface/transformers
-  - [[https://github.com/huggingface/transformers/pull/24736][typo bugfix to allow models to be ran with LocalAgent]]
+  - [[https://github.com/huggingface/transformers/pull/24736][bugfix to allow models to be ran with LocalAgent]]
 - ClementTsang/bottom
   - [[https://github.com/ClementTsang/bottom/commit/48f13b24ee55389ad00863c32398ec26241c3a6f][added zfs arc support]]
     - enabled metrics with sysctl
       - freebsd used sysctl support for hw temp sensors
     - [[https://github.com/ClementTsang/bottom/pull/1044][kept feature working between release refactors]]
     - [[https://github.com/ClementTsang/bottom/pull/1248][added zpool dataset io stats]]
-    - WIP [[https://github.com/ClementTsang/bottom/pull/2055][sysinfo add freebsd ufs io and feature build flags]]
     - WIP to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path or parse zpool iostat json output in zfs 2.3+
       - add arc and l2arc to disk menu, get arc r/w bytes from procfs iostat. include note about not getting vdev level iostats as that would need ioctl like issue, so no total l2cache
-      - send | recv of unmounted datasets will not be shown despite having stats currently
+      - send | recv of unmounted datasets will not be shown despite having stats currently as it uses a different flow
       - ZFS_IOC_POOL_STATS does not contain the spa_iostats exposed by under the per pool proc directory iostats file for per pool arc
         - includes 'vs_bytes' index with the read/write total bytes for each vdev_stat_t returned
         - appends 'l2cache' on vdev_root
         - appends 'spares' on vdev_root (active spare?)
-      - add zvols?
-      - https://github.com/robn/veneer does most of this already in dataset_list and pools
+        - zvols?
+      - https://github.com/robn/veneer does most of this already in dataset_list and pools. The per dataset arc usage counters from iostats and total L2 io still come from procfs.
       - libzfs_core python bindings are generated from ~include/libzfs/libzfs_core.h~ which only contains lzc_ioctl_fd (no bindings generated atm) and not the real lzc_ioctl in ~lib/libzfs_core/libzfs_core.c~
         - lzc_ioctl for the zfs_ioc_pool_stats(spa_get_stats/ZFS_IOC_POOL_STATS/* 0x5a05 */) is not exposed by pyzfs yet.
           - lzc_ioctl calls lzc_ioctl_fd but is static
@@ -40,8 +39,7 @@
           - NetBSD builds but isn't functional in bottom or sysinfo with netbsd 10.1 as there is statvfs and getmntinfo changes from 9 that havent been done in libc yet (wait for EOL of 9)
       - sysctl lacks netbsd support
         - has arc kstats but not objset ie no dataset io counters
-    - [[https://github.com/ClementTsang/bottom/pull/1812][Added option to subtract freeable arc from memory]]
-      - fixed broken arc collection on freebsd
+    - [[https://github.com/ClementTsang/bottom/pull/1812][Added option to subtract freeable arc from memory and fixed broken arc collection on freebsd]]
   - [[https://github.com/ClementTsang/bottom/pull/794][added gpu vram support]]
     - hide swap when not used in basic mode
     - bugfixed freebsd build / percentage toggle
@@ -67,6 +65,7 @@
   - [[https://github.com/ClementTsang/bottom/issues/1819#issuecomment-3330632727][tested dependency update for bug fix]]
   - [[https://github.com/ClementTsang/bottom/issues/1826][identified regression with network monitoring]]
   - [[https://github.com/ClementTsang/bottom/pull/1938#discussion_r2652149593][code review]] for basic layout adding network packet rate rows
+  - [[https://github.com/ClementTsang/bottom/pull/2055][sysinfo(updated to avoid bug) add freebsd ufs io and feature build flags for gpu sans nvidia]]
 - wine/wine
   - [[https://github.com/wine-mirror/wine/commit/6ad6c1ff4afe290482a5ac566e4d3f41f99b1e34][implement extended]] render options and enable tests
 - ValveSoftware/wine
@@ -103,28 +102,23 @@
   - [[https://github.com/clj-easy/graalvm-clojure/pull/20][updated aleph]] to compile with graalvm native image
   - [[https://github.com/clj-easy/graalvm-clojure/pull/19][updated ring-jetty]] version to compile with graalvm native image
 - yewstack/yew
-  - [[https://github.com/yewstack/yew/issues/359][suggested workaround]] for users getting setup
+  - [[https://github.com/yewstack/yew/issues/359][helped debug build issues]] for users using wasm
+  - [[https://github.com/yewstack/yew/issues/412][helped debug build issues]] for users using emscripten
 - mesosphere/spark-build
   - showed same error to user of [[https://github.com/mesosphere/spark-build/issues/69][json having a trailing comma]]
 - [[https://github.com/jlxip/DiscordInjector/pull/1][jlxip/DiscordInjector]]
   - patched to use discord public test beta and respect XDG config vars
 - borkdude/deps.clj :notupstream:
-  - not upstream as author said it was 'not important'
+  - not upstream as owner said it was 'not important'
   - [[https://github.com/jamartin9/deps.clj/commit/80c5973a7889cb3ab06764384a72c5509711317e][added musl static build]]
 - [[https://github.com/thedodd/ybc/pull/42][thedodd/ybc]] :notupstream:
   - Update textarea for is-loading control
   - Add navbar menu css configuration
   - patched for newer yew-agent
-    - not upstream as test and example code are broken for modal
 - itmettkeDE/cargo-patch :notupstream:
-  - not upstream as 'proper' fix is to change input parsing
-    - only used to patch old version of ssh-key for exposing private key in key2words until updated version was pushed
-  - [[https://github.com/jamartin9/cargo-patch/commit/da103f64d0a8001d6a9479ea31ac9642467ade1b][removed trailing]] context after git range header
-  - [[https://github.com/jamartin9/cargo-patch/commit/b9ad3400f1aad471d787d7a5a0aae1609f736957][removed broken]] support for new files
-  - Still needs the a/ b/ stripped and delete/create file support (diff format normalization)
   - updated cargo to support 2024 edition (not upstream)
 - [[https://github.com/evergreen-xch/cult-lite-farmer/pull/6][evergreen-xch/cult-lite-farmer]] :notupstream:
   - added launcher id to cli for nft plot discovery
   - added lto/codgen to release flags
   - closed after several months
-    - same team released dg_fast_farmer instead with compression support
+    - same team released dg_fast_farmer instead with launcher id and compression support
