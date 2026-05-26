@@ -147,6 +147,7 @@
 *** 3D
   - https://huggingface.co/tencent/Hunyuan3D-2?tab=readme-ov-file#blender-addon for 3D generation 3B
 ** Large Language Models
+  - mistral4 small uses MLA like deepseek, glm4.7-flash etc
   - nvidia nemotron nano models use ssm/mamba hybrid layers
     - added latent attention
   - https://arxiv.org/html/2502.13577v1 posits that the data manifold structure is not smooth uniform global structure but a stratified manifold
@@ -207,10 +208,13 @@
     - more than 1,000,000 hours of 40GiB GPU (400 watts) compute hours for 65B model
       - 1000 tons of CO2 (2.6 million KWh hours)
   - [[https://github.com/ggerganov/llama.cpp][llama.cpp gguf is 4 bit and cpu]] (adding more gpu and 3/5/6 bit quant)
+    - llama.cpp mtp ~--spec-type draft-mtp --spec-draft-n-max 6~ for qwen3.6 MTP
+      - perf was still lower than ik_llama w/o MTP
     - ik_llama.cpp fork with cpu/quant improvements
-      - ~-mtp~ ~--draft-max 10 --draft-p-min 0.85~ for mtp speculative decoding (poor perf with moe as memory bandwidth bound)
+      - ~-mtp~ ~--draft-max 3 --draft-p-min 0.75~ for mtp speculative decoding
         - model must have either a drafter or MTP tensors preserved
-        - ~-mtp --draft-max 1 --draft-p-min 0.0~ for current qwen3.6 dense mtp support (perf degrades with more than 1)
+        - ~-mtp --draft-max 1 --draft-p-min 0.0~ for current qwen3.6 dense mtp support
+        - Requant qwent mtp layer during runtime with ~-mtprot iq4_ks~ (better perf but costs ~0.6G mem)
         - gemma4 assistant drafter MTP with ~--spec-type mtp -md ../gemma-4-26B-A4B-it-assistant-Q8_0.gguf --draft-max 3 --draft-p-min 0.0~
           - ~-ngld 99~ for drafter gpu offload
       - ~-c 524288 --rope-scaling yarn --rope-scale 2 --yarn-orig-ctx 262144~ for yarn scaling to larger context for qwen3.6
@@ -220,6 +224,7 @@
       - gemma4
         - ~llama-server-ik --model ../google_gemma-4-26B-A4B-it-IQ4_NL.gguf --ctx-size 32768 --temp 1.0 --top-p 0.95 --top-k 64 --min-p 0.0 --repeat-penalty 1.0 --cache-type-k q6_0 --cache-type-v q6_0 -khad -vhad --threads 12 -fa on --cache-ram 0 --no-context-shift --no-warmup -ger -muge -rtr -mqkv --threads-http 1 --jinja --chat-template-kwargs '{"enable_thinking":true}'~
           - use ~--swa-full~ with llama.cpp for comparable SWA. llama.cpp supports iSWA(checkpointing, compression, fixed size instead of growing with context)
+            - llama.cpp has better perf for cpu only
       - fused deltanet for qwen3.5 (35B-A3B)
         - qwen 3.6 improved on qwen 3.5
           - drift in ssm_conv1d tensors for qwen 3.6 corrected with Wasserstein and Qwen-Plus quants?

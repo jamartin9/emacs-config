@@ -12,6 +12,7 @@
 - ffmpeg based
 - supports custom scripts
 - 'E' to switch editions of MKV
+- ~--demuxer-lavf-format=vapoursynth~ for vapoursynth script playback
 - ~mpv.conf~ for HDR/DV
 #+NAME: mpv-config.conf
 #+BEGIN_SRC conf :tangle no
@@ -39,6 +40,8 @@ screenshot-high-bit-depth=yes # 16 bit screenshots
 #gpu-context=waylandvk # set the environment variable ENABLE_HDR_WSI=1
 #vf-append=@histolevels:vapoursynth="~~/vs/histogram/levels.py":buffered-frames=3:concurrent-frames=4 # use vapoursynth to add extra frameinfo
 #vf-append=@frameinfo:vapoursynth="~~/vs/info/frameinfo.py":buffered-frames=3:concurrent-frames=4
+#[extension.vpy]
+#demuxer-lavf-format=vapoursynth
 #+END_SRC
 - bind keys to lua script with ~input.conf~
 #+NAME: mpv-input.conf

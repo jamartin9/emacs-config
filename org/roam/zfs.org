@@ -496,3 +496,21 @@ cat <<EOF > /mnt/guix/persist/guix-config/config.scm
                                ("/var/tmp"                               #f))))))
                    %desktop-services))
 #+END_SRC
+*** wip
+    - WIP to add L2 without parsing zpool/zdb can use ioctl, nvpair with ZFS_IOC_POOL_CONFIG for the cache device path or parse zpool iostat json output in zfs 2.3+
+      - get arc r/w bytes from procfs iostat.
+      - send | recv of unmounted datasets will not be shown despite having stats currently as it uses a different flow
+      - ZFS_IOC_POOL_STATS does not contain the spa_iostats exposed by under the per pool proc directory iostats file for per pool arc
+        - includes 'vs_bytes' index with the read/write total bytes for each vdev_stat_t returned
+        - appends 'l2cache' on vdev_root
+        - appends 'spares' on vdev_root (active spare?)
+        - zvols?
+      - https://github.com/robn/veneer does most of this already in dataset_list and pools. The per dataset arc usage counters from iostats and total L2 io still come from procfs.
+      - libzfs_core python bindings are generated from ~include/libzfs/libzfs_core.h~ which only contains lzc_ioctl_fd (no bindings generated atm) and not the real lzc_ioctl in ~lib/libzfs_core/libzfs_core.c~
+        - lzc_ioctl for the zfs_ioc_pool_stats(spa_get_stats/ZFS_IOC_POOL_STATS/* 0x5a05 */) is not exposed by pyzfs yet.
+          - lzc_ioctl calls lzc_ioctl_fd but is static
+          - call open on ~/dev/zfs~ and use that for the fd. Still requires mocking out ~zfs_cmd_t~
+        - zfs_ioc_pool_configs for the spa_all_configs(ZFS_IOC_POOL_CONFIGS/* 0x5a04 */) to get all pools/devicepaths
+          - NetBSD builds but isn't functional in bottom or sysinfo with netbsd 10.1 as there is statvfs and getmntinfo changes from 9 that havent been done in libc yet (wait for EOL of 9)
+      - sysctl lacks netbsd support
+        - has arc kstats but not objset ie no dataset io counters

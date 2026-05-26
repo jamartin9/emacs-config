@@ -8,6 +8,8 @@
 #+HTML_DOCTYPE: html5
 #+INCLUDE: "css.org::navbar" :only-contents t
 * Github Stars
+** propensive/soundness
+  - Soundness is an ecosystem of libraries for writing direct-style code with Scala 3
 ** getkyo/kyo
   - Kyo introduces a novel approach based on algebraic effects to deliver straightforward APIs in the pure Functional Programming paradigm in Scala (JS, JVM and Native)
 ** cbftp/cbftp-svn
@@ -2438,6 +2440,8 @@
 
 
 * rust
+** reubeno/brush
+  - bash implementation in rust
 ** mstange/samply
   - samply is a command line CPU profiler which uses the Firefox profiler as its UI.
 ** NVlabs/cuda-oxide

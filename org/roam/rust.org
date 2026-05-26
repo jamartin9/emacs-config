@@ -40,6 +40,7 @@
   - freebsd tests only run on qemu runner
   - set the image tag for newer cross
 - ~RUSTFLAGS="-Z location-detail=none -Zfmt-debug=none -C relocation-model=static -Ctarget-feature=+crt-static" cargo +nightly run -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort,optimize_for_size --target x86_64-unknown-linux-gnu --release~ with eyra for full source build
+- ~RUSTFLAGS="-C target-feature=-crt-static"~ with ~--target x86_64-unknown-linux-musl~ to dynamic link musl?
 - disable lifo slot in tokio to make all work stealable
 - ~RUSTC_BOOTSTRAP=1~ for nightly features on stable
 #+NAME: Cross.toml

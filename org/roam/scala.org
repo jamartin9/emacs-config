@@ -9,6 +9,14 @@
 #+INCLUDE: "css.org::navbar" :only-contents t
 * scala
 ** scala notes
+  - ~-Yprofile-enabled~ for profiling compiler in perfetto format
+  - supports multistage (used to be scala-lms) for runtime code eval generation(like futamura projections)
+    - ex https://github.com/strymonas/strymonas-scala
+  - effect systems
+    - https://www.reddit.com/r/scala/comments/1fuczbt/comment/lqc18dn/ describes evolution of monad effects systems from freer Monad and Higher order effects with MTL, turbolift, cats, kyo (haskell counterparts too)
+    - purelogic is a direct style capability effect system with event sourcing via the Reader, Writer, State and Raise monads
+    - ox/yaes/ for direct style
+    - dotty-cps-async can be used for multishot continuation rewriting instead of label/break with standard capabilities
   - Scala's immutable Map and Set implementations are vulnerable to hash collision-based denial-of-service (DoS) attacks, primarily due to their use of ListMap for handling collisions in HashMap and HashSet
     - added CollisionProofHashMap
   - caprese

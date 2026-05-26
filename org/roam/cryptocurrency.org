@@ -11,6 +11,7 @@
 - cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
   - sigma protocols are alternative (COMINT)
 * chia
+- 2.7.1+ needs ozone-platform set for electron gui in ~gui/package.json~ ex. ~electron . --ozone-platform=x11~ (electron version changed default to auto)
 - https://arcade21.games/ for games
 - https://beta.xch.trade/ to view swap prices between dexie and tibetswap
 - https://weso.forgeros.fr/tokenomics for incentive on compaction
@@ -70,8 +71,9 @@ chia wallet send -a 0.000000000001 -m 0.000000000001 -t xch1jhye8dmkhree0zr8t09r
     - works with offer files
   - ex of video sharing with datalayer https://github.com/jjldv/ChiaTubi
 - [[https://mojonode.com/explorer?q=select%20date_trunc(%27week%27,%20gs.ts)%20as%20datetime,%20coalesce(max(reorgs),%200)%20as%20%22max%20seq%20block%20reorgs%20per%20week%22%20from%0A%20%20generate_series(%272022-03-10%2000:00:00%27::timestamp,%20%0A%20%20%272023-03-21%2023:55:00%27::timestamp,%20interval%20%271%20day%27)%20gs(ts)%20%0A%20%20left%20join%20%0A%20%20(%0Aselect%20min(dt)%20as%20dt,%20count(seq)%20as%20reorgs%20from%20(%0A%20%20select%20height,%20max(created_at)%20as%20dt,%0A%20%20%20%20case%20when%20height%20-%20row_number()%20over%20(order%20by%20height)%20=%20-1%20then%20height%20%20%0A%20%20%20%20else%20height%20-%20row_number()%20over%20(order%20by%20height)%20end%20as%20seq%20from%20block_records%20%0Awhere%20reverted=true%0Agroup%20by%20height%0A)%20as%20t%0Agroup%20by%20seq%0A%20%20%20having%20count(seq)%20%3E%200%0A%20%20%20)%20as%20b%20%0A%20%20%20%20%20%0A%20%20%20%20%20on%20date_trunc(%27week%27,%20b.dt)%20=%20date_trunc(%27week%27,%20gs.ts)%0A%20%20%0A%20group%20by%20date_trunc(%27week%27,%20gs.ts)%0Aorder%20by%20date_trunc(%27week%27,%20gs.ts)%20][mojo node sql for block reorg]]
-- space farmers pool runs community node
-  - light farming alternative since flexpool shutdown
+  - dead
+- space farmers pool runs no longer runs a community node
+  - was a light farming alternative since flexpool shutdown
 - xch.events for mempool explorer
 * monero
 - use block > 2,688,888 restore height for faster sync times with view tag support (resend old funds etc)
