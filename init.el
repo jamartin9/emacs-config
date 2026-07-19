@@ -26,12 +26,13 @@
                                modus-themes-completions '((matches . (extrabold background intense))
                                                           (selection . (semibold accented intense))
                                                           (popup . (accented))))
+                           (advice-add 'completion-at-point :after #'minibuffer-hide-completions)
                            (fido-vertical-mode 1) ; M-j to ignore completion
                            (window-divider-mode 1)
                            (display-time-mode 1)
                            (delete-selection-mode 1)
                            (run-with-idle-timer 15 t (lambda () (garbage-collect))) ; collect gc every 15s while idle
-                           (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling ;(advice-add 'completion-at-point :after #'minibuffer-hide-completions)
+                           (blink-cursor-mode -1);(pixel-scroll-precision-mode 1) ; smooth scrolling ; BUG disables minibuffer completion scrolling 
                            (electric-pair-mode 1) ; less typing
                            (context-menu-mode 1); mouse right click menu
                            (url-handler-mode 1) ; open urls in buffers
@@ -108,7 +109,6 @@
               completion-styles '(basic initials substring partial-completion); completion-pcm-leading-wildcard
               completions-detailed t
               completions-sort 'historical ;completion-auto-select 'second-tab ;completion-auto-help 'lazy; '?' for help w/mouse click
-              icomplete-scroll t
               column-number-mode t
               sentence-end-double-space nil
               require-final-newline t
@@ -443,14 +443,29 @@
   (connection-local-set-profiles '(:application tramp :protocol "scp") 'remote-direct-async-process)
   (connection-local-set-profiles '(:application tramp :protocol "ssh") 'remote-direct-async-process))
 
+(use-package icomplete
+  :ensure nil; built-in
+  :commands (icomplete-vertical-mode icomplete-mode)
+  :bind (:map icomplete-minibuffer-map
+              ("C-n" . icomplete-forward-completions)
+              ("C-p" . icomplete-backward-completions)
+              ;("C-<tab>" . completion-at-point) ;icomplete-vertical-toggle
+              ("RET" . icomplete-fido-ret)); icomplete-force-complete-and-exit
+  :config (setq icomplete-scroll t
+                icomplete-vertical-in-buffer-adjust-list t
+                icomplete-in-buffer t
+                icomplete-prospects-height 10))
+
 (use-package completion-preview
   :ensure nil ; built-in
   :hook ((after-init . global-completion-preview-mode))
   :bind (:map completion-preview-active-mode-map ; M-i during preview for *Completions* buffer
               ("<M-left>" . completion-preview-next-candidate)
+              ("<M-right>" . completion-preview-prev-candidate)
               ("<M-up>" . minibuffer-previous-completion)
               ("<M-down>" . minibuffer-next-completion)
-              ("<M-right>" . completion-preview-prev-candidate))
+              ("C-<tab>" . completion-at-point)
+              )
   :config (setq completion-preview-minimum-symbol-length 2));completion-preview-idle-delay 0.2
 
 (use-package gnus ;; M-u for unread, ! to save for offline/cache, U to manually subscribe, L list all groups, g to rescan all groups or gnus-group-get-new-news-this-group, c to read all

@@ -211,12 +211,14 @@
     - llama.cpp mtp ~--spec-type draft-mtp --spec-draft-n-max 6~ for qwen3.6 MTP
       - perf was still lower than ik_llama w/o MTP
     - ik_llama.cpp fork with cpu/quant improvements
-      - ~-mtp~ ~--draft-max 3 --draft-p-min 0.75~ for mtp speculative decoding
+      - add ~--parallel-tool-calls~
+      - webui and mcp proxy with ~--webui llamacpp --webui-mcp-proxy~
+      - multiple specs with ~--spec-type ngram-mod:n_max=64,n_min=2,ngram_size_n=8 --spec-type mtp:n_max=1,p_min=0.0~
         - model must have either a drafter or MTP tensors preserved
-        - ~-mtp --draft-max 1 --draft-p-min 0.0~ for current qwen3.6 dense mtp support
-        - Requant qwent mtp layer during runtime with ~-mtprot iq4_ks~ (better perf but costs ~0.6G mem)
-        - gemma4 assistant drafter MTP with ~--spec-type mtp -md ../gemma-4-26B-A4B-it-assistant-Q8_0.gguf --draft-max 3 --draft-p-min 0.0~
+        - Requant qwent mtp layer during runtime with ~-mtprot iq4_ks~ (better perf as reduced vocab size in output tensor but costs ~0.6G mem)
+        - gemma4 assistant drafter MTP with ~-md ../gemma-4-26B-A4B-it-assistant-Q8_0.gguf~
           - ~-ngld 99~ for drafter gpu offload
+          - quant the kv of the draft model ~-ctkd~ and ~-ctvd~
       - ~-c 524288 --rope-scaling yarn --rope-scale 2 --yarn-orig-ctx 262144~ for yarn scaling to larger context for qwen3.6
       - ~--fit~ and ~--fit-margin~ for gpu tensor offload
       - ~--smart-expert-reduction~ is basically REAP
@@ -239,11 +241,12 @@
         - try to force full prompt processing with ~--cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift~
         - 2782.81 MiB KV cache with q8 and 2142.81 with q6
           - K quant is more important than V quant
-        - ~../llama-server-ik --model ../Qwen3.5-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.5-35B-A3B-mmproj-F32.gguf --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q6_0 --cache-type-v q6_0 -fa on -ger -khad -vhad -muge -rtr --cache-ram 0 --ctx-checkpoints 0 --ctx-checkpoints-tolerance 0 --no-context-shift --threads-http 1 --no-warmup --jinja~
-        - ~-mqkv -rtr~ disable mmap but gives 0.5 tk/s more
+        - ~../llama-server-ik --model ../Qwen3.6-35B-A3B-IQ4_XS.gguf --mmproj ../qwen3.6-35B-A3B-mmproj-F32.gguf -amb 256 --cpu-moe --no-kv-offload --no-warmup --ctx-size 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.00 --repeat-penalty 1.0 --threads 12 --cache-type-k q8_0 --cache-type-v q8_0 -fa on -ger -khad -vhad -muge -rtr --cache-ram 0 --no-context-shift --threads-http 1 --no-warmup --jinja~
+        - ~-mqkv -rtr~ disable mmap but gives tk/s more
       - flash mla ~-mla 3~ supported for cpu offloading on quants Q6 and Q8 for deepseek or glm4.7 lesser quants need ~-DGGML_IQK_FA_ALL_QUANTS=ON~ for cmake
         - ~../llama-server-ik --model ../GLM-4.7-Flash-REAP-23B-A3B-IQ4_NL.gguf --temp 0.7 --top-k 50 --top-p 1.00 --min-p 0.01 --dry-multiplier 1.1 --threads 12 --jinja -mla 3 -fa on -amb 256 -muge -mqkv -rtr -ger --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 0~
         - 16 tk/s w/16 threads on iq4 and 11 tk/s with Q6
+          - oversubscription can sometimes give perf when not memory bottlenecked
         - context 200k(202752 is 5561.79 MiB), 32k is 898.88 MiB of KV cache
         - khad (Hadamard transforms for K-cache) with quantized cache (special q8_KV for the cache-type-K causes assert error?)
           - reduces need for iquants in kv cache?

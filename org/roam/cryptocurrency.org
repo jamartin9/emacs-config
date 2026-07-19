@@ -11,7 +11,10 @@
 - cross group discrete logarithm equality proof in zero knowledge for shared secret between two chains with different ec curves. (farcaster)
   - sigma protocols are alternative (COMINT)
 * chia
+- https://github.com/AbandonedLand/CircuitSage for powershell scripts for circuitdao
+- https://rewards.fireacademy.io/distributor/datalayer-minions for datalayer minions reward distributor stake for dig tokens
 - 2.7.1+ needs ozone-platform set for electron gui in ~gui/package.json~ ex. ~electron . --ozone-platform=x11~ (electron version changed default to auto)
+  - extraction of electron zip fails with newer nodejs. extract electron manually and create the path.txt file with dist ~printf "electron" > ./node_modles/electron/path.txt~
 - https://arcade21.games/ for games
 - https://beta.xch.trade/ to view swap prices between dexie and tibetswap
 - https://weso.forgeros.fr/tokenomics for incentive on compaction
